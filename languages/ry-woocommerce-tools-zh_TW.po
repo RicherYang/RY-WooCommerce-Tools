@@ -1,0 +1,880 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: RY WooCommerce Tools\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-06-09 23:46+0800\n"
+"PO-Revision-Date: 2018-06-09 23:46+0800\n"
+"Last-Translator: Richer Yang <fantasyworldidvtw@gmail.com>\n"
+"Language-Team: <fantasyworldidvtw@gmail.com>\n"
+"Language: zh_TW\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: __;_e;_n_noop:1,2;_x:1,2c\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Generator: Poedit 2.0.4\n"
+"X-Poedit-Flags-xgettext: --add-comments=translators:\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Poedit-SearchPath-0: ./..\n"
+
+#: ../class.ry-wt.admin.php:19
+msgid "Settings"
+msgstr ""
+
+#: ../class.ry-wt.main.php:213
+#, php-format
+msgid ""
+"<strong>%s</strong> is inactive. It require WooCommerce version 3.0.0 or "
+"newer."
+msgstr ""
+"<strong>%s</strong> 暫停運作。 需求 WooCommerce 版本 3.0.0 或更新的版本。"
+
+#: ../class.ry-wt.main.php:214
+msgid "RY WooCommerce Tools"
+msgstr "RY WooCommerce Tools"
+
+#: ../class.ry-wt.main.php:242
+msgid ""
+"Please check your server time setting. Server time is differs from Google "
+"Public NTP  more than one minute."
+msgstr "請檢察伺服器的時間設定。與 Google NTP 的時間相差超過一分鐘。"
+
+#: ../templates/cart/cart-chouse-cvs.php:2
+msgid "Convenience store"
+msgstr "超商門市"
+
+#: ../templates/cart/cart-chouse-cvs.php:4
+msgid "Chouse convenience store"
+msgstr "選擇超商門市"
+
+#: ../templates/emails/customer-cvs-store.php:16
+#: ../templates/emails/plain/customer-cvs-store.php:13
+msgid "Your order product has been sended to the convenience store."
+msgstr "你訂購的商品已經送達超商門市。"
+
+#: ../templates/order/order-ecpay-payment-info-atm.php:15
+#: ../templates/order/order-ecpay-payment-info-barcode.php:15
+#: ../templates/order/order-ecpay-payment-info-cvs.php:15
+#: ../woocommerce/gateways/ecpay/ecpay-gateway-atm.php:82
+#: ../woocommerce/gateways/ecpay/ecpay-gateway-barcode.php:99
+#: ../woocommerce/gateways/ecpay/ecpay-gateway-cvs.php:99
+msgid "Payment details"
+msgstr "付款詳細資料"
+
+#: ../templates/order/order-ecpay-payment-info-atm.php:19
+#: ../woocommerce/gateways/ecpay/ecpay-gateway-atm.php:85
+msgid "Bank"
+msgstr "銀行"
+
+#: ../templates/order/order-ecpay-payment-info-atm.php:23
+msgid "Bank code"
+msgstr "銀行代碼"
+
+#: ../templates/order/order-ecpay-payment-info-atm.php:27
+#: ../woocommerce/gateways/ecpay/ecpay-gateway-atm.php:89
+msgid "ATM Bank account"
+msgstr "ATM 繳費帳號"
+
+#: ../templates/order/order-ecpay-payment-info-atm.php:31
+#: ../templates/order/order-ecpay-payment-info-barcode.php:37
+#: ../templates/order/order-ecpay-payment-info-cvs.php:23
+#: ../woocommerce/gateways/ecpay/ecpay-gateway-atm.php:93
+#: ../woocommerce/gateways/ecpay/ecpay-gateway-barcode.php:114
+#: ../woocommerce/gateways/ecpay/ecpay-gateway-cvs.php:106
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-atm.php:54
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-barcode.php:50
+msgid "Payment deadline"
+msgstr "付款截止日"
+
+#: ../templates/order/order-ecpay-payment-info-barcode.php:19
+#: ../woocommerce/gateways/ecpay/ecpay-gateway-barcode.php:102
+msgid "Barcode 1"
+msgstr "Barcode 1"
+
+#: ../templates/order/order-ecpay-payment-info-barcode.php:25
+#: ../woocommerce/gateways/ecpay/ecpay-gateway-barcode.php:106
+msgid "Barcode 2"
+msgstr "Barcode 2"
+
+#: ../templates/order/order-ecpay-payment-info-barcode.php:31
+#: ../woocommerce/gateways/ecpay/ecpay-gateway-barcode.php:110
+msgid "Barcode 3"
+msgstr "Barcode 3"
+
+#: ../templates/order/order-ecpay-payment-info-cvs.php:19
+#: ../woocommerce/gateways/ecpay/ecpay-gateway-cvs.php:102
+msgid "CVS code"
+msgstr "繳費代碼"
+
+#: ../woocommerce/admin/meta-boxes/ecpay-shipping-meta-box.php:14
+msgid "CVS info"
+msgstr "超商取貨資訊"
+
+#: ../woocommerce/admin/meta-boxes/ecpay-shipping-meta-box.php:35
+msgid "ECPay shipping ID"
+msgstr "綠界物流ID"
+
+#: ../woocommerce/admin/meta-boxes/ecpay-shipping-meta-box.php:36
+msgid "Shipping payment no"
+msgstr "物流寄件編號"
+
+#: ../woocommerce/admin/meta-boxes/ecpay-shipping-meta-box.php:37
+msgid "Shipping status"
+msgstr "物流狀態"
+
+#: ../woocommerce/admin/meta-boxes/ecpay-shipping-meta-box.php:38
+msgid "declare amount"
+msgstr "申報金額"
+
+#: ../woocommerce/admin/meta-boxes/ecpay-shipping-meta-box.php:39
+msgid "Collection of money"
+msgstr "代收貨款"
+
+#: ../woocommerce/admin/meta-boxes/ecpay-shipping-meta-box.php:40
+msgid "Shipping status last change time"
+msgstr "物流狀態最後變更時間"
+
+#: ../woocommerce/admin/meta-boxes/ecpay-shipping-meta-box.php:41
+msgid "Shipping create time"
+msgstr "物流建立時間"
+
+#: ../woocommerce/admin/meta-boxes/ecpay-shipping-meta-box.php:42
+msgid "Shipping booking note"
+msgstr "物流託運單"
+
+#: ../woocommerce/admin/meta-boxes/ecpay-shipping-meta-box.php:52
+msgid "Yes"
+msgstr ""
+
+#: ../woocommerce/admin/meta-boxes/ecpay-shipping-meta-box.php:52
+msgid "No"
+msgstr ""
+
+#: ../woocommerce/admin/meta-boxes/ecpay-shipping-meta-box.php:55
+msgid "Print"
+msgstr "列印"
+
+#: ../woocommerce/emails/ecpay-shipping-customer-cvs-store.php:10
+msgid "Product sended to cvs store"
+msgstr "商品送達超商門市"
+
+#: ../woocommerce/emails/ecpay-shipping-customer-cvs-store.php:11
+msgid ""
+"This is an order notification sent to customers after the product send to "
+"CVS store with ECPay shipping."
+msgstr "這是在商品經由綠界物流送達超商門市時給通知訂購人。"
+
+#: ../woocommerce/emails/ecpay-shipping-customer-cvs-store.php:25
+msgid "Your {site_title} order product send to CVS store"
+msgstr "你在 {site_title} 訂購的商品送達超商門市"
+
+#: ../woocommerce/emails/ecpay-shipping-customer-cvs-store.php:29
+msgid "Product Pickup Notice"
+msgstr "商品取貨通知"
+
+#: ../woocommerce/gateways/ecpay/ecpay-gateway-atm.php:11
+msgid "Pay via ATM"
+msgstr "使用ATM櫃員機付款"
+
+#: ../woocommerce/gateways/ecpay/ecpay-gateway-atm.php:12
+msgid "ECPay ATM"
+msgstr "綠界ATM櫃員機"
+
+#: ../woocommerce/gateways/ecpay/ecpay-gateway-atm.php:55
+msgid "Pay via ECPay ATM"
+msgstr "透過 綠界金流ATM櫃員機 付款"
+
+#: ../woocommerce/gateways/ecpay/ecpay-gateway-atm.php:70
+msgid "ATM payment deadline out of range. Set as default value."
+msgstr "ATM櫃員機繳費期限超過限制，調整為預設值。"
+
+#: ../woocommerce/gateways/ecpay/ecpay-gateway-barcode.php:10
+msgid "Pay via BARCODE"
+msgstr "使用超商條碼付款"
+
+#: ../woocommerce/gateways/ecpay/ecpay-gateway-barcode.php:11
+msgid "ECPay BARCODE"
+msgstr "綠界超商條碼"
+
+#: ../woocommerce/gateways/ecpay/ecpay-gateway-barcode.php:62
+msgid "Pay via ECPay BARCODE"
+msgstr "透過 綠界金流超商條碼 付款"
+
+#: ../woocommerce/gateways/ecpay/ecpay-gateway-barcode.php:75
+msgid "BARCODE payment deadline out of range. Set as default value."
+msgstr "超商條碼繳費期限超過限制，調整為預設值。"
+
+#: ../woocommerce/gateways/ecpay/ecpay-gateway-barcode.php:81
+#: ../woocommerce/gateways/ecpay/ecpay-gateway-cvs.php:81
+#: ../woocommerce/gateways/ecpay/includes/ecpay-gateway-base.php:31
+#, php-format
+msgid "%s minimum amount out of range. Set as default value."
+msgstr "%s 最小訂購金額超過限制，調整為預設值。"
+
+#: ../woocommerce/gateways/ecpay/ecpay-gateway-barcode.php:87
+#: ../woocommerce/gateways/ecpay/ecpay-gateway-cvs.php:87
+#, php-format
+msgid "%s maximum amount out of range. Set as default value."
+msgstr "%s 最大訂購金額超過限制，調整為預設值。"
+
+#: ../woocommerce/gateways/ecpay/ecpay-gateway-credit-installment.php:11
+msgid "Pay via Credit(installment)"
+msgstr "使用信用卡付款（分期）"
+
+#: ../woocommerce/gateways/ecpay/ecpay-gateway-credit-installment.php:12
+msgid "ECPay Credit(installment)"
+msgstr "綠界信用卡（分期）"
+
+#: ../woocommerce/gateways/ecpay/ecpay-gateway-credit-installment.php:49
+msgctxt "Checkout info"
+msgid "Number of periods"
+msgstr "分期期數"
+
+#: ../woocommerce/gateways/ecpay/ecpay-gateway-credit-installment.php:59
+msgid "Pay via ECPay Credit(installment)"
+msgstr "使用 綠界信用卡（分期） 付款"
+
+#: ../woocommerce/gateways/ecpay/ecpay-gateway-credit.php:11
+msgid "Pay via Credit"
+msgstr "使用信用卡付款"
+
+#: ../woocommerce/gateways/ecpay/ecpay-gateway-credit.php:12
+msgid "ECPay Credit"
+msgstr "綠界信用卡"
+
+#: ../woocommerce/gateways/ecpay/ecpay-gateway-credit.php:45
+msgid "Pay via ECPay Credit"
+msgstr "使用 綠界信用卡 付款"
+
+#: ../woocommerce/gateways/ecpay/ecpay-gateway-cvs.php:11
+msgid "Pay via CVS"
+msgstr "使用超商代碼 付款"
+
+#: ../woocommerce/gateways/ecpay/ecpay-gateway-cvs.php:12
+msgid "ECPay CVS"
+msgstr "綠界超商代碼"
+
+#: ../woocommerce/gateways/ecpay/ecpay-gateway-cvs.php:60
+msgid "Pay via ECPay CVS"
+msgstr "透過 綠界金流超商代碼  付款"
+
+#: ../woocommerce/gateways/ecpay/ecpay-gateway-cvs.php:75
+msgid "CVS payment deadline out of range. Set as default value."
+msgstr "超商代碼繳費期限超過限制，調整為預設值。"
+
+#: ../woocommerce/gateways/ecpay/ecpay-gateway-webatm.php:10
+msgid "Pay via WebATM"
+msgstr "使用網路ATM付款"
+
+#: ../woocommerce/gateways/ecpay/ecpay-gateway-webatm.php:11
+msgid "ECPay WebATM"
+msgstr "綠界網路ATM"
+
+#: ../woocommerce/gateways/ecpay/ecpay-gateway-webatm.php:47
+msgid "Pay via ECPay WebATM"
+msgstr "透過 綠界金流網路ATM 付款"
+
+#: ../woocommerce/gateways/ecpay/ecpay-gateway.php:42
+msgid "ECPay gateway options"
+msgstr "綠界金流設定"
+
+#: ../woocommerce/gateways/ecpay/ecpay-gateway.php:82
+msgid "ECPay gateway method failed to enable!"
+msgstr "綠界金流模組啟用失敗！"
+
+#: ../woocommerce/gateways/ecpay/ecpay-gateway.php:87
+#: ../woocommerce/shipping/ecpay/ecpay-shipping.php:125
+msgid "Order no prefix only letters and numbers allowed allowed"
+msgstr "訂單編號前綴只允許使用英文字母與數字。"
+
+#: ../woocommerce/gateways/ecpay/includes/ecpay-gateway-api.php:61
+msgid "Please wait transfer to checkout page."
+msgstr "請等待轉帳到結帳頁面。"
+
+#: ../woocommerce/gateways/ecpay/includes/ecpay-gateway-api.php:182
+#, php-format
+msgid "Credit installment to %d"
+msgstr "信用卡分期期數 %d"
+
+#: ../woocommerce/gateways/ecpay/includes/ecpay-gateway-base.php:50
+msgid "TAISHIN"
+msgstr "台新國際商業銀行"
+
+#: ../woocommerce/gateways/ecpay/includes/ecpay-gateway-base.php:51
+msgid "ESUN"
+msgstr "玉山商業銀行"
+
+#: ../woocommerce/gateways/ecpay/includes/ecpay-gateway-base.php:52
+msgid "BOT"
+msgstr "臺灣銀行"
+
+#: ../woocommerce/gateways/ecpay/includes/ecpay-gateway-base.php:53
+msgid "FUBON"
+msgstr "台北富邦銀行"
+
+#: ../woocommerce/gateways/ecpay/includes/ecpay-gateway-base.php:54
+msgid "CHINATRUST"
+msgstr "中國信託商業銀行"
+
+#: ../woocommerce/gateways/ecpay/includes/ecpay-gateway-base.php:55
+msgid "FIRST"
+msgstr "第一商業銀行"
+
+#: ../woocommerce/gateways/ecpay/includes/ecpay-gateway-base.php:56
+msgid "CATHAY"
+msgstr "國泰世華商業銀行"
+
+#: ../woocommerce/gateways/ecpay/includes/ecpay-gateway-base.php:57
+msgid "MEGA"
+msgstr "兆豐國際商業銀行"
+
+#: ../woocommerce/gateways/ecpay/includes/ecpay-gateway-base.php:58
+msgid "LAND"
+msgstr "臺灣土地銀行"
+
+#: ../woocommerce/gateways/ecpay/includes/ecpay-gateway-base.php:59
+msgid "TACHONG"
+msgstr "大眾商業銀行"
+
+#: ../woocommerce/gateways/ecpay/includes/ecpay-gateway-base.php:60
+msgid "SINOPAC"
+msgstr "永豐銀行"
+
+#: ../woocommerce/gateways/ecpay/includes/ecpay-gateway-base.php:61
+msgid "CVS"
+msgstr "超商代碼"
+
+#: ../woocommerce/gateways/ecpay/includes/ecpay-gateway-base.php:62
+msgid "OK"
+msgstr "OK 超商"
+
+#: ../woocommerce/gateways/ecpay/includes/ecpay-gateway-base.php:63
+msgid "FAMILY"
+msgstr "全家便利商店"
+
+#: ../woocommerce/gateways/ecpay/includes/ecpay-gateway-base.php:64
+msgid "HILIFE"
+msgstr "Hi-Life 萊爾富"
+
+#: ../woocommerce/gateways/ecpay/includes/ecpay-gateway-base.php:65
+msgid "IBON"
+msgstr "7-11 ibon"
+
+#: ../woocommerce/gateways/ecpay/includes/ecpay-gateway-base.php:74
+msgid "Inpay only work with ssl. You must enable force secure checkout."
+msgstr "站內付功能只在 SSL 環境下運作，請先啟用強制使用安全連線結帳。"
+
+#: ../woocommerce/gateways/ecpay/includes/ecpay-gateway-response.php:47
+#, php-format
+msgid "Payment by %s (%s)"
+msgstr "付款方式為 %s (%s)"
+
+#: ../woocommerce/gateways/ecpay/includes/ecpay-gateway-response.php:81
+msgid "Payment completed"
+msgstr "付款完成"
+
+#: ../woocommerce/gateways/ecpay/includes/ecpay-gateway-response.php:109
+#, php-format
+msgid "Payment failed: %s (%s)"
+msgstr "付款失敗： %s (%s)"
+
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-atm.php:6
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-barcode.php:6
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-credit-installment.php:6
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-credit.php:6
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-cvs.php:6
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-webatm.php:6
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway.php:11
+#: ../woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:11
+msgid "Enable/Disable"
+msgstr ""
+
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-atm.php:7
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-barcode.php:7
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-credit-installment.php:7
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-credit.php:7
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-cvs.php:7
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-webatm.php:7
+#, php-format
+msgid "Enable %s"
+msgstr "啟用 %s"
+
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-atm.php:12
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-credit-installment.php:12
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-credit.php:12
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-cvs.php:12
+msgid "Inpay"
+msgstr "站內付"
+
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-atm.php:13
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-credit-installment.php:13
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-credit.php:13
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-cvs.php:13
+msgid "Enable inpay"
+msgstr "啟用站內付"
+
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-atm.php:18
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-barcode.php:12
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-credit-installment.php:18
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-credit.php:18
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-cvs.php:18
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-webatm.php:12
+#: ../woocommerce/shipping/ecpay/includes/settings-ecpay-shipping-cvs.php:6
+msgid "Title"
+msgstr ""
+
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-atm.php:21
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-barcode.php:15
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-credit-installment.php:21
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-credit.php:21
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-cvs.php:21
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-webatm.php:15
+#: ../woocommerce/shipping/ecpay/includes/settings-ecpay-shipping-cvs.php:9
+msgid "This controls the title which the user sees during checkout."
+msgstr ""
+
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-atm.php:25
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-barcode.php:19
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-credit-installment.php:25
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-credit.php:25
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-cvs.php:25
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-webatm.php:19
+msgid "Description"
+msgstr ""
+
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-atm.php:29
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-barcode.php:23
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-credit-installment.php:29
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-credit.php:29
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-cvs.php:29
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-webatm.php:23
+msgid "This controls the description which the user sees during checkout."
+msgstr ""
+
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-atm.php:32
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-barcode.php:26
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-credit-installment.php:32
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-credit.php:32
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-cvs.php:32
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-webatm.php:26
+#: ../woocommerce/shipping/ecpay/includes/settings-ecpay-shipping-cvs.php:40
+msgid "Minimum order amount"
+msgstr "最小訂購金額"
+
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-atm.php:36
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-barcode.php:30
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-credit-installment.php:36
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-credit.php:36
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-cvs.php:36
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-webatm.php:30
+msgid "0 to disable minimum amount limit."
+msgstr "0 代表停用最小訂單金額限制。"
+
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-atm.php:43
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-barcode.php:38
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-cvs.php:44
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-webatm.php:37
+msgid "Maximum order amount"
+msgstr "最大訂購金額"
+
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-atm.php:47
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-barcode.php:42
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-cvs.php:48
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-webatm.php:41
+msgid "0 to disable maximum amount limit."
+msgstr "0 代表停用最大訂單金額限制。"
+
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-atm.php:58
+msgid "ATM allowable payment deadline from 1 day to 60 days."
+msgstr "ATM櫃員機允許的繳費期限為 1 到 60 天。"
+
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-barcode.php:54
+msgid "Barcode allowable payment deadline from 1 day to 30 days."
+msgstr "超商條碼允許的繳費期限為 1 到 30 天。"
+
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-credit-installment.php:43
+msgid "Enable number of periods"
+msgstr "允許的分期期數"
+
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-credit-installment.php:50
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-credit-installment.php:51
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-credit-installment.php:52
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-credit-installment.php:53
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-credit-installment.php:54
+#, php-format
+msgid "%d periods"
+msgstr "%d 期"
+
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-credit-installment.php:58
+msgctxt "Gateway setting"
+msgid "Number of periods"
+msgstr "分期期數"
+
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-cvs.php:56
+msgid "Payment deadline (minutes)"
+msgstr "付款截止日 (分)"
+
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-cvs.php:60
+msgid "CVS allowable payment deadline from 1 minute to 30 days."
+msgstr "超商代碼允許的繳費期限為 1分鐘到 30 天。"
+
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway.php:6
+#: ../woocommerce/settings/class-settings-ry-tools.php:16
+#: ../woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:6
+msgid "Base options"
+msgstr "基本設定"
+
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway.php:15
+#: ../woocommerce/settings/class-settings-ry-tools.php:51
+msgid "Enable ECPay gateway method"
+msgstr "啟用 綠界金流 模組"
+
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway.php:18
+#: ../woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:18
+msgid "Debug log"
+msgstr ""
+
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway.php:22
+#: ../woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:22
+msgid "Enable logging"
+msgstr ""
+
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway.php:23
+#, php-format
+msgid "Log ECPay gateway events/message, inside %s"
+msgstr "紀錄 綠界金流 事件/訊息，檔案位於 %s"
+
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway.php:26
+#: ../woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:47
+msgid "Order no prefix"
+msgstr "訂單編號前綴字"
+
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway.php:29
+#: ../woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:50
+msgid ""
+"The prefix string of order no. Only letters and numbers allowed allowed."
+msgstr "訂單編號前綴字符串。只允許使用英文字母與數字。"
+
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway.php:38
+#: ../woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:98
+msgid "API credentials"
+msgstr "API 憑證"
+
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway.php:43
+msgid "ECPay gateway sandbox"
+msgstr "綠界金流測試模式"
+
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway.php:47
+msgid "Enable ECPay gateway sandbox"
+msgstr "啟用綠界金流測試模式"
+
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway.php:50
+#: ../woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:110
+msgid "MerchantID"
+msgstr "商店代號"
+
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway.php:56
+#: ../woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:116
+msgid "HashKey"
+msgstr "HashKey"
+
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway.php:62
+#: ../woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:122
+msgid "HashIV"
+msgstr "HashIV"
+
+#: ../woocommerce/settings/class-settings-ry-tools.php:9
+msgid "RY Tools"
+msgstr "RY Tools"
+
+#: ../woocommerce/settings/class-settings-ry-tools.php:45
+msgid "ECPay support"
+msgstr "綠界支援"
+
+#: ../woocommerce/settings/class-settings-ry-tools.php:50
+msgid "Gateway method"
+msgstr "金流模組"
+
+#: ../woocommerce/settings/class-settings-ry-tools.php:57
+msgid "Shipping method"
+msgstr "物流模組"
+
+#: ../woocommerce/settings/class-settings-ry-tools.php:58
+#: ../woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:15
+msgid "Enable ECPay shipping method"
+msgstr "啟用 綠界物流 模組"
+
+#: ../woocommerce/settings/class-settings-ry-tools.php:69
+msgid "General options"
+msgstr "一般選項"
+
+#: ../woocommerce/settings/class-settings-ry-tools.php:74
+msgid "Repay action"
+msgstr "重新付款"
+
+#: ../woocommerce/settings/class-settings-ry-tools.php:75
+msgid "Edable order to change payment"
+msgstr "允許訂單變更付款方式"
+
+#: ../woocommerce/settings/class-settings-ry-tools.php:81
+msgid "strength password"
+msgstr "強密碼"
+
+#: ../woocommerce/settings/class-settings-ry-tools.php:82
+msgid "Edable the strength password check"
+msgstr "啟用強密碼檢測"
+
+#: ../woocommerce/settings/class-settings-ry-tools.php:93
+msgid "Address options"
+msgstr "地址選項"
+
+#: ../woocommerce/settings/class-settings-ry-tools.php:98
+msgid "Show Country"
+msgstr "顯示國家"
+
+#: ../woocommerce/settings/class-settings-ry-tools.php:99
+msgid "Show Country select item"
+msgstr "顯示國家選項"
+
+#: ../woocommerce/settings/class-settings-ry-tools.php:105
+msgid "Name merged"
+msgstr "姓名合併"
+
+#: ../woocommerce/settings/class-settings-ry-tools.php:106
+msgid "Hide the Last name input item"
+msgstr "隱藏姓氏輸入欄位"
+
+#: ../woocommerce/settings/class-settings-ry-tools.php:112
+msgid "One row address"
+msgstr "單行地址"
+
+#: ../woocommerce/settings/class-settings-ry-tools.php:113
+msgid "Only show one input item from address"
+msgstr "地址輸入欄位只保留一個欄位"
+
+#: ../woocommerce/shipping/ecpay/ecpay-shipping-cvs-711.php:11
+msgid "ECPay shipping CVS 7-11"
+msgstr "綠界物流 7-11 超商取貨"
+
+#: ../woocommerce/shipping/ecpay/ecpay-shipping-cvs-family.php:11
+msgid "ECPay shipping CVS Family"
+msgstr "綠界物流 全家便利店 超商取貨"
+
+#: ../woocommerce/shipping/ecpay/ecpay-shipping-cvs-hilife.php:11
+msgid "ECPay shipping CVS Hilife"
+msgstr "綠界物流 萊爾富 超商取貨"
+
+#: ../woocommerce/shipping/ecpay/ecpay-shipping.php:76
+msgid "ECPay shipping options"
+msgstr "綠界物流設定"
+
+#: ../woocommerce/shipping/ecpay/ecpay-shipping.php:93
+#: ../woocommerce/shipping/ecpay/ecpay-shipping.php:99
+#: ../woocommerce/shipping/ecpay/ecpay-shipping.php:105
+msgid "Verification failed!"
+msgstr "驗證失敗！"
+
+#: ../woocommerce/shipping/ecpay/ecpay-shipping.php:93
+msgid "Name length between 1 to 10 letter (5 if chinese)"
+msgstr "姓名長度在 1 到 10 個字中間（中文為 5 個字）"
+
+#: ../woocommerce/shipping/ecpay/ecpay-shipping.php:99
+#: ../woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:74
+msgid "Phone format (0x)xxxxxxx#xx"
+msgstr "電話格式 (0x)xxxxxxx#xx"
+
+#: ../woocommerce/shipping/ecpay/ecpay-shipping.php:105
+#: ../woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:85
+msgid "Cellphone format 09xxxxxxxx"
+msgstr "手機格式  09xxxxxxxx"
+
+#: ../woocommerce/shipping/ecpay/ecpay-shipping.php:120
+msgid "ECPay shipping method failed to enable!"
+msgstr "綠界物流模組啟用失敗！"
+
+#: ../woocommerce/shipping/ecpay/ecpay-shipping.php:131
+#: ../woocommerce/shipping/ecpay/ecpay-shipping.php:137
+msgctxt "Order status"
+msgid "Wait pickup (cvs)"
+msgstr "等待取貨（便利商店）"
+
+#: ../woocommerce/shipping/ecpay/ecpay-shipping.php:142
+#, php-format
+msgid "Wait pickup (cvs) <span class=\"count\">(%s)</span>"
+msgid_plural "Wait pickup (cvs) <span class=\"count\">(%s)</span>"
+msgstr[0] "等待取貨（便利商店）<span class=\"count\">(%s)</span>"
+
+#: ../woocommerce/shipping/ecpay/ecpay-shipping.php:237
+#: ../woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:61
+msgid "Phone"
+msgstr ""
+
+#: ../woocommerce/shipping/ecpay/ecpay-shipping.php:244
+msgid "Store Name"
+msgstr "門市名稱"
+
+#: ../woocommerce/shipping/ecpay/ecpay-shipping.php:250
+msgid "Store Address"
+msgstr "門市地址"
+
+#: ../woocommerce/shipping/ecpay/ecpay-shipping.php:256
+msgid "Store Telephone"
+msgstr "門市電話"
+
+#: ../woocommerce/shipping/ecpay/ecpay-shipping.php:301
+#, php-format
+msgid "CVS store %s (%s)"
+msgstr "寄貨門市 %s (%s)"
+
+#: ../woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:34
+msgid "Complete"
+msgstr ""
+
+#: ../woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:76
+msgid "Get new CVS payment no"
+msgstr "取得新的超商物流編號"
+
+#: ../woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:78
+msgid "Get new CVS payment no with cod"
+msgstr "取得新的超商物流編號(代收)"
+
+#: ../woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:81
+msgid "Resend at cvs notification"
+msgstr "重寄超商到貨通知"
+
+#: ../woocommerce/shipping/ecpay/includes/ecpay-shipping-api.php:144
+#, php-format
+msgid "Get shipping code error: %s"
+msgstr "取得物流代碼失敗：%s"
+
+#: ../woocommerce/shipping/ecpay/includes/ecpay-shipping-response.php:59
+#, php-format
+msgid "%s shipping status from %s to %s"
+msgstr "%s 運送狀態從 %s 變更為 %s"
+
+#: ../woocommerce/shipping/ecpay/includes/settings-ecpay-shipping-cvs.php:13
+msgid "Tax status"
+msgstr ""
+
+#: ../woocommerce/shipping/ecpay/includes/settings-ecpay-shipping-cvs.php:17
+msgid "Taxable"
+msgstr ""
+
+#: ../woocommerce/shipping/ecpay/includes/settings-ecpay-shipping-cvs.php:18
+msgctxt "Tax status"
+msgid "None"
+msgstr ""
+
+#: ../woocommerce/shipping/ecpay/includes/settings-ecpay-shipping-cvs.php:23
+msgid "Shipping cost"
+msgstr "運費"
+
+#: ../woocommerce/shipping/ecpay/includes/settings-ecpay-shipping-cvs.php:30
+msgid "Free shipping requires..."
+msgstr ""
+
+#: ../woocommerce/shipping/ecpay/includes/settings-ecpay-shipping-cvs.php:34
+msgid "N/A"
+msgstr ""
+
+#: ../woocommerce/shipping/ecpay/includes/settings-ecpay-shipping-cvs.php:35
+msgid "A minimum order amount"
+msgstr "最小訂購金額"
+
+#: ../woocommerce/shipping/ecpay/includes/settings-ecpay-shipping-cvs.php:44
+msgid ""
+"Users will need to spend this amount to get free shipping (if enabled above)."
+msgstr ""
+
+#. translators: %s WooCommerce weight unit*
+#: ../woocommerce/shipping/ecpay/includes/settings-ecpay-shipping-cvs.php:49
+#, php-format
+msgid "Every weight (%s) to plus times of cost"
+msgstr "每 %s 加成計算運費"
+
+#: ../woocommerce/shipping/ecpay/includes/settings-ecpay-shipping-cvs.php:53
+msgid "Calculate free shipping first. 0 to disable plus cost by weight."
+msgstr "先計算免運費。 0 代表停用運費加成計算。"
+
+#: ../woocommerce/shipping/ecpay/includes/settings-ecpay-shipping-cvs.php:62
+msgid "Shipping available"
+msgstr "可否運送"
+
+#. translators: %s: shipping class setting url
+#: ../woocommerce/shipping/ecpay/includes/settings-ecpay-shipping-cvs.php:66
+#, php-format
+msgid ""
+"These shipping available based on the <a href=\"%s\">product shipping class</"
+"a>."
+msgstr "這些可否運送是基於<a href=\"%s\">商品運送類別</a>。"
+
+#. translators: %s: shipping class name
+#: ../woocommerce/shipping/ecpay/includes/settings-ecpay-shipping-cvs.php:74
+#, php-format
+msgid "\"%s\" available"
+msgstr "\"%s\" 可運送"
+
+#: ../woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:23
+#, php-format
+msgid "Log ECPay shipping events/message, inside %s"
+msgstr "紀錄 綠界物流 事件/訊息，檔案位於 %s"
+
+#: ../woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:26
+msgid "Log status change"
+msgstr "紀錄狀態變更"
+
+#: ../woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:30
+msgid "Log status change at order notes."
+msgstr "於訂單備註中記錄狀態邊更。"
+
+#: ../woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:33
+msgid "Auto get shipping payment no"
+msgstr "自動取得物流寄件編號"
+
+#: ../woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:37
+msgid "Auto get shipping payment no when order status is change to processing."
+msgstr "當訂單狀態變更為處理中時自動取得物流寄件編號"
+
+#: ../woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:40
+msgid "Auto completed order"
+msgstr "自動完成訂單"
+
+#: ../woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:44
+msgid "Auto completed order when user getted products."
+msgstr "當使用者收到商品後自動完成訂單。"
+
+#: ../woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:54
+msgid "Cvs shipping type"
+msgstr "超商取貨類型"
+
+#: ../woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:59
+msgid "C2C"
+msgstr "C2C"
+
+#: ../woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:64
+msgid "Sender name"
+msgstr "寄件人姓名"
+
+#: ../woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:67
+msgid "Name length between 1 to 10 letter"
+msgstr "姓名長度在 1 到 10 個字中間"
+
+#: ../woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:71
+msgid "Sender phone"
+msgstr "寄件人電話"
+
+#: ../woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:82
+msgid "Sender cellphone"
+msgstr "寄件人手機"
+
+#: ../woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:103
+msgid "ECPay shipping sandbox"
+msgstr "綠界物流測試模式"
+
+#: ../woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:107
+msgid "Enable ECPay shipping sandbox"
+msgstr "啟用綠界物流測試模式"
+
+#~ msgid "Payment limit 30 to 20,000 dollar"
+#~ msgstr "付款金額限制 30 到 20,000 元"
