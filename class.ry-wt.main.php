@@ -67,15 +67,9 @@ final class RY_WT {
 				add_filter('woocommerce_shipping_fields', array(__CLASS__, 'hide_country_select'), 20);
 				add_filter('woocommerce_form_field_country_hidden', array(__CLASS__, 'form_field_country_hidden'), 20, 4);
 			}
-			// 姓氏與名字單一輸入欄位 
-			if( 'yes' == get_option(self::$option_prefix . 'name_merged', 'no') ) {
-				add_filter('woocommerce_billing_fields', array(__CLASS__, 'name_merged'), 20);
-				add_filter('woocommerce_shipping_fields', array(__CLASS__, 'name_merged'), 20);
-			}
-			// 單一地址欄位 
-			if( 'yes' == get_option(self::$option_prefix . 'one_row_address', 'yes') ) {
-				add_filter('woocommerce_billing_fields', array(__CLASS__, 'one_row_address'), 20);
-				add_filter('woocommerce_shipping_fields', array(__CLASS__, 'one_row_address'), 20);
+			// 先顯示姓氏
+			if( 'yes' == get_option(self::$option_prefix . 'last_name_first', 'no') ) {
+				add_filter('woocommerce_default_address_fields', array(__CLASS__, 'last_name_first'));
 			}
 		}
 	}
@@ -113,28 +107,9 @@ final class RY_WT {
 		return $fields;
 	}
 
-	public static function name_merged($fields) {
-		if( isset($fields['billing_first_name']) ) {
-			$fields['billing_first_name']['class'] = array('form-row-wide');
-			$fields['billing_last_name']['type'] = 'hidden_empty';
-			$fields['billing_last_name']['required'] = false;
-		}
-		if( isset($fields['shipping_first_name']) ) {
-			$fields['shipping_first_name']['class'] = array('form-row-wide');
-			$fields['shipping_last_name']['type'] = 'hidden_empty';
-			$fields['shipping_last_name']['required'] = false;
-		}
-
-		return $fields;
-	}
-
-	public static function one_row_address($fields) {
-		if( isset($fields['billing_address_2']) ) {
-			$fields['billing_address_2']['type'] = 'hidden_empty';
-		}
-		if( isset($fields['shipping_address_2']) ) {
-			$fields['shipping_address_2']['type'] = 'hidden_empty';
-		}
+	public static function last_name_first($fields) {
+		$fields['first_name']['priority'] = 20;
+		$fields['last_name']['priority'] = 10;
 
 		return $fields;
 	}
@@ -250,6 +225,10 @@ final class RY_WT {
 
 	public static function update_option($option, $value) {
 		return update_option(self::$option_prefix . $option, $value);
+	}
+
+	public static function delete_option($option) {
+		return delete_option(self::$option_prefix . $option);
 	}
 
 	public static function plugin_activation() {

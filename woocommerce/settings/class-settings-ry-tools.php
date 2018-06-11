@@ -102,18 +102,11 @@ if( !class_exists('WC_Settings_RY_Tools', false) ) {
 						'default' => 'no',
 					),
 					array(
-						'title'   => __('Name merged', RY_WT::$textdomain),
-						'desc'    => __('Hide the Last name input item', RY_WT::$textdomain),
-						'id'      => RY_WT::$option_prefix . 'name_merged',
+						'title'   => __('Last name first', RY_WT::$textdomain),
+						'desc'    => __('Show Last name before first name input item', RY_WT::$textdomain),
+						'id'      => RY_WT::$option_prefix . 'last_name_first',
 						'type'    => 'checkbox',
 						'default' => 'no',
-					),
-					array(
-						'title'   => __('One row address', RY_WT::$textdomain),
-						'desc'    => __('Only show one input item from address', RY_WT::$textdomain),
-						'id'      => RY_WT::$option_prefix . 'one_row_address',
-						'type'    => 'checkbox',
-						'default' => 'yes',
 					),
 					array(
 						'type' => 'sectionend',

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RY WooCommerce Tools\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-09 23:46+0800\n"
-"PO-Revision-Date: 2018-06-09 23:46+0800\n"
+"POT-Creation-Date: 2018-06-11 23:56+0800\n"
+"PO-Revision-Date: 2018-06-11 23:57+0800\n"
 "Last-Translator: Richer Yang <fantasyworldidvtw@gmail.com>\n"
 "Language-Team: <fantasyworldidvtw@gmail.com>\n"
 "Language: zh_TW\n"
@@ -22,7 +22,7 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
-#: ../class.ry-wt.main.php:213
+#: ../class.ry-wt.main.php:188
 #, php-format
 msgid ""
 "<strong>%s</strong> is inactive. It require WooCommerce version 3.0.0 or "
@@ -30,11 +30,11 @@ msgid ""
 msgstr ""
 "<strong>%s</strong> 暫停運作。 需求 WooCommerce 版本 3.0.0 或更新的版本。"
 
-#: ../class.ry-wt.main.php:214
+#: ../class.ry-wt.main.php:189
 msgid "RY WooCommerce Tools"
 msgstr "RY WooCommerce Tools"
 
-#: ../class.ry-wt.main.php:242
+#: ../class.ry-wt.main.php:217
 msgid ""
 "Please check your server time setting. Server time is differs from Google "
 "Public NTP  more than one minute."
@@ -638,20 +638,12 @@ msgid "Show Country select item"
 msgstr "顯示國家選項"
 
 #: ../woocommerce/settings/class-settings-ry-tools.php:105
-msgid "Name merged"
-msgstr "姓名合併"
+msgid "Last name first"
+msgstr "姓氏先顯示"
 
 #: ../woocommerce/settings/class-settings-ry-tools.php:106
-msgid "Hide the Last name input item"
-msgstr "隱藏姓氏輸入欄位"
-
-#: ../woocommerce/settings/class-settings-ry-tools.php:112
-msgid "One row address"
-msgstr "單行地址"
-
-#: ../woocommerce/settings/class-settings-ry-tools.php:113
-msgid "Only show one input item from address"
-msgstr "地址輸入欄位只保留一個欄位"
+msgid "Show Last name before first name input item"
+msgstr "先顯示姓氏輸入欄位"
 
 #: ../woocommerce/shipping/ecpay/ecpay-shipping-cvs-711.php:11
 msgid "ECPay shipping CVS 7-11"
@@ -875,6 +867,3 @@ msgstr "綠界物流測試模式"
 #: ../woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:107
 msgid "Enable ECPay shipping sandbox"
 msgstr "啟用綠界物流測試模式"
-
-#~ msgid "Payment limit 30 to 20,000 dollar"
-#~ msgstr "付款金額限制 30 到 20,000 元"

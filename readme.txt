@@ -4,7 +4,7 @@ Donate link: https://www.paypal.me/RicherYang
 Tags: woocommerce, payment, gateway, ecpay
 Requires at least: 4.0
 Tested up to: 4.9.6
-Stable tag: 0.0.17
+Stable tag: 0.0.18
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.txt
 
@@ -38,6 +38,11 @@ Please visit the [plugin page](https://richer.tw/ry-woocommerce-tools/ " ") with
 5. WooCommerce Order shipping convenience store info.
 
 == Changelog ==
+
+= 0.0.18 - 2018/06/11 =
+* 移除 - 單行地址設定（WooCommerce 已內鍵本功能）。
+* 移除 - 姓名合併設定。
+* 新增 - 先顯示姓名設定。
 
 = 0.0.17 - 2018/06/09 =
 * 新增 - 訂單取得新的超商物流編號支援貨到付款模式。

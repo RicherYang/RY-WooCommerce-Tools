@@ -27,5 +27,12 @@ final class RY_WT_update {
 		if( version_compare($now_version, '0.0.17', '<' ) ) {
 			RY_WT::update_option('version', '0.0.17');
 		}
+
+		if( version_compare($now_version, '0.0.18', '<' ) ) {
+			RY_WT::update_option('last_name_first', RY_WT::get_option('name_merged'));
+			RY_WT::delete_option('one_row_address');
+			RY_WT::delete_option('name_merged');
+			RY_WT::update_option('version', '0.0.18');
+		}
 	}
 }
