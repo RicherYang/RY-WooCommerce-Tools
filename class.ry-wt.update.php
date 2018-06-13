@@ -34,5 +34,9 @@ final class RY_WT_update {
 			RY_WT::delete_option('name_merged');
 			RY_WT::update_option('version', '0.0.18');
 		}
+
+		if( version_compare($now_version, '0.0.19', '<' ) ) {
+			RY_WT::update_option('version', '0.0.19');
+		}
 	}
 }

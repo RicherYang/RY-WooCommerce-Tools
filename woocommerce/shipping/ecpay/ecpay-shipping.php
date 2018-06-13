@@ -238,25 +238,29 @@ final class RY_ECPay_Shipping {
 			'required' => true,
 			'type' => 'tel',
 			'validate' => array('phone'),
-			'class' => array('cvs-info')
+			'class' => array('form-row-wide', 'cvs-info'),
+			'priority' => 100
 		);
 		$fields['shipping']['CVSStoreName'] = array(
 			'label' => __('Store Name', RY_WT::$textdomain),
 			'required' => false,
 			'type' => 'hiddentext',
-			'class' => array('cvs-info')
+			'class' => array('form-row-wide', 'cvs-info'),
+			'priority' => 110
 		);
 		$fields['shipping']['CVSAddress'] = array(
 			'label' => __('Store Address', RY_WT::$textdomain),
 			'required' => false,
 			'type' => 'hiddentext',
-			'class' => array('cvs-info')
+			'class' => array('form-row-wide', 'cvs-info'),
+			'priority' => 111
 		);
 		$fields['shipping']['CVSTelephone'] = array(
 			'label' => __('Store Telephone', RY_WT::$textdomain),
 			'required' => false,
 			'type' => 'hiddentext',
-			'class' => array('cvs-info')
+			'class' => array('form-row-wide', 'cvs-info'),
+			'priority' => 112
 		);
 		return $fields;
 	}
