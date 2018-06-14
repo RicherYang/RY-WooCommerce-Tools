@@ -109,7 +109,14 @@ final class RY_WT {
 
 	public static function last_name_first($fields) {
 		$fields['first_name']['priority'] = 20;
+		$class_key = array_search('form-row-first', $fields['first_name']['class']);
+		unset($fields['first_name']['class'][$class_key]);
+		$fields['first_name']['class'][] = 'form-row-last';
+
 		$fields['last_name']['priority'] = 10;
+		$class_key = array_search('form-row-last', $fields['last_name']['class']);
+		unset($fields['last_name']['class'][$class_key]);
+		$fields['last_name']['class'][] = 'form-row-first';
 
 		return $fields;
 	}
