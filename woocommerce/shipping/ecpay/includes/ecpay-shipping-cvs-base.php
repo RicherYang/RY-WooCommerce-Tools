@@ -94,9 +94,9 @@ class RY_ECPay_Shipping_CVS extends WC_Shipping_Method {
 		if( $this->cost_requires == 'min_amount' ) {
 			$total = WC()->cart->get_displayed_subtotal();
 			if( 'incl' === WC()->cart->tax_display_cart ) {
-				$total = round($total - (WC()->cart->get_discount_total() + WC()->cart->get_discount_tax()), wc_get_price_decimals());
+				$total = round($total - (WC()->cart->get_cart_discount_total() + WC()->cart->get_cart_discount_tax_total()), wc_get_price_decimals());
 			} else {
-				$total = round($total - WC()->cart->get_discount_total(), wc_get_price_decimals());
+				$total = round($total - WC()->cart->get_cart_discount_total(), wc_get_price_decimals());
 			}
 			if ( $total >= $this->min_amount ) {
 				$rate['cost'] = 0;

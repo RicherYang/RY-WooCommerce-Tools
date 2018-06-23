@@ -181,10 +181,15 @@ final class RY_ECPay_Shipping {
 					break;
 				}
 			}
+
 			if( $chosen_method === null ) {
 				$chosen_method = '';
 			} else {
-				$chosen_method = $chosen_method->get_method_id();
+				if ( version_compare(WC_VERSION, '3.2.0', '<' ) ) {
+					$chosen_method = $chosen_method->method_id;
+				} else {
+					$chosen_method = $chosen_method->get_method_id();
+				}
 			}
 		}
 
