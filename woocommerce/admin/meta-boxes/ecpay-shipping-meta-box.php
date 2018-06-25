@@ -43,15 +43,19 @@ class RY_ECPay_Shipping_Meta_Box {
 				</tr>
 			</thead>
 			<tbody>
-				<?php foreach( $cvs_info_list as $item ) { ?>
+				<?php foreach( $cvs_info_list as $item ) { 
+					$item['edit'] = wc_string_to_datetime($item['edit']);
+					$item['create'] = wc_string_to_datetime($item['create']);
+					?>
 					<tr>
 						<td><?=$item['ID']; ?></td>
 						<td><?=$item['PaymentNo'] . ' ' . $item['ValidationNo'] ?></td>
 						<td><?=$item['status_msg'] ?></td>
 						<td><?=$item['amount']; ?></td>
 						<td><?=($item['IsCollection'] == 'Y') ? __('Yes') : __('No') ?></td> 
-						<td><?=$item['edit']; ?></td>
-						<td><?=$item['create']; ?></td>
+						<?php /* translators: %1$s: date %2$s: time */ ?>
+						<td><?=sprintf(_x('%1$s %2$s', 'Datetime', RY_WT::$textdomain), $item['edit']->date_i18n(wc_date_format()), $item['edit']->date_i18n(wc_time_format())) ?></td>
+						<td><?=sprintf(_x('%1$s %2$s', 'Datetime', RY_WT::$textdomain), $item['create']->date_i18n(wc_date_format()), $item['create']->date_i18n(wc_time_format())) ?></td>
 						<td><button type="button" class="button print_info" data-orderid="<?=$post->ID ?>" data-id="<?=$item['ID'] ?>"><?=__('Print', RY_WT::$textdomain) ?></button></td>
 					</tr>
 				<?php } ?>

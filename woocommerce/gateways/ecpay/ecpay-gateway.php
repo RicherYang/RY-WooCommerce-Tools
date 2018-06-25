@@ -40,6 +40,24 @@ final class RY_ECPay_Gateway {
 
 	public static function add_sections($sections) {
 		$sections['ecpay_gateway'] = __('ECPay gateway options', RY_WT::$textdomain);
+
+$orders = wc_get_orders(array(
+	'limit' => -1,
+	'meta_query' => array(
+		'relation' => 'AND',
+		array(
+			'key'     => '_shipping_cvs_info',
+			'compare' => 'EXISTS',
+		)
+	)
+));
+var_dump(count($orders));
+foreach( $orders as $order ) {
+	
+	$cvs_info_list = $order->get_meta('_shipping_cvs_info', true);
+	//var_dump($cvs_info_list);
+}
+
 		return $sections;
 	}
 

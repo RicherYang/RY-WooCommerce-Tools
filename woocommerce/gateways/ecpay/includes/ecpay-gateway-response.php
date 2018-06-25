@@ -83,23 +83,26 @@ class RY_ECPay_Gateway_Response extends RY_ECPay_Gateway_Api {
 	}
 
 	protected static function payment_status_2($order, $ipn_info) {
+		$expireDate = new DateTime($ipn_info['ExpireDate'], new DateTimeZone('Asia/Taipei'));
+
 		$order->update_meta_data('_ecpay_atm_BankCode', $ipn_info['BankCode']);
 		$order->update_meta_data('_ecpay_atm_vAccount', $ipn_info['vAccount']);
-		$order->update_meta_data('_ecpay_atm_ExpireDate', $ipn_info['ExpireDate']);
+		$order->update_meta_data('_ecpay_atm_ExpireDate', $expireDate->format(DATE_ATOM));
 		$order->save_meta_data();
 	}
 
 	protected static function payment_status_10100073($order, $ipn_info) {
 		list($payment_type, $payment_subtype) = self::get_payment_info($ipn_info);
+		$expireDate = new DateTime($ipn_info['ExpireDate'], new DateTimeZone('Asia/Taipei'));
 
 		if( $payment_type == 'CVS' ) {
 			$order->update_meta_data('_ecpay_cvs_PaymentNo', $ipn_info['PaymentNo']);
-			$order->update_meta_data('_ecpay_cvs_ExpireDate', $ipn_info['ExpireDate']);
+			$order->update_meta_data('_ecpay_cvs_ExpireDate', $expireDate->format(DATE_ATOM));
 		} else {
 			$order->update_meta_data('_ecpay_barcode_Barcode1', $ipn_info['Barcode1']);
 			$order->update_meta_data('_ecpay_barcode_Barcode2', $ipn_info['Barcode2']);
 			$order->update_meta_data('_ecpay_barcode_Barcode3', $ipn_info['Barcode3']);
-			$order->update_meta_data('_ecpay_barcode_ExpireDate', $ipn_info['ExpireDate']);
+			$order->update_meta_data('_ecpay_barcode_ExpireDate', $expireDate->format(DATE_ATOM));
 		}
 		$order->save_meta_data();
 	}

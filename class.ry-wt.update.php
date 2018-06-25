@@ -38,5 +38,57 @@ final class RY_WT_update {
 		if( version_compare($now_version, '0.0.22', '<' ) ) {
 			RY_WT::update_option('version', '0.0.22');
 		}
+
+		if( version_compare($now_version, '0.0.23', '<' ) ) {
+			$orders = wc_get_orders(array(
+				'limit' => -1
+			));
+			foreach( $orders as $order ) {
+				$do_save = false;
+				switch( $order->get_payment_method() ) {
+					case 'ry_ecpay_atm':
+						$meta_key = '_ecpay_atm_ExpireDate';
+						break;
+					case 'ry_ecpay_barcode':
+						$meta_key = '_ecpay_barcode_ExpireDate';
+						break;
+					case 'ry_ecpay_cvs':
+						$meta_key = '_ecpay_cvs_ExpireDate';
+						break;
+					default:
+						$meta_key = '';
+						break;
+				}
+
+				if( !empty($meta_key) ) {
+					$expireDate = $order->get_meta($meta_key);
+					if( !empty($expireDate) && strpos($expireDate, 'T') === FALSE ) {
+						$time = new DateTime($expireDate, new DateTimeZone('Asia/Taipei'));
+						$order->update_meta_data($meta_key, $time->format(DATE_ATOM));
+						$do_save = true;
+					}
+				}
+
+				$cvs_info_list = $order->get_meta('_shipping_cvs_info', true);
+				if( is_array($cvs_info_list) ) {
+					foreach( $cvs_info_list as $key => $item ) {
+						if( strpos($item['edit'], 'T') === FALSE ) {
+							$time = new DateTime($item['edit'], new DateTimeZone('Asia/Taipei'));
+							$cvs_info_list[$key]['edit'] = $time->format(DATE_ATOM);
+							$do_save = true;
+						}
+						if( strpos($item['create'], 'T') === FALSE ) {
+							$time = new DateTime($item['create'], new DateTimeZone('Asia/Taipei'));
+							$cvs_info_list[$key]['create'] = $time->format(DATE_ATOM);
+							$do_save = true;
+						}
+						$order->update_meta_data('_shipping_cvs_info', $cvs_info_list);
+					}
+				}
+				$order->save_meta_data();
+			}
+
+			RY_WT::update_option('version', '0.0.23');
+		}
 	}
 }

@@ -96,8 +96,8 @@ class RY_ECPay_Shipping_Api extends RY_ECPay {
 					}
 
 					for( $i = 0; $i < $get_count; ++$i ) {
-						$now = current_time('Y/m/d H:i:s');
-						$args['MerchantTradeDate'] = $now;
+						$create_datetime = new DateTime('', new DateTimeZone('Asia/Taipei'));
+						$args['MerchantTradeDate'] = $create_datetime->format('Y/m/d H:i:s');
 						$args['MerchantTradeNo'] = self::generate_trade_no($order->get_id(), get_option(RY_WT::$option_prefix . 'ecpay_shipping_order_prefix'));
 						if( $i > 01 ) {
 							$args['IsCollection'] = 'N';
@@ -130,8 +130,8 @@ class RY_ECPay_Shipping_Api extends RY_ECPay {
 											$cvs_info_list[$result['AllPayLogisticsID']]['ValidationNo'] = $result['CVSValidationNo'];
 											$cvs_info_list[$result['AllPayLogisticsID']]['status'] = self::get_status($result);
 											$cvs_info_list[$result['AllPayLogisticsID']]['status_msg'] = self::get_status_msg($result);
-											$cvs_info_list[$result['AllPayLogisticsID']]['create'] = $now;
-											$cvs_info_list[$result['AllPayLogisticsID']]['edit'] = $now;
+											$cvs_info_list[$result['AllPayLogisticsID']]['create'] = $create_datetime->format(DATE_ATOM);
+											$cvs_info_list[$result['AllPayLogisticsID']]['edit'] = (string) new WC_DateTime();
 											$cvs_info_list[$result['AllPayLogisticsID']]['amount'] = $args['GoodsAmount'];
 											$cvs_info_list[$result['AllPayLogisticsID']]['IsCollection'] = $args['IsCollection'];
 

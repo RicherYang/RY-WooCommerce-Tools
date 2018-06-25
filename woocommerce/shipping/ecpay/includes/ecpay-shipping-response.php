@@ -46,7 +46,7 @@ class RY_ECPay_Shipping_Response extends RY_ECPay_Shipping_Api {
 			$old_info = $cvs_info_list[$ipn_info['AllPayLogisticsID']];
 			$cvs_info_list[$ipn_info['AllPayLogisticsID']]['status'] = self::get_status($ipn_info);
 			$cvs_info_list[$ipn_info['AllPayLogisticsID']]['status_msg'] = self::get_status_msg($ipn_info);
-			$cvs_info_list[$ipn_info['AllPayLogisticsID']]['edit'] = current_time('Y/m/d H:i:s');
+			$cvs_info_list[$ipn_info['AllPayLogisticsID']]['edit'] = (string) new WC_DateTime();
 
 			if( isset($cvs_info_list[$ipn_info['AllPayLogisticsID']]['ID']) ) {				
 				$order->update_meta_data('_shipping_cvs_info', $cvs_info_list);

@@ -39,6 +39,9 @@ Please visit the [plugin page](https://richer.tw/ry-woocommerce-tools/ " ") with
 
 == Changelog ==
 
+= 0.0.23 - 2018/06/25 =
+* 修正 - WordPress 時區非 UTC+8 的問題
+
 = 0.0.22 - 2018/06/23 =
 * 修正 - 在與 WooCommerce 3.2.0 之前版本相容性問題。
 

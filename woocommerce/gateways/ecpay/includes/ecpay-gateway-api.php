@@ -24,7 +24,7 @@ class RY_ECPay_Gateway_Api extends RY_ECPay {
 		$args = array(
 			'MerchantID' => $MerchantID,
 			'MerchantTradeNo' => self::generate_trade_no($order->get_id(), get_option(RY_WT::$option_prefix . 'ecpay_gateway_order_prefix')),
-			'MerchantTradeDate' => current_time('Y/m/d H:i:s'),
+			'MerchantTradeDate' => new DateTime('', new DateTimeZone('Asia/Taipei')),
 			'PaymentType' => 'aio',
 			'TotalAmount' => (int) ceil($order->get_total()),
 			'TradeDesc' => mb_substr(get_bloginfo('name'), 0, 100),
@@ -39,6 +39,7 @@ class RY_ECPay_Gateway_Api extends RY_ECPay {
 			'PaymentInfoURL' => $notify_url,
 			'ClientRedirectURL' => $return_url
 		);
+		$args['MerchantTradeDate'] = $args['MerchantTradeDate']->format('Y/m/d H:i:s');
 
 		$args = self::add_type_info($args, $order, $gateway);
 
