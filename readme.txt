@@ -4,7 +4,7 @@ Donate link: https://www.paypal.me/RicherYang
 Tags: woocommerce, payment, gateway, ecpay
 Requires at least: 4.0
 Tested up to: 4.9.6
-Stable tag: 0.0.22
+Stable tag: 0.0.23.1
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.txt
 
@@ -39,7 +39,7 @@ Please visit the [plugin page](https://richer.tw/ry-woocommerce-tools/ " ") with
 
 == Changelog ==
 
-= 0.0.23 - 2018/06/25 =
+= 0.0.23.1 - 2018/06/25 =
 * 修正 - WordPress 時區非 UTC+8 的問題
 
 = 0.0.22 - 2018/06/23 =
