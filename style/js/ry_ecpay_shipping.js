@@ -76,4 +76,3 @@ function RYECPayRemoveSendCvs() {
 	jQuery('#CVSAddress_field strong').text('');
 	jQuery('#CVSTelephone_field strong').text('');
 }
-
