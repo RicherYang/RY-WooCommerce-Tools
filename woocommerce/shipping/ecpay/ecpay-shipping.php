@@ -41,7 +41,7 @@ final class RY_ECPay_Shipping {
 			add_action('woocommerce_checkout_process', array(__CLASS__, 'is_need_checkout_fields'));
 			add_action('woocommerce_review_order_after_shipping', array(__CLASS__, 'shipping_chouse_cvs'));
 			add_filter('woocommerce_update_order_review_fragments', array(__CLASS__, 'shipping_chouse_cvs_info'));
-			add_action('woocommerce_checkout_create_order', array(__CLASS__, 'save_cvs_info'), 10, 2);
+			add_action('woocommerce_checkout_create_order', array(__CLASS__, 'save_cvs_info'), 20, 2);
 
 			if( 'yes' === get_option(RY_WT::$option_prefix . 'ecpay_shipping_auto_get_no', 'yes') ) {
 				add_action('woocommerce_order_status_processing', array(__CLASS__, 'get_cvs_code'), 10, 2);
@@ -59,7 +59,7 @@ final class RY_ECPay_Shipping {
 			require_once(RY_WT_PLUGIN_DIR . 'woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php');
 			RY_ECPay_Shipping_admin::init();
 		} else {
-			wp_register_script('ry_ecpay_shipping', RY_WT_PLUGIN_URL . 'style/js/ry_ecpay_shipping.js', array('jquery'), RY_WT_VERSION, true);
+			wp_register_script('ry-ecpay-shipping', RY_WT_PLUGIN_URL . 'style/js/ry_ecpay_shipping.js', array('jquery'), RY_WT_VERSION, true);
 		}
 	}
 
@@ -145,6 +145,7 @@ final class RY_ECPay_Shipping {
 
 	public static function add_method($shipping_methods) {
 		$shipping_methods = array_merge($shipping_methods, self::$support_methods);
+
 		return $shipping_methods;
 	}
 
@@ -197,7 +198,7 @@ final class RY_ECPay_Shipping {
 	}
 
 	public static function shipping_chouse_cvs() {
-		wp_enqueue_script('ry_ecpay_shipping');
+		wp_enqueue_script('ry-ecpay-shipping');
 		$method = self::get_chosen_method();
 		self::$js_data = array();
 
@@ -226,6 +227,7 @@ final class RY_ECPay_Shipping {
 		if( !empty(self::$js_data) ) {
 			$fragments['ecpay_shipping_info'] = self::$js_data;
 		}
+
 		return $fragments;
 	}
 
@@ -267,6 +269,7 @@ final class RY_ECPay_Shipping {
 			'class' => array('form-row-wide', 'cvs-info'),
 			'priority' => 112
 		);
+
 		return $fields;
 	}
 
@@ -307,12 +310,19 @@ final class RY_ECPay_Shipping {
 
 	public static function save_cvs_info($order, $data) {
 		if( !empty($data['CVSStoreID']) ) {
+			$order->set_shipping_company('');
+			$order->set_shipping_address_2('');
+			$order->set_shipping_city('');
+			$order->set_shipping_state('');
+			$order->set_shipping_postcode('');
+
 			$order->add_order_note(sprintf(__('CVS store %s (%s)', RY_WT::$textdomain), $data['CVSStoreName'], $data['CVSStoreID']));
-			$order->set_shipping_address_1($data['CVSAddress']);
 			$order->update_meta_data('_shipping_cvs_store_ID', $data['CVSStoreID']);
 			$order->update_meta_data('_shipping_cvs_store_name', $data['CVSStoreName']);
+			$order->update_meta_data('_shipping_cvs_store_address', $data['CVSAddress']);
 			$order->update_meta_data('_shipping_cvs_store_telephone', $data['CVSTelephone']);
 			$order->update_meta_data('_shipping_phone', $data['shipping_phone']);
+			$order->set_shipping_address_1($data['CVSAddress']);
 		}
 	}
 
@@ -334,8 +344,8 @@ final class RY_ECPay_Shipping {
 		if( isset($args['cvs_store_name']) ) {
 			$replacements['{cvs_store_ID}'] = $args['cvs_store_ID'];
 			$replacements['{cvs_store_name}'] = $args['cvs_store_name'];
-			$replacements['{cvs_address}'] = $args['cvs_address'];
-			$replacements['{cvs_telephone}'] = $args['cvs_telephone'];
+			$replacements['{cvs_store_address}'] = $args['cvs_address'];
+			$replacements['{cvs_store_telephone}'] = $args['cvs_telephone'];
 			$replacements['{phone}'] = $args['phone'];
 		}
 		return $replacements;

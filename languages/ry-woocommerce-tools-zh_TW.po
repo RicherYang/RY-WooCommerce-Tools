@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RY WooCommerce Tools\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-25 13:53+0800\n"
-"PO-Revision-Date: 2018-06-25 13:53+0800\n"
+"POT-Creation-Date: 2018-06-26 22:32+0800\n"
+"PO-Revision-Date: 2018-06-26 22:32+0800\n"
 "Last-Translator: Richer Yang <fantasyworldidvtw@gmail.com>\n"
 "Language-Team: <fantasyworldidvtw@gmail.com>\n"
 "Language: zh_TW\n"
@@ -91,8 +91,8 @@ msgstr "付款截止日"
 #: ../templates/order/order-ecpay-payment-info-atm.php:34
 #: ../templates/order/order-ecpay-payment-info-barcode.php:40
 #: ../templates/order/order-ecpay-payment-info-cvs.php:26
-#: ../woocommerce/admin/meta-boxes/ecpay-shipping-meta-box.php:57
-#: ../woocommerce/admin/meta-boxes/ecpay-shipping-meta-box.php:58
+#: ../woocommerce/admin/meta-boxes/ecpay-shipping-meta-box.php:59
+#: ../woocommerce/admin/meta-boxes/ecpay-shipping-meta-box.php:60
 #, php-format
 msgctxt "Datetime"
 msgid "%1$s %2$s"
@@ -131,38 +131,43 @@ msgid "Shipping payment no"
 msgstr "物流寄件編號"
 
 #: ../woocommerce/admin/meta-boxes/ecpay-shipping-meta-box.php:37
+#: ../woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:62
+msgid "Store ID"
+msgstr "門市編號"
+
+#: ../woocommerce/admin/meta-boxes/ecpay-shipping-meta-box.php:38
 msgid "Shipping status"
 msgstr "物流狀態"
 
-#: ../woocommerce/admin/meta-boxes/ecpay-shipping-meta-box.php:38
+#: ../woocommerce/admin/meta-boxes/ecpay-shipping-meta-box.php:39
 msgid "declare amount"
 msgstr "申報金額"
 
-#: ../woocommerce/admin/meta-boxes/ecpay-shipping-meta-box.php:39
+#: ../woocommerce/admin/meta-boxes/ecpay-shipping-meta-box.php:40
 msgid "Collection of money"
 msgstr "代收貨款"
 
-#: ../woocommerce/admin/meta-boxes/ecpay-shipping-meta-box.php:40
+#: ../woocommerce/admin/meta-boxes/ecpay-shipping-meta-box.php:41
 msgid "Shipping status last change time"
 msgstr "物流狀態最後變更時間"
 
-#: ../woocommerce/admin/meta-boxes/ecpay-shipping-meta-box.php:41
+#: ../woocommerce/admin/meta-boxes/ecpay-shipping-meta-box.php:42
 msgid "Shipping create time"
 msgstr "物流建立時間"
 
-#: ../woocommerce/admin/meta-boxes/ecpay-shipping-meta-box.php:42
+#: ../woocommerce/admin/meta-boxes/ecpay-shipping-meta-box.php:43
 msgid "Shipping booking note"
 msgstr "物流託運單"
 
-#: ../woocommerce/admin/meta-boxes/ecpay-shipping-meta-box.php:55
+#: ../woocommerce/admin/meta-boxes/ecpay-shipping-meta-box.php:57
 msgid "Yes"
 msgstr ""
 
-#: ../woocommerce/admin/meta-boxes/ecpay-shipping-meta-box.php:55
+#: ../woocommerce/admin/meta-boxes/ecpay-shipping-meta-box.php:57
 msgid "No"
 msgstr ""
 
-#: ../woocommerce/admin/meta-boxes/ecpay-shipping-meta-box.php:59
+#: ../woocommerce/admin/meta-boxes/ecpay-shipping-meta-box.php:61
 msgid "Print"
 msgstr "列印"
 
@@ -290,11 +295,11 @@ msgstr "透過 綠界金流網路ATM 付款"
 msgid "ECPay gateway options"
 msgstr "綠界金流設定"
 
-#: ../woocommerce/gateways/ecpay/ecpay-gateway.php:100
+#: ../woocommerce/gateways/ecpay/ecpay-gateway.php:83
 msgid "ECPay gateway method failed to enable!"
 msgstr "綠界金流模組啟用失敗！"
 
-#: ../woocommerce/gateways/ecpay/ecpay-gateway.php:105
+#: ../woocommerce/gateways/ecpay/ecpay-gateway.php:88
 #: ../woocommerce/shipping/ecpay/ecpay-shipping.php:125
 msgid "Order no prefix only letters and numbers allowed allowed"
 msgstr "訂單編號前綴只允許使用英文字母與數字。"
@@ -708,45 +713,48 @@ msgid "Wait pickup (cvs) <span class=\"count\">(%s)</span>"
 msgid_plural "Wait pickup (cvs) <span class=\"count\">(%s)</span>"
 msgstr[0] "等待取貨（便利商店）<span class=\"count\">(%s)</span>"
 
-#: ../woocommerce/shipping/ecpay/ecpay-shipping.php:242
-#: ../woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:61
+#: ../woocommerce/shipping/ecpay/ecpay-shipping.php:244
+#: ../woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:78
 msgid "Phone"
 msgstr ""
 
-#: ../woocommerce/shipping/ecpay/ecpay-shipping.php:250
+#: ../woocommerce/shipping/ecpay/ecpay-shipping.php:252
+#: ../woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:66
 msgid "Store Name"
 msgstr "門市名稱"
 
-#: ../woocommerce/shipping/ecpay/ecpay-shipping.php:257
+#: ../woocommerce/shipping/ecpay/ecpay-shipping.php:259
+#: ../woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:70
 msgid "Store Address"
 msgstr "門市地址"
 
-#: ../woocommerce/shipping/ecpay/ecpay-shipping.php:264
+#: ../woocommerce/shipping/ecpay/ecpay-shipping.php:266
+#: ../woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:74
 msgid "Store Telephone"
 msgstr "門市電話"
 
-#: ../woocommerce/shipping/ecpay/ecpay-shipping.php:310
+#: ../woocommerce/shipping/ecpay/ecpay-shipping.php:319
 #, php-format
 msgid "CVS store %s (%s)"
 msgstr "寄貨門市 %s (%s)"
 
-#: ../woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:34
+#: ../woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:35
 msgid "Complete"
 msgstr ""
 
-#: ../woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:76
+#: ../woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:93
 msgid "Get new CVS payment no"
 msgstr "取得新的超商物流編號"
 
-#: ../woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:78
+#: ../woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:95
 msgid "Get new CVS payment no with cod"
 msgstr "取得新的超商物流編號(代收)"
 
-#: ../woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:81
+#: ../woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:98
 msgid "Resend at cvs notification"
 msgstr "重寄超商到貨通知"
 
-#: ../woocommerce/shipping/ecpay/includes/ecpay-shipping-api.php:144
+#: ../woocommerce/shipping/ecpay/includes/ecpay-shipping-api.php:145
 #, php-format
 msgid "Get shipping code error: %s"
 msgstr "取得物流代碼失敗：%s"

@@ -4,7 +4,7 @@ Donate link: https://www.paypal.me/RicherYang
 Tags: woocommerce, payment, gateway, ecpay
 Requires at least: 4.0
 Tested up to: 4.9.6
-Stable tag: 0.0.23.1
+Stable tag: 0.0.24
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.txt
 
@@ -39,6 +39,10 @@ Please visit the [plugin page](https://richer.tw/ry-woocommerce-tools/ " ") with
 
 == Changelog ==
 
+= 0.0.24 - 2018/06/26 =
+* 修正 - 後台編輯訂單，編輯帳單資訊時可能跑版問題。
+* 新增 - 後台編輯訂單，編輯取貨門市資訊。
+
 = 0.0.23.1 - 2018/06/25 =
 * 修正 - WordPress 時區非 UTC+8 的問題
 
@@ -49,10 +53,10 @@ Please visit the [plugin page](https://richer.tw/ry-woocommerce-tools/ " ") with
 * 修正 - 在與 WooCommerce 3.2.0 之前版本相容性問題。
 
 = 0.0.20 - 2018/06/14 =
-* 修正 - 結帳頁面跑板問題。
+* 修正 - 結帳頁面跑版問題。
 
 = 0.0.19 - 2018/06/13 =
-* 修正 - 結帳頁面跑板問題。
+* 修正 - 結帳頁面跑版問題。
 
 = 0.0.18 - 2018/06/11 =
 * 移除 - 單行地址設定（WooCommerce 已內鍵本功能）。

@@ -128,6 +128,7 @@ class RY_ECPay_Shipping_Api extends RY_ECPay {
 											$cvs_info_list[$result['AllPayLogisticsID']]['ID'] = $result['AllPayLogisticsID'];
 											$cvs_info_list[$result['AllPayLogisticsID']]['PaymentNo'] = $result['CVSPaymentNo'];
 											$cvs_info_list[$result['AllPayLogisticsID']]['ValidationNo'] = $result['CVSValidationNo'];
+											$cvs_info_list[$result['AllPayLogisticsID']]['store_ID'] = $args['ReceiverStoreID'];
 											$cvs_info_list[$result['AllPayLogisticsID']]['status'] = self::get_status($result);
 											$cvs_info_list[$result['AllPayLogisticsID']]['status_msg'] = self::get_status_msg($result);
 											$cvs_info_list[$result['AllPayLogisticsID']]['create'] = $create_datetime->format(DATE_ATOM);

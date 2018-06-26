@@ -79,7 +79,7 @@ class RY_ECPay_Gateway_Atm extends RY_ECPay_Gateway_Base {
 		}
 		$payment_type = $order->get_meta('_ecpay_payment_type');
 		?>
-		<h3><?=__('Payment details', RY_WT::$textdomain) ?></h3>
+		<h3 style="clear:both"><?=__('Payment details', RY_WT::$textdomain) ?></h3>
 		<table>
 			<tr>
 				<td><?=__('Bank', RY_WT::$textdomain) ?></td>

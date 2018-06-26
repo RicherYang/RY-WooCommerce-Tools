@@ -24,19 +24,11 @@ final class RY_WT_update {
 			RY_WT::update_option('version', '0.0.7');
 		}
 
-		if( version_compare($now_version, '0.0.17', '<' ) ) {
-			RY_WT::update_option('version', '0.0.17');
-		}
-
 		if( version_compare($now_version, '0.0.18', '<' ) ) {
 			RY_WT::update_option('last_name_first', RY_WT::get_option('name_merged'));
 			RY_WT::delete_option('one_row_address');
 			RY_WT::delete_option('name_merged');
 			RY_WT::update_option('version', '0.0.18');
-		}
-
-		if( version_compare($now_version, '0.0.22', '<' ) ) {
-			RY_WT::update_option('version', '0.0.22');
 		}
 
 		if( version_compare($now_version, '0.0.23', '<' ) ) {
@@ -91,8 +83,38 @@ final class RY_WT_update {
 			RY_WT::update_option('version', '0.0.23');
 		}
 
-		if( version_compare($now_version, '0.0.23.1', '<' ) ) {
-			RY_WT::update_option('version', '0.0.23.1');
+		if( version_compare($now_version, '0.0.24', '<' ) ) {
+			$orders = wc_get_orders(array(
+				'limit' => -1
+			));
+			foreach( $orders as $order ) {
+				$store_ID = $order->get_meta('_shipping_cvs_store_ID', true);
+				if( !empty($store_ID) ) {
+					$cvs_store_address = $order->get_meta('_shipping_cvs_store_address', true);
+					if( empty($cvs_store_address) ) {
+						$order->update_meta_data('_shipping_cvs_store_address', $order->get_shipping_address_1());
+					}
+
+					$cvs_info_list = $order->get_meta('_shipping_cvs_info', true);
+					if( is_array($cvs_info_list) ) {
+						foreach( $cvs_info_list as $key => $item ) {
+							$cvs_info_list[$key]['store_ID'] = $store_ID;
+						}
+						$order->update_meta_data('_shipping_cvs_info', $cvs_info_list);
+					}
+					$order->save_meta_data();
+
+					$order->set_shipping_company('');
+					$order->set_shipping_address_1($order->get_meta('_shipping_cvs_store_address'));
+					$order->set_shipping_address_2('');
+					$order->set_shipping_city('');
+					$order->set_shipping_state('');
+					$order->set_shipping_postcode('');
+					$order->save();
+				}
+			}
+
+			RY_WT::update_option('version', '0.0.24');
 		}
 	}
 }

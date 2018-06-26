@@ -34,6 +34,7 @@ class RY_ECPay_Shipping_Meta_Box {
 				<tr>
 					<th><?=__('ECPay shipping ID', RY_WT::$textdomain) ?></th>
 					<th><?=__('Shipping payment no', RY_WT::$textdomain) ?></th>
+					<th><?=__('Store ID', RY_WT::$textdomain) ?></th>
 					<th><?=__('Shipping status', RY_WT::$textdomain) ?></th>
 					<th><?=__('declare amount', RY_WT::$textdomain) ?></th>
 					<th><?=__('Collection of money', RY_WT::$textdomain) ?></th>
@@ -50,6 +51,7 @@ class RY_ECPay_Shipping_Meta_Box {
 					<tr>
 						<td><?=$item['ID']; ?></td>
 						<td><?=$item['PaymentNo'] . ' ' . $item['ValidationNo'] ?></td>
+						<td><?=$item['store_ID'] ?></td>
 						<td><?=$item['status_msg'] ?></td>
 						<td><?=$item['amount']; ?></td>
 						<td><?=($item['IsCollection'] == 'Y') ? __('Yes') : __('No') ?></td> 

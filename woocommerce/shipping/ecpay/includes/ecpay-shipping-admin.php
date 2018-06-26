@@ -14,14 +14,15 @@ class RY_ECPay_Shipping_admin {
 		add_action('woocommerce_order_action_get_new_cvs_no_cod', array('RY_ECPay_Shipping_Api', 'get_cvs_code_cod'));
 		add_action('woocommerce_order_action_send_at_cvs_email', array('RY_ECPay_Shipping', 'send_at_cvs_email'));
 		add_action('wp_ajax_RY_ECPay_Shipping_print', array('RY_ECPay_Shipping_Api', 'print_info'));
-			
+
+		add_action('admin_enqueue_scripts', array(__CLASS__, 'add_scripts'));
 		add_action('add_meta_boxes', array('RY_ECPay_Shipping_Meta_Box', 'add_meta_box'), 40, 2);
 	}
 
 	public static function fix_cvs_map_address($address) {
 		if( isset($address['cvs_address']) ) {
 			$address = array(
-				$address['address_1']
+				$address['cvs_address']
 			);
 		}
 		return $address;
@@ -57,8 +58,24 @@ class RY_ECPay_Shipping_admin {
 				unset($shipping_fields['postcode']);
 				unset($shipping_fields['country']);
 				unset($shipping_fields['state']);
+				$shipping_fields['cvs_store_ID'] = array(
+					'label' => __('Store ID', RY_WT::$textdomain),
+					'show' => false
+				);
+				$shipping_fields['cvs_store_name'] = array(
+					'label' => __('Store Name', RY_WT::$textdomain),
+					'show' => false
+				);
+				$shipping_fields['cvs_store_address'] = array(
+					'label' => __('Store Address', RY_WT::$textdomain),
+					'show' => false
+				);
+				$shipping_fields['cvs_store_telephone'] = array(
+					'label' => __('Store Telephone', RY_WT::$textdomain),
+					'show' => false
+				);
 				$shipping_fields['phone'] = array(
-					'label' => __( 'Phone', 'woocommerce'),
+					'label' => __('Phone', 'woocommerce')
 				);
 			}
 		}
@@ -83,5 +100,15 @@ class RY_ECPay_Shipping_admin {
 			}
 		}
 		return $order_actions;
+	}
+
+	public static function add_scripts() {
+		$screen = get_current_screen();
+		$screen_id = $screen ? $screen->id : '';
+
+		if( in_array($screen_id, array('shop_order', 'edit-shop_order')) ) {
+			wp_enqueue_style('ry-shipping-admin-style', RY_WT_PLUGIN_URL . 'style/admin/ry_shipping.css', array(), RY_WT_VERSION);
+			wp_enqueue_script('ry-ecpay-shipping-admin', RY_WT_PLUGIN_URL . 'style/js/admin/ry_ecpay_shipping.js', array('jquery'), RY_WT_VERSION);
+		}
 	}
 }

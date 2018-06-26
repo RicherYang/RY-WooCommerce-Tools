@@ -120,7 +120,11 @@ class RY_ECPay_Shipping_CVS extends WC_Shipping_Method {
 			foreach( $order->get_items('shipping') as $item_id => $item ) {
 				$shipping_method = RY_ECPay_Shipping::get_order_support_shipping($item);
 				if( $shipping_method == $this->id ) {
-					if( isset($_POST['_shipping_phone']) && !empty($_POST['_shipping_phone']) ) {
+					if( isset($_POST['_shipping_phone']) ) {
+						$order->update_meta_data('_shipping_cvs_store_ID', $_POST['_shipping_cvs_store_ID']);
+						$order->update_meta_data('_shipping_cvs_store_name', $_POST['_shipping_cvs_store_name']);
+						$order->update_meta_data('_shipping_cvs_store_address', $_POST['_shipping_cvs_store_address']);
+						$order->update_meta_data('_shipping_cvs_store_telephone', $_POST['_shipping_cvs_store_telephone']);
 						$order->update_meta_data('_shipping_phone', $_POST['_shipping_phone']);
 						$order->save_meta_data();
 					}
