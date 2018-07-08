@@ -39,7 +39,7 @@ final class RY_ECPay_Gateway {
 	}
 
 	public static function add_sections($sections) {
-		$sections['ecpay_gateway'] = __('ECPay gateway options', RY_WT::$textdomain);
+		$sections['ecpay_gateway'] = __('ECPay gateway options', 'ry-woocommerce-tools');
 
 		return $sections;
 	}
@@ -80,12 +80,12 @@ final class RY_ECPay_Gateway {
 				}
 			}
 			if( !$enable ) {
-				WC_Admin_Settings::add_error(__('ECPay gateway method failed to enable!', RY_WT::$textdomain));
+				WC_Admin_Settings::add_error(__('ECPay gateway method failed to enable!', 'ry-woocommerce-tools'));
 				update_option(RY_WT::$option_prefix . 'ecpay_gateway', 'no');
 			}
 		}
 		if( !preg_match('/^[a-z0-9]*$/i', get_option(RY_WT::$option_prefix . 'ecpay_gateway_order_prefix')) ) {
-			WC_Admin_Settings::add_error(__('Order no prefix only letters and numbers allowed allowed', RY_WT::$textdomain));
+			WC_Admin_Settings::add_error(__('Order no prefix only letters and numbers allowed allowed', 'ry-woocommerce-tools'));
 			update_option(RY_WT::$option_prefix . 'ecpay_gateway_order_prefix', '');
 		}
 	}

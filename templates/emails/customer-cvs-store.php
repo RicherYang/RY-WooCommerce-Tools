@@ -13,7 +13,7 @@ if ( ! defined( 'RY_WT_VERSION' ) ) {
  */
 do_action( 'woocommerce_email_header', $email_heading, $email ); ?>
 
-<p><?php _e( "Your order product has been sended to the convenience store.", RY_WT::$textdomain); ?></p>
+<p><?php _e( "Your order product has been sended to the convenience store.", 'ry-woocommerce-tools'); ?></p>
 
 <?php
 

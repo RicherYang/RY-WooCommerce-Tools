@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RY WooCommerce Tools\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-26 22:32+0800\n"
-"PO-Revision-Date: 2018-06-26 22:32+0800\n"
+"POT-Creation-Date: 2018-07-08 20:28+0800\n"
+"PO-Revision-Date: 2018-07-08 20:29+0800\n"
 "Last-Translator: Richer Yang <fantasyworldidvtw@gmail.com>\n"
 "Language-Team: <fantasyworldidvtw@gmail.com>\n"
 "Language: zh_TW\n"
@@ -22,19 +22,19 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
-#: ../class.ry-wt.main.php:195
+#: ../class.ry-wt.main.php:220
 #, php-format
 msgid ""
-"<strong>%s</strong> is inactive. It require WooCommerce version 3.0.0 or "
+"<strong>%s</strong> is inactive. It require WooCommerce version 3.1.0 or "
 "newer."
 msgstr ""
-"<strong>%s</strong> 暫停運作。 需求 WooCommerce 版本 3.0.0 或更新的版本。"
+"<strong>%s</strong> 暫停運作。 需求 WooCommerce 版本 3.1.0 或更新的版本。"
 
-#: ../class.ry-wt.main.php:196
+#: ../class.ry-wt.main.php:221
 msgid "RY WooCommerce Tools"
 msgstr "RY WooCommerce Tools"
 
-#: ../class.ry-wt.main.php:224
+#: ../class.ry-wt.main.php:249
 msgid ""
 "Please check your server time setting. Server time is differs from Google "
 "Public NTP  more than one minute."
@@ -56,14 +56,14 @@ msgstr "你訂購的商品已經送達超商門市。"
 #: ../templates/order/order-ecpay-payment-info-atm.php:15
 #: ../templates/order/order-ecpay-payment-info-barcode.php:15
 #: ../templates/order/order-ecpay-payment-info-cvs.php:15
-#: ../woocommerce/gateways/ecpay/ecpay-gateway-atm.php:82
-#: ../woocommerce/gateways/ecpay/ecpay-gateway-barcode.php:99
-#: ../woocommerce/gateways/ecpay/ecpay-gateway-cvs.php:99
+#: ../woocommerce/gateways/ecpay/ecpay-gateway-atm.php:77
+#: ../woocommerce/gateways/ecpay/ecpay-gateway-barcode.php:94
+#: ../woocommerce/gateways/ecpay/ecpay-gateway-cvs.php:95
 msgid "Payment details"
 msgstr "付款詳細資料"
 
 #: ../templates/order/order-ecpay-payment-info-atm.php:19
-#: ../woocommerce/gateways/ecpay/ecpay-gateway-atm.php:85
+#: ../woocommerce/gateways/ecpay/ecpay-gateway-atm.php:80
 msgid "Bank"
 msgstr "銀行"
 
@@ -72,16 +72,16 @@ msgid "Bank code"
 msgstr "銀行代碼"
 
 #: ../templates/order/order-ecpay-payment-info-atm.php:27
-#: ../woocommerce/gateways/ecpay/ecpay-gateway-atm.php:89
+#: ../woocommerce/gateways/ecpay/ecpay-gateway-atm.php:84
 msgid "ATM Bank account"
 msgstr "ATM 繳費帳號"
 
 #: ../templates/order/order-ecpay-payment-info-atm.php:31
 #: ../templates/order/order-ecpay-payment-info-barcode.php:37
 #: ../templates/order/order-ecpay-payment-info-cvs.php:23
-#: ../woocommerce/gateways/ecpay/ecpay-gateway-atm.php:93
-#: ../woocommerce/gateways/ecpay/ecpay-gateway-barcode.php:114
-#: ../woocommerce/gateways/ecpay/ecpay-gateway-cvs.php:106
+#: ../woocommerce/gateways/ecpay/ecpay-gateway-atm.php:88
+#: ../woocommerce/gateways/ecpay/ecpay-gateway-barcode.php:109
+#: ../woocommerce/gateways/ecpay/ecpay-gateway-cvs.php:102
 #: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-atm.php:54
 #: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-barcode.php:50
 msgid "Payment deadline"
@@ -99,22 +99,22 @@ msgid "%1$s %2$s"
 msgstr "%1$s %2$s"
 
 #: ../templates/order/order-ecpay-payment-info-barcode.php:19
-#: ../woocommerce/gateways/ecpay/ecpay-gateway-barcode.php:102
+#: ../woocommerce/gateways/ecpay/ecpay-gateway-barcode.php:97
 msgid "Barcode 1"
 msgstr "Barcode 1"
 
 #: ../templates/order/order-ecpay-payment-info-barcode.php:25
-#: ../woocommerce/gateways/ecpay/ecpay-gateway-barcode.php:106
+#: ../woocommerce/gateways/ecpay/ecpay-gateway-barcode.php:101
 msgid "Barcode 2"
 msgstr "Barcode 2"
 
 #: ../templates/order/order-ecpay-payment-info-barcode.php:31
-#: ../woocommerce/gateways/ecpay/ecpay-gateway-barcode.php:110
+#: ../woocommerce/gateways/ecpay/ecpay-gateway-barcode.php:105
 msgid "Barcode 3"
 msgstr "Barcode 3"
 
 #: ../templates/order/order-ecpay-payment-info-cvs.php:19
-#: ../woocommerce/gateways/ecpay/ecpay-gateway-cvs.php:102
+#: ../woocommerce/gateways/ecpay/ecpay-gateway-cvs.php:98
 msgid "CVS code"
 msgstr "繳費代碼"
 
@@ -197,11 +197,11 @@ msgstr "使用ATM櫃員機付款"
 msgid "ECPay ATM"
 msgstr "綠界ATM櫃員機"
 
-#: ../woocommerce/gateways/ecpay/ecpay-gateway-atm.php:55
+#: ../woocommerce/gateways/ecpay/ecpay-gateway-atm.php:50
 msgid "Pay via ECPay ATM"
 msgstr "透過 綠界金流ATM櫃員機 付款"
 
-#: ../woocommerce/gateways/ecpay/ecpay-gateway-atm.php:70
+#: ../woocommerce/gateways/ecpay/ecpay-gateway-atm.php:65
 msgid "ATM payment deadline out of range. Set as default value."
 msgstr "ATM櫃員機繳費期限超過限制，調整為預設值。"
 
@@ -213,23 +213,23 @@ msgstr "使用超商條碼付款"
 msgid "ECPay BARCODE"
 msgstr "綠界超商條碼"
 
-#: ../woocommerce/gateways/ecpay/ecpay-gateway-barcode.php:62
+#: ../woocommerce/gateways/ecpay/ecpay-gateway-barcode.php:57
 msgid "Pay via ECPay BARCODE"
 msgstr "透過 綠界金流超商條碼 付款"
 
-#: ../woocommerce/gateways/ecpay/ecpay-gateway-barcode.php:75
+#: ../woocommerce/gateways/ecpay/ecpay-gateway-barcode.php:70
 msgid "BARCODE payment deadline out of range. Set as default value."
 msgstr "超商條碼繳費期限超過限制，調整為預設值。"
 
-#: ../woocommerce/gateways/ecpay/ecpay-gateway-barcode.php:81
-#: ../woocommerce/gateways/ecpay/ecpay-gateway-cvs.php:81
+#: ../woocommerce/gateways/ecpay/ecpay-gateway-barcode.php:76
+#: ../woocommerce/gateways/ecpay/ecpay-gateway-cvs.php:77
 #: ../woocommerce/gateways/ecpay/includes/ecpay-gateway-base.php:31
 #, php-format
 msgid "%s minimum amount out of range. Set as default value."
 msgstr "%s 最小訂購金額超過限制，調整為預設值。"
 
-#: ../woocommerce/gateways/ecpay/ecpay-gateway-barcode.php:87
-#: ../woocommerce/gateways/ecpay/ecpay-gateway-cvs.php:87
+#: ../woocommerce/gateways/ecpay/ecpay-gateway-barcode.php:82
+#: ../woocommerce/gateways/ecpay/ecpay-gateway-cvs.php:83
 #, php-format
 msgid "%s maximum amount out of range. Set as default value."
 msgstr "%s 最大訂購金額超過限制，調整為預設值。"
@@ -242,12 +242,12 @@ msgstr "使用信用卡付款（分期）"
 msgid "ECPay Credit(installment)"
 msgstr "綠界信用卡（分期）"
 
-#: ../woocommerce/gateways/ecpay/ecpay-gateway-credit-installment.php:49
+#: ../woocommerce/gateways/ecpay/ecpay-gateway-credit-installment.php:44
 msgctxt "Checkout info"
 msgid "Number of periods"
 msgstr "分期期數"
 
-#: ../woocommerce/gateways/ecpay/ecpay-gateway-credit-installment.php:59
+#: ../woocommerce/gateways/ecpay/ecpay-gateway-credit-installment.php:54
 msgid "Pay via ECPay Credit(installment)"
 msgstr "使用 綠界信用卡（分期） 付款"
 
@@ -259,7 +259,7 @@ msgstr "使用信用卡付款"
 msgid "ECPay Credit"
 msgstr "綠界信用卡"
 
-#: ../woocommerce/gateways/ecpay/ecpay-gateway-credit.php:45
+#: ../woocommerce/gateways/ecpay/ecpay-gateway-credit.php:40
 msgid "Pay via ECPay Credit"
 msgstr "使用 綠界信用卡 付款"
 
@@ -271,11 +271,11 @@ msgstr "使用超商代碼 付款"
 msgid "ECPay CVS"
 msgstr "綠界超商代碼"
 
-#: ../woocommerce/gateways/ecpay/ecpay-gateway-cvs.php:60
+#: ../woocommerce/gateways/ecpay/ecpay-gateway-cvs.php:56
 msgid "Pay via ECPay CVS"
 msgstr "透過 綠界金流超商代碼  付款"
 
-#: ../woocommerce/gateways/ecpay/ecpay-gateway-cvs.php:75
+#: ../woocommerce/gateways/ecpay/ecpay-gateway-cvs.php:71
 msgid "CVS payment deadline out of range. Set as default value."
 msgstr "超商代碼繳費期限超過限制，調整為預設值。"
 
@@ -287,7 +287,7 @@ msgstr "使用網路ATM付款"
 msgid "ECPay WebATM"
 msgstr "綠界網路ATM"
 
-#: ../woocommerce/gateways/ecpay/ecpay-gateway-webatm.php:47
+#: ../woocommerce/gateways/ecpay/ecpay-gateway-webatm.php:42
 msgid "Pay via ECPay WebATM"
 msgstr "透過 綠界金流網路ATM 付款"
 

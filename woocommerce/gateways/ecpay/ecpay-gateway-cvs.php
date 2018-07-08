@@ -8,8 +8,8 @@ class RY_ECPay_Gateway_Cvc extends RY_ECPay_Gateway_Base {
 	public function __construct() {
 		$this->id = 'ry_ecpay_cvs';
 		$this->has_fields = false;
-		$this->order_button_text = __('Pay via CVS', RY_WT::$textdomain);
-		$this->method_title = __('ECPay CVS', RY_WT::$textdomain);
+		$this->order_button_text = __('Pay via CVS', 'ry-woocommerce-tools');
+		$this->method_title = __('ECPay CVS', 'ry-woocommerce-tools');
 		$this->method_description = '';
 
 		$this->form_fields = include(RY_WT_PLUGIN_DIR . 'woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-cvs.php');
@@ -31,12 +31,8 @@ class RY_ECPay_Gateway_Cvc extends RY_ECPay_Gateway_Base {
 
 	public function is_available() {
 		if( 'yes' == $this->enabled && WC()->cart ) {
-			$total = WC()->cart->get_displayed_subtotal();
-			if( 'incl' === WC()->cart->tax_display_cart ) {
-				$total = round($total - (WC()->cart->get_cart_discount_total() + WC()->cart->get_cart_discount_tax_total()), wc_get_price_decimals());
-			} else {
-				$total = round($total - WC()->cart->get_cart_discount_total(), wc_get_price_decimals());
-			}
+			$total = $this->get_order_total();
+			var_dump($total);
 
 			if( $total < 30 ) {
 				return false;
@@ -57,7 +53,7 @@ class RY_ECPay_Gateway_Cvc extends RY_ECPay_Gateway_Base {
 
 	public function process_payment($order_id) {
 		$order = wc_get_order($order_id);
-		$order->add_order_note(__('Pay via ECPay CVS', RY_WT::$textdomain));
+		$order->add_order_note(__('Pay via ECPay CVS', 'ry-woocommerce-tools'));
 		wc_reduce_stock_levels($order_id);
 
 		return array(
@@ -72,19 +68,19 @@ class RY_ECPay_Gateway_Cvc extends RY_ECPay_Gateway_Base {
 		$_POST['woocommerce_ry_ecpay_cvs_expire_date'] = (int) $_POST['woocommerce_ry_ecpay_cvs_expire_date'];
 		if( $_POST['woocommerce_ry_ecpay_cvs_expire_date'] < 1 || $_POST['woocommerce_ry_ecpay_cvs_expire_date'] > 43200 ) {
 			$_POST['woocommerce_ry_ecpay_cvs_expire_date'] = 10080;
-			WC_Admin_Settings::add_error(__('CVS payment deadline out of range. Set as default value.', RY_WT::$textdomain));
+			WC_Admin_Settings::add_error(__('CVS payment deadline out of range. Set as default value.', 'ry-woocommerce-tools'));
 		}
 
 		$_POST['woocommerce_ry_ecpay_cvs_min_amount'] = (int) $_POST['woocommerce_ry_ecpay_cvs_min_amount'];
 		if( $_POST['woocommerce_ry_ecpay_cvs_min_amount'] > 0 && $_POST['woocommerce_ry_ecpay_cvs_min_amount'] < 30 ) {
 			$_POST['woocommerce_ry_ecpay_cvs_min_amount'] = 0;
-			WC_Admin_Settings::add_error(sprintf(__('%s minimum amount out of range. Set as default value.', RY_WT::$textdomain), $this->method_title));
+			WC_Admin_Settings::add_error(sprintf(__('%s minimum amount out of range. Set as default value.', 'ry-woocommerce-tools'), $this->method_title));
 		}
 
 		$_POST['woocommerce_ry_ecpay_cvs_max_amount'] = (int) $_POST['woocommerce_ry_ecpay_cvs_max_amount'];
 		if( $_POST['woocommerce_ry_ecpay_cvs_max_amount'] > 20000 ) {
 			$_POST['woocommerce_ry_ecpay_cvs_max_amount'] = 0;
-			WC_Admin_Settings::add_error(sprintf(__('%s maximum amount out of range. Set as default value.', RY_WT::$textdomain), $this->method_title));
+			WC_Admin_Settings::add_error(sprintf(__('%s maximum amount out of range. Set as default value.', 'ry-woocommerce-tools'), $this->method_title));
 		}
 
 		parent::process_admin_options();
@@ -96,14 +92,14 @@ class RY_ECPay_Gateway_Cvc extends RY_ECPay_Gateway_Base {
 		}
 		$payment_type = $order->get_meta('_ecpay_payment_type');
 		?>
-		<h3 style="clear:both"><?=__('Payment details', RY_WT::$textdomain) ?></h3>
+		<h3 style="clear:both"><?=__('Payment details', 'ry-woocommerce-tools') ?></h3>
 		<table>
 			<tr>
-				<td><?=__('CVS code', RY_WT::$textdomain) ?></td>
+				<td><?=__('CVS code', 'ry-woocommerce-tools') ?></td>
 				<td><?=$order->get_meta('_ecpay_cvs_PaymentNo') ?></td>
 			</tr>
 			<tr>
-				<td><?=__('Payment deadline', RY_WT::$textdomain) ?></td>
+				<td><?=__('Payment deadline', 'ry-woocommerce-tools') ?></td>
 				<td><?=$order->get_meta('_ecpay_cvs_ExpireDate') ?></td>
 			</tr>
 		</table>

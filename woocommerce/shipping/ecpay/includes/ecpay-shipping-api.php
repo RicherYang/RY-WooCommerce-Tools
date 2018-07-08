@@ -142,7 +142,7 @@ class RY_ECPay_Shipping_Api extends RY_ECPay {
 											do_action('ry_ecpay_shipping_get_cvs_no', $result, $cvs_info_list[$result['AllPayLogisticsID']]);
 										}
 									} else {
-										$order->add_order_note(sprintf(__('Get shipping code error: %s', RY_WT::$textdomain), $body[1]));
+										$order->add_order_note(sprintf(__('Get shipping code error: %s', 'ry-woocommerce-tools'), $body[1]));
 									}
 								}
 							} else {

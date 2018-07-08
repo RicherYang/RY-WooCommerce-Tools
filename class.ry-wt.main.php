@@ -3,7 +3,6 @@ defined('RY_WT_VERSION') OR exit('No direct script access allowed');
 
 final class RY_WT {
 	public static $options = array();
-	public static $textdomain = 'ry-woocommerce-tools';
 	public static $option_prefix = 'RY_WT_';
 
 	private static $initiated = false;
@@ -12,12 +11,14 @@ final class RY_WT {
 		if( !self::$initiated ) {
 			self::$initiated = true;
 
-			load_plugin_textdomain(self::$textdomain, false, plugin_basename(dirname(RY_WT_PLUGIN_BASENAME)) . '/languages');
+			load_plugin_textdomain('ry-woocommerce-tools', false, plugin_basename(dirname(RY_WT_PLUGIN_BASENAME)) . '/languages');
 
 			if( !defined('WC_VERSION') ) {
 				add_action('admin_notices', array(__CLASS__, 'need_woocommerce'));
 				return;
 			}
+
+			self::fixed_old_function();
 
 			include_once(RY_WT_PLUGIN_DIR . 'class.ry-wt.update.php');
 			RY_WT_update::update();
@@ -70,6 +71,30 @@ final class RY_WT {
 			// 先顯示姓氏
 			if( 'yes' == get_option(self::$option_prefix . 'last_name_first', 'no') ) {
 				add_filter('woocommerce_default_address_fields', array(__CLASS__, 'last_name_first'));
+			}
+		}
+	}
+
+	protected static function fixed_old_function() {
+		if( !function_exists('wc_string_to_datetime') ) {
+			function wc_string_to_datetime( $time_string ) {
+				// Strings are defined in local WP timezone. Convert to UTC.
+				if ( 1 === preg_match( '/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})(Z|((-|\+)\d{2}:\d{2}))$/', $time_string, $date_bits ) ) {
+					$offset    = ! empty( $date_bits[7] ) ? iso8601_timezone_to_offset( $date_bits[7] ) : wc_timezone_offset();
+					$timestamp = gmmktime( $date_bits[4], $date_bits[5], $date_bits[6], $date_bits[2], $date_bits[3], $date_bits[1] ) - $offset;
+				} else {
+					$timestamp = wc_string_to_timestamp( get_gmt_from_date( gmdate( 'Y-m-d H:i:s', wc_string_to_timestamp( $time_string ) ) ) );
+				}
+				$datetime = new WC_DateTime( "@{$timestamp}", new DateTimeZone( 'UTC' ) );
+
+				// Set local timezone or offset.
+				if ( get_option( 'timezone_string' ) ) {
+					$datetime->setTimezone( new DateTimeZone( wc_timezone_string() ) );
+				} else {
+					$datetime->set_utc_offset( wc_timezone_offset() );
+				}
+
+				return $datetime;
 			}
 		}
 	}
@@ -160,7 +185,7 @@ final class RY_WT {
 		$custom_attributes = self::form_field_custom_attributes($args);
 		if ( $args['required'] ) {
 			$args['class'][] = 'validate-required';
-			$required = ' <abbr class="required" title="' . esc_attr__('required', self::$textdomain) . '">*</abbr>';
+			$required = ' <abbr class="required" title="' . esc_attr__('required', 'ry-woocommerce-tools') . '">*</abbr>';
 		} else {
 			$required = '';
 		}
@@ -192,8 +217,8 @@ final class RY_WT {
 
 	public static function need_woocommerce() {
 		$message = sprintf(
-			__('<strong>%s</strong> is inactive. It require WooCommerce version 3.0.0 or newer.', self::$textdomain),
-			__('RY WooCommerce Tools', self::$textdomain)
+			__('<strong>%s</strong> is inactive. It require WooCommerce version 3.1.0 or newer.', 'ry-woocommerce-tools'),
+			__('RY WooCommerce Tools', 'ry-woocommerce-tools')
 		);
 		printf('<div class="error"><p>%s</p></div>', $message);
 	}
@@ -221,7 +246,7 @@ final class RY_WT {
 
 	public static function ntp_time_error() {
 		$message = sprintf(
-			__('Please check your server time setting. Server time is differs from Google Public NTP  more than one minute.', self::$textdomain)
+			__('Please check your server time setting. Server time is differs from Google Public NTP  more than one minute.', 'ry-woocommerce-tools')
 		);
 		printf('<div class="error"><p>%s</p></div>', $message);
 	}

@@ -10,7 +10,7 @@ if ( ! defined( 'RY_WT_VERSION' ) ) {
 
 echo "= " . $email_heading . " =\n\n";
 
-echo __( "Your order product has been sended to the convenience store.", RY_WT::$textdomain) . "\n\n";
+echo __( "Your order product has been sended to the convenience store.", 'ry-woocommerce-tools') . "\n\n";
 
 echo "=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n\n";
 

@@ -7,8 +7,8 @@ if( !class_exists('RY_ECPay_Shipping_Email_Customer_CVS_Store', false) ) {
 			$this->id = 'ry_ecpay_shipping_customer_cvs_store';
 			$this->customer_email = true;
 
-			$this->title = __('Product sended to cvs store', RY_WT::$textdomain);
-			$this->description = __('This is an order notification sent to customers after the product send to CVS store with ECPay shipping.',  RY_WT::$textdomain);
+			$this->title = __('Product sended to cvs store', 'ry-woocommerce-tools');
+			$this->description = __('This is an order notification sent to customers after the product send to CVS store with ECPay shipping.',  'ry-woocommerce-tools');
 			$this->template_base = RY_WT_PLUGIN_DIR . 'templates/';
 			$this->template_html = 'emails/customer-cvs-store.php';
 			$this->template_plain = 'emails/plain/customer-cvs-store.php';
@@ -22,11 +22,11 @@ if( !class_exists('RY_ECPay_Shipping_Email_Customer_CVS_Store', false) ) {
 		}
 
 		public function get_default_subject() {
-			return __('Your {site_title} order product send to CVS store', RY_WT::$textdomain);
+			return __('Your {site_title} order product send to CVS store', 'ry-woocommerce-tools');
 		}
 
 		public function get_default_heading() {
-			return __('Product Pickup Notice', RY_WT::$textdomain);
+			return __('Product Pickup Notice', 'ry-woocommerce-tools');
 		}
 
 		public function trigger($order_id, $order = false) {

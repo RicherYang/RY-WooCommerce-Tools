@@ -7,8 +7,8 @@ class RY_ECPay_Gateway_Webatm extends RY_ECPay_Gateway_Base {
 	public function __construct() {
 		$this->id = 'ry_ecpay_webatm';
 		$this->has_fields = false;
-		$this->order_button_text = __('Pay via WebATM', RY_WT::$textdomain);
-		$this->method_title = __('ECPay WebATM', RY_WT::$textdomain);
+		$this->order_button_text = __('Pay via WebATM', 'ry-woocommerce-tools');
+		$this->method_title = __('ECPay WebATM', 'ry-woocommerce-tools');
 		$this->method_description = '';
 
 		$this->form_fields = include(RY_WT_PLUGIN_DIR . 'woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-webatm.php');
@@ -24,12 +24,7 @@ class RY_ECPay_Gateway_Webatm extends RY_ECPay_Gateway_Base {
 
 	public function is_available() {
 		if( 'yes' == $this->enabled && WC()->cart ) {
-			$total = WC()->cart->get_displayed_subtotal();
-			if( 'incl' === WC()->cart->tax_display_cart ) {
-				$total = round($total - (WC()->cart->get_cart_discount_total() + WC()->cart->get_cart_discount_tax_total()), wc_get_price_decimals());
-			} else {
-				$total = round($total - WC()->cart->get_cart_discount_total(), wc_get_price_decimals());
-			}
+			$total = $this->get_order_total();
 
 			if( $this->min_amount > 0 and $total < $this->min_amount ) {
 				return false;
@@ -44,7 +39,7 @@ class RY_ECPay_Gateway_Webatm extends RY_ECPay_Gateway_Base {
 
 	public function process_payment($order_id) {
 		$order = wc_get_order($order_id);
-		$order->add_order_note(__('Pay via ECPay WebATM', RY_WT::$textdomain));
+		$order->add_order_note(__('Pay via ECPay WebATM', 'ry-woocommerce-tools'));
 		wc_reduce_stock_levels($order_id);
 
 		return array(

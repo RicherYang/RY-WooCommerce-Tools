@@ -44,7 +44,7 @@ class RY_ECPay_Gateway_Response extends RY_ECPay_Gateway_Api {
 
 			list($payment_type, $payment_subtype) = self::get_payment_info($ipn_info);
 			$order->set_transaction_id(self::get_transaction_id($ipn_info));
-			$order->add_order_note(sprintf(__('Payment by %s (%s)', RY_WT::$textdomain), __($payment_type, RY_WT::$textdomain), __($payment_subtype, RY_WT::$textdomain)));
+			$order->add_order_note(sprintf(__('Payment by %s (%s)', 'ry-woocommerce-tools'), __($payment_type, 'ry-woocommerce-tools'), __($payment_subtype, 'ry-woocommerce-tools')));
 			$order->update_meta_data('_ecpay_payment_type', $payment_type);
 			$order->update_meta_data('_ecpay_payment_subtype', $payment_subtype);
 			$order->save();
@@ -78,7 +78,7 @@ class RY_ECPay_Gateway_Response extends RY_ECPay_Gateway_Api {
 	}
 
 	protected static function payment_status_1($order, $ipn_info) {
-		$order->add_order_note(__('Payment completed', RY_WT::$textdomain));
+		$order->add_order_note(__('Payment completed', 'ry-woocommerce-tools'));
 		$order->payment_complete();
 	}
 
@@ -109,6 +109,6 @@ class RY_ECPay_Gateway_Response extends RY_ECPay_Gateway_Api {
 
 	protected static function payment_status_unknow($order, $ipn_info, $payment_status) {
 		RY_ECPay_Gateway::log('Unknow status: ' . self::get_status($ipn_info) . '(' . self::get_status_msg($ipn_info) . ')');
-		$order->update_status('failed', sprintf(__('Payment failed: %s (%s)', RY_WT::$textdomain), self::get_status($ipn_info), self::get_status_msg($ipn_info)));
+		$order->update_status('failed', sprintf(__('Payment failed: %s (%s)', 'ry-woocommerce-tools'), self::get_status($ipn_info), self::get_status_msg($ipn_info)));
 	}
 }

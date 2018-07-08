@@ -3,6 +3,8 @@ defined('RY_WT_VERSION') OR exit('No direct script access allowed');
 
 final class RY_WT_update {
 	public static function update() {
+		global $wpdb;
+
 		$now_version = RY_WT::get_option('version');
 
 		if( $now_version === FALSE ) {
@@ -10,10 +12,6 @@ final class RY_WT_update {
 		}
 		if( $now_version == RY_WT_VERSION ) {
 			return;
-		}
-
-		if( version_compare($now_version, '0.0.6', '<' ) ) {
-			RY_WT::update_option('version', '0.0.6');
 		}
 
 		if( version_compare($now_version, '0.0.7', '<' ) ) {
@@ -32,89 +30,74 @@ final class RY_WT_update {
 		}
 
 		if( version_compare($now_version, '0.0.23', '<' ) ) {
-			$orders = wc_get_orders(array(
-				'limit' => -1
-			));
-			foreach( $orders as $order ) {
-				$do_save = false;
-				switch( $order->get_payment_method() ) {
-					case 'ry_ecpay_atm':
-						$meta_key = '_ecpay_atm_ExpireDate';
-						break;
-					case 'ry_ecpay_barcode':
-						$meta_key = '_ecpay_barcode_ExpireDate';
-						break;
-					case 'ry_ecpay_cvs':
-						$meta_key = '_ecpay_cvs_ExpireDate';
-						break;
-					default:
-						$meta_key = '';
-						break;
-				}
+			@set_time_limit(300);
+			$meta_rows = $wpdb->get_results(
+				"SELECT meta_id, meta_value FROM {$wpdb->postmeta} WHERE meta_key IN ('_ecpay_atm_ExpireDate', '_ecpay_barcode_ExpireDate', '_ecpay_cvs_ExpireDate')"
+			);
 
-				if( !empty($meta_key) ) {
-					$expireDate = $order->get_meta($meta_key);
-					if( !empty($expireDate) && strpos($expireDate, 'T') === FALSE ) {
-						$time = new DateTime($expireDate, new DateTimeZone('Asia/Taipei'));
-						$order->update_meta_data($meta_key, $time->format(DATE_ATOM));
-						$do_save = true;
-					}
+			foreach ( $meta_rows as $meta_row ) {
+				if( strpos($meta_row->meta_value, 'T') === FALSE ) {
+					$time = new DateTime($meta_row->meta_value, new DateTimeZone('Asia/Taipei'));
+					update_metadata_by_mid('post', $meta_row->meta_id, $time->format(DATE_ATOM));
 				}
+			}
 
-				$cvs_info_list = $order->get_meta('_shipping_cvs_info', true);
+			$meta_rows = $wpdb->get_results(
+				"SELECT meta_id, meta_value FROM {$wpdb->postmeta} WHERE meta_key = '_shipping_cvs_info'"
+			);
+			foreach ( $meta_rows as $meta_row ) {
+				$cvs_info_list = maybe_unserialize($meta_row->meta_value);
 				if( is_array($cvs_info_list) ) {
 					foreach( $cvs_info_list as $key => $item ) {
 						if( strpos($item['edit'], 'T') === FALSE ) {
 							$time = new DateTime($item['edit'], new DateTimeZone('Asia/Taipei'));
 							$cvs_info_list[$key]['edit'] = $time->format(DATE_ATOM);
-							$do_save = true;
 						}
 						if( strpos($item['create'], 'T') === FALSE ) {
 							$time = new DateTime($item['create'], new DateTimeZone('Asia/Taipei'));
 							$cvs_info_list[$key]['create'] = $time->format(DATE_ATOM);
-							$do_save = true;
 						}
-						$order->update_meta_data('_shipping_cvs_info', $cvs_info_list);
+
+						update_metadata_by_mid('post', $meta_row->meta_id, $cvs_info_list);
 					}
 				}
-				$order->save_meta_data();
 			}
 
 			RY_WT::update_option('version', '0.0.23');
 		}
 
 		if( version_compare($now_version, '0.0.24', '<' ) ) {
-			$orders = wc_get_orders(array(
-				'limit' => -1
-			));
-			foreach( $orders as $order ) {
-				$store_ID = $order->get_meta('_shipping_cvs_store_ID', true);
-				if( !empty($store_ID) ) {
-					$cvs_store_address = $order->get_meta('_shipping_cvs_store_address', true);
-					if( empty($cvs_store_address) ) {
-						$order->update_meta_data('_shipping_cvs_store_address', $order->get_shipping_address_1());
-					}
-
-					$cvs_info_list = $order->get_meta('_shipping_cvs_info', true);
-					if( is_array($cvs_info_list) ) {
-						foreach( $cvs_info_list as $key => $item ) {
-							$cvs_info_list[$key]['store_ID'] = $store_ID;
-						}
-						$order->update_meta_data('_shipping_cvs_info', $cvs_info_list);
-					}
-					$order->save_meta_data();
-
-					$order->set_shipping_company('');
-					$order->set_shipping_address_1($order->get_meta('_shipping_cvs_store_address'));
-					$order->set_shipping_address_2('');
-					$order->set_shipping_city('');
-					$order->set_shipping_state('');
-					$order->set_shipping_postcode('');
-					$order->save();
+			@set_time_limit(300);
+			$meta_rows = $wpdb->get_results(
+				"SELECT meta_id, post_id, meta_value FROM {$wpdb->postmeta} WHERE meta_key = '_shipping_cvs_store_ID'"
+			);
+			foreach ( $meta_rows as $meta_row ) {
+				$cvs_store_address = get_metadata('post', $meta_row->post_id, '_shipping_cvs_store_address', true);
+				if( empty($cvs_store_address) ) {
+					$shipping_address_1 = get_metadata('post', $meta_row->post_id, '_shipping_address_1', true);
+					update_metadata('post', $meta_row->post_id, '_shipping_cvs_store_address', $shipping_address_1);
 				}
+
+				$cvs_info_list = get_metadata('post', $meta_row->post_id, '_shipping_cvs_info', true);
+				if( is_array($cvs_info_list) ) {
+					foreach( $cvs_info_list as $key => $item ) {
+						$cvs_info_list[$key]['store_ID'] = $meta_row->meta_value;
+					}
+					update_metadata('post', $meta_row->post_id, '_shipping_cvs_info', $cvs_info_list);
+				}
+
+				update_metadata('post', $meta_row->post_id, '_shipping_company', '');
+				update_metadata('post', $meta_row->post_id, '_shipping_address_2', '');
+				update_metadata('post', $meta_row->post_id, '_shipping_city', '');
+				update_metadata('post', $meta_row->post_id, '_shipping_state', '');
+				update_metadata('post', $meta_row->post_id, '_shipping_postcode', '');
 			}
 
 			RY_WT::update_option('version', '0.0.24');
+		}
+
+		if( version_compare($now_version, '0.0.28', '<' ) ) {
+			RY_WT::update_option('version', '0.0.28');
 		}
 	}
 }

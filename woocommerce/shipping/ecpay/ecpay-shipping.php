@@ -73,7 +73,7 @@ final class RY_ECPay_Shipping {
 	}
 
 	public static function add_sections($sections) {
-		$sections['ecpay_shipping'] = __('ECPay shipping options', RY_WT::$textdomain);
+		$sections['ecpay_shipping'] = __('ECPay shipping options', 'ry-woocommerce-tools');
 		return $sections;
 	}
 
@@ -90,19 +90,19 @@ final class RY_ECPay_Shipping {
 			$name = get_option(RY_WT::$option_prefix . 'ecpay_shipping_sender_name');
 			if( mb_strwidth($name) < 1 || mb_strwidth($name) > 10 ) {
 				$enable = false;
-				WC_Admin_Settings::add_error(__('Verification failed!', RY_WT::$textdomain) . ' ' . __('Name length between 1 to 10 letter (5 if chinese)', RY_WT::$textdomain));
+				WC_Admin_Settings::add_error(__('Verification failed!', 'ry-woocommerce-tools') . ' ' . __('Name length between 1 to 10 letter (5 if chinese)', 'ry-woocommerce-tools'));
 				update_option(RY_WT::$option_prefix . 'ecpay_shipping_sender_name', '');
 			}
 			if( !empty(get_option(RY_WT::$option_prefix . 'ecpay_shipping_sender_phone')) ) {
 				if( 1 !== preg_match('@^\(0\d{1,2}\)\d{6,8}(#\d+)?$@', get_option(RY_WT::$option_prefix . 'ecpay_shipping_sender_phone')) ) {
 					$enable = false;
-					WC_Admin_Settings::add_error(__('Verification failed!', RY_WT::$textdomain) . ' ' . __('Phone format (0x)xxxxxxx#xx', RY_WT::$textdomain));
+					WC_Admin_Settings::add_error(__('Verification failed!', 'ry-woocommerce-tools') . ' ' . __('Phone format (0x)xxxxxxx#xx', 'ry-woocommerce-tools'));
 					update_option(RY_WT::$option_prefix . 'ecpay_shipping_sender_phone', '');
 				}
 			}
 			if( 1 !== preg_match('@^09\d{8}?$@', get_option(RY_WT::$option_prefix . 'ecpay_shipping_sender_cellphone')) ) {
 				$enable = false;
-				WC_Admin_Settings::add_error(__('Verification failed!', RY_WT::$textdomain) . ' ' . __('Cellphone format 09xxxxxxxx', RY_WT::$textdomain));
+				WC_Admin_Settings::add_error(__('Verification failed!', 'ry-woocommerce-tools') . ' ' . __('Cellphone format 09xxxxxxxx', 'ry-woocommerce-tools'));
 				update_option(RY_WT::$option_prefix . 'ecpay_shipping_sender_cellphone', '');
 			}
 			if( 'yes' !== get_option(RY_WT::$option_prefix . 'ecpay_shipping_testmode', 'yes') ) {
@@ -117,29 +117,29 @@ final class RY_ECPay_Shipping {
 				}
 			}
 			if( !$enable ) {
-				WC_Admin_Settings::add_error(__('ECPay shipping method failed to enable!', RY_WT::$textdomain));
+				WC_Admin_Settings::add_error(__('ECPay shipping method failed to enable!', 'ry-woocommerce-tools'));
 				update_option(RY_WT::$option_prefix . 'ecpay_shipping_cvs', 'no');
 			}
 		}
 		if( !preg_match('/^[a-z0-9]*$/i', get_option(RY_WT::$option_prefix . 'ecpay_shipping_order_prefix')) ) {
-			WC_Admin_Settings::add_error(__('Order no prefix only letters and numbers allowed allowed', RY_WT::$textdomain));
+			WC_Admin_Settings::add_error(__('Order no prefix only letters and numbers allowed allowed', 'ry-woocommerce-tools'));
 			update_option(RY_WT::$option_prefix . 'ecpay_shipping_order_prefix', '');
 		}
 	}
 
 	public static function add_statuses($order_statuses) {
-		$order_statuses['wc-ry-at-cvs'] = _x('Wait pickup (cvs)', 'Order status', RY_WT::$textdomain);
+		$order_statuses['wc-ry-at-cvs'] = _x('Wait pickup (cvs)', 'Order status', 'ry-woocommerce-tools');
 		return $order_statuses;
 	}
 
 	public static function add_order_statuses() {
 		register_post_status('wc-ry-at-cvs', array(
-			'label' => _x('Wait pickup (cvs)', 'Order status', RY_WT::$textdomain),
+			'label' => _x('Wait pickup (cvs)', 'Order status', 'ry-woocommerce-tools'),
 			'public' => false,
 			'exclude_from_search' => false,
 			'show_in_admin_all_list' => true,
 			'show_in_admin_status_list' => true,
-			'label_count' => _n_noop('Wait pickup (cvs) <span class="count">(%s)</span>', 'Wait pickup (cvs) <span class="count">(%s)</span>', RY_WT::$textdomain),
+			'label_count' => _n_noop('Wait pickup (cvs) <span class="count">(%s)</span>', 'Wait pickup (cvs) <span class="count">(%s)</span>', 'ry-woocommerce-tools'),
 		));
 	}
 
@@ -249,21 +249,21 @@ final class RY_ECPay_Shipping {
 			'priority' => 100
 		);
 		$fields['shipping']['CVSStoreName'] = array(
-			'label' => __('Store Name', RY_WT::$textdomain),
+			'label' => __('Store Name', 'ry-woocommerce-tools'),
 			'required' => false,
 			'type' => 'hiddentext',
 			'class' => array('form-row-wide', 'cvs-info'),
 			'priority' => 110
 		);
 		$fields['shipping']['CVSAddress'] = array(
-			'label' => __('Store Address', RY_WT::$textdomain),
+			'label' => __('Store Address', 'ry-woocommerce-tools'),
 			'required' => false,
 			'type' => 'hiddentext',
 			'class' => array('form-row-wide', 'cvs-info'),
 			'priority' => 111
 		);
 		$fields['shipping']['CVSTelephone'] = array(
-			'label' => __('Store Telephone', RY_WT::$textdomain),
+			'label' => __('Store Telephone', 'ry-woocommerce-tools'),
 			'required' => false,
 			'type' => 'hiddentext',
 			'class' => array('form-row-wide', 'cvs-info'),
@@ -316,7 +316,7 @@ final class RY_ECPay_Shipping {
 			$order->set_shipping_state('');
 			$order->set_shipping_postcode('');
 
-			$order->add_order_note(sprintf(__('CVS store %s (%s)', RY_WT::$textdomain), $data['CVSStoreName'], $data['CVSStoreID']));
+			$order->add_order_note(sprintf(__('CVS store %s (%s)', 'ry-woocommerce-tools'), $data['CVSStoreName'], $data['CVSStoreID']));
 			$order->update_meta_data('_shipping_cvs_store_ID', $data['CVSStoreID']);
 			$order->update_meta_data('_shipping_cvs_store_name', $data['CVSStoreName']);
 			$order->update_meta_data('_shipping_cvs_store_address', $data['CVSAddress']);

@@ -11,7 +11,7 @@ class RY_ECPay_Shipping_Meta_Box {
 
 			foreach( $theorder->get_items('shipping') as $item_id => $item ) {
 				if( RY_ECPay_Shipping::get_order_support_shipping($item) !== false ) {
-					add_meta_box('ry-ecpoay-shipping-info', __('CVS info', RY_WT::$textdomain), 'RY_ECPay_Shipping_Meta_Box::output', 'shop_order', 'normal', 'high');
+					add_meta_box('ry-ecpoay-shipping-info', __('CVS info', 'ry-woocommerce-tools'), 'RY_ECPay_Shipping_Meta_Box::output', 'shop_order', 'normal', 'high');
 					break;
 				}
 			}
@@ -32,15 +32,15 @@ class RY_ECPay_Shipping_Meta_Box {
 		<table cellpadding="0" cellspacing="0" class="widefat">
 			<thead>
 				<tr>
-					<th><?=__('ECPay shipping ID', RY_WT::$textdomain) ?></th>
-					<th><?=__('Shipping payment no', RY_WT::$textdomain) ?></th>
-					<th><?=__('Store ID', RY_WT::$textdomain) ?></th>
-					<th><?=__('Shipping status', RY_WT::$textdomain) ?></th>
-					<th><?=__('declare amount', RY_WT::$textdomain) ?></th>
-					<th><?=__('Collection of money', RY_WT::$textdomain) ?></th>
-					<th><?=__('Shipping status last change time', RY_WT::$textdomain) ?></th>
-					<th><?=__('Shipping create time', RY_WT::$textdomain) ?></th>
-					<th><?=__('Shipping booking note', RY_WT::$textdomain) ?></th>
+					<th><?=__('ECPay shipping ID', 'ry-woocommerce-tools') ?></th>
+					<th><?=__('Shipping payment no', 'ry-woocommerce-tools') ?></th>
+					<th><?=__('Store ID', 'ry-woocommerce-tools') ?></th>
+					<th><?=__('Shipping status', 'ry-woocommerce-tools') ?></th>
+					<th><?=__('declare amount', 'ry-woocommerce-tools') ?></th>
+					<th><?=__('Collection of money', 'ry-woocommerce-tools') ?></th>
+					<th><?=__('Shipping status last change time', 'ry-woocommerce-tools') ?></th>
+					<th><?=__('Shipping create time', 'ry-woocommerce-tools') ?></th>
+					<th><?=__('Shipping booking note', 'ry-woocommerce-tools') ?></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -56,9 +56,9 @@ class RY_ECPay_Shipping_Meta_Box {
 						<td><?=$item['amount']; ?></td>
 						<td><?=($item['IsCollection'] == 'Y') ? __('Yes') : __('No') ?></td> 
 						<?php /* translators: %1$s: date %2$s: time */ ?>
-						<td><?=sprintf(_x('%1$s %2$s', 'Datetime', RY_WT::$textdomain), $item['edit']->date_i18n(wc_date_format()), $item['edit']->date_i18n(wc_time_format())) ?></td>
-						<td><?=sprintf(_x('%1$s %2$s', 'Datetime', RY_WT::$textdomain), $item['create']->date_i18n(wc_date_format()), $item['create']->date_i18n(wc_time_format())) ?></td>
-						<td><button type="button" class="button print_info" data-orderid="<?=$post->ID ?>" data-id="<?=$item['ID'] ?>"><?=__('Print', RY_WT::$textdomain) ?></button></td>
+						<td><?=sprintf(_x('%1$s %2$s', 'Datetime', 'ry-woocommerce-tools'), $item['edit']->date_i18n(wc_date_format()), $item['edit']->date_i18n(wc_time_format())) ?></td>
+						<td><?=sprintf(_x('%1$s %2$s', 'Datetime', 'ry-woocommerce-tools'), $item['create']->date_i18n(wc_date_format()), $item['create']->date_i18n(wc_time_format())) ?></td>
+						<td><button type="button" class="button print_info" data-orderid="<?=$post->ID ?>" data-id="<?=$item['ID'] ?>"><?=__('Print', 'ry-woocommerce-tools') ?></button></td>
 					</tr>
 				<?php } ?>
 			</tbody>

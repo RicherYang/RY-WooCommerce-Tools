@@ -4,7 +4,7 @@ defined('RY_WT_VERSION') OR exit('No direct script access allowed');
 return array(
 	'enabled' => array(
 		'title' => __('Enable/Disable', 'woocommerce'),
-		'label' => sprintf(__('Enable %s', RY_WT::$textdomain), $this->method_title),
+		'label' => sprintf(__('Enable %s', 'ry-woocommerce-tools'), $this->method_title),
 		'type' => 'checkbox',
 		'default' => 'no',
 	),
@@ -23,11 +23,11 @@ return array(
 		'description' => __('This controls the description which the user sees during checkout.', 'woocommerce'),
 	),
 	'min_amount' => array(
-		'title' => __('Minimum order amount', RY_WT::$textdomain),
+		'title' => __('Minimum order amount', 'ry-woocommerce-tools'),
 		'type' => 'number',
 		'default' => 0,
 		'placeholder' => 0,
-		'description' => __('0 to disable minimum amount limit.', RY_WT::$textdomain),
+		'description' => __('0 to disable minimum amount limit.', 'ry-woocommerce-tools'),
 		'custom_attributes' => array(
 			'min' => 0,
 			'max' => 20000,
@@ -35,11 +35,11 @@ return array(
 		)
 	),
 	'max_amount' => array(
-		'title' => __('Maximum order amount', RY_WT::$textdomain),
+		'title' => __('Maximum order amount', 'ry-woocommerce-tools'),
 		'type' => 'number',
 		'default' => 0,
 		'placeholder' => 0,
-		'description' => __('0 to disable maximum amount limit.', RY_WT::$textdomain),
+		'description' => __('0 to disable maximum amount limit.', 'ry-woocommerce-tools'),
 		'custom_attributes' => array(
 			'min' => 0,
 			'max' => 20000,
@@ -47,11 +47,11 @@ return array(
 		)
 	),
 	'expire_date' => array(
-		'title' => __('Payment deadline', RY_WT::$textdomain),
+		'title' => __('Payment deadline', 'ry-woocommerce-tools'),
 		'type' => 'number',
 		'default' => 7,
 		'placeholder' => 7,
-		'description' => __('Barcode allowable payment deadline from 1 day to 30 days.', RY_WT::$textdomain),
+		'description' => __('Barcode allowable payment deadline from 1 day to 30 days.', 'ry-woocommerce-tools'),
 		'custom_attributes' => array(
 			'min' => 1,
 			'max' => 30,

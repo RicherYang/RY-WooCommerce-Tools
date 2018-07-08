@@ -8,7 +8,7 @@ class RY_ECPay_Shipping_CVS_711 extends RY_ECPay_Shipping_CVS {
 	public function __construct($instance_id = 0) {
 		$this->id = 'ry_ecpay_shipping_cvs_711';
 		$this->instance_id = absint($instance_id);
-		$this->method_title = __('ECPay shipping CVS 7-11', RY_WT::$textdomain);
+		$this->method_title = __('ECPay shipping CVS 7-11', 'ry-woocommerce-tools');
 		$this->method_description = '';
 		$this->supports = array(
 			'shipping-zones',

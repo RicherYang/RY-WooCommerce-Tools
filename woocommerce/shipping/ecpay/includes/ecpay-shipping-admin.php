@@ -59,19 +59,19 @@ class RY_ECPay_Shipping_admin {
 				unset($shipping_fields['country']);
 				unset($shipping_fields['state']);
 				$shipping_fields['cvs_store_ID'] = array(
-					'label' => __('Store ID', RY_WT::$textdomain),
+					'label' => __('Store ID', 'ry-woocommerce-tools'),
 					'show' => false
 				);
 				$shipping_fields['cvs_store_name'] = array(
-					'label' => __('Store Name', RY_WT::$textdomain),
+					'label' => __('Store Name', 'ry-woocommerce-tools'),
 					'show' => false
 				);
 				$shipping_fields['cvs_store_address'] = array(
-					'label' => __('Store Address', RY_WT::$textdomain),
+					'label' => __('Store Address', 'ry-woocommerce-tools'),
 					'show' => false
 				);
 				$shipping_fields['cvs_store_telephone'] = array(
-					'label' => __('Store Telephone', RY_WT::$textdomain),
+					'label' => __('Store Telephone', 'ry-woocommerce-tools'),
 					'show' => false
 				);
 				$shipping_fields['phone'] = array(
@@ -90,12 +90,12 @@ class RY_ECPay_Shipping_admin {
 
 		foreach( $theorder->get_items('shipping') as $item_id => $item ) {
 			if( RY_ECPay_Shipping::get_order_support_shipping($item) !== false ) {
-				$order_actions['get_new_cvs_no'] = __('Get new CVS payment no', RY_WT::$textdomain);
+				$order_actions['get_new_cvs_no'] = __('Get new CVS payment no', 'ry-woocommerce-tools');
 				if( $theorder->get_payment_method() == 'cod' ) {
-					$order_actions['get_new_cvs_no_cod'] = __('Get new CVS payment no with cod', RY_WT::$textdomain);
+					$order_actions['get_new_cvs_no_cod'] = __('Get new CVS payment no with cod', 'ry-woocommerce-tools');
 				}
 				if( $theorder->has_status(array('ry-at-cvs')) ) {
-					$order_actions['send_at_cvs_email'] = __('Resend at cvs notification', RY_WT::$textdomain);
+					$order_actions['send_at_cvs_email'] = __('Resend at cvs notification', 'ry-woocommerce-tools');
 				}
 			}
 		}

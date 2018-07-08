@@ -7,8 +7,8 @@ class RY_ECPay_Gateway_Barcode extends RY_ECPay_Gateway_Base {
 	public function __construct() {
 		$this->id = 'ry_ecpay_barcode';
 		$this->has_fields = false;
-		$this->order_button_text = __('Pay via BARCODE', RY_WT::$textdomain);
-		$this->method_title = __('ECPay BARCODE', RY_WT::$textdomain);
+		$this->order_button_text = __('Pay via BARCODE', 'ry-woocommerce-tools');
+		$this->method_title = __('ECPay BARCODE', 'ry-woocommerce-tools');
 		$this->method_description = '';
 
 		$this->form_fields = include(RY_WT_PLUGIN_DIR . 'woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-barcode.php');
@@ -33,12 +33,7 @@ class RY_ECPay_Gateway_Barcode extends RY_ECPay_Gateway_Base {
 
 	public function is_available() {
 		if( 'yes' == $this->enabled && WC()->cart ) {
-			$total = WC()->cart->get_displayed_subtotal();
-			if( 'incl' === WC()->cart->tax_display_cart ) {
-				$total = round($total - (WC()->cart->get_cart_discount_total() + WC()->cart->get_cart_discount_tax_total()), wc_get_price_decimals());
-			} else {
-				$total = round($total - WC()->cart->get_cart_discount_total(), wc_get_price_decimals());
-			}
+			$total = $this->get_order_total();
 
 			if( $total < 30 ) {
 				return false;
@@ -59,7 +54,7 @@ class RY_ECPay_Gateway_Barcode extends RY_ECPay_Gateway_Base {
 
 	public function process_payment($order_id) {
 		$order = wc_get_order($order_id);
-		$order->add_order_note(__('Pay via ECPay BARCODE', RY_WT::$textdomain));
+		$order->add_order_note(__('Pay via ECPay BARCODE', 'ry-woocommerce-tools'));
 		wc_reduce_stock_levels($order_id);
 
 		return array(
@@ -72,19 +67,19 @@ class RY_ECPay_Gateway_Barcode extends RY_ECPay_Gateway_Base {
 		$_POST['woocommerce_ry_ecpay_barcode_expire_date'] = (int) $_POST['woocommerce_ry_ecpay_barcode_expire_date'];
 		if( $_POST['woocommerce_ry_ecpay_barcode_expire_date'] < 1 || $_POST['woocommerce_ry_ecpay_barcode_expire_date'] > 30 ) {
 			$_POST['woocommerce_ry_ecpay_barcode_expire_date'] = 7;
-			WC_Admin_Settings::add_error(__('BARCODE payment deadline out of range. Set as default value.', RY_WT::$textdomain));
+			WC_Admin_Settings::add_error(__('BARCODE payment deadline out of range. Set as default value.', 'ry-woocommerce-tools'));
 		}
 
 		$_POST['woocommerce_ry_ecpay_barcode_min_amount'] = (int) $_POST['woocommerce_ry_ecpay_barcode_min_amount'];
 		if( $_POST['woocommerce_ry_ecpay_barcode_min_amount'] > 0 && $_POST['woocommerce_ry_ecpay_barcode_min_amount'] < 30 ) {
 			$_POST['woocommerce_ry_ecpay_barcode_min_amount'] = 0;
-			WC_Admin_Settings::add_error(sprintf(__('%s minimum amount out of range. Set as default value.', RY_WT::$textdomain), $this->method_title));
+			WC_Admin_Settings::add_error(sprintf(__('%s minimum amount out of range. Set as default value.', 'ry-woocommerce-tools'), $this->method_title));
 		}
 
 		$_POST['woocommerce_ry_ecpay_barcode_max_amount'] = (int) $_POST['woocommerce_ry_ecpay_barcode_max_amount'];
 		if( $_POST['woocommerce_ry_ecpay_barcode_max_amount'] > 20000 ) {
 			$_POST['woocommerce_ry_ecpay_barcode_max_amount'] = 0;
-			WC_Admin_Settings::add_error(sprintf(__('%s maximum amount out of range. Set as default value.', RY_WT::$textdomain), $this->method_title));
+			WC_Admin_Settings::add_error(sprintf(__('%s maximum amount out of range. Set as default value.', 'ry-woocommerce-tools'), $this->method_title));
 		}
 
 		parent::process_admin_options();
@@ -96,22 +91,22 @@ class RY_ECPay_Gateway_Barcode extends RY_ECPay_Gateway_Base {
 		}
 		$payment_type = $order->get_meta('_ecpay_payment_type');
 		?>
-		<h3 style="clear:both"><?=__('Payment details', RY_WT::$textdomain) ?></h3>
+		<h3 style="clear:both"><?=__('Payment details', 'ry-woocommerce-tools') ?></h3>
 		<table>
 			<tr>
-				<td><?=__('Barcode 1', RY_WT::$textdomain) ?></td>
+				<td><?=__('Barcode 1', 'ry-woocommerce-tools') ?></td>
 				<td><?=$order->get_meta('_ecpay_barcode_Barcode1') ?></td>
 			</tr>
 			<tr>
-				<td><?=__('Barcode 2', RY_WT::$textdomain) ?></td>
+				<td><?=__('Barcode 2', 'ry-woocommerce-tools') ?></td>
 				<td><?=$order->get_meta('_ecpay_barcode_Barcode2') ?></td>
 			</tr>
 			<tr>
-				<td><?=__('Barcode 3', RY_WT::$textdomain) ?></td>
+				<td><?=__('Barcode 3', 'ry-woocommerce-tools') ?></td>
 				<td><?=$order->get_meta('_ecpay_barcode_Barcode3') ?></td>
 			</tr>
 			<tr>
-				<td><?=__('Payment deadline', RY_WT::$textdomain) ?></td>
+				<td><?=__('Payment deadline', 'ry-woocommerce-tools') ?></td>
 				<td><?=$order->get_meta('_ecpay_barcode_ExpireDate') ?></td>
 			</tr>
 		</table>

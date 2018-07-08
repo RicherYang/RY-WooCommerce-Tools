@@ -18,7 +18,7 @@ class RY_ECPay_Gateway_Base extends WC_Payment_Gateway {
 	}
 
 	public function get_icon() {
-		$icon_html = '<img src="' . esc_attr(RY_WT_PLUGIN_URL . 'icon/ecpay_logo.png') . '" alt="' . esc_attr__('ECPay', RY_WT::$textdomain) . '">';
+		$icon_html = '<img src="' . esc_attr(RY_WT_PLUGIN_URL . 'icon/ecpay_logo.png') . '" alt="' . esc_attr__('ECPay', 'ry-woocommerce-tools') . '">';
 
 		return apply_filters('woocommerce_gateway_icon', $icon_html, $this->id);
 	}
@@ -28,7 +28,7 @@ class RY_ECPay_Gateway_Base extends WC_Payment_Gateway {
 		$_POST[$filed_name] = (int) $_POST[$filed_name];
 		if( $_POST[$filed_name] < 0 ) {
 			$_POST[$filed_name] = 0;
-			WC_Admin_Settings::add_error(sprintf(__('%s minimum amount out of range. Set as default value.', RY_WT::$textdomain), $this->method_title));
+			WC_Admin_Settings::add_error(sprintf(__('%s minimum amount out of range. Set as default value.', 'ry-woocommerce-tools'), $this->method_title));
 		}
 
 		parent::process_admin_options();
@@ -47,31 +47,31 @@ class RY_ECPay_Gateway_Base extends WC_Payment_Gateway {
 
 	protected static function get_payment_subtypes() {
 		return array(
-			'TAISHIN' => __('TAISHIN', RY_WT::$textdomain),
-			'ESUN' => __('ESUN', RY_WT::$textdomain),
-			'BOT' => __('BOT', RY_WT::$textdomain),
-			'FUBON' => __('FUBON', RY_WT::$textdomain),
-			'CHINATRUST' => __('CHINATRUST', RY_WT::$textdomain),
-			'FIRST' => __('FIRST', RY_WT::$textdomain),
-			'CATHAY' => __('CATHAY', RY_WT::$textdomain),
-			'MEGA' => __('MEGA', RY_WT::$textdomain),
-			'LAND' => __('LAND', RY_WT::$textdomain),
-			'TACHONG' => __('TACHONG', RY_WT::$textdomain),
-			'SINOPAC' => __('SINOPAC', RY_WT::$textdomain),
-			'CVS' => __('CVS', RY_WT::$textdomain),
-			'OK' => __('OK', RY_WT::$textdomain),
-			'FAMILY' => __('FAMILY', RY_WT::$textdomain),
-			'HILIFE' => __('HILIFE', RY_WT::$textdomain),
-			'IBON' => __('IBON', RY_WT::$textdomain)
+			'TAISHIN' => __('TAISHIN', 'ry-woocommerce-tools'),
+			'ESUN' => __('ESUN', 'ry-woocommerce-tools'),
+			'BOT' => __('BOT', 'ry-woocommerce-tools'),
+			'FUBON' => __('FUBON', 'ry-woocommerce-tools'),
+			'CHINATRUST' => __('CHINATRUST', 'ry-woocommerce-tools'),
+			'FIRST' => __('FIRST', 'ry-woocommerce-tools'),
+			'CATHAY' => __('CATHAY', 'ry-woocommerce-tools'),
+			'MEGA' => __('MEGA', 'ry-woocommerce-tools'),
+			'LAND' => __('LAND', 'ry-woocommerce-tools'),
+			'TACHONG' => __('TACHONG', 'ry-woocommerce-tools'),
+			'SINOPAC' => __('SINOPAC', 'ry-woocommerce-tools'),
+			'CVS' => __('CVS', 'ry-woocommerce-tools'),
+			'OK' => __('OK', 'ry-woocommerce-tools'),
+			'FAMILY' => __('FAMILY', 'ry-woocommerce-tools'),
+			'HILIFE' => __('HILIFE', 'ry-woocommerce-tools'),
+			'IBON' => __('IBON', 'ry-woocommerce-tools')
 		);
 	}
 
 	protected function check_inpay_with_ssl() {
 		$post_filed = 'woocommerce_' . $this->id . '_inpay';
 		if( isset($_POST[$post_filed]) && 1 == (int) $_POST[$post_filed] ) {
-			if( 'yes' !== get_option('woocommerce_force_ssl_checkout') ) {
+			if( !wc_checkout_is_https() ) {
 				unset($_POST[$post_filed]);
-				WC_Admin_Settings::add_error(__('Inpay only work with ssl. You must enable force secure checkout.', RY_WT::$textdomain));
+				WC_Admin_Settings::add_error(__('Inpay only work with ssl. You must enable force secure checkout.', 'ry-woocommerce-tools'));
 			}
 		}
 	}

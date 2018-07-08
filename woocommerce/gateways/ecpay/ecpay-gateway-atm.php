@@ -8,8 +8,8 @@ class RY_ECPay_Gateway_Atm extends RY_ECPay_Gateway_Base {
 	public function __construct() {
 		$this->id = 'ry_ecpay_atm';
 		$this->has_fields = false;
-		$this->order_button_text = __('Pay via ATM', RY_WT::$textdomain);
-		$this->method_title = __('ECPay ATM', RY_WT::$textdomain);
+		$this->order_button_text = __('Pay via ATM', 'ry-woocommerce-tools');
+		$this->method_title = __('ECPay ATM', 'ry-woocommerce-tools');
 		$this->method_description = '';
 
 		$this->form_fields = include(RY_WT_PLUGIN_DIR . 'woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-atm.php');
@@ -31,12 +31,7 @@ class RY_ECPay_Gateway_Atm extends RY_ECPay_Gateway_Base {
 
 	public function is_available() {
 		if( 'yes' == $this->enabled && WC()->cart ) {
-			$total = WC()->cart->get_displayed_subtotal();
-			if( 'incl' === WC()->cart->tax_display_cart ) {
-				$total = round($total - (WC()->cart->get_cart_discount_total() + WC()->cart->get_cart_discount_tax_total()), wc_get_price_decimals());
-			} else {
-				$total = round($total - WC()->cart->get_cart_discount_total(), wc_get_price_decimals());
-			}
+			$total = $this->get_order_total();
 
 			if( $this->min_amount > 0 and $total < $this->min_amount ) {
 				return false;
@@ -52,7 +47,7 @@ class RY_ECPay_Gateway_Atm extends RY_ECPay_Gateway_Base {
 
 	public function process_payment($order_id) {
 		$order = wc_get_order($order_id);
-		$order->add_order_note(__('Pay via ECPay ATM', RY_WT::$textdomain));
+		$order->add_order_note(__('Pay via ECPay ATM', 'ry-woocommerce-tools'));
 		wc_reduce_stock_levels($order_id);
 
 		return array(
@@ -67,7 +62,7 @@ class RY_ECPay_Gateway_Atm extends RY_ECPay_Gateway_Base {
 		$_POST['woocommerce_ry_ecpay_atm_expire_date'] = (int) $_POST['woocommerce_ry_ecpay_atm_expire_date'];
 		if( $_POST['woocommerce_ry_ecpay_atm_expire_date'] < 1 || $_POST['woocommerce_ry_ecpay_atm_expire_date'] > 60 ) {
 			$_POST['woocommerce_ry_ecpay_atm_expire_date'] = 3;
-			WC_Admin_Settings::add_error(__('ATM payment deadline out of range. Set as default value.', RY_WT::$textdomain));
+			WC_Admin_Settings::add_error(__('ATM payment deadline out of range. Set as default value.', 'ry-woocommerce-tools'));
 		}
 
 		parent::process_admin_options();
@@ -79,18 +74,18 @@ class RY_ECPay_Gateway_Atm extends RY_ECPay_Gateway_Base {
 		}
 		$payment_type = $order->get_meta('_ecpay_payment_type');
 		?>
-		<h3 style="clear:both"><?=__('Payment details', RY_WT::$textdomain) ?></h3>
+		<h3 style="clear:both"><?=__('Payment details', 'ry-woocommerce-tools') ?></h3>
 		<table>
 			<tr>
-				<td><?=__('Bank', RY_WT::$textdomain) ?></td>
-				<td><?=__($order->get_meta('_ecpay_payment_subtype'), RY_WT::$textdomain) ?> (<?=$order->get_meta('_ecpay_atm_BankCode') ?>)</td>
+				<td><?=__('Bank', 'ry-woocommerce-tools') ?></td>
+				<td><?=__($order->get_meta('_ecpay_payment_subtype'), 'ry-woocommerce-tools') ?> (<?=$order->get_meta('_ecpay_atm_BankCode') ?>)</td>
 			</tr>
 			<tr>
-				<td><?=__('ATM Bank account', RY_WT::$textdomain) ?></td>
+				<td><?=__('ATM Bank account', 'ry-woocommerce-tools') ?></td>
 				<td><?=$order->get_meta('_ecpay_atm_vAccount') ?></td>
 			</tr>
 			<tr>
-				<td><?=__('Payment deadline', RY_WT::$textdomain) ?></td>
+				<td><?=__('Payment deadline', 'ry-woocommerce-tools') ?></td>
 				<td><?=$order->get_meta('_ecpay_atm_ExpireDate') ?></td>
 			</tr>
 		</table>

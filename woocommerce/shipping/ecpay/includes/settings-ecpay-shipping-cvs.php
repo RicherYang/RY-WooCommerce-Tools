@@ -20,7 +20,7 @@ $settings = array(
 		'class' => 'wc-enhanced-select',
 	),
 	'cost' => array(
-		'title' => __('Shipping cost', RY_WT::$textdomain),
+		'title' => __('Shipping cost', 'ry-woocommerce-tools'),
 		'type' => 'number',
 		'default' => 0,
 		'min' => 1,
@@ -37,7 +37,7 @@ $settings = array(
 		'class' => 'wc-enhanced-select'
 	),
 	'min_amount' => array(
-		'title' => __('Minimum order amount', RY_WT::$textdomain),
+		'title' => __('Minimum order amount', 'ry-woocommerce-tools'),
 		'type' => 'price',
 		'default' => 0,
 		'placeholder' => wc_format_localized_price(0),
@@ -46,11 +46,11 @@ $settings = array(
 	),
 	'weight_plus_cost' => array(
 		// translators: %s WooCommerce weight unit*
-		'title' => sprintf(__('Every weight (%s) to plus times of cost', RY_WT::$textdomain), __(get_option('woocommerce_weight_unit'), 'woocommerce')),
+		'title' => sprintf(__('Every weight (%s) to plus times of cost', 'ry-woocommerce-tools'), __(get_option('woocommerce_weight_unit'), 'woocommerce')),
 		'type' => 'number',
 		'default' => 0,
 		'placeholder' => 0,
-		'description' => __('Calculate free shipping first. 0 to disable plus cost by weight.', RY_WT::$textdomain),
+		'description' => __('Calculate free shipping first. 0 to disable plus cost by weight.', 'ry-woocommerce-tools'),
 		'desc_tip' => true
 	)
 );
@@ -59,11 +59,11 @@ $shipping_classes = WC()->shipping->get_shipping_classes();
 
 if ( !empty($shipping_classes) ) {
 	$settings['class_available'] = array(
-		'title' => __('Shipping available', RY_WT::$textdomain),
+		'title' => __('Shipping available', 'ry-woocommerce-tools'),
 		'type' => 'title',
 		'default' => '',
 		/* translators: %s: shipping class setting url */
-		'description' => sprintf(__('These shipping available based on the <a href="%s">product shipping class</a>.', RY_WT::$textdomain), admin_url('admin.php?page=wc-settings&tab=shipping&section=classes')),
+		'description' => sprintf(__('These shipping available based on the <a href="%s">product shipping class</a>.', 'ry-woocommerce-tools'), admin_url('admin.php?page=wc-settings&tab=shipping&section=classes')),
 	);
 	foreach( $shipping_classes as $shipping_class ) {
 		if( !isset($shipping_class->term_id) ) {
@@ -71,7 +71,7 @@ if ( !empty($shipping_classes) ) {
 		}
 		$settings['class_available_' . $shipping_class->term_id] = array(
 			/* translators: %s: shipping class name */
-			'title' => sprintf(__('"%s" available', RY_WT::$textdomain), esc_html($shipping_class->name)),
+			'title' => sprintf(__('"%s" available', 'ry-woocommerce-tools'), esc_html($shipping_class->name)),
 			'type' => 'checkbox',
 			'default' => $this->get_option('class_available_' . $shipping_class->term_id, 'yes')
 		);
