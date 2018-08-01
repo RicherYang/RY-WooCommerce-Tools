@@ -9,6 +9,8 @@ class RY_ECPay_Shipping_admin {
 
 		add_filter('woocommerce_admin_order_actions', array(__CLASS__, 'add_admin_order_actions'), 10, 2);
 		add_filter('woocommerce_admin_shipping_fields', array(__CLASS__, 'set_cvs_shipping_fields'));
+		add_action('woocommerce_shipping_zone_method_status_toggled', array(__CLASS__, 'check_can_enable'), 10, 4);
+		add_action('woocommerce_update_options_shipping_options', array(__CLASS__, 'check_ship_destination'));
 		add_filter('woocommerce_order_actions', array(__CLASS__, 'add_order_actions'));
 		add_action('woocommerce_order_action_get_new_cvs_no', array('RY_ECPay_Shipping_Api', 'get_cvs_code'));
 		add_action('woocommerce_order_action_get_new_cvs_no_cod', array('RY_ECPay_Shipping_Api', 'get_cvs_code_cod'));
@@ -80,6 +82,54 @@ class RY_ECPay_Shipping_admin {
 			}
 		}
 		return $shipping_fields;
+	}
+
+	public static function check_can_enable($instance_id, $method_id, $zone_id, $is_enabled) {
+		if( array_key_exists($method_id, RY_ECPay_Shipping::$support_methods) ) {
+			if( $is_enabled == 1 ) {
+				if( 'billing_only' === get_option('woocommerce_ship_to_destination') ) {
+					global $wpdb;
+
+					$wpdb->update(
+						$wpdb->prefix . 'woocommerce_shipping_zone_methods',
+						array(
+							'is_enabled' => 0
+						),
+						array(
+							'instance_id' => absint($instance_id)
+						)
+					);
+				}
+			}
+		}
+	}
+
+	public static function check_ship_destination() {
+		global $wpdb;
+		if( 'billing_only' === get_option('woocommerce_ship_to_destination') ) {
+			add_action('woocommerce_sections_shipping', array(__CLASS__, 'shipping_destination_notice'));
+
+			RY_WT::update_option('ecpay_shipping_cvs_type', 'disable');
+			foreach( array('ry_ecpay_shipping_cvs_711', 'ry_ecpay_shipping_cvs_hilife', 'ry_ecpay_shipping_cvs_family') as $method_id ) {
+				$wpdb->update(
+					$wpdb->prefix . 'woocommerce_shipping_zone_methods',
+					array(
+						'is_enabled' => 0
+					),
+					array(
+						'method_id' => $method_id,
+					)
+				);
+			}
+		} else {
+			if( RY_WT::get_option('ecpay_shipping_cvs_type') == 'disable' ) {
+				RY_WT::update_option('ecpay_shipping_cvs_type', 'C2C');
+			}
+		}
+	}
+
+	public static function shipping_destination_notice() {
+		echo '<div id="message" class="error inline"><p><strong>' . esc_html(__('All cvs shipping methods set to disable.', 'ry-woocommerce-tools')) . '</strong></p></div>';
 	}
 
 	public static function add_order_actions($order_actions) {

@@ -96,8 +96,27 @@ final class RY_WT_update {
 			RY_WT::update_option('version', '0.0.24');
 		}
 
-		if( version_compare($now_version, '0.0.28', '<' ) ) {
-			RY_WT::update_option('version', '0.0.28');
+		if( version_compare($now_version, '0.0.31', '<' ) ) {
+			if( 'billing_only' === get_option('woocommerce_ship_to_destination') ) {
+				RY_WT::update_option('ecpay_shipping_cvs_type', 'disable');
+				foreach( array('ry_ecpay_shipping_cvs_711', 'ry_ecpay_shipping_cvs_hilife', 'ry_ecpay_shipping_cvs_family') as $method_id ) {
+					$wpdb->update(
+						$wpdb->prefix . 'woocommerce_shipping_zone_methods',
+						array(
+							'is_enabled' => 0
+						),
+						array(
+							'method_id' => $method_id,
+						)
+					);
+				}
+			}
+
+			RY_WT::update_option('version', '0.0.31');
 		}
+
+		//if( version_compare($now_version, '0.0.31', '<' ) ) {
+		//	RY_WT::update_option('version', '0.0.31');
+		//}
 	}
 }

@@ -80,6 +80,13 @@ final class RY_ECPay_Shipping {
 	public static function add_setting($settings, $current_section) {
 		if( $current_section == 'ecpay_shipping' ) {
 			$settings = include(RY_WT_PLUGIN_DIR . 'woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php');
+			if( 'billing_only' === get_option('woocommerce_ship_to_destination') ) {
+				$key = array_search(RY_WT::$option_prefix . 'ecpay_shipping_cvs_type', array_column($settings, 'id'));
+				$settings[$key]['options'] = array(
+					'disable' => _x('Disable', 'Cvs type', 'ry-woocommerce-tools')
+				);
+				$settings[$key]['desc'] = __('Cvs only can enable with shipping destination not force to billing address.', 'ry-woocommerce-tools');
+			}
 		}
 		return $settings;
 	}

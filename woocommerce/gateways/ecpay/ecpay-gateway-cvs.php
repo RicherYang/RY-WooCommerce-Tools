@@ -32,19 +32,20 @@ class RY_ECPay_Gateway_Cvc extends RY_ECPay_Gateway_Base {
 	public function is_available() {
 		if( 'yes' == $this->enabled && WC()->cart ) {
 			$total = $this->get_order_total();
-			var_dump($total);
 
-			if( $total < 30 ) {
-				return false;
-			}
-			if( $total > 20000 ) {
-				return false;
-			}
-			if( $this->min_amount > 0 and $total < $this->min_amount ) {
-				return false;
-			}
-			if( $this->max_amount > 0 and $total > $this->max_amount ) {
-				return false;
+			if( $total > 0 ) {
+				if( $total < 30 ) {
+					return false;
+				}
+				if( $total > 20000 ) {
+					return false;
+				}
+				if( $this->min_amount > 0 and $total < $this->min_amount ) {
+					return false;
+				}
+				if( $this->max_amount > 0 and $total > $this->max_amount ) {
+					return false;
+				}
 			}
 		}
 

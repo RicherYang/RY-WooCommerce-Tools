@@ -27,7 +27,8 @@ class RY_ECPay_Shipping_Api extends RY_ECPay {
 					$item_names[] = trim($item->get_name());
 				}
 			}
-			$item_names = implode('#', $item_names);
+			$item_names = implode(' ', $item_names);
+			$item_names = str_replace(array('^','\'','`','!','@','＠','#','%','&','*','+','\\','"','<','>','|','_','[',']'), '', $item_names);
 			$item_names = mb_substr($item_names, 0, 25);
 
 			foreach( $order->get_items('shipping') as $item_id => $item ) {

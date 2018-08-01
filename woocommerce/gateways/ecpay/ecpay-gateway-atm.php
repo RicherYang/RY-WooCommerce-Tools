@@ -33,12 +33,13 @@ class RY_ECPay_Gateway_Atm extends RY_ECPay_Gateway_Base {
 		if( 'yes' == $this->enabled && WC()->cart ) {
 			$total = $this->get_order_total();
 
-			if( $this->min_amount > 0 and $total < $this->min_amount ) {
-				return false;
-			}
-
-			if( $this->max_amount > 0 and $total > $this->max_amount ) {
-				return false;
+			if( $total > 0 ) {
+				if( $this->min_amount > 0 and $total < $this->min_amount ) {
+					return false;
+				}
+				if( $this->max_amount > 0 and $total > $this->max_amount ) {
+					return false;
+				}
 			}
 		}
 

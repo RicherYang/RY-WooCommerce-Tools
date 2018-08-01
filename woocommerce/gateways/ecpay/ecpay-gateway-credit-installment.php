@@ -31,8 +31,10 @@ class RY_ECPay_Gateway_Credit_Installment extends RY_ECPay_Gateway_Base {
 			}
 			$total = $this->get_order_total();
 
-			if( $this->min_amount > 0 and $total < $this->min_amount ) {
-				return false;
+			if( $total > 0 ) {
+				if( $this->min_amount > 0 and $total < $this->min_amount ) {
+					return false;
+				}
 			}
 		}
 
