@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RY WooCommerce Tools\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-01 12:51+0800\n"
-"PO-Revision-Date: 2018-08-01 12:52+0800\n"
+"POT-Creation-Date: 2018-09-14 21:52+0800\n"
+"PO-Revision-Date: 2018-09-14 21:52+0800\n"
 "Last-Translator: Richer Yang\n"
 "Language-Team: <fantasyworldidvtw@gmail.com>\n"
 "Language: zh_TW\n"
@@ -57,8 +57,8 @@ msgstr "你訂購的商品已經送達超商門市。"
 #: ../templates/order/order-ecpay-payment-info-barcode.php:15
 #: ../templates/order/order-ecpay-payment-info-cvs.php:15
 #: ../woocommerce/gateways/ecpay/ecpay-gateway-atm.php:78
-#: ../woocommerce/gateways/ecpay/ecpay-gateway-barcode.php:96
-#: ../woocommerce/gateways/ecpay/ecpay-gateway-cvs.php:96
+#: ../woocommerce/gateways/ecpay/ecpay-gateway-barcode.php:92
+#: ../woocommerce/gateways/ecpay/ecpay-gateway-cvs.php:92
 msgid "Payment details"
 msgstr "付款詳細資料"
 
@@ -80,10 +80,10 @@ msgstr "ATM 繳費帳號"
 #: ../templates/order/order-ecpay-payment-info-barcode.php:37
 #: ../templates/order/order-ecpay-payment-info-cvs.php:23
 #: ../woocommerce/gateways/ecpay/ecpay-gateway-atm.php:89
-#: ../woocommerce/gateways/ecpay/ecpay-gateway-barcode.php:111
-#: ../woocommerce/gateways/ecpay/ecpay-gateway-cvs.php:103
+#: ../woocommerce/gateways/ecpay/ecpay-gateway-barcode.php:107
+#: ../woocommerce/gateways/ecpay/ecpay-gateway-cvs.php:99
 #: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-atm.php:54
-#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-barcode.php:50
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-barcode.php:48
 msgid "Payment deadline"
 msgstr "付款截止日"
 
@@ -99,22 +99,22 @@ msgid "%1$s %2$s"
 msgstr "%1$s %2$s"
 
 #: ../templates/order/order-ecpay-payment-info-barcode.php:19
-#: ../woocommerce/gateways/ecpay/ecpay-gateway-barcode.php:99
+#: ../woocommerce/gateways/ecpay/ecpay-gateway-barcode.php:95
 msgid "Barcode 1"
 msgstr "Barcode 1"
 
 #: ../templates/order/order-ecpay-payment-info-barcode.php:25
-#: ../woocommerce/gateways/ecpay/ecpay-gateway-barcode.php:103
+#: ../woocommerce/gateways/ecpay/ecpay-gateway-barcode.php:99
 msgid "Barcode 2"
 msgstr "Barcode 2"
 
 #: ../templates/order/order-ecpay-payment-info-barcode.php:31
-#: ../woocommerce/gateways/ecpay/ecpay-gateway-barcode.php:107
+#: ../woocommerce/gateways/ecpay/ecpay-gateway-barcode.php:103
 msgid "Barcode 3"
 msgstr "Barcode 3"
 
 #: ../templates/order/order-ecpay-payment-info-cvs.php:19
-#: ../woocommerce/gateways/ecpay/ecpay-gateway-cvs.php:99
+#: ../woocommerce/gateways/ecpay/ecpay-gateway-cvs.php:95
 msgid "CVS code"
 msgstr "繳費代碼"
 
@@ -213,26 +213,25 @@ msgstr "使用超商條碼付款"
 msgid "ECPay BARCODE"
 msgstr "綠界超商條碼"
 
-#: ../woocommerce/gateways/ecpay/ecpay-gateway-barcode.php:59
+#: ../woocommerce/gateways/ecpay/ecpay-gateway-barcode.php:56
 msgid "Pay via ECPay BARCODE"
 msgstr "透過 綠界金流超商條碼 付款"
 
-#: ../woocommerce/gateways/ecpay/ecpay-gateway-barcode.php:72
+#: ../woocommerce/gateways/ecpay/ecpay-gateway-barcode.php:69
 msgid "BARCODE payment deadline out of range. Set as default value."
 msgstr "超商條碼繳費期限超過限制，調整為預設值。"
 
-#: ../woocommerce/gateways/ecpay/ecpay-gateway-barcode.php:78
-#: ../woocommerce/gateways/ecpay/ecpay-gateway-cvs.php:78
+#: ../woocommerce/gateways/ecpay/ecpay-gateway-barcode.php:75
+#: ../woocommerce/gateways/ecpay/ecpay-gateway-cvs.php:75
 #: ../woocommerce/gateways/ecpay/includes/ecpay-gateway-base.php:31
 #, php-format
 msgid "%s minimum amount out of range. Set as default value."
 msgstr "%s 最小訂購金額超過限制，調整為預設值。"
 
-#: ../woocommerce/gateways/ecpay/ecpay-gateway-barcode.php:84
-#: ../woocommerce/gateways/ecpay/ecpay-gateway-cvs.php:84
+#: ../woocommerce/gateways/ecpay/ecpay-gateway-barcode.php:80
 #, php-format
-msgid "%s maximum amount out of range. Set as default value."
-msgstr "%s 最大訂購金額超過限制，調整為預設值。"
+msgid "%s maximum amount more then ECPay normal maximum (20000)."
+msgstr "%s 最大訂購金額超過綠界的標準限制 (20000)。"
 
 #: ../woocommerce/gateways/ecpay/ecpay-gateway-credit-installment.php:11
 msgid "Pay via Credit(installment)"
@@ -271,13 +270,18 @@ msgstr "使用超商代碼 付款"
 msgid "ECPay CVS"
 msgstr "綠界超商代碼"
 
-#: ../woocommerce/gateways/ecpay/ecpay-gateway-cvs.php:57
+#: ../woocommerce/gateways/ecpay/ecpay-gateway-cvs.php:54
 msgid "Pay via ECPay CVS"
 msgstr "透過 綠界金流超商代碼  付款"
 
-#: ../woocommerce/gateways/ecpay/ecpay-gateway-cvs.php:72
+#: ../woocommerce/gateways/ecpay/ecpay-gateway-cvs.php:69
 msgid "CVS payment deadline out of range. Set as default value."
 msgstr "超商代碼繳費期限超過限制，調整為預設值。"
+
+#: ../woocommerce/gateways/ecpay/ecpay-gateway-cvs.php:80
+#, php-format
+msgid "%s maximum amount more then ECPay normal maximum (6000)."
+msgstr "%s 最大訂購金額超過綠界的標準限制 (6000)。"
 
 #: ../woocommerce/gateways/ecpay/ecpay-gateway-webatm.php:10
 msgid "Pay via WebATM"
@@ -488,15 +492,15 @@ msgid "0 to disable minimum amount limit."
 msgstr "0 代表停用最小訂單金額限制。"
 
 #: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-atm.php:43
-#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-barcode.php:38
-#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-cvs.php:44
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-barcode.php:37
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-cvs.php:43
 #: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-webatm.php:37
 msgid "Maximum order amount"
 msgstr "最大訂購金額"
 
 #: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-atm.php:47
-#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-barcode.php:42
-#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-cvs.php:48
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-barcode.php:41
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-cvs.php:47
 #: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-webatm.php:41
 msgid "0 to disable maximum amount limit."
 msgstr "0 代表停用最大訂單金額限制。"
@@ -505,7 +509,7 @@ msgstr "0 代表停用最大訂單金額限制。"
 msgid "ATM allowable payment deadline from 1 day to 60 days."
 msgstr "ATM櫃員機允許的繳費期限為 1 到 60 天。"
 
-#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-barcode.php:54
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-barcode.php:52
 msgid "Barcode allowable payment deadline from 1 day to 30 days."
 msgstr "超商條碼允許的繳費期限為 1 到 30 天。"
 
@@ -527,11 +531,11 @@ msgctxt "Gateway setting"
 msgid "Number of periods"
 msgstr "分期期數"
 
-#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-cvs.php:56
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-cvs.php:54
 msgid "Payment deadline (minutes)"
 msgstr "付款截止日 (分)"
 
-#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-cvs.php:60
+#: ../woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-cvs.php:58
 msgid "CVS allowable payment deadline from 1 minute to 30 days."
 msgstr "超商代碼允許的繳費期限為 1分鐘到 30 天。"
 

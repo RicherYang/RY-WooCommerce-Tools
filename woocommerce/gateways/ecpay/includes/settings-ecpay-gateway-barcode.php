@@ -30,7 +30,6 @@ return array(
 		'description' => __('0 to disable minimum amount limit.', 'ry-woocommerce-tools'),
 		'custom_attributes' => array(
 			'min' => 0,
-			'max' => 20000,
 			'step' => 1
 		)
 	),
@@ -42,7 +41,6 @@ return array(
 		'description' => __('0 to disable maximum amount limit.', 'ry-woocommerce-tools'),
 		'custom_attributes' => array(
 			'min' => 0,
-			'max' => 20000,
 			'step' => 1
 		)
 	),

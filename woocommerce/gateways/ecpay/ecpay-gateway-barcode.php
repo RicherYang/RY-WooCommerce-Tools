@@ -36,10 +36,7 @@ class RY_ECPay_Gateway_Barcode extends RY_ECPay_Gateway_Base {
 			$total = $this->get_order_total();
 
 			if( $total > 0 ) {
-				if( $total < 30 ) {
-					return false;
-				}
-				if( $total > 20000 ) {
+				if( $total < 16 ) {
 					return false;
 				}
 				if( $this->min_amount > 0 and $total < $this->min_amount ) {
@@ -80,8 +77,7 @@ class RY_ECPay_Gateway_Barcode extends RY_ECPay_Gateway_Base {
 
 		$_POST['woocommerce_ry_ecpay_barcode_max_amount'] = (int) $_POST['woocommerce_ry_ecpay_barcode_max_amount'];
 		if( $_POST['woocommerce_ry_ecpay_barcode_max_amount'] > 20000 ) {
-			$_POST['woocommerce_ry_ecpay_barcode_max_amount'] = 0;
-			WC_Admin_Settings::add_error(sprintf(__('%s maximum amount out of range. Set as default value.', 'ry-woocommerce-tools'), $this->method_title));
+			WC_Admin_Settings::add_message(sprintf(__('%s maximum amount more then ECPay normal maximum (20000).', 'ry-woocommerce-tools'), $this->method_title));
 		}
 
 		parent::process_admin_options();

@@ -3,8 +3,8 @@ Contributors: Richer Yang
 Donate link: https://www.paypal.me/RicherYang
 Tags: woocommerce, payment, gateway, ecpay
 Requires at least: 4.0
-Tested up to: 4.9.7
-Stable tag: 0.0.31
+Tested up to: 4.9.8
+Stable tag: 0.0.33
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.txt
 
@@ -38,6 +38,13 @@ Please visit the [plugin page](https://richer.tw/ry-woocommerce-tools/ " ") with
 5. WooCommerce Order shipping convenience store info.
 
 == Changelog ==
+
+= 0.0.33 - 2018/09/14 =
+* 修正 - 綠界超商代碼與超商條碼的金額限制
+
+= 0.0.32 - 2018/08/30 = 
+* 修正 - 在網站名稱包含特殊字元時，串接綠界會發生錯誤
+* 修正 - 調整綠界超商代碼與超商條碼的金額限制
 
 = 0.0.31 - 2018/08/01 =
 * 修正 - 綠界物流商品名稱限制調整
