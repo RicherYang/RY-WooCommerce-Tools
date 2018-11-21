@@ -108,7 +108,9 @@ class RY_ECPay_Shipping_Api extends RY_ECPay {
 						$args = self::add_check_value($args, $HashKey, $HashIV, 'md5');
 						RY_ECPay_Shipping::log('Shipping POST: ' . var_export($args, true));
 
+						wc_set_time_limit(40);
 						$response = wp_remote_post($post_url, array(
+							'timeout' => 20,
 							'body' => $args
 						));
 						if( !is_wp_error($response) ) {
@@ -201,7 +203,9 @@ class RY_ECPay_Shipping_Api extends RY_ECPay {
 									}
 								}
 
+								wc_set_time_limit(40);
 								$response = wp_remote_post($post_url, array(
+									'timeout' => 20,
 									'body' => $args
 								));
 								if( $response['response']['code'] == '200' ) {

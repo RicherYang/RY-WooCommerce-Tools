@@ -113,7 +113,9 @@ $("#ry-ecpay-form").submit();');
 			$js_file = self::$api_url['inpay_js'];
 		}
 
+		wc_set_time_limit(40);
 		$response = wp_remote_post($post_url, array(
+			'timeout' => 20,
 			'body' => $args
 		));
 		if( !is_wp_error($response) ) {
