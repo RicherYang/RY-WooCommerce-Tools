@@ -89,6 +89,8 @@ class RY_ECPay_Gateway_Response extends RY_ECPay_Gateway_Api {
 		$order->update_meta_data('_ecpay_atm_vAccount', $ipn_info['vAccount']);
 		$order->update_meta_data('_ecpay_atm_ExpireDate', $expireDate->format(DATE_ATOM));
 		$order->save_meta_data();
+
+		$order->update_status('on-hold');
 	}
 
 	protected static function payment_status_10100073($order, $ipn_info) {
@@ -105,6 +107,8 @@ class RY_ECPay_Gateway_Response extends RY_ECPay_Gateway_Api {
 			$order->update_meta_data('_ecpay_barcode_ExpireDate', $expireDate->format(DATE_ATOM));
 		}
 		$order->save_meta_data();
+
+		$order->update_status('on-hold');
 	}
 
 	protected static function payment_status_unknow($order, $ipn_info, $payment_status) {

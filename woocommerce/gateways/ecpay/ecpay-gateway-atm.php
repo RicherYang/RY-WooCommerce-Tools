@@ -66,6 +66,11 @@ class RY_ECPay_Gateway_Atm extends RY_ECPay_Gateway_Base {
 			WC_Admin_Settings::add_error(__('ATM payment deadline out of range. Set as default value.', 'ry-woocommerce-tools'));
 		}
 
+		if( $_POST['woocommerce_ry_ecpay_atm_min_amount'] > 0 && $_POST['woocommerce_ry_ecpay_atm_min_amount'] < 5 ) {
+			$_POST['woocommerce_ry_ecpay_atm_min_amount'] = 0;
+			WC_Admin_Settings::add_error(sprintf(__('%s minimum amount out of range. Set as default value.', 'ry-woocommerce-tools'), $this->method_title));
+		}
+
 		parent::process_admin_options();
 	}
 

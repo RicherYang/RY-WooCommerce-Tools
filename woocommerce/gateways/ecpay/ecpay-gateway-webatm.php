@@ -49,4 +49,13 @@ class RY_ECPay_Gateway_Webatm extends RY_ECPay_Gateway_Base {
 			'redirect' => $order->get_checkout_payment_url(true),
 		);
 	}
+
+	public function process_admin_options() {
+		if( $_POST['woocommerce_ry_ecpay_webatm_min_amount'] > 0 && $_POST['woocommerce_ry_ecpay_webatm_min_amount'] < 5 ) {
+			$_POST['woocommerce_ry_ecpay_webatm_min_amount'] = 0;
+			WC_Admin_Settings::add_error(sprintf(__('%s minimum amount out of range. Set as default value.', 'ry-woocommerce-tools'), $this->method_title));
+		}
+
+		parent::process_admin_options();
+	}
 }

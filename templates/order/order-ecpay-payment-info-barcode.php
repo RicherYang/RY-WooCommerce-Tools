@@ -9,7 +9,9 @@ if( $order->get_payment_method() != 'ry_ecpay_barcode' ) {
 	return;
 }
 
-$payment_type = $order->get_meta('_ecpay_payment_type');
+if($order->get_meta('_ecpay_payment_type') != 'BARCODE' ) {
+	return;
+}
 ?>
 <section class="woocommerce-order-details">
 	<h2 class="woocommerce-order-details__title"><?=__('Payment details', 'ry-woocommerce-tools') ?></h2>

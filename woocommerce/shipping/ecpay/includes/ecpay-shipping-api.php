@@ -41,7 +41,10 @@ class RY_ECPay_Shipping_Api extends RY_ECPay {
 
 					$get_count = 1;
 					if( count($cvs_info_list) == 0 ) {
-						$get_count = $item->get_meta('no_count');
+						$get_count = (int) $item->get_meta('no_count');
+					}
+					if( $get_count < 1 ) {
+						$get_count = 1;
 					}
 
 					$method_class = RY_ECPay_Shipping::$support_methods[$shipping_method];

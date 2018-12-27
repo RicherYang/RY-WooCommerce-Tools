@@ -3,8 +3,8 @@ Contributors: Richer Yang
 Donate link: https://www.paypal.me/RicherYang
 Tags: woocommerce, payment, gateway, ecpay
 Requires at least: 4.0
-Tested up to: 4.9.8
-Stable tag: 1.0.1
+Tested up to: 5.0.2
+Stable tag: 1.0.4
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.txt
 
@@ -38,6 +38,15 @@ Please visit the [plugin page](https://richer.tw/ry-woocommerce-tools/ " ") with
 5. WooCommerce Order shipping convenience store info.
 
 == Changelog ==
+
+= 1.0.4 - 2018/12/27 =
+* 更新 - 修正後台變更為超取後無法順利取得超取編號。
+
+= 1.0.3 - 2018/12/27 =
+* 更新 - 綠界 ATM / WebATM 最小訂購金額限制。
+
+= 1.0.2 - 2018/12/14 =
+* 更新 - 調整非即時付款方式取得金流資訊後的訂單狀態。
 
 = 1.0.1 - 2018/11/21 =
 * 更新 - 延長呼叫外部 API 的逾時時間限制。
