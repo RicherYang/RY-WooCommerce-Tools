@@ -341,7 +341,15 @@ final class RY_ECPay_Shipping {
 
 	public static function show_store_in_address($address, $type, $order) {
 		if( $type == 'shipping' ) {
-			if( !empty($order->get_meta('_shipping_cvs_store_ID')) ) {
+			$items_shipping = $order->get_items('shipping');
+			if( count($items_shipping) ) {
+				$items_shipping = array_shift($items_shipping);
+				$shipping_method = RY_ECPay_Shipping::get_order_support_shipping($items_shipping);
+			}
+			if( $shipping_method !== false ) {
+				$shipping_methods = WC()->shipping->get_shipping_methods();
+
+				$address['shipping_type'] = $shipping_methods[$shipping_method]->get_method_title();
 				$address['cvs_store_ID'] = $order->get_meta('_shipping_cvs_store_ID');
 				$address['cvs_store_name'] = $order->get_meta('_shipping_cvs_store_name');
 				$address['cvs_address'] = $order->get_meta('_shipping_cvs_store_address');
@@ -355,6 +363,9 @@ final class RY_ECPay_Shipping {
 
 	public static function add_cvs_address_replacements($replacements, $args) {
 		if( isset($args['cvs_store_name']) ) {
+			if( isset($args['shipping_type']) ) {
+				$replacements['{shipping_type}'] = $args['shipping_type'];
+			}
 			$replacements['{cvs_store_ID}'] = $args['cvs_store_ID'];
 			$replacements['{cvs_store_name}'] = $args['cvs_store_name'];
 			$replacements['{cvs_store_address}'] = $args['cvs_address'];
