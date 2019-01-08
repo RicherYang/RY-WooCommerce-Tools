@@ -346,7 +346,7 @@ final class RY_ECPay_Shipping {
 				$items_shipping = array_shift($items_shipping);
 				$shipping_method = RY_ECPay_Shipping::get_order_support_shipping($items_shipping);
 			}
-			if( $shipping_method !== false ) {
+			if( !empty($shipping_method) ) {
 				$shipping_methods = WC()->shipping->get_shipping_methods();
 
 				$address['shipping_type'] = $shipping_methods[$shipping_method]->get_method_title();
