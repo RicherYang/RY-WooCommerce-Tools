@@ -1,9 +1,0 @@
-#order_data .order_data_column .form-field._shipping_cvs_store_name_field,
-#order_data .order_data_column .form-field._shipping_cvs_store_telephone_field {
-	float: right;
-	clear: right;
-}
-#order_data .order_data_column .form-field._shipping_phone_field {
-	width: 100%;
-	clear: both;
-}
