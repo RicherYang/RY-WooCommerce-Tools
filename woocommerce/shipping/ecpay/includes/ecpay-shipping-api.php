@@ -56,7 +56,7 @@ class RY_ECPay_Shipping_Api extends RY_ECPay {
 						$total = 19999;
 					}
 
-					$notify_url = WC()->api_request_url('ry_ecpay_shipping_callback');
+					$notify_url = WC()->api_request_url('ry_ecpay_shipping_callback', true);
 
 					RY_ECPay_Shipping::log('Generating shipping for order #' . $order->get_order_number() . ' with ' . $get_count . ' times');
 

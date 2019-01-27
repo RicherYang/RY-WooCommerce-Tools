@@ -4,8 +4,8 @@ Donate link: https://www.paypal.me/RicherYang
 Tags: woocommerce, payment, gateway, ecpay
 Requires at least: 4.0
 Requires PHP: 5.5.0
-Tested up to: 5.0.2
-Stable tag: 1.0.8
+Tested up to: 5.0.3
+Stable tag: 1.0.10
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.txt
 
@@ -39,6 +39,15 @@ Please visit the [plugin page](https://richer.tw/ry-woocommerce-tools/ " ") with
 5. WooCommerce Order shipping convenience store info.
 
 == Changelog ==
+
+= 1.0.9 - 2019/01/27 =
+* 更新 - 強制傳送綠界的回傳網址為 https 模式
+
+= 1.0.9 - 2019/01/24 =
+* 更新 - 修正超商機台顯示文字問題
+
+= 1.0.8.1 - 2019/01/21 =
+* 更新 - 調整選擇門市文字
 
 = 1.0.8 - 2019/01/09 =
 

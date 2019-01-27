@@ -18,7 +18,7 @@ class RY_ECPay_Gateway_Api extends RY_ECPay {
 	public static function checkout_form($order, $gateway) {
 		RY_ECPay_Gateway::log('Generating payment form for order #' . $order->get_order_number());
 
-		$notify_url = WC()->api_request_url('ry_ecpay_callback');
+		$notify_url = WC()->api_request_url('ry_ecpay_callback', true);
 		$return_url = $gateway->get_return_url($order);
 
 		list($MerchantID, $HashKey, $HashIV) = RY_ECPay_Gateway::get_ecpay_api_info();
@@ -29,7 +29,7 @@ class RY_ECPay_Gateway_Api extends RY_ECPay {
 			'MerchantTradeDate' => new DateTime('', new DateTimeZone('Asia/Taipei')),
 			'PaymentType' => 'aio',
 			'TotalAmount' => (int) ceil($order->get_total()),
-			'TradeDesc' => urlencode(mb_substr(get_bloginfo('name'), 0, 100)),
+			'TradeDesc' => mb_substr(get_bloginfo('name'), 0, 100),
 			'ItemName' => self::get_item_name($order),
 			'ReturnURL' => $notify_url,
 			'ChoosePayment' => $gateway->payment_type,
@@ -85,7 +85,7 @@ $("#ry-ecpay-form").submit();');
 	public static function inpay_checkout_form($order, $gateway) {
 		RY_ECPay_Gateway::log('Generating inpay payment form for order #' . $order->get_order_number());
 
-		$notify_url = WC()->api_request_url('ry_ecpay_callback');
+		$notify_url = WC()->api_request_url('ry_ecpay_callback', true);
 
 		list($MerchantID, $HashKey, $HashIV) = RY_ECPay_Gateway::get_ecpay_api_info();
 
@@ -95,7 +95,7 @@ $("#ry-ecpay-form").submit();');
 			'MerchantTradeDate' => current_time('Y/m/d H:i:s'),
 			'PaymentType' => 'aio',
 			'TotalAmount' => (int) ceil($order->get_total()),
-			'TradeDesc' => urlencode(mb_substr(get_bloginfo('name'), 0, 100)),
+			'TradeDesc' => mb_substr(get_bloginfo('name'), 0, 100),
 			'ItemName' => self::get_item_name($order),
 			'ReturnURL' => $notify_url,
 			'ChoosePayment' => $gateway->payment_type,
