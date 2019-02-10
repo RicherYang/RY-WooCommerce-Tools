@@ -40,7 +40,7 @@ Please visit the [plugin page](https://richer.tw/ry-woocommerce-tools/ " ") with
 
 == Changelog ==
 
-= 1.0.9 - 2019/01/27 =
+= 1.0.10 - 2019/01/27 =
 * 更新 - 強制傳送綠界的回傳網址為 https 模式
 
 = 1.0.9 - 2019/01/24 =
