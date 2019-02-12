@@ -19,8 +19,12 @@ return [
 		'id' => RY_WT::$option_prefix . 'ecpay_shipping_log',
 		'type' => 'checkbox',
 		'default' => 'no',
-		'desc' => __('Enable logging', 'woocommerce')
-			. '<br>' . sprintf(__('Log ECPay shipping events/message, inside %s', 'ry-woocommerce-tools'), '<code>' . WC_Log_Handler_File::get_log_file_path('ry_ecpay_shipping') . '</code>')
+		'desc' => __('Enable logging', 'woocommerce') . '<br>'
+			. sprintf(
+				/* translators: %s: Path of log file */
+				__('Log ECPay shipping events/message, inside %s', 'ry-woocommerce-tools'),
+				'<code>' . WC_Log_Handler_File::get_log_file_path('ry_ecpay_shipping') . '</code>'
+			)
 	],
 	[
 		'title' => __('Log status change', 'ry-woocommerce-tools'),

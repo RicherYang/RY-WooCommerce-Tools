@@ -19,8 +19,12 @@ return array(
 		'id' => RY_WT::$option_prefix . 'ecpay_gateway_log',
 		'type' => 'checkbox',
 		'default' => 'no',
-		'desc' => __('Enable logging', 'woocommerce')
-			. '<br>' . sprintf(__('Log ECPay gateway events/message, inside %s', 'ry-woocommerce-tools'), '<code>' . WC_Log_Handler_File::get_log_file_path('ry_ecpay_gateway') . '</code>')
+		'desc' => __('Enable logging', 'woocommerce') . '<br>'
+			. sprintf(
+				/* translators: %s: Path of log file */
+				__('Log ECPay gateway events/message, inside %s', 'ry-woocommerce-tools'),
+				'<code>' . WC_Log_Handler_File::get_log_file_path('ry_ecpay_gateway') . '</code>'
+			)
 	),
 	array(
 		'title' => __('Order no prefix', 'ry-woocommerce-tools'),

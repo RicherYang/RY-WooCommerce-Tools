@@ -68,6 +68,7 @@ class RY_ECPay_Gateway_Atm extends RY_ECPay_Gateway_Base {
 
 		if( $_POST['woocommerce_ry_ecpay_atm_min_amount'] > 0 && $_POST['woocommerce_ry_ecpay_atm_min_amount'] < 5 ) {
 			$_POST['woocommerce_ry_ecpay_atm_min_amount'] = 0;
+			/* translators: %s: Gateway method title */
 			WC_Admin_Settings::add_error(sprintf(__('%s minimum amount out of range. Set as default value.', 'ry-woocommerce-tools'), $this->method_title));
 		}
 

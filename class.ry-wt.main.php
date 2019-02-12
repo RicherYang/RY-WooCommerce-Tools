@@ -219,6 +219,7 @@ final class RY_WT {
 
 	public static function need_woocommerce() {
 		$message = sprintf(
+			/* translators: %s: Name of this plugin */
 			__('<strong>%s</strong> is inactive. It require WooCommerce version 3.1.0 or newer.', 'ry-woocommerce-tools'),
 			__('RY WooCommerce Tools', 'ry-woocommerce-tools')
 		);

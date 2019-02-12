@@ -4,6 +4,7 @@ defined('RY_WT_VERSION') OR exit('No direct script access allowed');
 return [
 	'enabled' => [
 		'title' => __('Enable/Disable', 'woocommerce'),
+		/* translators: %s: Gateway method title */
 		'label' => sprintf(__('Enable %s', 'ry-woocommerce-tools'), $this->method_title),
 		'type' => 'checkbox',
 		'default' => 'no',
@@ -47,10 +48,15 @@ return [
 		'default' => '',
 		'description' => '',
 		'options' => [
+			/* translators: %d number of periods */
 			3 => sprintf(__('%d periods', 'ry-woocommerce-tools'), 3),
+			/* translators: %d number of periods */
 			6 => sprintf(__('%d periods', 'ry-woocommerce-tools'), 6),
+			/* translators: %d number of periods */
 			12 => sprintf(__('%d periods', 'ry-woocommerce-tools'), 12),
+			/* translators: %d number of periods */
 			18 => sprintf(__('%d periods', 'ry-woocommerce-tools'), 18),
+			/* translators: %d number of periods */
 			24 => sprintf(__('%d periods', 'ry-woocommerce-tools'), 24),
 		],
 		'desc_tip' => true,

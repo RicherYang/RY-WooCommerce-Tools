@@ -224,7 +224,11 @@ window.addEventListener("message", function (e) {
 					$number_of_periods = (int) $order->get_meta('_ecpay_payment_number_of_periods', true);
 					if( in_array($number_of_periods, $gateway->number_of_periods) ) {
 						$args['CreditInstallment'] = $number_of_periods;
-						$order->add_order_note(sprintf(__('Credit installment to %d', 'ry-woocommerce-tools'), $number_of_periods));
+						$order->add_order_note(sprintf(
+							/* translators: %d number of periods */
+							__('Credit installment to %d', 'ry-woocommerce-tools'),
+							$number_of_periods
+						));
 						$order->save();
 					}
 				}

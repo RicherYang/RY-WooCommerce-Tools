@@ -152,6 +152,7 @@ final class RY_ECPay_Shipping {
 			'exclude_from_search' => false,
 			'show_in_admin_all_list' => true,
 			'show_in_admin_status_list' => true,
+			/* translators: %s: number of orders */
 			'label_count' => _n_noop('Wait pickup (cvs) <span class="count">(%s)</span>', 'Wait pickup (cvs) <span class="count">(%s)</span>', 'ry-woocommerce-tools'),
 		]);
 	}
@@ -329,7 +330,12 @@ final class RY_ECPay_Shipping {
 			$order->set_shipping_state('');
 			$order->set_shipping_postcode('');
 
-			$order->add_order_note(sprintf(__('CVS store %s (%s)', 'ry-woocommerce-tools'), $data['CVSStoreName'], $data['CVSStoreID']));
+			$order->add_order_note(sprintf(
+				/* translators: 1: Store name 2: Store ID */
+				__('CVS store %1$s (%2$s)', 'ry-woocommerce-tools'),
+				$data['CVSStoreName'],
+				$data['CVSStoreID']
+			));
 			$order->update_meta_data('_shipping_cvs_store_ID', $data['CVSStoreID']);
 			$order->update_meta_data('_shipping_cvs_store_name', $data['CVSStoreName']);
 			$order->update_meta_data('_shipping_cvs_store_address', $data['CVSAddress']);

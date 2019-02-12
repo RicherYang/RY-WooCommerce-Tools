@@ -56,7 +56,13 @@ class RY_ECPay_Shipping_Response extends RY_ECPay_Shipping_Api {
 			if( 'yes' === get_option(RY_WT::$option_prefix . 'ecpay_shipping_log_status_change', 'no') ) {
 				if( isset($old_info['status']) ) {
 					if( $old_info['status'] != $cvs_info_list[$ipn_info['AllPayLogisticsID']]['status'] ) {
-						$order->add_order_note(sprintf(__('%s shipping status from %s to %s', 'ry-woocommerce-tools'), $ipn_info['AllPayLogisticsID'], $old_info['status_msg'], $cvs_info_list[$ipn_info['AllPayLogisticsID']]['status_msg']));
+						$order->add_order_note(sprintf(
+							/* translators: 1: EcPay ID 2: Old status 3: New status */
+							__('%1$s shipping status from %2$s to %3$s', 'ry-woocommerce-tools'),
+							$ipn_info['AllPayLogisticsID'],
+							$old_info['status_msg'],
+							$cvs_info_list[$ipn_info['AllPayLogisticsID']]['status_msg']
+						));
 					}
 				}
 			}
