@@ -37,22 +37,22 @@ final class RY_WT {
 			add_filter('woocommerce_localisation_address_formats', [__CLASS__, 'add_address_format']);
 
 			// 綠界金流
-			if( 'yes' == get_option(self::$option_prefix . 'enabled_ecpay_gateway', 'yes') ) {
+			if( 'yes' == self::get_option('enabled_ecpay_gateway', 'yes') ) {
 				include_once(RY_WT_PLUGIN_DIR . 'woocommerce/gateways/ecpay/ecpay-gateway.php');
 				RY_ECPay_Gateway::init();
 			}
 			// 綠界物流
-			if( 'yes' == get_option(self::$option_prefix . 'enabled_ecpay_shipping', 'no') ) {
+			if( 'yes' == self::get_option('enabled_ecpay_shipping', 'no') ) {
 				include_once(RY_WT_PLUGIN_DIR . 'woocommerce/shipping/ecpay/ecpay-shipping.php');
 				RY_ECPay_Shipping::init();
 			}
 
 			// 重新付款
-			if( 'no' == get_option(self::$option_prefix . 'repay_action', 'no') ) {
+			if( 'no' == self::get_option('repay_action', 'no') ) {
 				add_filter('woocommerce_my_account_my_orders_actions', [__CLASS__, 'remove_pay_action']);
 			}
 			// 取消密碼強度檢查
-			if( 'no' == get_option(self::$option_prefix . 'strength_password', 'yes') ) {
+			if( 'no' == self::get_option('strength_password', 'yes') ) {
 				if( ( !is_admin() || defined('DOING_AJAX') ) && !defined('DOING_CRON') ) {
 					add_action('wp_enqueue_scripts', [__CLASS__, 'remove_strength_password_script'], 20);
 				}
@@ -63,13 +63,13 @@ final class RY_WT {
 			add_filter('woocommerce_form_field_hiddentext', [__CLASS__, 'form_field_hiddentext'], 20, 4);
 
 			// 不顯示國家選項
-			if( 'no' == get_option(self::$option_prefix . 'show_country_select', 'no') ) {
+			if( 'no' == self::get_option('show_country_select', 'no') ) {
 				add_filter('woocommerce_billing_fields', [__CLASS__, 'hide_country_select'], 20);
 				add_filter('woocommerce_shipping_fields', [__CLASS__, 'hide_country_select'], 20);
 				add_filter('woocommerce_form_field_country_hidden', [__CLASS__, 'form_field_country_hidden'], 20, 4);
 			}
 			// 先顯示姓氏
-			if( 'yes' == get_option(self::$option_prefix . 'last_name_first', 'no') ) {
+			if( 'yes' == self::get_option('last_name_first', 'no') ) {
 				add_filter('woocommerce_default_address_fields', [__CLASS__, 'last_name_first']);
 			}
 		}

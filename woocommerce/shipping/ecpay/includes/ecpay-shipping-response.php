@@ -34,7 +34,7 @@ class RY_ECPay_Shipping_Response extends RY_ECPay_Shipping_Api {
 	}
 
 	public static function shipping_callback($ipn_info) {
-		$order_id = self::get_order_id($ipn_info, get_option(RY_WT::$option_prefix . 'ecpay_shipping_order_prefix'));
+		$order_id = self::get_order_id($ipn_info, RY_WT::get_option('ecpay_shipping_order_prefix'));
 		if( $order = wc_get_order($order_id) ) {
 			$cvs_info_list = $order->get_meta('_shipping_cvs_info', true);
 			if( !is_array($cvs_info_list) ) {
@@ -53,7 +53,7 @@ class RY_ECPay_Shipping_Response extends RY_ECPay_Shipping_Api {
 				$order->save_meta_data();
 			}
 
-			if( 'yes' === get_option(RY_WT::$option_prefix . 'ecpay_shipping_log_status_change', 'no') ) {
+			if( 'yes' === RY_WT::get_option('ecpay_shipping_log_status_change', 'no') ) {
 				if( isset($old_info['status']) ) {
 					if( $old_info['status'] != $cvs_info_list[$ipn_info['AllPayLogisticsID']]['status'] ) {
 						$order->add_order_note(sprintf(
@@ -72,7 +72,7 @@ class RY_ECPay_Shipping_Response extends RY_ECPay_Shipping_Api {
 			}
 
 			if( in_array($cvs_info_list[$ipn_info['AllPayLogisticsID']]['status'], [2067, 3022]) ) {
-				if( 'yes' == get_option(RY_WT::$option_prefix . 'ecpay_shipping_auto_completed', 'yes') ) {
+				if( 'yes' == RY_WT::get_option('ecpay_shipping_auto_completed', 'yes') ) {
 					$order->update_status('completed');
 				}
 			}

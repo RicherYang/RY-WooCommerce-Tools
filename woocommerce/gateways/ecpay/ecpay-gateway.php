@@ -18,13 +18,13 @@ final class RY_ECPay_Gateway {
 		include_once(RY_WT_PLUGIN_DIR . 'woocommerce/gateways/ecpay/ecpay-gateway-cvs.php');
 		include_once(RY_WT_PLUGIN_DIR . 'woocommerce/gateways/ecpay/ecpay-gateway-barcode.php');
 
-		self::$log_enabled = 'yes' === get_option(RY_WT::$option_prefix . 'ecpay_gateway_log', 'no');
+		self::$log_enabled = 'yes' === RY_WT::get_option('ecpay_gateway_log', 'no');
 
 		add_filter('woocommerce_get_sections_rytools', [__CLASS__, 'add_sections']);
 		add_filter('woocommerce_get_settings_rytools', [__CLASS__, 'add_setting'], 10, 2);
 		add_action('woocommerce_update_options_rytools_ecpay_gateway', [__CLASS__, 'check_option']);
 
-		if( 'yes' === get_option(RY_WT::$option_prefix . 'ecpay_gateway', 'yes') ) {
+		if( 'yes' === RY_WT::get_option('ecpay_gateway', 'yes') ) {
 			add_filter('woocommerce_payment_gateways', [__CLASS__, 'add_method']);
 		}
 	}
@@ -52,41 +52,41 @@ final class RY_ECPay_Gateway {
 	}
 
 	public static function get_ecpay_api_info() {
-		if( 'yes' === get_option(RY_WT::$option_prefix . 'ecpay_gateway_testmode', 'yes') ) {
+		if( 'yes' === RY_WT::get_option('ecpay_gateway_testmode', 'yes') ) {
 			$MerchantID = '2000132';
 			$HashKey = '5294y06JbISpM5x9';
 			$HashIV = 'v77hoKGq4kWxNNIS';
 		} else {
-			$MerchantID = get_option(RY_WT::$option_prefix . 'ecpay_gateway_MerchantID');
-			$HashKey = get_option(RY_WT::$option_prefix . 'ecpay_gateway_HashKey');
-			$HashIV = get_option(RY_WT::$option_prefix . 'ecpay_gateway_HashIV');
+			$MerchantID = RY_WT::get_option('ecpay_gateway_MerchantID');
+			$HashKey = RY_WT::get_option('ecpay_gateway_HashKey');
+			$HashIV = RY_WT::get_option('ecpay_gateway_HashIV');
 		}
 
 		return [$MerchantID, $HashKey, $HashIV];
 	}
 
 	public static function check_option() {
-		if( 'yes' == get_option(RY_WT::$option_prefix . 'ecpay_gateway', 'yes') ) {
+		if( 'yes' == RY_WT::get_option('ecpay_gateway', 'yes') ) {
 			$enable = true;
-			if( 'yes' !== get_option(RY_WT::$option_prefix . 'ecpay_gateway_testmode', 'yes') ) {
-				if( empty(get_option(RY_WT::$option_prefix . 'ecpay_gateway_MerchantID')) ) {
+			if( 'yes' !== RY_WT::get_option('ecpay_gateway_testmode', 'yes') ) {
+				if( empty(RY_WT::get_option('ecpay_gateway_MerchantID')) ) {
 					$enable = false;
 				}
-				if( empty(get_option(RY_WT::$option_prefix . 'ecpay_gateway_HashKey')) ) {
+				if( empty(RY_WT::get_option('ecpay_gateway_HashKey')) ) {
 					$enable = false;
 				}
-				if( empty(get_option(RY_WT::$option_prefix . 'ecpay_gateway_HashIV')) ) {
+				if( empty(RY_WT::get_option('ecpay_gateway_HashIV')) ) {
 					$enable = false;
 				}
 			}
 			if( !$enable ) {
 				WC_Admin_Settings::add_error(__('ECPay gateway method failed to enable!', 'ry-woocommerce-tools'));
-				update_option(RY_WT::$option_prefix . 'ecpay_gateway', 'no');
+				RY_WT::update_option('ecpay_gateway', 'no');
 			}
 		}
-		if( !preg_match('/^[a-z0-9]*$/i', get_option(RY_WT::$option_prefix . 'ecpay_gateway_order_prefix')) ) {
+		if( !preg_match('/^[a-z0-9]*$/i', RY_WT::get_option('ecpay_gateway_order_prefix')) ) {
 			WC_Admin_Settings::add_error(__('Order no prefix only letters and numbers allowed allowed', 'ry-woocommerce-tools'));
-			update_option(RY_WT::$option_prefix . 'ecpay_gateway_order_prefix', '');
+			RY_WT::update_option('ecpay_gateway_order_prefix', '');
 		}
 	}
 

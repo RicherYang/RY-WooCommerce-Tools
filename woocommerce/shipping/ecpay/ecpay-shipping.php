@@ -23,7 +23,7 @@ final class RY_ECPay_Shipping {
 		include_once(RY_WT_PLUGIN_DIR . 'woocommerce/shipping/ecpay/ecpay-shipping-cvs-hilife.php');
 		include_once(RY_WT_PLUGIN_DIR . 'woocommerce/shipping/ecpay/ecpay-shipping-cvs-family.php');
 
-		self::$log_enabled = 'yes' === get_option(RY_WT::$option_prefix . 'ecpay_shipping_log', 'no');
+		self::$log_enabled = 'yes' === RY_WT::get_option('ecpay_shipping_log', 'no');
 
 		add_filter('woocommerce_get_sections_rytools', [__CLASS__, 'add_sections']);
 		add_filter('woocommerce_get_settings_rytools', [__CLASS__, 'add_setting'], 10, 2);
@@ -33,7 +33,7 @@ final class RY_ECPay_Shipping {
 		add_filter('woocommerce_reports_order_statuses', [__CLASS__, 'add_reports_order_statuses']);
 		self::register_order_statuses();
 
-		if( 'yes' === get_option(RY_WT::$option_prefix . 'ecpay_shipping_cvs', 'yes') ) {
+		if( 'yes' === RY_WT::get_option('ecpay_shipping_cvs', 'yes') ) {
 			RY_ECPay_Shipping_Response::init();
 
 			add_filter('woocommerce_shipping_methods', [__CLASS__, 'add_method']);
@@ -44,7 +44,7 @@ final class RY_ECPay_Shipping {
 			add_filter('woocommerce_update_order_review_fragments', [__CLASS__, 'shipping_chouse_cvs_info']);
 			add_action('woocommerce_checkout_create_order', [__CLASS__, 'save_cvs_info'], 20, 2);
 
-			if( 'yes' === get_option(RY_WT::$option_prefix . 'ecpay_shipping_auto_get_no', 'yes') ) {
+			if( 'yes' === RY_WT::get_option('ecpay_shipping_auto_get_no', 'yes') ) {
 				add_action('woocommerce_order_status_processing', [__CLASS__, 'get_cvs_code'], 10, 2);
 			}
 			add_action('woocommerce_order_status_ry-at-cvs', [__CLASS__, 'send_at_cvs_email'], 10, 2);
@@ -93,45 +93,45 @@ final class RY_ECPay_Shipping {
 	}
 
 	public static function check_option() {
-		if( 'yes' == get_option(RY_WT::$option_prefix . 'ecpay_shipping_cvs', 'yes') ) {
+		if( 'yes' == RY_WT::get_option('ecpay_shipping_cvs', 'yes') ) {
 			$enable = true;
-			$name = get_option(RY_WT::$option_prefix . 'ecpay_shipping_sender_name');
+			$name = RY_WT::get_option('ecpay_shipping_sender_name');
 			if( mb_strwidth($name) < 1 || mb_strwidth($name) > 10 ) {
 				$enable = false;
 				WC_Admin_Settings::add_error(__('Verification failed!', 'ry-woocommerce-tools') . ' ' . __('Name length between 1 to 10 letter (5 if chinese)', 'ry-woocommerce-tools'));
-				update_option(RY_WT::$option_prefix . 'ecpay_shipping_sender_name', '');
+				RY_WT::update_option('ecpay_shipping_sender_name', '');
 			}
-			if( !empty(get_option(RY_WT::$option_prefix . 'ecpay_shipping_sender_phone')) ) {
-				if( 1 !== preg_match('@^\(0\d{1,2}\)\d{6,8}(#\d+)?$@', get_option(RY_WT::$option_prefix . 'ecpay_shipping_sender_phone')) ) {
+			if( !empty(RY_WT::get_option('ecpay_shipping_sender_phone')) ) {
+				if( 1 !== preg_match('@^\(0\d{1,2}\)\d{6,8}(#\d+)?$@', RY_WT::get_option('ecpay_shipping_sender_phone')) ) {
 					$enable = false;
 					WC_Admin_Settings::add_error(__('Verification failed!', 'ry-woocommerce-tools') . ' ' . __('Phone format (0x)xxxxxxx#xx', 'ry-woocommerce-tools'));
-					update_option(RY_WT::$option_prefix . 'ecpay_shipping_sender_phone', '');
+					RY_WT::update_option('ecpay_shipping_sender_phone', '');
 				}
 			}
-			if( 1 !== preg_match('@^09\d{8}?$@', get_option(RY_WT::$option_prefix . 'ecpay_shipping_sender_cellphone')) ) {
+			if( 1 !== preg_match('@^09\d{8}?$@', RY_WT::get_option('ecpay_shipping_sender_cellphone')) ) {
 				$enable = false;
 				WC_Admin_Settings::add_error(__('Verification failed!', 'ry-woocommerce-tools') . ' ' . __('Cellphone format 09xxxxxxxx', 'ry-woocommerce-tools'));
-				update_option(RY_WT::$option_prefix . 'ecpay_shipping_sender_cellphone', '');
+				RY_WT::update_option('ecpay_shipping_sender_cellphone', '');
 			}
-			if( 'yes' !== get_option(RY_WT::$option_prefix . 'ecpay_shipping_testmode', 'yes') ) {
-				if( empty(get_option(RY_WT::$option_prefix . 'ecpay_shipping_MerchantID')) ) {
+			if( 'yes' !== RY_WT::get_option('ecpay_shipping_testmode', 'yes') ) {
+				if( empty(RY_WT::get_option('ecpay_shipping_MerchantID')) ) {
 					$enable = false;
 				}
-				if( empty(get_option(RY_WT::$option_prefix . 'ecpay_shipping_HashKey')) ) {
+				if( empty(RY_WT::get_option('ecpay_shipping_HashKey')) ) {
 					$enable = false;
 				}
-				if( empty(get_option(RY_WT::$option_prefix . 'ecpay_shipping_HashIV')) ) {
+				if( empty(RY_WT::get_option('ecpay_shipping_HashIV')) ) {
 					$enable = false;
 				}
 			}
 			if( !$enable ) {
 				WC_Admin_Settings::add_error(__('ECPay shipping method failed to enable!', 'ry-woocommerce-tools'));
-				update_option(RY_WT::$option_prefix . 'ecpay_shipping_cvs', 'no');
+				RY_WT::update_option('ecpay_shipping_cvs', 'no');
 			}
 		}
-		if( !preg_match('/^[a-z0-9]*$/i', get_option(RY_WT::$option_prefix . 'ecpay_shipping_order_prefix')) ) {
+		if( !preg_match('/^[a-z0-9]*$/i', RY_WT::get_option('ecpay_shipping_order_prefix')) ) {
 			WC_Admin_Settings::add_error(__('Order no prefix only letters and numbers allowed allowed', 'ry-woocommerce-tools'));
-			update_option(RY_WT::$option_prefix . 'ecpay_shipping_order_prefix', '');
+			RY_WT::update_option('ecpay_shipping_order_prefix', '');
 		}
 	}
 
@@ -164,8 +164,8 @@ final class RY_ECPay_Shipping {
 	}
 
 	public static function get_ecpay_api_info() {
-		self::$testmode = 'yes' === get_option(RY_WT::$option_prefix . 'ecpay_shipping_testmode', 'yes');
-		$cvs_type = get_option(RY_WT::$option_prefix . 'ecpay_shipping_cvs_type');
+		self::$testmode = 'yes' === RY_WT::get_option('ecpay_shipping_testmode', 'yes');
+		$cvs_type = RY_WT::get_option('ecpay_shipping_cvs_type');
 		if( self::$testmode ) {
 			if( 'C2C' == $cvs_type ) {
 				$MerchantID = '2000933';
@@ -177,9 +177,9 @@ final class RY_ECPay_Shipping {
 				$HashIV = 'v77hoKGq4kWxNNIS';
 			}
 		} else {
-			$MerchantID = get_option(RY_WT::$option_prefix . 'ecpay_shipping_MerchantID');
-			$HashKey = get_option(RY_WT::$option_prefix . 'ecpay_shipping_HashKey');
-			$HashIV = get_option(RY_WT::$option_prefix . 'ecpay_shipping_HashIV');
+			$MerchantID = RY_WT::get_option('ecpay_shipping_MerchantID');
+			$HashKey = RY_WT::get_option('ecpay_shipping_HashKey');
+			$HashIV = RY_WT::get_option('ecpay_shipping_HashIV');
 		}
 
 		return [$MerchantID, $HashKey, $HashIV, $cvs_type];

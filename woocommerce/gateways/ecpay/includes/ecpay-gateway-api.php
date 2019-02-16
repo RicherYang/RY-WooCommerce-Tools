@@ -25,7 +25,7 @@ class RY_ECPay_Gateway_Api extends RY_ECPay {
 
 		$args = [
 			'MerchantID' => $MerchantID,
-			'MerchantTradeNo' => self::generate_trade_no($order->get_id(), get_option(RY_WT::$option_prefix . 'ecpay_gateway_order_prefix')),
+			'MerchantTradeNo' => self::generate_trade_no($order->get_id(), RY_WT::get_option('ecpay_gateway_order_prefix')),
 			'MerchantTradeDate' => new DateTime('', new DateTimeZone('Asia/Taipei')),
 			'PaymentType' => 'aio',
 			'TotalAmount' => (int) ceil($order->get_total()),
@@ -50,7 +50,7 @@ class RY_ECPay_Gateway_Api extends RY_ECPay {
 		$order->update_meta_data('_ecpay_MerchantTradeNo', $args['MerchantTradeNo']);
 		$order->save_meta_data();
 
-		if( 'yes' === get_option(RY_WT::$option_prefix . 'ecpay_gateway_testmode', 'yes') ) {
+		if( 'yes' === RY_WT::get_option('ecpay_gateway_testmode', 'yes') ) {
 			$url = self::$api_test_url['checkout'];
 		} else {
 			$url = self::$api_url['checkout'];
@@ -91,7 +91,7 @@ $("#ry-ecpay-form").submit();');
 
 		$args = [
 			'MerchantID' => $MerchantID,
-			'MerchantTradeNo' => self::generate_trade_no($order->get_id(), get_option(RY_WT::$option_prefix . 'ecpay_gateway_order_prefix')),
+			'MerchantTradeNo' => self::generate_trade_no($order->get_id(), RY_WT::get_option('ecpay_gateway_order_prefix')),
 			'MerchantTradeDate' => current_time('Y/m/d H:i:s'),
 			'PaymentType' => 'aio',
 			'TotalAmount' => (int) ceil($order->get_total()),
@@ -111,7 +111,7 @@ $("#ry-ecpay-form").submit();');
 		$order->update_meta_data('_ecpay_MerchantTradeNo', $args['MerchantTradeNo']);
 		$order->save_meta_data();
 
-		if( 'yes' === get_option(RY_WT::$option_prefix . 'ecpay_gateway_testmode', 'yes') ) {
+		if( 'yes' === RY_WT::get_option('ecpay_gateway_testmode', 'yes') ) {
 			$post_url = self::$api_test_url['sptoken'];
 			$js_file = self::$api_test_url['inpay_js'];
 		} else {
@@ -196,7 +196,7 @@ window.addEventListener("message", function (e) {
 		$args = self::add_check_value($args, $HashKey, $HashIV, 'sha256');
 		RY_ECPay_Gateway::log('Query POST: ' . var_export($args, true));
 
-		if( 'yes' === get_option(RY_WT::$option_prefix . 'ecpay_gateway_testmode', 'yes') ) {
+		if( 'yes' === RY_WT::get_option('ecpay_gateway_testmode', 'yes') ) {
 			$post_url = self::$api_test_url['query'];
 		} else {
 			$post_url = self::$api_url['query'];

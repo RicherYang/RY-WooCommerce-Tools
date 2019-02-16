@@ -37,7 +37,7 @@ class RY_ECPay_Gateway_Response extends RY_ECPay_Gateway_Api {
 	}
 
 	public static function checkout_callback($ipn_info) {
-		$order_id = self::get_order_id($ipn_info, get_option(RY_WT::$option_prefix . 'ecpay_gateway_order_prefix'));
+		$order_id = self::get_order_id($ipn_info, RY_WT::get_option('ecpay_gateway_order_prefix'));
 		if( $order = wc_get_order($order_id) ) {
 			$payment_status = self::get_status($ipn_info);
 			RY_ECPay_Gateway::log('Found order #' . $order->get_id() . ' Payment status: ' . $payment_status);

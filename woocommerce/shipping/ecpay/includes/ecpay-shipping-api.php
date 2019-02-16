@@ -66,9 +66,9 @@ class RY_ECPay_Shipping_Api extends RY_ECPay {
 						'LogisticsSubType' => $method_class::$LogisticsSubType . (('C2C' == $CVS_type) ? 'C2C' : ''),
 						'GoodsAmount' => (int) $total,
 						'GoodsName' => $item_names,
-						'SenderName' => get_option(RY_WT::$option_prefix . 'ecpay_shipping_sender_name'),
-						'SenderPhone' => get_option(RY_WT::$option_prefix . 'ecpay_shipping_sender_phone'),
-						'SenderCellPhone' => get_option(RY_WT::$option_prefix . 'ecpay_shipping_sender_cellphone'),
+						'SenderName' => RY_WT::get_option('ecpay_shipping_sender_name'),
+						'SenderPhone' => RY_WT::get_option('ecpay_shipping_sender_phone'),
+						'SenderCellPhone' => RY_WT::get_option('ecpay_shipping_sender_cellphone'),
 						'ReceiverName' => $order->get_shipping_last_name() . $order->get_shipping_first_name(),
 						'ReceiverCellPhone' => $order->get_meta('_shipping_phone'),
 						'ServerReplyURL' => $notify_url,
@@ -102,7 +102,7 @@ class RY_ECPay_Shipping_Api extends RY_ECPay {
 					for( $i = 0; $i < $get_count; ++$i ) {
 						$create_datetime = new DateTime('', new DateTimeZone('Asia/Taipei'));
 						$args['MerchantTradeDate'] = $create_datetime->format('Y/m/d H:i:s');
-						$args['MerchantTradeNo'] = self::generate_trade_no($order->get_id(), get_option(RY_WT::$option_prefix . 'ecpay_shipping_order_prefix'));
+						$args['MerchantTradeNo'] = self::generate_trade_no($order->get_id(), RY_WT::get_option('ecpay_shipping_order_prefix'));
 						if( $i > 01 ) {
 							$args['IsCollection'] = 'N';
 							$args['CollectionAmount'] = 0;
