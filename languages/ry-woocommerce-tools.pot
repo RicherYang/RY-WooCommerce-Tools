@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the RY WooCommerce Tools plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: RY WooCommerce Tools 1.0.11\n"
+"Project-Id-Version: RY WooCommerce Tools 1.0.13.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/ry-woocommerce-tools\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2019-02-16T15:12:30+08:00\n"
+"POT-Creation-Date: 2019-02-26T13:50:28+08:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.1.0\n"
 "X-Domain: ry-woocommerce-tools\n"
@@ -523,30 +523,30 @@ msgstr ""
 msgid "The prefix string of order no. Only letters and numbers allowed allowed."
 msgstr ""
 
-#: woocommerce/gateways/ecpay/includes/settings-ecpay-gateway.php:42
+#: woocommerce/gateways/ecpay/includes/settings-ecpay-gateway.php:41
 #: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:101
 msgid "API credentials"
 msgstr ""
 
-#: woocommerce/gateways/ecpay/includes/settings-ecpay-gateway.php:47
+#: woocommerce/gateways/ecpay/includes/settings-ecpay-gateway.php:46
 msgid "ECPay gateway sandbox"
 msgstr ""
 
-#: woocommerce/gateways/ecpay/includes/settings-ecpay-gateway.php:51
+#: woocommerce/gateways/ecpay/includes/settings-ecpay-gateway.php:50
 msgid "Enable ECPay gateway sandbox"
 msgstr ""
 
-#: woocommerce/gateways/ecpay/includes/settings-ecpay-gateway.php:54
+#: woocommerce/gateways/ecpay/includes/settings-ecpay-gateway.php:53
 #: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:113
 msgid "MerchantID"
 msgstr ""
 
-#: woocommerce/gateways/ecpay/includes/settings-ecpay-gateway.php:60
+#: woocommerce/gateways/ecpay/includes/settings-ecpay-gateway.php:59
 #: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:119
 msgid "HashKey"
 msgstr ""
 
-#: woocommerce/gateways/ecpay/includes/settings-ecpay-gateway.php:66
+#: woocommerce/gateways/ecpay/includes/settings-ecpay-gateway.php:65
 #: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:125
 msgid "HashIV"
 msgstr ""
@@ -563,52 +563,57 @@ msgstr ""
 msgid "Gateway method"
 msgstr ""
 
-#: woocommerce/settings/class-settings-ry-tools.php:57
-msgid "Shipping method"
+#: woocommerce/settings/class-settings-ry-tools.php:52
+#: woocommerce/settings/class-settings-ry-tools.php:60
+msgid "For correct link with ECPay API, need enable secure checkout."
 msgstr ""
 
 #: woocommerce/settings/class-settings-ry-tools.php:58
+msgid "Shipping method"
+msgstr ""
+
+#: woocommerce/settings/class-settings-ry-tools.php:59
 #: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:15
 msgid "Enable ECPay shipping method"
 msgstr ""
 
-#: woocommerce/settings/class-settings-ry-tools.php:68
+#: woocommerce/settings/class-settings-ry-tools.php:70
 msgid "General options"
 msgstr ""
 
-#: woocommerce/settings/class-settings-ry-tools.php:73
+#: woocommerce/settings/class-settings-ry-tools.php:75
 msgid "Repay action"
 msgstr ""
 
-#: woocommerce/settings/class-settings-ry-tools.php:74
+#: woocommerce/settings/class-settings-ry-tools.php:76
 msgid "Edable order to change payment"
 msgstr ""
 
-#: woocommerce/settings/class-settings-ry-tools.php:80
+#: woocommerce/settings/class-settings-ry-tools.php:82
 msgid "strength password"
 msgstr ""
 
-#: woocommerce/settings/class-settings-ry-tools.php:81
+#: woocommerce/settings/class-settings-ry-tools.php:83
 msgid "Edable the strength password check"
 msgstr ""
 
-#: woocommerce/settings/class-settings-ry-tools.php:91
+#: woocommerce/settings/class-settings-ry-tools.php:93
 msgid "Address options"
 msgstr ""
 
-#: woocommerce/settings/class-settings-ry-tools.php:96
+#: woocommerce/settings/class-settings-ry-tools.php:98
 msgid "Show Country"
 msgstr ""
 
-#: woocommerce/settings/class-settings-ry-tools.php:97
+#: woocommerce/settings/class-settings-ry-tools.php:99
 msgid "Show Country select item"
 msgstr ""
 
-#: woocommerce/settings/class-settings-ry-tools.php:103
+#: woocommerce/settings/class-settings-ry-tools.php:105
 msgid "Last name first"
 msgstr ""
 
-#: woocommerce/settings/class-settings-ry-tools.php:104
+#: woocommerce/settings/class-settings-ry-tools.php:106
 msgid "Show Last name before first name input item"
 msgstr ""
 

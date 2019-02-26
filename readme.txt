@@ -40,8 +40,8 @@ Please visit the [plugin page](https://richer.tw/ry-woocommerce-tools/ " ") with
 
 == Changelog ==
 
-= 1.0.13 - 2019/02/26 =
-* 新增 - SSL 模式提醒
+= 1.0.13.1 - 2019/02/26 =
+* 新增 – SSL 模式提醒
 
 = 1.0.12 - 2019/02/16 =
 * 更新 - 調整程式寫法

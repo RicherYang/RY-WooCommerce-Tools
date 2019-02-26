@@ -49,8 +49,7 @@ if( !class_exists('WC_Settings_RY_Tools', false) ) {
 					[
 						'title'   => __('Gateway method', 'ry-woocommerce-tools'),
 						'desc'    => __('Enable ECPay gateway method', 'ry-woocommerce-tools')
-							. (wc_checkout_is_https() ? '' : '<br>' . sprintf(__('To connenct with ECPay API, need support %s', 'ry-woocommerce-tools'),
-								__( 'Secure checkout', 'woocommerce' ))),
+							. (wc_checkout_is_https() ? '' : '<br>' . __('For correct link with ECPay API, need enable secure checkout.', 'ry-woocommerce-tools')),
 						'id'      => RY_WT::$option_prefix . 'enabled_ecpay_gateway',
 						'type'    => 'checkbox',
 						'default' => 'yes'
@@ -58,8 +57,7 @@ if( !class_exists('WC_Settings_RY_Tools', false) ) {
 					[
 						'title'   => __('Shipping method', 'ry-woocommerce-tools'),
 						'desc'    => __('Enable ECPay shipping method', 'ry-woocommerce-tools')
-							. (wc_checkout_is_https() ? '' : '<br>' . sprintf(__('To connenct with ECPay API, need support %s', 'ry-woocommerce-tools'),
-								__( 'Secure checkout', 'woocommerce' ))),
+							. (wc_checkout_is_https() ? '' : '<br>' . __('For correct link with ECPay API, need enable secure checkout.', 'ry-woocommerce-tools')),
 						'id'      => RY_WT::$option_prefix . 'enabled_ecpay_shipping',
 						'type'    => 'checkbox',
 						'default' => 'no',
