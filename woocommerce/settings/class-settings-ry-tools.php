@@ -109,6 +109,13 @@ if( !class_exists('WC_Settings_RY_Tools', false) ) {
 						'default' => 'no',
 					],
 					[
+						'title'   => __('Address zip first', 'ry-woocommerce-tools'),
+						'desc'    => __('Show address input item in zip state address', 'ry-woocommerce-tools'),
+						'id'      => RY_WT::$option_prefix . 'address_zip_first',
+						'type'    => 'checkbox',
+						'default' => 'no',
+					],
+					[
 						'type' => 'sectionend',
 						'id' => 'checkout_page_options',
 					]

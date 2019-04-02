@@ -5,7 +5,7 @@ Tags: woocommerce, payment, gateway, ecpay
 Requires at least: 4.0
 Requires PHP: 5.5.0
 Tested up to: 5.0.3
-Stable tag: 1.0.13
+Stable tag: 1.0.14
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.txt
 
@@ -21,14 +21,12 @@ Let your WooCommerce store more with Taiwan's habits.
 
 = Minimum Requirements =
 
+* php 5.5.0+
 * WooCommerce 3.0+
 
 == Frequently Asked Questions ==
 Basically I didn't follow the support forum at wordpress.org.
 Please visit the [plugin page](https://richer.tw/ry-woocommerce-tools/ " ") with any questions.
-
-基本上我是不關注 wordpress.org 上的支援論壇的。
-有任何的問題請至 [外掛支援](https://richer.tw/ry-woocommerce-tools/ " ") 提出。
 
 == Screenshots ==
 
@@ -40,7 +38,7 @@ Please visit the [plugin page](https://richer.tw/ry-woocommerce-tools/ " ") with
 
 == Changelog ==
 
-= 1.0.13.1 - 2019/02/26 =
+= 1.0.13.2 - 2019/02/26 =
 * 新增 – SSL 模式提醒
 
 = 1.0.12 - 2019/02/16 =

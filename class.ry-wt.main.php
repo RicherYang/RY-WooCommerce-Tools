@@ -72,6 +72,9 @@ final class RY_WT {
 			if( 'yes' == self::get_option('last_name_first', 'no') ) {
 				add_filter('woocommerce_default_address_fields', [__CLASS__, 'last_name_first']);
 			}
+			if( 'yes' == self::get_option('address_zip_first', 'no') ) {
+				add_filter('woocommerce_default_address_fields', [__CLASS__, 'address_zip_first']);
+			}
 		}
 	}
 
@@ -144,6 +147,18 @@ final class RY_WT {
 		$class_key = array_search('form-row-last', $fields['last_name']['class']);
 		unset($fields['last_name']['class'][$class_key]);
 		$fields['last_name']['class'][] = 'form-row-first';
+
+		return $fields;
+	}
+
+	public static function address_zip_first($fields) {
+		$fields['postcode']['priority'] = 50;
+		$fields['state']['priority'] = 60;
+		$fields['city']['priority'] = 70;
+		$fields['address_1']['priority'] = 80;
+		if( isset($fields['address_2']) ) {
+			$fields['address_2']['priority'] = 90;
+		}
 
 		return $fields;
 	}
