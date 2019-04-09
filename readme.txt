@@ -4,8 +4,8 @@ Donate link: https://www.paypal.me/RicherYang
 Tags: woocommerce, payment, gateway, ecpay
 Requires at least: 4.0
 Requires PHP: 5.5.0
-Tested up to: 5.0.3
-Stable tag: 1.0.14
+Tested up to: 5.1.1
+Stable tag: 1.0.15
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.txt
 
@@ -22,6 +22,7 @@ Let your WooCommerce store more with Taiwan's habits.
 = Minimum Requirements =
 
 * php 5.5.0+
+* WordPress 5.0+
 * WooCommerce 3.0+
 
 == Frequently Asked Questions ==
@@ -37,6 +38,13 @@ Please visit the [plugin page](https://richer.tw/ry-woocommerce-tools/ " ") with
 5. WooCommerce Order shipping convenience store info.
 
 == Changelog ==
+
+= 1.0.15 - 2019/04/09 =
+* 新增 - 超商逾時取貨狀態
+* 更新 - 後台超商資訊顯示模式
+
+= 1.0.14 - 2019/03/23 =
+* 新增 - 地址可依郵遞區號縣市鄉鎮街道的順序排列
 
 = 1.0.13.2 - 2019/02/26 =
 * 新增 – SSL 模式提醒

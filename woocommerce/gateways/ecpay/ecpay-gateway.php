@@ -34,7 +34,10 @@ final class RY_ECPay_Gateway {
 			if( empty( self::$log ) ) {
 				self::$log = wc_get_logger();
 			}
-			self::$log->log($level, $message, ['source' => 'ry_ecpay_gateway']);
+			self::$log->log($level, $message, [
+				'source' => 'ry_ecpay_gateway',
+				'_legacy' => true
+			]);
 		}
 	}
 

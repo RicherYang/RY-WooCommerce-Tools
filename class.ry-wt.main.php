@@ -105,9 +105,9 @@ final class RY_WT {
 	public static function add_address_format($address_formats) {
 		$address_formats['TW'] = "{postcode}\n{country} {state} {city}\n{address_1} {address_2}\n{company} {last_name}{first_name}";
 		if( is_admin() ) {
-			$address_formats['CVS'] = "{last_name}{first_name}\n{shipping_type}\n{cvs_store_name} ({cvs_store_ID})\n{cvs_store_address}\n{cvs_store_telephone}\n";
+			$address_formats['CVS'] = "{last_name}{first_name}\n{shipping_type}\n{cvs_store_name} ({cvs_store_ID})\n";
 		} else {
-			$address_formats['CVS'] = "{last_name}{first_name}\n{cvs_store_name} ({cvs_store_ID})\n{cvs_store_address}\n{cvs_store_telephone}\n"
+			$address_formats['CVS'] = "{cvs_store_name} ({cvs_store_ID})\n{cvs_store_address}\n{cvs_store_telephone}\n{last_name}{first_name}\n"
 				. '<p class="woocommerce-customer-details--phone">{phone}</p>';
 		}
 		return $address_formats;

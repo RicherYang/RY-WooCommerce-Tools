@@ -69,7 +69,10 @@ final class RY_ECPay_Shipping {
 			if( empty( self::$log ) ) {
 				self::$log = wc_get_logger();
 			}
-			self::$log->log($level, $message, ['source' => 'ry_ecpay_shipping']);
+			self::$log->log($level, $message, [
+				'source' => 'ry_ecpay_shipping',
+				'_legacy' => true
+			]);
 		}
 	}
 
@@ -137,11 +140,15 @@ final class RY_ECPay_Shipping {
 
 	public static function add_order_statuses($order_statuses) {
 		$order_statuses['wc-ry-at-cvs'] = _x('Wait pickup (cvs)', 'Order status', 'ry-woocommerce-tools');
+		$order_statuses['wc-ry-out-cvs'] = _x('Overdue return (cvs)', 'Order status', 'ry-woocommerce-tools');
+
 		return $order_statuses;
 	}
 
 	public static function add_reports_order_statuses($order_statuses) {
 		$order_statuses[] = 'wc-ry-at-cvs';
+		$order_statuses[] = 'wc-ry-out-cvs';
+
 		return $order_statuses;
 	}
 
@@ -154,6 +161,15 @@ final class RY_ECPay_Shipping {
 			'show_in_admin_status_list' => true,
 			/* translators: %s: number of orders */
 			'label_count' => _n_noop('Wait pickup (cvs) <span class="count">(%s)</span>', 'Wait pickup (cvs) <span class="count">(%s)</span>', 'ry-woocommerce-tools'),
+		]);
+		register_post_status('wc-ry-out-cvs', [
+			'label' => _x('Overdue return (cvs)', 'Order status', 'ry-woocommerce-tools'),
+			'public' => false,
+			'exclude_from_search' => false,
+			'show_in_admin_all_list' => true,
+			'show_in_admin_status_list' => true,
+			/* translators: %s: number of orders */
+			'label_count' => _n_noop('Overdue return (cvs) <span class="count">(%s)</span>', 'Overdue return (cvs) <span class="count">(%s)</span>', 'ry-woocommerce-tools'),
 		]);
 	}
 

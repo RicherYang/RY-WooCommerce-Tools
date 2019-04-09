@@ -2,20 +2,20 @@
 # This file is distributed under the same license as the RY WooCommerce Tools plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: RY WooCommerce Tools 1.0.13.1\n"
+"Project-Id-Version: RY WooCommerce Tools 1.0.15\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/ry-woocommerce-tools\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2019-02-26T13:50:28+08:00\n"
+"POT-Creation-Date: 2019-04-09T11:07:32+08:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.1.0\n"
 "X-Domain: ry-woocommerce-tools\n"
 
 #. Plugin Name of the plugin
-#: class.ry-wt.main.php:224
+#: class.ry-wt.main.php:239
 msgid "RY WooCommerce Tools"
 msgstr ""
 
@@ -35,16 +35,16 @@ msgstr ""
 msgid "https://richer.tw/"
 msgstr ""
 
-#: class.ry-wt.main.php:190
+#: class.ry-wt.main.php:205
 msgid "required"
 msgstr ""
 
 #. translators: %s: Name of this plugin
-#: class.ry-wt.main.php:223
+#: class.ry-wt.main.php:238
 msgid "<strong>%s</strong> is inactive. It require WooCommerce version 3.1.0 or newer."
 msgstr ""
 
-#: class.ry-wt.main.php:252
+#: class.ry-wt.main.php:267
 msgid "Please check your server time setting. Server time is differs from Google Public NTP  more than one minute."
 msgstr ""
 
@@ -298,16 +298,16 @@ msgstr ""
 msgid "Pay via ECPay WebATM"
 msgstr ""
 
-#: woocommerce/gateways/ecpay/ecpay-gateway.php:42
+#: woocommerce/gateways/ecpay/ecpay-gateway.php:45
 msgid "ECPay gateway options"
 msgstr ""
 
-#: woocommerce/gateways/ecpay/ecpay-gateway.php:83
+#: woocommerce/gateways/ecpay/ecpay-gateway.php:86
 msgid "ECPay gateway method failed to enable!"
 msgstr ""
 
-#: woocommerce/gateways/ecpay/ecpay-gateway.php:88
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:133
+#: woocommerce/gateways/ecpay/ecpay-gateway.php:91
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:136
 msgid "Order no prefix only letters and numbers allowed allowed"
 msgstr ""
 
@@ -617,6 +617,14 @@ msgstr ""
 msgid "Show Last name before first name input item"
 msgstr ""
 
+#: woocommerce/settings/class-settings-ry-tools.php:112
+msgid "Address zip first"
+msgstr ""
+
+#: woocommerce/settings/class-settings-ry-tools.php:113
+msgid "Show address input item in zip state address"
+msgstr ""
+
 #: woocommerce/shipping/ecpay/ecpay-shipping-cvs-711.php:11
 msgid "ECPay shipping CVS 7-11"
 msgstr ""
@@ -629,72 +637,84 @@ msgstr ""
 msgid "ECPay shipping CVS Hilife"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:77
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:80
 msgid "ECPay shipping options"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:87
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:90
 msgctxt "Cvs type"
 msgid "Disable"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:89
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:92
 msgid "Cvs only can enable with shipping destination not force to billing address."
 msgstr ""
 
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:101
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:107
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:113
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:104
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:110
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:116
 msgid "Verification failed!"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:101
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:104
 msgid "Name length between 1 to 10 letter (5 if chinese)"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:107
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:110
 #: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:78
 msgid "Phone format (0x)xxxxxxx#xx"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:113
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:116
 #: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:89
 msgid "Cellphone format 09xxxxxxxx"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:128
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:131
 msgid "ECPay shipping method failed to enable!"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:139
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:150
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:142
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:157
 msgctxt "Order status"
 msgid "Wait pickup (cvs)"
 msgstr ""
 
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:143
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:166
+msgctxt "Order status"
+msgid "Overdue return (cvs)"
+msgstr ""
+
 #. translators: %s: number of orders
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:156
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:163
 msgid "Wait pickup (cvs) <span class=\"count\">(%s)</span>"
 msgid_plural "Wait pickup (cvs) <span class=\"count\">(%s)</span>"
 msgstr[0] ""
 
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:266
+#. translators: %s: number of orders
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:172
+msgid "Overdue return (cvs) <span class=\"count\">(%s)</span>"
+msgid_plural "Overdue return (cvs) <span class=\"count\">(%s)</span>"
+msgstr[0] ""
+
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:282
 #: woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:68
 msgid "Store Name"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:273
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:289
 #: woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:72
 msgid "Store Address"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:280
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:296
 #: woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:76
 msgid "Store Telephone"
 msgstr ""
 
 #. translators: 1: Store name 2: Store ID
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:335
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:351
 msgid "CVS store %1$s (%2$s)"
 msgstr ""
 

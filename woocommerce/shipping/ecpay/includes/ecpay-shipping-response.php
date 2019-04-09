@@ -67,14 +67,8 @@ class RY_ECPay_Shipping_Response extends RY_ECPay_Shipping_Api {
 				}
 			}
 
-			if( in_array($cvs_info_list[$ipn_info['AllPayLogisticsID']]['status'], [2063, 2073, 3018]) ) {
-				$order->update_status('ry-at-cvs');
-			}
-
-			if( in_array($cvs_info_list[$ipn_info['AllPayLogisticsID']]['status'], [2067, 3022]) ) {
-				if( 'yes' == RY_WT::get_option('ecpay_shipping_auto_completed', 'yes') ) {
-					$order->update_status('completed');
-				}
+			if( method_exists(__CLASS__, 'shipping_status_' . $cvs_info_list[$ipn_info['AllPayLogisticsID']]['status']) ) {
+				call_user_func([__CLASS__, 'shipping_status_' . $cvs_info_list[$ipn_info['AllPayLogisticsID']]['status']], $order, $ipn_info);
 			}
 
 			do_action('ry_ecpay_shipping_response_status_' . $cvs_info_list[$ipn_info['AllPayLogisticsID']]['status'], $ipn_info, $order);
@@ -85,5 +79,37 @@ class RY_ECPay_Shipping_Response extends RY_ECPay_Shipping_Api {
 
 		RY_ECPay_Shipping::log('Order not found', 'error');
 		self::die_error();
+	}
+
+	protected static function shipping_status_2063($order) {
+		$order->update_status('ry-at-cvs');
+	}
+
+	protected static function shipping_status_2067($order) {
+		if( 'yes' == RY_WT::get_option('ecpay_shipping_auto_completed', 'yes') ) {
+			$order->update_status('completed');
+		}
+	}
+
+	protected static function shipping_status_2073($order) {
+		$order->update_status('ry-at-cvs');
+	}
+
+	protected static function shipping_status_3018($order) {
+		$order->update_status('ry-at-cvs');
+	}
+
+	protected static function shipping_status_2074($order) {
+		$order->update_status('ry-out-cvs');
+	}
+
+	protected static function shipping_status_3020($order) {
+		$order->update_status('ry-out-cvs');
+	}
+
+	protected static function shipping_status_3022($order) {
+		if( 'yes' == RY_WT::get_option('ecpay_shipping_auto_completed', 'yes') ) {
+			$order->update_status('completed');
+		}
 	}
 }
