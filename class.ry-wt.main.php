@@ -25,7 +25,6 @@ final class RY_WT {
 
 			if( is_admin() ) {
 				include_once(RY_WT_PLUGIN_DIR . 'class.ry-wt.admin.php');
-				RY_WT_admin::init();
 			}
 
 			add_action('ry_check_ntp_time', [__CLASS__, 'check_ntp_time']);
@@ -39,12 +38,10 @@ final class RY_WT {
 			// 綠界金流
 			if( 'yes' == self::get_option('enabled_ecpay_gateway', 'yes') ) {
 				include_once(RY_WT_PLUGIN_DIR . 'woocommerce/gateways/ecpay/ecpay-gateway.php');
-				RY_ECPay_Gateway::init();
 			}
 			// 綠界物流
 			if( 'yes' == self::get_option('enabled_ecpay_shipping', 'no') ) {
 				include_once(RY_WT_PLUGIN_DIR . 'woocommerce/shipping/ecpay/ecpay-shipping.php');
-				RY_ECPay_Shipping::init();
 			}
 
 			// 重新付款

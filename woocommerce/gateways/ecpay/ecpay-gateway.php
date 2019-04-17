@@ -104,3 +104,5 @@ final class RY_ECPay_Gateway {
 		return $methods;
 	}
 }
+
+RY_ECPay_Gateway::init();

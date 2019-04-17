@@ -26,3 +26,5 @@ final class RY_WT_admin {
 		return $settings;
 	}
 }
+
+RY_WT_admin::init();

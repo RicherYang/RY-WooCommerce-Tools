@@ -313,6 +313,7 @@ final class RY_ECPay_Shipping {
 				break;
 			}
 		}
+
 		if( $used_cvs ) {
 			add_filter('woocommerce_checkout_fields', [__CLASS__, 'fix_add_cvs_info'], 15);
 		} else {
@@ -426,11 +427,15 @@ final class RY_ECPay_Shipping {
 
 	public static function add_email_class($emails) {
 		$emails['RY_ECPay_Shipping_Email_Customer_CVS_Store'] = include(RY_WT_PLUGIN_DIR . 'woocommerce/emails/ecpay-shipping-customer-cvs-store.php');
+
 		return $emails;
 	}
 
 	public static function add_email_action($actions) {
 		$actions[] = 'ry_ecpay_shipping_cvs_to_store';
+
 		return $actions;
 	}
 }
+
+RY_ECPay_Shipping::init();
