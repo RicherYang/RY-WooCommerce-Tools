@@ -25,10 +25,6 @@ final class RY_ECPay_Shipping {
 
 		self::$log_enabled = 'yes' === RY_WT::get_option('ecpay_shipping_log', 'no');
 
-		add_filter('woocommerce_get_sections_rytools', [__CLASS__, 'add_sections']);
-		add_filter('woocommerce_get_settings_rytools', [__CLASS__, 'add_setting'], 10, 2);
-		add_action('woocommerce_update_options_rytools_ecpay_shipping', [__CLASS__, 'check_option']);
-
 		add_filter('wc_order_statuses', [__CLASS__, 'add_order_statuses']);
 		add_filter('woocommerce_reports_order_statuses', [__CLASS__, 'add_reports_order_statuses']);
 		self::register_order_statuses();
@@ -57,8 +53,11 @@ final class RY_ECPay_Shipping {
 		add_filter('woocommerce_formatted_address_replacements', [__CLASS__, 'add_cvs_address_replacements'], 10, 2);
 
 		if( is_admin() ) {
-			require_once(RY_WT_PLUGIN_DIR . 'woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php');
-			RY_ECPay_Shipping_admin::init();
+			add_filter('woocommerce_get_sections_rytools', [__CLASS__, 'add_sections']);
+			add_filter('woocommerce_get_settings_rytools', [__CLASS__, 'add_setting'], 10, 2);
+			add_action('woocommerce_update_options_rytools_ecpay_shipping', [__CLASS__, 'check_option']);
+
+			include_once(RY_WT_PLUGIN_DIR . 'woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php');
 		} else {
 			wp_register_script('ry-ecpay-shipping', RY_WT_PLUGIN_URL . 'style/js/ry_ecpay_shipping.js', ['jquery'], RY_WT_VERSION, true);
 		}

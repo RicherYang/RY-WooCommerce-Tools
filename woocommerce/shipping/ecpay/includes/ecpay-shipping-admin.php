@@ -162,3 +162,5 @@ class RY_ECPay_Shipping_admin {
 		}
 	}
 }
+
+RY_ECPay_Shipping_admin::init();
