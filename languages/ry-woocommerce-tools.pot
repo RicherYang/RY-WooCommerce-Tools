@@ -2,20 +2,20 @@
 # This file is distributed under the same license as the RY WooCommerce Tools plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: RY WooCommerce Tools 1.0.15\n"
+"Project-Id-Version: RY WooCommerce Tools 1.1.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/ry-woocommerce-tools\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2019-04-09T11:07:32+08:00\n"
+"POT-Creation-Date: 2019-05-07T14:59:35+08:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.1.0\n"
+"X-Generator: WP-CLI 2.2.0\n"
 "X-Domain: ry-woocommerce-tools\n"
 
 #. Plugin Name of the plugin
-#: class.ry-wt.main.php:239
+#: class.ry-wt.main.php:236
 msgid "RY WooCommerce Tools"
 msgstr ""
 
@@ -35,62 +35,67 @@ msgstr ""
 msgid "https://richer.tw/"
 msgstr ""
 
-#: class.ry-wt.main.php:205
+#: class.ry-wt.admin.php:34
+#: woocommerce/settings/settings-ry-tools-pro.php:6
+msgid "Pro version"
+msgstr ""
+
+#: class.ry-wt.main.php:202
 msgid "required"
 msgstr ""
 
 #. translators: %s: Name of this plugin
-#: class.ry-wt.main.php:238
+#: class.ry-wt.main.php:235
 msgid "<strong>%s</strong> is inactive. It require WooCommerce version 3.1.0 or newer."
 msgstr ""
 
-#: class.ry-wt.main.php:267
+#: class.ry-wt.main.php:264
 msgid "Please check your server time setting. Server time is differs from Google Public NTP  more than one minute."
 msgstr ""
 
-#: templates/cart/cart-chouse-cvs.php:2
+#: templates/cart/cart-chouse-cvs.php:15
 msgid "Convenience store"
 msgstr ""
 
-#: templates/cart/cart-chouse-cvs.php:3
+#: templates/cart/cart-chouse-cvs.php:16
 msgid "Chouse convenience Store"
 msgstr ""
 
-#: templates/cart/cart-chouse-cvs.php:4
+#: templates/cart/cart-chouse-cvs.php:17
 msgid "Chouse convenience store"
 msgstr ""
 
-#: templates/emails/customer-cvs-store.php:16
-#: templates/emails/plain/customer-cvs-store.php:13
+#: templates/emails/customer-cvs-store.php:23
+#: templates/emails/plain/customer-cvs-store.php:20
 msgid "Your order product has been sended to the convenience store."
 msgstr ""
 
-#: templates/order/order-ecpay-payment-info-atm.php:17
-#: templates/order/order-ecpay-payment-info-barcode.php:17
-#: templates/order/order-ecpay-payment-info-cvs.php:17
+#: templates/order/order-ecpay-payment-info-atm.php:29
+#: templates/order/order-ecpay-payment-info-barcode.php:29
+#: templates/order/order-ecpay-payment-info-cvs.php:29
 #: woocommerce/gateways/ecpay/ecpay-gateway-atm.php:84
 #: woocommerce/gateways/ecpay/ecpay-gateway-barcode.php:94
 #: woocommerce/gateways/ecpay/ecpay-gateway-cvs.php:94
 msgid "Payment details"
 msgstr ""
 
-#: templates/order/order-ecpay-payment-info-atm.php:21
+#: templates/order/order-ecpay-payment-info-atm.php:33
 #: woocommerce/gateways/ecpay/ecpay-gateway-atm.php:87
 msgid "Bank"
 msgstr ""
 
-#: templates/order/order-ecpay-payment-info-atm.php:25
+#: templates/order/order-ecpay-payment-info-atm.php:37
 msgid "Bank code"
 msgstr ""
 
-#: templates/order/order-ecpay-payment-info-atm.php:29
+#: templates/order/order-ecpay-payment-info-atm.php:41
 #: woocommerce/gateways/ecpay/ecpay-gateway-atm.php:91
 msgid "ATM Bank account"
 msgstr ""
 
-#: templates/order/order-ecpay-payment-info-atm.php:33
-#: templates/order/order-ecpay-payment-info-barcode.php:39
-#: templates/order/order-ecpay-payment-info-cvs.php:25
+#: templates/order/order-ecpay-payment-info-atm.php:45
+#: templates/order/order-ecpay-payment-info-barcode.php:51
+#: templates/order/order-ecpay-payment-info-cvs.php:37
 #: woocommerce/gateways/ecpay/ecpay-gateway-atm.php:95
 #: woocommerce/gateways/ecpay/ecpay-gateway-barcode.php:109
 #: woocommerce/gateways/ecpay/ecpay-gateway-cvs.php:101
@@ -99,32 +104,31 @@ msgstr ""
 msgid "Payment deadline"
 msgstr ""
 
+#: templates/order/order-ecpay-payment-info-barcode.php:33
+#: woocommerce/gateways/ecpay/ecpay-gateway-barcode.php:97
+msgid "Barcode 1"
+msgstr ""
+
+#: templates/order/order-ecpay-payment-info-barcode.php:39
+#: woocommerce/gateways/ecpay/ecpay-gateway-barcode.php:101
+msgid "Barcode 2"
+msgstr ""
+
+#: templates/order/order-ecpay-payment-info-barcode.php:45
+#: woocommerce/gateways/ecpay/ecpay-gateway-barcode.php:105
+msgid "Barcode 3"
+msgstr ""
+
 #. translators: %1$s: date %2$s: time
-#: templates/order/order-ecpay-payment-info-atm.php:36
-#: templates/order/order-ecpay-payment-info-barcode.php:42
-#: templates/order/order-ecpay-payment-info-cvs.php:28
+#: templates/order/order-ecpay-payment-info-barcode.php:54
+#: templates/order/order-ecpay-payment-info-cvs.php:40
 #: woocommerce/admin/meta-boxes/ecpay-shipping-meta-box.php:60
 #: woocommerce/admin/meta-boxes/ecpay-shipping-meta-box.php:61
 msgctxt "Datetime"
 msgid "%1$s %2$s"
 msgstr ""
 
-#: templates/order/order-ecpay-payment-info-barcode.php:21
-#: woocommerce/gateways/ecpay/ecpay-gateway-barcode.php:97
-msgid "Barcode 1"
-msgstr ""
-
-#: templates/order/order-ecpay-payment-info-barcode.php:27
-#: woocommerce/gateways/ecpay/ecpay-gateway-barcode.php:101
-msgid "Barcode 2"
-msgstr ""
-
-#: templates/order/order-ecpay-payment-info-barcode.php:33
-#: woocommerce/gateways/ecpay/ecpay-gateway-barcode.php:105
-msgid "Barcode 3"
-msgstr ""
-
-#: templates/order/order-ecpay-payment-info-cvs.php:21
+#: templates/order/order-ecpay-payment-info-cvs.php:33
 #: woocommerce/gateways/ecpay/ecpay-gateway-cvs.php:97
 msgid "CVS code"
 msgstr ""
@@ -307,16 +311,16 @@ msgid "ECPay gateway method failed to enable!"
 msgstr ""
 
 #: woocommerce/gateways/ecpay/ecpay-gateway.php:91
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:136
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:135
 msgid "Order no prefix only letters and numbers allowed allowed"
 msgstr ""
 
-#: woocommerce/gateways/ecpay/includes/ecpay-gateway-api.php:66
+#: woocommerce/gateways/ecpay/includes/ecpay-gateway-api.php:89
 msgid "Please wait transfer to checkout page."
 msgstr ""
 
 #. translators: %d number of periods
-#: woocommerce/gateways/ecpay/includes/ecpay-gateway-api.php:229
+#: woocommerce/gateways/ecpay/includes/ecpay-gateway-api.php:252
 msgid "Credit installment to %d"
 msgstr ""
 
@@ -637,78 +641,80 @@ msgstr ""
 msgid "ECPay shipping CVS Hilife"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:80
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:79
 msgid "ECPay shipping options"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:90
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:89
 msgctxt "Cvs type"
 msgid "Disable"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:92
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:91
 msgid "Cvs only can enable with shipping destination not force to billing address."
 msgstr ""
 
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:104
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:110
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:116
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:103
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:109
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:115
 msgid "Verification failed!"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:104
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:103
 msgid "Name length between 1 to 10 letter (5 if chinese)"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:110
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:109
 #: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:78
 msgid "Phone format (0x)xxxxxxx#xx"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:116
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:115
 #: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:89
 msgid "Cellphone format 09xxxxxxxx"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:131
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:130
 msgid "ECPay shipping method failed to enable!"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:142
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:157
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:141
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:156
 msgctxt "Order status"
 msgid "Wait pickup (cvs)"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:143
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:166
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:142
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:165
 msgctxt "Order status"
 msgid "Overdue return (cvs)"
 msgstr ""
 
 #. translators: %s: number of orders
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:163
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:162
 msgid "Wait pickup (cvs) <span class=\"count\">(%s)</span>"
 msgid_plural "Wait pickup (cvs) <span class=\"count\">(%s)</span>"
 msgstr[0] ""
+msgstr[1] ""
 
 #. translators: %s: number of orders
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:172
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:171
 msgid "Overdue return (cvs) <span class=\"count\">(%s)</span>"
 msgid_plural "Overdue return (cvs) <span class=\"count\">(%s)</span>"
 msgstr[0] ""
+msgstr[1] ""
 
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:282
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:281
 #: woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:68
 msgid "Store Name"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:289
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:288
 #: woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:72
 msgid "Store Address"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:296
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:295
 #: woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:76
 msgid "Store Telephone"
 msgstr ""

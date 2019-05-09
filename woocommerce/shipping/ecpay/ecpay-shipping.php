@@ -27,6 +27,7 @@ final class RY_ECPay_Shipping {
 
 		add_filter('wc_order_statuses', [__CLASS__, 'add_order_statuses']);
 		add_filter('woocommerce_reports_order_statuses', [__CLASS__, 'add_reports_order_statuses']);
+		add_filter('woocommerce_order_is_paid_statuses', [__CLASS__, 'add_order_is_paid_statuses']);
 		self::register_order_statuses();
 
 		if( 'yes' === RY_WT::get_option('ecpay_shipping_cvs', 'yes') ) {
@@ -145,10 +146,16 @@ final class RY_ECPay_Shipping {
 	}
 
 	public static function add_reports_order_statuses($order_statuses) {
-		$order_statuses[] = 'wc-ry-at-cvs';
-		$order_statuses[] = 'wc-ry-out-cvs';
+		$order_statuses[] = 'ry-at-cvs';
+		$order_statuses[] = 'ry-out-cvs';
 
 		return $order_statuses;
+	}
+
+	public static function add_order_is_paid_statuses($statuses) {
+		$statuses[] = 'ry-at-cvs';
+
+		return $statuses;
 	}
 
 	public static function register_order_statuses() {

@@ -44,8 +44,7 @@ if($order->get_meta('_ecpay_payment_type') != 'ATM' ) {
 			<tr>
 				<td><?=__('Payment deadline', 'ry-woocommerce-tools') ?></td>
 				<?php $expireDate = wc_string_to_datetime($order->get_meta('_ecpay_atm_ExpireDate')); ?>
-				<?php /* translators: %1$s: date */ ?>
-				<td><?=sprintf(_x('%1$s', 'Datetime', 'ry-woocommerce-tools'), $expireDate->date_i18n(wc_date_format())) ?></td>
+				<td><?=$expireDate->date_i18n(wc_date_format()); ?></td>
 			</tr>
 		</tbody>
 	</table>
