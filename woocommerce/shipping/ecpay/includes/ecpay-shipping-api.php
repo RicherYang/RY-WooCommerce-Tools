@@ -34,13 +34,13 @@ class RY_ECPay_Shipping_Api extends RY_ECPay {
 			foreach( $order->get_items('shipping') as $item_id => $item ) {
 				$shipping_method = RY_ECPay_Shipping::get_order_support_shipping($item);
 				if( $shipping_method !== false ) {
-					$cvs_info_list = $order->get_meta('_shipping_cvs_info', true);
-					if( !is_array($cvs_info_list) ) {
-						$cvs_info_list = [];
+					$shipping_list = $order->get_meta('_ecpay_shipping_info', true);
+					if( !is_array($shipping_list) ) {
+						$shipping_list = [];
 					}
 
 					$get_count = 1;
-					if( count($cvs_info_list) == 0 ) {
+					if( count($shipping_list) == 0 ) {
 						$get_count = (int) $item->get_meta('no_count');
 					}
 					if( $get_count < 1 ) {
@@ -75,7 +75,7 @@ class RY_ECPay_Shipping_Api extends RY_ECPay {
 						'LogisticsC2CReplyURL' => $notify_url,
 					];
 
-					if( count($cvs_info_list) == 0 ) {
+					if( count($shipping_list) == 0 ) {
 						if( $order->get_payment_method() == 'cod' ) {
 							$args['IsCollection'] = 'Y';
 							$args['CollectionAmount'] = $args['GoodsAmount'];
@@ -124,28 +124,30 @@ class RY_ECPay_Shipping_Api extends RY_ECPay {
 									if( $body[0] == '1' ) {
 										parse_str($body[1], $result);
 										if( is_array($result) ) {
-											$cvs_info_list = $order->get_meta('_shipping_cvs_info', true);
-											if( !is_array($cvs_info_list) ) {
-												$cvs_info_list = [];
+											$shipping_list = $order->get_meta('_ecpay_shipping_info', true);
+											if( !is_array($shipping_list) ) {
+												$shipping_list = [];
 											}
-											if( !isset($cvs_info_list[$result['AllPayLogisticsID']]) ) {
-												$cvs_info_list[$result['AllPayLogisticsID']] = [];
+											if( !isset($shipping_list[$result['AllPayLogisticsID']]) ) {
+												$shipping_list[$result['AllPayLogisticsID']] = [];
 											}
-											$cvs_info_list[$result['AllPayLogisticsID']]['ID'] = $result['AllPayLogisticsID'];
-											$cvs_info_list[$result['AllPayLogisticsID']]['PaymentNo'] = $result['CVSPaymentNo'];
-											$cvs_info_list[$result['AllPayLogisticsID']]['ValidationNo'] = $result['CVSValidationNo'];
-											$cvs_info_list[$result['AllPayLogisticsID']]['store_ID'] = $args['ReceiverStoreID'];
-											$cvs_info_list[$result['AllPayLogisticsID']]['status'] = self::get_status($result);
-											$cvs_info_list[$result['AllPayLogisticsID']]['status_msg'] = self::get_status_msg($result);
-											$cvs_info_list[$result['AllPayLogisticsID']]['create'] = $create_datetime->format(DATE_ATOM);
-											$cvs_info_list[$result['AllPayLogisticsID']]['edit'] = (string) new WC_DateTime();
-											$cvs_info_list[$result['AllPayLogisticsID']]['amount'] = $args['GoodsAmount'];
-											$cvs_info_list[$result['AllPayLogisticsID']]['IsCollection'] = $args['IsCollection'];
+											$shipping_list[$result['AllPayLogisticsID']]['ID'] = $result['AllPayLogisticsID'];
+											$shipping_list[$result['AllPayLogisticsID']]['LogisticsType'] = $result['LogisticsType'];
+											$shipping_list[$result['AllPayLogisticsID']]['LogisticsSubType'] = $result['LogisticsSubType'];
+											$shipping_list[$result['AllPayLogisticsID']]['PaymentNo'] = $result['CVSPaymentNo'];
+											$shipping_list[$result['AllPayLogisticsID']]['ValidationNo'] = $result['CVSValidationNo'];
+											$shipping_list[$result['AllPayLogisticsID']]['store_ID'] = $args['ReceiverStoreID'];
+											$shipping_list[$result['AllPayLogisticsID']]['status'] = self::get_status($result);
+											$shipping_list[$result['AllPayLogisticsID']]['status_msg'] = self::get_status_msg($result);
+											$shipping_list[$result['AllPayLogisticsID']]['create'] = $create_datetime->format(DATE_ATOM);
+											$shipping_list[$result['AllPayLogisticsID']]['edit'] = (string) new WC_DateTime();
+											$shipping_list[$result['AllPayLogisticsID']]['amount'] = $args['GoodsAmount'];
+											$shipping_list[$result['AllPayLogisticsID']]['IsCollection'] = $args['IsCollection'];
 
-											$order->update_meta_data('_shipping_cvs_info', $cvs_info_list);
+											$order->update_meta_data('_ecpay_shipping_info', $shipping_list);
 											$order->save_meta_data();
 
-											do_action('ry_ecpay_shipping_get_cvs_no', $result, $cvs_info_list[$result['AllPayLogisticsID']]);
+											do_action('ry_ecpay_shipping_get_cvs_no', $result, $shipping_list[$result['AllPayLogisticsID']]);
 										}
 									} else {
 										$order->add_order_note(sprintf(
@@ -163,7 +165,7 @@ class RY_ECPay_Shipping_Api extends RY_ECPay {
 						}
 					}
 
-					do_action('ry_ecpay_shipping_get_all_cvs_no', $cvs_info_list);
+					do_action('ry_ecpay_shipping_get_all_cvs_no', $shipping_list);
 				}
 			}
 		}
@@ -181,10 +183,10 @@ class RY_ECPay_Shipping_Api extends RY_ECPay {
 			foreach( $order->get_items('shipping') as $item_id => $item ) {
 				$shipping_method = RY_ECPay_Shipping::get_order_support_shipping($item);
 				if( $shipping_method !== false ) {
-					$cvs_info_list = $order->get_meta('_shipping_cvs_info', true);
-					if( is_array($cvs_info_list) ) {
+					$shipping_list = $order->get_meta('_ecpay_shipping_info', true);
+					if( is_array($shipping_list) ) {
 						list($MerchantID, $HashKey, $HashIV, $CVS_type) = RY_ECPay_Shipping::get_ecpay_api_info();
-						foreach( $cvs_info_list as $info ) {
+						foreach( $shipping_list as $info ) {
 							if( $info['ID'] == $Logistics_ID ) {
 								$args = [
 									'MerchantID' => $MerchantID,

@@ -36,42 +36,42 @@ class RY_ECPay_Shipping_Response extends RY_ECPay_Shipping_Api {
 	public static function shipping_callback($ipn_info) {
 		$order_id = self::get_order_id($ipn_info, RY_WT::get_option('ecpay_shipping_order_prefix'));
 		if( $order = wc_get_order($order_id) ) {
-			$cvs_info_list = $order->get_meta('_shipping_cvs_info', true);
-			if( !is_array($cvs_info_list) ) {
-				$cvs_info_list = [];
+			$shipping_list = $order->get_meta('_ecpay_shipping_info', true);
+			if( !is_array($shipping_list) ) {
+				$shipping_list = [];
 			}
-			if( !isset($cvs_info_list[$ipn_info['AllPayLogisticsID']]) ) {
-				$cvs_info_list[$ipn_info['AllPayLogisticsID']] = [];
+			if( !isset($shipping_list[$ipn_info['AllPayLogisticsID']]) ) {
+				$shipping_list[$ipn_info['AllPayLogisticsID']] = [];
 			}
-			$old_info = $cvs_info_list[$ipn_info['AllPayLogisticsID']];
-			$cvs_info_list[$ipn_info['AllPayLogisticsID']]['status'] = self::get_status($ipn_info);
-			$cvs_info_list[$ipn_info['AllPayLogisticsID']]['status_msg'] = self::get_status_msg($ipn_info);
-			$cvs_info_list[$ipn_info['AllPayLogisticsID']]['edit'] = (string) new WC_DateTime();
+			$old_info = $shipping_list[$ipn_info['AllPayLogisticsID']];
+			$shipping_list[$ipn_info['AllPayLogisticsID']]['status'] = self::get_status($ipn_info);
+			$shipping_list[$ipn_info['AllPayLogisticsID']]['status_msg'] = self::get_status_msg($ipn_info);
+			$shipping_list[$ipn_info['AllPayLogisticsID']]['edit'] = (string) new WC_DateTime();
 
-			if( isset($cvs_info_list[$ipn_info['AllPayLogisticsID']]['ID']) ) {				
-				$order->update_meta_data('_shipping_cvs_info', $cvs_info_list);
+			if( isset($shipping_list[$ipn_info['AllPayLogisticsID']]['ID']) ) {				
+				$order->update_meta_data('_ecpay_shipping_info', $shipping_list);
 				$order->save_meta_data();
 			}
 
 			if( 'yes' === RY_WT::get_option('ecpay_shipping_log_status_change', 'no') ) {
 				if( isset($old_info['status']) ) {
-					if( $old_info['status'] != $cvs_info_list[$ipn_info['AllPayLogisticsID']]['status'] ) {
+					if( $old_info['status'] != $shipping_list[$ipn_info['AllPayLogisticsID']]['status'] ) {
 						$order->add_order_note(sprintf(
 							/* translators: 1: EcPay ID 2: Old status 3: New status */
 							__('%1$s shipping status from %2$s to %3$s', 'ry-woocommerce-tools'),
 							$ipn_info['AllPayLogisticsID'],
 							$old_info['status_msg'],
-							$cvs_info_list[$ipn_info['AllPayLogisticsID']]['status_msg']
+							$shipping_list[$ipn_info['AllPayLogisticsID']]['status_msg']
 						));
 					}
 				}
 			}
 
-			if( method_exists(__CLASS__, 'shipping_status_' . $cvs_info_list[$ipn_info['AllPayLogisticsID']]['status']) ) {
-				call_user_func([__CLASS__, 'shipping_status_' . $cvs_info_list[$ipn_info['AllPayLogisticsID']]['status']], $order, $ipn_info);
+			if( method_exists(__CLASS__, 'shipping_status_' . $shipping_list[$ipn_info['AllPayLogisticsID']]['status']) ) {
+				call_user_func([__CLASS__, 'shipping_status_' . $shipping_list[$ipn_info['AllPayLogisticsID']]['status']], $order, $ipn_info);
 			}
 
-			do_action('ry_ecpay_shipping_response_status_' . $cvs_info_list[$ipn_info['AllPayLogisticsID']]['status'], $ipn_info, $order);
+			do_action('ry_ecpay_shipping_response_status_' . $shipping_list[$ipn_info['AllPayLogisticsID']]['status'], $ipn_info, $order);
 			do_action('ry_ecpay_shipping_response', $ipn_info, $order);
 
 			self::die_success();

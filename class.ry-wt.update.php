@@ -46,19 +46,19 @@ final class RY_WT_update {
 				"SELECT meta_id, meta_value FROM {$wpdb->postmeta} WHERE meta_key = '_shipping_cvs_info'"
 			);
 			foreach ( $meta_rows as $meta_row ) {
-				$cvs_info_list = maybe_unserialize($meta_row->meta_value);
-				if( is_array($cvs_info_list) ) {
-					foreach( $cvs_info_list as $key => $item ) {
+				$shipping_list = maybe_unserialize($meta_row->meta_value);
+				if( is_array($shipping_list) ) {
+					foreach( $shipping_list as $key => $item ) {
 						if( strpos($item['edit'], 'T') === FALSE ) {
 							$time = new DateTime($item['edit'], new DateTimeZone('Asia/Taipei'));
-							$cvs_info_list[$key]['edit'] = $time->format(DATE_ATOM);
+							$shipping_list[$key]['edit'] = $time->format(DATE_ATOM);
 						}
 						if( strpos($item['create'], 'T') === FALSE ) {
 							$time = new DateTime($item['create'], new DateTimeZone('Asia/Taipei'));
-							$cvs_info_list[$key]['create'] = $time->format(DATE_ATOM);
+							$shipping_list[$key]['create'] = $time->format(DATE_ATOM);
 						}
 
-						update_metadata_by_mid('post', $meta_row->meta_id, $cvs_info_list);
+						update_metadata_by_mid('post', $meta_row->meta_id, $shipping_list);
 					}
 				}
 			}
@@ -78,12 +78,12 @@ final class RY_WT_update {
 					update_metadata('post', $meta_row->post_id, '_shipping_cvs_store_address', $shipping_address_1);
 				}
 
-				$cvs_info_list = get_metadata('post', $meta_row->post_id, '_shipping_cvs_info', true);
-				if( is_array($cvs_info_list) ) {
-					foreach( $cvs_info_list as $key => $item ) {
-						$cvs_info_list[$key]['store_ID'] = $meta_row->meta_value;
+				$shipping_list = get_metadata('post', $meta_row->post_id, '_shipping_cvs_info', true);
+				if( is_array($shipping_list) ) {
+					foreach( $shipping_list as $key => $item ) {
+						$shipping_list[$key]['store_ID'] = $meta_row->meta_value;
 					}
-					update_metadata('post', $meta_row->post_id, '_shipping_cvs_info', $cvs_info_list);
+					update_metadata('post', $meta_row->post_id, '_shipping_cvs_info', $shipping_list);
 				}
 
 				update_metadata('post', $meta_row->post_id, '_shipping_company', '');
@@ -117,6 +117,42 @@ final class RY_WT_update {
 
 		if( version_compare($now_version, '1.1.1', '<' ) ) {
 			RY_WT::update_option('version', '1.1.1');
+		}
+
+		if( version_compare($now_version, '1.1.2', '<' ) ) {
+			@set_time_limit(300);
+
+			include_once(RY_WT_PLUGIN_DIR . 'woocommerce/shipping/ecpay/ecpay-shipping.php');
+
+			$wpdb->update($wpdb->postmeta, ['meta_key' => '_ecpay_shipping_info'], ['meta_key' => '_shipping_cvs_info']);
+
+			$cvs_type = RY_WT::get_option('ecpay_shipping_cvs_type');
+			$meta_rows = $wpdb->get_results(
+				"SELECT post_id FROM {$wpdb->postmeta} WHERE meta_key = '_ecpay_shipping_info'"
+			);
+			foreach ( $meta_rows as $meta_row ) {
+				if( $order = wc_get_order($meta_row->post_id) ) {
+					$shipping_list = $order->get_meta('_ecpay_shipping_info', true);
+					if( !is_array($shipping_list) ) {
+						continue;
+					}
+
+					foreach( $order->get_items('shipping') as $item_id => $item ) {
+						$shipping_method = RY_ECPay_Shipping::get_order_support_shipping($item);
+						if( $shipping_method !== false ) {
+							$method_class = RY_ECPay_Shipping::$support_methods[$shipping_method];
+							foreach( $shipping_list as &$info ) {
+								$info['LogisticsType'] = $method_class::$LogisticsType;
+								$info['LogisticsSubType'] = $method_class::$LogisticsSubType . (('C2C' == $cvs_type) ? 'C2C' : '');
+							}
+						}
+					}
+					$order->update_meta_data('_ecpay_shipping_info', $shipping_list);
+					$order->save_meta_data();
+				}
+			}
+
+			RY_WT::update_option('version', '1.1.2');
 		}
 	}
 }

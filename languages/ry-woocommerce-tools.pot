@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the RY WooCommerce Tools plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: RY WooCommerce Tools 1.1.0\n"
+"Project-Id-Version: RY WooCommerce Tools 1.1.2\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/ry-woocommerce-tools\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2019-05-07T14:59:35+08:00\n"
+"POT-Creation-Date: 2019-05-14T18:21:29+08:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.2.0\n"
 "X-Domain: ry-woocommerce-tools\n"
@@ -122,8 +122,8 @@ msgstr ""
 #. translators: %1$s: date %2$s: time
 #: templates/order/order-ecpay-payment-info-barcode.php:54
 #: templates/order/order-ecpay-payment-info-cvs.php:40
-#: woocommerce/admin/meta-boxes/ecpay-shipping-meta-box.php:60
-#: woocommerce/admin/meta-boxes/ecpay-shipping-meta-box.php:61
+#: woocommerce/admin/meta-boxes/ecpay-shipping-meta-box.php:65
+#: woocommerce/admin/meta-boxes/ecpay-shipping-meta-box.php:66
 msgctxt "Datetime"
 msgid "%1$s %2$s"
 msgstr ""
@@ -134,7 +134,7 @@ msgid "CVS code"
 msgstr ""
 
 #: woocommerce/admin/meta-boxes/ecpay-shipping-meta-box.php:14
-msgid "CVS info"
+msgid "ECPay shipping info"
 msgstr ""
 
 #: woocommerce/admin/meta-boxes/ecpay-shipping-meta-box.php:36
@@ -174,7 +174,7 @@ msgstr ""
 msgid "Shipping booking note"
 msgstr ""
 
-#: woocommerce/admin/meta-boxes/ecpay-shipping-meta-box.php:62
+#: woocommerce/admin/meta-boxes/ecpay-shipping-meta-box.php:67
 msgid "Print"
 msgstr ""
 
@@ -311,7 +311,7 @@ msgid "ECPay gateway method failed to enable!"
 msgstr ""
 
 #: woocommerce/gateways/ecpay/ecpay-gateway.php:91
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:135
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:136
 msgid "Order no prefix only letters and numbers allowed allowed"
 msgstr ""
 
@@ -641,86 +641,86 @@ msgstr ""
 msgid "ECPay shipping CVS Hilife"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:79
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:80
 msgid "ECPay shipping options"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:89
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:90
 msgctxt "Cvs type"
 msgid "Disable"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:91
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:92
 msgid "Cvs only can enable with shipping destination not force to billing address."
 msgstr ""
 
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:103
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:109
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:115
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:104
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:110
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:116
 msgid "Verification failed!"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:103
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:104
 msgid "Name length between 1 to 10 letter (5 if chinese)"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:109
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:110
 #: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:78
 msgid "Phone format (0x)xxxxxxx#xx"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:115
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:116
 #: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:89
 msgid "Cellphone format 09xxxxxxxx"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:130
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:131
 msgid "ECPay shipping method failed to enable!"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:141
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:156
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:142
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:163
 msgctxt "Order status"
 msgid "Wait pickup (cvs)"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:142
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:165
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:143
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:172
 msgctxt "Order status"
 msgid "Overdue return (cvs)"
 msgstr ""
 
 #. translators: %s: number of orders
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:162
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:169
 msgid "Wait pickup (cvs) <span class=\"count\">(%s)</span>"
 msgid_plural "Wait pickup (cvs) <span class=\"count\">(%s)</span>"
 msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: number of orders
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:171
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:178
 msgid "Overdue return (cvs) <span class=\"count\">(%s)</span>"
 msgid_plural "Overdue return (cvs) <span class=\"count\">(%s)</span>"
 msgstr[0] ""
 msgstr[1] ""
 
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:281
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:288
 #: woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:68
 msgid "Store Name"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:288
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:295
 #: woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:72
 msgid "Store Address"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:295
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:302
 #: woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:76
 msgid "Store Telephone"
 msgstr ""
 
 #. translators: 1: Store name 2: Store ID
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:351
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:358
 msgid "CVS store %1$s (%2$s)"
 msgstr ""
 
@@ -741,7 +741,7 @@ msgid "Resend at cvs notification"
 msgstr ""
 
 #. translators: %s Error messade
-#: woocommerce/shipping/ecpay/includes/ecpay-shipping-api.php:153
+#: woocommerce/shipping/ecpay/includes/ecpay-shipping-api.php:155
 msgid "Get shipping code error: %s"
 msgstr ""
 

@@ -5,7 +5,7 @@ Tags: woocommerce, payment, gateway, ecpay
 Requires at least: 4.0
 Requires PHP: 5.5.0
 Tested up to: 5.1.1
-Stable tag: 1.1.1
+Stable tag: 1.1.2
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.txt
 
@@ -38,6 +38,9 @@ Please visit the [plugin page](https://richer.tw/ry-woocommerce-tools/ " ") with
 5. WooCommerce Order shipping convenience store info.
 
 == Changelog ==
+
+= 1.1.2 - 2019/05/14 =
+* 更新 - 調整綠界物流資訊儲存資訊
 
 = 1.1.1 - 2019/05/09 =
 * 新增 - 將超商等待取貨設定為 is_paid 狀態

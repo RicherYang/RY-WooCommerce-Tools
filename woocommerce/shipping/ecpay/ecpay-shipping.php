@@ -415,11 +415,11 @@ final class RY_ECPay_Shipping {
 	}
 
 	public static function get_cvs_code($order_id, $order) {
-		$cvs_info_list = $order->get_meta('_shipping_cvs_info', true);
-		if( !is_array($cvs_info_list) ) {
-			$cvs_info_list = [];
+		$shipping_list = $order->get_meta('_ecpay_shipping_info', true);
+		if( !is_array($shipping_list) ) {
+			$shipping_list = [];
 		}
-		if( count($cvs_info_list) == 0 ) {
+		if( count($shipping_list) == 0 ) {
 			RY_ECPay_Shipping_Api::get_cvs_code($order_id);
 		}
 	}
