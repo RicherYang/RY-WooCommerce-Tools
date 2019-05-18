@@ -4,7 +4,7 @@ defined('RY_WT_VERSION') OR exit('No direct script access allowed');
 return [
 	[
 		'title' => __('Base options', 'ry-woocommerce-tools'),
-		'id' => 'shipping_options',
+		'id' => 'base_options',
 		'type' => 'title'
 	],
 	[
@@ -48,6 +48,15 @@ return [
 		'desc' => __('Auto completed order when user getted products.', 'ry-woocommerce-tools')
 	],
 	[
+		'id' => 'base_options',
+		'type' => 'sectionend'
+	],
+	[
+		'title' => __('Shipping note options', 'ry-woocommerce-tools'),
+		'id' => 'note_options',
+		'type' => 'title'
+	],
+	[
 		'title' => __('Order no prefix', 'ry-woocommerce-tools'),
 		'id' => RY_WT::$option_prefix . 'ecpay_shipping_order_prefix',
 		'type' => 'text',
@@ -60,8 +69,7 @@ return [
 		'type' => 'select',
 		'default' => 'C2C',
 		'options' => [
-			'C2C' => _x('C2C', 'Cvs type', 'ry-woocommerce-tools'),
-			//'B2C' => _x('B2C', 'Cvs type', 'ry-woocommerce-tools')
+			'C2C' => _x('C2C', 'Cvs type', 'ry-woocommerce-tools')
 		]
 	],
 	[
@@ -94,7 +102,7 @@ return [
 		]
 	],
 	[
-		'id' => 'shipping_options',
+		'id' => 'note_options',
 		'type' => 'sectionend'
 	],
 	[
