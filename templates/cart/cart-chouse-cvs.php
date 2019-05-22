@@ -8,12 +8,13 @@
  * happen. When this occurs the version of the template file will be bumped and
  * the readme will list any important changes.
  *
- * @version 1.0.9
+ * @version 1.1.6
  */
 ?>
 <tr class="chouse_cvs">
 	<th><?php echo __('Convenience store', 'ry-woocommerce-tools') ?></th>
 	<td data-title="<?php echo esc_attr__('Chouse convenience Store', 'ry-woocommerce-tools') ?>">
-		<p><button type="button" class="button" onclick="RYECPaySendCvsPost();"><?php echo __('Chouse convenience store', 'ry-woocommerce-tools') ?></button></p>
+		<button type="button" class="button" onclick="RYECPaySendCvsPost();"><?php echo __('Chouse convenience store', 'ry-woocommerce-tools') ?></button>
+		<span class="show_chouse_cvs_name"><br><?php echo __('Convenience store:', 'ry-woocommerce-tools') ?><span class="chouse_cvs_name"></span>
 	</td>
 </tr>

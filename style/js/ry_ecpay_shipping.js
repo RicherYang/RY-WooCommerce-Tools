@@ -15,8 +15,11 @@ $(document.body).on('updated_checkout', function(e, data) {
 		if( $('input#LogisticsSubType').length ) {
 			if( $('input#LogisticsSubType').val() == ecpayShippingInfo.postData.LogisticsSubType ) {
 				$('#CVSStoreName_field strong').text($('input#CVSStoreName').val());
-				$('#cvsStoreAddress_field strong').text($('input#CVSAddress').val());
-				$('#cvsStorePhone_field strong').text($('input#CVSTelephone').val());
+				$('#CVSAddress_field strong').text($('input#CVSAddress').val());
+				$('#CVSTelephone_field strong').text($('input#CVSTelephone').val());
+
+				$('.chouse_cvs .show_chouse_cvs_name').show();
+				$('.chouse_cvs .chouse_cvs_name').text($('input#CVSStoreName').val());
 			} else {
 				RYECPayRemoveSendCvs();
 			}
@@ -75,4 +78,5 @@ function RYECPayRemoveSendCvs() {
 	jQuery('#CVSStoreName_field strong').text('');
 	jQuery('#CVSAddress_field strong').text('');
 	jQuery('#CVSTelephone_field strong').text('');
+	jQuery('.chouse_cvs .show_chouse_cvs_name').hide();
 }

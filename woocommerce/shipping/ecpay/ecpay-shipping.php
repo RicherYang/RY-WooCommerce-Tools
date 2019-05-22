@@ -375,16 +375,18 @@ final class RY_ECPay_Shipping {
 				$items_shipping = array_shift($items_shipping);
 				$shipping_method = RY_ECPay_Shipping::get_order_support_shipping($items_shipping);
 
-				if( !empty($shipping_method) ) {
+				if( $shipping_method != false ) {
 					$shipping_methods = WC()->shipping->get_shipping_methods();
 
-					$address['shipping_type'] = $shipping_methods[$shipping_method]->get_method_title();
-					$address['cvs_store_ID'] = $order->get_meta('_shipping_cvs_store_ID');
-					$address['cvs_store_name'] = $order->get_meta('_shipping_cvs_store_name');
-					$address['cvs_address'] = $order->get_meta('_shipping_cvs_store_address');
-					$address['cvs_telephone'] = $order->get_meta('_shipping_cvs_store_telephone');
-					$address['phone'] = $order->get_meta('_shipping_phone');
-					$address['country'] = 'CVS';
+					if( isset($shipping_methods[$shipping_method]) ) {
+						$address['shipping_type'] = $shipping_methods[$shipping_method]->get_method_title();
+						$address['cvs_store_ID'] = $order->get_meta('_shipping_cvs_store_ID');
+						$address['cvs_store_name'] = $order->get_meta('_shipping_cvs_store_name');
+						$address['cvs_address'] = $order->get_meta('_shipping_cvs_store_address');
+						$address['cvs_telephone'] = $order->get_meta('_shipping_cvs_store_telephone');
+						$address['phone'] = $order->get_meta('_shipping_phone');
+						$address['country'] = 'CVS';
+					}
 				}
 			}
 		}
