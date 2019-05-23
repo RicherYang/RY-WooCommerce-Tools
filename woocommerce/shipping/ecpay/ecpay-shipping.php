@@ -37,8 +37,8 @@ final class RY_ECPay_Shipping {
 
 			add_filter('woocommerce_checkout_fields', [__CLASS__, 'add_cvs_info']);
 			add_action('woocommerce_checkout_process', [__CLASS__, 'is_need_checkout_fields']);
-			add_action('woocommerce_review_order_after_shipping', [__CLASS__, 'shipping_chouse_cvs']);
-			add_filter('woocommerce_update_order_review_fragments', [__CLASS__, 'shipping_chouse_cvs_info']);
+			add_action('woocommerce_review_order_after_shipping', [__CLASS__, 'shipping_choose_cvs']);
+			add_filter('woocommerce_update_order_review_fragments', [__CLASS__, 'shipping_choose_cvs_info']);
 			add_action('woocommerce_checkout_create_order', [__CLASS__, 'save_cvs_info'], 20, 2);
 
 			if( 'yes' === RY_WT::get_option('ecpay_shipping_auto_get_no', 'yes') ) {
@@ -233,13 +233,13 @@ final class RY_ECPay_Shipping {
 		return $chosen_method;
 	}
 
-	public static function shipping_chouse_cvs() {
+	public static function shipping_choose_cvs() {
 		wp_enqueue_script('ry-ecpay-shipping');
 		$method = self::get_chosen_method();
 		self::$js_data = [];
 
 		if( array_key_exists($method, self::$support_methods) ) {
-			wc_get_template('cart/cart-chouse-cvs.php', [], '', RY_WT_PLUGIN_DIR . 'templates/');
+			wc_get_template('cart/cart-choose-cvs.php', [], '', RY_WT_PLUGIN_DIR . 'templates/');
 
 			list($MerchantID, $HashKey, $HashIV, $CVS_type) = self::get_ecpay_api_info();
 			$method_class = self::$support_methods[$method];
@@ -259,7 +259,7 @@ final class RY_ECPay_Shipping {
 		}
 	}
 
-	public static function shipping_chouse_cvs_info($fragments) {
+	public static function shipping_choose_cvs_info($fragments) {
 		if( !empty(self::$js_data) ) {
 			$fragments['ecpay_shipping_info'] = self::$js_data;
 		}
