@@ -23,7 +23,7 @@ $settings = [
 		'title' => __('Shipping cost', 'ry-woocommerce-tools'),
 		'type' => 'number',
 		'default' => 0,
-		'min' => 1,
+		'min' => 0,
 		'step' => 1
 	],
 	'cost_requires' => [

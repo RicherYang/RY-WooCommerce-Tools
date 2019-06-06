@@ -16,7 +16,9 @@ class RY_ECPay_Shipping_CVS_Hilife extends RY_ECPay_Shipping_CVS {
 			'instance-settings-modal',
 		];
 
-		$this->instance_form_fields = include(RY_WT_PLUGIN_DIR . 'woocommerce/shipping/ecpay/includes/settings-ecpay-shipping-cvs.php');
+		if( empty($this->instance_form_fields) ) {
+			$this->instance_form_fields = include(RY_WT_PLUGIN_DIR . 'woocommerce/shipping/ecpay/includes/settings-ecpay-shipping-cvs.php');
+		}
 		$this->instance_form_fields['cost']['default'] = 55;
 
 		$this->init();

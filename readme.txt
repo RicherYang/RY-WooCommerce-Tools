@@ -3,10 +3,9 @@ Contributors: Richer Yang
 Donate link: https://www.paypal.me/RicherYang
 Tags: woocommerce, payment, gateway, ecpay
 Requires at least: 4.0
-Requires PHP: 5.5.0
 Tested up to: 5.2.1
-Stable tag: 1.1.7
-License: GPLv2
+Stable tag: 1.1.10
+License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.txt
 
 Accept your WooCommerce store via ECPay payment gateway and ECPay shipping.
@@ -21,7 +20,6 @@ Let your WooCommerce store more with Taiwan's habits.
 
 = Minimum Requirements =
 
-* php 5.5.0+
 * WordPress 5.0+
 * WooCommerce 3.0+
 
@@ -38,6 +36,15 @@ Please visit the [plugin page](https://richer.tw/ry-woocommerce-tools/ " ") with
 5. WooCommerce Order shipping convenience store info.
 
 == Changelog ==
+
+= 1.1.10 - 2019/06/04 =
+* 更新 - 列印超商貨單時，連結綠界伺服器錯誤時的處理方式
+
+= 1.1.9 - 2019/06/03 =
+* 更新 - 專業版功能資訊
+
+= 1.1.8 - 2019/06/02 =
+* 更新 - 修正未選擇超商門市的提示錯誤
 
 = 1.1.7 - 2019/05/23 =
 * 更新 - 修正錯字

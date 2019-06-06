@@ -4,7 +4,7 @@ defined('RY_WT_VERSION') OR exit('No direct script access allowed');
 return [
 	[
 		'title' => __('Base options', 'ry-woocommerce-tools'),
-		'id' => 'shipping_options',
+		'id' => 'base_options',
 		'type' => 'title',
 	],
 	[
@@ -34,7 +34,7 @@ return [
 		'desc_tip' => true
 	],
 	[
-		'id' => 'shipping_options',
+		'id' => 'base_options',
 		'type' => 'sectionend'
 	],
 	[

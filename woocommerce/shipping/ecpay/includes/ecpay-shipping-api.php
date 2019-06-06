@@ -217,8 +217,14 @@ class RY_ECPay_Shipping_Api extends RY_ECPay {
 									'timeout' => 20,
 									'body' => $args
 								]);
-								if( $response['response']['code'] == '200' ) {
-									echo($response['body']);
+								if( !is_wp_error($response) ) {
+									if( $response['response']['code'] == '200' ) {
+										echo($response['body']);
+									}
+								} else {
+									echo('<!DOCTYPE html><html><head><meta charset="' . get_bloginfo('charset', 'display') . '"></head><body>');
+									_e('Error with connect to ECPay server.', 'ry-woocommerce-tools');
+									echo('</body></html>');
 								}
 							}
 						}

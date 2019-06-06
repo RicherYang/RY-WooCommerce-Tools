@@ -18,8 +18,10 @@ $(document.body).on('updated_checkout', function(e, data) {
 				$('#CVSAddress_field strong').text($('input#CVSAddress').val());
 				$('#CVSTelephone_field strong').text($('input#CVSTelephone').val());
 
-				$('.choose_cvs .show_choose_cvs_name').show();
-				$('.choose_cvs .choose_cvs_name').text($('input#CVSStoreName').val());
+				if( $('input#CVSStoreName').val() != '' ) {
+					$('.choose_cvs .show_choose_cvs_name').show();
+					$('.choose_cvs .choose_cvs_name').text($('input#CVSStoreName').val());
+				}
 			} else {
 				RYECPayRemoveSendCvs();
 			}
