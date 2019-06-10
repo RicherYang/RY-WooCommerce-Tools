@@ -4,7 +4,7 @@ Donate link: https://www.paypal.me/RicherYang
 Tags: woocommerce, payment, gateway, ecpay
 Requires at least: 4.0
 Tested up to: 5.2.1
-Stable tag: 1.1.10
+Stable tag: 1.1.11.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.txt
 
@@ -36,6 +36,9 @@ Please visit the [plugin page](https://richer.tw/ry-woocommerce-tools/ " ") with
 5. WooCommerce Order shipping convenience store info.
 
 == Changelog ==
+
+= 1.1.11.1 - 2019/06/10 =
+* 更新 - 修正 ATM 帳號可能因為瀏覽器判斷錯誤顯示為電話模式
 
 = 1.1.10 - 2019/06/04 =
 * 更新 - 列印超商貨單時，連結綠界伺服器錯誤時的處理方式

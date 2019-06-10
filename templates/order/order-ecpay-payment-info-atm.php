@@ -8,7 +8,7 @@
  * happen. When this occurs the version of the template file will be bumped and
  * the readme will list any important changes.
  *
- * @version 1.0.17
+ * @version 1.1.11
  */
 
 defined('RY_WT_VERSION') OR exit('No direct script access allowed');
@@ -35,11 +35,11 @@ if($order->get_meta('_ecpay_payment_type') != 'ATM' ) {
 			</tr>
 			<tr>
 				<td><?=__('Bank code', 'ry-woocommerce-tools') ?></td>
-				<td><?=$order->get_meta('_ecpay_atm_BankCode') ?></td>
+				<td><?=$order->get_meta('_ecpay_atm_BankCode')  ?></td>
 			</tr>
 			<tr>
 				<td><?=__('ATM Bank account', 'ry-woocommerce-tools') ?></td>
-				<td><?=$order->get_meta('_ecpay_atm_vAccount') ?></td>
+				<td><?=wordwrap($order->get_meta('_ecpay_atm_vAccount'), 4, '<span> </span>', true) ?></td>
 			</tr>
 			<tr>
 				<td><?=__('Payment deadline', 'ry-woocommerce-tools') ?></td>
