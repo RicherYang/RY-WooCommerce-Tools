@@ -11,7 +11,7 @@ return [
 		'title' => __('Enable/Disable', 'woocommerce'),
 		'id' => RY_WT::$option_prefix . 'ecpay_shipping_cvs',
 		'type' => 'checkbox',
-		'default' => 'yes',
+		'default' => 'no',
 		'desc' => __('Enable ECPay shipping method', 'ry-woocommerce-tools')
 	],
 	[

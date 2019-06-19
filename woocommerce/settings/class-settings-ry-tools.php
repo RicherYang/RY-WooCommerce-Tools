@@ -52,7 +52,7 @@ if( !class_exists('WC_Settings_RY_Tools', false) ) {
 							. (wc_checkout_is_https() ? '' : '<br>' . __('For correct link with ECPay API, need enable secure checkout.', 'ry-woocommerce-tools')),
 						'id'      => RY_WT::$option_prefix . 'enabled_ecpay_gateway',
 						'type'    => 'checkbox',
-						'default' => 'yes'
+						'default' => 'no'
 					],
 					[
 						'title'   => __('Shipping method', 'ry-woocommerce-tools'),

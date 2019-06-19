@@ -30,7 +30,7 @@ final class RY_ECPay_Shipping {
 		add_filter('woocommerce_order_is_paid_statuses', [__CLASS__, 'add_order_is_paid_statuses']);
 		self::register_order_statuses();
 
-		if( 'yes' === RY_WT::get_option('ecpay_shipping_cvs', 'yes') ) {
+		if( 'yes' === RY_WT::get_option('ecpay_shipping_cvs', 'no') ) {
 			RY_ECPay_Shipping_Response::init();
 
 			add_filter('woocommerce_shipping_methods', [__CLASS__, 'add_method']);

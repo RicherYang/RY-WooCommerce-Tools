@@ -2,9 +2,10 @@
 Contributors: Richer Yang
 Donate link: https://www.paypal.me/RicherYang
 Tags: woocommerce, payment, gateway, ecpay
-Requires at least: 4.0
-Tested up to: 5.2.1
-Stable tag: 1.1.11.1
+Requires at least: 5.0
+Requires PHP: 5.6.0
+Tested up to: 5.2.2
+Stable tag: 1.1.12
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.txt
 
@@ -20,8 +21,10 @@ Let your WooCommerce store more with Taiwan's habits.
 
 = Minimum Requirements =
 
+* PHP 5.6+
 * WordPress 5.0+
 * WooCommerce 3.0+
+
 
 == Frequently Asked Questions ==
 Basically I didn't follow the support forum at wordpress.org.
@@ -36,6 +39,9 @@ Please visit the [plugin page](https://richer.tw/ry-woocommerce-tools/ " ") with
 5. WooCommerce Order shipping convenience store info.
 
 == Changelog ==
+
+= 1.1.12 - 2019/06/19 =
+* 更新 - 啟用狀態預設值調整
 
 = 1.1.11.1 - 2019/06/10 =
 * 更新 - 修正 ATM 帳號可能因為瀏覽器判斷錯誤顯示為電話模式

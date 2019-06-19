@@ -36,7 +36,7 @@ final class RY_WT {
 			add_filter('woocommerce_localisation_address_formats', [__CLASS__, 'add_address_format']);
 
 			// 綠界金流
-			if( 'yes' == self::get_option('enabled_ecpay_gateway', 'yes') ) {
+			if( 'yes' == self::get_option('enabled_ecpay_gateway', 'no') ) {
 				include_once(RY_WT_PLUGIN_DIR . 'woocommerce/gateways/ecpay/ecpay-gateway.php');
 			}
 			// 綠界物流
@@ -232,7 +232,7 @@ final class RY_WT {
 	public static function need_woocommerce() {
 		$message = sprintf(
 			/* translators: %s: Name of this plugin */
-			__('<strong>%s</strong> is inactive. It require WooCommerce version 3.1.0 or newer.', 'ry-woocommerce-tools'),
+			__('<strong>%s</strong> is inactive. It require WooCommerce version 3.0.0 or newer.', 'ry-woocommerce-tools'),
 			__('RY WooCommerce Tools', 'ry-woocommerce-tools')
 		);
 		printf('<div class="error"><p>%s</p></div>', $message);

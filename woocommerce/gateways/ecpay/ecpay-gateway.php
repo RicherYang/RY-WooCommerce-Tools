@@ -24,7 +24,7 @@ final class RY_ECPay_Gateway {
 		add_filter('woocommerce_get_settings_rytools', [__CLASS__, 'add_setting'], 10, 2);
 		add_action('woocommerce_update_options_rytools_ecpay_gateway', [__CLASS__, 'check_option']);
 
-		if( 'yes' === RY_WT::get_option('ecpay_gateway', 'yes') ) {
+		if( 'yes' === RY_WT::get_option('ecpay_gateway', 'no') ) {
 			add_filter('woocommerce_payment_gateways', [__CLASS__, 'add_method']);
 		}
 	}

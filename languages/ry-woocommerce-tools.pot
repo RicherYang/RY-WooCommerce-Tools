@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the RY WooCommerce Tools plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: RY WooCommerce Tools 1.1.11.1\n"
+"Project-Id-Version: RY WooCommerce Tools 1.1.12\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/ry-woocommerce-tools\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2019-06-10T23:26:03+08:00\n"
+"POT-Creation-Date: 2019-06-19T10:45:05+08:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.2.0\n"
 "X-Domain: ry-woocommerce-tools\n"
@@ -46,7 +46,7 @@ msgstr ""
 
 #. translators: %s: Name of this plugin
 #: class.ry-wt.main.php:235
-msgid "<strong>%s</strong> is inactive. It require WooCommerce version 3.1.0 or newer."
+msgid "<strong>%s</strong> is inactive. It require WooCommerce version 3.0.0 or newer."
 msgstr ""
 
 #: class.ry-wt.main.php:264
