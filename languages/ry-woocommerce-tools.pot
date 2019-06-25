@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the RY WooCommerce Tools plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: RY WooCommerce Tools 1.1.12\n"
+"Project-Id-Version: RY WooCommerce Tools 1.1.14\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/ry-woocommerce-tools\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2019-06-19T10:45:05+08:00\n"
+"POT-Creation-Date: 2019-06-25T23:42:53+08:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.2.0\n"
 "X-Domain: ry-woocommerce-tools\n"
@@ -74,66 +74,66 @@ msgstr ""
 msgid "Your order product has been sended to the convenience store."
 msgstr ""
 
-#: templates/order/order-ecpay-payment-info-atm.php:29
-#: templates/order/order-ecpay-payment-info-barcode.php:29
-#: templates/order/order-ecpay-payment-info-cvs.php:29
-#: woocommerce/gateways/ecpay/ecpay-gateway-atm.php:84
-#: woocommerce/gateways/ecpay/ecpay-gateway-barcode.php:94
-#: woocommerce/gateways/ecpay/ecpay-gateway-cvs.php:94
+#: templates/order/order-ecpay-payment-info-atm.php:25
+#: templates/order/order-ecpay-payment-info-barcode.php:25
+#: templates/order/order-ecpay-payment-info-cvs.php:25
+#: woocommerce/gateways/ecpay/ecpay-gateway-atm.php:82
+#: woocommerce/gateways/ecpay/ecpay-gateway-barcode.php:92
+#: woocommerce/gateways/ecpay/ecpay-gateway-cvs.php:92
 msgid "Payment details"
 msgstr ""
 
-#: templates/order/order-ecpay-payment-info-atm.php:33
-#: woocommerce/gateways/ecpay/ecpay-gateway-atm.php:87
+#: templates/order/order-ecpay-payment-info-atm.php:29
+#: woocommerce/gateways/ecpay/ecpay-gateway-atm.php:85
 msgid "Bank"
 msgstr ""
 
-#: templates/order/order-ecpay-payment-info-atm.php:37
+#: templates/order/order-ecpay-payment-info-atm.php:33
 msgid "Bank code"
 msgstr ""
 
-#: templates/order/order-ecpay-payment-info-atm.php:41
-#: woocommerce/gateways/ecpay/ecpay-gateway-atm.php:91
+#: templates/order/order-ecpay-payment-info-atm.php:37
+#: woocommerce/gateways/ecpay/ecpay-gateway-atm.php:89
 msgid "ATM Bank account"
 msgstr ""
 
-#: templates/order/order-ecpay-payment-info-atm.php:45
-#: templates/order/order-ecpay-payment-info-barcode.php:51
-#: templates/order/order-ecpay-payment-info-cvs.php:37
-#: woocommerce/gateways/ecpay/ecpay-gateway-atm.php:95
-#: woocommerce/gateways/ecpay/ecpay-gateway-barcode.php:109
-#: woocommerce/gateways/ecpay/ecpay-gateway-cvs.php:101
+#: templates/order/order-ecpay-payment-info-atm.php:41
+#: templates/order/order-ecpay-payment-info-barcode.php:47
+#: templates/order/order-ecpay-payment-info-cvs.php:33
+#: woocommerce/gateways/ecpay/ecpay-gateway-atm.php:93
+#: woocommerce/gateways/ecpay/ecpay-gateway-barcode.php:107
+#: woocommerce/gateways/ecpay/ecpay-gateway-cvs.php:99
 #: woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-atm.php:55
 #: woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-barcode.php:49
 msgid "Payment deadline"
 msgstr ""
 
-#: templates/order/order-ecpay-payment-info-barcode.php:33
-#: woocommerce/gateways/ecpay/ecpay-gateway-barcode.php:97
+#: templates/order/order-ecpay-payment-info-barcode.php:29
+#: woocommerce/gateways/ecpay/ecpay-gateway-barcode.php:95
 msgid "Barcode 1"
 msgstr ""
 
-#: templates/order/order-ecpay-payment-info-barcode.php:39
-#: woocommerce/gateways/ecpay/ecpay-gateway-barcode.php:101
+#: templates/order/order-ecpay-payment-info-barcode.php:35
+#: woocommerce/gateways/ecpay/ecpay-gateway-barcode.php:99
 msgid "Barcode 2"
 msgstr ""
 
-#: templates/order/order-ecpay-payment-info-barcode.php:45
-#: woocommerce/gateways/ecpay/ecpay-gateway-barcode.php:105
+#: templates/order/order-ecpay-payment-info-barcode.php:41
+#: woocommerce/gateways/ecpay/ecpay-gateway-barcode.php:103
 msgid "Barcode 3"
 msgstr ""
 
 #. translators: %1$s: date %2$s: time
-#: templates/order/order-ecpay-payment-info-barcode.php:54
-#: templates/order/order-ecpay-payment-info-cvs.php:40
+#: templates/order/order-ecpay-payment-info-barcode.php:50
+#: templates/order/order-ecpay-payment-info-cvs.php:36
 #: woocommerce/admin/meta-boxes/ecpay-shipping-meta-box.php:65
 #: woocommerce/admin/meta-boxes/ecpay-shipping-meta-box.php:66
 msgctxt "Datetime"
 msgid "%1$s %2$s"
 msgstr ""
 
-#: templates/order/order-ecpay-payment-info-cvs.php:33
-#: woocommerce/gateways/ecpay/ecpay-gateway-cvs.php:97
+#: templates/order/order-ecpay-payment-info-cvs.php:29
+#: woocommerce/gateways/ecpay/ecpay-gateway-cvs.php:95
 msgid "CVS code"
 msgstr ""
 
@@ -150,7 +150,7 @@ msgid "Shipping payment no"
 msgstr ""
 
 #: woocommerce/admin/meta-boxes/ecpay-shipping-meta-box.php:38
-#: woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:64
+#: woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:65
 msgid "Store ID"
 msgstr ""
 
@@ -206,18 +206,18 @@ msgstr ""
 msgid "ECPay ATM"
 msgstr ""
 
-#: woocommerce/gateways/ecpay/ecpay-gateway-atm.php:51
+#: woocommerce/gateways/ecpay/ecpay-gateway-atm.php:49
 msgid "Pay via ECPay ATM"
 msgstr ""
 
-#: woocommerce/gateways/ecpay/ecpay-gateway-atm.php:66
+#: woocommerce/gateways/ecpay/ecpay-gateway-atm.php:64
 msgid "ATM payment deadline out of range. Set as default value."
 msgstr ""
 
 #. translators: %s: Gateway method title
-#: woocommerce/gateways/ecpay/ecpay-gateway-atm.php:72
-#: woocommerce/gateways/ecpay/ecpay-gateway-barcode.php:76
-#: woocommerce/gateways/ecpay/ecpay-gateway-cvs.php:76
+#: woocommerce/gateways/ecpay/ecpay-gateway-atm.php:70
+#: woocommerce/gateways/ecpay/ecpay-gateway-barcode.php:74
+#: woocommerce/gateways/ecpay/ecpay-gateway-cvs.php:74
 #: woocommerce/gateways/ecpay/ecpay-gateway-webatm.php:57
 #: woocommerce/gateways/ecpay/includes/ecpay-gateway-base.php:31
 msgid "%s minimum amount out of range. Set as default value."
@@ -231,16 +231,16 @@ msgstr ""
 msgid "ECPay BARCODE"
 msgstr ""
 
-#: woocommerce/gateways/ecpay/ecpay-gateway-barcode.php:56
+#: woocommerce/gateways/ecpay/ecpay-gateway-barcode.php:54
 msgid "Pay via ECPay BARCODE"
 msgstr ""
 
-#: woocommerce/gateways/ecpay/ecpay-gateway-barcode.php:69
+#: woocommerce/gateways/ecpay/ecpay-gateway-barcode.php:67
 msgid "BARCODE payment deadline out of range. Set as default value."
 msgstr ""
 
 #. translators: %s: Gateway method title
-#: woocommerce/gateways/ecpay/ecpay-gateway-barcode.php:82
+#: woocommerce/gateways/ecpay/ecpay-gateway-barcode.php:80
 msgid "%s maximum amount more then ECPay normal maximum (20000)."
 msgstr ""
 
@@ -281,16 +281,16 @@ msgstr ""
 msgid "ECPay CVS"
 msgstr ""
 
-#: woocommerce/gateways/ecpay/ecpay-gateway-cvs.php:54
+#: woocommerce/gateways/ecpay/ecpay-gateway-cvs.php:52
 msgid "Pay via ECPay CVS"
 msgstr ""
 
-#: woocommerce/gateways/ecpay/ecpay-gateway-cvs.php:69
+#: woocommerce/gateways/ecpay/ecpay-gateway-cvs.php:67
 msgid "CVS payment deadline out of range. Set as default value."
 msgstr ""
 
 #. translators: %s: Gateway method title
-#: woocommerce/gateways/ecpay/ecpay-gateway-cvs.php:82
+#: woocommerce/gateways/ecpay/ecpay-gateway-cvs.php:80
 msgid "%s maximum amount more then ECPay normal maximum (6000)."
 msgstr ""
 
@@ -306,15 +306,15 @@ msgstr ""
 msgid "Pay via ECPay WebATM"
 msgstr ""
 
-#: woocommerce/gateways/ecpay/ecpay-gateway.php:45
+#: woocommerce/gateways/ecpay/ecpay-gateway.php:51
 msgid "ECPay gateway options"
 msgstr ""
 
-#: woocommerce/gateways/ecpay/ecpay-gateway.php:86
+#: woocommerce/gateways/ecpay/ecpay-gateway.php:92
 msgid "ECPay gateway method failed to enable!"
 msgstr ""
 
-#: woocommerce/gateways/ecpay/ecpay-gateway.php:91
+#: woocommerce/gateways/ecpay/ecpay-gateway.php:97
 #: woocommerce/shipping/ecpay/ecpay-shipping.php:136
 msgid "Order no prefix only letters and numbers allowed allowed"
 msgstr ""
@@ -709,17 +709,17 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: woocommerce/shipping/ecpay/ecpay-shipping.php:288
-#: woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:68
+#: woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:69
 msgid "Store Name"
 msgstr ""
 
 #: woocommerce/shipping/ecpay/ecpay-shipping.php:295
-#: woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:72
+#: woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:73
 msgid "Store Address"
 msgstr ""
 
 #: woocommerce/shipping/ecpay/ecpay-shipping.php:302
-#: woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:76
+#: woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:77
 msgid "Store Telephone"
 msgstr ""
 
@@ -728,19 +728,19 @@ msgstr ""
 msgid "CVS store %1$s (%2$s)"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:132
+#: woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:133
 msgid "All cvs shipping methods set to disable."
 msgstr ""
 
-#: woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:143
+#: woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:144
 msgid "Get new CVS payment no"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:145
+#: woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:146
 msgid "Get new CVS payment no with cod"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:148
+#: woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:149
 msgid "Resend at cvs notification"
 msgstr ""
 
@@ -749,7 +749,7 @@ msgstr ""
 msgid "Get shipping code error: %s"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/includes/ecpay-shipping-api.php:226
+#: woocommerce/shipping/ecpay/includes/ecpay-shipping-api.php:220
 msgid "Error with connect to ECPay server."
 msgstr ""
 

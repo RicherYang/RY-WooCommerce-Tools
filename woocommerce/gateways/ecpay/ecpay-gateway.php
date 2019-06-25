@@ -24,6 +24,12 @@ final class RY_ECPay_Gateway {
 		add_filter('woocommerce_get_settings_rytools', [__CLASS__, 'add_setting'], 10, 2);
 		add_action('woocommerce_update_options_rytools_ecpay_gateway', [__CLASS__, 'check_option']);
 
+		if( is_admin() ) {
+		} else {
+			add_action('woocommerce_thankyou', [__CLASS__, 'payment_info'], 9);
+			add_action('woocommerce_view_order', [__CLASS__, 'payment_info'], 9);
+		}
+
 		if( 'yes' === RY_WT::get_option('ecpay_gateway', 'no') ) {
 			add_filter('woocommerce_payment_gateways', [__CLASS__, 'add_method']);
 		}
@@ -90,6 +96,35 @@ final class RY_ECPay_Gateway {
 		if( !preg_match('/^[a-z0-9]*$/i', RY_WT::get_option('ecpay_gateway_order_prefix')) ) {
 			WC_Admin_Settings::add_error(__('Order no prefix only letters and numbers allowed allowed', 'ry-woocommerce-tools'));
 			RY_WT::update_option('ecpay_gateway_order_prefix', '');
+		}
+	}
+
+	public static function payment_info($order_id) {
+		if( !$order_id ) {
+			return;
+		}
+		
+		if( !$order = wc_get_order($order_id) ) {
+			return;
+		}
+		$payment_method = $order->get_payment_method();
+		switch( $order->get_payment_method() ) {
+			case 'ry_ecpay_atm':
+				$template_file = 'order/order-ecpay-payment-info-atm.php';
+				break;
+			case 'ry_ecpay_barcode':
+				$template_file = 'order/order-ecpay-payment-info-barcode.php';
+				break;
+			case 'ry_ecpay_cvs':
+				$template_file = 'order/order-ecpay-payment-info-cvs.php';
+				break;
+		}
+
+		if( isset($template_file) ) {
+			$args = array(
+				'order' => $order,
+			);
+			wc_get_template($template_file, $args, '', RY_WT_PLUGIN_DIR . 'templates/');
 		}
 	}
 

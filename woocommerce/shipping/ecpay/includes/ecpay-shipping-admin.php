@@ -15,7 +15,8 @@ class RY_ECPay_Shipping_admin {
 		add_action('woocommerce_order_action_get_new_cvs_no', ['RY_ECPay_Shipping_Api', 'get_cvs_code']);
 		add_action('woocommerce_order_action_get_new_cvs_no_cod', ['RY_ECPay_Shipping_Api', 'get_cvs_code_cod']);
 		add_action('woocommerce_order_action_send_at_cvs_email', ['RY_ECPay_Shipping', 'send_at_cvs_email']);
-		add_action('wp_ajax_RY_ECPay_Shipping_print', ['RY_ECPay_Shipping_Api', 'print_info']);
+
+		add_action('wp_ajax_RY_ECPay_Shipping_print', [__CLASS__, 'print_info']);
 
 		add_action('admin_enqueue_scripts', [__CLASS__, 'add_scripts']);
 		add_action('add_meta_boxes', ['RY_ECPay_Shipping_Meta_Box', 'add_meta_box'], 40, 2);
@@ -150,6 +151,32 @@ class RY_ECPay_Shipping_admin {
 			}
 		}
 		return $order_actions;
+	}
+
+	public static function print_info() {
+		$order_ID = (int) $_GET['orderid'];
+		$logistics_id = (int) $_GET['id'];
+
+		$print_info = '';
+		if( $order = wc_get_order($order_ID) ) {
+			foreach( $order->get_items('shipping') as $item_id => $item ) {
+				$shipping_list = $order->get_meta('_ecpay_shipping_info', true);
+				if( is_array($shipping_list) ) {
+					foreach( $shipping_list as $info ) {
+						if( $info['ID'] == $logistics_id ) {
+							$print_info = RY_ECPay_Shipping_Api::get_print_info($logistics_id, $info);
+							echo($print_info);
+							wp_die();
+						}
+					}
+				}
+			}
+			wp_redirect(admin_url('post.php?post=' . $order_ID . '&action=edit'));
+			exit();
+		}
+		
+		wp_redirect(admin_url('edit.php?post_type=shop_order'));
+		exit();
 	}
 
 	public static function add_scripts() {

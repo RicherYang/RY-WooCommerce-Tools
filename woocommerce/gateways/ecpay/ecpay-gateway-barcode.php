@@ -21,8 +21,6 @@ class RY_ECPay_Gateway_Barcode extends RY_ECPay_Gateway_Base {
 		$this->max_amount = (int) $this->get_option('max_amount', 0);
 
 		add_action('woocommerce_admin_order_data_after_billing_address', [$this, 'admin_payment_info']);
-		add_action('woocommerce_view_order', [$this, 'payment_info'], 9);
-		add_action('woocommerce_thankyou', [$this, 'payment_info'], 9);
 
 		if( is_checkout() || is_view_order_page() ) {
 			wp_enqueue_style('ry_wt_ecpay_shipping', RY_WT_PLUGIN_URL . 'style/ry_wt.css');
@@ -111,16 +109,5 @@ class RY_ECPay_Gateway_Barcode extends RY_ECPay_Gateway_Base {
 			</tr>
 		</table>
 		<?php
-	}
-
-	public function payment_info($order_id) {
-		if( !$order_id ) {
-			return;
-		}
-
-		$args = array(
-			'order_id' => $order_id,
-		);
-		wc_get_template('order/order-ecpay-payment-info-barcode.php', $args, '', RY_WT_PLUGIN_DIR . 'templates/');
 	}
 }

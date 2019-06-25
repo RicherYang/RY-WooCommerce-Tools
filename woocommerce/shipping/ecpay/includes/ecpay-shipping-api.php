@@ -5,17 +5,17 @@ class RY_ECPay_Shipping_Api extends RY_ECPay {
 	public static $api_test_url = [
 		'map' => 'https://logistics-stage.ecpay.com.tw/Express/map',
 		'create' => 'https://logistics-stage.ecpay.com.tw/Express/Create',
-		'print_UNIMART' => 'https://logistics-stage.ecpay.com.tw/Express/PrintUniMartC2COrderInfo',
-		'print_FAMI' => 'https://logistics-stage.ecpay.com.tw/Express/PrintFAMIC2COrderInfo',
-		'print_HILIFE' => 'https://logistics-stage.ecpay.com.tw/Express/PrintHILIFEC2COrderInfo',
+		'print_UNIMARTC2C' => 'https://logistics-stage.ecpay.com.tw/Express/PrintUniMartC2COrderInfo',
+		'print_FAMIC2C' => 'https://logistics-stage.ecpay.com.tw/Express/PrintFAMIC2COrderInfo',
+		'print_HILIFEC2C' => 'https://logistics-stage.ecpay.com.tw/Express/PrintHILIFEC2COrderInfo',
 		'print_B2C' => 'https://logistics-stage.ecpay.com.tw/helper/printTradeDocument'
 	];
 	public static $api_url = [
 		'map' => 'https://logistics.ecpay.com.tw/Express/map',
 		'create' => 'https://logistics.ecpay.com.tw/Express/Create',
-		'print_UNIMART' => 'https://logistics.ecpay.com.tw/Express/PrintUniMartC2COrderInfo',
-		'print_FAMI' => 'https://logistics.ecpay.com.tw/Express/PrintFAMIC2COrderInfo',
-		'print_HILIFE' => 'https://logistics.ecpay.com.tw/Express/PrintHILIFEC2COrderInfo',
+		'print_UNIMARTC2C' => 'https://logistics.ecpay.com.tw/Express/PrintUniMartC2COrderInfo',
+		'print_FAMIC2C' => 'https://logistics.ecpay.com.tw/Express/PrintFAMIC2COrderInfo',
+		'print_HILIFEC2C' => 'https://logistics.ecpay.com.tw/Express/PrintHILIFEC2COrderInfo',
 		'print_B2C' => 'https://logistics.ecpay.com.tw/helper/printTradeDocument'
 	];
 
@@ -175,63 +175,49 @@ class RY_ECPay_Shipping_Api extends RY_ECPay {
 		self::get_cvs_code($order_id, true);
 	}
 
-	public static function print_info() {
-		$order_ID = (int) $_GET['orderid'];
-		$Logistics_ID = (int) $_GET['id'];
+	public static function get_print_info($logistics_id, $info = null) {
+		list($MerchantID, $HashKey, $HashIV, $CVS_type) = RY_ECPay_Shipping::get_ecpay_api_info();
 
-		if( $order = wc_get_order($order_ID) ) {
-			foreach( $order->get_items('shipping') as $item_id => $item ) {
-				$shipping_method = RY_ECPay_Shipping::get_order_support_shipping($item);
-				if( $shipping_method !== false ) {
-					$shipping_list = $order->get_meta('_ecpay_shipping_info', true);
-					if( is_array($shipping_list) ) {
-						list($MerchantID, $HashKey, $HashIV, $CVS_type) = RY_ECPay_Shipping::get_ecpay_api_info();
-						foreach( $shipping_list as $info ) {
-							if( $info['ID'] == $Logistics_ID ) {
-								$args = [
-									'MerchantID' => $MerchantID,
-									'AllPayLogisticsID' => $info['ID'],
-								];
-								if( $CVS_type == 'C2C' ) {
-									$args['CVSPaymentNo'] = $info['PaymentNo'];
-									$args['CVSValidationNo'] = $info['ValidationNo'];
-								}
-								$args = self::add_check_value($args, $HashKey, $HashIV, 'md5');
+		if( is_array($logistics_id) ) {
+			$logistics_id = implode(',', $logistics_id);
+		}
 
-								if( RY_ECPay_Shipping::$testmode ) {
-									if( $CVS_type == 'C2C' ) {
-										$post_url = self::$api_test_url['print_' . $shipping_method::$LogisticsSubType];
-									} else {
-										$post_url = self::$api_test_url['print_B2C'];
-									}
-								} else {
-									if( $CVS_type == 'C2C' ) {
-										$post_url = self::$api_url['print_' . $shipping_method::$LogisticsSubType];
-									} else {
-										$post_url = self::$api_url['print_B2C'];
-									}
-								}
+		$args = [
+			'MerchantID' => $MerchantID,
+			'AllPayLogisticsID' => $logistics_id,
+		];
+		if( $CVS_type == 'C2C' ) {
+			$args['CVSPaymentNo'] = $info['PaymentNo'];
+			$args['CVSValidationNo'] = $info['ValidationNo'];
+		}
+		$args = self::add_check_value($args, $HashKey, $HashIV, 'md5');
 
-								wc_set_time_limit(40);
-								$response = wp_remote_post($post_url, [
-									'timeout' => 20,
-									'body' => $args
-								]);
-								if( !is_wp_error($response) ) {
-									if( $response['response']['code'] == '200' ) {
-										echo($response['body']);
-									}
-								} else {
-									echo('<!DOCTYPE html><html><head><meta charset="' . get_bloginfo('charset', 'display') . '"></head><body>');
-									_e('Error with connect to ECPay server.', 'ry-woocommerce-tools');
-									echo('</body></html>');
-								}
-							}
-						}
-					}
-				}
+		if( RY_ECPay_Shipping::$testmode ) {
+			if( $CVS_type == 'C2C' ) {
+				$post_url = self::$api_test_url['print_' . $info['LogisticsSubType']];
+			} else {
+				$post_url = self::$api_test_url['print_B2C'];
+			}
+		} else {
+			if( $CVS_type == 'C2C' ) {
+				$post_url = self::$api_url['print_' . $info['LogisticsSubType']];
+			} else {
+				$post_url = self::$api_url['print_B2C'];
 			}
 		}
-		wp_die();
+
+		wc_set_time_limit(40);
+		$response = wp_remote_post($post_url, [
+			'timeout' => 20,
+			'body' => $args
+		]);
+		if( !is_wp_error($response) ) {
+			if( $response['response']['code'] == '200' ) {
+				return $response['body'];
+			}
+		}
+		return '<!DOCTYPE html><html><head><meta charset="' . get_bloginfo('charset', 'display') . '"></head><body>'
+			. __('Error with connect to ECPay server.', 'ry-woocommerce-tools')
+			. '</body></html>';
 	}
 }

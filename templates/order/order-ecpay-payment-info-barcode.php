@@ -8,20 +8,16 @@
  * happen. When this occurs the version of the template file will be bumped and
  * the readme will list any important changes.
  *
- * @version 1.0.2
+ * @version 1.1.13
  */
 
 defined('RY_WT_VERSION') OR exit('No direct script access allowed');
-
-if( !$order = wc_get_order($order_id) ) {
-	return;
-}
 
 if( $order->get_payment_method() != 'ry_ecpay_barcode' ) {
 	return;
 }
 
-if($order->get_meta('_ecpay_payment_type') != 'BARCODE' ) {
+if( $order->get_meta('_ecpay_payment_type') != 'BARCODE' ) {
 	return;
 }
 ?>
