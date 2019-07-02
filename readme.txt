@@ -5,7 +5,7 @@ Tags: woocommerce, payment, gateway, ecpay
 Requires at least: 5.0
 Requires PHP: 5.6.20
 Tested up to: 5.2.2
-Stable tag: 1.1.14
+Stable tag: 1.1.15
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.txt
 
@@ -39,6 +39,9 @@ Please visit the [plugin page](https://richer.tw/ry-woocommerce-tools/ " ") with
 5. WooCommerce Order shipping convenience store info.
 
 == Changelog ==
+
+= 1.1.15 - 2019/07/02 =
+* 更新 - 修正與 Flexible Checkout Fields for WooCommerce(flexible-checkout-fields) 相容性問題
 
 = 1.1.14 - 2019/06/25 =
 * 更新 - 調整列印超商託運單程式

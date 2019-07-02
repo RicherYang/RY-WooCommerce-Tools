@@ -214,8 +214,10 @@ final class RY_ECPay_Shipping {
 			$packages = WC()->shipping->get_packages();
 			foreach ( $packages as $i => $package ) {
 				if( isset(WC()->session->chosen_shipping_methods[$i]) ) {
-					$chosen_method = $package['rates'][WC()->session->chosen_shipping_methods[$i]];
-					break;
+					if( isset($package['rates'][WC()->session->chosen_shipping_methods[$i]]) ) {
+						$chosen_method = $package['rates'][WC()->session->chosen_shipping_methods[$i]];
+						break;
+					}
 				}
 			}
 
@@ -321,9 +323,9 @@ final class RY_ECPay_Shipping {
 		}
 
 		if( $used_cvs ) {
-			add_filter('woocommerce_checkout_fields', [__CLASS__, 'fix_add_cvs_info'], 15);
+			add_filter('woocommerce_checkout_fields', [__CLASS__, 'fix_add_cvs_info'], 9999);
 		} else {
-			add_filter('woocommerce_checkout_fields', [__CLASS__, 'fix_noin_add_cvs_info'], 15);
+			add_filter('woocommerce_checkout_fields', [__CLASS__, 'fix_noin_add_cvs_info'], 9999);
 		}
 	}
 
