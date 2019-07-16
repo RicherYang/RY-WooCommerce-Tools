@@ -3,18 +3,18 @@ defined('RY_WT_VERSION') OR exit('No direct script access allowed');
 
 class RY_ECPay_Gateway_Response extends RY_ECPay_Gateway_Api {
 	public static function init($gateway_id) {
-		add_action('woocommerce_api_ry_ecpay_callback', [__CLASS__, 'check_checkout_callback']);
-		//add_action('woocommerce_thankyou_' . $gateway_id, [__CLASS__, 'check_checkout_callback']);
+		add_action('woocommerce_api_request', [__CLASS__, 'set_do_die']);
+		add_action('woocommerce_api_ry_ecpay_callback', [__CLASS__, 'check_callback']);
+		add_action('woocommerce_thankyou_' . $gateway_id, [__CLASS__, 'check_callback']);
 
-		add_action('valid-checkout-request', [__CLASS__, 'checkout_callback']);
+		add_action('valid_ecpay_callback_request', [__CLASS__, 'doing_callback']);
 	}
 
-	public static function check_checkout_callback() {
-		$ipn_info = wp_unslash($_POST);
+	public static function check_callback() {
 		if( !empty($_POST) ) {
 			$ipn_info = wp_unslash($_POST);
 			if( self::ipn_request_is_valid($ipn_info) ) {
-				do_action('valid-checkout-request', $ipn_info);
+				do_action('valid_ecpay_callback_request', $ipn_info);
 			} else {
 				self::die_error();
 			}
@@ -36,23 +36,19 @@ class RY_ECPay_Gateway_Response extends RY_ECPay_Gateway_Api {
 		}
 	}
 
-	public static function checkout_callback($ipn_info) {
+	public static function doing_callback($ipn_info) {
 		$order_id = self::get_order_id($ipn_info, RY_WT::get_option('ecpay_gateway_order_prefix'));
 		if( $order = wc_get_order($order_id) ) {
 			$payment_status = self::get_status($ipn_info);
 			RY_ECPay_Gateway::log('Found order #' . $order->get_id() . ' Payment status: ' . $payment_status);
 
-			list($payment_type, $payment_subtype) = self::get_payment_info($ipn_info);
-			$order->set_transaction_id(self::get_transaction_id($ipn_info));
-			$order->add_order_note(sprintf(
-				/* translators: 1: Payment type 2: Payment subtype */
-				__('Payment by %1$s (%2$s)', 'ry-woocommerce-tools'),
-				__($payment_type, 'ry-woocommerce-tools'),
-				__($payment_subtype, 'ry-woocommerce-tools')
-			));
-			$order->update_meta_data('_ecpay_payment_type', $payment_type);
-			$order->update_meta_data('_ecpay_payment_subtype', $payment_subtype);
-			$order->save();
+			if( (string) $order->get_transaction_id() == '' ) {
+				list($payment_type, $payment_subtype) = self::get_payment_info($ipn_info);
+				$order->set_transaction_id(self::get_transaction_id($ipn_info));
+				$order->update_meta_data('_ecpay_payment_type', $payment_type);
+				$order->update_meta_data('_ecpay_payment_subtype', $payment_subtype);
+				$order->save();
+			}
 			
 			if( method_exists(__CLASS__, 'payment_status_' . $payment_status) ) {
 				call_user_func([__CLASS__, 'payment_status_' . $payment_status], $order, $ipn_info);

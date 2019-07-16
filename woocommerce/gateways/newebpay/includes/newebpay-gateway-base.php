@@ -1,7 +1,7 @@
 <?php
 defined('RY_WT_VERSION') OR exit('No direct script access allowed');
 
-class RY_ECPay_Gateway_Base extends WC_Payment_Gateway {
+class RY_NewebPay_Gateway_Base extends WC_Payment_Gateway {
 	public static $log_enabled = false;
 	public static $log = false;
 
@@ -11,14 +11,14 @@ class RY_ECPay_Gateway_Base extends WC_Payment_Gateway {
 		add_action('woocommerce_update_options_payment_gateways_' . $this->id, [$this, 'process_admin_options']);
 
 		if( $this->enabled ) {
-			RY_ECPay_Gateway_Response::init($this->id);
+			RY_NewebPay_Gateway_Response::init($this->id);
 
 			add_action('woocommerce_receipt_' . $this->id, [$this, 'receipt_page']);
 		}
 	}
 
 	public function get_icon() {
-		$icon_html = '<img src="' . esc_attr(RY_WT_PLUGIN_URL . 'icon/ecpay_logo.png') . '" alt="' . esc_attr__('ECPay', 'ry-woocommerce-tools') . '">';
+		$icon_html = '<img src="' . esc_attr(RY_WT_PLUGIN_URL . 'icon/newebpay_logo.png') . '" alt="' . esc_attr__('NewebPay', 'ry-woocommerce-tools') . '">';
 
 		return apply_filters('woocommerce_gateway_icon', $icon_html, $this->id);
 	}
@@ -36,22 +36,9 @@ class RY_ECPay_Gateway_Base extends WC_Payment_Gateway {
 
 	public function receipt_page($order_id) {
 		if( $order = wc_get_order($order_id) ) {
-			if( $this->inpay ) {
-				RY_ECPay_Gateway_Api::inpay_checkout_form($order, $this);
-			} else {
-				RY_ECPay_Gateway_Api::checkout_form($order, $this);
-			}
-			WC()->cart->empty_cart();
-		}
-	}
+			RY_NewebPay_Gateway_Api::checkout_form($order, $this);
 
-	protected function check_inpay_with_ssl() {
-		$post_filed = 'woocommerce_' . $this->id . '_inpay';
-		if( isset($_POST[$post_filed]) && 1 == (int) $_POST[$post_filed] ) {
-			if( !wc_checkout_is_https() ) {
-				unset($_POST[$post_filed]);
-				WC_Admin_Settings::add_error(__('Inpay only work with ssl. You must enable force secure checkout.', 'ry-woocommerce-tools'));
-			}
+			WC()->cart->empty_cart();
 		}
 	}
 }

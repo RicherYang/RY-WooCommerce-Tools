@@ -44,6 +44,11 @@ final class RY_WT {
 				include_once(RY_WT_PLUGIN_DIR . 'woocommerce/shipping/ecpay/ecpay-shipping.php');
 			}
 
+			// 藍新金流
+			if( 'yes' == self::get_option('enabled_newebpay_gateway', 'no') ) {
+				include_once(RY_WT_PLUGIN_DIR . 'woocommerce/gateways/newebpay/newebpay-gateway.php');
+			}
+
 			// 重新付款
 			if( 'no' == self::get_option('repay_action', 'no') ) {
 				add_filter('woocommerce_my_account_my_orders_actions', [__CLASS__, 'remove_pay_action']);
@@ -287,5 +292,54 @@ final class RY_WT {
 
 	public static function plugin_deactivation( ) {
 		wp_clear_scheduled_hook('ry_check_ntp_time');
+	}
+
+	// just for i18n use
+	private static function bank_code_list() {
+		_x('004', 'Bank code', 'ry-woocommerce-tools'); // 臺灣銀行
+		_x('005', 'Bank code', 'ry-woocommerce-tools'); // 土地銀行
+		_x('006', 'Bank code', 'ry-woocommerce-tools'); // 合庫商銀
+		_x('007', 'Bank code', 'ry-woocommerce-tools'); // 第一銀行
+		_x('008', 'Bank code', 'ry-woocommerce-tools'); // 華南銀行
+		_x('009', 'Bank code', 'ry-woocommerce-tools'); // 彰化銀行
+		_x('011', 'Bank code', 'ry-woocommerce-tools'); // 上海銀行
+		_x('012', 'Bank code', 'ry-woocommerce-tools'); // 台北富邦
+		_x('013', 'Bank code', 'ry-woocommerce-tools'); // 國泰世華
+		_x('016', 'Bank code', 'ry-woocommerce-tools'); // 高雄銀行
+		_x('017', 'Bank code', 'ry-woocommerce-tools'); // 兆豐銀行
+		_x('018', 'Bank code', 'ry-woocommerce-tools'); // 農業金庫
+		_x('021', 'Bank code', 'ry-woocommerce-tools'); // 花旗(台灣)銀行
+		_x('022', 'Bank code', 'ry-woocommerce-tools'); // 美國銀行
+		_x('025', 'Bank code', 'ry-woocommerce-tools'); // 首都銀行
+		_x('039', 'Bank code', 'ry-woocommerce-tools'); // 澳商澳盛銀行
+		_x('048', 'Bank code', 'ry-woocommerce-tools'); // 王道銀行
+		_x('050', 'Bank code', 'ry-woocommerce-tools'); // 臺灣企銀
+		_x('052', 'Bank code', 'ry-woocommerce-tools'); // 渣打商銀
+		_x('053', 'Bank code', 'ry-woocommerce-tools'); // 台中銀行
+		_x('054', 'Bank code', 'ry-woocommerce-tools'); // 京城商銀
+		_x('072', 'Bank code', 'ry-woocommerce-tools'); // 德意志銀行
+		_x('075', 'Bank code', 'ry-woocommerce-tools'); // 東亞銀行
+		_x('081', 'Bank code', 'ry-woocommerce-tools'); // 匯豐(台灣)銀行
+		_x('082', 'Bank code', 'ry-woocommerce-tools'); // 巴黎銀行
+		_x('101', 'Bank code', 'ry-woocommerce-tools'); // 瑞興銀行
+		_x('102', 'Bank code', 'ry-woocommerce-tools'); // 華泰銀行
+		_x('103', 'Bank code', 'ry-woocommerce-tools'); // 臺灣新光商銀
+		_x('108', 'Bank code', 'ry-woocommerce-tools'); // 陽信銀行
+		_x('118', 'Bank code', 'ry-woocommerce-tools'); // 板信銀行
+		_x('147', 'Bank code', 'ry-woocommerce-tools'); // 三信銀行
+		_x('700', 'Bank code', 'ry-woocommerce-tools'); // 中華郵政
+		_x('803', 'Bank code', 'ry-woocommerce-tools'); // 聯邦銀行
+		_x('805', 'Bank code', 'ry-woocommerce-tools'); // 遠東銀行
+		_x('806', 'Bank code', 'ry-woocommerce-tools'); // 元大銀行
+		_x('807', 'Bank code', 'ry-woocommerce-tools'); // 永豐銀行
+		_x('808', 'Bank code', 'ry-woocommerce-tools'); // 玉山銀行
+		_x('809', 'Bank code', 'ry-woocommerce-tools'); // 凱基銀行
+		_x('810', 'Bank code', 'ry-woocommerce-tools'); // 星展(台灣)銀行
+		_x('812', 'Bank code', 'ry-woocommerce-tools'); // 台新銀行
+		_x('815', 'Bank code', 'ry-woocommerce-tools'); // 日盛銀行
+		_x('816', 'Bank code', 'ry-woocommerce-tools'); // 安泰銀行
+		_x('822', 'Bank code', 'ry-woocommerce-tools'); // 中國信託
+
+		return false;
 	}
 }
