@@ -60,10 +60,10 @@ class RY_ECPay_Gateway_Response extends RY_ECPay_Gateway_Api {
 			do_action('ry_ecpay_gateway_response', $ipn_info, $order);
 
 			self::die_success();
+		} else {
+			RY_ECPay_Gateway::log('Order not found', 'error');
+			self::die_error();
 		}
-
-		RY_ECPay_Gateway::log('Order not found', 'error');
-		self::die_error();
 	}
 
 	protected static function get_payment_info($ipn_info) {
@@ -79,8 +79,10 @@ class RY_ECPay_Gateway_Response extends RY_ECPay_Gateway_Api {
 	}
 
 	protected static function payment_status_1($order, $ipn_info) {
-		$order->add_order_note(__('Payment completed', 'ry-woocommerce-tools'));
-		$order->payment_complete();
+		if( !$order->is_paid() ) {
+			$order->add_order_note(__('Payment completed', 'ry-woocommerce-tools'));
+			$order->payment_complete();
+		}
 	}
 
 	protected static function payment_status_2($order, $ipn_info) {

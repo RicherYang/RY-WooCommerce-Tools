@@ -83,7 +83,7 @@ abstract class RY_ECPay {
 		return false;
 	}
 
-	protected static function set_do_die() {
+	public static function set_do_die() {
 		self::$do_die = true;
 	}
 
