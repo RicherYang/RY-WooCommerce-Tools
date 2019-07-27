@@ -31,6 +31,8 @@ final class RY_NewebPay_Gateway {
 		}
 
 		if( 'yes' === RY_WT::get_option('newebpay_gateway', 'no') ) {
+			RY_NewebPay_Gateway_Response::init();
+
 			add_filter('woocommerce_payment_gateways', [__CLASS__, 'add_method']);
 		}
 	}

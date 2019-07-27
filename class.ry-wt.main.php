@@ -48,6 +48,10 @@ final class RY_WT {
 			if( 'yes' == self::get_option('enabled_newebpay_gateway', 'no') ) {
 				include_once(RY_WT_PLUGIN_DIR . 'woocommerce/gateways/newebpay/newebpay-gateway.php');
 			}
+			// 藍新物流
+			if( 'yes' == self::get_option('enabled_newebpay_shipping', 'no') ) {
+				include_once(RY_WT_PLUGIN_DIR . 'woocommerce/shipping/newebpay/newebpay-shipping.php');
+			}
 
 			// 重新付款
 			if( 'no' == self::get_option('repay_action', 'no') ) {

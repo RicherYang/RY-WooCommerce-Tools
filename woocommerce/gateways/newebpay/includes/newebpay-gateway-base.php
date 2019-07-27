@@ -11,8 +11,6 @@ class RY_NewebPay_Gateway_Base extends WC_Payment_Gateway {
 		add_action('woocommerce_update_options_payment_gateways_' . $this->id, [$this, 'process_admin_options']);
 
 		if( $this->enabled ) {
-			RY_NewebPay_Gateway_Response::init($this->id);
-
 			add_action('woocommerce_receipt_' . $this->id, [$this, 'receipt_page']);
 		}
 	}

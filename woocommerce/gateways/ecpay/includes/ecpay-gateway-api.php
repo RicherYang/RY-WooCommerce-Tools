@@ -16,7 +16,7 @@ class RY_ECPay_Gateway_Api extends RY_ECPay {
 	];
 
 	public static function checkout_form($order, $gateway) {
-		RY_ECPay_Gateway::log('Generating payment form for order #' . $order->get_order_number());
+		RY_ECPay_Gateway::log('Generating payment form by ' . $gateway->id . ' for #' . $order->get_order_number());
 
 		$notify_url = WC()->api_request_url('ry_ecpay_callback', true);
 		$return_url = $gateway->get_return_url($order);
@@ -106,7 +106,7 @@ $("#ry-ecpay-form").submit();');
 	}
 
 	public static function inpay_checkout_form($order, $gateway) {
-		RY_ECPay_Gateway::log('Generating inpay payment form for order #' . $order->get_order_number());
+		RY_ECPay_Gateway::log('Generating inpay payment form by ' . $gateway->id . ' for #' . $order->get_order_number());
 
 		$notify_url = WC()->api_request_url('ry_ecpay_callback', true);
 
@@ -201,42 +201,6 @@ window.addEventListener("message", function (e) {
 		} else {
 			RY_ECPay_Gateway::log('SPToken failed. POST error: ' . implode("\n", $response->get_error_messages()), 'error');
 			self::checkout_form($order, $gateway);
-		}
-	}
-
-	public static function query_info($order) {
-		RY_ECPay_Gateway::log('Query payment info #' . $order->get_order_number());
-
-		list($MerchantID, $HashKey, $HashIV) = RY_ECPay_Gateway::get_ecpay_api_info();
-
-		$args = [
-			'MerchantID' => $MerchantID,
-			'MerchantTradeNo' => $order->get_meta('_ecpay_MerchantTradeNo'),
-			'TimeStamp' => new DateTime('', new DateTimeZone('Asia/Taipei'))
-		];
-		$args['TimeStamp'] = $args['TimeStamp']->format('U');
-
-		$args = self::add_check_value($args, $HashKey, $HashIV, 'sha256');
-		RY_ECPay_Gateway::log('Query POST: ' . var_export($args, true));
-
-		if( 'yes' === RY_WT::get_option('ecpay_gateway_testmode', 'yes') ) {
-			$post_url = self::$api_test_url['query'];
-		} else {
-			$post_url = self::$api_url['query'];
-		}
-
-		$response = wp_remote_post($post_url, [
-			'timeout' => 20,
-			'body' => $args
-		]);
-		if( !is_wp_error($response) ) {
-			if( $response['response']['code'] == '200' ) {
-				RY_ECPay_Gateway::log('Payment Query request result: ' . $response['body']);
-			} else {
-				RY_ECPay_Gateway::log('Payment Query failed. Http code: ' . $response['response']['code'], 'error');
-			}
-		} else {
-			RY_ECPay_Gateway::log('Payment Query failed. POST error: ' . implode("\n", $response->get_error_messages()), 'error');
 		}
 	}
 

@@ -2,10 +2,10 @@
 defined('RY_WT_VERSION') OR exit('No direct script access allowed');
 
 class RY_NewebPay_Gateway_Response extends RY_NewebPay_Gateway_Api {
-	public static function init($gateway_id) {
+	public static function init() {
 		add_action('woocommerce_api_request', [__CLASS__, 'set_do_die']);
 		add_action('woocommerce_api_ry_newebpay_callback', [__CLASS__, 'check_callback']);
-		add_action('woocommerce_thankyou_' . $gateway_id, [__CLASS__, 'check_callback']);
+		add_action('woocommerce_thankyou', [__CLASS__, 'check_callback'], 9);
 
 		add_action('valid_newebpay_callback_request', [__CLASS__, 'doing_callback']);
 	}
@@ -22,17 +22,19 @@ class RY_NewebPay_Gateway_Response extends RY_NewebPay_Gateway_Api {
 	}
 
 	protected static function ipn_request_is_valid($ipn_info) {
-		RY_NewebPay_Gateway::log('IPN request: ' . var_export($ipn_info, true));
-
-		list($MerchantID, $HashKey, $HashIV) = RY_NewebPay_Gateway::get_newebpay_api_info();
-
 		$info_value = self::get_tradeInfo_value($ipn_info);
-		$info_sha_value = self::get_tradeSha_value($ipn_info);
-		if( $info_sha_value == self::generate_hash_value($info_value, $HashKey, $HashIV) ) {
-			return true;
-		} else {
-			RY_NewebPay_Gateway::log('IPN request check failed. Response:' . $info_sha_value . ' Self:' . self::generate_hash_value($info_value, $HashKey, $HashIV), 'error');
-			return false;
+		if( $info_value ) {
+			RY_NewebPay_Gateway::log('IPN request: ' . var_export($ipn_info, true));
+
+			list($MerchantID, $HashKey, $HashIV) = RY_NewebPay_Gateway::get_newebpay_api_info();
+
+			$info_sha_value = self::get_tradeSha_value($ipn_info);
+			if( $info_sha_value == self::generate_hash_value($info_value, $HashKey, $HashIV) ) {
+				return true;
+			} else {
+				RY_NewebPay_Gateway::log('IPN request check failed. Response:' . $info_sha_value . ' Self:' . self::generate_hash_value($info_value, $HashKey, $HashIV), 'error');
+				return false;
+			}
 		}
 	}
 
@@ -105,6 +107,58 @@ class RY_NewebPay_Gateway_Response extends RY_NewebPay_Gateway_Api {
 			$order->save_meta_data();
 
 			$order->update_status('on-hold');
+		}
+		
+		if( isset($ipn_info->StoreCode) ) {
+			$order = wc_get_order($order);
+			if( $order->get_meta('_shipping_cvs_store_ID') == '' ) {
+				$order->set_shipping_company('');
+				$order->set_shipping_address_2('');
+				$order->set_shipping_city('');
+				$order->set_shipping_state('');
+				$order->set_shipping_postcode('');
+
+				$order->set_shipping_last_name('');
+				$order->set_shipping_first_name($ipn_info->CVSCOMName);
+				$order->add_order_note(sprintf(
+					/* translators: 1: Store name 2: Store ID */
+					__('CVS store %1$s (%2$s)', 'ry-woocommerce-tools'),
+					$ipn_info->StoreName,
+					$ipn_info->StoreCode
+				));
+				$order->update_meta_data('_shipping_cvs_store_ID', $ipn_info->StoreCode);
+				$order->update_meta_data('_shipping_cvs_store_name', $ipn_info->StoreName);
+				$order->update_meta_data('_shipping_cvs_store_address', $ipn_info->StoreAddr);
+				$order->update_meta_data('_shipping_cvs_store_type', $ipn_info->StoreType);
+				$order->update_meta_data('_shipping_phone', $ipn_info->CVSCOMPhone);
+				$order->set_shipping_address_1($ipn_info->StoreAddr);
+				$order->save();
+
+				$shipping_list = $order->get_meta('_newebpay_shipping_info', true);
+				if( !is_array($shipping_list) ) {
+					$shipping_list = [];
+				}
+				if( !isset($shipping_list[$ipn_info->TradeNo]) ) {
+					$shipping_list[$ipn_info->TradeNo] = [];
+				}
+				$shipping_list[$ipn_info->TradeNo]['ID'] = $ipn_info->TradeNo;
+				$shipping_list[$ipn_info->TradeNo]['Type'] = $ipn_info->StoreType;
+				$shipping_list[$ipn_info->TradeNo]['PaymentNo'] = $ipn_info->TradeNo;
+				$shipping_list[$ipn_info->TradeNo]['store_ID'] = $ipn_info->StoreCode;
+				$shipping_list[$ipn_info->TradeNo]['create'] = (string) new WC_DateTime();
+				$shipping_list[$ipn_info->TradeNo]['edit'] = (string) new WC_DateTime();
+				$shipping_list[$ipn_info->TradeNo]['amount'] = $ipn_info->Amt;
+				$shipping_list[$ipn_info->TradeNo]['IsCollection'] = $ipn_info->TradeType;
+
+				$order->update_meta_data('_newebpay_shipping_info', $shipping_list);
+				$order->save_meta_data();
+				
+				if( $ipn_info->TradeType == '1' ) {
+					if( $order->get_status() == 'pending' ) {
+						$order->update_status('processing');
+					}
+				}
+			}
 		}
 	}
 

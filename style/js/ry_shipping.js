@@ -28,6 +28,11 @@ $(document.body).on('updated_checkout', function(e, data) {
 		} else {
 			RYECPayRemoveSendCvs();
 		}
+	} else if( typeof data.fragments.newebpay_shipping_info !== 'undefined' ) {
+		$('.woocommerce-shipping-fields__field-wrapper p').hide();
+		if( $('#ship-to-different-address-checkbox').prop('checked') === false ) {
+			$('#ship-to-different-address-checkbox').click();
+		}
 	} else {
 		$('.woocommerce-shipping-fields__field-wrapper p.cvs-info').hide();
 		$('.woocommerce-shipping-fields__field-wrapper p:not(.cvs-info)').show();

@@ -2,10 +2,10 @@
 defined('RY_WT_VERSION') OR exit('No direct script access allowed');
 
 class RY_ECPay_Gateway_Response extends RY_ECPay_Gateway_Api {
-	public static function init($gateway_id) {
+	public static function init() {
 		add_action('woocommerce_api_request', [__CLASS__, 'set_do_die']);
 		add_action('woocommerce_api_ry_ecpay_callback', [__CLASS__, 'check_callback']);
-		add_action('woocommerce_thankyou_' . $gateway_id, [__CLASS__, 'check_callback']);
+		//add_action('woocommerce_thankyou', [__CLASS__, 'check_callback'], 9);
 
 		add_action('valid_ecpay_callback_request', [__CLASS__, 'doing_callback']);
 	}
@@ -22,17 +22,18 @@ class RY_ECPay_Gateway_Response extends RY_ECPay_Gateway_Api {
 	}
 
 	protected static function ipn_request_is_valid($ipn_info) {
-		RY_ECPay_Gateway::log('IPN request: ' . var_export($ipn_info, true));
-
-		list($MerchantID, $HashKey, $HashIV) = RY_ECPay_Gateway::get_ecpay_api_info();
-
 		$check_value = self::get_check_value($ipn_info);
-		$ipn_info_check_value = self::generate_check_value($ipn_info, $HashKey, $HashIV, 'sha256');
-		if( $check_value == $ipn_info_check_value ) {
-			return true;
-		} else {
-			RY_ECPay_Gateway::log('IPN request check failed. Response:' . $check_value . ' Self:' . $ipn_info_check_value, 'error');
-			return false;
+		if( $check_value ) {
+			RY_ECPay_Gateway::log('IPN request: ' . var_export($ipn_info, true));
+			list($MerchantID, $HashKey, $HashIV) = RY_ECPay_Gateway::get_ecpay_api_info();
+
+			$ipn_info_check_value = self::generate_check_value($ipn_info, $HashKey, $HashIV, 'sha256');
+			if( $check_value == $ipn_info_check_value ) {
+				return true;
+			} else {
+				RY_ECPay_Gateway::log('IPN request check failed. Response:' . $check_value . ' Self:' . $ipn_info_check_value, 'error');
+				return false;
+			}
 		}
 	}
 

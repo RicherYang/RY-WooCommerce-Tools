@@ -80,6 +80,14 @@ if( !class_exists('WC_Settings_RY_Tools', false) ) {
 						'default' => 'no'
 					],
 					[
+						'title'   => __('Shipping method', 'ry-woocommerce-tools'),
+						'desc'    => __('Enable NewebPay shipping method', 'ry-woocommerce-tools')
+							. (wc_checkout_is_https() ? '' : '<br>' . __('For correct link with NewebPay API, need enable secure checkout.', 'ry-woocommerce-tools')),
+						'id'      => RY_WT::$option_prefix . 'enabled_newebpay_shipping',
+						'type'    => 'checkbox',
+						'default' => 'no',
+					],
+					[
 						'type' => 'sectionend',
 						'id' => 'newebpay_support',
 					],

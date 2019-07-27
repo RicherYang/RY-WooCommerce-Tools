@@ -10,7 +10,7 @@ class RY_NewebPay_Gateway_Api extends RY_NewebPay {
 	];
 
 	public static function checkout_form($order, $gateway) {
-		RY_NewebPay_Gateway::log('Generating payment form for order #' . $order->get_order_number());
+		RY_NewebPay_Gateway::log('Generating payment form by ' . $gateway->id . ' for #' . $order->get_order_number());
 
 		$notify_url = WC()->api_request_url('ry_newebpay_callback', true);
 		$return_url = $gateway->get_return_url($order);
@@ -77,6 +77,7 @@ class RY_NewebPay_Gateway_Api extends RY_NewebPay {
 		} else {
 			$url = self::$api_url['checkout'];
 		}
+
 		echo '<form method="post" id="ry-newebpay-form" action="' . esc_url($url) . '" style="display:none;">';
 		foreach( $form_data as $key => $value ) {
 			echo '<input type="hidden" name="' . esc_attr($key) . '" value="' . esc_attr($value) . '">';
@@ -104,44 +105,10 @@ $("#ry-newebpay-form").submit();');
 		do_action('ry_newebpay_gateway_checkout', $args, $order, $gateway);
 	}
 
-	public static function query_info($order) {
-		RY_NewebPay_Gateway::log('Query payment info #' . $order->get_order_number());
-
-		list($MerchantID, $HashKey, $HashIV) = RY_NewebPay_Gateway::get_newebpay_api_info();
-
-		$args = [
-			'MerchantID' => $MerchantID,
-			'MerchantTradeNo' => $order->get_meta('_newebpay_MerchantTradeNo'),
-			'TimeStamp' => new DateTime('', new DateTimeZone('Asia/Taipei'))
-		];
-		$args['TimeStamp'] = $args['TimeStamp']->format('U');
-
-		$args = self::add_check_value($args, $HashKey, $HashIV, 'sha256');
-		RY_NewebPay_Gateway::log('Query POST: ' . var_export($args, true));
-
-		if( 'yes' === RY_WT::get_option('newebpay_gateway_testmode', 'yes') ) {
-			$post_url = self::$api_test_url['query'];
-		} else {
-			$post_url = self::$api_url['query'];
-		}
-
-		$response = wp_remote_post($post_url, [
-			'timeout' => 20,
-			'body' => $args
-		]);
-		if( !is_wp_error($response) ) {
-			if( $response['response']['code'] == '200' ) {
-				RY_NewebPay_Gateway::log('Payment Query request result: ' . $response['body']);
-			} else {
-				RY_NewebPay_Gateway::log('Payment Query failed. Http code: ' . $response['response']['code'], 'error');
-			}
-		} else {
-			RY_NewebPay_Gateway::log('Payment Query failed. POST error: ' . implode("\n", $response->get_error_messages()), 'error');
-		}
-	}
-
 	protected static function add_type_info($args, $order, $gateway) {
-		$args[$gateway->payment_type] = 1;
+		if( isset($args[$gateway->payment_type]) ) {
+			$args[$gateway->payment_type] = 1;
+		}
 
 		switch( $gateway->payment_type ) {
 			case 'VACC':
@@ -173,6 +140,19 @@ $("#ry-newebpay-form").submit();');
 				}
 				break;
 		}
+
+		$items_shipping = $order->get_items('shipping');
+		$items_shipping = array_shift($items_shipping);
+		if( $items_shipping ) {
+			if( $items_shipping->get_method_id() == 'ry_newebpay_shipping_cvs' ) {
+				if( $gateway->id == 'cod' ) {
+					$args['CVSCOM'] = 2;
+				} else {
+					$args['CVSCOM'] = 1;
+				}
+			}
+		}
+
 		return $args;
 	}
 }
