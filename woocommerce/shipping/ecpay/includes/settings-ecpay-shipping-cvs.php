@@ -45,7 +45,7 @@ $settings = [
 		'desc_tip' => true
 	],
 	'weight_plus_cost' => [
-		// translators: %s WooCommerce weight unit*
+		// translators: %s WooCommerce weight unit
 		'title' => sprintf(__('Every weight (%s) to plus times of cost', 'ry-woocommerce-tools'), __(get_option('woocommerce_weight_unit'), 'woocommerce')),
 		'type' => 'number',
 		'default' => 0,

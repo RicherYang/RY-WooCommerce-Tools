@@ -8,6 +8,7 @@ $(document.body).on('updated_checkout', function(e, data) {
 		$('.woocommerce-shipping-fields__field-wrapper p:not(.cvs-info)').hide();
 		$('.woocommerce-shipping-fields__field-wrapper p#shipping_first_name_field').show();
 		$('.woocommerce-shipping-fields__field-wrapper p#shipping_last_name_field').show();
+		$('.woocommerce-shipping-fields__field-wrapper p#shipping_country_field').show();
 		$('.woocommerce-shipping-fields__field-wrapper p.cvs-info').show();
 		if( $('#ship-to-different-address-checkbox').prop('checked') === false ) {
 			$('#ship-to-different-address-checkbox').click();
