@@ -109,7 +109,6 @@ final class RY_ECPay_Gateway {
 		if( !$order = wc_get_order($order_id) ) {
 			return;
 		}
-		$payment_method = $order->get_payment_method();
 		switch( $order->get_payment_method() ) {
 			case 'ry_ecpay_atm':
 				$template_file = 'order/order-ecpay-payment-info-atm.php';
