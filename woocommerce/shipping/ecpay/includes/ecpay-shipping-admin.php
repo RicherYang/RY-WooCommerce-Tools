@@ -5,7 +5,7 @@ class RY_ECPay_Shipping_admin {
 	public static function init() {
 		include_once(RY_WT_PLUGIN_DIR . 'woocommerce/admin/meta-boxes/ecpay-shipping-meta-box.php');
 
-		add_filter('woocommerce_admin_shipping_fields', [__CLASS__, 'set_cvs_shipping_fields']);
+		add_filter('woocommerce_admin_shipping_fields', [__CLASS__, 'set_cvs_shipping_fields'], 99);
 		add_action('woocommerce_shipping_zone_method_status_toggled', [__CLASS__, 'check_can_enable'], 10, 4);
 		add_action('woocommerce_update_options_shipping_options', [__CLASS__, 'check_ship_destination']);
 		add_filter('woocommerce_order_actions', [__CLASS__, 'add_order_actions']);
