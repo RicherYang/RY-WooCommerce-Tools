@@ -51,13 +51,15 @@ class RY_NewebPay_Gateway_Response extends RY_NewebPay_Gateway_Api {
 			$payment_status = self::get_status($ipn_info);
 			RY_NewebPay_Gateway::log('Found order #' . $order->get_id() . ' Payment status: ' . $payment_status);
 
-			if( (string) $order->get_transaction_id() == '' ) {
+			$transaction_id = (string) $order->get_transaction_id();
+			if( $transaction_id == '' || $transaction_id != self::get_transaction_id($ipn_info) ) {
 				$payment_type = self::get_payment_type($ipn_info);
 				$order->set_transaction_id(self::get_transaction_id($ipn_info));
 				$order->update_meta_data('_newebpay_payment_type', $payment_type);
 				$order->save();
+				$order = wc_get_order($order_id);
 			}
-			
+
 			if( method_exists(__CLASS__, 'payment_status_' . $payment_status) ) {
 				call_user_func([__CLASS__, 'payment_status_' . $payment_status], $order, $ipn_info->Result);
 			} else {
@@ -75,38 +77,38 @@ class RY_NewebPay_Gateway_Response extends RY_NewebPay_Gateway_Api {
 	}
 
 	protected static function payment_status_SUCCESS($order, $ipn_info) {
-		if( isset($ipn_info->PayTime) ) {
-			if( !$order->is_paid() ) {
+		if( !$order->is_paid() ) {
+			if( isset($ipn_info->PayTime) ) {
 				$order->add_order_note(__('Payment completed', 'ry-woocommerce-tools'));
 				$order->payment_complete();
+			} elseif( isset($ipn_info->BankCode) ) {
+				$expireDate = new DateTime($ipn_info->ExpireDate . ' ' . $ipn_info->ExpireTime, new DateTimeZone('Asia/Taipei'));
+
+				$order->update_meta_data('_newebpay_atm_BankCode', $ipn_info->BankCode);
+				$order->update_meta_data('_newebpay_atm_vAccount', $ipn_info->CodeNo);
+				$order->update_meta_data('_newebpay_atm_ExpireDate', $expireDate->format(DATE_ATOM));
+				$order->save_meta_data();
+
+				$order->update_status('on-hold');
+			} elseif( isset($ipn_info->CodeNo) ) {
+				$expireDate = new DateTime($ipn_info->ExpireDate . ' ' . $ipn_info->ExpireTime, new DateTimeZone('Asia/Taipei'));
+
+				$order->update_meta_data('_newebpay_cvs_PaymentNo', $ipn_info->CodeNo);
+				$order->update_meta_data('_newebpay_cvs_ExpireDate', $expireDate->format(DATE_ATOM));
+				$order->save_meta_data();
+
+				$order->update_status('on-hold');
+			} elseif( isset($ipn_info->Barcode_1) ) {
+				$expireDate = new DateTime($ipn_info->ExpireDate . ' ' . $ipn_info->ExpireTime, new DateTimeZone('Asia/Taipei'));
+
+				$order->update_meta_data('_newebpay_barcode_Barcode1', $ipn_info->Barcode_1);
+				$order->update_meta_data('_newebpay_barcode_Barcode2', $ipn_info->Barcode_2);
+				$order->update_meta_data('_newebpay_barcode_Barcode3', $ipn_info->Barcode_3);
+				$order->update_meta_data('_newebpay_barcode_ExpireDate', $expireDate->format(DATE_ATOM));
+				$order->save_meta_data();
+
+				$order->update_status('on-hold');
 			}
-		} elseif( isset($ipn_info->BankCode) ) {
-			$expireDate = new DateTime($ipn_info->ExpireDate . ' ' . $ipn_info->ExpireTime, new DateTimeZone('Asia/Taipei'));
-
-			$order->update_meta_data('_newebpay_atm_BankCode', $ipn_info->BankCode);
-			$order->update_meta_data('_newebpay_atm_vAccount', $ipn_info->CodeNo);
-			$order->update_meta_data('_newebpay_atm_ExpireDate', $expireDate->format(DATE_ATOM));
-			$order->save_meta_data();
-
-			$order->update_status('on-hold');
-		} elseif( isset($ipn_info->CodeNo) ) {
-			$expireDate = new DateTime($ipn_info->ExpireDate . ' ' . $ipn_info->ExpireTime, new DateTimeZone('Asia/Taipei'));
-
-			$order->update_meta_data('_newebpay_cvs_PaymentNo', $ipn_info->CodeNo);
-			$order->update_meta_data('_newebpay_cvs_ExpireDate', $expireDate->format(DATE_ATOM));
-			$order->save_meta_data();
-
-			$order->update_status('on-hold');
-		} elseif( isset($ipn_info->Barcode_1) ) {
-			$expireDate = new DateTime($ipn_info->ExpireDate . ' ' . $ipn_info->ExpireTime, new DateTimeZone('Asia/Taipei'));
-
-			$order->update_meta_data('_newebpay_barcode_Barcode1', $ipn_info->Barcode_1);
-			$order->update_meta_data('_newebpay_barcode_Barcode2', $ipn_info->Barcode_2);
-			$order->update_meta_data('_newebpay_barcode_Barcode3', $ipn_info->Barcode_3);
-			$order->update_meta_data('_newebpay_barcode_ExpireDate', $expireDate->format(DATE_ATOM));
-			$order->save_meta_data();
-
-			$order->update_status('on-hold');
 		}
 		
 		if( isset($ipn_info->StoreCode) ) {

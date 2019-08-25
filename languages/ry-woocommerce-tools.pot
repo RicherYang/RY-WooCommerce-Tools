@@ -2,16 +2,16 @@
 # This file is distributed under the same license as the RY WooCommerce Tools plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: RY WooCommerce Tools 1.2.10\n"
+"Project-Id-Version: RY WooCommerce Tools 1.2.12\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/ry-woocommerce-tools\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2019-08-13T13:54:22+08:00\n"
+"POT-Creation-Date: 2019-08-25T00:13:34+08:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.2.0\n"
+"X-Generator: WP-CLI 2.3.0\n"
 "X-Domain: ry-woocommerce-tools\n"
 
 #. Plugin Name of the plugin
@@ -609,14 +609,14 @@ msgstr ""
 msgid "Inpay only work with ssl. You must enable force secure checkout."
 msgstr ""
 
-#: woocommerce/gateways/ecpay/includes/ecpay-gateway-response.php:84
-#: woocommerce/gateways/newebpay/includes/newebpay-gateway-response.php:80
+#: woocommerce/gateways/ecpay/includes/ecpay-gateway-response.php:86
+#: woocommerce/gateways/newebpay/includes/newebpay-gateway-response.php:82
 msgid "Payment completed"
 msgstr ""
 
 #. translators: 1: Error status code 2: Error status message
-#: woocommerce/gateways/ecpay/includes/ecpay-gateway-response.php:122
-#: woocommerce/gateways/newebpay/includes/newebpay-gateway-response.php:169
+#: woocommerce/gateways/ecpay/includes/ecpay-gateway-response.php:128
+#: woocommerce/gateways/newebpay/includes/newebpay-gateway-response.php:171
 msgid "Payment failed: %1$s (%2$s)"
 msgstr ""
 
@@ -813,7 +813,7 @@ msgid "NewebPay"
 msgstr ""
 
 #. translators: 1: Store name 2: Store ID
-#: woocommerce/gateways/newebpay/includes/newebpay-gateway-response.php:125
+#: woocommerce/gateways/newebpay/includes/newebpay-gateway-response.php:127
 #: woocommerce/shipping/ecpay/ecpay-shipping.php:284
 msgid "CVS store %1$s (%2$s)"
 msgstr ""
