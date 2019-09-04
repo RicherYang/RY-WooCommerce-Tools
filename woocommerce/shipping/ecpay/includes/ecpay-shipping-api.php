@@ -19,6 +19,14 @@ class RY_ECPay_Shipping_Api extends RY_ECPay {
 		'print_B2C' => 'https://logistics.ecpay.com.tw/helper/printTradeDocument'
 	];
 
+	public static function get_map_post_url() {
+		if( RY_ECPay_Shipping::$testmode ) {
+			return self::$api_test_url['map'];
+		} else {
+			return self::$api_url['map'];
+		}
+	}
+
 	public static function get_cvs_code($order_id, $collection = false) {
 		if( $order = wc_get_order($order_id) ) {
 			$item_names = [];

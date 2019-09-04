@@ -169,11 +169,8 @@ final class RY_ECPay_Shipping {
 
 			list($MerchantID, $HashKey, $HashIV, $CVS_type) = self::get_ecpay_api_info();
 			$method_class = self::$support_methods[$chosen_shipping];
-			if( self::$testmode ) {
-				self::$js_data['postUrl'] = RY_ECPay_Shipping_Api::$api_test_url['map'];
-			} else {
-				self::$js_data['postUrl'] = RY_ECPay_Shipping_Api::$api_url['map'];
-			}
+
+			self::$js_data['postUrl'] = RY_ECPay_Shipping_Api::get_map_post_url();
 			self::$js_data['postData'] = [
 				'MerchantID' => $MerchantID,
 				'LogisticsType' => $method_class::$LogisticsType,
