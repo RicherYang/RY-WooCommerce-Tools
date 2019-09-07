@@ -136,7 +136,7 @@ class RY_NewebPay_Shipping_CVS extends WC_Shipping_Method {
 	}
 
 	public function only_newebpay_gateway($_available_gateways) {
-		if( WC()->cart->needs_shipping() ) {
+		if( WC()->cart && WC()->cart->needs_shipping() ) {
 			$chosen_shipping = wc_get_chosen_shipping_method_ids();
 			if( count(array_intersect($chosen_shipping, [$this->id])) ) {
 				foreach( $_available_gateways as $key => $gateway ) {

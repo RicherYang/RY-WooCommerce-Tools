@@ -156,6 +156,8 @@ class RY_ECPay_Shipping_Api extends RY_ECPay {
 											$order->save_meta_data();
 
 											do_action('ry_ecpay_shipping_get_cvs_no', $result, $shipping_list[$result['AllPayLogisticsID']]);
+										} else {
+											RY_ECPay_Shipping::log('Shipping failed. Parse result failed.', 'error');
 										}
 									} else {
 										$order->add_order_note(sprintf(
@@ -164,6 +166,8 @@ class RY_ECPay_Shipping_Api extends RY_ECPay {
 											$body[1]
 										));
 									}
+								} else {
+									RY_ECPay_Shipping::log('Shipping failed. Explode result failed.', 'error');
 								}
 							} else {
 								RY_ECPay_Shipping::log('Shipping failed. Http code: ' . $response['response']['code'], 'error');
