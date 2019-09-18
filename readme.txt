@@ -1,11 +1,11 @@
 === RY WooCommerce Tools ===
-Contributors: Richer Yang
+Contributors: fantasyworld
 Donate link: https://www.paypal.me/RicherYang
 Tags: woocommerce, payment, gateway, shipping, ecpay, newebpay
 Requires at least: 5.0
 Requires PHP: 5.6.20
 Tested up to: 5.2.3
-Stable tag: 1.2.14
+Stable tag: 1.2.15.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.txt
 
@@ -38,6 +38,9 @@ Please visit the [plugin page](https://richer.tw/ry-woocommerce-tools/ " ") with
 4. NewebPay gateway global settings.
 
 == Changelog ==
+
+= 1.2.15.1 - 2019/09/15 =
+* 更新 - 修正後台物流資訊錯誤
 
 = 1.2.14 - 2019/09/05 =
 * 更新 - 修正外觀選單頁面的錯誤

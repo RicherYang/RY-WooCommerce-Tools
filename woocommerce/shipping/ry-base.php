@@ -75,7 +75,12 @@ final class RY_Shipping {
 
 				$shipping_methods = WC()->shipping->get_shipping_methods();
 
-				$address['shipping_type'] = $shipping_methods[$items_shipping]->get_method_title();
+				if( isset($shipping_methods[$items_shipping]) ) {
+					$address['shipping_type'] = $shipping_methods[$items_shipping]->get_method_title();
+				} else {
+					$address['shipping_type'] = (string) $items_shipping;
+				}
+
 				$address['cvs_store_ID'] = $order->get_meta('_shipping_cvs_store_ID');
 				$address['cvs_store_name'] = $order->get_meta('_shipping_cvs_store_name');
 				$address['cvs_address'] = $order->get_meta('_shipping_cvs_store_address');
