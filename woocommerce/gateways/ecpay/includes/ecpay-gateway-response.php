@@ -121,13 +121,20 @@ class RY_ECPay_Gateway_Response extends RY_ECPay_Gateway_Api {
 		}
 	}
 
-	protected static function payment_status_unknow($order, $ipn_info, $payment_status) {
-		RY_ECPay_Gateway::log('Unknow status: ' . self::get_status($ipn_info) . '(' . self::get_status_msg($ipn_info) . ')');
+	protected static function payment_status_10100058($order, $ipn_info) {
+		if( $order->is_paid() ) {
+			$order->add_order_note(__('Payment failed within paid order', 'ry-woocommerce-tools'));
+			$order->save();
+			return ;
+		}
 		$order->update_status('failed', sprintf(
-			/* translators: 1: Error status code 2: Error status message */
-			__('Payment failed: %1$s (%2$s)', 'ry-woocommerce-tools'),
-			self::get_status($ipn_info),
+			/* translators: Error status message */
+			__('Payment failed (%s)', 'ry-woocommerce-tools'),
 			self::get_status_msg($ipn_info)
 		));
+	}
+
+	protected static function payment_status_unknow($order, $ipn_info, $payment_status) {
+		RY_ECPay_Gateway::log('Unknow status: ' . self::get_status($ipn_info) . '(' . self::get_status_msg($ipn_info) . ')');
 	}
 }
