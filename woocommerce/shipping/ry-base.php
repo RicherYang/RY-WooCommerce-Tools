@@ -64,21 +64,23 @@ final class RY_Shipping {
 
 	public static function show_store_in_address($address, $type, $order) {
 		if( $type == 'shipping' ) {
-			if( $order->get_meta('_shipping_cvs_store_ID') != '' ) {
+			if( !empty($order->get_meta('_shipping_cvs_store_ID')) ) {
 				$items_shipping = $order->get_items('shipping');
 				$items_shipping = array_shift($items_shipping);
-				if ( version_compare(WC_VERSION, '3.2.0', '<' ) ) {
-					$items_shipping = $items_shipping->method_id;
-				} else {
-					$items_shipping = $items_shipping->get_method_id();
-				}
+				if( $items_shipping ) {
+					if ( version_compare(WC_VERSION, '3.2.0', '<' ) ) {
+						$items_shipping = $items_shipping->method_id;
+					} else {
+						$items_shipping = $items_shipping->get_method_id();
+					}
 
-				$shipping_methods = WC()->shipping->get_shipping_methods();
+					$shipping_methods = WC()->shipping->get_shipping_methods();
 
-				if( isset($shipping_methods[$items_shipping]) ) {
-					$address['shipping_type'] = $shipping_methods[$items_shipping]->get_method_title();
-				} else {
-					$address['shipping_type'] = (string) $items_shipping;
+					if( isset($shipping_methods[$items_shipping]) ) {
+						$address['shipping_type'] = $shipping_methods[$items_shipping]->get_method_title();
+					} else {
+						$address['shipping_type'] = (string) $items_shipping;
+					}
 				}
 
 				$address['cvs_store_ID'] = $order->get_meta('_shipping_cvs_store_ID');

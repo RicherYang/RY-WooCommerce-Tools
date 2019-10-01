@@ -24,8 +24,8 @@ class RY_ECPay_Shipping_admin {
 		$shipping_method = false;
 		if( !empty($theorder) ) {
 			$items_shipping = $theorder->get_items('shipping');
-			if( count($items_shipping) ) {
-				$items_shipping = array_shift($items_shipping);
+			$items_shipping = array_shift($items_shipping);
+			if( $items_shipping ) {
 				$shipping_method = RY_ECPay_Shipping::get_order_support_shipping($items_shipping);
 			}
 			if( $shipping_method !== false ) {

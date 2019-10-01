@@ -5,7 +5,7 @@ Tags: woocommerce, payment, gateway, shipping, ecpay, newebpay
 Requires at least: 5.0
 Requires PHP: 5.6.20
 Tested up to: 5.2.3
-Stable tag: 1.2.16
+Stable tag: 1.2.17
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.txt
 
@@ -38,6 +38,9 @@ Please visit the [plugin page](https://richer.tw/ry-woocommerce-tools/ " ") with
 4. NewebPay gateway global settings.
 
 == Changelog ==
+
+= 1.2.17 - 2019/09/24 =
+* 更新 - 修正後台訂單列表的錯誤
 
 = 1.2.16 - 2019/09/21 =
 * 更新 - 綠界回傳未知的狀態碼不會自動設為付款失敗訂單
