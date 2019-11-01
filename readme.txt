@@ -4,8 +4,8 @@ Donate link: https://www.paypal.me/RicherYang
 Tags: woocommerce, payment, gateway, shipping, ecpay, newebpay
 Requires at least: 5.0
 Requires PHP: 5.6.20
-Tested up to: 5.2.3
-Stable tag: 1.2.17
+Tested up to: 5.2.4
+Stable tag: 1.2.18.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.txt
 
@@ -39,12 +39,15 @@ Please visit the [plugin page](https://richer.tw/ry-woocommerce-tools/ " ") with
 
 == Changelog ==
 
+= 1.2.18.1 - 2019/11/01 =
+* 更新 - 調整後台物流的相關程式碼
+
 = 1.2.17 - 2019/09/24 =
 * 更新 - 修正後台訂單列表的錯誤
 
 = 1.2.16 - 2019/09/21 =
 * 更新 - 綠界回傳未知的狀態碼不會自動設為付款失敗訂單
-* 更新 - 綠界已付款的訂單不會資動設為付款失敗訂單
+* 更新 - 綠界已付款的訂單不會自動設為付款失敗訂單
 
 = 1.2.15.1 - 2019/09/15 =
 * 更新 - 修正後台物流資訊錯誤

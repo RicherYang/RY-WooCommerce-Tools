@@ -13,37 +13,12 @@ class RY_ECPay_Shipping_CVS extends WC_Shipping_Method {
 		$this->weight_plus_cost = $this->get_option('weight_plus_cost', 0);
 
 		add_action('woocommerce_update_options_shipping_' . $this->id, [$this, 'process_admin_options']);
-		
 		add_action('woocommerce_update_order', [$this, 'save_order_update']);
+
+		add_action('admin_footer', [$this, 'enqueue_admin_js'], 10);
 	}
 
 	public function get_instance_form_fields() {
-		static $is_print = [];
-		if( is_admin() ) {
-			if( !isset($is_print[$this->id]) ) {
-				$is_print[$this->id] = true;
-				wc_enqueue_js(
-'jQuery(function($) {
-	function RYECPayShowHide' . $this->id . 'MinAmountField(el) {
-		var form = $(el).closest("form");
-		var minAmountField = $("#woocommerce_' . $this->id . '_min_amount", form).closest("tr");
-		if( "min_amount" === $(el).val() ) {
-			minAmountField.show();
-		} else {
-			minAmountField.hide();
-		}
-	}
-	$(document.body).on("change", "#woocommerce_' . $this->id . '_cost_requires", function(){
-		RYECPayShowHide' . $this->id . 'MinAmountField(this);
-	}).change();
-	$(document.body).on("wc_backbone_modal_loaded", function(evt, target) {
-		if("wc-modal-shipping-method-settings" === target ) {
-			RYECPayShowHide' . $this->id . 'MinAmountField($("#wc-backbone-modal-dialog #woocommerce_' . $this->id . '_cost_requires", evt.currentTarget));
-		}
-	});
-});');
-			}
-		}
 		return parent::get_instance_form_fields();
 	}
 
@@ -113,6 +88,39 @@ class RY_ECPay_Shipping_CVS extends WC_Shipping_Method {
 
 		$this->add_rate($rate);
 		do_action('woocommerce_' . $this->id . '_shipping_add_rate', $this, $rate);
+	}
+
+	public function enqueue_admin_js() {
+		static $is_print = [];
+		if( is_admin() ) {
+			if( !isset($is_print[$this->id]) ) {
+				$is_print[$this->id] = true;
+				wc_enqueue_js(
+'jQuery(function($) {
+	function RYECPayShowHide' . $this->id . 'MinAmountField(el) {
+		var form = $(el).closest("form");
+		var minAmountField = $("#woocommerce_' . $this->id . '_min_amount", form).closest("tr");
+		switch( $(el).val() ) {
+			case "min_amount":
+			case "min_amount_except_discount":
+				minAmountField.show();
+				break;
+			default:
+				minAmountField.hide();
+				break;
+		}
+	}
+	$(document.body).on("change", "#woocommerce_' . $this->id . '_cost_requires", function(){
+		RYECPayShowHide' . $this->id . 'MinAmountField(this);
+	}).change();
+	$(document.body).on("wc_backbone_modal_loaded", function(evt, target) {
+		if("wc-modal-shipping-method-settings" === target ) {
+			RYECPayShowHide' . $this->id . 'MinAmountField($("#wc-backbone-modal-dialog #woocommerce_' . $this->id . '_cost_requires", evt.currentTarget));
+		}
+	});
+});');
+			}
+		}
 	}
 
 	public function save_order_update($order_id) {
