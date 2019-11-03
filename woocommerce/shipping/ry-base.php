@@ -63,6 +63,8 @@ final class RY_Shipping {
 	}
 
 	public static function show_store_in_address($address, $type, $order) {
+		$show_cvs_address = false;
+
 		if( $type == 'shipping' ) {
 			if( !empty($order->get_meta('_shipping_cvs_store_ID')) ) {
 				$items_shipping = $order->get_items('shipping');
@@ -74,22 +76,35 @@ final class RY_Shipping {
 						$items_shipping = $items_shipping->get_method_id();
 					}
 
-					$shipping_methods = WC()->shipping->get_shipping_methods();
+					if( 'yes' == RY_WT::get_option('enabled_ecpay_shipping', 'no') ) {
+						if( array_key_exists($items_shipping, RY_ECPay_Shipping::$support_methods) ) {
+							$show_cvs_address = true;
+						}
+					}
 
-					if( isset($shipping_methods[$items_shipping]) ) {
-						$address['shipping_type'] = $shipping_methods[$items_shipping]->get_method_title();
-					} else {
-						$address['shipping_type'] = (string) $items_shipping;
+					if( 'yes' == RY_WT::get_option('enabled_newebpay_shipping', 'no') ) {
+						if( array_key_exists($items_shipping, RY_NewebPay_Shipping::$support_methods) ) {
+							$show_cvs_address = true;
+						}
 					}
 				}
-
-				$address['cvs_store_ID'] = $order->get_meta('_shipping_cvs_store_ID');
-				$address['cvs_store_name'] = $order->get_meta('_shipping_cvs_store_name');
-				$address['cvs_address'] = $order->get_meta('_shipping_cvs_store_address');
-				$address['cvs_telephone'] = $order->get_meta('_shipping_cvs_store_telephone');
-				$address['phone'] = $order->get_meta('_shipping_phone');
-				$address['country'] = 'CVS';
 			}
+		}
+
+		if( $show_cvs_address ) {
+			$shipping_methods = WC()->shipping->get_shipping_methods();
+			if( isset($shipping_methods[$items_shipping]) ) {
+				$address['shipping_type'] = $shipping_methods[$items_shipping]->get_method_title();
+			} else {
+				$address['shipping_type'] = (string) $items_shipping;
+			}
+
+			$address['cvs_store_ID'] = $order->get_meta('_shipping_cvs_store_ID');
+			$address['cvs_store_name'] = $order->get_meta('_shipping_cvs_store_name');
+			$address['cvs_address'] = $order->get_meta('_shipping_cvs_store_address');
+			$address['cvs_telephone'] = $order->get_meta('_shipping_cvs_store_telephone');
+			$address['phone'] = $order->get_meta('_shipping_phone');
+			$address['country'] = 'CVS';
 		}
 
 		return $address;
