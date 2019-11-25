@@ -203,6 +203,7 @@ class RY_ECPay_Shipping_Api extends RY_ECPay {
 			$args['CVSValidationNo'] = $info['ValidationNo'];
 		}
 		$args = self::add_check_value($args, $HashKey, $HashIV, 'md5');
+		RY_ECPay_Shipping::log('Print info POST: ' . var_export($args, true));
 
 		if( RY_ECPay_Shipping::$testmode ) {
 			if( $CVS_type == 'C2C' ) {
@@ -223,11 +224,17 @@ class RY_ECPay_Shipping_Api extends RY_ECPay {
 			'timeout' => 20,
 			'body' => $args
 		]);
+
 		if( !is_wp_error($response) ) {
 			if( $response['response']['code'] == '200' ) {
 				return $response['body'];
+			}	else {
+				RY_ECPay_Shipping::log('Print info failed. Http code: ' . $response['response']['code'], 'error');
 			}
+		} else {
+			RY_ECPay_Shipping::log('Print info failed. POST error: ' . implode("\n", $response->get_error_messages()), 'error');
 		}
+
 		return '<!DOCTYPE html><html><head><meta charset="' . get_bloginfo('charset', 'display') . '"></head><body>'
 			. __('Error with connect to ECPay server.', 'ry-woocommerce-tools')
 			. '</body></html>';

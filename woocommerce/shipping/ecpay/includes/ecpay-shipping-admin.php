@@ -29,13 +29,6 @@ class RY_ECPay_Shipping_admin {
 				$shipping_method = RY_ECPay_Shipping::get_order_support_shipping($items_shipping);
 			}
 			if( $shipping_method !== false ) {
-				unset($shipping_fields['company']);
-				unset($shipping_fields['address_1']);
-				unset($shipping_fields['address_2']);
-				unset($shipping_fields['city']);
-				unset($shipping_fields['postcode']);
-				unset($shipping_fields['country']);
-				unset($shipping_fields['state']);
 				$shipping_fields['cvs_store_ID'] = [
 					'label' => __('Store ID', 'ry-woocommerce-tools'),
 					'show' => false
@@ -143,7 +136,7 @@ class RY_ECPay_Shipping_admin {
 										$sub_info = substr($print_info, strpos($print_info, '<img'));
 										preg_match('/(<img[^>]*>)/', $sub_info, $match);
 										if( count($match) == 2 ) {
-											$print_info = '<!DOCTYPE html><html><head><meta charset="' . get_bloginfo('charset', 'display') . '"></head><body style="margin:0;padding:0">'
+											$print_info = '<!DOCTYPE html><html><head><meta charset="' . get_bloginfo('charset', 'display') . '"></head><body style="margin:0;padding:0;overflow:hidden">'
 												. $match[1]
 												. '</body></html>';
 										}
@@ -152,8 +145,8 @@ class RY_ECPay_Shipping_admin {
 										$sub_info = substr($print_info, strpos($print_info, 'location.href'));
 										preg_match("/'([^']*)'/", $sub_info, $match);
 										if( count($match) == 2 ) {
-											$print_info = '<!DOCTYPE html><html><head><meta charset="' . get_bloginfo('charset', 'display') . '"></head><body style="margin:0;padding:0">'
-												. '<iframe src="' . $match[1] . '" style="border:0;width:835px;height:230px"></iframe>'
+											$print_info = '<!DOCTYPE html><html><head><meta charset="' . get_bloginfo('charset', 'display') . '"></head><body style="margin:0;padding:0;overflow:hidden">'
+												. '<iframe src="' . $match[1] . '" style="border:0;width:990px;height:315px"></iframe>'
 												. '</body></html>';
 										}
 										break;
