@@ -129,8 +129,8 @@ class RY_ECPay_Shipping_admin {
 				if( is_array($shipping_list) ) {
 					foreach( $shipping_list as $info ) {
 						if( $info['ID'] == $logistics_id ) {
-							$print_info = RY_ECPay_Shipping_Api::get_print_info($logistics_id, $info);
 							if( $only ) {
+								$print_info = RY_ECPay_Shipping_Api::get_print_info($logistics_id, $info);
 								switch( $info['LogisticsSubType'] ) {
 									case 'FAMIC2C':
 										$sub_info = substr($print_info, strpos($print_info, '<img'));
@@ -153,6 +153,8 @@ class RY_ECPay_Shipping_admin {
 									case 'UNIMARTC2C':
 										break;
 								}
+							} else {
+								$print_info = RY_ECPay_Shipping_Api::get_print_info_form($logistics_id, $info);
 							}
 							echo($print_info);
 							wp_die();

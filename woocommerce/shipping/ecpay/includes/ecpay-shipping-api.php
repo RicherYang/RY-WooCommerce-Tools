@@ -239,4 +239,47 @@ class RY_ECPay_Shipping_Api extends RY_ECPay {
 			. __('Error with connect to ECPay server.', 'ry-woocommerce-tools')
 			. '</body></html>';
 	}
+
+	public static function get_print_info_form($logistics_id, $info = null) {
+		list($MerchantID, $HashKey, $HashIV, $CVS_type) = RY_ECPay_Shipping::get_ecpay_api_info();
+
+		if( is_array($logistics_id) ) {
+			$logistics_id = implode(',', $logistics_id);
+		}
+
+		$args = [
+			'MerchantID' => $MerchantID,
+			'AllPayLogisticsID' => $logistics_id,
+		];
+		if( $CVS_type == 'C2C' ) {
+			$args['CVSPaymentNo'] = $info['PaymentNo'];
+			$args['CVSValidationNo'] = $info['ValidationNo'];
+		}
+		$args = self::add_check_value($args, $HashKey, $HashIV, 'md5');
+		RY_ECPay_Shipping::log('Print info POST: ' . var_export($args, true));
+
+		if( RY_ECPay_Shipping::$testmode ) {
+			if( $CVS_type == 'C2C' ) {
+				$post_url = self::$api_test_url['print_' . $info['LogisticsSubType']];
+			} else {
+				$post_url = self::$api_test_url['print_B2C'];
+			}
+		} else {
+			if( $CVS_type == 'C2C' ) {
+				$post_url = self::$api_url['print_' . $info['LogisticsSubType']];
+			} else {
+				$post_url = self::$api_url['print_B2C'];
+			}
+		}
+
+		$html = '<!DOCTYPE html><head><meta charset="' . get_bloginfo('charset', 'display') . '"></head><body>';
+		$html .= '<form method="post" id="ry-ecpay-form" action="' . esc_url($post_url) . '" style="display:none;">';
+		foreach( $args as $key => $value ) {
+			$html .= '<input type="hidden" name="' . esc_attr($key) . '" value="' . esc_attr($value) . '">';
+		}
+		$html .= '</form>';
+		$html .= '<script>document.getElementById("ry-ecpay-form").submit();</script>';
+		$html .= '</body></html>';
+		return $html;
+	}
 }
