@@ -1,11 +1,11 @@
-=== RY WooCommerce Tools ===
+=== RY WooCommerce City Select ===
 Contributors: fantasyworld
 Donate link: https://www.paypal.me/RicherYang
 Tags: woocommerce, payment, gateway, shipping, ecpay, newebpay
 Requires at least: 5.0
 Requires PHP: 5.6.20
-Tested up to: 5.2.4
-Stable tag: 1.2.23
+Tested up to: 5.3.0
+Stable tag: 1.2.24
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.txt
 
@@ -38,6 +38,10 @@ Please visit the [plugin page](https://richer.tw/ry-woocommerce-tools/ " ") with
 4. NewebPay gateway global settings.
 
 == Changelog ==
+
+= 1.2.24 - 2019/12/09 =
+* 新增 - 綠界超商取貨支援免運折價卷
+* 更新 - 調整專業版資訊內容
 
 = 1.2.23 - 2019/11/28 =
 * 更新 - 調整綠界託運單列印方式

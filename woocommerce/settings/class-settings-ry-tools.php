@@ -20,17 +20,28 @@ if( !class_exists('WC_Settings_RY_Tools', false) ) {
 		}
 
 		public function output() {
-			global $current_section;
+			global $current_section, $hide_save_button;
 
-			$settings = $this->get_settings($current_section);
-			WC_Admin_Settings::output_fields($settings);
+			if( $current_section == 'pro_info') {
+				$hide_save_button = true;
+				$this->output_pro_info();
+			} else{
+				if( apply_filters('ry_setting_section_' . $current_section , true) ) {
+					$settings = $this->get_settings($current_section);
+					WC_Admin_Settings::output_fields($settings);
+				} else {
+					do_action('ry_setting_section_ouput_hmtl');
+				}
+			}
 		}
 
 		public function save() {
 			global $current_section;
 
-			$settings = $this->get_settings($current_section);
-			WC_Admin_Settings::save_fields($settings);
+			if( apply_filters('ry_setting_section_' . $current_section , true) ) {
+				$settings = $this->get_settings($current_section);
+				WC_Admin_Settings::save_fields($settings);
+			}
 		
 			if( $current_section ) {
 				do_action('woocommerce_update_options_' . $this->id . '_' . $current_section);
@@ -148,6 +159,10 @@ if( !class_exists('WC_Settings_RY_Tools', false) ) {
 			}
 
 			return apply_filters('woocommerce_get_settings_' . $this->id, $settings, $current_section);
+		}
+
+		public function output_pro_info() {
+			include RY_WT_PLUGIN_DIR . 'woocommerce/admin/view/html-setting-pro_info.php';
 		}
 	}
 }
