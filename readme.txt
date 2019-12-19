@@ -4,8 +4,8 @@ Donate link: https://www.paypal.me/RicherYang
 Tags: woocommerce, payment, gateway, shipping, ecpay, newebpay
 Requires at least: 5.0
 Requires PHP: 5.6.20
-Tested up to: 5.3.0
-Stable tag: 1.2.24
+Tested up to: 5.3.1
+Stable tag: 1.2.25
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.txt
 
@@ -38,6 +38,9 @@ Please visit the [plugin page](https://richer.tw/ry-woocommerce-tools/ " ") with
 4. NewebPay gateway global settings.
 
 == Changelog ==
+
+= 1.2.25 - 2019/12/17 =
+* 新增 - 藍新超商取貨支援免運折價卷
 
 = 1.2.24 - 2019/12/09 =
 * 新增 - 綠界超商取貨支援免運折價卷

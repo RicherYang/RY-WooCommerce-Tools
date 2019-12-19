@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the RY WooCommerce Tools plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: RY WooCommerce Tools 1.2.24\n"
+"Project-Id-Version: RY WooCommerce Tools 1.2.25\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/ry-woocommerce-tools\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2019-12-09T10:28:54+08:00\n"
+"POT-Creation-Date: 2019-12-17T22:14:36+08:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.4.0\n"
 "X-Domain: ry-woocommerce-tools\n"
@@ -666,7 +666,7 @@ msgstr ""
 #: woocommerce/gateways/newebpay/includes/settings-newebpay-gateway-cvs.php:27
 #: woocommerce/gateways/newebpay/includes/settings-newebpay-gateway-webatm.php:27
 #: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping-cvs.php:43
-#: woocommerce/shipping/newebpay/includes/settings-newebpay-shipping-cvs.php:40
+#: woocommerce/shipping/newebpay/includes/settings-newebpay-shipping-cvs.php:43
 msgid "Minimum order amount"
 msgstr ""
 
@@ -1108,29 +1108,29 @@ msgstr ""
 
 #. translators: %s WooCommerce weight unit
 #: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping-cvs.php:52
-#: woocommerce/shipping/newebpay/includes/settings-newebpay-shipping-cvs.php:49
+#: woocommerce/shipping/newebpay/includes/settings-newebpay-shipping-cvs.php:52
 msgid "Every weight (%s) to plus times of cost"
 msgstr ""
 
 #: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping-cvs.php:56
-#: woocommerce/shipping/newebpay/includes/settings-newebpay-shipping-cvs.php:53
+#: woocommerce/shipping/newebpay/includes/settings-newebpay-shipping-cvs.php:56
 msgid "Calculate free shipping first. 0 to disable plus cost by weight."
 msgstr ""
 
 #: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping-cvs.php:65
-#: woocommerce/shipping/newebpay/includes/settings-newebpay-shipping-cvs.php:62
+#: woocommerce/shipping/newebpay/includes/settings-newebpay-shipping-cvs.php:65
 msgid "Shipping available"
 msgstr ""
 
 #. translators: %s: shipping class setting url
 #: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping-cvs.php:69
-#: woocommerce/shipping/newebpay/includes/settings-newebpay-shipping-cvs.php:66
+#: woocommerce/shipping/newebpay/includes/settings-newebpay-shipping-cvs.php:69
 msgid "These shipping available based on the <a href=\"%s\">product shipping class</a>."
 msgstr ""
 
 #. translators: %s: shipping class name
 #: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping-cvs.php:77
-#: woocommerce/shipping/newebpay/includes/settings-newebpay-shipping-cvs.php:74
+#: woocommerce/shipping/newebpay/includes/settings-newebpay-shipping-cvs.php:77
 msgid "\"%s\" available"
 msgstr ""
 

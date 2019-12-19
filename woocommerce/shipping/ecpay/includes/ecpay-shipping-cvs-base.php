@@ -150,6 +150,8 @@ class RY_ECPay_Shipping_CVS extends WC_Shipping_Method {
 			case "min_amount_or_coupon":
 			case "min_amount_and_coupon":
 			case "min_amount_except_discount":
+			case "min_amount_except_discount_or_coupon":
+			case "min_amount_except_discount_and_coupon":
 				minAmountField.show();
 				break;
 			default:

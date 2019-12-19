@@ -13,11 +13,15 @@ class RY_NewebPay_Shipping_CVS extends WC_Shipping_Method {
 			'instance-settings-modal',
 		];
 
+		if( empty($this->instance_form_fields) ) {
+			$this->instance_form_fields = include(RY_WT_PLUGIN_DIR . 'woocommerce/shipping/newebpay/includes/settings-newebpay-shipping-cvs.php');
+		}
+		$this->instance_form_fields['title']['default'] = $this->method_title;
+
 		$this->init();
 	}
 
 	public function init() {
-		$this->instance_form_fields = include(RY_WT_PLUGIN_DIR . 'woocommerce/shipping/newebpay/includes/settings-newebpay-shipping-cvs.php');
 		$this->title = $this->get_option('title');
 		$this->tax_status = $this->get_option('tax_status');
 		$this->cost = $this->get_option('cost');
@@ -47,10 +51,18 @@ class RY_NewebPay_Shipping_CVS extends WC_Shipping_Method {
 	function RYNewebPayShowHide' . $this->id . 'MinAmountField(el) {
 		var form = $(el).closest("form");
 		var minAmountField = $("#woocommerce_' . $this->id . '_min_amount", form).closest("tr");
-		if( "min_amount" === $(el).val() ) {
-			minAmountField.show();
-		} else {
-			minAmountField.hide();
+		switch( $(el).val() ) {
+			case "min_amount":
+			case "min_amount_or_coupon":
+			case "min_amount_and_coupon":
+			case "min_amount_except_discount":
+			case "min_amount_except_discount_or_coupon":
+			case "min_amount_except_discount_and_coupon":
+				minAmountField.show();
+				break;
+			default:
+				minAmountField.hide();
+				break;
 		}
 	}
 	$(document.body).on("change", "#woocommerce_' . $this->id . '_cost_requires", function(){
@@ -111,16 +123,29 @@ class RY_NewebPay_Shipping_CVS extends WC_Shipping_Method {
 			]
 		];
 
-		if( $this->cost_requires == 'min_amount' ) {
-			$total = WC()->cart->get_displayed_subtotal();
-			if( 'incl' === WC()->cart->tax_display_cart ) {
-				$total = round($total - (WC()->cart->get_cart_discount_total() + WC()->cart->get_cart_discount_tax_total()), wc_get_price_decimals());
-			} else {
-				$total = round($total - WC()->cart->get_cart_discount_total(), wc_get_price_decimals());
-			}
-			if ( $total >= $this->min_amount ) {
-				$rate['cost'] = 0;
-			}
+		$has_coupon = $this->check_has_coupon($this->cost_requires, ['coupon', 'min_amount_or_coupon', 'min_amount_and_coupon']);
+		$has_min_amount = $this->check_has_min_amount($this->cost_requires, ['min_amount', 'min_amount_or_coupon', 'min_amount_and_coupon']);
+
+		switch ( $this->cost_requires ) {
+			case 'coupon':
+				$set_cost_zero = $has_coupon;
+				break;
+			case 'min_amount':
+				$set_cost_zero = $has_min_amount;
+				break;
+			case 'min_amount_or_coupon':
+				$set_cost_zero = $has_min_amount || $has_coupon;
+				break;
+			case 'min_amount_and_coupon':
+				$set_cost_zero = $has_min_amount && $has_coupon;
+				break;
+			default:
+				$set_cost_zero = false;
+				break;
+		}
+
+		if( $set_cost_zero ) {
+			$rate['cost'] = 0;
 		}
 
 		if( $this->weight_plus_cost > 0 ) {
@@ -133,6 +158,38 @@ class RY_NewebPay_Shipping_CVS extends WC_Shipping_Method {
 
 		$this->add_rate($rate);
 		do_action('woocommerce_' . $this->id . '_shipping_add_rate', $this, $rate);
+	}
+
+	protected function check_has_coupon($requires, $check_requires_list) {
+		if( in_array($requires, $check_requires_list) ) {
+			$coupons = WC()->cart->get_coupons();
+			if( $coupons ) {
+				foreach( $coupons as $code => $coupon ) {
+					if ( $coupon->is_valid() && $coupon->get_free_shipping() ) {
+						return true;
+						break;
+					}
+				}
+			}
+		}
+		return false;
+	}
+
+	protected function check_has_min_amount($requires, $check_requires_list, $original = false) {
+		if( in_array($requires, $check_requires_list) ) {
+			$total = WC()->cart->get_displayed_subtotal();
+			if( $original === false ) {
+				if( 'incl' === WC()->cart->tax_display_cart ) {
+					$total = round($total - (WC()->cart->get_cart_discount_total() + WC()->cart->get_cart_discount_tax_total()), wc_get_price_decimals());
+				} else {
+					$total = round($total - WC()->cart->get_cart_discount_total(), wc_get_price_decimals());
+				}
+			}
+			if ( $total >= $this->min_amount ) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public function only_newebpay_gateway($_available_gateways) {
