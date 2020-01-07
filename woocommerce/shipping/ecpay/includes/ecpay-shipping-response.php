@@ -57,11 +57,13 @@ class RY_ECPay_Shipping_Response extends RY_ECPay_Shipping_Api {
 				if( isset($old_info['status']) ) {
 					if( $old_info['status'] != $shipping_list[$ipn_info['AllPayLogisticsID']]['status'] ) {
 						$order->add_order_note(sprintf(
-							/* translators: 1: EcPay ID 2: Old status 3: New status */
-							__('%1$s shipping status from %2$s to %3$s', 'ry-woocommerce-tools'),
+							/* translators: 1: EcPay ID 2: Old status mag 3: Old status no 4: New status mag 5: New status no */
+							__('%1$s shipping status from %2$s(%3$d) to %4$s(%5$d)', 'ry-woocommerce-tools'),
 							$ipn_info['AllPayLogisticsID'],
 							$old_info['status_msg'],
-							$shipping_list[$ipn_info['AllPayLogisticsID']]['status_msg']
+							$old_info['status'],
+							$shipping_list[$ipn_info['AllPayLogisticsID']]['status_msg'],
+							$shipping_list[$ipn_info['AllPayLogisticsID']]['status']
 						));
 					}
 				}

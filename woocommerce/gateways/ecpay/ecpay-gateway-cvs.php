@@ -13,6 +13,14 @@ class RY_ECPay_Gateway_Cvc extends RY_ECPay_Gateway_Base {
 		$this->method_description = '';
 
 		$this->form_fields = include(RY_WT_PLUGIN_DIR . 'woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-cvs.php');
+
+		$now = new DateTime();
+		$now->setTimezone(new DateTimeZone('Asia/Taipei'));
+		if( $now > new DateTime('2020-01-06T15:15:00+08:00')){
+			$this->form_fields['expire_date']['description'] = __('CVS allowable payment deadline from 1 minute to 60 days.', 'ry-woocommerce-tools');
+			$this->form_fields['expire_date']['custom_attributes']['max'] = 86400;
+		}
+
 		$this->init_settings();
 
 		$this->inpay = 'yes' == $this->get_option('inpay');

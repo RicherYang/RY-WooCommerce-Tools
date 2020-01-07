@@ -43,15 +43,7 @@ class RY_ECPay_Gateway_Response extends RY_ECPay_Gateway_Api {
 			$payment_status = self::get_status($ipn_info);
 			RY_ECPay_Gateway::log('Found order #' . $order->get_id() . ' Payment status: ' . $payment_status);
 
-			$transaction_id = (string) $order->get_transaction_id();
-			if( $transaction_id == '' || $transaction_id != self::get_transaction_id($ipn_info) ) {
-				list($payment_type, $payment_subtype) = self::get_payment_info($ipn_info);
-				$order->set_transaction_id(self::get_transaction_id($ipn_info));
-				$order->update_meta_data('_ecpay_payment_type', $payment_type);
-				$order->update_meta_data('_ecpay_payment_subtype', $payment_subtype);
-				$order->save();
-				$order = wc_get_order($order_id);
-			}
+			$order = self::set_transaction_info($order, $ipn_info);
 
 			if( method_exists(__CLASS__, 'payment_status_' . $payment_status) ) {
 				call_user_func([__CLASS__, 'payment_status_' . $payment_status], $order, $ipn_info);
@@ -69,6 +61,19 @@ class RY_ECPay_Gateway_Response extends RY_ECPay_Gateway_Api {
 		}
 	}
 
+	protected static function set_transaction_info($order, $ipn_info) {
+		$transaction_id = (string) $order->get_transaction_id();
+		if( $transaction_id == '' || !$order->is_paid() || $transaction_id != self::get_transaction_id($ipn_info) ) {
+			list($payment_type, $payment_subtype) = self::get_payment_info($ipn_info);
+			$order->set_transaction_id(self::get_transaction_id($ipn_info));
+			$order->update_meta_data('_ecpay_payment_type', $payment_type);
+			$order->update_meta_data('_ecpay_payment_subtype', $payment_subtype);
+			$order->save();
+			$order = wc_get_order($order->get_id());
+		}
+		return $order;
+	}
+
 	protected static function get_payment_info($ipn_info) {
 		if( isset($ipn_info['PaymentType']) ) {
 			$payment_type = $ipn_info['PaymentType'];
@@ -83,6 +88,7 @@ class RY_ECPay_Gateway_Response extends RY_ECPay_Gateway_Api {
 
 	protected static function payment_status_1($order, $ipn_info) {
 		if( !$order->is_paid() ) {
+			$order = self::set_transaction_info($order, $ipn_info);
 			$order->add_order_note(__('Payment completed', 'ry-woocommerce-tools'));
 			$order->payment_complete();
 		}

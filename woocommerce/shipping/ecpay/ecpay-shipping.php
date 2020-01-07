@@ -200,11 +200,11 @@ final class RY_ECPay_Shipping {
 			'type' => 'hidden'
 		];
 		$fields['shipping']['shipping_phone'] = [
-			'label' => __('Phone', 'woocommerce'),
+			'label' => __('Phone', 'ry-woocommerce-tools'),
 			'required' => true,
 			'type' => 'tel',
 			'validate' => ['phone'],
-			'class' => ['form-row-wide', 'cvs-info'],
+			'class' => ['form-row-wide'],
 			'priority' => 100
 		];
 		$fields['shipping']['CVSStoreName'] = [
@@ -229,6 +229,9 @@ final class RY_ECPay_Shipping {
 			'priority' => 112
 		];
 
+		if( 'no' == RY_WT::get_option('ecpay_keep_shipping_phone', 'no') ) {
+			$fields['shipping']['shipping_phone']['class'][] = 'cvs-info';
+		}
 		return $fields;
 	}
 

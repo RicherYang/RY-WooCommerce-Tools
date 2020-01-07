@@ -1,15 +1,15 @@
-# Copyright (C) 2019 Richer Yang
+# Copyright (C) 2020 Richer Yang
 # This file is distributed under the same license as the RY WooCommerce Tools plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: RY WooCommerce Tools 1.2.25\n"
+"Project-Id-Version: RY WooCommerce Tools 1.2.28\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/ry-woocommerce-tools\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2019-12-17T22:14:36+08:00\n"
+"POT-Creation-Date: 2020-01-02T22:07:38+08:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.4.0\n"
 "X-Domain: ry-woocommerce-tools\n"
@@ -297,7 +297,7 @@ msgstr ""
 #: templates/order/order-newebpay-payment-info-cvs.php:25
 #: woocommerce/gateways/ecpay/ecpay-gateway-atm.php:82
 #: woocommerce/gateways/ecpay/ecpay-gateway-barcode.php:92
-#: woocommerce/gateways/ecpay/ecpay-gateway-cvs.php:92
+#: woocommerce/gateways/ecpay/ecpay-gateway-cvs.php:100
 #: woocommerce/gateways/newebpay/newebpay-gateway-atm.php:72
 #: woocommerce/gateways/newebpay/newebpay-gateway-barcode.php:92
 #: woocommerce/gateways/newebpay/newebpay-gateway-cvs.php:88
@@ -331,7 +331,7 @@ msgstr ""
 #: templates/order/order-newebpay-payment-info-cvs.php:33
 #: woocommerce/gateways/ecpay/ecpay-gateway-atm.php:93
 #: woocommerce/gateways/ecpay/ecpay-gateway-barcode.php:107
-#: woocommerce/gateways/ecpay/ecpay-gateway-cvs.php:99
+#: woocommerce/gateways/ecpay/ecpay-gateway-cvs.php:107
 #: woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-atm.php:55
 #: woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-barcode.php:49
 #: woocommerce/gateways/newebpay/includes/settings-newebpay-gateway-atm.php:49
@@ -377,7 +377,7 @@ msgstr ""
 
 #: templates/order/order-ecpay-payment-info-cvs.php:29
 #: templates/order/order-newebpay-payment-info-cvs.php:29
-#: woocommerce/gateways/ecpay/ecpay-gateway-cvs.php:95
+#: woocommerce/gateways/ecpay/ecpay-gateway-cvs.php:103
 #: woocommerce/gateways/newebpay/newebpay-gateway-cvs.php:91
 msgid "CVS code"
 msgstr ""
@@ -478,7 +478,7 @@ msgstr ""
 #. translators: %s: Gateway method title
 #: woocommerce/gateways/ecpay/ecpay-gateway-atm.php:70
 #: woocommerce/gateways/ecpay/ecpay-gateway-barcode.php:74
-#: woocommerce/gateways/ecpay/ecpay-gateway-cvs.php:74
+#: woocommerce/gateways/ecpay/ecpay-gateway-cvs.php:82
 #: woocommerce/gateways/ecpay/ecpay-gateway-webatm.php:57
 #: woocommerce/gateways/ecpay/includes/ecpay-gateway-base.php:29
 #: woocommerce/gateways/newebpay/includes/newebpay-gateway-base.php:29
@@ -507,7 +507,7 @@ msgstr ""
 
 #. translators: %1$s: Gateway method title, %2$d normal maximum
 #: woocommerce/gateways/ecpay/ecpay-gateway-barcode.php:80
-#: woocommerce/gateways/ecpay/ecpay-gateway-cvs.php:80
+#: woocommerce/gateways/ecpay/ecpay-gateway-cvs.php:88
 #: woocommerce/gateways/newebpay/newebpay-gateway-barcode.php:80
 #: woocommerce/gateways/newebpay/newebpay-gateway-cvs.php:76
 msgid "%1$s maximum amount more then normal maximum (%2$d)."
@@ -554,11 +554,15 @@ msgstr ""
 msgid "ECPay CVS"
 msgstr ""
 
-#: woocommerce/gateways/ecpay/ecpay-gateway-cvs.php:52
+#: woocommerce/gateways/ecpay/ecpay-gateway-cvs.php:20
+msgid "CVS allowable payment deadline from 1 minute to 60 days."
+msgstr ""
+
+#: woocommerce/gateways/ecpay/ecpay-gateway-cvs.php:60
 msgid "Pay via ECPay CVS"
 msgstr ""
 
-#: woocommerce/gateways/ecpay/ecpay-gateway-cvs.php:67
+#: woocommerce/gateways/ecpay/ecpay-gateway-cvs.php:75
 #: woocommerce/gateways/newebpay/newebpay-gateway-cvs.php:63
 msgid "CVS payment deadline out of range. Set as default value."
 msgstr ""
@@ -609,17 +613,17 @@ msgstr ""
 msgid "Inpay only work with ssl. You must enable force secure checkout."
 msgstr ""
 
-#: woocommerce/gateways/ecpay/includes/ecpay-gateway-response.php:86
+#: woocommerce/gateways/ecpay/includes/ecpay-gateway-response.php:92
 #: woocommerce/gateways/newebpay/includes/newebpay-gateway-response.php:82
 msgid "Payment completed"
 msgstr ""
 
-#: woocommerce/gateways/ecpay/includes/ecpay-gateway-response.php:126
+#: woocommerce/gateways/ecpay/includes/ecpay-gateway-response.php:132
 msgid "Payment failed within paid order"
 msgstr ""
 
 #. translators: Error status message
-#: woocommerce/gateways/ecpay/includes/ecpay-gateway-response.php:132
+#: woocommerce/gateways/ecpay/includes/ecpay-gateway-response.php:138
 msgid "Payment failed (%s)"
 msgstr ""
 
@@ -1096,9 +1100,9 @@ msgstr ""
 msgid "Error with connect to ECPay server."
 msgstr ""
 
-#. translators: 1: EcPay ID 2: Old status 3: New status
+#. translators: 1: EcPay ID 2: Old status mag 3: Old status no 4: New status mag 5: New status no
 #: woocommerce/shipping/ecpay/includes/ecpay-shipping-response.php:61
-msgid "%1$s shipping status from %2$s to %3$s"
+msgid "%1$s shipping status from %2$s(%3$d) to %4$s(%5$d)"
 msgstr ""
 
 #: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping-cvs.php:23
