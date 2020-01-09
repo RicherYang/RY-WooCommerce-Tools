@@ -46,7 +46,11 @@ class RY_ECPay_Shipping_admin {
 					'show' => false
 				];
 				$shipping_fields['phone'] = [
-					'label' => __('Phone', 'woocommerce')
+					'label' => __('Phone', 'ry-woocommerce-tools')
+				];
+			} elseif( 'yes' == RY_WT::get_option('ecpay_keep_shipping_phone', 'no') ) {
+				$shipping_fields['phone'] = [
+					'label' => __('Phone', 'ry-woocommerce-tools')
 				];
 			}
 		}
