@@ -25,6 +25,8 @@ final class RY_WT {
 
 			if( is_admin() ) {
 				include_once(RY_WT_PLUGIN_DIR . 'class.ry-wt.admin.php');
+			} else {
+				add_filter('woocommerce_order_get_payment_method_title', [__CLASS__, 'unpay_title_notice'], 10, 2);
 			}
 
 			add_action('ry_check_ntp_time', [__CLASS__, 'check_ntp_time']);
@@ -32,32 +34,25 @@ final class RY_WT {
 				add_action('admin_notices', [__CLASS__, 'ntp_time_error']);
 			}
 
-			// 本地化地址
 			add_filter('woocommerce_localisation_address_formats', [__CLASS__, 'add_address_format']);
 
-			// 綠界金流
 			if( 'yes' == self::get_option('enabled_ecpay_gateway', 'no') ) {
 				include_once(RY_WT_PLUGIN_DIR . 'woocommerce/gateways/ecpay/ecpay-gateway.php');
 			}
-			// 綠界物流
 			if( 'yes' == self::get_option('enabled_ecpay_shipping', 'no') ) {
 				include_once(RY_WT_PLUGIN_DIR . 'woocommerce/shipping/ecpay/ecpay-shipping.php');
 			}
 
-			// 藍新金流
 			if( 'yes' == self::get_option('enabled_newebpay_gateway', 'no') ) {
 				include_once(RY_WT_PLUGIN_DIR . 'woocommerce/gateways/newebpay/newebpay-gateway.php');
 			}
-			// 藍新物流
 			if( 'yes' == self::get_option('enabled_newebpay_shipping', 'no') ) {
 				include_once(RY_WT_PLUGIN_DIR . 'woocommerce/shipping/newebpay/newebpay-shipping.php');
 			}
 
-			// 重新付款
 			if( 'no' == self::get_option('repay_action', 'no') ) {
 				add_filter('woocommerce_my_account_my_orders_actions', [__CLASS__, 'remove_pay_action']);
 			}
-			// 取消密碼強度檢查
 			if( 'no' == self::get_option('strength_password', 'yes') ) {
 				if( ( !is_admin() || defined('DOING_AJAX') ) && !defined('DOING_CRON') ) {
 					add_action('wp_enqueue_scripts', [__CLASS__, 'remove_strength_password_script'], 20);
@@ -68,13 +63,11 @@ final class RY_WT {
 			add_filter('woocommerce_form_field_hidden_empty', [__CLASS__, 'form_field_hidden_empty'], 20, 4);
 			add_filter('woocommerce_form_field_hiddentext', [__CLASS__, 'form_field_hiddentext'], 20, 4);
 
-			// 不顯示國家選項
 			if( 'no' == self::get_option('show_country_select', 'no') ) {
 				add_filter('woocommerce_billing_fields', [__CLASS__, 'hide_country_select'], 20);
 				add_filter('woocommerce_shipping_fields', [__CLASS__, 'hide_country_select'], 20);
 				add_filter('woocommerce_form_field_country_hidden', [__CLASS__, 'form_field_country_hidden'], 20, 4);
 			}
-			// 先顯示姓氏
 			if( 'yes' == self::get_option('last_name_first', 'no') ) {
 				add_filter('woocommerce_default_address_fields', [__CLASS__, 'last_name_first']);
 			}
@@ -106,6 +99,13 @@ final class RY_WT {
 				return $datetime;
 			}
 		}
+	}
+
+	public static function unpay_title_notice($title, $order) {
+		if( !$order->is_paid() ) {
+			$title .= ' ' . __('(not paid)', 'ry-woocommerce-tools');
+		}
+		return $title;
 	}
 
 	public static function add_address_format($address_formats) {

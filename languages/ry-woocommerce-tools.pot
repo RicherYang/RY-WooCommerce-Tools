@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the RY WooCommerce Tools plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: RY WooCommerce Tools 1.2.28\n"
+"Project-Id-Version: RY WooCommerce Tools 1.2.31\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/ry-woocommerce-tools\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2020-01-02T22:07:38+08:00\n"
+"POT-Creation-Date: 2020-01-15T22:37:55+08:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.4.0\n"
 "X-Domain: ry-woocommerce-tools\n"
@@ -38,6 +38,10 @@ msgstr ""
 #: class.ry-wt.admin.php:32
 #: woocommerce/settings/settings-ry-tools-pro.php:6
 msgid "Pro version"
+msgstr ""
+
+#: class.ry-wt.main.php:106
+msgid "(not paid)"
 msgstr ""
 
 #: class.ry-wt.main.php:211
@@ -773,19 +777,19 @@ msgstr ""
 
 #: woocommerce/gateways/ecpay/includes/settings-ecpay-gateway.php:30
 #: woocommerce/gateways/newebpay/includes/settings-newebpay-gateway.php:30
-#: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:60
+#: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:67
 msgid "Order no prefix"
 msgstr ""
 
 #: woocommerce/gateways/ecpay/includes/settings-ecpay-gateway.php:33
 #: woocommerce/gateways/newebpay/includes/settings-newebpay-gateway.php:33
-#: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:63
+#: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:70
 msgid "The prefix string of order no. Only letters and numbers allowed allowed."
 msgstr ""
 
 #: woocommerce/gateways/ecpay/includes/settings-ecpay-gateway.php:41
 #: woocommerce/gateways/newebpay/includes/settings-newebpay-gateway.php:41
-#: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:109
+#: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:116
 msgid "API credentials"
 msgstr ""
 
@@ -799,19 +803,19 @@ msgstr ""
 
 #: woocommerce/gateways/ecpay/includes/settings-ecpay-gateway.php:53
 #: woocommerce/gateways/newebpay/includes/settings-newebpay-gateway.php:53
-#: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:121
+#: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:128
 msgid "MerchantID"
 msgstr ""
 
 #: woocommerce/gateways/ecpay/includes/settings-ecpay-gateway.php:59
 #: woocommerce/gateways/newebpay/includes/settings-newebpay-gateway.php:59
-#: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:127
+#: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:134
 msgid "HashKey"
 msgstr ""
 
 #: woocommerce/gateways/ecpay/includes/settings-ecpay-gateway.php:65
 #: woocommerce/gateways/newebpay/includes/settings-newebpay-gateway.php:65
-#: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:133
+#: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:140
 msgid "HashIV"
 msgstr ""
 
@@ -821,7 +825,7 @@ msgstr ""
 
 #. translators: 1: Store name 2: Store ID
 #: woocommerce/gateways/newebpay/includes/newebpay-gateway-response.php:127
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:281
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:284
 msgid "CVS store %1$s (%2$s)"
 msgstr ""
 
@@ -1043,17 +1047,23 @@ msgid "Name length between 1 to 10 letter (5 if chinese)"
 msgstr ""
 
 #: woocommerce/shipping/ecpay/ecpay-shipping.php:101
-#: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:86
+#: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:93
 msgid "Phone format (0x)xxxxxxx#xx"
 msgstr ""
 
 #: woocommerce/shipping/ecpay/ecpay-shipping.php:107
-#: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:97
+#: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:104
 msgid "Cellphone format 09xxxxxxxx"
 msgstr ""
 
 #: woocommerce/shipping/ecpay/ecpay-shipping.php:122
 msgid "ECPay shipping method failed to enable!"
+msgstr ""
+
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:203
+#: woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:49
+#: woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:53
+msgid "Phone"
 msgstr ""
 
 #: woocommerce/shipping/ecpay/ecpay-shipping.php:211
@@ -1073,20 +1083,20 @@ msgstr ""
 msgid "Store Telephone"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:92
+#: woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:96
 #: woocommerce/shipping/newebpay/includes/newebpay-shipping-admin.php:93
 msgid "All cvs shipping methods set to disable."
 msgstr ""
 
-#: woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:108
+#: woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:112
 msgid "Get new CVS payment no"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:110
+#: woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:114
 msgid "Get new CVS payment no with cod"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:113
+#: woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:117
 #: woocommerce/shipping/newebpay/includes/newebpay-shipping-admin.php:106
 msgid "Resend at cvs notification"
 msgstr ""
@@ -1160,47 +1170,55 @@ msgid "Auto get shipping payment no when order status is change to processing."
 msgstr ""
 
 #: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:44
-msgid "Auto completed order"
+msgid "Keep shipping phone"
 msgstr ""
 
 #: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:48
-msgid "Auto completed order when user getted products."
+msgid "Always show shipping phone field in checkout form."
+msgstr ""
+
+#: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:51
+msgid "Auto completed order"
 msgstr ""
 
 #: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:55
+msgid "Auto completed order when user getted products."
+msgstr ""
+
+#: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:62
 msgid "Shipping note options"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:67
+#: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:74
 msgid "Cvs shipping type"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:72
+#: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:79
 msgctxt "Cvs type"
 msgid "C2C"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:76
+#: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:83
 msgid "Sender name"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:79
+#: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:86
 msgid "Name length between 1 to 10 letter"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:83
+#: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:90
 msgid "Sender phone"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:94
+#: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:101
 msgid "Sender cellphone"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:114
+#: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:121
 msgid "ECPay shipping sandbox"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:118
+#: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:125
 msgid "Enable ECPay shipping sandbox"
 msgstr ""
 
