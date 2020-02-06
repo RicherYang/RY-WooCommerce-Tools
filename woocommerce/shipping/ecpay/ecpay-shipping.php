@@ -158,7 +158,6 @@ final class RY_ECPay_Shipping {
 	}
 
 	public static function shipping_choose_cvs() {
-		wp_enqueue_script('ry-shipping');
 		$chosen_shipping = wc_get_chosen_shipping_method_ids();
 		$chosen_shipping = array_intersect($chosen_shipping, array_keys(self::$support_methods));
 		$chosen_shipping = array_shift($chosen_shipping);
@@ -170,7 +169,6 @@ final class RY_ECPay_Shipping {
 			list($MerchantID, $HashKey, $HashIV, $CVS_type) = self::get_ecpay_api_info();
 			$method_class = self::$support_methods[$chosen_shipping];
 
-			self::$js_data['postUrl'] = RY_ECPay_Shipping_Api::get_map_post_url();
 			self::$js_data['postData'] = [
 				'MerchantID' => $MerchantID,
 				'LogisticsType' => $method_class::$LogisticsType,
@@ -180,6 +178,12 @@ final class RY_ECPay_Shipping {
 				'Device' => (int) wp_is_mobile()
 			];
 		}
+
+		wp_localize_script('ry-shipping', 'ry_shipping_params', array_merge([
+			'postUrl' => RY_ECPay_Shipping_Api::get_map_post_url()
+		], self::$js_data));
+
+		wp_enqueue_script('ry-shipping');
 	}
 
 	public static function shipping_choose_cvs_info($fragments) {
@@ -232,6 +236,38 @@ final class RY_ECPay_Shipping {
 		if( 'no' == RY_WT::get_option('ecpay_keep_shipping_phone', 'no') ) {
 			$fields['shipping']['shipping_phone']['class'][] = 'cvs-info';
 		}
+
+		if( is_checkout()) {
+			$chosen_method = isset(WC()->session->chosen_shipping_methods) ? WC()->session->chosen_shipping_methods : [];
+			$is_support = false;
+			if( count($chosen_method) ) {
+				foreach( self::$support_methods as $method => $method_class ) {
+					if( strpos($chosen_method[0], $method ) === 0 ) {
+						$is_support = true;
+					}
+				}
+			}
+			if( $is_support ) {
+				foreach($fields['shipping'] as $key => $filed ) {
+					if (isset($filed['class'])) {
+						if( !in_array('cvs-info', $filed['class'])) {
+							if( !in_array($key, ['shipping_first_name', 'shipping_last_name', 'shipping_country', 'shipping_phone'])) {
+								$fields['shipping'][$key]['class'][] = 'ry-hide';
+							}
+						}
+					} else {
+						if($filed['type'] != 'hidden') {
+							$fields['shipping'][$key]['class'] = ['ry-hide'];
+						}
+					}
+				}
+			} else {
+				$fields['shipping']['CVSStoreName']['class'][] = 'ry-hide';
+				$fields['shipping']['CVSAddress']['class'][] = 'ry-hide';
+				$fields['shipping']['CVSTelephone']['class'][] = 'ry-hide';
+			}
+		}
+
 		return $fields;
 	}
 

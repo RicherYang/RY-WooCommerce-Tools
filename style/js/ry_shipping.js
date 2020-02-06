@@ -2,43 +2,48 @@ var ecpayShippingInfo;
 
 jQuery(function ($) {
 
-	$(document.body).on('updated_checkout', function (e, data) {
-		if (typeof data.fragments.ecpay_shipping_info !== 'undefined') {
-			ecpayShippingInfo = data.fragments.ecpay_shipping_info;
-			$('.woocommerce-shipping-fields__field-wrapper p:not(.cvs-info)').hide();
-			$('.woocommerce-shipping-fields__field-wrapper p#shipping_first_name_field').show();
-			$('.woocommerce-shipping-fields__field-wrapper p#shipping_last_name_field').show();
-			$('.woocommerce-shipping-fields__field-wrapper p#shipping_country_field').show();
-			$('.woocommerce-shipping-fields__field-wrapper p#shipping_phone_field').show();
-			$('.woocommerce-shipping-fields__field-wrapper p.cvs-info').show();
-			if ($('#ship-to-different-address-checkbox').prop('checked') === false) {
-				$('#ship-to-different-address-checkbox').click();
-			}
-			if ($('input#LogisticsSubType').length) {
-				if ($('input#LogisticsSubType').val() == ecpayShippingInfo.postData.LogisticsSubType) {
-					$('#CVSStoreName_field strong').text($('input#CVSStoreName').val());
-					$('#CVSAddress_field strong').text($('input#CVSAddress').val());
-					$('#CVSTelephone_field strong').text($('input#CVSTelephone').val());
+	ecpayShippingInfo = ry_shipping_params.postData;
+	$('.woocommerce-checkout p.ry-hide').hide();
 
-					if ($('input#CVSStoreName').val() != '') {
-						$('.choose_cvs .show_choose_cvs_name').show();
-						$('.choose_cvs .choose_cvs_name').text($('input#CVSStoreName').val());
+	$(document.body).on('updated_checkout', function (e, data) {
+		if (typeof data !== 'undefined') {
+			if (typeof data.fragments.ecpay_shipping_info !== 'undefined') {
+				ecpayShippingInfo = data.fragments.ecpay_shipping_info.postData;
+				$('.woocommerce-shipping-fields__field-wrapper p:not(.cvs-info)').hide();
+				$('.woocommerce-shipping-fields__field-wrapper p#shipping_first_name_field').show();
+				$('.woocommerce-shipping-fields__field-wrapper p#shipping_last_name_field').show();
+				$('.woocommerce-shipping-fields__field-wrapper p#shipping_country_field').show();
+				$('.woocommerce-shipping-fields__field-wrapper p#shipping_phone_field').show();
+				$('.woocommerce-shipping-fields__field-wrapper p.cvs-info').show();
+				if ($('#ship-to-different-address-checkbox').prop('checked') === false) {
+					$('#ship-to-different-address-checkbox').click();
+				}
+				if ($('input#LogisticsSubType').length) {
+					if ($('input#LogisticsSubType').val() == ecpayShippingInfo.LogisticsSubType) {
+						$('#CVSStoreName_field strong').text($('input#CVSStoreName').val());
+						$('#CVSAddress_field strong').text($('input#CVSAddress').val());
+						$('#CVSTelephone_field strong').text($('input#CVSTelephone').val());
+
+						if ($('input#CVSStoreName').val() != '') {
+							$('.choose_cvs .show_choose_cvs_name').show();
+							$('.choose_cvs .choose_cvs_name').text($('input#CVSStoreName').val());
+						}
+					} else {
+						RYECPayRemoveSendCvs();
 					}
 				} else {
 					RYECPayRemoveSendCvs();
 				}
+			} else if (typeof data.fragments.newebpay_shipping_info !== 'undefined') {
+				$('.woocommerce-shipping-fields__field-wrapper p').hide();
+				if ($('#ship-to-different-address-checkbox').prop('checked') === false) {
+					$('#ship-to-different-address-checkbox').click();
+				}
 			} else {
+				$('.woocommerce-shipping-fields__field-wrapper p.cvs-info').hide();
+				$('.woocommerce-shipping-fields__field-wrapper p:not(.cvs-info)').show();
 				RYECPayRemoveSendCvs();
 			}
-		} else if (typeof data.fragments.newebpay_shipping_info !== 'undefined') {
-			$('.woocommerce-shipping-fields__field-wrapper p').hide();
-			if ($('#ship-to-different-address-checkbox').prop('checked') === false) {
-				$('#ship-to-different-address-checkbox').click();
-			}
-		} else {
-			$('.woocommerce-shipping-fields__field-wrapper p.cvs-info').hide();
-			$('.woocommerce-shipping-fields__field-wrapper p:not(.cvs-info)').show();
-			RYECPayRemoveSendCvs();
 		}
 
 		if (window.sessionStorage.getItem('RYECPayTempCheckoutForm') !== null) {
@@ -66,14 +71,14 @@ jQuery(function ($) {
 			window.sessionStorage.removeItem('RYECPayTempCheckoutForm');
 		}
 	});
-
 });
 
 function RYECPaySendCvsPost() {
+	console.log(ecpayShippingInfo);
 	window.sessionStorage.setItem('RYECPayTempCheckoutForm', JSON.stringify(jQuery('form.checkout').serializeArray()));
-	var html = '<form id="RYECPaySendCvsForm" action="' + ecpayShippingInfo.postUrl + '" method="post">';
-	for (var idx in ecpayShippingInfo.postData) {
-		html += '<input type="hidden" name="' + idx + '" value="' + ecpayShippingInfo.postData[idx] + '">';
+	var html = '<form id="RYECPaySendCvsForm" action="' + ry_shipping_params.postUrl + '" method="post">';
+	for (var idx in ecpayShippingInfo) {
+		html += '<input type="hidden" name="' + idx + '" value="' + ecpayShippingInfo[idx] + '">';
 	}
 	html += '</form>';
 	document.body.innerHTML += html;

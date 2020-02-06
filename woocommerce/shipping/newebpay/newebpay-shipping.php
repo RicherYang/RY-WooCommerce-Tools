@@ -16,6 +16,7 @@ final class RY_NewebPay_Shipping {
 		if( 'yes' === RY_WT::get_option('newebpay_shipping', 'no') ) {
 			add_filter('woocommerce_shipping_methods', [__CLASS__, 'add_method']);
 
+			add_filter('woocommerce_checkout_fields', [__CLASS__, 'add_cvs_info']);
 			add_action('woocommerce_checkout_process', [__CLASS__, 'is_need_checkout_fields']);
 			add_action('woocommerce_review_order_after_shipping', [__CLASS__, 'shipping_choose_cvs']);
 			add_filter('woocommerce_update_order_review_fragments', [__CLASS__, 'shipping_choose_cvs_info']);
@@ -65,6 +66,33 @@ final class RY_NewebPay_Shipping {
 		$shipping_methods = array_merge($shipping_methods, self::$support_methods);
 
 		return $shipping_methods;
+	}
+
+	public static function add_cvs_info($fields) {
+		if( is_checkout()) {
+			$chosen_method = isset(WC()->session->chosen_shipping_methods) ? WC()->session->chosen_shipping_methods : [];
+			$is_support = false;
+			if( count($chosen_method) ) {
+				foreach( self::$support_methods as $method => $method_class ) {
+					if( strpos($chosen_method[0], $method ) === 0 ) {
+						$is_support = true;
+					}
+				}
+			}
+			if( $is_support ) {
+				foreach($fields['shipping'] as $key => $filed ) {
+					if (isset($filed['class'])) {
+						$fields['shipping'][$key]['class'][] = 'ry-hide';
+					} else {
+						if($filed['type'] != 'hidden') {
+							$fields['shipping'][$key]['class'] = ['ry-hide'];
+						}
+					}
+				}
+			}
+		}
+
+		return $fields;
 	}
 
 	public static function is_need_checkout_fields() {
