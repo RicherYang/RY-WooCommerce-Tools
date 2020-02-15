@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the RY WooCommerce Tools plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: RY WooCommerce Tools 1.2.31\n"
+"Project-Id-Version: RY WooCommerce Tools 1.2.33\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/ry-woocommerce-tools\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2020-01-15T22:37:55+08:00\n"
+"POT-Creation-Date: 2020-02-15T10:13:13+08:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.4.0\n"
 "X-Domain: ry-woocommerce-tools\n"
@@ -825,7 +825,7 @@ msgstr ""
 
 #. translators: 1: Store name 2: Store ID
 #: woocommerce/gateways/newebpay/includes/newebpay-gateway-response.php:127
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:284
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:319
 msgid "CVS store %1$s (%2$s)"
 msgstr ""
 
@@ -1032,7 +1032,7 @@ msgid "Disable"
 msgstr ""
 
 #: woocommerce/shipping/ecpay/ecpay-shipping.php:83
-#: woocommerce/shipping/newebpay/newebpay-shipping.php:43
+#: woocommerce/shipping/newebpay/newebpay-shipping.php:44
 msgid "Cvs only can enable with shipping destination not force to billing address."
 msgstr ""
 
@@ -1060,25 +1060,25 @@ msgstr ""
 msgid "ECPay shipping method failed to enable!"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:203
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:206
 #: woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:49
 #: woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:53
 msgid "Phone"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:211
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:214
 #: woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:37
 #: woocommerce/shipping/newebpay/includes/newebpay-shipping-admin.php:43
 msgid "Store Name"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:218
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:221
 #: woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:41
 #: woocommerce/shipping/newebpay/includes/newebpay-shipping-admin.php:47
 msgid "Store Address"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:225
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:228
 #: woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:45
 msgid "Store Telephone"
 msgstr ""
@@ -1230,15 +1230,15 @@ msgstr ""
 msgid "NewebPay shipping CVS"
 msgstr ""
 
-#: woocommerce/shipping/newebpay/newebpay-shipping.php:34
+#: woocommerce/shipping/newebpay/newebpay-shipping.php:35
 msgid "NewebPay shipping options"
 msgstr ""
 
-#: woocommerce/shipping/newebpay/newebpay-shipping.php:55
+#: woocommerce/shipping/newebpay/newebpay-shipping.php:56
 msgid "NewebPay shipping method need enable NewebPay gateway."
 msgstr ""
 
-#: woocommerce/shipping/newebpay/newebpay-shipping.php:59
+#: woocommerce/shipping/newebpay/newebpay-shipping.php:60
 msgid "NewebPay shipping method failed to enable!"
 msgstr ""
 

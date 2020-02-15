@@ -174,8 +174,7 @@ final class RY_ECPay_Shipping {
 				'LogisticsType' => $method_class::$LogisticsType,
 				'LogisticsSubType' => $method_class::$LogisticsSubType . (('C2C' == $CVS_type) ? 'C2C' : ''),
 				'IsCollection' => 'Y',
-				'ServerReplyURL' => esc_url(wc_get_page_permalink('checkout')),
-				'Device' => (int) wp_is_mobile()
+				'ServerReplyURL' => esc_url(wc_get_page_permalink('checkout'))
 			];
 		}
 
