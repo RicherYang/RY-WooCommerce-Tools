@@ -5,7 +5,7 @@ Tags: woocommerce, payment, gateway, shipping, ecpay, newebpay
 Requires at least: 5.0
 Requires PHP: 5.6.20
 Tested up to: 5.3.2
-Stable tag: 1.2.33
+Stable tag: 1.2.34
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.txt
 
@@ -38,6 +38,9 @@ Please visit the [plugin page](https://richer.tw/ry-woocommerce-tools/ " ") with
 4. NewebPay gateway global settings.
 
 == Changelog ==
+
+= 1.2.34 - 2020/02/18 =
+* 更新 - 調整綠界回覆超商資訊時的 action 參數內容。
 
 = 1.2.33 - 2020/02/15 =
 * 更新 - 選擇超商門市顯示模式採用超商系統自動偵測
