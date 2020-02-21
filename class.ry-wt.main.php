@@ -26,7 +26,11 @@ final class RY_WT {
 			if( is_admin() ) {
 				include_once(RY_WT_PLUGIN_DIR . 'class.ry-wt.admin.php');
 			} else {
-				add_filter('woocommerce_order_get_payment_method_title', [__CLASS__, 'unpay_title_notice'], 10, 2);
+				if( apply_filters('ry_show_unpay_title_notice', true) ) {
+					self::add_unpay_title_notice(true);
+					add_filter('woocommerce_email_setup_locale', [__CLASS__, 'remove_unpay_title_notice']);
+					add_filter('woocommerce_email_restore_locale', [__CLASS__, 'add_unpay_title_notice']);
+				}
 			}
 
 			add_action('ry_check_ntp_time', [__CLASS__, 'check_ntp_time']);
@@ -106,6 +110,16 @@ final class RY_WT {
 			$title .= ' ' . __('(not paid)', 'ry-woocommerce-tools');
 		}
 		return $title;
+	}
+
+	public static function remove_unpay_title_notice($status) {
+		remove_filter('woocommerce_order_get_payment_method_title', [__CLASS__, 'unpay_title_notice'], 10, 2);
+		return $status;
+	}
+
+	public static function add_unpay_title_notice($status) {
+		add_filter('woocommerce_order_get_payment_method_title', [__CLASS__, 'unpay_title_notice'], 10, 2);
+		return $status;
 	}
 
 	public static function add_address_format($address_formats) {

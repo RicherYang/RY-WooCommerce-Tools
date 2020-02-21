@@ -47,8 +47,8 @@ jQuery(function ($) {
 		}
 
 		if (window.sessionStorage.getItem('RYECPayTempCheckoutForm') !== null) {
-			var formData = JSON.parse(window.sessionStorage.getItem('RYECPayTempCheckoutForm'));
-			var notSetData = ['payment_method', 'LogisticsSubType', 'CVSStoreID', 'CVSStoreName', 'CVSAddress', 'CVSTelephone'];
+			var formData = JSON.parse(window.sessionStorage.getItem('RYECPayTempCheckoutForm')),
+				notSetData = ['LogisticsSubType', 'CVSStoreID', 'CVSStoreName', 'CVSAddress', 'CVSTelephone', 'terms'];
 			for (var idx in formData) {
 				if (formData[idx].name.substr(0, 1) == '_') {
 				} else if (notSetData.includes(formData[idx].name)) {
@@ -57,11 +57,25 @@ jQuery(function ($) {
 					switch ($item.prop('tagName')) {
 						case 'INPUT':
 							if ($item.attr('type') == 'checkbox') {
-								$item.prop('checked', $item.val() == formData[idx].value);
+								if ($item.prop('checked') === false) {
+									$item.trigger('click');
+								}
+								break;
+							}
+							if ($item.attr('type') == 'radio') {
+								$item = jQuery('[name="' + formData[idx].name + '"][value="' + formData[idx].value + '"]');
+								if ($item.prop('checked') === false) {
+									$item.trigger('click');
+								}
 								break;
 							}
 						case 'TEXTAREA':
+						case 'SELECT':
+							var oldVal = $item.val();
 							$item.val(formData[idx].value);
+							if (oldVal != formData[idx].value) {
+								$item.trigger('change');
+							}
 							break;
 						default:
 							break;
@@ -74,7 +88,6 @@ jQuery(function ($) {
 });
 
 function RYECPaySendCvsPost() {
-	console.log(ecpayShippingInfo);
 	window.sessionStorage.setItem('RYECPayTempCheckoutForm', JSON.stringify(jQuery('form.checkout').serializeArray()));
 	var html = '<form id="RYECPaySendCvsForm" action="' + ry_shipping_params.postUrl + '" method="post">';
 	for (var idx in ecpayShippingInfo) {

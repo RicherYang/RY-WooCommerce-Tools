@@ -12,14 +12,24 @@ if( !class_exists('RY_ECPay') ) {
 			return substr($trade_no, 0, 20);
 		}
 
-		protected static function add_check_value($args, $HashKey, $HashIV, $hash_algo) {
-			$args['CheckMacValue'] = self::generate_check_value($args, $HashKey, $HashIV, $hash_algo);
+		protected static function add_check_value($args, $HashKey, $HashIV, $hash_algo, $skip_args = []) {
+			$args['CheckMacValue'] = self::generate_check_value($args, $HashKey, $HashIV, $hash_algo, $skip_args);
 			return $args;
 		}
 
-		protected static function generate_check_value($args, $HashKey, $HashIV, $hash_algo) {
-			if( isset($args['CheckMacValue']) ) {
-				unset($args['CheckMacValue']);
+		protected static function urlencode($string) {
+			$string = str_replace(
+				['%2D', '%2d', '%5F', '%5f', '%2E', '%2e', '%2A', '%2a', '%21', '%28', '%29'],
+				[  '-',   '-',   '_',   '_',    '.',  '.',   '*',   '*',   '!',   '(',   ')'],
+				urlencode($string)
+			);
+			return $string;
+		}
+
+		protected static function generate_check_value($args, $HashKey, $HashIV, $hash_algo, $skip_args = []) {
+			$skip_args[] = 'CheckMacValue';
+			foreach( $skip_args as $key ) {
+				unset($args[$key]);
 			}
 
 			ksort($args, SORT_STRING | SORT_FLAG_CASE);
@@ -32,16 +42,26 @@ if( !class_exists('RY_ECPay') ) {
 			$args_string[] = 'HashIV=' . $HashIV;
 
 			$args_string = implode('&', $args_string);
-			$args_string = strtolower(urlencode($args_string));
-			$args_string = str_replace(
-				['%2d', '%5f', '%2e', '%21', '%2a', '%28', '%29'],
-				['-', '_', '.', '!', '*', '(', ')'],
-				$args_string
-			);
+			$args_string = self::urlencode($args_string);
+			$args_string = strtolower($args_string);
 			$check_value = hash($hash_algo, $args_string);
 			$check_value = strtoupper($check_value);
 
 			return $check_value;
+		}
+
+		protected static function link_server($post_url, $args) {
+			wc_set_time_limit(40);
+
+			$send_body = [];
+			foreach($args as $key => $value) {
+				$send_body[] = $key . '=' . $value;
+			}
+
+			return wp_remote_post($post_url, [
+				'timeout' => 20,
+				'body' => implode('&', $send_body)
+			]);
 		}
 
 		protected static function get_check_value($ipn_info) {

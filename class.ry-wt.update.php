@@ -155,8 +155,8 @@ final class RY_WT_update {
 			RY_WT::update_option('version', '1.1.2');
 		}
 
-		if( version_compare($now_version, '1.2.34', '<' ) ) {
-			RY_WT::update_option('version', '1.2.34');
+		if( version_compare($now_version, '1.2.38', '<' ) ) {
+			RY_WT::update_option('version', '1.2.38');
 		}
 	}
 }
