@@ -37,6 +37,7 @@ final class RY_Shipping {
 
 	public static function add_order_is_paid_statuses($statuses) {
 		$statuses[] = 'ry-at-cvs';
+		$statuses[] = 'ry-out-cvs';
 
 		return $statuses;
 	}
