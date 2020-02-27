@@ -262,31 +262,33 @@ final class RY_WT {
 	}
 
 	public static function check_ntp_time() {
-		if( function_exists('stream_socket_client') ) {
-			$socket = stream_socket_client('udp://time.google.com:123', $errno, $errstr);
-			if( $socket ) {
-				fwrite($socket, chr(0x1B) . str_repeat(chr(0x00), 47));
-				$response = fread($socket, 48);
-				fclose($socket);
-				if( !empty($response) ) {
-					$data = @unpack('N12', $response);
-					if( is_array($data) && isset($data[9]) ) {
-						$timestamp = sprintf('%u', $data[9]) - 2208988800;
-						$time_diff = current_time('timestamp', true) - $timestamp;
-						if( abs($time_diff) > MINUTE_IN_SECONDS ) {
-							self::update_option('ntp_time_error', true);
-						}
-					}
-				}
+		if( !function_exists('stream_socket_client') ) {
+			wp_clear_scheduled_hook('ry_check_ntp_time');
+			return;
+		}
+
+		$socket = stream_socket_client('udp://time.google.com:123', $errno, $errstr);
+		if( $socket ) {
+			fwrite($socket, chr(0x1B) . str_repeat(chr(0x00), 47));
+			$response = fread($socket, 48);
+			fclose($socket);
+			if( empty($response) ) {
+				return;
+			}
+
+			$data = @unpack('N12', $response);
+			if( is_array($data) && isset($data[9]) ) {
+				$timestamp = sprintf('%u', $data[9]) - 2208988800;
+				$time_diff = current_time('timestamp', true) - $timestamp;
+				self::update_option('ntp_time_error', abs($time_diff) > MINUTE_IN_SECONDS);
+
+				return $time_diff;
 			}
 		}
 	}
 
 	public static function ntp_time_error() {
-		$message = sprintf(
-			__('Please check your server time setting. Server time is differs from Google Public NTP  more than one minute.', 'ry-woocommerce-tools')
-		);
-		printf('<div class="error"><p>%s</p></div>', $message);
+		printf('<div class="error is-dismissible"><p>%s</p></div>', __('Please check your server time setting. Server time is differs from Google Public NTP more than one minute.', 'ry-woocommerce-tools'));
 	}
 
 	public static function get_option($option, $default = false) {
@@ -309,7 +311,7 @@ final class RY_WT {
 	}
 
 	public static function plugin_deactivation( ) {
-		wp_clear_scheduled_hook('ry_check_ntp_time');
+		wp_unschedule_hook('ry_check_ntp_time');
 	}
 
 	// just for i18n use

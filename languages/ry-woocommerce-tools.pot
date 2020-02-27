@@ -2,20 +2,21 @@
 # This file is distributed under the same license as the RY WooCommerce Tools plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: RY WooCommerce Tools 1.2.34\n"
+"Project-Id-Version: RY WooCommerce Tools 1.3.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/ry-woocommerce-tools\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2020-02-18T19:18:35+08:00\n"
+"POT-Creation-Date: 2020-02-27T12:22:20+08:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.4.0\n"
 "X-Domain: ry-woocommerce-tools\n"
 
 #. Plugin Name of the plugin
-#: class.ry-wt.main.php:245
+#: class.ry-wt.main.php:259
+#: woocommerce/admin/view/html-setting-tools.php:1
 msgid "RY WooCommerce Tools"
 msgstr ""
 
@@ -35,239 +36,244 @@ msgstr ""
 msgid "https://richer.tw/"
 msgstr ""
 
-#: class.ry-wt.admin.php:32
+#: class.ry-wt.admin.php:35
+#: woocommerce/admin/view/html-setting-tools.php:1
+msgid "Tools"
+msgstr ""
+
+#: class.ry-wt.admin.php:36
 #: woocommerce/settings/settings-ry-tools-pro.php:6
 msgid "Pro version"
 msgstr ""
 
-#: class.ry-wt.main.php:106
+#: class.ry-wt.main.php:110
 msgid "(not paid)"
 msgstr ""
 
-#: class.ry-wt.main.php:211
+#: class.ry-wt.main.php:225
 msgid "required"
 msgstr ""
 
 #. translators: %s: Name of this plugin
-#: class.ry-wt.main.php:244
+#: class.ry-wt.main.php:258
 msgid "<strong>%s</strong> is inactive. It require WooCommerce version 3.0.0 or newer."
 msgstr ""
 
-#: class.ry-wt.main.php:273
-msgid "Please check your server time setting. Server time is differs from Google Public NTP  more than one minute."
-msgstr ""
-
-#: class.ry-wt.main.php:303
-msgctxt "Bank code"
-msgid "004"
-msgstr ""
-
-#: class.ry-wt.main.php:304
-msgctxt "Bank code"
-msgid "005"
-msgstr ""
-
-#: class.ry-wt.main.php:305
-msgctxt "Bank code"
-msgid "006"
-msgstr ""
-
-#: class.ry-wt.main.php:306
-msgctxt "Bank code"
-msgid "007"
-msgstr ""
-
-#: class.ry-wt.main.php:307
-msgctxt "Bank code"
-msgid "008"
-msgstr ""
-
-#: class.ry-wt.main.php:308
-msgctxt "Bank code"
-msgid "009"
-msgstr ""
-
-#: class.ry-wt.main.php:309
-msgctxt "Bank code"
-msgid "011"
-msgstr ""
-
-#: class.ry-wt.main.php:310
-msgctxt "Bank code"
-msgid "012"
-msgstr ""
-
-#: class.ry-wt.main.php:311
-msgctxt "Bank code"
-msgid "013"
-msgstr ""
-
-#: class.ry-wt.main.php:312
-msgctxt "Bank code"
-msgid "016"
-msgstr ""
-
-#: class.ry-wt.main.php:313
-msgctxt "Bank code"
-msgid "017"
-msgstr ""
-
-#: class.ry-wt.main.php:314
-msgctxt "Bank code"
-msgid "018"
-msgstr ""
-
-#: class.ry-wt.main.php:315
-msgctxt "Bank code"
-msgid "021"
-msgstr ""
-
-#: class.ry-wt.main.php:316
-msgctxt "Bank code"
-msgid "022"
-msgstr ""
-
-#: class.ry-wt.main.php:317
-msgctxt "Bank code"
-msgid "025"
-msgstr ""
-
-#: class.ry-wt.main.php:318
-msgctxt "Bank code"
-msgid "039"
+#: class.ry-wt.main.php:291
+msgid "Please check your server time setting. Server time is differs from Google Public NTP more than one minute."
 msgstr ""
 
 #: class.ry-wt.main.php:319
 msgctxt "Bank code"
-msgid "048"
+msgid "004"
 msgstr ""
 
 #: class.ry-wt.main.php:320
 msgctxt "Bank code"
-msgid "050"
+msgid "005"
 msgstr ""
 
 #: class.ry-wt.main.php:321
 msgctxt "Bank code"
-msgid "052"
+msgid "006"
 msgstr ""
 
 #: class.ry-wt.main.php:322
 msgctxt "Bank code"
-msgid "053"
+msgid "007"
 msgstr ""
 
 #: class.ry-wt.main.php:323
 msgctxt "Bank code"
-msgid "054"
+msgid "008"
 msgstr ""
 
 #: class.ry-wt.main.php:324
 msgctxt "Bank code"
-msgid "072"
+msgid "009"
 msgstr ""
 
 #: class.ry-wt.main.php:325
 msgctxt "Bank code"
-msgid "075"
+msgid "011"
 msgstr ""
 
 #: class.ry-wt.main.php:326
 msgctxt "Bank code"
-msgid "081"
+msgid "012"
 msgstr ""
 
 #: class.ry-wt.main.php:327
 msgctxt "Bank code"
-msgid "082"
+msgid "013"
 msgstr ""
 
 #: class.ry-wt.main.php:328
 msgctxt "Bank code"
-msgid "101"
+msgid "016"
 msgstr ""
 
 #: class.ry-wt.main.php:329
 msgctxt "Bank code"
-msgid "102"
+msgid "017"
 msgstr ""
 
 #: class.ry-wt.main.php:330
 msgctxt "Bank code"
-msgid "103"
+msgid "018"
 msgstr ""
 
 #: class.ry-wt.main.php:331
 msgctxt "Bank code"
-msgid "108"
+msgid "021"
 msgstr ""
 
 #: class.ry-wt.main.php:332
 msgctxt "Bank code"
-msgid "118"
+msgid "022"
 msgstr ""
 
 #: class.ry-wt.main.php:333
 msgctxt "Bank code"
-msgid "147"
+msgid "025"
 msgstr ""
 
 #: class.ry-wt.main.php:334
 msgctxt "Bank code"
-msgid "700"
+msgid "039"
 msgstr ""
 
 #: class.ry-wt.main.php:335
 msgctxt "Bank code"
-msgid "803"
+msgid "048"
 msgstr ""
 
 #: class.ry-wt.main.php:336
 msgctxt "Bank code"
-msgid "805"
+msgid "050"
 msgstr ""
 
 #: class.ry-wt.main.php:337
 msgctxt "Bank code"
-msgid "806"
+msgid "052"
 msgstr ""
 
 #: class.ry-wt.main.php:338
 msgctxt "Bank code"
-msgid "807"
+msgid "053"
 msgstr ""
 
 #: class.ry-wt.main.php:339
 msgctxt "Bank code"
-msgid "808"
+msgid "054"
 msgstr ""
 
 #: class.ry-wt.main.php:340
 msgctxt "Bank code"
-msgid "809"
+msgid "072"
 msgstr ""
 
 #: class.ry-wt.main.php:341
 msgctxt "Bank code"
-msgid "810"
+msgid "075"
 msgstr ""
 
 #: class.ry-wt.main.php:342
 msgctxt "Bank code"
-msgid "812"
+msgid "081"
 msgstr ""
 
 #: class.ry-wt.main.php:343
 msgctxt "Bank code"
-msgid "815"
+msgid "082"
 msgstr ""
 
 #: class.ry-wt.main.php:344
 msgctxt "Bank code"
-msgid "816"
+msgid "101"
 msgstr ""
 
 #: class.ry-wt.main.php:345
+msgctxt "Bank code"
+msgid "102"
+msgstr ""
+
+#: class.ry-wt.main.php:346
+msgctxt "Bank code"
+msgid "103"
+msgstr ""
+
+#: class.ry-wt.main.php:347
+msgctxt "Bank code"
+msgid "108"
+msgstr ""
+
+#: class.ry-wt.main.php:348
+msgctxt "Bank code"
+msgid "118"
+msgstr ""
+
+#: class.ry-wt.main.php:349
+msgctxt "Bank code"
+msgid "147"
+msgstr ""
+
+#: class.ry-wt.main.php:350
+msgctxt "Bank code"
+msgid "700"
+msgstr ""
+
+#: class.ry-wt.main.php:351
+msgctxt "Bank code"
+msgid "803"
+msgstr ""
+
+#: class.ry-wt.main.php:352
+msgctxt "Bank code"
+msgid "805"
+msgstr ""
+
+#: class.ry-wt.main.php:353
+msgctxt "Bank code"
+msgid "806"
+msgstr ""
+
+#: class.ry-wt.main.php:354
+msgctxt "Bank code"
+msgid "807"
+msgstr ""
+
+#: class.ry-wt.main.php:355
+msgctxt "Bank code"
+msgid "808"
+msgstr ""
+
+#: class.ry-wt.main.php:356
+msgctxt "Bank code"
+msgid "809"
+msgstr ""
+
+#: class.ry-wt.main.php:357
+msgctxt "Bank code"
+msgid "810"
+msgstr ""
+
+#: class.ry-wt.main.php:358
+msgctxt "Bank code"
+msgid "812"
+msgstr ""
+
+#: class.ry-wt.main.php:359
+msgctxt "Bank code"
+msgid "815"
+msgstr ""
+
+#: class.ry-wt.main.php:360
+msgctxt "Bank code"
+msgid "816"
+msgstr ""
+
+#: class.ry-wt.main.php:361
 msgctxt "Bank code"
 msgid "822"
 msgstr ""
@@ -443,6 +449,17 @@ msgstr ""
 
 #: woocommerce/admin/meta-boxes/newebpay-shipping-meta-box.php:36
 msgid "NewebPay shipping ID"
+msgstr ""
+
+#. translators: %d: differ time (second)
+#: woocommerce/admin/view/html-setting-tools.php:6
+msgid "Server time and Google Public NTP differ is %d second"
+msgid_plural "Server time and Google Public NTP differ is %d seconds"
+msgstr[0] ""
+msgstr[1] ""
+
+#: woocommerce/admin/view/html-setting-tools.php:10
+msgid "Check server time"
 msgstr ""
 
 #: woocommerce/emails/ecpay-shipping-customer-cvs-store.php:10
@@ -1102,11 +1119,11 @@ msgid "Resend at cvs notification"
 msgstr ""
 
 #. translators: %s Error messade
-#: woocommerce/shipping/ecpay/includes/ecpay-shipping-api.php:165
+#: woocommerce/shipping/ecpay/includes/ecpay-shipping-api.php:150
 msgid "Get shipping code error: %s"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/includes/ecpay-shipping-api.php:239
+#: woocommerce/shipping/ecpay/includes/ecpay-shipping-api.php:240
 msgid "Error with connect to ECPay server."
 msgstr ""
 
@@ -1243,26 +1260,26 @@ msgid "NewebPay shipping method failed to enable!"
 msgstr ""
 
 #: woocommerce/shipping/ry-base.php:25
-#: woocommerce/shipping/ry-base.php:46
+#: woocommerce/shipping/ry-base.php:47
 msgctxt "Order status"
 msgid "Wait pickup (cvs)"
 msgstr ""
 
 #: woocommerce/shipping/ry-base.php:26
-#: woocommerce/shipping/ry-base.php:55
+#: woocommerce/shipping/ry-base.php:56
 msgctxt "Order status"
 msgid "Overdue return (cvs)"
 msgstr ""
 
 #. translators: %s: number of orders
-#: woocommerce/shipping/ry-base.php:52
+#: woocommerce/shipping/ry-base.php:53
 msgid "Wait pickup (cvs) <span class=\"count\">(%s)</span>"
 msgid_plural "Wait pickup (cvs) <span class=\"count\">(%s)</span>"
 msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: number of orders
-#: woocommerce/shipping/ry-base.php:61
+#: woocommerce/shipping/ry-base.php:62
 msgid "Overdue return (cvs) <span class=\"count\">(%s)</span>"
 msgid_plural "Overdue return (cvs) <span class=\"count\">(%s)</span>"
 msgstr[0] ""

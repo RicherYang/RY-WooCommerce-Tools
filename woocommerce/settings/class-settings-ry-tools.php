@@ -30,7 +30,7 @@ if( !class_exists('WC_Settings_RY_Tools', false) ) {
 					$settings = $this->get_settings($current_section);
 					WC_Admin_Settings::output_fields($settings);
 				} else {
-					do_action('ry_setting_section_ouput_hmtl');
+					do_action('ry_setting_section_ouput_' . $current_section);
 				}
 			}
 		}

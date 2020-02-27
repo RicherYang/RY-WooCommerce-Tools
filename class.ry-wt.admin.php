@@ -13,6 +13,9 @@ final class RY_WT_admin {
 			add_filter('woocommerce_get_settings_pages', [__CLASS__, 'get_settings_page']);
 			
 			add_filter('woocommerce_get_sections_rytools', [__CLASS__, 'add_sections'], 11);
+
+			add_filter('ry_setting_section_tools', '__return_false');
+			add_action('ry_setting_section_ouput_tools', [__CLASS__, 'output_tools']);
 		}
 	}
 
@@ -29,9 +32,26 @@ final class RY_WT_admin {
 	}
 
 	public static function add_sections($sections) {
+		$sections['tools'] = __('Tools', 'ry-woocommerce-tools');
 		$sections['pro_info'] = __('Pro version', 'ry-woocommerce-tools');
 
 		return $sections;
+	}
+
+	public static function output_tools() {
+		global $hide_save_button;
+
+		$hide_save_button = true;
+
+		if( isset($_POST['ryt_check_time']) && $_POST['ryt_check_time'] == 'ryt_check_time' ) {
+			$time_diff = RY_WT::check_ntp_time();
+
+			if( RY_WT::get_option('ntp_time_error', false) ) {
+				RY_WT::ntp_time_error();
+			}
+		}
+
+		include RY_WT_PLUGIN_DIR . 'woocommerce/admin/view/html-setting-tools.php';
 	}
 }
 
