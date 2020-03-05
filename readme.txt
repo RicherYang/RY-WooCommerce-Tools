@@ -5,7 +5,7 @@ Tags: woocommerce, payment, gateway, shipping, ecpay, newebpay
 Requires at least: 5.0
 Requires PHP: 5.6.20
 Tested up to: 5.3.2
-Stable tag: 1.3.0
+Stable tag: 1.3.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.txt
 
@@ -39,7 +39,10 @@ Please visit the [plugin page](https://richer.tw/ry-woocommerce-tools/ " ") with
 
 == Changelog ==
 
-= 1.3.0 - 2019/07/15 =
+= 1.3.1 - 2020/03/05 =
+* 更新 - 修正結帳運送行動電話必填驗證錯誤
+
+= 1.3.0 - 2020/02/27 =
 * 新增 - 手動比對 Google Public NTP 時間
 
 

@@ -283,8 +283,6 @@ final class RY_ECPay_Shipping {
 
 		if( $used_cvs ) {
 			add_filter('woocommerce_checkout_fields', [__CLASS__, 'fix_add_cvs_info'], 9999);
-		} else {
-			add_filter('woocommerce_checkout_fields', [__CLASS__, 'fix_noin_add_cvs_info'], 9999);
 		}
 	}
 
@@ -298,11 +296,6 @@ final class RY_ECPay_Shipping {
 
 		$fields['shipping']['shipping_phone']['required'] = true;
 		$fields['shipping']['CVSStoreName']['required'] = true;
-		return $fields;
-	}
-
-	public static function fix_noin_add_cvs_info($fields) {
-		$fields['shipping']['shipping_phone']['required'] = false;
 		return $fields;
 	}
 
