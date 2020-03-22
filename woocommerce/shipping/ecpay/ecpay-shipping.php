@@ -282,11 +282,13 @@ final class RY_ECPay_Shipping {
 		}
 
 		if( $used_cvs ) {
-			add_filter('woocommerce_checkout_fields', [__CLASS__, 'fix_add_cvs_info'], 9999);
+			add_filter('woocommerce_checkout_fields', [__CLASS__, 'fix_use_cvs_info'], 9999);
+		} else {
+			add_filter('woocommerce_checkout_fields', [__CLASS__, 'fix_not_use_cvs_info'], 9999);
 		}
 	}
 
-	public static function fix_add_cvs_info($fields) {
+	public static function fix_use_cvs_info($fields) {
 		$fields['shipping']['shipping_country']['required'] = false;
 		$fields['shipping']['shipping_address_1']['required'] = false;
 		$fields['shipping']['shipping_address_2']['required'] = false;
@@ -296,6 +298,14 @@ final class RY_ECPay_Shipping {
 
 		$fields['shipping']['shipping_phone']['required'] = true;
 		$fields['shipping']['CVSStoreName']['required'] = true;
+		return $fields;
+	}
+
+	public static function fix_not_use_cvs_info($fields) {
+		if( 'no' == RY_WT::get_option('ecpay_keep_shipping_phone', 'no') ) {
+			$fields['shipping']['shipping_phone']['required'] = false;
+		}
+
 		return $fields;
 	}
 
