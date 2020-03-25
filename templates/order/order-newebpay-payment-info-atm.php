@@ -11,37 +11,55 @@
  * @version 1.2.1
  */
 
-defined('RY_WT_VERSION') OR exit('No direct script access allowed');
+defined('RY_WT_VERSION') or exit('No direct script access allowed');
 
-if( $order->get_payment_method() != 'ry_newebpay_atm' ) {
-	return;
+if ($order->get_payment_method() != 'ry_newebpay_atm') {
+    return;
 }
 
-if( $order->get_meta('_newebpay_payment_type') != 'VACC' ) {
-	return;
+if ($order->get_meta('_newebpay_payment_type') != 'VACC') {
+    return;
 }
 ?>
 <section class="woocommerce-order-details">
-	<h2 class="woocommerce-order-details__title"><?=__('Payment details', 'ry-woocommerce-tools') ?></h2>
-	<table class="woocommerce-table woocommerce-table--payment-details payment_details">
-		<tbody>
-			<tr>
-				<td><?=__('Bank', 'ry-woocommerce-tools') ?></td>
-				<td><?=_x($order->get_meta('_newebpay_atm_BankCode'), 'Bank code', 'ry-woocommerce-tools') ?></td>
-			</tr>
-			<tr>
-				<td><?=__('Bank code', 'ry-woocommerce-tools') ?></td>
-				<td><?=$order->get_meta('_newebpay_atm_BankCode')  ?></td>
-			</tr>
-			<tr>
-				<td><?=__('ATM Bank account', 'ry-woocommerce-tools') ?></td>
-				<td><?=wordwrap($order->get_meta('_newebpay_atm_vAccount'), 4, '<span> </span>', true) ?></td>
-			</tr>
-			<tr>
-				<td><?=__('Payment deadline', 'ry-woocommerce-tools') ?></td>
-				<?php $expireDate = wc_string_to_datetime($order->get_meta('_newebpay_atm_ExpireDate')); ?>
-				<td><?=$expireDate->date_i18n(wc_date_format()); ?></td>
-			</tr>
-		</tbody>
-	</table>
+    <h2 class="woocommerce-order-details__title">
+        <?=__('Payment details', 'ry-woocommerce-tools') ?>
+    </h2>
+    <table class="woocommerce-table woocommerce-table--payment-details payment_details">
+        <tbody>
+            <tr>
+                <td>
+                    <?=__('Bank', 'ry-woocommerce-tools') ?>
+                </td>
+                <td>
+                    <?=_x($order->get_meta('_newebpay_atm_BankCode'), 'Bank code', 'ry-woocommerce-tools') ?>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <?=__('Bank code', 'ry-woocommerce-tools') ?>
+                </td>
+                <td>
+                    <?=$order->get_meta('_newebpay_atm_BankCode')  ?>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <?=__('ATM Bank account', 'ry-woocommerce-tools') ?>
+                </td>
+                <td>
+                    <?=wordwrap($order->get_meta('_newebpay_atm_vAccount'), 4, '<span> </span>', true) ?>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <?=__('Payment deadline', 'ry-woocommerce-tools') ?>
+                </td>
+                <td>
+                    <?php $expireDate = wc_string_to_datetime($order->get_meta('_newebpay_atm_ExpireDate')); ?>
+                    <?=$expireDate->date_i18n(wc_date_format()); ?>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </section>
