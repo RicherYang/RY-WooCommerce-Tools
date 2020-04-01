@@ -15,7 +15,6 @@ class RY_ECPay_Shipping_CVS extends WC_Shipping_Method
         $this->weight_plus_cost = $this->get_option('weight_plus_cost', 0);
 
         add_action('woocommerce_update_options_shipping_' . $this->id, [$this, 'process_admin_options']);
-        add_action('woocommerce_update_order', [$this, 'save_order_update']);
 
         add_action('admin_footer', [$this, 'enqueue_admin_js'], 10);
     }
@@ -177,30 +176,6 @@ class RY_ECPay_Shipping_CVS extends WC_Shipping_Method
     });
 });'
                 );
-            }
-        }
-    }
-
-    public function save_order_update($order_id)
-    {
-        if ($order = wc_get_order($order_id)) {
-            foreach ($order->get_items('shipping') as $item_id => $item) {
-                $shipping_method = RY_ECPay_Shipping::get_order_support_shipping($item);
-                if ($shipping_method == $this->id) {
-                    if (isset($_POST['_shipping_phone'])) {
-                        $order->update_meta_data('_shipping_cvs_store_ID', wc_clean(wp_unslash($_POST['_shipping_cvs_store_ID'])));
-                        $order->update_meta_data('_shipping_cvs_store_name', wc_clean(wp_unslash($_POST['_shipping_cvs_store_name'])));
-                        $order->update_meta_data('_shipping_cvs_store_address', wc_clean(wp_unslash($_POST['_shipping_cvs_store_address'])));
-                        $order->update_meta_data('_shipping_cvs_store_telephone', wc_clean(wp_unslash($_POST['_shipping_cvs_store_telephone'])));
-                        $order->update_meta_data('_shipping_phone', wc_clean(wp_unslash($_POST['_shipping_phone'])));
-                        $order->save_meta_data();
-
-                        // I know this is not the bast way to do thios thing
-                        $shipping_address = $order->get_address('shipping');
-                        update_post_meta($order_id, '_shipping_address_1', wc_clean(wp_unslash($_POST['_shipping_cvs_store_address'])));
-                        update_post_meta($order_id, '_shipping_address_index', implode(' ', $shipping_address));
-                    }
-                }
             }
         }
     }

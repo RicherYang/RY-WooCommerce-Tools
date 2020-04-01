@@ -40,7 +40,6 @@ class RY_NewebPay_Shipping_CVS extends WC_Shipping_Method
         add_filter('woocommerce_cod_process_payment_order_status', [$this, 'change_cod_order_status'], 10, 2);
         add_filter('woocommerce_payment_successful_result', [$this, 'change_cod_redirect'], 10, 2);
         add_action('woocommerce_receipt_cod', [__CLASS__, 'cod_receipt_page']);
-        add_action('woocommerce_update_order', [$this, 'save_order_update']);
     }
 
 
@@ -253,29 +252,6 @@ class RY_NewebPay_Shipping_CVS extends WC_Shipping_Method
     {
         if ($order = wc_get_order($order_id)) {
             RY_NewebPay_Gateway_Api::checkout_form($order, wc_get_payment_gateway_by_order($order));
-        }
-    }
-
-    public function save_order_update($order_id)
-    {
-        if ($order = wc_get_order($order_id)) {
-            foreach ($order->get_items('shipping') as $item_id => $item) {
-                $shipping_method = RY_NewebPay_Shipping::get_order_support_shipping($item);
-                if ($shipping_method == $this->id) {
-                    if (isset($_POST['_shipping_phone'])) {
-                        $order->update_meta_data('_shipping_cvs_store_ID', wc_clean(wp_unslash($_POST['_shipping_cvs_store_ID'])));
-                        $order->update_meta_data('_shipping_cvs_store_name', wc_clean(wp_unslash($_POST['_shipping_cvs_store_name'])));
-                        $order->update_meta_data('_shipping_cvs_store_address', wc_clean(wp_unslash($_POST['_shipping_cvs_store_address'])));
-                        $order->update_meta_data('_shipping_phone', wc_clean(wp_unslash($_POST['_shipping_phone'])));
-                        $order->save_meta_data();
-
-                        // I know this is not the bast way to do thios thing
-                        $shipping_address = $order->get_address('shipping');
-                        update_post_meta($order_id, '_shipping_address_1', wc_clean(wp_unslash($_POST['_shipping_cvs_store_address'])));
-                        update_post_meta($order_id, '_shipping_address_index', implode(' ', $shipping_address));
-                    }
-                }
-            }
         }
     }
 }

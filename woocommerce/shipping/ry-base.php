@@ -15,6 +15,7 @@ final class RY_Shipping
 
         if (is_admin()) {
             add_action('admin_enqueue_scripts', [__CLASS__, 'add_scripts']);
+            add_action('woocommerce_update_order', [__CLASS__, 'save_order_update']);
 
             add_filter('woocommerce_shipping_address_map_url_parts', [__CLASS__, 'fix_cvs_map_address']);
             add_filter('woocommerce_admin_order_actions', [__CLASS__, 'add_admin_order_actions'], 10, 2);
@@ -141,6 +142,41 @@ final class RY_Shipping
         if (in_array($screen_id, ['shop_order', 'edit-shop_order'])) {
             wp_enqueue_style('ry-shipping-admin-style', RY_WT_PLUGIN_URL . 'style/admin/ry_shipping.css', [], RY_WT_VERSION);
             wp_enqueue_script('ry-shipping-admin', RY_WT_PLUGIN_URL . 'style/js/admin/ry_shipping.js', ['jquery'], RY_WT_VERSION);
+        }
+    }
+
+    public static function save_order_update($order_id)
+    {
+        if ($order = wc_get_order($order_id)) {
+            foreach ($order->get_items('shipping') as $item_id => $item) {
+                $update = false;
+                if (class_exists('RY_ECPay_Shipping')) {
+                    if (RY_ECPay_Shipping::get_order_support_shipping($item) !== false) {
+                        $update = true;
+                    }
+                }
+                if (class_exists('RY_NewebPay_Shipping')) {
+                    if (RY_NewebPay_Shipping::get_order_support_shipping($item) !== false) {
+                        $update = true;
+                    }
+                }
+                if ($update) {
+                    if (isset($_POST['_shipping_phone'])) {
+                        file_put_contents('D:/123/123.txt', var_export('update'), FILE_APPEND);
+                        $order->update_meta_data('_shipping_cvs_store_ID', wc_clean(wp_unslash($_POST['_shipping_cvs_store_ID'])));
+                        $order->update_meta_data('_shipping_cvs_store_name', wc_clean(wp_unslash($_POST['_shipping_cvs_store_name'])));
+                        $order->update_meta_data('_shipping_cvs_store_address', wc_clean(wp_unslash($_POST['_shipping_cvs_store_address'])));
+                        $order->update_meta_data('_shipping_cvs_store_telephone', wc_clean(wp_unslash($_POST['_shipping_cvs_store_telephone'])));
+                        $order->update_meta_data('_shipping_phone', wc_clean(wp_unslash($_POST['_shipping_phone'])));
+                        $order->save_meta_data();
+
+                        // I know this is not the bast way to do thios thing
+                        $shipping_address = $order->get_address('shipping');
+                        update_post_meta($order_id, '_shipping_address_1', wc_clean(wp_unslash($_POST['_shipping_cvs_store_address'])));
+                        update_post_meta($order_id, '_shipping_address_index', implode(' ', $shipping_address));
+                    }
+                }
+            }
         }
     }
 
