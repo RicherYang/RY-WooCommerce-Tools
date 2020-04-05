@@ -5,13 +5,56 @@ class RY_ECPay_Shipping_Response extends RY_ECPay_Shipping_Api
 {
     public static function init()
     {
+        add_action('woocommerce_api_ry_ecpay_map_callback', [__CLASS__, 'map_redirect']);
         add_action('woocommerce_api_ry_ecpay_shipping_callback', [__CLASS__, 'check_shipping_callback']);
         add_action('valid-shipping-request', [__CLASS__, 'shipping_callback']);
     }
 
+    public static function map_redirect()
+    {
+        $cvs_info = [];
+        if (!empty($_POST)) {
+            $ipn_info = wp_unslash($_POST);
+            foreach (['LogisticsSubType', 'CVSStoreID', 'CVSStoreName', 'CVSAddress', 'CVSTelephone', 'CVSOutSide'] as $key) {
+                if (isset($ipn_info[$key])) {
+                    $cvs_info[$key] = $ipn_info[$key];
+                }
+            }
+        }
+
+        if (count($cvs_info) == 6) {
+            if (isset($ipn_info['ExtraData'])) {
+                if (substr($ipn_info['ExtraData'], 0, 2) == 'ry') {
+                    $order_ID = (int) substr($ipn_info['ExtraData'], 2);
+                    $order = wc_get_order($order_ID);
+                    if ($order) {
+                        RY_ECPay_Shipping::save_cvs_info($order, $cvs_info);
+                        $order->save();
+                        wp_redirect(admin_url('post.php?post=' . $order->get_id() . '&action=edit'));
+                        die();
+                    }
+                }
+            }
+
+            $html = '<!DOCTYPE html><head><meta charset="' . get_bloginfo('charset', 'display') . '"></head><title>AutoSubmitForm</title><body>';
+            $html .= '<form method="post" id="ry-ecpay-map-redirect" action="' . esc_url(wc_get_page_permalink('checkout')) . '" style="display:none;">';
+            foreach ($cvs_info as $key => $value) {
+                $html .= '<input type="hidden" name="' . esc_attr($key) . '" value="' . esc_attr($value) . '">';
+            }
+            $html .= '</form>';
+            $html .= '<script>document.getElementById("ry-ecpay-map-redirect").submit();</script>';
+            $html .= '</body></html>';
+
+            echo $html;
+            die();
+        }
+
+        wp_redirect(wc_get_page_permalink('checkout'));
+        die();
+    }
+
     public static function check_shipping_callback()
     {
-        $ipn_info = wp_unslash($_POST);
         if (!empty($_POST)) {
             $ipn_info = wp_unslash($_POST);
             if (self::ipn_request_is_valid($ipn_info)) {

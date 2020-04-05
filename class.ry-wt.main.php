@@ -22,10 +22,6 @@ final class RY_WT
 
             self::fixed_old_function();
 
-            if (apply_filters('ry_fix_samesite_cookie', true)) {
-                include_once(RY_WT_PLUGIN_DIR . 'includes/fix-samesite-cookie.php');
-            }
-
             include_once(RY_WT_PLUGIN_DIR . 'class.ry-wt.update.php');
             RY_WT_update::update();
 
