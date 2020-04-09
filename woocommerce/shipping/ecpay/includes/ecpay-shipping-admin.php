@@ -62,21 +62,22 @@ class RY_ECPay_Shipping_admin
 
     public static function check_can_enable($instance_id, $method_id, $zone_id, $is_enabled)
     {
+        if ($is_enabled != 1) {
+            return;
+        }
         if (array_key_exists($method_id, RY_ECPay_Shipping::$support_methods)) {
-            if ($is_enabled == 1) {
-                if ('billing_only' === get_option('woocommerce_ship_to_destination')) {
-                    global $wpdb;
+            if ('billing_only' === get_option('woocommerce_ship_to_destination')) {
+                global $wpdb;
 
-                    $wpdb->update(
-                        $wpdb->prefix . 'woocommerce_shipping_zone_methods',
-                        [
-                            'is_enabled' => 0
-                        ],
-                        [
-                            'instance_id' => absint($instance_id)
-                        ]
-                    );
-                }
+                $wpdb->update(
+                    $wpdb->prefix . 'woocommerce_shipping_zone_methods',
+                    [
+                        'is_enabled' => 0
+                    ],
+                    [
+                        'instance_id' => absint($instance_id)
+                    ]
+                );
             }
         }
     }

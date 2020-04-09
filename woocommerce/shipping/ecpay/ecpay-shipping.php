@@ -184,7 +184,7 @@ final class RY_ECPay_Shipping
                 'LogisticsType' => $method_class::$LogisticsType,
                 'LogisticsSubType' => $method_class::$LogisticsSubType . (('C2C' == $CVS_type) ? 'C2C' : ''),
                 'IsCollection' => 'Y',
-                'ServerReplyURL' => esc_url(WC()->api_request_url('ry_ecpay_map_callback', true))
+                'ServerReplyURL' => esc_url(WC()->api_request_url('ry_ecpay_map_callback'))
             ];
         }
 
@@ -343,7 +343,9 @@ final class RY_ECPay_Shipping
             $order->update_meta_data('_shipping_cvs_store_name', $data['CVSStoreName']);
             $order->update_meta_data('_shipping_cvs_store_address', $data['CVSAddress']);
             $order->update_meta_data('_shipping_cvs_store_telephone', $data['CVSTelephone']);
-            $order->update_meta_data('_shipping_phone', $data['shipping_phone']);
+            if (isset($data['shipping_phone'])) {
+                $order->update_meta_data('_shipping_phone', $data['shipping_phone']);
+            }
             $order->set_shipping_address_1($data['CVSAddress']);
         }
     }
