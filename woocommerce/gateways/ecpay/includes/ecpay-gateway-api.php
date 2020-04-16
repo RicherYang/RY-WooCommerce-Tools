@@ -44,28 +44,27 @@ class RY_ECPay_Gateway_Api extends RY_ECPay
             'ClientRedirectURL' => $return_url
         ];
         $args['MerchantTradeDate'] = $args['MerchantTradeDate']->format('Y/m/d H:i:s');
-        if ($gateway->payment_type == 'Credit') {
-            switch (get_locale()) {
-                case 'zh_HK':
-                case 'zh_TW':
-                    break;
-                case 'ko_KR':
-                    $args['Language'] = 'KOR';
-                    break;
-                case 'ja':
-                    $args['Language'] = 'JPN';
-                    break;
-                case 'zh_CN':
-                    $args['Language'] = 'CHI';
-                    break;
-                case 'en_US':
-                case 'en_AU':
-                case 'en_CA':
-                case 'en_GB':
-                default:
-                    $args['Language'] = 'ENG';
-                    break;
-            }
+
+        switch (get_locale()) {
+            case 'zh_HK':
+            case 'zh_TW':
+                break;
+            case 'ko_KR':
+                $args['Language'] = 'KOR';
+                break;
+            case 'ja':
+                $args['Language'] = 'JPN';
+                break;
+            case 'zh_CN':
+                $args['Language'] = 'CHI';
+                break;
+            case 'en_US':
+            case 'en_AU':
+            case 'en_CA':
+            case 'en_GB':
+            default:
+                $args['Language'] = 'ENG';
+                break;
         }
 
         $args = self::add_type_info($args, $order, $gateway);
