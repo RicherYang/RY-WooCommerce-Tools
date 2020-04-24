@@ -162,7 +162,6 @@ final class RY_Shipping
                 }
                 if ($update) {
                     if (isset($_POST['_shipping_phone'])) {
-                        file_put_contents('D:/123/123.txt', var_export('update'), FILE_APPEND);
                         $order->update_meta_data('_shipping_cvs_store_ID', wc_clean(wp_unslash($_POST['_shipping_cvs_store_ID'])));
                         $order->update_meta_data('_shipping_cvs_store_name', wc_clean(wp_unslash($_POST['_shipping_cvs_store_name'])));
                         $order->update_meta_data('_shipping_cvs_store_address', wc_clean(wp_unslash($_POST['_shipping_cvs_store_address'])));
