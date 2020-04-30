@@ -48,7 +48,7 @@ class RY_ECPay_Gateway_Credit_Installment extends RY_ECPay_Gateway_Base
     {
         parent::payment_fields();
         echo '<p>' . _x('Number of periods', 'Checkout info', 'ry-woocommerce-tools');
-        echo ' <select name="number_of_periods">';
+        echo ' <select name="ecpay_number_of_periods">';
         foreach ($this->number_of_periods as $number_of_periods) {
             echo '<option value="' . $number_of_periods . '">' . $number_of_periods . '</option>';
         }
@@ -59,8 +59,8 @@ class RY_ECPay_Gateway_Credit_Installment extends RY_ECPay_Gateway_Base
     {
         $order = wc_get_order($order_id);
         $order->add_order_note(__('Pay via ECPay Credit(installment)', 'ry-woocommerce-tools'));
-        if (isset($_POST['number_of_periods'])) {
-            $order->update_meta_data('_ecpay_payment_number_of_periods', (int) $_POST['number_of_periods']);
+        if (isset($_POST['ecpay_number_of_periods'])) {
+            $order->update_meta_data('_ecpay_payment_number_of_periods', (int) $_POST['ecpay_number_of_periods']);
         }
         $order->save();
         wc_reduce_stock_levels($order_id);

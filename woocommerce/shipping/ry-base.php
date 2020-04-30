@@ -59,6 +59,7 @@ final class RY_Shipping
             /* translators: %s: number of orders */
             'label_count' => _n_noop('Wait pickup (cvs) <span class="count">(%s)</span>', 'Wait pickup (cvs) <span class="count">(%s)</span>', 'ry-woocommerce-tools'),
         ]);
+
         register_post_status('wc-ry-out-cvs', [
             'label' => _x('Overdue return (cvs)', 'Order status', 'ry-woocommerce-tools'),
             'public' => false,
@@ -149,24 +150,24 @@ final class RY_Shipping
     {
         if ($order = wc_get_order($order_id)) {
             foreach ($order->get_items('shipping') as $item_id => $item) {
-                $update = false;
+                $shipping_method = false;
                 if (class_exists('RY_ECPay_Shipping')) {
-                    if (RY_ECPay_Shipping::get_order_support_shipping($item) !== false) {
-                        $update = true;
-                    }
+                    $shipping_method = RY_ECPay_Shipping::get_order_support_shipping($item);
                 }
                 if (class_exists('RY_NewebPay_Shipping')) {
-                    if (RY_NewebPay_Shipping::get_order_support_shipping($item) !== false) {
-                        $update = true;
-                    }
+                    $shipping_method = RY_NewebPay_Shipping::get_order_support_shipping($item);
                 }
-                if ($update) {
+                if ($shipping_method) {
                     if (isset($_POST['_shipping_phone'])) {
+                        $order->update_meta_data('_shipping_phone', wc_clean(wp_unslash($_POST['_shipping_phone'])));
+                        $order->save_meta_data();
+                    }
+
+                    if (strpos($shipping_method, 'cvs') !== false) {
                         $order->update_meta_data('_shipping_cvs_store_ID', wc_clean(wp_unslash($_POST['_shipping_cvs_store_ID'])));
                         $order->update_meta_data('_shipping_cvs_store_name', wc_clean(wp_unslash($_POST['_shipping_cvs_store_name'])));
                         $order->update_meta_data('_shipping_cvs_store_address', wc_clean(wp_unslash($_POST['_shipping_cvs_store_address'])));
                         $order->update_meta_data('_shipping_cvs_store_telephone', wc_clean(wp_unslash($_POST['_shipping_cvs_store_telephone'])));
-                        $order->update_meta_data('_shipping_phone', wc_clean(wp_unslash($_POST['_shipping_phone'])));
                         $order->save_meta_data();
 
                         // I know this is not the bast way to do thios thing

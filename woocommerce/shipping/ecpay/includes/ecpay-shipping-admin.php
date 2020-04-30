@@ -11,8 +11,8 @@ class RY_ECPay_Shipping_admin
         add_action('woocommerce_shipping_zone_method_status_toggled', [__CLASS__, 'check_can_enable'], 10, 4);
         add_action('woocommerce_update_options_shipping_options', [__CLASS__, 'check_ship_destination']);
         add_filter('woocommerce_order_actions', [__CLASS__, 'add_order_actions']);
-        add_action('woocommerce_order_action_get_new_cvs_no', ['RY_ECPay_Shipping_Api', 'get_cvs_code']);
-        add_action('woocommerce_order_action_get_new_cvs_no_cod', ['RY_ECPay_Shipping_Api', 'get_cvs_code_cod']);
+        add_action('woocommerce_order_action_get_new_ecpay_no', ['RY_ECPay_Shipping_Api', 'get_code']);
+        add_action('woocommerce_order_action_get_new_ecpay_no_cod', ['RY_ECPay_Shipping_Api', 'get_code_cod']);
         add_action('woocommerce_order_action_send_at_cvs_email', ['RY_ECPay_Shipping', 'send_at_cvs_email']);
 
         add_action('wp_ajax_RY_ECPay_Shipping_print', [__CLASS__, 'print_info']);
@@ -32,22 +32,25 @@ class RY_ECPay_Shipping_admin
                 $shipping_method = RY_ECPay_Shipping::get_order_support_shipping($items_shipping);
             }
             if ($shipping_method !== false) {
-                $shipping_fields['cvs_store_ID'] = [
-                    'label' => __('Store ID', 'ry-woocommerce-tools'),
-                    'show' => false
-                ];
-                $shipping_fields['cvs_store_name'] = [
-                    'label' => __('Store Name', 'ry-woocommerce-tools'),
-                    'show' => false
-                ];
-                $shipping_fields['cvs_store_address'] = [
-                    'label' => __('Store Address', 'ry-woocommerce-tools'),
-                    'show' => false
-                ];
-                $shipping_fields['cvs_store_telephone'] = [
-                    'label' => __('Store Telephone', 'ry-woocommerce-tools'),
-                    'show' => false
-                ];
+                if (strpos($shipping_method, 'cvs') !== false) {
+                    $shipping_fields['cvs_store_ID'] = [
+                        'label' => __('Store ID', 'ry-woocommerce-tools'),
+                        'show' => false
+                    ];
+                    $shipping_fields['cvs_store_name'] = [
+                        'label' => __('Store Name', 'ry-woocommerce-tools'),
+                        'show' => false
+                    ];
+                    $shipping_fields['cvs_store_address'] = [
+                        'label' => __('Store Address', 'ry-woocommerce-tools'),
+                        'show' => false
+                    ];
+                    $shipping_fields['cvs_store_telephone'] = [
+                        'label' => __('Store Telephone', 'ry-woocommerce-tools'),
+                        'show' => false
+                    ];
+                }
+
                 $shipping_fields['phone'] = [
                     'label' => __('Phone', 'ry-woocommerce-tools')
                 ];
@@ -116,9 +119,9 @@ class RY_ECPay_Shipping_admin
 
         foreach ($theorder->get_items('shipping') as $item_id => $item) {
             if (RY_ECPay_Shipping::get_order_support_shipping($item) !== false) {
-                $order_actions['get_new_cvs_no'] = __('Get new CVS payment no', 'ry-woocommerce-tools');
+                $order_actions['get_new_ecpay_no'] = __('Get new Ecpay shipping no', 'ry-woocommerce-tools');
                 if ($theorder->get_payment_method() == 'cod') {
-                    $order_actions['get_new_cvs_no_cod'] = __('Get new CVS payment no with cod', 'ry-woocommerce-tools');
+                    $order_actions['get_new_ecpay_no_cod'] = __('Get new Ecpay shipping no with cod', 'ry-woocommerce-tools');
                 }
                 if ($theorder->has_status(['ry-at-cvs'])) {
                     $order_actions['send_at_cvs_email'] = __('Resend at cvs notification', 'ry-woocommerce-tools');

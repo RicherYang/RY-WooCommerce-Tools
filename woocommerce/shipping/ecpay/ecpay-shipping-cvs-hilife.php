@@ -1,7 +1,7 @@
 <?php
 defined('RY_WT_VERSION') or exit('No direct script access allowed');
 
-class RY_ECPay_Shipping_CVS_Hilife extends RY_ECPay_Shipping_CVS
+class RY_ECPay_Shipping_CVS_Hilife extends RY_ECPay_Shipping_Base
 {
     public static $LogisticsType = 'CVS';
     public static $LogisticsSubType = 'HILIFE';
@@ -19,7 +19,7 @@ class RY_ECPay_Shipping_CVS_Hilife extends RY_ECPay_Shipping_CVS
         ];
 
         if (empty($this->instance_form_fields)) {
-            $this->instance_form_fields = include(RY_WT_PLUGIN_DIR . 'woocommerce/shipping/ecpay/includes/settings-ecpay-shipping-cvs.php');
+            $this->instance_form_fields = include(RY_WT_PLUGIN_DIR . 'woocommerce/shipping/ecpay/includes/settings-ecpay-shipping-base.php');
         }
         $this->instance_form_fields['title']['default'] = $this->method_title;
         $this->instance_form_fields['cost']['default'] = 55;

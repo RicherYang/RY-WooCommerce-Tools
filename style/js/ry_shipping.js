@@ -6,35 +6,42 @@ jQuery(function ($) {
     $('.woocommerce-checkout p.ry-hide').hide();
 
     $(document.body).on('updated_checkout', function (e, data) {
-        if (typeof data !== 'undefined') {
-            if (typeof data.fragments.ecpay_shipping_info !== 'undefined') {
-                ecpayShippingInfo = data.fragments.ecpay_shipping_info.postData;
-                $('.woocommerce-shipping-fields__field-wrapper p:not(.cvs-info)').hide();
-                $('.woocommerce-shipping-fields__field-wrapper p#shipping_first_name_field').show();
-                $('.woocommerce-shipping-fields__field-wrapper p#shipping_last_name_field').show();
-                $('.woocommerce-shipping-fields__field-wrapper p#shipping_country_field').show();
-                $('.woocommerce-shipping-fields__field-wrapper p#shipping_phone_field').show();
-                $('.woocommerce-shipping-fields__field-wrapper p.cvs-info').show();
-                if ($('#ship-to-different-address-checkbox').prop('checked') === false) {
-                    $('#ship-to-different-address-checkbox').click();
-                }
-                if ($('input#LogisticsSubType').length) {
-                    if ($('input#LogisticsSubType').val() == ecpayShippingInfo.LogisticsSubType) {
-                        $('#CVSStoreName_field strong').text($('input#CVSStoreName').val());
-                        $('#CVSAddress_field strong').text($('input#CVSAddress').val());
-                        $('#CVSTelephone_field strong').text($('input#CVSTelephone').val());
+        if (data !== undefined) {
+            if (data.fragments.ecpay_shipping_info !== undefined) {
+                if (data.fragments.ecpay_shipping_info.postData === undefined) {
+                    $('.woocommerce-shipping-fields__field-wrapper p.cvs-info').hide();
+                    $('.woocommerce-shipping-fields__field-wrapper p:not(.cvs-info)').show();
+                    $('.woocommerce-shipping-fields__field-wrapper p#shipping_phone_field').show();
+                    RYECPayRemoveSendCvs();
+                } else {
+                    ecpayShippingInfo = data.fragments.ecpay_shipping_info.postData;
+                    $('.woocommerce-shipping-fields__field-wrapper p:not(.cvs-info)').hide();
+                    $('.woocommerce-shipping-fields__field-wrapper p#shipping_first_name_field').show();
+                    $('.woocommerce-shipping-fields__field-wrapper p#shipping_last_name_field').show();
+                    $('.woocommerce-shipping-fields__field-wrapper p#shipping_country_field').show();
+                    $('.woocommerce-shipping-fields__field-wrapper p#shipping_phone_field').show();
+                    $('.woocommerce-shipping-fields__field-wrapper p.cvs-info').show();
+                    if ($('#ship-to-different-address-checkbox').prop('checked') === false) {
+                        $('#ship-to-different-address-checkbox').click();
+                    }
+                    if ($('input#LogisticsSubType').length) {
+                        if ($('input#LogisticsSubType').val() == ecpayShippingInfo.LogisticsSubType) {
+                            $('#CVSStoreName_field strong').text($('input#CVSStoreName').val());
+                            $('#CVSAddress_field strong').text($('input#CVSAddress').val());
+                            $('#CVSTelephone_field strong').text($('input#CVSTelephone').val());
 
-                        if ($('input#CVSStoreName').val() != '') {
-                            $('.choose_cvs .show_choose_cvs_name').show();
-                            $('.choose_cvs .choose_cvs_name').text($('input#CVSStoreName').val());
+                            if ($('input#CVSStoreName').val() != '') {
+                                $('.choose_cvs .show_choose_cvs_name').show();
+                                $('.choose_cvs .choose_cvs_name').text($('input#CVSStoreName').val());
+                            }
+                        } else {
+                            RYECPayRemoveSendCvs();
                         }
                     } else {
                         RYECPayRemoveSendCvs();
                     }
-                } else {
-                    RYECPayRemoveSendCvs();
                 }
-            } else if (typeof data.fragments.newebpay_shipping_info !== 'undefined') {
+            } else if (data.fragments.newebpay_shipping_info !== undefined) {
                 $('.woocommerce-shipping-fields__field-wrapper p').hide();
                 if ($('#ship-to-different-address-checkbox').prop('checked') === false) {
                     $('#ship-to-different-address-checkbox').click();

@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the RY WooCommerce Tools plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: RY WooCommerce Tools 1.3.3\n"
+"Project-Id-Version: RY WooCommerce Tools 1.4.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/ry-woocommerce-tools\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2020-03-25T15:22:03+08:00\n"
+"POT-Creation-Date: 2020-04-30T11:28:53+08:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.4.0\n"
 "X-Domain: ry-woocommerce-tools\n"
@@ -377,8 +377,8 @@ msgstr ""
 #. translators: %1$s: date %2$s: time
 #: templates/order/order-ecpay-payment-info-barcode.php:61
 #: templates/order/order-ecpay-payment-info-cvs.php:45
-#: woocommerce/admin/meta-boxes/ecpay-shipping-meta-box.php:81
-#: woocommerce/admin/meta-boxes/ecpay-shipping-meta-box.php:83
+#: woocommerce/admin/meta-boxes/ecpay-shipping-meta-box.php:108
+#: woocommerce/admin/meta-boxes/ecpay-shipping-meta-box.php:111
 #: woocommerce/admin/meta-boxes/newebpay-shipping-meta-box.php:66
 #: woocommerce/admin/meta-boxes/newebpay-shipping-meta-box.php:68
 msgctxt "Datetime"
@@ -396,50 +396,64 @@ msgstr ""
 msgid "ECPay shipping info"
 msgstr ""
 
-#: woocommerce/admin/meta-boxes/ecpay-shipping-meta-box.php:38
+#: woocommerce/admin/meta-boxes/ecpay-shipping-meta-box.php:39
 msgid "ECPay shipping ID"
 msgstr ""
 
-#: woocommerce/admin/meta-boxes/ecpay-shipping-meta-box.php:40
-msgid "Shipping payment no"
+#: woocommerce/admin/meta-boxes/ecpay-shipping-meta-box.php:42
+msgid "Shipping Type"
 msgstr ""
 
-#: woocommerce/admin/meta-boxes/ecpay-shipping-meta-box.php:42
+#: woocommerce/admin/meta-boxes/ecpay-shipping-meta-box.php:45
+msgid "Shipping no"
+msgstr ""
+
+#: woocommerce/admin/meta-boxes/ecpay-shipping-meta-box.php:48
 #: woocommerce/admin/meta-boxes/newebpay-shipping-meta-box.php:40
-#: woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:36
+#: woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:37
 #: woocommerce/shipping/newebpay/includes/newebpay-shipping-admin.php:42
 msgid "Store ID"
 msgstr ""
 
-#: woocommerce/admin/meta-boxes/ecpay-shipping-meta-box.php:44
+#: woocommerce/admin/meta-boxes/ecpay-shipping-meta-box.php:51
 msgid "Shipping status"
 msgstr ""
 
-#: woocommerce/admin/meta-boxes/ecpay-shipping-meta-box.php:46
+#: woocommerce/admin/meta-boxes/ecpay-shipping-meta-box.php:54
 #: woocommerce/admin/meta-boxes/newebpay-shipping-meta-box.php:42
 msgid "declare amount"
 msgstr ""
 
-#: woocommerce/admin/meta-boxes/ecpay-shipping-meta-box.php:48
+#: woocommerce/admin/meta-boxes/ecpay-shipping-meta-box.php:57
 #: woocommerce/admin/meta-boxes/newebpay-shipping-meta-box.php:44
 msgid "Collection of money"
 msgstr ""
 
-#: woocommerce/admin/meta-boxes/ecpay-shipping-meta-box.php:50
+#: woocommerce/admin/meta-boxes/ecpay-shipping-meta-box.php:60
 #: woocommerce/admin/meta-boxes/newebpay-shipping-meta-box.php:46
 msgid "Shipping status last change time"
 msgstr ""
 
-#: woocommerce/admin/meta-boxes/ecpay-shipping-meta-box.php:52
+#: woocommerce/admin/meta-boxes/ecpay-shipping-meta-box.php:63
 #: woocommerce/admin/meta-boxes/newebpay-shipping-meta-box.php:48
 msgid "Shipping create time"
 msgstr ""
 
-#: woocommerce/admin/meta-boxes/ecpay-shipping-meta-box.php:54
+#: woocommerce/admin/meta-boxes/ecpay-shipping-meta-box.php:66
 msgid "Shipping booking note"
 msgstr ""
 
-#: woocommerce/admin/meta-boxes/ecpay-shipping-meta-box.php:85
+#: woocommerce/admin/meta-boxes/ecpay-shipping-meta-box.php:80
+msgctxt "shipping type"
+msgid "CVS"
+msgstr ""
+
+#: woocommerce/admin/meta-boxes/ecpay-shipping-meta-box.php:90
+msgctxt "shipping type"
+msgid "Home"
+msgstr ""
+
+#: woocommerce/admin/meta-boxes/ecpay-shipping-meta-box.php:114
 msgid "Print"
 msgstr ""
 
@@ -611,17 +625,17 @@ msgstr ""
 
 #: woocommerce/gateways/ecpay/ecpay-gateway.php:106
 #: woocommerce/gateways/newebpay/newebpay-gateway.php:98
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:135
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:140
 msgid "Order no prefix only letters and numbers allowed allowed"
 msgstr ""
 
-#: woocommerce/gateways/ecpay/includes/ecpay-gateway-api.php:91
+#: woocommerce/gateways/ecpay/includes/ecpay-gateway-api.php:90
 #: woocommerce/gateways/newebpay/includes/newebpay-gateway-api.php:91
 msgid "Please wait transfer to checkout page."
 msgstr ""
 
 #. translators: %d number of periods
-#: woocommerce/gateways/ecpay/includes/ecpay-gateway-api.php:225
+#: woocommerce/gateways/ecpay/includes/ecpay-gateway-api.php:224
 #: woocommerce/gateways/newebpay/includes/newebpay-gateway-api.php:139
 msgid "Credit installment to %d"
 msgstr ""
@@ -634,17 +648,17 @@ msgstr ""
 msgid "Inpay only work with ssl. You must enable force secure checkout."
 msgstr ""
 
-#: woocommerce/gateways/ecpay/includes/ecpay-gateway-response.php:100
+#: woocommerce/gateways/ecpay/includes/ecpay-gateway-response.php:99
 #: woocommerce/gateways/newebpay/includes/newebpay-gateway-response.php:88
 msgid "Payment completed"
 msgstr ""
 
-#: woocommerce/gateways/ecpay/includes/ecpay-gateway-response.php:143
+#: woocommerce/gateways/ecpay/includes/ecpay-gateway-response.php:142
 msgid "Payment failed within paid order"
 msgstr ""
 
 #. translators: Error status message
-#: woocommerce/gateways/ecpay/includes/ecpay-gateway-response.php:149
+#: woocommerce/gateways/ecpay/includes/ecpay-gateway-response.php:148
 msgid "Payment failed (%s)"
 msgstr ""
 
@@ -690,6 +704,7 @@ msgstr ""
 #: woocommerce/gateways/newebpay/includes/settings-newebpay-gateway-credit.php:27
 #: woocommerce/gateways/newebpay/includes/settings-newebpay-gateway-cvs.php:27
 #: woocommerce/gateways/newebpay/includes/settings-newebpay-gateway-webatm.php:27
+#: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping-base.php:43
 #: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping-cvs.php:43
 #: woocommerce/shipping/newebpay/includes/settings-newebpay-shipping-cvs.php:43
 msgid "Minimum order amount"
@@ -806,7 +821,7 @@ msgstr ""
 
 #: woocommerce/gateways/ecpay/includes/settings-ecpay-gateway.php:41
 #: woocommerce/gateways/newebpay/includes/settings-newebpay-gateway.php:41
-#: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:116
+#: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:126
 msgid "API credentials"
 msgstr ""
 
@@ -820,19 +835,19 @@ msgstr ""
 
 #: woocommerce/gateways/ecpay/includes/settings-ecpay-gateway.php:53
 #: woocommerce/gateways/newebpay/includes/settings-newebpay-gateway.php:53
-#: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:128
+#: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:138
 msgid "MerchantID"
 msgstr ""
 
 #: woocommerce/gateways/ecpay/includes/settings-ecpay-gateway.php:59
 #: woocommerce/gateways/newebpay/includes/settings-newebpay-gateway.php:59
-#: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:134
+#: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:144
 msgid "HashKey"
 msgstr ""
 
 #: woocommerce/gateways/ecpay/includes/settings-ecpay-gateway.php:65
 #: woocommerce/gateways/newebpay/includes/settings-newebpay-gateway.php:65
-#: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:140
+#: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:150
 msgid "HashIV"
 msgstr ""
 
@@ -842,7 +857,7 @@ msgstr ""
 
 #. translators: 1: Store name 2: Store ID
 #: woocommerce/gateways/newebpay/includes/newebpay-gateway-response.php:133
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:338
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:350
 msgid "CVS store %1$s (%2$s)"
 msgstr ""
 
@@ -1039,127 +1054,141 @@ msgstr ""
 msgid "ECPay shipping CVS Hilife"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:77
+#: woocommerce/shipping/ecpay/ecpay-shipping-home-ecan.php:13
+msgid "ECPay shipping home Ecan"
+msgstr ""
+
+#: woocommerce/shipping/ecpay/ecpay-shipping-home-tcat.php:13
+msgid "ECPay shipping home Tcat"
+msgstr ""
+
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:81
 msgid "ECPay shipping options"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:88
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:93
 msgctxt "Cvs type"
 msgid "Disable"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:90
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:95
 #: woocommerce/shipping/newebpay/newebpay-shipping.php:48
 msgid "Cvs only can enable with shipping destination not force to billing address."
 msgstr ""
 
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:103
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:109
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:115
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:108
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:114
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:120
 msgid "Verification failed!"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:103
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:108
 msgid "Name length between 1 to 10 letter (5 if chinese)"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:109
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:114
 #: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:93
 msgid "Phone format (0x)xxxxxxx#xx"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:115
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:120
 #: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:104
 msgid "Cellphone format 09xxxxxxxx"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:130
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:135
 msgid "ECPay shipping method failed to enable!"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:218
-#: woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:52
-#: woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:56
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:227
+#: woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:55
+#: woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:59
 msgid "Phone"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:226
-#: woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:40
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:235
+#: woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:41
 #: woocommerce/shipping/newebpay/includes/newebpay-shipping-admin.php:46
 msgid "Store Name"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:233
-#: woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:44
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:242
+#: woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:45
 #: woocommerce/shipping/newebpay/includes/newebpay-shipping-admin.php:50
 msgid "Store Address"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:240
-#: woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:48
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:249
+#: woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:49
 msgid "Store Telephone"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:101
+#: woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:105
 #: woocommerce/shipping/newebpay/includes/newebpay-shipping-admin.php:98
 msgid "All cvs shipping methods set to disable."
 msgstr ""
 
-#: woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:118
-msgid "Get new CVS payment no"
+#: woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:122
+msgid "Get new Ecpay shipping no"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:120
-msgid "Get new CVS payment no with cod"
+#: woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:124
+msgid "Get new Ecpay shipping no with cod"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:123
+#: woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:127
 #: woocommerce/shipping/newebpay/includes/newebpay-shipping-admin.php:112
 msgid "Resend at cvs notification"
 msgstr ""
 
 #. translators: %s Error messade
-#: woocommerce/shipping/ecpay/includes/ecpay-shipping-api.php:153
+#: woocommerce/shipping/ecpay/includes/ecpay-shipping-api.php:176
 msgid "Get shipping code error: %s"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/includes/ecpay-shipping-api.php:245
+#: woocommerce/shipping/ecpay/includes/ecpay-shipping-api.php:269
 msgid "Error with connect to ECPay server."
 msgstr ""
 
 #. translators: 1: EcPay ID 2: Old status mag 3: Old status no 4: New status mag 5: New status no
-#: woocommerce/shipping/ecpay/includes/ecpay-shipping-response.php:66
+#: woocommerce/shipping/ecpay/includes/ecpay-shipping-response.php:109
 msgid "%1$s shipping status from %2$s(%3$d) to %4$s(%5$d)"
 msgstr ""
 
+#: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping-base.php:23
 #: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping-cvs.php:23
 #: woocommerce/shipping/newebpay/includes/settings-newebpay-shipping-cvs.php:23
 msgid "Shipping cost"
 msgstr ""
 
 #. translators: %s WooCommerce weight unit
+#: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping-base.php:52
 #: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping-cvs.php:52
 #: woocommerce/shipping/newebpay/includes/settings-newebpay-shipping-cvs.php:52
 msgid "Every weight (%s) to plus times of cost"
 msgstr ""
 
+#: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping-base.php:56
 #: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping-cvs.php:56
 #: woocommerce/shipping/newebpay/includes/settings-newebpay-shipping-cvs.php:56
 msgid "Calculate free shipping first. 0 to disable plus cost by weight."
 msgstr ""
 
+#: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping-base.php:65
 #: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping-cvs.php:65
 #: woocommerce/shipping/newebpay/includes/settings-newebpay-shipping-cvs.php:65
 msgid "Shipping available"
 msgstr ""
 
 #. translators: %s: shipping class setting url
+#: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping-base.php:69
 #: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping-cvs.php:69
 #: woocommerce/shipping/newebpay/includes/settings-newebpay-shipping-cvs.php:69
 msgid "These shipping available based on the <a href=\"%s\">product shipping class</a>."
 msgstr ""
 
 #. translators: %s: shipping class name
+#: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping-base.php:77
 #: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping-cvs.php:77
 #: woocommerce/shipping/newebpay/includes/settings-newebpay-shipping-cvs.php:77
 msgid "\"%s\" available"
@@ -1231,11 +1260,19 @@ msgstr ""
 msgid "Sender cellphone"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:121
+#: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:112
+msgid "Sender zipcode"
+msgstr ""
+
+#: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:117
+msgid "Sender address"
+msgstr ""
+
+#: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:131
 msgid "ECPay shipping sandbox"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:125
+#: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:135
 msgid "Enable ECPay shipping sandbox"
 msgstr ""
 
@@ -1259,27 +1296,27 @@ msgstr ""
 msgid "NewebPay shipping method failed to enable!"
 msgstr ""
 
-#: woocommerce/shipping/ry-base.php:28
-#: woocommerce/shipping/ry-base.php:53
+#: woocommerce/shipping/ry-base.php:29
+#: woocommerce/shipping/ry-base.php:54
 msgctxt "Order status"
 msgid "Wait pickup (cvs)"
 msgstr ""
 
-#: woocommerce/shipping/ry-base.php:29
-#: woocommerce/shipping/ry-base.php:62
+#: woocommerce/shipping/ry-base.php:30
+#: woocommerce/shipping/ry-base.php:64
 msgctxt "Order status"
 msgid "Overdue return (cvs)"
 msgstr ""
 
 #. translators: %s: number of orders
-#: woocommerce/shipping/ry-base.php:59
+#: woocommerce/shipping/ry-base.php:60
 msgid "Wait pickup (cvs) <span class=\"count\">(%s)</span>"
 msgid_plural "Wait pickup (cvs) <span class=\"count\">(%s)</span>"
 msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: number of orders
-#: woocommerce/shipping/ry-base.php:68
+#: woocommerce/shipping/ry-base.php:70
 msgid "Overdue return (cvs) <span class=\"count\">(%s)</span>"
 msgid_plural "Overdue return (cvs) <span class=\"count\">(%s)</span>"
 msgstr[0] ""

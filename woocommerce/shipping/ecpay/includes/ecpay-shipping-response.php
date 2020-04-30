@@ -158,6 +158,13 @@ class RY_ECPay_Shipping_Response extends RY_ECPay_Shipping_Api
         $order->update_status('ry-out-cvs');
     }
 
+    protected static function shipping_status_3003($order)
+    {
+        if ('yes' == RY_WT::get_option('ecpay_shipping_auto_completed', 'yes')) {
+            $order->update_status('completed');
+        }
+    }
+
     protected static function shipping_status_3020($order)
     {
         $order->update_status('ry-out-cvs');

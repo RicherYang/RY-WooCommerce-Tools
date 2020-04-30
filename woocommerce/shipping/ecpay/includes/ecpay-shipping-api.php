@@ -29,7 +29,7 @@ class RY_ECPay_Shipping_Api extends RY_ECPay
         }
     }
 
-    public static function get_cvs_code($order_id, $collection = false)
+    public static function get_code($order_id, $collection = false)
     {
         $order = wc_get_order($order_id);
         if (!$order) {
@@ -81,7 +81,7 @@ class RY_ECPay_Shipping_Api extends RY_ECPay
             $args = [
                 'MerchantID' => $MerchantID,
                 'LogisticsType' => $method_class::$LogisticsType,
-                'LogisticsSubType' => $method_class::$LogisticsSubType . (('C2C' == $CVS_type) ? 'C2C' : ''),
+                'LogisticsSubType' => $method_class::$LogisticsSubType,
                 'GoodsAmount' => (int) $total,
                 'GoodsName' => $item_names,
                 'SenderName' => RY_WT::get_option('ecpay_shipping_sender_name'),
@@ -89,14 +89,19 @@ class RY_ECPay_Shipping_Api extends RY_ECPay
                 'SenderCellPhone' => RY_WT::get_option('ecpay_shipping_sender_cellphone'),
                 'ReceiverName' => $order->get_shipping_last_name() . $order->get_shipping_first_name(),
                 'ReceiverCellPhone' => $order->get_meta('_shipping_phone'),
+                'ReceiverStoreID' => '',
                 'ServerReplyURL' => $notify_url,
                 'LogisticsC2CReplyURL' => $notify_url,
             ];
 
+            if ($args['LogisticsType'] == 'CVS') {
+                $args['LogisticsSubType'] .= ('C2C' == $CVS_type) ? 'C2C' : '';
+            }
+
             if (count($shipping_list) == 0) {
                 if ($order->get_payment_method() == 'cod') {
                     $args['IsCollection'] = 'Y';
-                    $args['CollectionAmount'] = $args['GoodsAmount'];
+                    $args['CollectionAmount'] = $order->get_total();
                 } else {
                     $args['IsCollection'] = 'N';
                     $args['CollectionAmount'] = 0;
@@ -104,11 +109,29 @@ class RY_ECPay_Shipping_Api extends RY_ECPay
             }
             if ($collection == true) {
                 $args['IsCollection'] = 'Y';
-                $args['CollectionAmount'] = $args['GoodsAmount'];
+                $args['CollectionAmount'] = $order->get_total();
             }
 
             if ($method_class::$LogisticsType == 'CVS') {
                 $args['ReceiverStoreID'] = $order->get_meta('_shipping_cvs_store_ID');
+            }
+
+            if ($method_class::$LogisticsType == 'Home') {
+                $country = $order->get_shipping_country();
+
+                $state = $order->get_shipping_state();
+                $states = WC()->countries->get_states($country);
+                $full_state = ($state && isset($states[$state])) ? $states[$state] : $state;
+
+                $args['SenderZipCode'] = RY_WT::get_option('ecpay_shipping_sender_zipcode');
+                $args['SenderAddress'] = RY_WT::get_option('ecpay_shipping_sender_address');
+                $args['ReceiverZipCode'] = $order->get_shipping_postcode();
+                $args['ReceiverAddress'] = $full_state . $order->get_shipping_city() . $order->get_shipping_address_1() . $order->get_shipping_address_2();
+                $args['Temperature'] = '0001';
+                $args['Distance'] = '00';
+                $args['Specification'] = '0001';
+                $args['ScheduledPickupTime'] = '4';
+                $args['ScheduledDeliveryTime'] = '4';
             }
 
             if (RY_ECPay_Shipping::$testmode) {
@@ -175,6 +198,7 @@ class RY_ECPay_Shipping_Api extends RY_ECPay
                 $shipping_list[$result['AllPayLogisticsID']]['PaymentNo'] = $result['CVSPaymentNo'];
                 $shipping_list[$result['AllPayLogisticsID']]['ValidationNo'] = $result['CVSValidationNo'];
                 $shipping_list[$result['AllPayLogisticsID']]['store_ID'] = $args['ReceiverStoreID'];
+                $shipping_list[$result['AllPayLogisticsID']]['BookingNote'] = $result['BookingNote'];
                 $shipping_list[$result['AllPayLogisticsID']]['status'] = self::get_status($result);
                 $shipping_list[$result['AllPayLogisticsID']]['status_msg'] = self::get_status_msg($result);
                 $shipping_list[$result['AllPayLogisticsID']]['create'] = $create_datetime->format(DATE_ATOM);
@@ -192,9 +216,9 @@ class RY_ECPay_Shipping_Api extends RY_ECPay
         }
     }
 
-    public static function get_cvs_code_cod($order_id)
+    public static function get_code_cod($order_id)
     {
-        self::get_cvs_code($order_id, true);
+        self::get_code($order_id, true);
     }
 
     public static function get_print_info($logistics_id, $info = null)
@@ -258,7 +282,7 @@ class RY_ECPay_Shipping_Api extends RY_ECPay
             'MerchantID' => $MerchantID,
             'AllPayLogisticsID' => $logistics_id,
         ];
-        if ($CVS_type == 'C2C') {
+        if (strpos($info['LogisticsSubType'], 'C2C') !== false) {
             $args['CVSPaymentNo'] = $info['PaymentNo'];
             $args['CVSValidationNo'] = $info['ValidationNo'];
         }
@@ -266,13 +290,13 @@ class RY_ECPay_Shipping_Api extends RY_ECPay
         RY_ECPay_Shipping::log('Print info POST: ' . var_export($args, true));
 
         if (RY_ECPay_Shipping::$testmode) {
-            if ($CVS_type == 'C2C') {
+            if (strpos($info['LogisticsSubType'], 'C2C') !== false) {
                 $post_url = self::$api_test_url['print_' . $info['LogisticsSubType']];
             } else {
                 $post_url = self::$api_test_url['print_B2C'];
             }
         } else {
-            if ($CVS_type == 'C2C') {
+            if (strpos($info['LogisticsSubType'], 'C2C') !== false) {
                 $post_url = self::$api_url['print_' . $info['LogisticsSubType']];
             } else {
                 $post_url = self::$api_url['print_B2C'];

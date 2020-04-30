@@ -9,7 +9,7 @@ return [
     ],
     [
         'title' => __('Enable/Disable', 'woocommerce'),
-        'id' => RY_WT::$option_prefix . 'ecpay_shipping_cvs',
+        'id' => RY_WT::$option_prefix . 'ecpay_shipping',
         'type' => 'checkbox',
         'default' => 'no',
         'desc' => __('Enable ECPay shipping method', 'ry-woocommerce-tools')
@@ -107,6 +107,16 @@ return [
         'custom_attributes' => [
             'pattern' => '09\d{8}',
         ]
+    ],
+    [
+        'title' => __('Sender zipcode', 'ry-woocommerce-tools'),
+        'id' => RY_WT::$option_prefix . 'ecpay_shipping_sender_zipcode',
+        'type' => 'text'
+    ],
+    [
+        'title' => __('Sender address', 'ry-woocommerce-tools'),
+        'id' => RY_WT::$option_prefix . 'ecpay_shipping_sender_address',
+        'type' => 'text'
     ],
     [
         'id' => 'note_options',

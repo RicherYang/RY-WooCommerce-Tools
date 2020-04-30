@@ -10,7 +10,9 @@ final class RY_ECPay_Shipping
     public static $support_methods = [
         'ry_ecpay_shipping_cvs_711' => 'RY_ECPay_Shipping_CVS_711',
         'ry_ecpay_shipping_cvs_hilife' => 'RY_ECPay_Shipping_CVS_Hilife',
-        'ry_ecpay_shipping_cvs_family' => 'RY_ECPay_Shipping_CVS_Family'
+        'ry_ecpay_shipping_cvs_family' => 'RY_ECPay_Shipping_CVS_Family',
+        'ry_ecpay_shipping_home_tcat' => 'RY_ECPay_Shipping_Home_Tcat',
+        'ry_ecpay_shipping_home_ecan' => 'RY_ECPay_Shipping_Home_Ecan'
     ];
 
     protected static $js_data;
@@ -21,14 +23,16 @@ final class RY_ECPay_Shipping
         include_once(RY_WT_PLUGIN_DIR . 'woocommerce/abstracts/abstract-ecpay.php');
         include_once(RY_WT_PLUGIN_DIR . 'woocommerce/shipping/ecpay/includes/ecpay-shipping-api.php');
         include_once(RY_WT_PLUGIN_DIR . 'woocommerce/shipping/ecpay/includes/ecpay-shipping-response.php');
-        include_once(RY_WT_PLUGIN_DIR . 'woocommerce/shipping/ecpay/includes/ecpay-shipping-cvs-base.php');
+        include_once(RY_WT_PLUGIN_DIR . 'woocommerce/shipping/ecpay/includes/ecpay-shipping-base.php');
         include_once(RY_WT_PLUGIN_DIR . 'woocommerce/shipping/ecpay/ecpay-shipping-cvs-711.php');
         include_once(RY_WT_PLUGIN_DIR . 'woocommerce/shipping/ecpay/ecpay-shipping-cvs-hilife.php');
         include_once(RY_WT_PLUGIN_DIR . 'woocommerce/shipping/ecpay/ecpay-shipping-cvs-family.php');
+        include_once(RY_WT_PLUGIN_DIR . 'woocommerce/shipping/ecpay/ecpay-shipping-home-tcat.php');
+        include_once(RY_WT_PLUGIN_DIR . 'woocommerce/shipping/ecpay/ecpay-shipping-home-ecan.php');
 
         self::$log_enabled = 'yes' === RY_WT::get_option('ecpay_shipping_log', 'no');
 
-        if ('yes' === RY_WT::get_option('ecpay_shipping_cvs', 'no')) {
+        if ('yes' === RY_WT::get_option('ecpay_shipping', 'no')) {
             self::$testmode = 'yes' === RY_WT::get_option('ecpay_shipping_testmode', 'yes');
 
             RY_ECPay_Shipping_Response::init();
@@ -42,7 +46,7 @@ final class RY_ECPay_Shipping
             add_action('woocommerce_checkout_create_order', [__CLASS__, 'save_cvs_info'], 20, 2);
 
             if ('yes' === RY_WT::get_option('ecpay_shipping_auto_get_no', 'yes')) {
-                add_action('woocommerce_order_status_processing', [__CLASS__, 'get_cvs_code'], 10, 2);
+                add_action('woocommerce_order_status_processing', [__CLASS__, 'get_code'], 10, 2);
             }
             add_action('woocommerce_order_status_ry-at-cvs', [__CLASS__, 'send_at_cvs_email'], 10, 2);
 
@@ -82,6 +86,7 @@ final class RY_ECPay_Shipping
     {
         if ($current_section == 'ecpay_shipping') {
             $settings = include(RY_WT_PLUGIN_DIR . 'woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php');
+
             if ('billing_only' === get_option('woocommerce_ship_to_destination')) {
                 $key = array_search(RY_WT::$option_prefix . 'ecpay_shipping_cvs_type', array_column($settings, 'id'));
                 $settings[$key]['options'] = [
@@ -95,7 +100,7 @@ final class RY_ECPay_Shipping
 
     public static function check_option()
     {
-        if ('yes' == RY_WT::get_option('ecpay_shipping_cvs', 'yes')) {
+        if ('yes' == RY_WT::get_option('ecpay_shipping', 'yes')) {
             $enable = true;
             $name = RY_WT::get_option('ecpay_shipping_sender_name');
             if (mb_strwidth($name) < 1 || mb_strwidth($name) > 10) {
@@ -128,7 +133,7 @@ final class RY_ECPay_Shipping
             }
             if (!$enable) {
                 WC_Admin_Settings::add_error(__('ECPay shipping method failed to enable!', 'ry-woocommerce-tools'));
-                RY_WT::update_option('ecpay_shipping_cvs', 'no');
+                RY_WT::update_option('ecpay_shipping', 'no');
             }
         }
         if (!preg_match('/^[a-z0-9]*$/i', RY_WT::get_option('ecpay_shipping_order_prefix'))) {
@@ -174,18 +179,22 @@ final class RY_ECPay_Shipping
         self::$js_data = [];
 
         if ($chosen_shipping) {
-            wc_get_template('cart/cart-choose-cvs.php', [], '', RY_WT_PLUGIN_DIR . 'templates/');
+            if (strpos($chosen_shipping, 'cvs') === false) {
+                self::$js_data['ecpay_home'] = true;
+            } else {
+                wc_get_template('cart/cart-choose-cvs.php', [], '', RY_WT_PLUGIN_DIR . 'templates/');
 
-            list($MerchantID, $HashKey, $HashIV, $CVS_type) = self::get_ecpay_api_info();
-            $method_class = self::$support_methods[$chosen_shipping];
+                list($MerchantID, $HashKey, $HashIV, $CVS_type) = self::get_ecpay_api_info();
+                $method_class = self::$support_methods[$chosen_shipping];
 
-            self::$js_data['postData'] = [
-                'MerchantID' => $MerchantID,
-                'LogisticsType' => $method_class::$LogisticsType,
-                'LogisticsSubType' => $method_class::$LogisticsSubType . (('C2C' == $CVS_type) ? 'C2C' : ''),
-                'IsCollection' => 'Y',
-                'ServerReplyURL' => esc_url(WC()->api_request_url('ry_ecpay_map_callback'))
-            ];
+                self::$js_data['postData'] = [
+                    'MerchantID' => $MerchantID,
+                    'LogisticsType' => $method_class::$LogisticsType,
+                    'LogisticsSubType' => $method_class::$LogisticsSubType . (('C2C' == $CVS_type) ? 'C2C' : ''),
+                    'IsCollection' => 'Y',
+                    'ServerReplyURL' => esc_url(WC()->api_request_url('ry_ecpay_map_callback'))
+                ];
+            }
         }
 
         wp_localize_script('ry-shipping', 'ry_shipping_params', array_merge([
@@ -250,15 +259,18 @@ final class RY_ECPay_Shipping
 
         if (is_checkout()) {
             $chosen_method = isset(WC()->session->chosen_shipping_methods) ? WC()->session->chosen_shipping_methods : [];
-            $is_support = false;
+            $used_cvs = false;
             if (count($chosen_method)) {
-                foreach (self::$support_methods as $method => $method_class) {
-                    if (strpos($chosen_method[0], $method) === 0) {
-                        $is_support = true;
+                foreach ($chosen_method as $method) {
+                    $method = strstr($method, ':', true);
+                    if (array_key_exists($method, self::$support_methods) && strpos($method, 'cvs') !== false) {
+                        $used_cvs = true;
+                        break;
                     }
                 }
             }
-            if ($is_support) {
+
+            if ($used_cvs) {
                 foreach ($fields['shipping'] as $key => $filed) {
                     if (isset($filed['class'])) {
                         if (!in_array('cvs-info', $filed['class'])) {
@@ -288,7 +300,7 @@ final class RY_ECPay_Shipping
         $shipping_method = isset($_POST['shipping_method']) ? wc_clean($_POST['shipping_method']) : [];
         foreach ($shipping_method as $method) {
             $method = strstr($method, ':', true);
-            if (array_key_exists($method, self::$support_methods)) {
+            if (array_key_exists($method, self::$support_methods) && strpos($method, 'cvs') !== false) {
                 $used_cvs = true;
                 break;
             }
@@ -343,10 +355,11 @@ final class RY_ECPay_Shipping
             $order->update_meta_data('_shipping_cvs_store_name', $data['CVSStoreName']);
             $order->update_meta_data('_shipping_cvs_store_address', $data['CVSAddress']);
             $order->update_meta_data('_shipping_cvs_store_telephone', $data['CVSTelephone']);
-            if (isset($data['shipping_phone'])) {
-                $order->update_meta_data('_shipping_phone', $data['shipping_phone']);
-            }
             $order->set_shipping_address_1($data['CVSAddress']);
+        }
+
+        if (isset($data['shipping_phone'])) {
+            $order->update_meta_data('_shipping_phone', $data['shipping_phone']);
         }
     }
 
@@ -361,14 +374,14 @@ final class RY_ECPay_Shipping
         return false;
     }
 
-    public static function get_cvs_code($order_id, $order)
+    public static function get_code($order_id, $order)
     {
         $shipping_list = $order->get_meta('_ecpay_shipping_info', true);
         if (!is_array($shipping_list)) {
             $shipping_list = [];
         }
         if (count($shipping_list) == 0) {
-            RY_ECPay_Shipping_Api::get_cvs_code($order_id);
+            RY_ECPay_Shipping_Api::get_code($order_id);
         }
     }
 
