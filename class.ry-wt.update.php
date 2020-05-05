@@ -117,10 +117,6 @@ final class RY_WT_update
             RY_WT::update_option('version', '0.0.31');
         }
 
-        if (version_compare($now_version, '1.1.1', '<')) {
-            RY_WT::update_option('version', '1.1.1');
-        }
-
         if (version_compare($now_version, '1.1.2', '<')) {
             @set_time_limit(300);
 
@@ -157,15 +153,14 @@ final class RY_WT_update
             RY_WT::update_option('version', '1.1.2');
         }
 
-        if (version_compare($now_version, '1.3.10', '<')) {
-            RY_WT::update_option('version', '1.3.10');
-        }
-
         if (version_compare($now_version, '1.4.0', '<')) {
             RY_WT::update_option('ecpay_shipping', RY_WT::get_option('ecpay_shipping_cvs', 'no'));
-            //RY_WT::delete_option('ecpay_shipping_cvs');
 
             RY_WT::update_option('version', '1.4.0');
+        }
+        
+        if (version_compare($now_version, '1.4.2', '<')) {
+            RY_WT::update_option('version', '1.4.2');
         }
     }
 }

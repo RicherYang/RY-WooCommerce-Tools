@@ -164,16 +164,18 @@ final class RY_Shipping
                     }
 
                     if (strpos($shipping_method, 'cvs') !== false) {
-                        $order->update_meta_data('_shipping_cvs_store_ID', wc_clean(wp_unslash($_POST['_shipping_cvs_store_ID'])));
-                        $order->update_meta_data('_shipping_cvs_store_name', wc_clean(wp_unslash($_POST['_shipping_cvs_store_name'])));
-                        $order->update_meta_data('_shipping_cvs_store_address', wc_clean(wp_unslash($_POST['_shipping_cvs_store_address'])));
-                        $order->update_meta_data('_shipping_cvs_store_telephone', wc_clean(wp_unslash($_POST['_shipping_cvs_store_telephone'])));
-                        $order->save_meta_data();
+                        if (isset($_POST['_shipping_cvs_store_ID'])) {
+                            $order->update_meta_data('_shipping_cvs_store_ID', wc_clean(wp_unslash($_POST['_shipping_cvs_store_ID'])));
+                            $order->update_meta_data('_shipping_cvs_store_name', wc_clean(wp_unslash($_POST['_shipping_cvs_store_name'])));
+                            $order->update_meta_data('_shipping_cvs_store_address', wc_clean(wp_unslash($_POST['_shipping_cvs_store_address'])));
+                            $order->update_meta_data('_shipping_cvs_store_telephone', wc_clean(wp_unslash($_POST['_shipping_cvs_store_telephone'])));
+                            $order->save_meta_data();
 
-                        // I know this is not the bast way to do thios thing
-                        $shipping_address = $order->get_address('shipping');
-                        update_post_meta($order_id, '_shipping_address_1', wc_clean(wp_unslash($_POST['_shipping_cvs_store_address'])));
-                        update_post_meta($order_id, '_shipping_address_index', implode(' ', $shipping_address));
+                            // I know this is not the bast way to do thios thing
+                            $shipping_address = $order->get_address('shipping');
+                            update_post_meta($order_id, '_shipping_address_1', wc_clean(wp_unslash($_POST['_shipping_cvs_store_address'])));
+                            update_post_meta($order_id, '_shipping_address_index', implode(' ', $shipping_address));
+                        }
                     }
                 }
             }

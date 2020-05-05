@@ -263,7 +263,7 @@ final class RY_ECPay_Shipping
             if (count($chosen_method)) {
                 foreach ($chosen_method as $method) {
                     $method = strstr($method, ':', true);
-                    if (array_key_exists($method, self::$support_methods) && strpos($method, 'cvs') !== false) {
+                    if ($method && array_key_exists($method, self::$support_methods) && strpos($method, 'cvs') !== false) {
                         $used_cvs = true;
                         break;
                     }
@@ -300,7 +300,7 @@ final class RY_ECPay_Shipping
         $shipping_method = isset($_POST['shipping_method']) ? wc_clean($_POST['shipping_method']) : [];
         foreach ($shipping_method as $method) {
             $method = strstr($method, ':', true);
-            if (array_key_exists($method, self::$support_methods) && strpos($method, 'cvs') !== false) {
+            if ($method && array_key_exists($method, self::$support_methods) && strpos($method, 'cvs') !== false) {
                 $used_cvs = true;
                 break;
             }
