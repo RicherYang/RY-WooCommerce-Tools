@@ -52,6 +52,17 @@ final class RY_ECPay_Shipping
 
             add_filter('woocommerce_email_classes', [__CLASS__, 'add_email_class']);
             add_filter('woocommerce_email_actions', [__CLASS__, 'add_email_action']);
+
+            add_action('ry_ecpay_shipping_response_status_2063', [__CLASS__, 'shipping_at_cvs'], 10, 2);
+            add_action('ry_ecpay_shipping_response_status_2073', [__CLASS__, 'shipping_at_cvs'], 10, 2);
+            add_action('ry_ecpay_shipping_response_status_3018', [__CLASS__, 'shipping_at_cvs'], 10, 2);
+            add_action('ry_ecpay_shipping_response_status_2074', [__CLASS__, 'shipping_out_cvs'], 10, 2);
+            add_action('ry_ecpay_shipping_response_status_3020', [__CLASS__, 'shipping_out_cvs'], 10, 2);
+            if ('yes' == RY_WT::get_option('ecpay_shipping_auto_completed', 'yes')) {
+                add_action('ry_ecpay_shipping_response_status_2067', [__CLASS__, 'shipping_completed'], 10, 2);
+                add_action('ry_ecpay_shipping_response_status_3003', [__CLASS__, 'shipping_completed'], 10, 2);
+                add_action('ry_ecpay_shipping_response_status_3022', [__CLASS__, 'shipping_completed'], 10, 2);
+            }
         }
 
         if (is_admin()) {
@@ -383,6 +394,21 @@ final class RY_ECPay_Shipping
         if (count($shipping_list) == 0) {
             RY_ECPay_Shipping_Api::get_code($order_id);
         }
+    }
+
+    public static function shipping_at_cvs($ipn_info, $order)
+    {
+        $order->update_status('ry-at-cvs');
+    }
+
+    public static function shipping_out_cvs($ipn_info, $order)
+    {
+        $order->update_status('ry-out-cvs');
+    }
+
+    public static function shipping_completed($ipn_info, $order)
+    {
+        $order->update_status('completed');
     }
 
     public static function send_at_cvs_email($order_id, $order = null)

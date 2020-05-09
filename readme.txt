@@ -5,7 +5,7 @@ Tags: woocommerce, payment, gateway, shipping, ecpay, newebpay
 Requires at least: 5.0
 Requires PHP: 5.6.20
 Tested up to: 5.4.1
-Stable tag: 1.4.2
+Stable tag: 1.4.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.txt
 
@@ -38,6 +38,12 @@ Please visit the [plugin page](https://richer.tw/ry-woocommerce-tools/ " ") with
 4. NewebPay gateway global settings.
 
 == Changelog ==
+
+= 1.4.4 - 2020/05/09 =
+* 更新 - 調整接收綠界回傳物流資訊的處理方式。
+
+= 1.4.3 - 2020/05/08 =
+* 更新 - 修正綠界 API 未回應接收成功訊息。
 
 = 1.4.2 - 2020/05/05 =
 * 更新 - 修正訂單列表更新訂單狀態後超商資訊會遺失問題。

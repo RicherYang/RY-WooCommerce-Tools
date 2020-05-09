@@ -5,6 +5,7 @@ class RY_ECPay_Shipping_Response extends RY_ECPay_Shipping_Api
 {
     public static function init()
     {
+        add_action('woocommerce_api_request', [__CLASS__, 'set_do_die']);
         add_action('woocommerce_api_ry_ecpay_map_callback', [__CLASS__, 'map_redirect']);
         add_action('woocommerce_api_ry_ecpay_shipping_callback', [__CLASS__, 'check_shipping_callback']);
         add_action('valid-shipping-request', [__CLASS__, 'shipping_callback']);
@@ -117,10 +118,6 @@ class RY_ECPay_Shipping_Response extends RY_ECPay_Shipping_Api
                 }
             }
 
-            if (method_exists(__CLASS__, 'shipping_status_' . $shipping_list[$ipn_info['AllPayLogisticsID']]['status'])) {
-                call_user_func([__CLASS__, 'shipping_status_' . $shipping_list[$ipn_info['AllPayLogisticsID']]['status']], $order, $ipn_info);
-            }
-
             do_action('ry_ecpay_shipping_response_status_' . $shipping_list[$ipn_info['AllPayLogisticsID']]['status'], $ipn_info, $order);
             do_action('ry_ecpay_shipping_response', $ipn_info, $order);
 
@@ -129,51 +126,5 @@ class RY_ECPay_Shipping_Response extends RY_ECPay_Shipping_Api
 
         RY_ECPay_Shipping::log('Order not found', 'error');
         self::die_error();
-    }
-
-    protected static function shipping_status_2063($order)
-    {
-        $order->update_status('ry-at-cvs');
-    }
-
-    protected static function shipping_status_2067($order)
-    {
-        if ('yes' == RY_WT::get_option('ecpay_shipping_auto_completed', 'yes')) {
-            $order->update_status('completed');
-        }
-    }
-
-    protected static function shipping_status_2073($order)
-    {
-        $order->update_status('ry-at-cvs');
-    }
-
-    protected static function shipping_status_3018($order)
-    {
-        $order->update_status('ry-at-cvs');
-    }
-
-    protected static function shipping_status_2074($order)
-    {
-        $order->update_status('ry-out-cvs');
-    }
-
-    protected static function shipping_status_3003($order)
-    {
-        if ('yes' == RY_WT::get_option('ecpay_shipping_auto_completed', 'yes')) {
-            $order->update_status('completed');
-        }
-    }
-
-    protected static function shipping_status_3020($order)
-    {
-        $order->update_status('ry-out-cvs');
-    }
-
-    protected static function shipping_status_3022($order)
-    {
-        if ('yes' == RY_WT::get_option('ecpay_shipping_auto_completed', 'yes')) {
-            $order->update_status('completed');
-        }
     }
 }
