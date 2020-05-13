@@ -36,14 +36,14 @@ class RY_ECPay_Shipping_Api extends RY_ECPay
             return false;
         }
 
-        $item_names = [];
-        $items = $order->get_items();
-        if (count($items)) {
-            foreach ($items as $item) {
-                $item_names[] = trim($item->get_name());
+        $item_names = RY_WT::get_option('shipping_item_name', '');
+        if (empty($item_names)) {
+            $items = $order->get_items();
+            if (count($items)) {
+                $item = reset($items);
+                $item_names = trim($item->get_name());
             }
         }
-        $item_names = implode(' ', $item_names);
         $item_names = str_replace(['^','\'','`','!','@','＠','#','%','&','*','+','\\','"','<','>','|','_','[',']'], '', $item_names);
         $item_names = mb_substr($item_names, 0, 25);
 
