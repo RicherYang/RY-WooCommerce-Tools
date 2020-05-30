@@ -35,11 +35,6 @@ class RY_NewebPay_Shipping_CVS extends WC_Shipping_Method
         $this->init_settings();
 
         add_action('woocommerce_update_options_shipping_' . $this->id, [$this, 'process_admin_options']);
-
-        add_filter('woocommerce_available_payment_gateways', [$this, 'only_newebpay_gateway'], 100);
-        add_filter('woocommerce_cod_process_payment_order_status', [$this, 'change_cod_order_status'], 10, 2);
-        add_filter('woocommerce_payment_successful_result', [$this, 'change_cod_redirect'], 10, 2);
-        add_action('woocommerce_receipt_cod', [__CLASS__, 'cod_receipt_page']);
     }
 
 
@@ -198,60 +193,5 @@ class RY_NewebPay_Shipping_CVS extends WC_Shipping_Method
             }
         }
         return false;
-    }
-
-    public function only_newebpay_gateway($_available_gateways)
-    {
-        if (WC()->cart && WC()->cart->needs_shipping()) {
-            $chosen_shipping = wc_get_chosen_shipping_method_ids();
-            if (count(array_intersect($chosen_shipping, [$this->id]))) {
-                foreach ($_available_gateways as $key => $gateway) {
-                    if (strpos($key, 'ry_newebpay_') === 0) {
-                        continue;
-                    }
-                    if ($key == 'cod') {
-                        continue;
-                    }
-                    unset($_available_gateways[$key]);
-                }
-            }
-        }
-        return $_available_gateways;
-    }
-
-    public function change_cod_order_status($status, $order)
-    {
-        $items_shipping = $order->get_items('shipping');
-        $items_shipping = array_shift($items_shipping);
-        if ($items_shipping) {
-            if ($items_shipping->get_method_id() == $this->id) {
-                $status = 'pending';
-            }
-        }
-
-        return $status;
-    }
-
-    public function change_cod_redirect($result, $order_id)
-    {
-        $order = wc_get_order($order_id);
-        if ($order->get_payment_method() == 'cod') {
-            $items_shipping = $order->get_items('shipping');
-            $items_shipping = array_shift($items_shipping);
-            if ($items_shipping) {
-                if ($items_shipping->get_method_id() == $this->id) {
-                    $result['redirect'] = $order->get_checkout_payment_url(true);
-                }
-            }
-        }
-
-        return $result;
-    }
-
-    public static function cod_receipt_page($order_id)
-    {
-        if ($order = wc_get_order($order_id)) {
-            RY_NewebPay_Gateway_Api::checkout_form($order, wc_get_payment_gateway_by_order($order));
-        }
     }
 }
