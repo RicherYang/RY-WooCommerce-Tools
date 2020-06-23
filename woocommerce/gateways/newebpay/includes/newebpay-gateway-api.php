@@ -88,7 +88,7 @@ class RY_NewebPay_Gateway_Api extends RY_NewebPay
 
         wc_enqueue_js(
             '$.blockUI({
-    message: "' . __('Please wait transfer to checkout page.', 'ry-woocommerce-tools') . '",
+    message: "' . __('Please wait.<br>Getting checkout info.', 'ry-woocommerce-tools') . '",
     baseZ: 99999,
     overlayCSS: {
         background: "#000",

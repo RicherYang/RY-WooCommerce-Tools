@@ -23,7 +23,6 @@ final class RY_NewebPay_Shipping
             add_filter('woocommerce_available_payment_gateways', [__CLASS__, 'only_newebpay_gateway'], 100);
             add_filter('woocommerce_cod_process_payment_order_status', [__CLASS__, 'change_cod_order_status'], 10, 2);
             add_action('woocommerce_receipt_cod', [__CLASS__, 'cod_receipt_page']);
-
             add_action('woocommerce_review_order_after_shipping', [__CLASS__, 'shipping_choose_cvs']);
             add_filter('woocommerce_update_order_review_fragments', [__CLASS__, 'shipping_choose_cvs_info']);
         }

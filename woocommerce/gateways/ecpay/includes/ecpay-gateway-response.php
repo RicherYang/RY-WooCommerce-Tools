@@ -7,8 +7,12 @@ class RY_ECPay_Gateway_Response extends RY_ECPay_Gateway_Api
     {
         add_action('woocommerce_api_request', [__CLASS__, 'set_do_die']);
         add_action('woocommerce_api_ry_ecpay_callback', [__CLASS__, 'check_callback']);
+        add_action('valid_ecpay_gateway_request', [__CLASS__, 'doing_callback']);
 
-        add_action('valid_ecpay_callback_request', [__CLASS__, 'doing_callback']);
+        add_action('ry_ecpay_gateway_response_status_1', [__CLASS__, 'payment_complete'], 10, 2);
+        add_action('ry_ecpay_gateway_response_status_2', [__CLASS__, 'payment_wait_atm'], 10, 2);
+        add_action('ry_ecpay_gateway_response_status_10100073', [__CLASS__, 'payment_wait_cvs'], 10, 2);
+        add_action('ry_ecpay_gateway_response_status_10100058', [__CLASS__, 'payment_failed'], 10, 2);
     }
 
     public static function check_callback()
@@ -16,7 +20,7 @@ class RY_ECPay_Gateway_Response extends RY_ECPay_Gateway_Api
         if (!empty($_POST)) {
             $ipn_info = wp_unslash($_POST);
             if (self::ipn_request_is_valid($ipn_info)) {
-                do_action('valid_ecpay_callback_request', $ipn_info);
+                do_action('valid_ecpay_gateway_request', $ipn_info);
             } else {
                 self::die_error();
             }
@@ -48,12 +52,6 @@ class RY_ECPay_Gateway_Response extends RY_ECPay_Gateway_Api
             RY_ECPay_Gateway::log('Found order #' . $order->get_id() . ' Payment status: ' . $payment_status);
 
             $order = self::set_transaction_info($order, $ipn_info);
-
-            if (method_exists(__CLASS__, 'payment_status_' . $payment_status)) {
-                call_user_func([__CLASS__, 'payment_status_' . $payment_status], $order, $ipn_info);
-            } else {
-                self::payment_status_unknow($order, $ipn_info, $payment_status);
-            }
 
             do_action('ry_ecpay_gateway_response_status_' . $payment_status, $ipn_info, $order);
             do_action('ry_ecpay_gateway_response', $ipn_info, $order);
@@ -92,7 +90,7 @@ class RY_ECPay_Gateway_Response extends RY_ECPay_Gateway_Api
         return false;
     }
 
-    protected static function payment_status_1($order, $ipn_info)
+    public static function payment_complete($ipn_info, $order)
     {
         if (!$order->is_paid()) {
             $order = self::set_transaction_info($order, $ipn_info);
@@ -101,7 +99,7 @@ class RY_ECPay_Gateway_Response extends RY_ECPay_Gateway_Api
         }
     }
 
-    protected static function payment_status_2($order, $ipn_info)
+    public static function payment_wait_atm($ipn_info, $order)
     {
         if (!$order->is_paid()) {
             $expireDate = new DateTime($ipn_info['ExpireDate'], new DateTimeZone('Asia/Taipei'));
@@ -115,7 +113,7 @@ class RY_ECPay_Gateway_Response extends RY_ECPay_Gateway_Api
         }
     }
 
-    protected static function payment_status_10100073($order, $ipn_info)
+    public static function payment_wait_cvs($ipn_info, $order)
     {
         if (!$order->is_paid()) {
             list($payment_type, $payment_subtype) = self::get_payment_info($ipn_info);
@@ -136,22 +134,18 @@ class RY_ECPay_Gateway_Response extends RY_ECPay_Gateway_Api
         }
     }
 
-    protected static function payment_status_10100058($order, $ipn_info)
+    public static function payment_failed($ipn_info, $order)
     {
         if ($order->is_paid()) {
             $order->add_order_note(__('Payment failed within paid order', 'ry-woocommerce-tools'));
             $order->save();
             return ;
         }
+
         $order->update_status('failed', sprintf(
             /* translators: Error status message */
             __('Payment failed (%s)', 'ry-woocommerce-tools'),
             self::get_status_msg($ipn_info)
         ));
-    }
-
-    protected static function payment_status_unknow($order, $ipn_info, $payment_status)
-    {
-        RY_ECPay_Gateway::log('Unknow status: ' . self::get_status($ipn_info) . '(' . self::get_status_msg($ipn_info) . ')');
     }
 }

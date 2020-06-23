@@ -44,6 +44,7 @@ class RY_ECPay_Gateway_Api extends RY_ECPay
             'ClientRedirectURL' => $return_url
         ];
         $args['MerchantTradeDate'] = $args['MerchantTradeDate']->format('Y/m/d H:i:s');
+        $args['TradeDesc'] = self::urlencode($args['TradeDesc']);
 
         switch (get_locale()) {
             case 'zh_HK':
@@ -87,7 +88,7 @@ class RY_ECPay_Gateway_Api extends RY_ECPay
 
         wc_enqueue_js(
             '$.blockUI({
-    message: "' . __('Please wait transfer to checkout page.', 'ry-woocommerce-tools') . '",
+    message: "' . __('Please wait.<br>Getting checkout info.', 'ry-woocommerce-tools') . '",
     baseZ: 99999,
     overlayCSS: {
         background: "#000",
@@ -243,7 +244,7 @@ window.addEventListener("message", function (e) {
         $item_name = '';
         if (count($order->get_items())) {
             foreach ($order->get_items() as $item) {
-                $item_name .= trim($item->get_name()) . '#';
+                $item_name .= str_replace('#', '', trim($item->get_name())) . '#';
                 if (strlen($item_name) > 200) {
                     break;
                 }

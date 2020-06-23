@@ -56,6 +56,13 @@ final class RY_WT
                 include_once(RY_WT_PLUGIN_DIR . 'woocommerce/shipping/newebpay/newebpay-shipping.php');
             }
 
+            if ('yes' == self::get_option('enabled_smilepay_gateway', 'no')) {
+                include_once(RY_WT_PLUGIN_DIR . 'woocommerce/gateways/smilepay/smilepay-gateway.php');
+            }
+            if ('yes' == self::get_option('enabled_smilepay_shipping', 'no')) {
+                //include_once(RY_WT_PLUGIN_DIR . 'woocommerce/shipping/smilepay/smilepay-shipping.php');
+            }
+
             if ('no' == self::get_option('repay_action', 'no')) {
                 add_filter('woocommerce_my_account_my_orders_actions', [__CLASS__, 'remove_pay_action']);
             }

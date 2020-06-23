@@ -8,7 +8,18 @@ class RY_ECPay_Shipping_Response extends RY_ECPay_Shipping_Api
         add_action('woocommerce_api_request', [__CLASS__, 'set_do_die']);
         add_action('woocommerce_api_ry_ecpay_map_callback', [__CLASS__, 'map_redirect']);
         add_action('woocommerce_api_ry_ecpay_shipping_callback', [__CLASS__, 'check_shipping_callback']);
-        add_action('valid-shipping-request', [__CLASS__, 'shipping_callback']);
+        add_action('valid_ecpay_shipping_request', [__CLASS__, 'shipping_callback']);
+
+        add_action('ry_ecpay_shipping_response_status_2063', [__CLASS__, 'shipping_at_cvs'], 10, 2);
+        add_action('ry_ecpay_shipping_response_status_2073', [__CLASS__, 'shipping_at_cvs'], 10, 2);
+        add_action('ry_ecpay_shipping_response_status_3018', [__CLASS__, 'shipping_at_cvs'], 10, 2);
+        add_action('ry_ecpay_shipping_response_status_2074', [__CLASS__, 'shipping_out_cvs'], 10, 2);
+        add_action('ry_ecpay_shipping_response_status_3020', [__CLASS__, 'shipping_out_cvs'], 10, 2);
+        if ('yes' == RY_WT::get_option('ecpay_shipping_auto_completed', 'yes')) {
+            add_action('ry_ecpay_shipping_response_status_2067', [__CLASS__, 'shipping_completed'], 10, 2);
+            add_action('ry_ecpay_shipping_response_status_3003', [__CLASS__, 'shipping_completed'], 10, 2);
+            add_action('ry_ecpay_shipping_response_status_3022', [__CLASS__, 'shipping_completed'], 10, 2);
+        }
     }
 
     public static function map_redirect()
@@ -59,7 +70,7 @@ class RY_ECPay_Shipping_Response extends RY_ECPay_Shipping_Api
         if (!empty($_POST)) {
             $ipn_info = wp_unslash($_POST);
             if (self::ipn_request_is_valid($ipn_info)) {
-                do_action('valid-shipping-request', $ipn_info);
+                do_action('valid_ecpay_shipping_request', $ipn_info);
             } else {
                 self::die_error();
             }
@@ -126,5 +137,20 @@ class RY_ECPay_Shipping_Response extends RY_ECPay_Shipping_Api
 
         RY_ECPay_Shipping::log('Order not found', 'error');
         self::die_error();
+    }
+
+    public static function shipping_at_cvs($ipn_info, $order)
+    {
+        $order->update_status('ry-at-cvs');
+    }
+
+    public static function shipping_out_cvs($ipn_info, $order)
+    {
+        $order->update_status('ry-out-cvs');
+    }
+
+    public static function shipping_completed($ipn_info, $order)
+    {
+        $order->update_status('completed');
     }
 }

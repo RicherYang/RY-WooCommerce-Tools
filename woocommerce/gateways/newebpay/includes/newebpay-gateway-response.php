@@ -8,8 +8,7 @@ class RY_NewebPay_Gateway_Response extends RY_NewebPay_Gateway_Api
         add_action('woocommerce_api_request', [__CLASS__, 'set_do_die']);
         add_action('woocommerce_api_ry_newebpay_callback', [__CLASS__, 'check_callback']);
         add_action('woocommerce_thankyou', [__CLASS__, 'check_callback'], 8);
-
-        add_action('valid_newebpay_callback_request', [__CLASS__, 'doing_callback']);
+        add_action('valid_newebpay_gateway_request', [__CLASS__, 'doing_callback']);
     }
 
     public static function check_callback()
@@ -17,7 +16,7 @@ class RY_NewebPay_Gateway_Response extends RY_NewebPay_Gateway_Api
         if (!empty($_POST)) {
             $ipn_info = wp_unslash($_POST);
             if (self::ipn_request_is_valid($ipn_info)) {
-                do_action('valid_newebpay_callback_request', $ipn_info);
+                do_action('valid_newebpay_gateway_request', $ipn_info);
             } else {
                 self::die_error();
             }

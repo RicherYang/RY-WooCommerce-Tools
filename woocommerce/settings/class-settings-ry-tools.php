@@ -108,6 +108,31 @@ if (!class_exists('WC_Settings_RY_Tools', false)) {
                         'id' => 'newebpay_support',
                     ],
                     [
+                        'title' => __('SmilePay support', 'ry-woocommerce-tools'),
+                        'type'  => 'title',
+                        'id'    => 'smilepay_support',
+                    ],
+                    [
+                        'title'   => __('Gateway method', 'ry-woocommerce-tools'),
+                        'desc'    => __('Enable SmilePay gateway method', 'ry-woocommerce-tools')
+                            . (wc_checkout_is_https() ? '' : '<br>' . __('For correct link with SmilePay API, need enable secure checkout.', 'ry-woocommerce-tools')),
+                        'id'      => RY_WT::$option_prefix . 'enabled_smilepay_gateway',
+                        'type'    => 'checkbox',
+                        'default' => 'no'
+                    ],/*
+                    [
+                        'title'   => __('Shipping method', 'ry-woocommerce-tools'),
+                        'desc'    => __('Enable SmilePay shipping method', 'ry-woocommerce-tools')
+                            . (wc_checkout_is_https() ? '' : '<br>' . __('For correct link with SmilePay API, need enable secure checkout.', 'ry-woocommerce-tools')),
+                        'id'      => RY_WT::$option_prefix . 'enabled_smilepay_shipping',
+                        'type'    => 'checkbox',
+                        'default' => 'no',
+                    ],*/
+                    [
+                        'type' => 'sectionend',
+                        'id' => 'smilepay_support',
+                    ],
+                    [
                         'title' => __('General options', 'ry-woocommerce-tools'),
                         'type'  => 'title',
                         'id'    => 'general_options',

@@ -9,26 +9,26 @@ return [
     ],
     [
         'title' => __('Enable/Disable', 'woocommerce'),
-        'id' => RY_WT::$option_prefix . 'ecpay_gateway',
+        'id' => RY_WT::$option_prefix . 'smilepay_gateway',
         'type' => 'checkbox',
         'default' => 'no',
-        'desc' => __('Enable ECPay gateway method', 'ry-woocommerce-tools')
+        'desc' => __('Enable SmilePay gateway method', 'ry-woocommerce-tools')
     ],
     [
         'title' => __('Debug log', 'woocommerce'),
-        'id' => RY_WT::$option_prefix . 'ecpay_gateway_log',
+        'id' => RY_WT::$option_prefix . 'smilepay_gateway_log',
         'type' => 'checkbox',
         'default' => 'no',
         'desc' => __('Enable logging', 'woocommerce') . '<br>'
             . sprintf(
                 /* translators: %s: Path of log file */
-                __('Log ECPay gateway events/message, inside %s', 'ry-woocommerce-tools'),
-                '<code>' . WC_Log_Handler_File::get_log_file_path('ry_ecpay_gateway') . '</code>'
+                __('Log SmilePay gateway events/message, inside %s', 'ry-woocommerce-tools'),
+                '<code>' . WC_Log_Handler_File::get_log_file_path('ry_smilepay_gateway') . '</code>'
             )
     ],
     [
         'title' => __('Order no prefix', 'ry-woocommerce-tools'),
-        'id' => RY_WT::$option_prefix . 'ecpay_gateway_order_prefix',
+        'id' => RY_WT::$option_prefix . 'smilepay_gateway_order_prefix',
         'type' => 'text',
         'desc' => __('The prefix string of order no. Only letters and numbers allowed allowed.', 'ry-woocommerce-tools'),
         'desc_tip' => true
@@ -43,27 +43,33 @@ return [
         'type' => 'title'
     ],
     [
-        'title' => __('ECPay gateway sandbox', 'ry-woocommerce-tools'),
-        'id' => RY_WT::$option_prefix . 'ecpay_gateway_testmode',
+        'title' => __('SmilePay gateway sandbox', 'ry-woocommerce-tools'),
+        'id' => RY_WT::$option_prefix . 'smilepay_gateway_testmode',
         'type' => 'checkbox',
         'default' => 'yes',
-        'desc' => __('Enable ECPay gateway sandbox', 'ry-woocommerce-tools')
+        'desc' => __('Enable SmilePay gateway sandbox', 'ry-woocommerce-tools')
     ],
     [
-        'title' => __('MerchantID', 'ECPay', 'ry-woocommerce-tools'),
-        'id' => RY_WT::$option_prefix . 'ecpay_gateway_MerchantID',
+        'title' => _x('Dcvc', 'SmilePay', 'ry-woocommerce-tools'),
+        'id' => RY_WT::$option_prefix . 'smilepay_gateway_Dcvc',
         'type' => 'text',
         'default' => ''
     ],
     [
-        'title' => __('HashKey', 'ECPay', 'ry-woocommerce-tools'),
-        'id' => RY_WT::$option_prefix . 'ecpay_gateway_HashKey',
+        'title' => _x('Rvg2c', 'SmilePay', 'ry-woocommerce-tools'),
+        'id' => RY_WT::$option_prefix . 'smilepay_gateway_Rvg2c',
         'type' => 'text',
         'default' => ''
     ],
     [
-        'title' => __('HashIV', 'ECPay', 'ry-woocommerce-tools'),
-        'id' => RY_WT::$option_prefix . 'ecpay_gateway_HashIV',
+        'title' => _x('Verify_key', 'SmilePay', 'ry-woocommerce-tools'),
+        'id' => RY_WT::$option_prefix . 'smilepay_gateway_Verify_key',
+        'type' => 'text',
+        'default' => ''
+    ],
+    [
+        'title' => _x('Rot_check', 'SmilePay', 'ry-woocommerce-tools'),
+        'id' => RY_WT::$option_prefix . 'smilepay_gateway_Rot_check',
         'type' => 'text',
         'default' => ''
     ],

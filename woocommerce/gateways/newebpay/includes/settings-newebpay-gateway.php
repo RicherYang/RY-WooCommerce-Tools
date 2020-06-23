@@ -50,19 +50,19 @@ return [
         'desc' => __('Enable NewebPay gateway sandbox', 'ry-woocommerce-tools')
     ],
     [
-        'title' => __('MerchantID', 'ry-woocommerce-tools'),
+        'title' => __('MerchantID', 'NewebPay', 'ry-woocommerce-tools'),
         'id' => RY_WT::$option_prefix . 'newebpay_gateway_MerchantID',
         'type' => 'text',
         'default' => ''
     ],
     [
-        'title' => __('HashKey', 'ry-woocommerce-tools'),
+        'title' => __('HashKey', 'NewebPay', 'ry-woocommerce-tools'),
         'id' => RY_WT::$option_prefix . 'newebpay_gateway_HashKey',
         'type' => 'text',
         'default' => ''
     ],
     [
-        'title' => __('HashIV', 'ry-woocommerce-tools'),
+        'title' => __('HashIV', 'NewebPay', 'ry-woocommerce-tools'),
         'id' => RY_WT::$option_prefix . 'newebpay_gateway_HashIV',
         'type' => 'text',
         'default' => ''
