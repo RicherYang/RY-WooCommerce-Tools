@@ -97,6 +97,12 @@ final class RY_Shipping
                             $show_cvs_address = true;
                         }
                     }
+
+                    if ('yes' == RY_WT::get_option('enabled_smilepay_shipping', 'no')) {
+                        if (array_key_exists($items_shipping, RY_SmilePay_Shipping::$support_methods)) {
+                            $show_cvs_address = true;
+                        }
+                    }
                 }
             }
         }

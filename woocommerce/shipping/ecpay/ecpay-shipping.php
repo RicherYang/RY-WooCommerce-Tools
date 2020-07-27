@@ -253,7 +253,7 @@ final class RY_ECPay_Shipping
             'priority' => 112
         ];
 
-        if ('no' == RY_WT::get_option('ecpay_keep_shipping_phone', 'no')) {
+        if ('no' == RY_WT::get_option('keep_shipping_phone', 'no')) {
             $fields['shipping']['shipping_phone']['class'][] = 'cvs-info';
         }
 
@@ -329,7 +329,7 @@ final class RY_ECPay_Shipping
 
     public static function fix_not_use_cvs_info($fields)
     {
-        if ('no' == RY_WT::get_option('ecpay_keep_shipping_phone', 'no')) {
+        if ('no' == RY_WT::get_option('keep_shipping_phone', 'no')) {
             $fields['shipping']['shipping_phone']['required'] = false;
         }
 

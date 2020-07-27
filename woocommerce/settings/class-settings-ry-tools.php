@@ -119,7 +119,7 @@ if (!class_exists('WC_Settings_RY_Tools', false)) {
                         'id'      => RY_WT::$option_prefix . 'enabled_smilepay_gateway',
                         'type'    => 'checkbox',
                         'default' => 'no'
-                    ],/*
+                    ],
                     [
                         'title'   => __('Shipping method', 'ry-woocommerce-tools'),
                         'desc'    => __('Enable SmilePay shipping method', 'ry-woocommerce-tools')
@@ -127,7 +127,7 @@ if (!class_exists('WC_Settings_RY_Tools', false)) {
                         'id'      => RY_WT::$option_prefix . 'enabled_smilepay_shipping',
                         'type'    => 'checkbox',
                         'default' => 'no',
-                    ],*/
+                    ],
                     [
                         'type' => 'sectionend',
                         'id' => 'smilepay_support',

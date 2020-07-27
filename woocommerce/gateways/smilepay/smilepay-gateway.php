@@ -5,7 +5,6 @@ final class RY_SmilePay_Gateway
 {
     public static $log_enabled = false;
     public static $log = false;
-    public static $log_source = 'ry_smilepay';
 
     public static function init()
     {
@@ -14,7 +13,6 @@ final class RY_SmilePay_Gateway
         include_once(RY_WT_PLUGIN_DIR . 'woocommerce/gateways/smilepay/includes/smilepay-gateway-response.php');
         include_once(RY_WT_PLUGIN_DIR . 'woocommerce/gateways/smilepay/includes/smilepay-gateway-base.php');
         include_once(RY_WT_PLUGIN_DIR . 'woocommerce/gateways/smilepay/smilepay-gateway-credit.php');
-        //include_once(RY_WT_PLUGIN_DIR . 'woocommerce/gateways/smilepay/smilepay-gateway-credit-installment.php');
         include_once(RY_WT_PLUGIN_DIR . 'woocommerce/gateways/smilepay/smilepay-gateway-webatm.php');
         include_once(RY_WT_PLUGIN_DIR . 'woocommerce/gateways/smilepay/smilepay-gateway-atm.php');
         include_once(RY_WT_PLUGIN_DIR . 'woocommerce/gateways/smilepay/smilepay-gateway-cvs-711.php');
@@ -40,6 +38,8 @@ final class RY_SmilePay_Gateway
 
             add_action('wp_ajax_RY_SmilePay_getcode', [__CLASS__, 'get_code']);
             add_action('wp_ajax_nopriv_RY_SmilePay_getcode', [__CLASS__, 'get_code']);
+            add_action('wp_ajax_RY_SmilePay_shipping_getcode', [__CLASS__, 'shipping_get_code']);
+            add_action('wp_ajax_nopriv_RY_SmilePay_shipping_getcode', [__CLASS__, 'shipping_get_code']);
         }
     }
 
@@ -126,7 +126,25 @@ final class RY_SmilePay_Gateway
     {
         $order_id = isset($_GET['id']) ? (int) $_GET['id'] : 0;
         $order = wc_get_order($order_id);
-        $url = RY_SmilePay_Gateway_Api::get_code($order);
+        $url = false;
+        if ($order) {
+            $url = RY_SmilePay_Gateway_Api::get_code($order);
+        }
+        if (!$url) {
+            $url = $order->get_checkout_order_received_url();
+        }
+        echo($url);
+        wp_die();
+    }
+
+    public static function shipping_get_code()
+    {
+        $order_id = isset($_GET['id']) ? (int) $_GET['id'] : 0;
+        $order = wc_get_order($order_id);
+        $url = false;
+        if ($order) {
+            $url = RY_SmilePay_Shipping_Api::get_csv_info($order);
+        }
         if (!$url) {
             $url = $order->get_checkout_order_received_url();
         }
@@ -170,7 +188,6 @@ final class RY_SmilePay_Gateway
     public static function add_method($methods)
     {
         $methods[] = 'RY_SmilePay_Gateway_Credit';
-        //$methods[] = 'RY_SmilePay_Gateway_Credit_Installment';
         $methods[] = 'RY_SmilePay_Gateway_Webatm';
         $methods[] = 'RY_SmilePay_Gateway_Atm';
         $methods[] = 'RY_SmilePay_Gateway_Cvs_711';

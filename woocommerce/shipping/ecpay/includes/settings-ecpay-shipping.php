@@ -42,7 +42,7 @@ return [
     ],
     [
         'title' => __('Keep shipping phone', 'ry-woocommerce-tools'),
-        'id' => RY_WT::$option_prefix . 'ecpay_keep_shipping_phone',
+        'id' => RY_WT::$option_prefix . 'keep_shipping_phone',
         'type' => 'checkbox',
         'default' => 'no',
         'desc' => __('Always show shipping phone field in checkout form.', 'ry-woocommerce-tools')

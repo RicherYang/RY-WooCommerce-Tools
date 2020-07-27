@@ -29,8 +29,6 @@ class RY_SmilePay_Gateway_Api extends RY_SmilePay
         $gateway = $payment_gateways[$payment_method];
         RY_SmilePay_Gateway::log('Generating payment form by ' . $gateway->id . ' for #' . $order->get_order_number());
 
-        $notify_url = WC()->api_request_url('ry_smilepay_callback', true);
-
         list($Dcvc, $Rvg2c, $Verify_key, $Rot_check) = RY_SmilePay_Gateway::get_smilepay_api_info();
 
         $args = [
@@ -40,7 +38,7 @@ class RY_SmilePay_Gateway_Api extends RY_SmilePay
             'Pay_zg' => $gateway->payment_type,
             'Data_id' => self::generate_trade_no($order->get_id(), RY_WT::get_option('smilepay_gateway_order_prefix')),
             'Amount' => (int) ceil($order->get_total()),
-            'Roturl' => $notify_url,
+            'Roturl' => WC()->api_request_url('ry_smilepay_callback', true),
             'Roturl_status' => 'RY_SmilePay'
         ];
         if ($gateway->get_code_mode) {
@@ -132,7 +130,7 @@ class RY_SmilePay_Gateway_Api extends RY_SmilePay
 
     protected static function add_type_info($args, $order, $gateway)
     {
-        switch ($gateway->payment_type) {
+        switch ($args['Pay_zg']) {
             case '2':
             case '3':
                 $date = new DateTime('', new DateTimeZone('Asia/Taipei'));
@@ -156,7 +154,7 @@ class RY_SmilePay_Gateway_Api extends RY_SmilePay
         if (count($order->get_items())) {
             foreach ($order->get_items() as $item) {
                 $item_name .= trim($item->get_name()) . '#';
-                if (strlen($item_name) > 50) {
+                if (strlen($item_name) > 20) {
                     break;
                 }
             }

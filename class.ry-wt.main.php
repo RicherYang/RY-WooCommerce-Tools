@@ -60,7 +60,7 @@ final class RY_WT
                 include_once(RY_WT_PLUGIN_DIR . 'woocommerce/gateways/smilepay/smilepay-gateway.php');
             }
             if ('yes' == self::get_option('enabled_smilepay_shipping', 'no')) {
-                //include_once(RY_WT_PLUGIN_DIR . 'woocommerce/shipping/smilepay/smilepay-shipping.php');
+                include_once(RY_WT_PLUGIN_DIR . 'woocommerce/shipping/smilepay/smilepay-shipping.php');
             }
 
             if ('no' == self::get_option('repay_action', 'no')) {

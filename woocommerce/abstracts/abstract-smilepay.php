@@ -21,6 +21,30 @@ if (!class_exists('RY_SmilePay')) {
             ]);
         }
 
+        protected static function clean_post_data($change_convert = false)
+        {
+            if ($change_convert) {
+                if (function_exists('mb_convert_encoding')) {
+                    foreach ($_POST as $key => $value) {
+                        if (!is_array($value)) {
+                            $_POST[$key] = mb_convert_encoding($value, 'UTF-8', 'BIG-5');
+                        } else {
+                            unset($_POST[$key]);
+                        }
+                    }
+                }
+            }
+
+            $ipn_info = [];
+            foreach ($_POST as $key => $value) {
+                if (!is_array($value)) {
+                    $ipn_info[$key] = wp_unslash($value);
+                }
+            }
+
+            return $ipn_info;
+        }
+
         protected static function get_transaction_id($ipn_info)
         {
             if (isset($ipn_info->SmilePayNO)) {
@@ -28,6 +52,17 @@ if (!class_exists('RY_SmilePay')) {
             }
             if (isset($ipn_info['Smseid'])) {
                 return $ipn_info['Smseid'];
+            }
+            return false;
+        }
+
+        protected static function get_status($ipn_info)
+        {
+            if (isset($ipn_info['Shipstatus'])) {
+                return trim($ipn_info['Shipstatus']);
+            }
+            if (isset($ipn_info['Status'])) {
+                return trim($ipn_info['Status']);
             }
             return false;
         }

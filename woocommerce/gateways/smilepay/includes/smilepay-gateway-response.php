@@ -13,18 +13,13 @@ class RY_SmilePay_Gateway_Response extends RY_SmilePay_Gateway_Api
     public static function check_callback()
     {
         if (!empty($_POST)) {
-            if (function_exists('mb_convert_encoding')) {
-                foreach ($_POST as $key => $value) {
-                    $_POST[$key] = mb_convert_encoding($value, 'UTF-8', 'BIG-5');
-                }
-            }
-            $ipn_info = wp_unslash($_POST);
+            $ipn_info = self::clean_post_data(true);
             if (self::ipn_request_is_valid($ipn_info)) {
                 do_action('valid_smilepay_gateway_request', $ipn_info);
-            } else {
-                self::die_error();
+                return;
             }
         }
+        self::die_error();
     }
 
     protected static function ipn_request_is_valid($ipn_info)
@@ -40,7 +35,7 @@ class RY_SmilePay_Gateway_Response extends RY_SmilePay_Gateway_Api
                 $ipn_info_check_value[0] = str_pad(substr($Rot_check, -4), 4, '0', STR_PAD_LEFT);
                 $ipn_info_check_value[1] = (int) ceil($order->get_total());
                 $ipn_info_check_value[1] = str_pad($ipn_info_check_value[1], 8, '0', STR_PAD_LEFT);
-                $ipn_info_check_value[2] = isset($ipn_info['Smseid']) ? $ipn_info['Smseid'] : '';
+                $ipn_info_check_value[2] = self::get_transaction_id($ipn_info);
                 $ipn_info_check_value[2] = str_pad(substr($ipn_info_check_value[2], -4), 4, '9', STR_PAD_LEFT);
                 $ipn_info_check_value[2] = preg_replace('/[^\d]/s', '9', $ipn_info_check_value[2]);
 

@@ -2,7 +2,9 @@ var ecpayShippingInfo;
 
 jQuery(function ($) {
 
-    ecpayShippingInfo = ry_shipping_params.postData;
+    if (typeof ry_shipping_params !== 'undefined') {
+        ecpayShippingInfo = ry_shipping_params.postData;
+    }
     $('.woocommerce-checkout p.ry-hide').hide();
 
     $(document.body).on('updated_checkout', function (e, data) {
@@ -43,6 +45,18 @@ jQuery(function ($) {
                 }
             } else if (data.fragments.newebpay_shipping_info !== undefined) {
                 $('.woocommerce-shipping-fields__field-wrapper p').hide();
+                if ($('#ship-to-different-address-checkbox').prop('checked') === false) {
+                    $('#ship-to-different-address-checkbox').click();
+                }
+            } else if (data.fragments.smilepay_shipping_info !== undefined) {
+                $('.woocommerce-shipping-fields__field-wrapper p:not(.cvs-info)').hide();
+                $('.woocommerce-shipping-fields__field-wrapper p#shipping_first_name_field').show();
+                $('.woocommerce-shipping-fields__field-wrapper p#shipping_last_name_field').show();
+                $('.woocommerce-shipping-fields__field-wrapper p#shipping_phone_field').show();
+                $('.woocommerce-shipping-fields__field-wrapper p.cvs-info').show();
+                $('.woocommerce-shipping-fields__field-wrapper #CVSStoreName_field').hide();
+                $('.woocommerce-shipping-fields__field-wrapper #CVSAddress_field').hide();
+                $('.woocommerce-shipping-fields__field-wrapper #CVSTelephone_field').hide();
                 if ($('#ship-to-different-address-checkbox').prop('checked') === false) {
                     $('#ship-to-different-address-checkbox').click();
                 }

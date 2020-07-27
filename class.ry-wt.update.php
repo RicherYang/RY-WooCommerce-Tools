@@ -158,9 +158,15 @@ final class RY_WT_update
 
             RY_WT::update_option('version', '1.4.0');
         }
+
+        if (version_compare($now_version, '1.6.0', '<')) {
+            RY_WT::update_option('keep_shipping_phone', RY_WT::get_option('ecpay_keep_shipping_phone', 'no'));
+            
+            RY_WT::update_option('version', '1.6.0');
+        }
         
-        if (version_compare($now_version, '1.5.1', '<')) {
-            RY_WT::update_option('version', '1.5.1');
+        if (version_compare($now_version, '1.6.1', '<')) {
+            RY_WT::update_option('version', '1.6.1');
         }
     }
 }

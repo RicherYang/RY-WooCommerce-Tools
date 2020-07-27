@@ -5,7 +5,6 @@ final class RY_NewebPay_Gateway
 {
     public static $log_enabled = false;
     public static $log = false;
-    public static $log_source = 'ry_newebpay';
 
     public static function init()
     {
