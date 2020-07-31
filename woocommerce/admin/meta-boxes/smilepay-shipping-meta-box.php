@@ -96,7 +96,7 @@ class RY_SmilePay_Shipping_Meta_Box
                 <?=sprintf(_x('%1$s %2$s', 'Datetime', 'ry-woocommerce-tools'), $item['create']->date_i18n(wc_date_format()), $item['create']->date_i18n(wc_time_format())) ?>
             </td>
             <td>
-                <!--<button type="button" class="button print_info" data-orderid="<?=$post->ID ?>" data-id="<?=$item['ID'] ?>"><?=__('Print', 'ry-woocommerce-tools') ?></button>-->
+                <button type="button" class="button print_info" data-orderid="<?=$post->ID ?>" data-id="<?=$item['ID'] ?>"><?=__('Print', 'ry-woocommerce-tools') ?></button>
             </td>
         </tr>
         <?php
@@ -104,5 +104,16 @@ class RY_SmilePay_Shipping_Meta_Box
     </tbody>
 </table>
 <?php
+        wc_enqueue_js(
+                'jQuery(function($) {
+$(".print_info").click(function(){
+    window.open(ajaxurl + "?" + $.param({
+        action: "RY_SmilePay_Shipping_print",
+        orderid: $(this).data("orderid"),
+        id: $(this).data("id")
+    }), "_blank", "toolbar=yes,scrollbars=yes,resizable=yes");
+});
+});'
+            );
     }
 }

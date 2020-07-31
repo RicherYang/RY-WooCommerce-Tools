@@ -46,7 +46,7 @@ final class RY_SmilePay_Shipping
             add_filter('woocommerce_get_settings_rytools', [__CLASS__, 'add_setting'], 10, 2);
             add_action('woocommerce_update_options_rytools_smilepay_shipping', [__CLASS__, 'check_option']);
 
-            include_once(RY_WT_PLUGIN_DIR . 'woocommerce/shipping/smilepay/includes/smilepay-shipping-admin.php');
+            include_once RY_WT_PLUGIN_DIR . 'woocommerce/shipping/smilepay/includes/smilepay-shipping-admin.php';
         }
     }
 
@@ -278,7 +278,7 @@ final class RY_SmilePay_Shipping
             $shipping_list = [];
         }
         foreach ($shipping_list as $smse_id => $info) {
-            RY_SmilePay_Shipping_Api::get_code_no($order_id, $info);
+            RY_SmilePay_Shipping_Api::get_code_no($order_id, $smse_id);
         }
     }
 

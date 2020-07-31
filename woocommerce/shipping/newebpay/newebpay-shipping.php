@@ -11,9 +11,9 @@ final class RY_NewebPay_Shipping
 
     public static function init()
     {
-        include_once(RY_WT_PLUGIN_DIR . 'woocommerce/shipping/ry-base.php');
-        include_once(RY_WT_PLUGIN_DIR . 'woocommerce/abstracts/abstract-newebpay.php');
-        include_once(RY_WT_PLUGIN_DIR . 'woocommerce/shipping/newebpay/newebpay-shipping-cvs.php');
+        include_once RY_WT_PLUGIN_DIR . 'woocommerce/shipping/ry-base.php';
+        include_once RY_WT_PLUGIN_DIR . 'woocommerce/abstracts/abstract-newebpay.php';
+        include_once RY_WT_PLUGIN_DIR . 'woocommerce/shipping/newebpay/newebpay-shipping-cvs.php';
 
         if ('yes' === RY_WT::get_option('newebpay_shipping', 'no')) {
             add_filter('woocommerce_shipping_methods', [__CLASS__, 'add_method']);
@@ -32,7 +32,7 @@ final class RY_NewebPay_Shipping
             add_filter('woocommerce_get_settings_rytools', [__CLASS__, 'add_setting'], 10, 2);
             add_action('woocommerce_update_options_rytools_newebpay_shipping', [__CLASS__, 'check_option']);
 
-            include_once(RY_WT_PLUGIN_DIR . 'woocommerce/shipping/newebpay/includes/newebpay-shipping-admin.php');
+            include_once RY_WT_PLUGIN_DIR . 'woocommerce/shipping/newebpay/includes/newebpay-shipping-admin.php';
         }
     }
 

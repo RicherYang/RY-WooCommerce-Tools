@@ -5,7 +5,7 @@ class RY_NewebPay_Shipping_admin
 {
     public static function init()
     {
-        include_once(RY_WT_PLUGIN_DIR . 'woocommerce/admin/meta-boxes/newebpay-shipping-meta-box.php');
+        include_once RY_WT_PLUGIN_DIR . 'woocommerce/admin/meta-boxes/newebpay-shipping-meta-box.php';
 
         add_filter('woocommerce_admin_shipping_fields', [__CLASS__, 'set_cvs_shipping_fields'], 99);
         add_action('woocommerce_shipping_zone_method_status_toggled', [__CLASS__, 'check_can_enable'], 10, 4);

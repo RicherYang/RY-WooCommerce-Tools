@@ -5,13 +5,15 @@ class RY_SmilePay_Shipping_Api extends RY_SmilePay_Gateway_Api
 {
     public static $api_test_url = [
         'checkout' => 'https://ssl.smse.com.tw/ezpos_test/mtmk_utf.asp',
-        'pay' => 'http://ssl.smse.com.tw/api/C2CPayment.asp',
-        'unpay' => 'http://ssl.smse.com.tw/api/C2CPaymentU.asp'
+        'pay' => 'https://ssl.smse.com.tw/api/C2CPayment.asp',
+        'unpay' => 'https://ssl.smse.com.tw/api/C2CPaymentU.asp',
+        'print' => 'https://ssl.smse.com.tw/api/C2C_MultiplePrint.asp'
     ];
     public static $api_url = [
         'checkout' => 'https://ssl.smse.com.tw/ezpos/mtmk_utf.asp',
-        'pay' => 'http://ssl.smse.com.tw/api/C2CPayment.asp',
-        'unpay' => 'http://ssl.smse.com.tw/api/C2CPaymentU.asp'
+        'pay' => 'https://ssl.smse.com.tw/api/C2CPayment.asp',
+        'unpay' => 'https://ssl.smse.com.tw/api/C2CPaymentU.asp',
+        'print' => 'https://ssl.smse.com.tw/api/C2C_MultiplePrint.asp'
     ];
 
     public static function get_csv_info($order_id)
@@ -25,10 +27,15 @@ class RY_SmilePay_Shipping_Api extends RY_SmilePay_Gateway_Api
 
         list($Dcvc, $Rvg2c, $Verify_key, $Rot_check) = RY_SmilePay_Gateway::get_smilepay_api_info();
 
+        $item_names = RY_WT::get_option('shipping_item_name', '');
+        if (empty($item_names)) {
+            $item_names = self::get_item_name($order);
+        }
+
         $args = [
             'Dcvc' => $Dcvc,
             'Rvg2c' => $Rvg2c,
-            'Od_sob' => self::get_item_name($order),
+            'Od_sob' => $item_names,
             'Pay_zg' => 52,
             'Data_id' => self::generate_trade_no($order->get_id(), RY_WT::get_option('smilepay_gateway_order_prefix')),
             'Amount' => (int) ceil($order->get_total()),
@@ -75,10 +82,15 @@ class RY_SmilePay_Shipping_Api extends RY_SmilePay_Gateway_Api
 
         list($Dcvc, $Rvg2c, $Verify_key, $Rot_check) = RY_SmilePay_Gateway::get_smilepay_api_info();
 
+        $item_names = RY_WT::get_option('shipping_item_name', '');
+        if (empty($item_names)) {
+            $item_names = self::get_item_name($order);
+        }
+
         $args = [
             'Dcvc' => $Dcvc,
             'Rvg2c' => $Rvg2c,
-            'Od_sob' => self::get_item_name($order),
+            'Od_sob' => $item_names,
             'Pay_zg' => $cod ? 51 : 52,
             'Data_id' => self::generate_trade_no($order->get_id(), RY_WT::get_option('smilepay_gateway_order_prefix')),
             'Amount' => (int) ceil($order->get_total()),
@@ -116,7 +128,7 @@ class RY_SmilePay_Shipping_Api extends RY_SmilePay_Gateway_Api
         self::get_csv_no($order_id, true);
     }
 
-    public static function get_code_no($order_id, $shipping_info)
+    public static function get_code_no($order_id, $get_smse_id)
     {
         $order = wc_get_order($order_id);
         if (!$order) {
@@ -125,69 +137,108 @@ class RY_SmilePay_Shipping_Api extends RY_SmilePay_Gateway_Api
 
         list($Dcvc, $Rvg2c, $Verify_key, $Rot_check) = RY_SmilePay_Gateway::get_smilepay_api_info();
 
-        $args = [
-            'Dcvc' => $Dcvc,
-            'Verify_key' => $Verify_key,
-            'smseid' => $shipping_info['ID'],
-            'Pay_subzg' => $shipping_info['type'],
-            'types' => 'Xml'
-        ];
-
-        RY_SmilePay_Shipping::log('Get code POST: ' . var_export($args, true));
-
-        if ($shipping_info['IsCollection']) {
-            if ('yes' === RY_WT::get_option('smilepay_gateway_testmode', 'yes')) {
-                $url = self::$api_test_url['pay'];
-            } else {
-                $url = self::$api_url['pay'];
+        $shipping_list = $order->get_meta('_smilepay_shipping_info', true);
+        if (!is_array($shipping_list)) {
+            $shipping_list = [];
+        }
+        foreach ($shipping_list as $smse_id => $info) {
+            if ($get_smse_id != $smse_id) {
+                continue;
             }
-        } else {
-            if ('yes' === RY_WT::get_option('smilepay_gateway_testmode', 'yes')) {
-                $url = self::$api_test_url['unpay'];
+
+            $args = [
+                'Dcvc' => $Dcvc,
+                'Verify_key' => $Verify_key,
+                'smseid' => $info['ID'],
+                'Pay_subzg' => $info['type'],
+                'types' => 'Xml'
+            ];
+
+            RY_SmilePay_Shipping::log('Get code POST: ' . var_export($args, true));
+
+            if ($info['IsCollection']) {
+                if ('yes' === RY_WT::get_option('smilepay_gateway_testmode', 'yes')) {
+                    $url = self::$api_test_url['pay'];
+                } else {
+                    $url = self::$api_url['pay'];
+                }
             } else {
-                $url = self::$api_url['unpay'];
+                if ('yes' === RY_WT::get_option('smilepay_gateway_testmode', 'yes')) {
+                    $url = self::$api_test_url['unpay'];
+                } else {
+                    $url = self::$api_url['unpay'];
+                }
             }
-        }
 
-        $response = self::link_server($url, $args);
-        if (is_wp_error($response)) {
-            RY_SmilePay_Shipping::log('Get code failed. POST error: ' . implode("\n", $response->get_error_messages()), 'error');
-            return false;
-        }
+            $response = self::link_server($url, $args);
+            if (is_wp_error($response)) {
+                RY_SmilePay_Shipping::log('Get code failed. POST error: ' . implode("\n", $response->get_error_messages()), 'error');
+                return false;
+            }
 
-        $response_code = wp_remote_retrieve_response_code($response);
-        if (200 != $response_code) {
-            RY_SmilePay_Shipping::log('Get code failed. Http code: ' . $response_code, 'error');
-            return false;
-        }
+            $response_code = wp_remote_retrieve_response_code($response);
+            if (200 != $response_code) {
+                RY_SmilePay_Shipping::log('Get code failed. Http code: ' . $response_code, 'error');
+                return false;
+            }
 
-        $body = wp_remote_retrieve_body($response);
-        RY_SmilePay_Shipping::log('Get code result: ' . $body);
+            $body = wp_remote_retrieve_body($response);
+            RY_SmilePay_Shipping::log('Get code result: ' . $body);
 
-        $ipn_info = @simplexml_load_string($body);
-        if (!$ipn_info) {
-            RY_SmilePay_Shipping::log('Get code failed. Parse result failed.', 'error');
-            return false;
-        }
+            $ipn_info = @simplexml_load_string($body);
+            if (!$ipn_info) {
+                RY_SmilePay_Shipping::log('Get code failed. Parse result failed.', 'error');
+                return false;
+            }
 
-        RY_SmilePay_Shipping::log('Get code result data: ' . var_export($ipn_info, true));
+            RY_SmilePay_Shipping::log('Get code result data: ' . var_export($ipn_info, true));
 
-        if ((string) $ipn_info->Status != '1') {
-            $order->add_order_note(sprintf(
+            if ((string) $ipn_info->Status != '1') {
+                $order->add_order_note(sprintf(
                 /* translators: %1$s Error messade, %2$d Error messade ID */
                 __('Get Smilepay code error: %1$s (%2$d)', 'ry-woocommerce-tools'),
-                (string) $ipn_info->Desc,
-                (string) $ipn_info->Status
-            ));
-            return false;
+                    (string) $ipn_info->Desc,
+                    (string) $ipn_info->Status
+                ));
+                return false;
+            }
+
+            $shipping_list = $order->get_meta('_smilepay_shipping_info', true);
+            $shipping_list[$info['ID']]['PaymentNo'] = (string) $ipn_info->paymentno;
+            $shipping_list[$info['ID']]['ValidationNo'] = (string) $ipn_info->validationno;
+            $shipping_list[$info['ID']]['edit'] = (string) new WC_DateTime();
+            $shipping_list[$info['ID']]['amount'] = (int) $ipn_info->Amount;
+            $order->update_meta_data('_smilepay_shipping_info', $shipping_list);
+            $order->save_meta_data();
+        }
+    }
+
+    public static function get_print_url($info_list, $multi = false)
+    {
+        list($Dcvc, $Rvg2c, $Verify_key, $Rot_check) = RY_SmilePay_Gateway::get_smilepay_api_info();
+
+        $args = [
+            'Dcvc' => $Dcvc,
+            'Rvg2c' => $Rvg2c,
+            'Verify_key' => $Verify_key
+        ];
+        if (!$multi) {
+            $info_list = [$info_list];
         }
 
-        $shipping_list = $order->get_meta('_smilepay_shipping_info', true);
-        $shipping_list[$shipping_info['ID']]['PaymentNo'] = (string) $ipn_info->paymentno;
-        $shipping_list[$shipping_info['ID']]['ValidationNo'] = (string) $ipn_info->validationno;
-        $shipping_list[$shipping_info['ID']]['edit'] = (string) new WC_DateTime();
-        $shipping_list[$shipping_info['ID']]['amount'] = (int) $ipn_info->Amount;
-        $order->update_meta_data('_smilepay_shipping_info', $shipping_list);
-        $order->save_meta_data();
+        $no_list = [];
+        foreach ($info_list as $info) {
+            $no_list[] = $info['PaymentNo'] . $info['ValidationNo'];
+        }
+        $no_list = array_filter($no_list);
+        $args['Pay_subzg'] = $info_list[0]['type'];
+        $args['PinCodes'] = implode(',', $no_list);
+
+        if ('yes' === RY_WT::get_option('smilepay_gateway_testmode', 'yes')) {
+            $url = self::$api_test_url['print'];
+        } else {
+            $url = self::$api_url['print'];
+        }
+        return $url . '?' . http_build_query($args, '', '&');
     }
 }

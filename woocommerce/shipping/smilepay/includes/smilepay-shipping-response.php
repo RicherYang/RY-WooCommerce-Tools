@@ -56,7 +56,7 @@ class RY_SmilePay_Shipping_Response extends RY_SmilePay
                     'ValidationNo' => '',
                     'IsCollection' => $ipn_info['Classif'] == 'T' ? 1 : 0,
                     'type' => $ipn_info['Classif_sub'],
-                    'status' => $ipn_info['Status'],
+                    'status' => 0,
                     'create' => (string) new WC_DateTime(),
                     'edit' => (string) new WC_DateTime()
                 ];
@@ -135,7 +135,7 @@ class RY_SmilePay_Shipping_Response extends RY_SmilePay
                 $url = admin_url('post.php?post=' . $order_id . '&action=edit');
 
                 if ('yes' === RY_WT::get_option('smilepay_shipping_auto_get_no', 'yes')) {
-                    RY_SmilePay_Shipping_Api::get_code_no($order_id, $shipping_list[$smse_id]);
+                    RY_SmilePay_Shipping_Api::get_code_no($order_id, $smse_id);
                 }
             }
         }

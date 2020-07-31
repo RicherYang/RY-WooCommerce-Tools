@@ -5,7 +5,7 @@ Tags: woocommerce, payment, gateway, shipping, ecpay, newebpay, smilepay
 Requires at least: 5.0
 Requires PHP: 5.6.20
 Tested up to: 5.4.2
-Stable tag: 1.6.1
+Stable tag: 1.6.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.txt
 
@@ -39,10 +39,16 @@ Please visit the [plugin page](https://richer.tw/ry-woocommerce-tools/ " ") with
 
 == Changelog ==
 
-= 1.6.1 - 2020/06/27 =
+= 1.6.3 - 2020/07/31 =
+* 更新 - 調整速買配物流 API 細節。
+
+= 1.6.2 - 2020/07/30 =
+* 新增 - 後台列印託運單。
+
+= 1.6.1 - 2020/07/27 =
 * 新增 - 速買配物流支援重新取得物流編號。
 
-= 1.6.0 - 2020/06/26 =
+= 1.6.0 - 2020/07/26 =
 * 新增 - 支援速買配物流。
 
 [See changelog for all versions](https://richer.tw/ry-woocommerce-tools/history/).

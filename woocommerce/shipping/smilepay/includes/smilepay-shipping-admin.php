@@ -5,18 +5,18 @@ class RY_SmilePay_Shipping_admin
 {
     public static function init()
     {
-        include_once(RY_WT_PLUGIN_DIR . 'woocommerce/admin/meta-boxes/smilepay-shipping-meta-box.php');
+        include_once RY_WT_PLUGIN_DIR . 'woocommerce/admin/meta-boxes/smilepay-shipping-meta-box.php';
 
         add_filter('woocommerce_admin_shipping_fields', [__CLASS__, 'set_cvs_shipping_fields'], 99);
         add_action('woocommerce_shipping_zone_method_status_toggled', [__CLASS__, 'check_can_enable'], 10, 4);
         add_action('woocommerce_update_options_shipping_options', [__CLASS__, 'check_ship_destination']);
-
         add_filter('woocommerce_order_actions', [__CLASS__, 'add_order_actions']);
         add_action('woocommerce_order_action_get_new_smilepay_no', ['RY_SmilePay_Shipping_Api', 'get_csv_no']);
         add_action('woocommerce_order_action_get_new_smilepay_no_cod', ['RY_SmilePay_Shipping_Api', 'get_csv_no_cod']);
         add_action('woocommerce_order_action_send_at_cvs_email', ['RY_SmilePay_Shipping', 'send_at_cvs_email']);
 
         add_action('add_meta_boxes', ['RY_SmilePay_Shipping_Meta_Box', 'add_meta_box'], 40, 2);
+        add_action('wp_ajax_RY_SmilePay_Shipping_print', [__CLASS__, 'print_info']);
     }
 
     public static function set_cvs_shipping_fields($shipping_fields)
@@ -120,6 +120,37 @@ class RY_SmilePay_Shipping_admin
             }
         }
         return $order_actions;
+    }
+
+    public static function print_info()
+    {
+        $order_ID = (int) $_GET['orderid'];
+        $logistics_id = (int) $_GET['id'];
+
+        $print_info = '';
+        $order = wc_get_order($order_ID);
+        if (!$order) {
+            wp_redirect(admin_url('edit.php?post_type=shop_order'));
+            exit();
+        }
+
+        foreach ($order->get_items('shipping') as $item_id => $item) {
+            $shipping_list = $order->get_meta('_smilepay_shipping_info', true);
+            if (!is_array($shipping_list)) {
+                continue;
+            }
+            foreach ($shipping_list as $info) {
+                if ($info['ID'] != $logistics_id) {
+                    continue;
+                }
+
+                wp_redirect(RY_SmilePay_Shipping_Api::get_print_url($info));
+                exit();
+            }
+        }
+
+        wp_redirect(admin_url('post.php?post=' . $order_ID . '&action=edit'));
+        exit();
     }
 }
 

@@ -8,16 +8,16 @@ final class RY_SmilePay_Gateway
 
     public static function init()
     {
-        include_once(RY_WT_PLUGIN_DIR . 'woocommerce/abstracts/abstract-smilepay.php');
-        include_once(RY_WT_PLUGIN_DIR . 'woocommerce/gateways/smilepay/includes/smilepay-gateway-api.php');
-        include_once(RY_WT_PLUGIN_DIR . 'woocommerce/gateways/smilepay/includes/smilepay-gateway-response.php');
-        include_once(RY_WT_PLUGIN_DIR . 'woocommerce/gateways/smilepay/includes/smilepay-gateway-base.php');
-        include_once(RY_WT_PLUGIN_DIR . 'woocommerce/gateways/smilepay/smilepay-gateway-credit.php');
-        include_once(RY_WT_PLUGIN_DIR . 'woocommerce/gateways/smilepay/smilepay-gateway-webatm.php');
-        include_once(RY_WT_PLUGIN_DIR . 'woocommerce/gateways/smilepay/smilepay-gateway-atm.php');
-        include_once(RY_WT_PLUGIN_DIR . 'woocommerce/gateways/smilepay/smilepay-gateway-cvs-711.php');
-        include_once(RY_WT_PLUGIN_DIR . 'woocommerce/gateways/smilepay/smilepay-gateway-cvs-fami.php');
-        include_once(RY_WT_PLUGIN_DIR . 'woocommerce/gateways/smilepay/smilepay-gateway-barcode.php');
+        include_once RY_WT_PLUGIN_DIR . 'woocommerce/abstracts/abstract-smilepay.php';
+        include_once RY_WT_PLUGIN_DIR . 'woocommerce/gateways/smilepay/includes/smilepay-gateway-api.php';
+        include_once RY_WT_PLUGIN_DIR . 'woocommerce/gateways/smilepay/includes/smilepay-gateway-response.php';
+        include_once RY_WT_PLUGIN_DIR . 'woocommerce/gateways/smilepay/includes/smilepay-gateway-base.php';
+        include_once RY_WT_PLUGIN_DIR . 'woocommerce/gateways/smilepay/smilepay-gateway-credit.php';
+        include_once RY_WT_PLUGIN_DIR . 'woocommerce/gateways/smilepay/smilepay-gateway-webatm.php';
+        include_once RY_WT_PLUGIN_DIR . 'woocommerce/gateways/smilepay/smilepay-gateway-atm.php';
+        include_once RY_WT_PLUGIN_DIR . 'woocommerce/gateways/smilepay/smilepay-gateway-cvs-711.php';
+        include_once RY_WT_PLUGIN_DIR . 'woocommerce/gateways/smilepay/smilepay-gateway-cvs-fami.php';
+        include_once RY_WT_PLUGIN_DIR . 'woocommerce/gateways/smilepay/smilepay-gateway-barcode.php';
 
         self::$log_enabled = 'yes' === RY_WT::get_option('smilepay_gateway_log', 'no');
 

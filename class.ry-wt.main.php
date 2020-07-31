@@ -22,11 +22,11 @@ final class RY_WT
 
             self::fixed_old_function();
 
-            include_once(RY_WT_PLUGIN_DIR . 'class.ry-wt.update.php');
+            include_once RY_WT_PLUGIN_DIR . 'class.ry-wt.update.php';
             RY_WT_update::update();
 
             if (is_admin()) {
-                include_once(RY_WT_PLUGIN_DIR . 'class.ry-wt.admin.php');
+                include_once RY_WT_PLUGIN_DIR . 'class.ry-wt.admin.php';
             } else {
                 if (apply_filters('ry_show_unpay_title_notice', true)) {
                     self::add_unpay_title_notice(true);
@@ -43,24 +43,24 @@ final class RY_WT
             add_filter('woocommerce_localisation_address_formats', [__CLASS__, 'add_address_format']);
 
             if ('yes' == self::get_option('enabled_ecpay_gateway', 'no')) {
-                include_once(RY_WT_PLUGIN_DIR . 'woocommerce/gateways/ecpay/ecpay-gateway.php');
+                include_once RY_WT_PLUGIN_DIR . 'woocommerce/gateways/ecpay/ecpay-gateway.php';
             }
             if ('yes' == self::get_option('enabled_ecpay_shipping', 'no')) {
-                include_once(RY_WT_PLUGIN_DIR . 'woocommerce/shipping/ecpay/ecpay-shipping.php');
+                include_once RY_WT_PLUGIN_DIR . 'woocommerce/shipping/ecpay/ecpay-shipping.php';
             }
 
             if ('yes' == self::get_option('enabled_newebpay_gateway', 'no')) {
-                include_once(RY_WT_PLUGIN_DIR . 'woocommerce/gateways/newebpay/newebpay-gateway.php');
+                include_once RY_WT_PLUGIN_DIR . 'woocommerce/gateways/newebpay/newebpay-gateway.php';
             }
             if ('yes' == self::get_option('enabled_newebpay_shipping', 'no')) {
-                include_once(RY_WT_PLUGIN_DIR . 'woocommerce/shipping/newebpay/newebpay-shipping.php');
+                include_once RY_WT_PLUGIN_DIR . 'woocommerce/shipping/newebpay/newebpay-shipping.php';
             }
 
             if ('yes' == self::get_option('enabled_smilepay_gateway', 'no')) {
-                include_once(RY_WT_PLUGIN_DIR . 'woocommerce/gateways/smilepay/smilepay-gateway.php');
+                include_once RY_WT_PLUGIN_DIR . 'woocommerce/gateways/smilepay/smilepay-gateway.php';
             }
             if ('yes' == self::get_option('enabled_smilepay_shipping', 'no')) {
-                include_once(RY_WT_PLUGIN_DIR . 'woocommerce/shipping/smilepay/smilepay-shipping.php');
+                include_once RY_WT_PLUGIN_DIR . 'woocommerce/shipping/smilepay/smilepay-shipping.php';
             }
 
             if ('no' == self::get_option('repay_action', 'no')) {

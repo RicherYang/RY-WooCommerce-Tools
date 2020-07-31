@@ -5,7 +5,7 @@ class RY_ECPay_Shipping_admin
 {
     public static function init()
     {
-        include_once(RY_WT_PLUGIN_DIR . 'woocommerce/admin/meta-boxes/ecpay-shipping-meta-box.php');
+        include_once RY_WT_PLUGIN_DIR . 'woocommerce/admin/meta-boxes/ecpay-shipping-meta-box.php';
 
         add_filter('woocommerce_admin_shipping_fields', [__CLASS__, 'set_cvs_shipping_fields'], 99);
         add_action('woocommerce_shipping_zone_method_status_toggled', [__CLASS__, 'check_can_enable'], 10, 4);
@@ -15,9 +15,8 @@ class RY_ECPay_Shipping_admin
         add_action('woocommerce_order_action_get_new_ecpay_no_cod', ['RY_ECPay_Shipping_Api', 'get_code_cod']);
         add_action('woocommerce_order_action_send_at_cvs_email', ['RY_ECPay_Shipping', 'send_at_cvs_email']);
 
-        add_action('wp_ajax_RY_ECPay_Shipping_print', [__CLASS__, 'print_info']);
-
         add_action('add_meta_boxes', ['RY_ECPay_Shipping_Meta_Box', 'add_meta_box'], 40, 2);
+        add_action('wp_ajax_RY_ECPay_Shipping_print', [__CLASS__, 'print_info']);
     }
 
     public static function set_cvs_shipping_fields($shipping_fields)

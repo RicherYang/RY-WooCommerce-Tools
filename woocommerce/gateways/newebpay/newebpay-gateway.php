@@ -8,16 +8,16 @@ final class RY_NewebPay_Gateway
 
     public static function init()
     {
-        include_once(RY_WT_PLUGIN_DIR . 'woocommerce/abstracts/abstract-newebpay.php');
-        include_once(RY_WT_PLUGIN_DIR . 'woocommerce/gateways/newebpay/includes/newebpay-gateway-api.php');
-        include_once(RY_WT_PLUGIN_DIR . 'woocommerce/gateways/newebpay/includes/newebpay-gateway-response.php');
-        include_once(RY_WT_PLUGIN_DIR . 'woocommerce/gateways/newebpay/includes/newebpay-gateway-base.php');
-        include_once(RY_WT_PLUGIN_DIR . 'woocommerce/gateways/newebpay/newebpay-gateway-credit.php');
-        include_once(RY_WT_PLUGIN_DIR . 'woocommerce/gateways/newebpay/newebpay-gateway-credit-installment.php');
-        include_once(RY_WT_PLUGIN_DIR . 'woocommerce/gateways/newebpay/newebpay-gateway-webatm.php');
-        include_once(RY_WT_PLUGIN_DIR . 'woocommerce/gateways/newebpay/newebpay-gateway-atm.php');
-        include_once(RY_WT_PLUGIN_DIR . 'woocommerce/gateways/newebpay/newebpay-gateway-cvs.php');
-        include_once(RY_WT_PLUGIN_DIR . 'woocommerce/gateways/newebpay/newebpay-gateway-barcode.php');
+        include_once RY_WT_PLUGIN_DIR . 'woocommerce/abstracts/abstract-newebpay.php';
+        include_once RY_WT_PLUGIN_DIR . 'woocommerce/gateways/newebpay/includes/newebpay-gateway-api.php';
+        include_once RY_WT_PLUGIN_DIR . 'woocommerce/gateways/newebpay/includes/newebpay-gateway-response.php';
+        include_once RY_WT_PLUGIN_DIR . 'woocommerce/gateways/newebpay/includes/newebpay-gateway-base.php';
+        include_once RY_WT_PLUGIN_DIR . 'woocommerce/gateways/newebpay/newebpay-gateway-credit.php';
+        include_once RY_WT_PLUGIN_DIR . 'woocommerce/gateways/newebpay/newebpay-gateway-credit-installment.php';
+        include_once RY_WT_PLUGIN_DIR . 'woocommerce/gateways/newebpay/newebpay-gateway-webatm.php';
+        include_once RY_WT_PLUGIN_DIR . 'woocommerce/gateways/newebpay/newebpay-gateway-atm.php';
+        include_once RY_WT_PLUGIN_DIR . 'woocommerce/gateways/newebpay/newebpay-gateway-cvs.php';
+        include_once RY_WT_PLUGIN_DIR . 'woocommerce/gateways/newebpay/newebpay-gateway-barcode.php';
 
         self::$log_enabled = 'yes' === RY_WT::get_option('newebpay_gateway_log', 'no');
 
