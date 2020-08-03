@@ -16,6 +16,7 @@ class RY_SmilePay_Shipping_admin
         add_action('woocommerce_order_action_send_at_cvs_email', ['RY_SmilePay_Shipping', 'send_at_cvs_email']);
 
         add_action('add_meta_boxes', ['RY_SmilePay_Shipping_Meta_Box', 'add_meta_box'], 40, 2);
+        add_action('wp_ajax_RY_SmilePay_Shipping_get_no', [__CLASS__, 'get_code_no']);
         add_action('wp_ajax_RY_SmilePay_Shipping_print', [__CLASS__, 'print_info']);
     }
 
@@ -122,10 +123,10 @@ class RY_SmilePay_Shipping_admin
         return $order_actions;
     }
 
-    public static function print_info()
+    public static function get_code_no()
     {
         $order_ID = (int) $_GET['orderid'];
-        $logistics_id = (int) $_GET['id'];
+        $logistics_id = wp_unslash($_GET['id']);
 
         $print_info = '';
         $order = wc_get_order($order_ID);
@@ -139,12 +140,43 @@ class RY_SmilePay_Shipping_admin
             if (!is_array($shipping_list)) {
                 continue;
             }
-            foreach ($shipping_list as $info) {
-                if ($info['ID'] != $logistics_id) {
-                    continue;
+            if (isset($shipping_list[$logistics_id])) {
+                if (empty($shipping_list[$logistics_id]['PaymentNo'])) {
+                    RY_SmilePay_Shipping_Api::get_code_no($order_ID, $logistics_id);
+                }
+            }
+        }
+
+        wp_redirect(admin_url('post.php?post=' . $order_ID . '&action=edit'));
+        exit();
+    }
+
+    public static function print_info()
+    {
+        $order_ID = (int) $_GET['orderid'];
+        $logistics_id = wp_unslash($_GET['id']);
+
+        $print_info = '';
+        $order = wc_get_order($order_ID);
+        if (!$order) {
+            wp_redirect(admin_url('edit.php?post_type=shop_order'));
+            exit();
+        }
+
+        foreach ($order->get_items('shipping') as $item_id => $item) {
+            $shipping_list = $order->get_meta('_smilepay_shipping_info', true);
+            if (!is_array($shipping_list)) {
+                continue;
+            }
+            if (isset($shipping_list[$logistics_id])) {
+                if (empty($shipping_list[$logistics_id]['PaymentNo'])) {
+                    RY_SmilePay_Shipping_Api::get_code_no($order_ID, $logistics_id);
+
+                    $order = wc_get_order($order_ID);
+                    $shipping_list = $order->get_meta('_smilepay_shipping_info', true);
                 }
 
-                wp_redirect(RY_SmilePay_Shipping_Api::get_print_url($info));
+                wp_redirect(RY_SmilePay_Shipping_Api::get_print_url($shipping_list[$logistics_id]));
                 exit();
             }
         }
