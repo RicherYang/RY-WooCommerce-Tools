@@ -18,8 +18,7 @@ final class RY_NewebPay_Shipping
         if ('yes' === RY_WT::get_option('newebpay_shipping', 'no')) {
             add_filter('woocommerce_shipping_methods', [__CLASS__, 'add_method']);
 
-            add_filter('woocommerce_checkout_fields', [__CLASS__, 'add_cvs_info']);
-            add_action('woocommerce_checkout_process', [__CLASS__, 'is_need_checkout_fields']);
+            add_filter('woocommerce_checkout_fields', [__CLASS__, 'add_cvs_info'], 9999);
             add_filter('woocommerce_available_payment_gateways', [__CLASS__, 'only_newebpay_gateway'], 100);
             add_filter('woocommerce_cod_process_payment_order_status', [__CLASS__, 'change_cod_order_status'], 10, 2);
             add_action('woocommerce_receipt_cod', [__CLASS__, 'cod_receipt_page']);
@@ -102,36 +101,29 @@ final class RY_NewebPay_Shipping
             }
         }
 
-        return $fields;
-    }
+        if (did_action('woocommerce_checkout_process')) {
+            $used_cvs = false;
+            $shipping_method = isset($_POST['shipping_method']) ? wc_clean($_POST['shipping_method']) : [];
+            foreach ($shipping_method as $method) {
+                $method = strstr($method, ':', true);
+                if ($method && array_key_exists($method, self::$support_methods)) {
+                    $used_cvs = true;
+                    break;
+                }
+            }
 
-    public static function is_need_checkout_fields()
-    {
-        $used_cvs = false;
-        $shipping_method = isset($_POST['shipping_method']) ? wc_clean($_POST['shipping_method']) : [];
-        foreach ($shipping_method as $method) {
-            $method = strstr($method, ':', true);
-            if ($method && array_key_exists($method, self::$support_methods)) {
-                $used_cvs = true;
-                break;
+            if ($used_cvs) {
+                $fields['shipping']['shipping_first_name']['required'] = false;
+                $fields['shipping']['shipping_last_name']['required'] = false;
+                $fields['shipping']['shipping_country']['required'] = false;
+                $fields['shipping']['shipping_address_1']['required'] = false;
+                $fields['shipping']['shipping_address_2']['required'] = false;
+                $fields['shipping']['shipping_city']['required'] = false;
+                $fields['shipping']['shipping_state']['required'] = false;
+                $fields['shipping']['shipping_postcode']['required'] = false;
             }
         }
 
-        if ($used_cvs) {
-            add_filter('woocommerce_checkout_fields', [__CLASS__, 'fix_add_cvs_info'], 9999);
-        }
-    }
-
-    public static function fix_add_cvs_info($fields)
-    {
-        $fields['shipping']['shipping_first_name']['required'] = false;
-        $fields['shipping']['shipping_last_name']['required'] = false;
-        $fields['shipping']['shipping_country']['required'] = false;
-        $fields['shipping']['shipping_address_1']['required'] = false;
-        $fields['shipping']['shipping_address_2']['required'] = false;
-        $fields['shipping']['shipping_city']['required'] = false;
-        $fields['shipping']['shipping_state']['required'] = false;
-        $fields['shipping']['shipping_postcode']['required'] = false;
         return $fields;
     }
 

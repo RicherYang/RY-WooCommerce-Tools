@@ -39,8 +39,7 @@ final class RY_ECPay_Shipping
 
             add_filter('woocommerce_shipping_methods', [__CLASS__, 'add_method']);
 
-            add_filter('woocommerce_checkout_fields', [__CLASS__, 'add_cvs_info']);
-            add_action('woocommerce_checkout_process', [__CLASS__, 'is_need_checkout_fields']);
+            add_filter('woocommerce_checkout_fields', [__CLASS__, 'add_cvs_info'], 9999);
             add_action('woocommerce_review_order_after_shipping', [__CLASS__, 'shipping_choose_cvs']);
             add_filter('woocommerce_update_order_review_fragments', [__CLASS__, 'shipping_choose_cvs_info']);
             add_action('woocommerce_checkout_create_order', [__CLASS__, 'save_cvs_info'], 20, 2);
@@ -291,46 +290,32 @@ final class RY_ECPay_Shipping
             }
         }
 
-        return $fields;
-    }
-
-    public static function is_need_checkout_fields()
-    {
-        $used_cvs = false;
-        $shipping_method = isset($_POST['shipping_method']) ? wc_clean($_POST['shipping_method']) : [];
-        foreach ($shipping_method as $method) {
-            $method = strstr($method, ':', true);
-            if ($method && array_key_exists($method, self::$support_methods) && strpos($method, 'cvs') !== false) {
-                $used_cvs = true;
-                break;
+        if (did_action('woocommerce_checkout_process')) {
+            $used_cvs = false;
+            $shipping_method = isset($_POST['shipping_method']) ? wc_clean($_POST['shipping_method']) : [];
+            foreach ($shipping_method as $method) {
+                $method = strstr($method, ':', true);
+                if ($method && array_key_exists($method, self::$support_methods) && strpos($method, 'cvs') !== false) {
+                    $used_cvs = true;
+                    break;
+                }
             }
-        }
 
-        if ($used_cvs) {
-            add_filter('woocommerce_checkout_fields', [__CLASS__, 'fix_use_cvs_info'], 9999);
-        } else {
-            add_filter('woocommerce_checkout_fields', [__CLASS__, 'fix_not_use_cvs_info'], 9999);
-        }
-    }
+            if ($used_cvs) {
+                $fields['shipping']['shipping_country']['required'] = false;
+                $fields['shipping']['shipping_address_1']['required'] = false;
+                $fields['shipping']['shipping_address_2']['required'] = false;
+                $fields['shipping']['shipping_city']['required'] = false;
+                $fields['shipping']['shipping_state']['required'] = false;
+                $fields['shipping']['shipping_postcode']['required'] = false;
 
-    public static function fix_use_cvs_info($fields)
-    {
-        $fields['shipping']['shipping_country']['required'] = false;
-        $fields['shipping']['shipping_address_1']['required'] = false;
-        $fields['shipping']['shipping_address_2']['required'] = false;
-        $fields['shipping']['shipping_city']['required'] = false;
-        $fields['shipping']['shipping_state']['required'] = false;
-        $fields['shipping']['shipping_postcode']['required'] = false;
-
-        $fields['shipping']['shipping_phone']['required'] = true;
-        $fields['shipping']['CVSStoreName']['required'] = true;
-        return $fields;
-    }
-
-    public static function fix_not_use_cvs_info($fields)
-    {
-        if ('no' == RY_WT::get_option('keep_shipping_phone', 'no')) {
-            $fields['shipping']['shipping_phone']['required'] = false;
+                $fields['shipping']['shipping_phone']['required'] = true;
+                $fields['shipping']['CVSStoreName']['required'] = true;
+            } else {
+                if ('no' == RY_WT::get_option('keep_shipping_phone', 'no')) {
+                    $fields['shipping']['shipping_phone']['required'] = false;
+                }
+            }
         }
 
         return $fields;
