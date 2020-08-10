@@ -9,6 +9,7 @@ if (!class_exists('RY_SmilePay')) {
             $trade_no = $order_prefix . $order_id . 'TS' . rand(0, 9) . strrev((string) time());
             $trade_no = substr($trade_no, 0, 20);
             $trade_no = apply_filters('ry_smilepay_trade_no', $trade_no);
+
             return substr($trade_no, 0, 20);
         }
 
@@ -86,11 +87,6 @@ if (!class_exists('RY_SmilePay')) {
                 }
             }
             return false;
-        }
-
-        public static function set_do_die()
-        {
-            self::$do_die = true;
         }
 
         protected static function die_success()
