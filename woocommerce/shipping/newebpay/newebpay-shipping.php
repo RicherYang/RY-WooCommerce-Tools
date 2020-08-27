@@ -55,17 +55,19 @@ final class RY_NewebPay_Shipping
 
     public static function check_option()
     {
-        $enable = true;
-        if ('billing_only' === get_option('woocommerce_ship_to_destination')) {
-            $enable = false;
-        }
-        if ('no' == RY_WT::get_option('newebpay_gateway', 'no')) {
-            WC_Admin_Settings::add_error(__('NewebPay shipping method need enable NewebPay gateway.', 'ry-woocommerce-tools'));
-            $enable = false;
-        }
-        if (!$enable) {
-            WC_Admin_Settings::add_error(__('NewebPay shipping method failed to enable!', 'ry-woocommerce-tools'));
-            RY_WT::update_option('newebpay_shipping', 'no');
+        if ('yes' == RY_WT::get_option('newebpay_shipping', 'no')) {
+            $enable = true;
+            if ('no' == RY_WT::get_option('newebpay_gateway', 'no')) {
+                WC_Admin_Settings::add_error(__('NewebPay shipping method need enable NewebPay gateway.', 'ry-woocommerce-tools'));
+                $enable = false;
+            }
+            if ('billing_only' === get_option('woocommerce_ship_to_destination')) {
+                $enable = false;
+            }
+            if (!$enable) {
+                WC_Admin_Settings::add_error(__('NewebPay shipping method failed to enable!', 'ry-woocommerce-tools'));
+                RY_WT::update_option('newebpay_shipping', 'no');
+            }
         }
     }
 

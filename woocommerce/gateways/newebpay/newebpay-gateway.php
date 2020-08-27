@@ -77,7 +77,7 @@ final class RY_NewebPay_Gateway
 
     public static function check_option()
     {
-        if ('yes' == RY_WT::get_option('newebpay_gateway', 'yes')) {
+        if ('yes' == RY_WT::get_option('newebpay_gateway', 'no')) {
             $enable = true;
             if (empty(RY_WT::get_option('newebpay_gateway_MerchantID'))) {
                 $enable = false;
@@ -93,6 +93,13 @@ final class RY_NewebPay_Gateway
                 RY_WT::update_option('newebpay_gateway', 'no');
             }
         }
+        if ('no' == RY_WT::get_option('newebpay_gateway', 'no')) {
+            if ('yes' == RY_WT::get_option('newebpay_shipping', 'no')) {
+                WC_Admin_Settings::add_error(__('NewebPay shipping method need enable NewebPay gateway.', 'ry-woocommerce-tools'));
+                RY_WT::update_option('newebpay_shipping', 'no');
+            }
+        }
+
         if (!preg_match('/^[a-z0-9]*$/i', RY_WT::get_option('newebpay_gateway_order_prefix'))) {
             WC_Admin_Settings::add_error(__('Order no prefix only letters and numbers allowed allowed', 'ry-woocommerce-tools'));
             RY_WT::update_option('newebpay_gateway_order_prefix', '');

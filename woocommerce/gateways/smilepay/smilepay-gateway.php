@@ -90,7 +90,7 @@ final class RY_SmilePay_Gateway
 
     public static function check_option()
     {
-        if ('yes' == RY_WT::get_option('smilepay_gateway', 'yes')) {
+        if ('yes' == RY_WT::get_option('smilepay_gateway', 'no')) {
             if (!extension_loaded('simplexml')) {
                 WC_Admin_Settings::add_error(__('SmilePay gateway method need php simplexml extension.', 'ry-woocommerce-tools'));
                 RY_WT::update_option('smilepay_gateway', 'no');
@@ -116,6 +116,13 @@ final class RY_SmilePay_Gateway
                 RY_WT::update_option('smilepay_gateway', 'no');
             }
         }
+        if ('no' == RY_WT::get_option('smilepay_gateway', 'no')) {
+            if ('yes' == RY_WT::get_option('smilepay_shipping', 'no')) {
+                WC_Admin_Settings::add_error(__('SmilePay shipping method need enable SmilePay gateway.', 'ry-woocommerce-tools'));
+                RY_WT::update_option('smilepay_shipping', 'no');
+            }
+        }
+
         if (!preg_match('/^[a-z0-9]*$/i', RY_WT::get_option('smilepay_gateway_order_prefix'))) {
             WC_Admin_Settings::add_error(__('Order no prefix only letters and numbers allowed allowed', 'ry-woocommerce-tools'));
             RY_WT::update_option('smilepay_gateway_order_prefix', '');

@@ -87,13 +87,13 @@ final class RY_SmilePay_Shipping
             RY_WT::update_option('smilepay_shipping', 'no');
         }
 
-        if ('yes' == RY_WT::get_option('smilepay_shipping', 'yes')) {
+        if ('yes' == RY_WT::get_option('smilepay_shipping', 'no')) {
             $enable = true;
-            if ('billing_only' === get_option('woocommerce_ship_to_destination')) {
+            if ('no' == RY_WT::get_option('smilepay_gateway', 'no')) {
+                WC_Admin_Settings::add_error(__('SmilePay shipping method need enable SmilePay gateway.', 'ry-woocommerce-tools'));
                 $enable = false;
             }
-            if ('no' == RY_WT::get_option('smilepay_shipping', 'no')) {
-                WC_Admin_Settings::add_error(__('SmilePay shipping method need enable SmilePay gateway.', 'ry-woocommerce-tools'));
+            if ('billing_only' === get_option('woocommerce_ship_to_destination')) {
                 $enable = false;
             }
             if (!$enable) {
