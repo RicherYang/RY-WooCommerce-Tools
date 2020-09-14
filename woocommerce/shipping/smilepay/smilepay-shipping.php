@@ -180,7 +180,7 @@ final class RY_SmilePay_Shipping
         return $fields;
     }
 
-    public function only_smilepay_gateway($_available_gateways)
+    public static function only_smilepay_gateway($_available_gateways)
     {
         if (WC()->cart && WC()->cart->needs_shipping()) {
             $chosen_shipping = wc_get_chosen_shipping_method_ids();

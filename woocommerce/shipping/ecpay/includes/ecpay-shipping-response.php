@@ -48,13 +48,13 @@ class RY_ECPay_Shipping_Response extends RY_ECPay_Shipping_Api
                 }
             }
 
-            $html = '<!DOCTYPE html><head><meta charset="' . get_bloginfo('charset', 'display') . '"></head><title>AutoSubmitForm</title><body>';
+            $html = '<!doctype html><html ' . get_language_attributes('html') . '><head><meta charset="' . get_bloginfo('charset', 'display') . '"><title>AutoSubmitForm</title></head><body>';
             $html .= '<form method="post" id="ry-ecpay-map-redirect" action="' . esc_url(wc_get_page_permalink('checkout')) . '" style="display:none;">';
             foreach ($cvs_info as $key => $value) {
                 $html .= '<input type="hidden" name="' . esc_attr($key) . '" value="' . esc_attr($value) . '">';
             }
             $html .= '</form>';
-            $html .= '<script>document.getElementById("ry-ecpay-map-redirect").submit();</script>';
+            $html .= '<script type="text/javascript">document.getElementById("ry-ecpay-map-redirect").submit();</script>';
             $html .= '</body></html>';
 
             echo $html;

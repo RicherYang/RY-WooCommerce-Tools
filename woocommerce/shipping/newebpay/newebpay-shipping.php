@@ -129,7 +129,7 @@ final class RY_NewebPay_Shipping
         return $fields;
     }
 
-    public function only_newebpay_gateway($_available_gateways)
+    public static function only_newebpay_gateway($_available_gateways)
     {
         if (WC()->cart && WC()->cart->needs_shipping()) {
             $chosen_shipping = wc_get_chosen_shipping_method_ids();
@@ -149,7 +149,7 @@ final class RY_NewebPay_Shipping
         return $_available_gateways;
     }
 
-    public function change_cod_order_status($status, $order)
+    public static function change_cod_order_status($status, $order)
     {
         $items_shipping = $order->get_items('shipping');
         $items_shipping = array_shift($items_shipping);
@@ -163,7 +163,7 @@ final class RY_NewebPay_Shipping
         return $status;
     }
 
-    public function change_cod_redirect($result, $order_id)
+    public static function change_cod_redirect($result, $order_id)
     {
         $order = wc_get_order($order_id);
         $result['redirect'] = $order->get_checkout_payment_url(true);
