@@ -2,20 +2,20 @@
 # This file is distributed under the same license as the RY WooCommerce Tools plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: RY WooCommerce Tools 1.6.5\n"
+"Project-Id-Version: RY WooCommerce Tools 1.6.13\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/ry-woocommerce-tools\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2020-08-03T14:48:03+08:00\n"
+"POT-Creation-Date: 2020-12-09T10:46:06+08:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.4.0\n"
 "X-Domain: ry-woocommerce-tools\n"
 
 #. Plugin Name of the plugin
-#: class.ry-wt.main.php:285
+#: class.ry-wt.main.php:287
 #: woocommerce/admin/view/html-setting-tools.php:2
 msgid "RY WooCommerce Tools"
 msgstr ""
@@ -50,230 +50,230 @@ msgstr ""
 msgid "(not paid)"
 msgstr ""
 
-#: class.ry-wt.main.php:249
+#: class.ry-wt.main.php:251
 msgid "required"
 msgstr ""
 
 #. translators: %s: Name of this plugin
-#: class.ry-wt.main.php:284
+#: class.ry-wt.main.php:286
 msgid "<strong>%s</strong> is inactive. It require WooCommerce version 3.0.0 or newer."
 msgstr ""
 
-#: class.ry-wt.main.php:319
+#: class.ry-wt.main.php:321
 msgid "Please check your server time setting. Server time is differs from Google Public NTP more than one minute."
-msgstr ""
-
-#: class.ry-wt.main.php:353
-msgctxt "Bank code"
-msgid "004"
-msgstr ""
-
-#: class.ry-wt.main.php:354
-msgctxt "Bank code"
-msgid "005"
 msgstr ""
 
 #: class.ry-wt.main.php:355
 msgctxt "Bank code"
-msgid "006"
+msgid "004"
 msgstr ""
 
 #: class.ry-wt.main.php:356
 msgctxt "Bank code"
-msgid "007"
+msgid "005"
 msgstr ""
 
 #: class.ry-wt.main.php:357
 msgctxt "Bank code"
-msgid "008"
+msgid "006"
 msgstr ""
 
 #: class.ry-wt.main.php:358
 msgctxt "Bank code"
-msgid "009"
+msgid "007"
 msgstr ""
 
 #: class.ry-wt.main.php:359
 msgctxt "Bank code"
-msgid "011"
+msgid "008"
 msgstr ""
 
 #: class.ry-wt.main.php:360
 msgctxt "Bank code"
-msgid "012"
+msgid "009"
 msgstr ""
 
 #: class.ry-wt.main.php:361
 msgctxt "Bank code"
-msgid "013"
+msgid "011"
 msgstr ""
 
 #: class.ry-wt.main.php:362
 msgctxt "Bank code"
-msgid "016"
+msgid "012"
 msgstr ""
 
 #: class.ry-wt.main.php:363
 msgctxt "Bank code"
-msgid "017"
+msgid "013"
 msgstr ""
 
 #: class.ry-wt.main.php:364
 msgctxt "Bank code"
-msgid "018"
+msgid "016"
 msgstr ""
 
 #: class.ry-wt.main.php:365
 msgctxt "Bank code"
-msgid "021"
+msgid "017"
 msgstr ""
 
 #: class.ry-wt.main.php:366
 msgctxt "Bank code"
-msgid "022"
+msgid "018"
 msgstr ""
 
 #: class.ry-wt.main.php:367
 msgctxt "Bank code"
-msgid "025"
+msgid "021"
 msgstr ""
 
 #: class.ry-wt.main.php:368
 msgctxt "Bank code"
-msgid "039"
+msgid "022"
 msgstr ""
 
 #: class.ry-wt.main.php:369
 msgctxt "Bank code"
-msgid "048"
+msgid "025"
 msgstr ""
 
 #: class.ry-wt.main.php:370
 msgctxt "Bank code"
-msgid "050"
+msgid "039"
 msgstr ""
 
 #: class.ry-wt.main.php:371
 msgctxt "Bank code"
-msgid "052"
+msgid "048"
 msgstr ""
 
 #: class.ry-wt.main.php:372
 msgctxt "Bank code"
-msgid "053"
+msgid "050"
 msgstr ""
 
 #: class.ry-wt.main.php:373
 msgctxt "Bank code"
-msgid "054"
+msgid "052"
 msgstr ""
 
 #: class.ry-wt.main.php:374
 msgctxt "Bank code"
-msgid "072"
+msgid "053"
 msgstr ""
 
 #: class.ry-wt.main.php:375
 msgctxt "Bank code"
-msgid "075"
+msgid "054"
 msgstr ""
 
 #: class.ry-wt.main.php:376
 msgctxt "Bank code"
-msgid "081"
+msgid "072"
 msgstr ""
 
 #: class.ry-wt.main.php:377
 msgctxt "Bank code"
-msgid "082"
+msgid "075"
 msgstr ""
 
 #: class.ry-wt.main.php:378
 msgctxt "Bank code"
-msgid "101"
+msgid "081"
 msgstr ""
 
 #: class.ry-wt.main.php:379
 msgctxt "Bank code"
-msgid "102"
+msgid "082"
 msgstr ""
 
 #: class.ry-wt.main.php:380
 msgctxt "Bank code"
-msgid "103"
+msgid "101"
 msgstr ""
 
 #: class.ry-wt.main.php:381
 msgctxt "Bank code"
-msgid "108"
+msgid "102"
 msgstr ""
 
 #: class.ry-wt.main.php:382
 msgctxt "Bank code"
-msgid "118"
+msgid "103"
 msgstr ""
 
 #: class.ry-wt.main.php:383
 msgctxt "Bank code"
-msgid "147"
+msgid "108"
 msgstr ""
 
 #: class.ry-wt.main.php:384
 msgctxt "Bank code"
-msgid "700"
+msgid "118"
 msgstr ""
 
 #: class.ry-wt.main.php:385
 msgctxt "Bank code"
-msgid "803"
+msgid "147"
 msgstr ""
 
 #: class.ry-wt.main.php:386
 msgctxt "Bank code"
-msgid "805"
+msgid "700"
 msgstr ""
 
 #: class.ry-wt.main.php:387
 msgctxt "Bank code"
-msgid "806"
+msgid "803"
 msgstr ""
 
 #: class.ry-wt.main.php:388
 msgctxt "Bank code"
-msgid "807"
+msgid "805"
 msgstr ""
 
 #: class.ry-wt.main.php:389
 msgctxt "Bank code"
-msgid "808"
+msgid "806"
 msgstr ""
 
 #: class.ry-wt.main.php:390
 msgctxt "Bank code"
-msgid "809"
+msgid "807"
 msgstr ""
 
 #: class.ry-wt.main.php:391
 msgctxt "Bank code"
-msgid "810"
+msgid "808"
 msgstr ""
 
 #: class.ry-wt.main.php:392
 msgctxt "Bank code"
-msgid "812"
+msgid "809"
 msgstr ""
 
 #: class.ry-wt.main.php:393
 msgctxt "Bank code"
-msgid "815"
+msgid "810"
 msgstr ""
 
 #: class.ry-wt.main.php:394
 msgctxt "Bank code"
-msgid "816"
+msgid "812"
 msgstr ""
 
 #: class.ry-wt.main.php:395
+msgctxt "Bank code"
+msgid "815"
+msgstr ""
+
+#: class.ry-wt.main.php:396
+msgctxt "Bank code"
+msgid "816"
+msgstr ""
+
+#: class.ry-wt.main.php:397
 msgctxt "Bank code"
 msgid "822"
 msgstr ""
@@ -703,20 +703,20 @@ msgid "ECPay gateway method failed to enable!"
 msgstr ""
 
 #: woocommerce/gateways/ecpay/ecpay-gateway.php:105
-#: woocommerce/gateways/newebpay/newebpay-gateway.php:97
-#: woocommerce/gateways/smilepay/smilepay-gateway.php:120
+#: woocommerce/gateways/newebpay/newebpay-gateway.php:104
+#: woocommerce/gateways/smilepay/smilepay-gateway.php:127
 #: woocommerce/shipping/ecpay/ecpay-shipping.php:139
 msgid "Order no prefix only letters and numbers allowed allowed"
 msgstr ""
 
-#: woocommerce/gateways/ecpay/includes/ecpay-gateway-api.php:91
+#: woocommerce/gateways/ecpay/includes/ecpay-gateway-api.php:90
 #: woocommerce/gateways/newebpay/includes/newebpay-gateway-api.php:91
 #: woocommerce/gateways/smilepay/includes/smilepay-gateway-base.php:54
 msgid "Please wait.<br>Getting checkout info."
 msgstr ""
 
 #. translators: %d number of periods
-#: woocommerce/gateways/ecpay/includes/ecpay-gateway-api.php:225
+#: woocommerce/gateways/ecpay/includes/ecpay-gateway-api.php:224
 #: woocommerce/gateways/newebpay/includes/newebpay-gateway-api.php:139
 msgid "Credit installment to %d"
 msgstr ""
@@ -909,7 +909,7 @@ msgid "Base options"
 msgstr ""
 
 #: woocommerce/gateways/ecpay/includes/settings-ecpay-gateway.php:15
-#: woocommerce/settings/class-settings-ry-tools.php:67
+#: woocommerce/settings/class-settings-ry-tools.php:81
 msgid "Enable ECPay gateway method"
 msgstr ""
 
@@ -975,7 +975,7 @@ msgid "CVS allowable payment deadline from 1 day to 180 days."
 msgstr ""
 
 #: woocommerce/gateways/newebpay/includes/settings-newebpay-gateway.php:15
-#: woocommerce/settings/class-settings-ry-tools.php:92
+#: woocommerce/settings/class-settings-ry-tools.php:106
 msgid "Enable NewebPay gateway method"
 msgstr ""
 
@@ -1048,6 +1048,12 @@ msgstr ""
 msgid "NewebPay gateway method failed to enable!"
 msgstr ""
 
+#: woocommerce/gateways/newebpay/newebpay-gateway.php:98
+#: woocommerce/settings/class-settings-ry-tools.php:53
+#: woocommerce/shipping/newebpay/newebpay-shipping.php:61
+msgid "NewebPay shipping method need enable NewebPay gateway."
+msgstr ""
+
 #: woocommerce/gateways/smilepay/includes/settings-smilepay-gateway-atm.php:53
 msgid "ATM allowable payment deadline from 1 day to 30 days."
 msgstr ""
@@ -1057,7 +1063,7 @@ msgid "CVS allowable payment deadline from 2 hours to 7 days."
 msgstr ""
 
 #: woocommerce/gateways/smilepay/includes/settings-smilepay-gateway.php:15
-#: woocommerce/settings/class-settings-ry-tools.php:117
+#: woocommerce/settings/class-settings-ry-tools.php:131
 msgid "Enable SmilePay gateway method"
 msgstr ""
 
@@ -1172,109 +1178,115 @@ msgstr ""
 msgid "SmilePay gateway method failed to enable!"
 msgstr ""
 
+#: woocommerce/gateways/smilepay/smilepay-gateway.php:121
+#: woocommerce/settings/class-settings-ry-tools.php:60
+#: woocommerce/shipping/smilepay/smilepay-shipping.php:93
+msgid "SmilePay shipping method need enable SmilePay gateway."
+msgstr ""
+
 #: woocommerce/settings/class-settings-ry-tools.php:10
 msgid "RY Tools"
 msgstr ""
 
-#: woocommerce/settings/class-settings-ry-tools.php:61
+#: woocommerce/settings/class-settings-ry-tools.php:75
 msgid "ECPay support"
 msgstr ""
 
-#: woocommerce/settings/class-settings-ry-tools.php:66
-#: woocommerce/settings/class-settings-ry-tools.php:91
-#: woocommerce/settings/class-settings-ry-tools.php:116
+#: woocommerce/settings/class-settings-ry-tools.php:80
+#: woocommerce/settings/class-settings-ry-tools.php:105
+#: woocommerce/settings/class-settings-ry-tools.php:130
 msgid "Gateway method"
 msgstr ""
 
-#: woocommerce/settings/class-settings-ry-tools.php:68
-#: woocommerce/settings/class-settings-ry-tools.php:76
+#: woocommerce/settings/class-settings-ry-tools.php:82
+#: woocommerce/settings/class-settings-ry-tools.php:90
 msgid "For correct link with ECPay API, need enable secure checkout."
 msgstr ""
 
-#: woocommerce/settings/class-settings-ry-tools.php:74
-#: woocommerce/settings/class-settings-ry-tools.php:99
-#: woocommerce/settings/class-settings-ry-tools.php:124
+#: woocommerce/settings/class-settings-ry-tools.php:88
+#: woocommerce/settings/class-settings-ry-tools.php:113
+#: woocommerce/settings/class-settings-ry-tools.php:138
 msgid "Shipping method"
 msgstr ""
 
-#: woocommerce/settings/class-settings-ry-tools.php:75
+#: woocommerce/settings/class-settings-ry-tools.php:89
 #: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:15
 msgid "Enable ECPay shipping method"
 msgstr ""
 
-#: woocommerce/settings/class-settings-ry-tools.php:86
+#: woocommerce/settings/class-settings-ry-tools.php:100
 msgid "NewebPay support"
 msgstr ""
 
-#: woocommerce/settings/class-settings-ry-tools.php:93
-#: woocommerce/settings/class-settings-ry-tools.php:101
+#: woocommerce/settings/class-settings-ry-tools.php:107
+#: woocommerce/settings/class-settings-ry-tools.php:115
 msgid "For correct link with NewebPay API, need enable secure checkout."
 msgstr ""
 
-#: woocommerce/settings/class-settings-ry-tools.php:100
+#: woocommerce/settings/class-settings-ry-tools.php:114
 #: woocommerce/shipping/newebpay/includes/settings-newebpay-shipping.php:16
 msgid "Enable NewebPay shipping method"
 msgstr ""
 
-#: woocommerce/settings/class-settings-ry-tools.php:111
+#: woocommerce/settings/class-settings-ry-tools.php:125
 msgid "SmilePay support"
 msgstr ""
 
-#: woocommerce/settings/class-settings-ry-tools.php:118
-#: woocommerce/settings/class-settings-ry-tools.php:126
+#: woocommerce/settings/class-settings-ry-tools.php:132
+#: woocommerce/settings/class-settings-ry-tools.php:140
 msgid "For correct link with SmilePay API, need enable secure checkout."
 msgstr ""
 
-#: woocommerce/settings/class-settings-ry-tools.php:125
+#: woocommerce/settings/class-settings-ry-tools.php:139
 #: woocommerce/shipping/smilepay/includes/settings-smilepay-shipping.php:15
 msgid "Enable SmilePay shipping method"
 msgstr ""
 
-#: woocommerce/settings/class-settings-ry-tools.php:136
+#: woocommerce/settings/class-settings-ry-tools.php:150
 msgid "General options"
 msgstr ""
 
-#: woocommerce/settings/class-settings-ry-tools.php:141
+#: woocommerce/settings/class-settings-ry-tools.php:155
 msgid "Repay action"
 msgstr ""
 
-#: woocommerce/settings/class-settings-ry-tools.php:142
+#: woocommerce/settings/class-settings-ry-tools.php:156
 msgid "Edable order to change payment"
 msgstr ""
 
-#: woocommerce/settings/class-settings-ry-tools.php:148
+#: woocommerce/settings/class-settings-ry-tools.php:162
 msgid "strength password"
 msgstr ""
 
-#: woocommerce/settings/class-settings-ry-tools.php:149
+#: woocommerce/settings/class-settings-ry-tools.php:163
 msgid "Edable the strength password check"
 msgstr ""
 
-#: woocommerce/settings/class-settings-ry-tools.php:159
+#: woocommerce/settings/class-settings-ry-tools.php:173
 msgid "Address options"
 msgstr ""
 
-#: woocommerce/settings/class-settings-ry-tools.php:164
+#: woocommerce/settings/class-settings-ry-tools.php:178
 msgid "Show Country"
 msgstr ""
 
-#: woocommerce/settings/class-settings-ry-tools.php:165
+#: woocommerce/settings/class-settings-ry-tools.php:179
 msgid "Show Country select item"
 msgstr ""
 
-#: woocommerce/settings/class-settings-ry-tools.php:171
+#: woocommerce/settings/class-settings-ry-tools.php:185
 msgid "Last name first"
 msgstr ""
 
-#: woocommerce/settings/class-settings-ry-tools.php:172
+#: woocommerce/settings/class-settings-ry-tools.php:186
 msgid "Show Last name before first name input item"
 msgstr ""
 
-#: woocommerce/settings/class-settings-ry-tools.php:178
+#: woocommerce/settings/class-settings-ry-tools.php:192
 msgid "Address zip first"
 msgstr ""
 
-#: woocommerce/settings/class-settings-ry-tools.php:179
+#: woocommerce/settings/class-settings-ry-tools.php:193
 msgid "Show address input item in zip state address"
 msgstr ""
 
@@ -1393,7 +1405,7 @@ msgid "Error with connect to ECPay server."
 msgstr ""
 
 #. translators: 1: EcPay ID 2: Old status mag 3: Old status no 4: New status mag 5: New status no
-#: woocommerce/shipping/ecpay/includes/ecpay-shipping-response.php:121
+#: woocommerce/shipping/ecpay/includes/ecpay-shipping-response.php:135
 msgid "%1$s shipping status from %2$s(%3$d) to %4$s(%5$d)"
 msgstr ""
 
@@ -1553,11 +1565,7 @@ msgstr ""
 msgid "NewebPay shipping options"
 msgstr ""
 
-#: woocommerce/shipping/newebpay/newebpay-shipping.php:63
-msgid "NewebPay shipping method need enable NewebPay gateway."
-msgstr ""
-
-#: woocommerce/shipping/newebpay/newebpay-shipping.php:67
+#: woocommerce/shipping/newebpay/newebpay-shipping.php:68
 msgid "NewebPay shipping method failed to enable!"
 msgstr ""
 
@@ -1614,10 +1622,6 @@ msgstr ""
 
 #: woocommerce/shipping/smilepay/smilepay-shipping.php:86
 msgid "SmilePay shipping method need php simplexml extension."
-msgstr ""
-
-#: woocommerce/shipping/smilepay/smilepay-shipping.php:96
-msgid "SmilePay shipping method need enable SmilePay gateway."
 msgstr ""
 
 #: woocommerce/shipping/smilepay/smilepay-shipping.php:100

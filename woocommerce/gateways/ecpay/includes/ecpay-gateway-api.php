@@ -44,7 +44,6 @@ class RY_ECPay_Gateway_Api extends RY_ECPay
             'ClientRedirectURL' => $return_url
         ];
         $args['MerchantTradeDate'] = $args['MerchantTradeDate']->format('Y/m/d H:i:s');
-        $args['TradeDesc'] = self::urlencode($args['TradeDesc']);
 
         switch (get_locale()) {
             case 'zh_HK':

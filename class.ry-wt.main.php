@@ -227,9 +227,11 @@ final class RY_WT
 
     public static function form_field_hidden($field, $key, $args, $value)
     {
-        $custom_attributes = self::form_field_custom_attributes($args);
+        if (empty($field)) {
+            $custom_attributes = self::form_field_custom_attributes($args);
 
-        $field .= '<input type="hidden" class="' . esc_attr(implode(' ', $args['input_class'])) . '" name="' . esc_attr($key) . '" id="' . esc_attr($args['id']) . '" value="' . esc_attr($value) . '" ' . implode(' ', $custom_attributes) . '>';
+            $field .= '<input type="hidden" class="' . esc_attr(implode(' ', $args['input_class'])) . '" name="' . esc_attr($key) . '" id="' . esc_attr($args['id']) . '" value="' . esc_attr($value) . '" ' . implode(' ', $custom_attributes) . '>';
+        }
         return $field;
     }
 

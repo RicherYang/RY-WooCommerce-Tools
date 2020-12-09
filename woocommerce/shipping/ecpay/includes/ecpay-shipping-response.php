@@ -48,6 +48,20 @@ class RY_ECPay_Shipping_Response extends RY_ECPay_Shipping_Api
                 }
             }
 
+            $out_island = (int) WC()->session->get('shipping_cvs_out_island');
+            if ($cvs_info['CVSOutSide'] != $out_island) {
+                $package_key = 0;
+                do {
+                    $stored_rates = WC()->session->get('shipping_for_package_' . $package_key);
+                    if (empty($stored_rates)) {
+                        break;
+                    }
+                    WC()->session->set('shipping_for_package_' . $package_key, '');
+                    $package_key += 1;
+                } while (true);
+                WC()->session->set('shipping_cvs_out_island', (int) $cvs_info['CVSOutSide']);
+            }
+
             $html = '<!doctype html><html ' . get_language_attributes('html') . '><head><meta charset="' . get_bloginfo('charset', 'display') . '"><title>AutoSubmitForm</title></head><body>';
             $html .= '<form method="post" id="ry-ecpay-map-redirect" action="' . esc_url(wc_get_page_permalink('checkout')) . '" style="display:none;">';
             foreach ($cvs_info as $key => $value) {
