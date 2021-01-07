@@ -153,14 +153,14 @@ if (!class_exists('WC_Settings_RY_Tools', false)) {
                     ],
                     [
                         'title'   => __('Repay action', 'ry-woocommerce-tools'),
-                        'desc'    => __('Edable order to change payment', 'ry-woocommerce-tools'),
+                        'desc'    => __('Enable order to change payment', 'ry-woocommerce-tools'),
                         'id'      => RY_WT::$option_prefix . 'repay_action',
                         'type'    => 'checkbox',
                         'default' => 'no',
                     ],
                     [
                         'title'   => __('strength password', 'ry-woocommerce-tools'),
-                        'desc'    => __('Edable the strength password check', 'ry-woocommerce-tools'),
+                        'desc'    => __('Enable the strength password check', 'ry-woocommerce-tools'),
                         'id'      => RY_WT::$option_prefix . 'strength_password',
                         'type'    => 'checkbox',
                         'default' => 'yes',
