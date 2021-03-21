@@ -1,6 +1,4 @@
 <?php
-defined('RY_WT_VERSION') or exit('No direct script access allowed');
-
 class RY_SmilePay_Gateway_Base extends WC_Payment_Gateway
 {
     public static $log_enabled = false;

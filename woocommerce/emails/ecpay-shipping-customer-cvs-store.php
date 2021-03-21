@@ -1,6 +1,4 @@
 <?php
-defined('RY_WT_VERSION') or exit('No direct script access allowed');
-
 if (!class_exists('RY_ECPay_Shipping_Email_Customer_CVS_Store', false)) {
     class RY_ECPay_Shipping_Email_Customer_CVS_Store extends WC_Email
     {

@@ -1,6 +1,4 @@
 <?php
-defined('RY_WT_VERSION') or exit('No direct script access allowed');
-
 class RY_ECPay_Gateway_Credit_Installment extends RY_ECPay_Gateway_Base
 {
     public $payment_type = 'Credit';
@@ -63,7 +61,8 @@ class RY_ECPay_Gateway_Credit_Installment extends RY_ECPay_Gateway_Base
             $order->update_meta_data('_ecpay_payment_number_of_periods', (int) $_POST['ecpay_number_of_periods']);
         }
         $order->save();
-        wc_reduce_stock_levels($order_id);
+        wc_maybe_reduce_stock_levels($order_id);
+        wc_release_stock_for_order($order);
 
         return [
             'result'   => 'success',

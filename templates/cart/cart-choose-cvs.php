@@ -10,6 +10,7 @@
  *
  * @version 1.1.7
  */
+defined('ABSPATH') || exit;
 ?>
 <tr class="choose_cvs">
     <th>

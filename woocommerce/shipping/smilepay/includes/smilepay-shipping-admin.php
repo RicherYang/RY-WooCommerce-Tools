@@ -1,7 +1,5 @@
 <?php
-defined('RY_WT_VERSION') or exit('No direct script access allowed');
-
-class RY_SmilePay_Shipping_admin
+final class RY_SmilePay_Shipping_admin
 {
     public static function init()
     {

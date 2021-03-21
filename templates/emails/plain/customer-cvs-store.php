@@ -10,10 +10,7 @@
  *
  * @version 1.2.9
  */
-
-if (! defined('RY_WT_VERSION')) {
-    exit;
-}
+defined('ABSPATH') || exit;
 
 echo "=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n";
 echo esc_html(wp_strip_all_tags($email_heading));

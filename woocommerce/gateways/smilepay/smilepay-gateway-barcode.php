@@ -1,6 +1,4 @@
 <?php
-defined('RY_WT_VERSION') or exit('No direct script access allowed');
-
 class RY_SmilePay_Gateway_Barcode extends RY_SmilePay_Gateway_Base
 {
     public $payment_type = 3;
@@ -57,7 +55,8 @@ class RY_SmilePay_Gateway_Barcode extends RY_SmilePay_Gateway_Base
     {
         $order = wc_get_order($order_id);
         $order->add_order_note(__('Pay via SmilePay BARCODE', 'ry-woocommerce-tools'));
-        wc_reduce_stock_levels($order_id);
+        wc_maybe_reduce_stock_levels($order_id);
+        wc_release_stock_for_order($order);
 
         return [
             'result'   => 'success',

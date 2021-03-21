@@ -1,6 +1,4 @@
 <?php
-defined('RY_WT_VERSION') or exit('No direct script access allowed');
-
 if (!class_exists('RY_SmilePay')) {
     abstract class RY_SmilePay
     {

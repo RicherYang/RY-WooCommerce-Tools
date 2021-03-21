@@ -1,6 +1,4 @@
 <?php
-defined('RY_WT_VERSION') or exit('No direct script access allowed');
-
 class RY_ECPay_Gateway_Response extends RY_ECPay_Gateway_Api
 {
     public static function init()

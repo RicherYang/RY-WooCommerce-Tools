@@ -1,17 +1,12 @@
 <?php
-defined('RY_WT_VERSION') or exit('No direct script access allowed');
-
 final class RY_WT_update
 {
     public static function update()
     {
         global $wpdb;
 
-        $now_version = RY_WT::get_option('version');
+        $now_version = RY_WT::get_option('version', '');
 
-        if ($now_version === false) {
-            $now_version = '0.0.0';
-        }
         if ($now_version == RY_WT_VERSION) {
             return;
         }
@@ -161,12 +156,12 @@ final class RY_WT_update
 
         if (version_compare($now_version, '1.6.0', '<')) {
             RY_WT::update_option('keep_shipping_phone', RY_WT::get_option('ecpay_keep_shipping_phone', 'no'));
-            
+
             RY_WT::update_option('version', '1.6.0');
         }
-        
-        if (version_compare($now_version, '1.6.14', '<')) {
-            RY_WT::update_option('version', '1.6.14');
+
+        if (version_compare($now_version, '1.6.16', '<')) {
+            RY_WT::update_option('version', '1.6.16');
         }
     }
 }

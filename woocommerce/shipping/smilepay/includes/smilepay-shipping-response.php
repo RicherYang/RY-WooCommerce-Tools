@@ -1,6 +1,4 @@
 <?php
-defined('RY_WT_VERSION') or exit('No direct script access allowed');
-
 class RY_SmilePay_Shipping_Response extends RY_SmilePay
 {
     public static function init()

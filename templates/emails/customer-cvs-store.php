@@ -10,10 +10,7 @@
  *
  * @version 1.2.9
  */
-
-if (! defined('RY_WT_VERSION')) {
-    exit;
-}
+defined('ABSPATH') || exit;
 
 /**
  * @hooked WC_Emails::email_header() Output the email header

@@ -1,6 +1,4 @@
 <?php
-defined('RY_WT_VERSION') or exit('No direct script access allowed');
-
 class RY_SmilePay_Shipping_Meta_Box
 {
     public static function add_meta_box($post_type, $post)

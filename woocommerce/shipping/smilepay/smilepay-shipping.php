@@ -1,6 +1,4 @@
 <?php
-defined('RY_WT_VERSION') or exit('No direct script access allowed');
-
 final class RY_SmilePay_Shipping
 {
     public static $log = false;

@@ -10,8 +10,7 @@
  *
  * @version 1.1.13
  */
-
-defined('RY_WT_VERSION') or exit('No direct script access allowed');
+defined( 'ABSPATH' ) || exit;
 
 if ($order->get_payment_method() != 'ry_smilepay_barcode') {
     return;

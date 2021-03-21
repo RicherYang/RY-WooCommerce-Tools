@@ -1,6 +1,4 @@
 <?php
-defined('RY_WT_VERSION') or exit('No direct script access allowed');
-
 class RY_ECPay_Gateway_Api extends RY_ECPay
 {
     public static $api_test_url = [

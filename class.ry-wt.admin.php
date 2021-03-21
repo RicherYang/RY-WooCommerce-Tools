@@ -1,6 +1,4 @@
 <?php
-defined('RY_WT_VERSION') or exit('No direct script access allowed');
-
 final class RY_WT_admin
 {
     private static $initiated = false;
@@ -30,7 +28,7 @@ final class RY_WT_admin
 
     public static function get_settings_page($settings)
     {
-        $settings[] = include(RY_WT_PLUGIN_DIR . 'woocommerce/settings/class-settings-ry-tools.php');
+        $settings[] = include RY_WT_PLUGIN_DIR . 'woocommerce/settings/class-settings-ry-tools.php';
 
         return $settings;
     }

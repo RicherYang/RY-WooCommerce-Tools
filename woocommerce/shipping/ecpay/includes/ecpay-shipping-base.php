@@ -1,6 +1,4 @@
 <?php
-defined('RY_WT_VERSION') or exit('No direct script access allowed');
-
 class RY_ECPay_Shipping_Base extends WC_Shipping_Method
 {
     public function init()

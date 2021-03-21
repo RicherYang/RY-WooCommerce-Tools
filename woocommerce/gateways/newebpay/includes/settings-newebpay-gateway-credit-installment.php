@@ -1,6 +1,4 @@
 <?php
-defined('RY_WT_VERSION') or exit('No direct script access allowed');
-
 return [
     'enabled' => [
         'title' => __('Enable/Disable', 'woocommerce'),

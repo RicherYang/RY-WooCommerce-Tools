@@ -1,6 +1,4 @@
 <?php
-defined('RY_WT_VERSION') or exit('No direct script access allowed');
-
 class RY_NewebPay_Shipping_CVS extends WC_Shipping_Method
 {
     public function __construct($instance_id = 0)

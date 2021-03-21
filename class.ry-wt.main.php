@@ -1,6 +1,4 @@
 <?php
-defined('RY_WT_VERSION') or exit('No direct script access allowed');
-
 final class RY_WT
 {
     public static $options = [];
@@ -28,10 +26,12 @@ final class RY_WT
             if (is_admin()) {
                 include_once RY_WT_PLUGIN_DIR . 'class.ry-wt.admin.php';
             } else {
-                if (apply_filters('ry_show_unpay_title_notice', true)) {
-                    self::add_unpay_title_notice(true);
-                    add_filter('woocommerce_email_setup_locale', [__CLASS__, 'remove_unpay_title_notice']);
-                    add_filter('woocommerce_email_restore_locale', [__CLASS__, 'add_unpay_title_notice']);
+                if ('yes' == self::get_option('show_unpay_title', 'yes')) {
+                    if (apply_filters('ry_show_unpay_title_notice', true)) {
+                        self::add_unpay_title_notice(true);
+                        add_filter('woocommerce_email_setup_locale', [__CLASS__, 'remove_unpay_title_notice']);
+                        add_filter('woocommerce_email_restore_locale', [__CLASS__, 'add_unpay_title_notice']);
+                    }
                 }
             }
 
