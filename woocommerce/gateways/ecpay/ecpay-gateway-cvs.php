@@ -74,7 +74,7 @@ class RY_ECPay_Gateway_Cvc extends RY_ECPay_Gateway_Base
         $this->check_inpay_with_ssl();
 
         $_POST['woocommerce_ry_ecpay_cvs_expire_date'] = (int) $_POST['woocommerce_ry_ecpay_cvs_expire_date'];
-        if ($_POST['woocommerce_ry_ecpay_cvs_expire_date'] < 1 || $_POST['woocommerce_ry_ecpay_cvs_expire_date'] > 43200) {
+        if ($_POST['woocommerce_ry_ecpay_cvs_expire_date'] < 1 || $_POST['woocommerce_ry_ecpay_cvs_expire_date'] > 86400) {
             $_POST['woocommerce_ry_ecpay_cvs_expire_date'] = 10080;
             WC_Admin_Settings::add_error(__('CVS payment deadline out of range. Set as default value.', 'ry-woocommerce-tools'));
         }

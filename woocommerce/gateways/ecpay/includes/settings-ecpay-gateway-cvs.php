@@ -54,10 +54,10 @@ return [
         'type' => 'number',
         'default' => 10080,
         'placeholder' => 10080,
-        'description' => __('CVS allowable payment deadline from 1 minute to 30 days.', 'ry-woocommerce-tools'),
+        'description' => __('CVS allowable payment deadline from 1 minute to 60 days.', 'ry-woocommerce-tools'),
         'custom_attributes' => [
             'min' => 1,
-            'max' => 43200,
+            'max' => 86400,
             'step' => 1
         ]
     ]

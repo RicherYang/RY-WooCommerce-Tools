@@ -229,6 +229,7 @@ window.addEventListener("message", function (e) {
             case 'ATM':
                 $args['ExpireDate'] = $gateway->expire_date;
                 break;
+            case 'BARCODE':
             case 'CVS':
                 $args['StoreExpireDate'] = $gateway->expire_date;
                 break;

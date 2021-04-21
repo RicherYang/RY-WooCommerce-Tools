@@ -48,10 +48,10 @@ return [
         'type' => 'number',
         'default' => 7,
         'placeholder' => 7,
-        'description' => __('Barcode allowable payment deadline from 1 day to 30 days.', 'ry-woocommerce-tools'),
+        'description' => __('Barcode allowable payment deadline from 1 day to 60 days.', 'ry-woocommerce-tools'),
         'custom_attributes' => [
             'min' => 1,
-            'max' => 30,
+            'max' => 60,
             'step' => 1
         ]
     ]

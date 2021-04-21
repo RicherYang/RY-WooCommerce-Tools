@@ -66,7 +66,7 @@ class RY_ECPay_Gateway_Barcode extends RY_ECPay_Gateway_Base
     public function process_admin_options()
     {
         $_POST['woocommerce_ry_ecpay_barcode_expire_date'] = (int) $_POST['woocommerce_ry_ecpay_barcode_expire_date'];
-        if ($_POST['woocommerce_ry_ecpay_barcode_expire_date'] < 1 || $_POST['woocommerce_ry_ecpay_barcode_expire_date'] > 30) {
+        if ($_POST['woocommerce_ry_ecpay_barcode_expire_date'] < 1 || $_POST['woocommerce_ry_ecpay_barcode_expire_date'] > 60) {
             $_POST['woocommerce_ry_ecpay_barcode_expire_date'] = 7;
             WC_Admin_Settings::add_error(__('BARCODE payment deadline out of range. Set as default value.', 'ry-woocommerce-tools'));
         }
