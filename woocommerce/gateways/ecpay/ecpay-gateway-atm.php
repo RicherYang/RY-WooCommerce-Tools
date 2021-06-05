@@ -2,7 +2,6 @@
 class RY_ECPay_Gateway_Atm extends RY_ECPay_Gateway_Base
 {
     public $payment_type = 'ATM';
-    public $inpay_payment_type = 'ATM';
 
     public function __construct()
     {
@@ -15,7 +14,6 @@ class RY_ECPay_Gateway_Atm extends RY_ECPay_Gateway_Base
         $this->form_fields = include(RY_WT_PLUGIN_DIR . 'woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-atm.php');
         $this->init_settings();
 
-        $this->inpay = 'yes' == $this->get_option('inpay');
         $this->title = $this->get_option('title');
         $this->description = $this->get_option('description');
         $this->expire_date = (int) $this->get_option('expire_date', 3);
@@ -60,8 +58,6 @@ class RY_ECPay_Gateway_Atm extends RY_ECPay_Gateway_Base
 
     public function process_admin_options()
     {
-        $this->check_inpay_with_ssl();
-
         $_POST['woocommerce_ry_ecpay_atm_expire_date'] = (int) $_POST['woocommerce_ry_ecpay_atm_expire_date'];
         if ($_POST['woocommerce_ry_ecpay_atm_expire_date'] < 1 || $_POST['woocommerce_ry_ecpay_atm_expire_date'] > 60) {
             $_POST['woocommerce_ry_ecpay_atm_expire_date'] = 3;

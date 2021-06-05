@@ -4,8 +4,6 @@ class RY_ECPay_Gateway_Base extends WC_Payment_Gateway
     public static $log_enabled = false;
     public static $log = false;
 
-    public $inpay = false;
-
     public function __construct()
     {
         add_action('woocommerce_update_options_payment_gateways_' . $this->id, [$this, 'process_admin_options']);
@@ -37,23 +35,8 @@ class RY_ECPay_Gateway_Base extends WC_Payment_Gateway
     public function receipt_page($order_id)
     {
         if ($order = wc_get_order($order_id)) {
-            if ($this->inpay) {
-                RY_ECPay_Gateway_Api::inpay_checkout_form($order, $this);
-            } else {
-                RY_ECPay_Gateway_Api::checkout_form($order, $this);
-            }
+            RY_ECPay_Gateway_Api::checkout_form($order, $this);
             WC()->cart->empty_cart();
-        }
-    }
-
-    protected function check_inpay_with_ssl()
-    {
-        $post_filed = 'woocommerce_' . $this->id . '_inpay';
-        if (isset($_POST[$post_filed]) && 1 == (int) $_POST[$post_filed]) {
-            if (!wc_checkout_is_https()) {
-                unset($_POST[$post_filed]);
-                WC_Admin_Settings::add_error(__('Inpay only work with ssl. You must enable force secure checkout.', 'ry-woocommerce-tools'));
-            }
         }
     }
 }

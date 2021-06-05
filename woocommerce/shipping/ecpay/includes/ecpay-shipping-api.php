@@ -92,6 +92,16 @@ class RY_ECPay_Shipping_Api extends RY_ECPay
                 'LogisticsC2CReplyURL' => $notify_url,
             ];
 
+            if ('yes' === RY_WTP::get_option('ecpay_shipping_cleanup_receiver_name', 'no')) {
+                $args['ReceiverName'] = preg_replace('/[^a-zA-Z\x{4e00}-\x{9fff}\x{3400}-\x{4dbf}]/u', '', $args['ReceiverName']);
+                if (preg_match('/^[a-zA-z]+$/', $args['ReceiverName'])) {
+                    $args['ReceiverName'] = mb_substr($args['ReceiverName'], 0, 10);
+                } else {
+                    $args['ReceiverName'] = preg_replace('/[a-zA-Z]/', '', $args['ReceiverName']);
+                    $args['ReceiverName'] = mb_substr($args['ReceiverName'], 0, 4);
+                }
+            }
+
             if ($args['LogisticsType'] == 'CVS') {
                 $args['LogisticsSubType'] .= ('C2C' == $CVS_type) ? 'C2C' : '';
             }

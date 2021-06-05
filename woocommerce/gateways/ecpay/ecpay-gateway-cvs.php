@@ -2,7 +2,6 @@
 class RY_ECPay_Gateway_Cvc extends RY_ECPay_Gateway_Base
 {
     public $payment_type = 'CVS';
-    public $inpay_payment_type = 'CVS';
 
     public function __construct()
     {
@@ -23,7 +22,6 @@ class RY_ECPay_Gateway_Cvc extends RY_ECPay_Gateway_Base
 
         $this->init_settings();
 
-        $this->inpay = 'yes' == $this->get_option('inpay');
         $this->title = $this->get_option('title');
         $this->description = $this->get_option('description');
         $this->expire_date = (int) $this->get_option('expire_date', 10080);
@@ -71,8 +69,6 @@ class RY_ECPay_Gateway_Cvc extends RY_ECPay_Gateway_Base
 
     public function process_admin_options()
     {
-        $this->check_inpay_with_ssl();
-
         $_POST['woocommerce_ry_ecpay_cvs_expire_date'] = (int) $_POST['woocommerce_ry_ecpay_cvs_expire_date'];
         if ($_POST['woocommerce_ry_ecpay_cvs_expire_date'] < 1 || $_POST['woocommerce_ry_ecpay_cvs_expire_date'] > 86400) {
             $_POST['woocommerce_ry_ecpay_cvs_expire_date'] = 10080;

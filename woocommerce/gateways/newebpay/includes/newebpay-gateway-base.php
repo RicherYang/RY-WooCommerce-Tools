@@ -4,8 +4,6 @@ class RY_NewebPay_Gateway_Base extends WC_Payment_Gateway
     public static $log_enabled = false;
     public static $log = false;
 
-    public $inpay = false;
-
     public function __construct()
     {
         add_action('woocommerce_update_options_payment_gateways_' . $this->id, [$this, 'process_admin_options']);

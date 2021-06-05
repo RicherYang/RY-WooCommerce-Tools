@@ -7,12 +7,6 @@ return [
         'type' => 'checkbox',
         'default' => 'no',
     ],
-    'inpay' => [
-        'title' => __('Inpay', 'ry-woocommerce-tools'),
-        'label' => sprintf(__('Enable inpay', 'ry-woocommerce-tools'), $this->method_title),
-        'type' => 'checkbox',
-        'default' => 'no',
-    ],
     'title' => [
         'title' => __('Title', 'woocommerce'),
         'type' => 'text',

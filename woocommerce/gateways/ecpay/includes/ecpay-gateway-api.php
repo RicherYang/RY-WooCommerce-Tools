@@ -5,13 +5,11 @@ class RY_ECPay_Gateway_Api extends RY_ECPay
         'checkout' => 'https://payment-stage.ecpay.com.tw/Cashier/AioCheckOut/V5',
         'query' => 'https://payment-stage.ecpay.com.tw/Cashier/QueryTradeInfo/V5',
         'sptoken' => 'https://payment-stage.ecpay.com.tw/SP/CreateTrade',
-        'inpay_js' => 'https://payment-stage.ecpay.com.tw/Scripts/SP/ECPayPayment_1.0.0.js'
     ];
     public static $api_url = [
         'checkout' => 'https://payment.ecpay.com.tw/Cashier/AioCheckOut/V5',
         'query' => 'https://payment.ecpay.com.tw/Cashier/QueryTradeInfo/V5',
         'sptoken' => 'https://payment.ecpay.com.tw/SP/CreateTrade',
-        'inpay_js' => 'https://payment.ecpay.com.tw/Scripts/SP/ECPayPayment_1.0.0.js'
     ];
 
     public static function checkout_form($order, $gateway)
@@ -103,103 +101,6 @@ $("#ry-ecpay-form").submit();'
         );
 
         do_action('ry_ecpay_gateway_checkout', $args, $order, $gateway);
-    }
-
-    public static function inpay_checkout_form($order, $gateway)
-    {
-        RY_ECPay_Gateway::log('Generating inpay payment form by ' . $gateway->id . ' for #' . $order->get_order_number());
-
-        $notify_url = WC()->api_request_url('ry_ecpay_callback', true);
-
-        list($MerchantID, $HashKey, $HashIV) = RY_ECPay_Gateway::get_ecpay_api_info();
-
-        $args = [
-            'MerchantID' => $MerchantID,
-            'MerchantTradeNo' => self::generate_trade_no($order->get_id(), RY_WT::get_option('ecpay_gateway_order_prefix')),
-            'MerchantTradeDate' => current_time('Y/m/d H:i:s'),
-            'PaymentType' => 'aio',
-            'TotalAmount' => (int) ceil($order->get_total()),
-            'TradeDesc' => mb_substr(get_bloginfo('name'), 0, 100),
-            'ItemName' => self::get_item_name($order),
-            'ReturnURL' => $notify_url,
-            'ChoosePayment' => $gateway->payment_type,
-            'NeedExtraPaidInfo' => 'Y',
-            'EncryptType' => 1,
-            'PaymentInfoURL' => $notify_url
-        ];
-
-        $args = self::add_type_info($args, $order, $gateway);
-        $args = self::add_check_value($args, $HashKey, $HashIV, 'sha256');
-        RY_ECPay_Gateway::log('Get SPToken POST: ' . var_export($args, true));
-
-        $order->update_meta_data('_ecpay_MerchantTradeNo', $args['MerchantTradeNo']);
-        $order->save_meta_data();
-
-        if ('yes' === RY_WT::get_option('ecpay_gateway_testmode', 'yes')) {
-            $post_url = self::$api_test_url['sptoken'];
-            $js_file = self::$api_test_url['inpay_js'];
-        } else {
-            $post_url = self::$api_url['sptoken'];
-            $js_file = self::$api_url['inpay_js'];
-        }
-
-        wc_set_time_limit(40);
-        $response = wp_remote_post($post_url, [
-            'timeout' => 20,
-            'body' => $args
-        ]);
-        if (!is_wp_error($response)) {
-            if ($response['response']['code'] == '200') {
-                RY_ECPay_Gateway::log('SPToken request result: ' . $response['body']);
-                $token_info = json_decode($response['body'], true);
-                if (is_array($token_info)) {
-                    $check_value = self::get_check_value($token_info);
-                    $token_info_check_value = self::generate_check_value($token_info, $HashKey, $HashIV, 'sha256');
-                    if ($check_value == $token_info_check_value) {
-                        if (self::get_status($token_info) == 1) {
-                            ?>
-<script src="<?=$js_file ?>" data-MerchantID="<?=$token_info['MerchantID'] ?>" data-SPToken="<?=$token_info['SPToken'] ?>" data-PaymentType="<?=$gateway->inpay_payment_type ?>" data-CustomerBtn="1">
-</script>
-<button type="button" class="button alt" id="ecpay_checkout_btn" onclick="checkOut('<?=$gateway->inpay_payment_type ?>')"><?=$gateway->order_button_text ?></button>
-<?php
-                            wc_enqueue_js(
-                                'function autoCheckOut() {
-    var CheckMobile = new RegExp("android.+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino"),
-        CheckMobile2 = new RegExp("mobile|mobi|nokia|samsung|sonyericsson|mot|blackberry|lg|htc|j2me|ucweb|opera mini|mobi|android|iphone");
-    if( CheckMobile.test(navigator.userAgent) || CheckMobile2.test(navigator.userAgent.toLowerCase())) {
-   } else {
-       $("#ecpay_checkout_btn").hide();
-        if( $("#ecpay_checkout_btn").length ) {
-            $("#ecpay_checkout_btn").click();
-        } else {
-            setTimeout(autoCheckOut, 100);
-        }
-    }
-}
-autoCheckOut();
-window.addEventListener("message", function (e) {
-    if( typeof e.data == "string" ) {
-        var data = JSON.parse(e.data);
-        if( typeof data == "object" && typeof data.MerchantTradeNo != "undefined" ) {
-            location.href = "' . $gateway->get_return_url($order) . '";
-        }
-    }
-});'
-                            );
-                            do_action('ry_ecpay_gateway_checkout_inpay', $args, $order, $gateway);
-                        }
-                    } else {
-                        RY_ECPay_Gateway::log('SPToken request check failed. Response:' . $check_value . ' Self:' . $token_info_check_value, 'error');
-                    }
-                }
-            } else {
-                RY_ECPay_Gateway::log('SPToken failed. Http code: ' . $response['response']['code'], 'error');
-                self::checkout_form($order, $gateway);
-            }
-        } else {
-            RY_ECPay_Gateway::log('SPToken failed. POST error: ' . implode("\n", $response->get_error_messages()), 'error');
-            self::checkout_form($order, $gateway);
-        }
     }
 
     protected static function add_type_info($args, $order, $gateway)
