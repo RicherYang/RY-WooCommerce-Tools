@@ -39,7 +39,10 @@ Please visit the [plugin page](https://richer.tw/ry-woocommerce-tools/ " ") with
 
 == Changelog ==
 
+= 1.7.1 - 2021/06/05 =
+* 更新 - 修正綠界物流API錯誤
+
 = 1.7.0 - 2021/06/05 =
-* 新增 - 移除「綠界站內付 1.0」支援
+* 移除 - 「綠界站內付 1.0」支援
 
 [See changelog for all versions](https://richer.tw/ry-woocommerce-tools/history/).
