@@ -27,7 +27,7 @@ class RY_ECPay_Gateway_Api extends RY_ECPay
             'MerchantTradeDate' => new DateTime('', new DateTimeZone('Asia/Taipei')),
             'PaymentType' => 'aio',
             'TotalAmount' => (int) ceil($order->get_total()),
-            'TradeDesc' => mb_substr(get_bloginfo('name'), 0, 100),
+            'TradeDesc' => get_bloginfo('name'),
             'ItemName' => self::get_item_name($order),
             'ReturnURL' => $notify_url,
             'ChoosePayment' => $gateway->payment_type,
@@ -39,6 +39,8 @@ class RY_ECPay_Gateway_Api extends RY_ECPay
             'PaymentInfoURL' => $notify_url,
             'ClientRedirectURL' => $return_url
         ];
+        $args['TradeDesc'] = preg_replace('/[\x{21}-\x{2f}\x{3a}-\x{40}\x{5b}-\x{60}\x{7b}-\x{7e}]/', ' ', $args['TradeDesc']);
+        $args['TradeDesc'] = mb_substr($args['TradeDesc'], 0, 100);
         $args['MerchantTradeDate'] = $args['MerchantTradeDate']->format('Y/m/d H:i:s');
 
         switch (get_locale()) {
@@ -144,7 +146,7 @@ $("#ry-ecpay-form").submit();'
         if (count($order->get_items())) {
             foreach ($order->get_items() as $item) {
                 $item_name .= str_replace('#', '', trim($item->get_name())) . '#';
-                if (strlen($item_name) > 200) {
+                if (mb_strlen($item_name) > 200) {
                     break;
                 }
             }
