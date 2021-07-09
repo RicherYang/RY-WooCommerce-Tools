@@ -5,6 +5,8 @@ final class RY_ECPay_Shipping_admin
     {
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/admin/meta-boxes/ecpay-shipping-meta-box.php';
 
+        add_action('admin_menu', [__CLASS__, 'admin_menu'], 15);
+
         add_filter('woocommerce_admin_shipping_fields', [__CLASS__, 'set_cvs_shipping_fields'], 99);
         add_action('woocommerce_shipping_zone_method_status_toggled', [__CLASS__, 'check_can_enable'], 10, 4);
         add_action('woocommerce_update_options_shipping_options', [__CLASS__, 'check_ship_destination']);
@@ -14,7 +16,11 @@ final class RY_ECPay_Shipping_admin
         add_action('woocommerce_order_action_send_at_cvs_email', ['RY_ECPay_Shipping', 'send_at_cvs_email']);
 
         add_action('add_meta_boxes', ['RY_ECPay_Shipping_Meta_Box', 'add_meta_box'], 40, 2);
-        add_action('wp_ajax_RY_ECPay_Shipping_print', [__CLASS__, 'print_info']);
+    }
+
+    public static function admin_menu()
+    {
+        add_submenu_page(null, 'RY ECPay shipping print', null, 'edit_shop_orders', 'ry_print_ecpay_shipping', [__CLASS__, 'print_shipping']);
     }
 
     public static function set_cvs_shipping_fields($shipping_fields)
@@ -109,7 +115,7 @@ final class RY_ECPay_Shipping_admin
 
     public static function add_order_actions($order_actions)
     {
-        global $theorder;
+        global $theorder, $post;
         if (!is_object($theorder)) {
             $theorder = wc_get_order($post->ID);
         }
@@ -128,63 +134,122 @@ final class RY_ECPay_Shipping_admin
         return $order_actions;
     }
 
-    public static function print_info()
+    public static function print_shipping()
     {
-        $order_ID = (int) $_GET['orderid'];
-        $logistics_id = (int) $_GET['id'];
-        $only = isset($_GET['only']) ? (bool) $_GET['only'] : false;
+        $order_ID = wp_unslash($_GET['orderid']);
+        $logistics_ID = (int) $_GET['id'];
+        $print_list = [];
 
-        $print_info = '';
-        $order = wc_get_order($order_ID);
-        if (!$order) {
-            wp_redirect(admin_url('edit.php?post_type=shop_order'));
+        if ($logistics_ID > 0) {
+            $order = wc_get_order((int) $order_ID);
+            if (empty($order)) {
+                wp_redirect(admin_url('edit.php?post_type=shop_order'));
+                exit();
+            }
+
+            $shipping_list = $order->get_meta('_ecpay_shipping_info', true);
+            if (is_array($shipping_list)) {
+                foreach ($shipping_list as $info) {
+                    if ($info['ID'] == $logistics_ID) {
+                        $print_list[] = $info;
+                    }
+                }
+            }
+        } else {
+            $print_type = wp_unslash($_GET['type']);
+            $order_IDs = explode(',', $order_ID);
+            foreach ($order_IDs as $order_ID) {
+                $order = wc_get_order((int) $order_ID);
+                if (empty($order)) {
+                    continue;
+                }
+                $shipping_list = $order->get_meta('_ecpay_shipping_info', true);
+                if (is_array($shipping_list)) {
+                    foreach ($shipping_list as $info) {
+                        switch ($info['LogisticsSubType']) {
+                            case 'UNIMART':
+                            case 'UNIMARTC2C':
+                                if ($print_type == 'cvs_711') {
+                                    $print_list[] = $info;
+                                }
+                                break;
+                            case 'FAMI':
+                            case 'FAMIC2C':
+                                if ($print_type == 'cvs_family') {
+                                    $print_list[] = $info;
+                                }
+                                break;
+                            case 'HILIFE':
+                                if ($print_type == 'cvs_hilife') {
+                                    $print_list[] = $info;
+                                }
+                                break;
+                            case 'TCAT':
+                                if ($print_type == 'home_tcat') {
+                                    $print_list[] = $info;
+                                }
+                                break;
+                            case 'ECAN':
+                                if ($print_type == 'home_ecan') {
+                                    $print_list[] = $info;
+                                }
+                                break;
+                        }
+                    }
+                }
+            }
+        }
+
+        if (!empty($print_list)) {
+            RY_ECPay_Shipping_Api::get_print_form($print_list);
             exit();
         }
 
-        foreach ($order->get_items('shipping') as $item_id => $item) {
-            $shipping_list = $order->get_meta('_ecpay_shipping_info', true);
-            if (!is_array($shipping_list)) {
-                continue;
-            }
-            foreach ($shipping_list as $info) {
-                if ($info['ID'] != $logistics_id) {
-                    continue;
-                }
-                if ($only) {
-                    $print_info = RY_ECPay_Shipping_Api::get_print_info($logistics_id, $info);
-                    switch ($info['LogisticsSubType']) {
-                        case 'FAMIC2C':
-                            $sub_info = substr($print_info, strpos($print_info, '<img'));
-                            preg_match('/(<img[^>]*>)/', $sub_info, $match);
-                            if (count($match) == 2) {
-                                $print_info = '<!DOCTYPE html><html><head><meta charset="' . get_bloginfo('charset', 'display') . '"></head><body style="margin:0;padding:0;overflow:hidden">'
-                                    . $match[1]
-                                    . '</body></html>';
-                            }
-                            break;
-                        case 'HILIFEC2C':
-                            $sub_info = substr($print_info, strpos($print_info, 'location.href'));
-                            preg_match("/'([^']*)'/", $sub_info, $match);
-                            if (count($match) == 2) {
-                                $print_info = '<!DOCTYPE html><html><head><meta charset="' . get_bloginfo('charset', 'display') . '"></head><body style="margin:0;padding:0;overflow:hidden">'
-                                    . '<iframe src="' . $match[1] . '" style="border:0;width:990px;height:315px"></iframe>'
-                                    . '</body></html>';
-                            }
-                            break;
-                        case 'UNIMARTC2C':
-                            break;
-                    }
-                } else {
-                    $print_info = RY_ECPay_Shipping_Api::get_print_info_form($logistics_id, $info);
-                }
-
-                echo $print_info;
-                wp_die();
-            }
-        }
-
-        wp_redirect(admin_url('post.php?post=' . $order_ID . '&action=edit'));
+        //wp_redirect(admin_url(''));
         exit();
+
+        /*
+                foreach ($order->get_items('shipping') as $item_id => $item) {
+                    $shipping_list = $order->get_meta('_ecpay_shipping_info', true);
+                    if (!is_array($shipping_list)) {
+                        continue;
+                    }
+                    foreach ($shipping_list as $info) {
+                        if ($info['ID'] != $logistics_id) {
+                            continue;
+                        }
+                        if ($only) {
+                            $print_info = RY_ECPay_Shipping_Api::get_print_info($logistics_id, $info);
+                            switch ($info['LogisticsSubType']) {
+                                case 'FAMIC2C':
+                                    $sub_info = substr($print_info, strpos($print_info, '<img'));
+                                    preg_match('/(<img[^>]*>)/', $sub_info, $match);
+                                    if (count($match) == 2) {
+                                        $print_info = '<!DOCTYPE html><html><head><meta charset="' . get_bloginfo('charset', 'display') . '"></head><body style="margin:0;padding:0;overflow:hidden">'
+                                            . $match[1]
+                                            . '</body></html>';
+                                    }
+                                    break;
+                                case 'HILIFEC2C':
+                                    $sub_info = substr($print_info, strpos($print_info, 'location.href'));
+                                    preg_match("/'([^']*)'/", $sub_info, $match);
+                                    if (count($match) == 2) {
+                                        $print_info = '<!DOCTYPE html><html><head><meta charset="' . get_bloginfo('charset', 'display') . '"></head><body style="margin:0;padding:0;overflow:hidden">'
+                                            . '<iframe src="' . $match[1] . '" style="border:0;width:990px;height:315px"></iframe>'
+                                            . '</body></html>';
+                                    }
+                                    break;
+                                case 'UNIMARTC2C':
+                                    break;
+                            }
+                        } else {
+                            $print_info = RY_ECPay_Shipping_Api::get_print_info_form($logistics_id, $info);
+                        }
+
+                        echo $print_info;
+                        wp_die();
+                    }
+                }*/
     }
 }
 

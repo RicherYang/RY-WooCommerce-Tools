@@ -109,7 +109,7 @@ class RY_ECPay_Shipping_Meta_Box
                 <?=sprintf(_x('%1$s %2$s', 'Datetime', 'ry-woocommerce-tools'), $item['create']->date_i18n(wc_date_format()), $item['create']->date_i18n(wc_time_format())) ?>
             </td>
             <td>
-                <button type="button" class="button print_info" data-orderid="<?=$post->ID ?>" data-id="<?=$item['ID'] ?>"><?=__('Print', 'ry-woocommerce-tools') ?></button>
+                <a class="button" href="<?=esc_url(add_query_arg(['orderid' => $post->ID, 'id' => $item['ID'], 'noheader' => 1], admin_url('admin.php?page=ry_print_ecpay_shipping'))) ?>"><?=__('Print', 'ry-woocommerce-tools') ?></a>
             </td>
         </tr>
         <?php
@@ -117,16 +117,5 @@ class RY_ECPay_Shipping_Meta_Box
     </tbody>
 </table>
 <?php
-        wc_enqueue_js(
-                'jQuery(function($) {
-$(".print_info").click(function(){
-    window.open(ajaxurl + "?" + $.param({
-        action: "RY_ECPay_Shipping_print",
-        orderid: $(this).data("orderid"),
-        id: $(this).data("id")
-    }), "_blank", "toolbar=yes,scrollbars=yes,resizable=yes");
-});
-});'
-            );
     }
 }

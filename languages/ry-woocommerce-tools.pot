@@ -2,14 +2,14 @@
 # This file is distributed under the GPLv2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: RY WooCommerce Tools 1.7.2\n"
+"Project-Id-Version: RY WooCommerce Tools 1.7.3\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/ry-woocommerce-tools\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-06-08T18:33:54+08:00\n"
+"POT-Creation-Date: 2021-07-09T11:24:46+08:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.5.0\n"
 "X-Domain: ry-woocommerce-tools\n"
@@ -449,7 +449,7 @@ msgstr ""
 #: woocommerce/admin/meta-boxes/ecpay-shipping-meta-box.php:46
 #: woocommerce/admin/meta-boxes/newebpay-shipping-meta-box.php:38
 #: woocommerce/admin/meta-boxes/smilepay-shipping-meta-box.php:43
-#: woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:34
+#: woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:40
 #: woocommerce/shipping/newebpay/includes/newebpay-shipping-admin.php:40
 #: woocommerce/shipping/smilepay/includes/smilepay-shipping-admin.php:43
 msgid "Store ID"
@@ -1340,46 +1340,46 @@ msgid "ECPay shipping method failed to enable!"
 msgstr ""
 
 #: woocommerce/shipping/ecpay/ecpay-shipping.php:224
-#: woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:52
-#: woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:56
+#: woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:58
+#: woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:62
 #: woocommerce/shipping/smilepay/smilepay-shipping.php:114
 msgid "Phone"
 msgstr ""
 
 #: woocommerce/shipping/ecpay/ecpay-shipping.php:232
-#: woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:38
+#: woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:44
 #: woocommerce/shipping/newebpay/includes/newebpay-shipping-admin.php:44
 #: woocommerce/shipping/smilepay/includes/smilepay-shipping-admin.php:47
 msgid "Store Name"
 msgstr ""
 
 #: woocommerce/shipping/ecpay/ecpay-shipping.php:239
-#: woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:42
+#: woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:48
 #: woocommerce/shipping/newebpay/includes/newebpay-shipping-admin.php:48
 #: woocommerce/shipping/smilepay/includes/smilepay-shipping-admin.php:51
 msgid "Store Address"
 msgstr ""
 
 #: woocommerce/shipping/ecpay/ecpay-shipping.php:246
-#: woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:46
+#: woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:52
 msgid "Store Telephone"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:102
+#: woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:108
 #: woocommerce/shipping/newebpay/includes/newebpay-shipping-admin.php:96
 #: woocommerce/shipping/smilepay/includes/smilepay-shipping-admin.php:99
 msgid "All cvs shipping methods set to disable."
 msgstr ""
 
-#: woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:119
+#: woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:125
 msgid "Get new Ecpay shipping no"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:121
+#: woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:127
 msgid "Get new Ecpay shipping no with cod"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:124
+#: woocommerce/shipping/ecpay/includes/ecpay-shipping-admin.php:130
 #: woocommerce/shipping/newebpay/includes/newebpay-shipping-admin.php:110
 #: woocommerce/shipping/smilepay/includes/smilepay-shipping-admin.php:117
 msgid "Resend at cvs notification"
@@ -1388,10 +1388,6 @@ msgstr ""
 #. translators: %s Error messade
 #: woocommerce/shipping/ecpay/includes/ecpay-shipping-api.php:184
 msgid "Get shipping code error: %s"
-msgstr ""
-
-#: woocommerce/shipping/ecpay/includes/ecpay-shipping-api.php:277
-msgid "Error with connect to ECPay server."
 msgstr ""
 
 #. translators: 1: EcPay ID 2: Old status mag 3: Old status no 4: New status mag 5: New status no
