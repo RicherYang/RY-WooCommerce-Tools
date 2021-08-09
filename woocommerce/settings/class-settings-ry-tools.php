@@ -150,7 +150,7 @@ class WC_Settings_RY_Tools extends WC_Settings_Page
                 ],
                 [
                     'title'   => __('Repay action', 'ry-woocommerce-tools'),
-                    'desc'    => __('Enable order to change payment', 'ry-woocommerce-tools'),
+                    'desc'    => __('Show pay link at account orders page.', 'ry-woocommerce-tools'),
                     'id'      => RY_WT::$option_prefix . 'repay_action',
                     'type'    => 'checkbox',
                     'default' => 'no',
