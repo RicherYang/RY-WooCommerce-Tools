@@ -56,14 +56,11 @@ if (!class_exists('RY_ECPay_Shipping_Email_Customer_CVS_Store', false)) {
             $args = [
                 'order' => $this->object,
                 'email_heading' => $this->get_heading(),
-                'additional_content' => $this->get_default_additional_content(),
+                'additional_content' => $this->get_additional_content(),
                 'sent_to_admin' => false,
                 'plain_text' => false,
                 'email' => $this,
             ];
-            if (version_compare(WC_VERSION, '3.7.0', '>=')) {
-                $args['additional_content'] = $this->get_additional_content();
-            }
             return wc_get_template_html($this->template_html, $args, '', RY_WT_PLUGIN_DIR . 'templates/');
         }
 
@@ -72,14 +69,11 @@ if (!class_exists('RY_ECPay_Shipping_Email_Customer_CVS_Store', false)) {
             $args = [
                 'order' => $this->object,
                 'email_heading' => $this->get_heading(),
-                'additional_content' => $this->get_default_additional_content(),
+                'additional_content' => $this->get_additional_content(),
                 'sent_to_admin' => false,
                 'plain_text' => true,
                 'email' => $this,
             ];
-            if (version_compare(WC_VERSION, '3.7.0', '>=')) {
-                $args['additional_content'] = $this->get_additional_content();
-            }
             return wc_get_template_html($this->template_plain, $args, '', RY_WT_PLUGIN_DIR . 'templates/');
         }
 

@@ -78,11 +78,7 @@ final class RY_Shipping
                 $items_shipping = $order->get_items('shipping');
                 $items_shipping = array_shift($items_shipping);
                 if ($items_shipping) {
-                    if (version_compare(WC_VERSION, '3.2.0', '<')) {
-                        $items_shipping = $items_shipping->method_id;
-                    } else {
-                        $items_shipping = $items_shipping->get_method_id();
-                    }
+                    $items_shipping = $items_shipping->get_method_id();
 
                     if ('yes' == RY_WT::get_option('enabled_ecpay_shipping', 'no')) {
                         if (array_key_exists($items_shipping, RY_ECPay_Shipping::$support_methods)) {
@@ -117,7 +113,11 @@ final class RY_Shipping
             $address['cvs_store_name'] = $order->get_meta('_shipping_cvs_store_name');
             $address['cvs_address'] = $order->get_meta('_shipping_cvs_store_address');
             $address['cvs_telephone'] = $order->get_meta('_shipping_cvs_store_telephone');
-            $address['phone'] = $order->get_meta('_shipping_phone');
+            if (version_compare(WC_VERSION, '5.6.0', '>=')) {
+                $address['phone'] = $order->get_shipping_phone();
+            } else {
+                $address['phone'] = $order->get_meta('_shipping_phone');
+            }
             $address['country'] = 'CVS';
         }
 
@@ -162,9 +162,11 @@ final class RY_Shipping
                     $shipping_method = RY_NewebPay_Shipping::get_order_support_shipping($item);
                 }
                 if ($shipping_method) {
-                    if (isset($_POST['_shipping_phone'])) {
-                        $order->update_meta_data('_shipping_phone', wc_clean(wp_unslash($_POST['_shipping_phone'])));
-                        $order->save_meta_data();
+                    if (version_compare(WC_VERSION, '5.6.0', '<')) {
+                        if (isset($_POST['_shipping_phone'])) {
+                            $order->update_meta_data('_shipping_phone', wc_clean(wp_unslash($_POST['_shipping_phone'])));
+                            $order->save_meta_data();
+                        }
                     }
 
                     if (strpos($shipping_method, 'cvs') !== false) {

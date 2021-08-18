@@ -86,11 +86,15 @@ class RY_ECPay_Shipping_Api extends RY_ECPay
                 'SenderPhone' => RY_WT::get_option('ecpay_shipping_sender_phone'),
                 'SenderCellPhone' => RY_WT::get_option('ecpay_shipping_sender_cellphone'),
                 'ReceiverName' => $order->get_shipping_last_name() . $order->get_shipping_first_name(),
-                'ReceiverCellPhone' => $order->get_meta('_shipping_phone'),
                 'ReceiverStoreID' => '',
                 'ServerReplyURL' => $notify_url,
                 'LogisticsC2CReplyURL' => $notify_url,
             ];
+            if (version_compare(WC_VERSION, '5.6.0', '>=')) {
+                $args['ReceiverCellPhone'] = $order->get_shipping_phone();
+            } else {
+                $args['ReceiverCellPhone'] = $order->get_meta('_shipping_phone');
+            }
 
             if ('yes' === RY_WT::get_option('ecpay_shipping_cleanup_receiver_name', 'no')) {
                 $args['ReceiverName'] = preg_replace('/[^a-zA-Z\x{4e00}-\x{9fff}\x{3400}-\x{4dbf}]/u', '', $args['ReceiverName']);

@@ -38,12 +38,16 @@ class RY_SmilePay_Shipping_Api extends RY_SmilePay_Gateway_Api
             'Data_id' => self::generate_trade_no($order->get_id(), RY_WT::get_option('smilepay_gateway_order_prefix')),
             'Amount' => (int) ceil($order->get_total()),
             'Pur_name' => $order->get_shipping_last_name() . $order->get_shipping_first_name(),
-            'Mobile_number' => $order->get_meta('_shipping_phone'),
             'Roturl' => WC()->api_request_url('ry_smilepay_callback', true),
             'Roturl_status' => 'RY_SmilePay',
             'MapRoturl' => WC()->api_request_url('ry_smilepay_shipping_map_callback', true),
             'Logistics_Roturl' => WC()->api_request_url('ry_smilepay_shipping_callback', true)
         ];
+        if (version_compare(WC_VERSION, '5.6.0', '>=')) {
+            $args['Mobile_number'] = $order->get_shipping_phone();
+        } else {
+            $args['Mobile_number'] = $order->get_meta('_shipping_phone');
+        }
 
         if ($order->get_payment_method() == 'cod') {
             $args['Pay_zg'] = 51;
@@ -93,13 +97,17 @@ class RY_SmilePay_Shipping_Api extends RY_SmilePay_Gateway_Api
             'Data_id' => self::generate_trade_no($order->get_id(), RY_WT::get_option('smilepay_gateway_order_prefix')),
             'Amount' => (int) ceil($order->get_total()),
             'Pur_name' => $order->get_shipping_last_name() . $order->get_shipping_first_name(),
-            'Mobile_number' => $order->get_meta('_shipping_phone'),
             'Roturl' => WC()->api_request_url('ry_smilepay_callback', true),
             'Roturl_status' => 'RY_SmilePay',
             'MapRoturl' => WC()->api_request_url('ry_smilepay_shipping_admin_map_callback', true),
             'Logistics_Roturl' => WC()->api_request_url('ry_smilepay_shipping_callback', true),
             'Logistics_store' => $order->get_meta('_shipping_cvs_store_ID') . '/' . $order->get_meta('_shipping_cvs_store_name') . '/' . $order->get_meta('_shipping_cvs_store_address')
         ];
+        if (version_compare(WC_VERSION, '5.6.0', '>=')) {
+            $args['Mobile_number'] = $order->get_shipping_phone();
+        } else {
+            $args['Mobile_number'] = $order->get_meta('_shipping_phone');
+        }
 
         foreach ($order->get_items('shipping') as $item_id => $item) {
             $shipping_method = RY_SmilePay_Shipping::get_order_support_shipping($item);

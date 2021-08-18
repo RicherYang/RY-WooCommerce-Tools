@@ -341,8 +341,10 @@ final class RY_ECPay_Shipping
             $order->set_shipping_address_1($data['CVSAddress']);
         }
 
-        if (isset($data['shipping_phone'])) {
-            $order->update_meta_data('_shipping_phone', $data['shipping_phone']);
+        if (version_compare(WC_VERSION, '5.6.0', '<')) {
+            if (isset($data['shipping_phone'])) {
+                $order->update_meta_data('_shipping_phone', $data['shipping_phone']);
+            }
         }
     }
 

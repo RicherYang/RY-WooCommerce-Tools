@@ -200,8 +200,10 @@ final class RY_SmilePay_Shipping
 
     public static function save_cvs_info($order, $data)
     {
-        if (isset($data['shipping_phone'])) {
-            $order->update_meta_data('_shipping_phone', $data['shipping_phone']);
+        if (version_compare(WC_VERSION, '5.6.0', '<')) {
+            if (isset($data['shipping_phone'])) {
+                $order->update_meta_data('_shipping_phone', $data['shipping_phone']);
+            }
         }
     }
 

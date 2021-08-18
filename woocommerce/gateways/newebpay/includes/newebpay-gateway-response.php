@@ -135,7 +135,12 @@ class RY_NewebPay_Gateway_Response extends RY_NewebPay_Gateway_Api
                 $order->update_meta_data('_shipping_cvs_store_name', $ipn_info->StoreName);
                 $order->update_meta_data('_shipping_cvs_store_address', $ipn_info->StoreAddr);
                 $order->update_meta_data('_shipping_cvs_store_type', $ipn_info->StoreType);
-                $order->update_meta_data('_shipping_phone', $ipn_info->CVSCOMPhone);
+                if (version_compare(WC_VERSION, '5.6.0', '>=')) {
+                    $order->set_shipping_phone($ipn_info->CVSCOMPhone);
+                } else {
+                    $order->update_meta_data('_shipping_phone', $ipn_info->CVSCOMPhone);
+                }
+
                 $order->set_shipping_address_1($ipn_info->StoreAddr);
                 $order->save();
 
