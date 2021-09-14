@@ -3,7 +3,7 @@
 Plugin Name: RY WooCommerce Tools
 Plugin URI: https://richer.tw/ry-woocommerce-tools
 Description: WooCommerce Tools
-Version: 1.7.6
+Version: 1.7.7
 Author: Richer Yang
 Author URI: https://richer.tw/
 Text Domain: ry-woocommerce-tools
@@ -17,7 +17,7 @@ WC tested up to: 5.6.0
 
 function_exists('plugin_dir_url') or exit('No direct script access allowed');
 
-define('RY_WT_VERSION', '1.7.6');
+define('RY_WT_VERSION', '1.7.7');
 define('RY_WT_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('RY_WT_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('RY_WT_PLUGIN_BASENAME', plugin_basename(__FILE__));

@@ -160,8 +160,8 @@ final class RY_WT_update
             RY_WT::update_option('version', '1.6.0');
         }
 
-        if (version_compare($now_version, '1.7.6', '<')) {
-            RY_WT::update_option('version', '1.7.6');
+        if (version_compare($now_version, '1.7.7', '<')) {
+            RY_WT::update_option('version', '1.7.7');
         }
     }
 }
