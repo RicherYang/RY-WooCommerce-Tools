@@ -145,7 +145,7 @@ $("#ry-ecpay-form").submit();'
         $item_name = '';
         if (count($order->get_items())) {
             foreach ($order->get_items() as $item) {
-                $item_name .= str_replace('#', '', trim($item->get_name())) . '#';
+                $item_name .= str_replace(['#', '[', ']', ':'], '', trim($item->get_name())) . '#';
                 if (mb_strlen($item_name) > 200) {
                     break;
                 }
