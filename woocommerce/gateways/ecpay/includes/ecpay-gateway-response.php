@@ -1,5 +1,5 @@
 <?php
-class RY_ECPay_Gateway_Response extends RY_ECPay_Gateway_Api
+class RY_ECPay_Gateway_Response extends RY_Abstract_Api_ECPay
 {
     public static function init()
     {

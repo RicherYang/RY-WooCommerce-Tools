@@ -4,9 +4,11 @@
 
 <?php if (isset($time_diff)) { ?>
 <p>
-    <?=sprintf(
-        /* translators: %d: differ time (second) */
-        _n('Server time and Google Public NTP differ is %d second', 'Server time and Google Public NTP differ is %d seconds', $time_diff, 'ry-woocommerce-tools'),
+    <?php
+    printf(
+        /* translators: %1$s server time, %2$d: differ time (second) */
+        _n('Server time (%1$s) and Google Public NTP differ is %2$d second', 'Server time (%1$s) and Google Public NTP differ is %2$d seconds', $time_diff, 'ry-woocommerce-tools'),
+    current_time('mysql'),
     $time_diff
 ); ?>
 </p>

@@ -4,8 +4,8 @@ Donate link: https://www.paypal.me/RicherYang
 Tags: woocommerce, payment, gateway, shipping, ecpay, newebpay, smilepay
 Requires at least: 5.5
 Requires PHP: 7.3
-Tested up to: 5.8.0
-Stable tag: 1.7.7.1
+Tested up to: 5.8.1
+Stable tag: 1.7.8
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.txt
 
@@ -39,7 +39,11 @@ Please visit the [plugin page](https://richer.tw/ry-woocommerce-tools/ " ") with
 
 == Changelog ==
 
-= 1.7.7.1 - 2021/09/14 ==
+= 1.7.8 - 2021/09/16 =
+* 新增 - 金流支援指定商品名稱
+* 移除 - 1.0 版本以前的版本更新相容性
+
+= 1.7.7.1 - 2021/09/14 =
 * 更新 - 調整藍新回傳資料處理順序
 
 = 1.7.6 - 2021/08/18 =

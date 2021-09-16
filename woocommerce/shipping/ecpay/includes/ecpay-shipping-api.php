@@ -1,5 +1,5 @@
 <?php
-class RY_ECPay_Shipping_Api extends RY_ECPay
+class RY_ECPay_Shipping_Api extends RY_Abstract_Api_ECPay
 {
     public static $api_test_url = [
         'map' => 'https://logistics-stage.ecpay.com.tw/Express/map',
@@ -34,18 +34,10 @@ class RY_ECPay_Shipping_Api extends RY_ECPay
             return false;
         }
 
-        $item_names = RY_WT::get_option('shipping_item_name', '');
-        if (empty($item_names)) {
-            $items = $order->get_items();
-            if (count($items)) {
-                $item = reset($items);
-                $item_names = trim($item->get_name());
-            }
-        }
-        $item_names = str_replace(['^','\'','`','!','@','＠','#','%','&','*','+','\\','"','<','>','|','_','[',']'], '', $item_names);
-        $item_names = mb_substr($item_names, 0, 25);
+        $item_name = self::get_item_name(RY_WT::get_option('shipping_item_name', ''), $order);
+        $item_name = mb_substr($item_name, 0, 40);
 
-        foreach ($order->get_items('shipping') as $item_id => $item) {
+        foreach ($order->get_items('shipping') as $item) {
             $shipping_method = RY_ECPay_Shipping::get_order_support_shipping($item);
             if ($shipping_method == false) {
                 continue;
@@ -81,7 +73,7 @@ class RY_ECPay_Shipping_Api extends RY_ECPay
                 'LogisticsType' => $method_class::$LogisticsType,
                 'LogisticsSubType' => $method_class::$LogisticsSubType,
                 'GoodsAmount' => (int) $total,
-                'GoodsName' => $item_names,
+                'GoodsName' => $item_name,
                 'SenderName' => RY_WT::get_option('ecpay_shipping_sender_name'),
                 'SenderPhone' => RY_WT::get_option('ecpay_shipping_sender_phone'),
                 'SenderCellPhone' => RY_WT::get_option('ecpay_shipping_sender_cellphone'),

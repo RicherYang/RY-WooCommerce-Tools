@@ -1,5 +1,5 @@
 <?php
-class RY_SmilePay_Shipping_Response extends RY_SmilePay
+class RY_SmilePay_Shipping_Response extends RY_Abstract_Api_SmilePay
 {
     public static function init()
     {

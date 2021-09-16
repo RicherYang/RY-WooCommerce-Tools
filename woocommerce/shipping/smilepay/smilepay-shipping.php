@@ -13,6 +13,7 @@ final class RY_SmilePay_Shipping
     public static function init()
     {
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/shipping/ry-base.php';
+        include_once RY_WT_PLUGIN_DIR . 'woocommerce/abstracts/abstract-api.php';
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/abstracts/abstract-smilepay.php';
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/shipping/smilepay/includes/smilepay-shipping-api.php';
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/shipping/smilepay/includes/smilepay-shipping-response.php';

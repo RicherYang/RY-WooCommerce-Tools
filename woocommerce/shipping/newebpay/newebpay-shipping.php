@@ -10,6 +10,7 @@ final class RY_NewebPay_Shipping
     public static function init()
     {
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/shipping/ry-base.php';
+        include_once RY_WT_PLUGIN_DIR . 'woocommerce/abstracts/abstract-api.php';
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/abstracts/abstract-newebpay.php';
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/shipping/newebpay/newebpay-shipping-cvs.php';
 

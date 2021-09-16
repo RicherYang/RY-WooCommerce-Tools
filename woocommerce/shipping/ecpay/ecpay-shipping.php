@@ -18,6 +18,7 @@ final class RY_ECPay_Shipping
     public static function init()
     {
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/shipping/ry-base.php';
+        include_once RY_WT_PLUGIN_DIR . 'woocommerce/abstracts/abstract-api.php';
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/abstracts/abstract-ecpay.php';
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/shipping/ecpay/includes/ecpay-shipping-api.php';
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/shipping/ecpay/includes/ecpay-shipping-response.php';

@@ -69,6 +69,14 @@ return [
         'desc_tip' => true
     ],
     [
+        'title' => __('shipping item name', 'ry-woocommerce-tools'),
+        'id' => RY_WT::$option_prefix . 'shipping_item_name',
+        'type' => 'text',
+        'default' => '',
+        'desc' => __('If empty use the first product name.', 'ry-woocommerce-tools'),
+        'desc_tip' => true
+    ],
+    [
         'title' => __('Cvs shipping type', 'ry-woocommerce-tools'),
         'id' => RY_WT::$option_prefix . 'ecpay_shipping_cvs_type',
         'type' => 'select',

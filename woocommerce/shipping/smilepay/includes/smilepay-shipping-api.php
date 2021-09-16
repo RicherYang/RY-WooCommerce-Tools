@@ -1,5 +1,5 @@
 <?php
-class RY_SmilePay_Shipping_Api extends RY_SmilePay_Gateway_Api
+class RY_SmilePay_Shipping_Api extends RY_Abstract_Api_SmilePay
 {
     public static $api_test_url = [
         'checkout' => 'https://ssl.smse.com.tw/ezpos_test/mtmk_utf.asp',
@@ -25,15 +25,13 @@ class RY_SmilePay_Shipping_Api extends RY_SmilePay_Gateway_Api
 
         list($Dcvc, $Rvg2c, $Verify_key, $Rot_check) = RY_SmilePay_Gateway::get_smilepay_api_info();
 
-        $item_names = RY_WT::get_option('shipping_item_name', '');
-        if (empty($item_names)) {
-            $item_names = self::get_item_name($order);
-        }
+        $item_name = self::get_item_name(RY_WT::get_option('shipping_item_name', ''), $order);
+        $item_name = mb_substr($item_name, 0, 20);
 
         $args = [
             'Dcvc' => $Dcvc,
             'Rvg2c' => $Rvg2c,
-            'Od_sob' => $item_names,
+            'Od_sob' => $item_name,
             'Pay_zg' => 52,
             'Data_id' => self::generate_trade_no($order->get_id(), RY_WT::get_option('smilepay_gateway_order_prefix')),
             'Amount' => (int) ceil($order->get_total()),
@@ -84,15 +82,13 @@ class RY_SmilePay_Shipping_Api extends RY_SmilePay_Gateway_Api
 
         list($Dcvc, $Rvg2c, $Verify_key, $Rot_check) = RY_SmilePay_Gateway::get_smilepay_api_info();
 
-        $item_names = RY_WT::get_option('shipping_item_name', '');
-        if (empty($item_names)) {
-            $item_names = self::get_item_name($order);
-        }
+        $item_name = self::get_item_name(RY_WT::get_option('shipping_item_name', ''), $order);
+        $item_name = mb_substr($item_name, 0, 20);
 
         $args = [
             'Dcvc' => $Dcvc,
             'Rvg2c' => $Rvg2c,
-            'Od_sob' => $item_names,
+            'Od_sob' => $item_name,
             'Pay_zg' => $cod ? 51 : 52,
             'Data_id' => self::generate_trade_no($order->get_id(), RY_WT::get_option('smilepay_gateway_order_prefix')),
             'Amount' => (int) ceil($order->get_total()),

@@ -1,5 +1,5 @@
 <?php
-class RY_ECPay_Shipping_Response extends RY_ECPay_Shipping_Api
+class RY_ECPay_Shipping_Response extends RY_Abstract_Api_ECPay
 {
     public static function init()
     {

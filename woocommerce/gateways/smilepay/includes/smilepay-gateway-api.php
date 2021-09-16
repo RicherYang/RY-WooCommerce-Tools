@@ -1,5 +1,5 @@
 <?php
-class RY_SmilePay_Gateway_Api extends RY_SmilePay
+class RY_SmilePay_Gateway_Api extends RY_Abstract_Api_SmilePay
 {
     public static $api_test_url = [
         'checkout' => 'https://ssl.smse.com.tw/ezpos_test/mtmk_utf.asp',
@@ -29,10 +29,13 @@ class RY_SmilePay_Gateway_Api extends RY_SmilePay
 
         list($Dcvc, $Rvg2c, $Verify_key, $Rot_check) = RY_SmilePay_Gateway::get_smilepay_api_info();
 
+        $item_name = self::get_item_name(RY_WT::get_option('payment_item_name', ''), $order);
+        $item_name = mb_substr($item_name, 0, 40);
+
         $args = [
             'Dcvc' => $Dcvc,
             'Rvg2c' => $Rvg2c,
-            'Od_sob' => self::get_item_name($order),
+            'Od_sob' => $item_name,
             'Pay_zg' => $gateway->payment_type,
             'Data_id' => self::generate_trade_no($order->get_id(), RY_WT::get_option('smilepay_gateway_order_prefix')),
             'Amount' => (int) ceil($order->get_total()),
@@ -144,21 +147,6 @@ class RY_SmilePay_Gateway_Api extends RY_SmilePay
                 break;
         }
         return $args;
-    }
-
-    protected static function get_item_name($order)
-    {
-        $item_name = '';
-        if (count($order->get_items())) {
-            foreach ($order->get_items() as $item) {
-                $item_name .= trim($item->get_name()) . '#';
-                if (strlen($item_name) > 20) {
-                    break;
-                }
-            }
-        }
-        $item_name = rtrim($item_name, '#');
-        return $item_name;
     }
 
     protected static function set_transaction_info($order, $ipn_info, $payment_type)

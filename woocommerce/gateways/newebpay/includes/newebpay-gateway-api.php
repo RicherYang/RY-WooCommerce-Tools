@@ -1,5 +1,5 @@
 <?php
-class RY_NewebPay_Gateway_Api extends RY_NewebPay
+class RY_NewebPay_Gateway_Api extends RY_Abstract_Api_NewebPay
 {
     public static $api_test_url = [
         'checkout' => 'https://ccore.newebpay.com/MPG/mpg_gateway'
@@ -17,6 +17,9 @@ class RY_NewebPay_Gateway_Api extends RY_NewebPay
 
         list($MerchantID, $HashKey, $HashIV) = RY_NewebPay_Gateway::get_newebpay_api_info();
 
+        $item_name = self::get_item_name(RY_WT::get_option('payment_item_name', ''), $order);
+        $item_name = mb_substr($item_name, 0, 40);
+
         $args = [
             'MerchantID' => $MerchantID,
             'RespondType' => 'JSON',
@@ -24,7 +27,7 @@ class RY_NewebPay_Gateway_Api extends RY_NewebPay
             'Version' => '1.5',
             'MerchantOrderNo' => self::generate_trade_no($order->get_id(), RY_WT::get_option('newebpay_gateway_order_prefix')),
             'Amt' => (int) ceil($order->get_total()),
-            'ItemDesc' => mb_substr(get_bloginfo('name'), 0, 50),
+            'ItemDesc' => $item_name,
             'ReturnURL' => $return_url,
             'NotifyURL' => $notify_url,
             'CustomerURL' => $return_url,
@@ -84,24 +87,7 @@ class RY_NewebPay_Gateway_Api extends RY_NewebPay
         }
         echo '</form>';
 
-        wc_enqueue_js(
-            '$.blockUI({
-    message: "' . __('Please wait.<br>Getting checkout info.', 'ry-woocommerce-tools') . '",
-    baseZ: 99999,
-    overlayCSS: {
-        background: "#000",
-        opacity: 0.4
-    },
-    css: {
-        "font-size": "1.5em",
-        padding: "1.5em",
-        textAlign: "center",
-        border: "3px solid #aaa",
-        backgroundColor: "#fff",
-    }
-});
-$("#ry-newebpay-form").submit();'
-        );
+        wc_enqueue_js(self::blockUI_script() . '$("#ry-newebpay-form").submit();');
 
         do_action('ry_newebpay_gateway_checkout', $args, $order, $gateway);
     }

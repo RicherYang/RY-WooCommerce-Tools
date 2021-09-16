@@ -261,6 +261,23 @@ final class RY_WT
         printf('<div class="error"><p>%s</p></div>', $message);
     }
 
+    public static function get_google_ntp_time()
+    {
+        $socket = stream_socket_client('udp://time.google.com:123', $errno, $errstr);
+        if ($socket) {
+            fwrite($socket, chr(0x1B) . str_repeat(chr(0x00), 47));
+            $response = fread($socket, 48);
+            fclose($socket);
+            if (!empty($response)) {
+                $data = @unpack('N12', $response);
+                if (is_array($data) && isset($data[9])) {
+                    return sprintf('%u', $data[9]) - 2208988800;
+                }
+            }
+        }
+        return 0;
+    }
+
     public static function check_ntp_time()
     {
         if (!function_exists('stream_socket_client')) {
@@ -268,23 +285,11 @@ final class RY_WT
             return;
         }
 
-        $socket = stream_socket_client('udp://time.google.com:123', $errno, $errstr);
-        if ($socket) {
-            fwrite($socket, chr(0x1B) . str_repeat(chr(0x00), 47));
-            $response = fread($socket, 48);
-            fclose($socket);
-            if (empty($response)) {
-                return;
-            }
-
-            $data = @unpack('N12', $response);
-            if (is_array($data) && isset($data[9])) {
-                $timestamp = sprintf('%u', $data[9]) - 2208988800;
-                $time_diff = current_time('timestamp', true) - $timestamp;
-                self::update_option('ntp_time_error', abs($time_diff) > MINUTE_IN_SECONDS);
-
-                return $time_diff;
-            }
+        $ntp_time = self::get_google_ntp_time();
+        if ($ntp_time > 0) {
+            $time_diff = current_time('timestamp', true) - $ntp_time;
+            self::update_option('ntp_time_error', abs($time_diff) > MINUTE_IN_SECONDS);
+            return $time_diff;
         }
     }
 
