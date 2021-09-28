@@ -11,7 +11,7 @@ class RY_SmilePay_Gateway_Base extends WC_Payment_Gateway
         add_action('woocommerce_update_options_payment_gateways_' . $this->id, [$this, 'process_admin_options']);
 
         if ($this->enabled) {
-            add_action('woocommerce_receipt_' . $this->id, ['RY_SmilePay_Gateway_Base', 'receipt_page']);
+            add_action('woocommerce_receipt_' . $this->id, [$this, 'receipt_page']);
         }
     }
 
@@ -34,48 +34,10 @@ class RY_SmilePay_Gateway_Base extends WC_Payment_Gateway
         parent::process_admin_options();
     }
 
-    public static function receipt_page($order_id)
+    public function receipt_page($order_id)
     {
         if ($order = wc_get_order($order_id)) {
-            $get_shipping = false;
-            $items_shipping = $order->get_items('shipping');
-            $items_shipping = array_shift($items_shipping);
-            if ($items_shipping) {
-                if (RY_SmilePay_Shipping::get_order_support_shipping($items_shipping) !== false) {
-                    $get_shipping = true;
-                }
-            }
-
-            wc_enqueue_js(
-                '
-$.blockUI({
-    message: "' . __('Please wait.<br>Getting checkout info.', 'ry-woocommerce-tools') . '",
-    baseZ: 99999,
-    overlayCSS: {
-        background: "#000",
-        opacity: 0.4
-    },
-    css: {
-        "font-size": "1.5em",
-        padding: "1.5em",
-        textAlign: "center",
-        border: "3px solid #aaa",
-        backgroundColor: "#fff",
-    }
-});
-$.ajax({
-    type: "GET",
-    url: wc_checkout_params.ajax_url,
-    data: {
-        action: "' . ($get_shipping ? 'RY_SmilePay_shipping_getcode' : 'RY_SmilePay_getcode') . '",
-        id: ' . $order->get_id() . '
-    },
-    dataType: "text",
-    success: function(result) {
-        window.location = result;
-    }
- });'
-            );
+            RY_SmilePay_Gateway_Api::checkout_form($order);
             WC()->cart->empty_cart();
         }
     }

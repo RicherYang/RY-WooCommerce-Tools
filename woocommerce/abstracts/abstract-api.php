@@ -15,14 +15,14 @@ abstract class RY_Abstract_Api
 
     protected static function get_item_name($item_name = '', $order)
     {
-        if (empty($item_names)) {
+        if (empty($item_name)) {
             $items = $order->get_items();
             if (count($items)) {
                 $item = reset($items);
-                $item_names = trim($item->get_name());
+                $item_name = trim($item->get_name());
             }
         }
-        $item_names = str_replace(['^','\'','`','!','@','＠','#','%','&','*','+','\\','"','<','>','|','_','[',']'], '', $item_names);
+        $item_name = str_replace(['^','\'','`','!','@','＠','#','%','&','*','+','\\','"','<','>','|','_','[',']'], '', $item_name);
 
         return $item_name;
     }

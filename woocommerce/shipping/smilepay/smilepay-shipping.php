@@ -237,7 +237,7 @@ final class RY_SmilePay_Shipping
             $items_shipping = array_shift($items_shipping);
             if ($items_shipping) {
                 if (isset(self::$support_methods[$items_shipping->get_method_id()])) {
-                    RY_SmilePay_Gateway_Base::receipt_page($order_id);
+                    RY_SmilePay_Gateway_Api::checkout_form(wc_get_order($order_id));
                 }
             }
         }

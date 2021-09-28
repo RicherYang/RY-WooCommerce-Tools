@@ -10,6 +10,34 @@ class RY_SmilePay_Gateway_Api extends RY_Abstract_Api_SmilePay
         'api_checkout' => 'https://ssl.smse.com.tw/api/SPPayment.asp'
     ];
 
+    public static function checkout_form($order)
+    {
+        $get_shipping = false;
+        $items_shipping = $order->get_items('shipping');
+        $items_shipping = array_shift($items_shipping);
+        if ($items_shipping) {
+            if (RY_SmilePay_Shipping::get_order_support_shipping($items_shipping) !== false) {
+                $get_shipping = true;
+            }
+        }
+
+        wc_enqueue_js(self::blockUI_script() . '
+$.ajax({
+type: "GET",
+url: wc_checkout_params.ajax_url,
+data: {
+    action: "' . ($get_shipping ? 'RY_SmilePay_shipping_getcode' : 'RY_SmilePay_getcode') . '",
+    id: ' . $order->get_id() . '
+},
+dataType: "text",
+success: function(result) {
+    window.location = result;
+}
+});');
+
+        do_action('ry_smilepay_gateway_checkout', $order);
+    }
+
     public static function get_code($order_id)
     {
         $order = wc_get_order($order_id);

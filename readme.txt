@@ -2,10 +2,10 @@
 Contributors: fantasyworld
 Donate link: https://www.paypal.me/RicherYang
 Tags: woocommerce, payment, gateway, shipping, ecpay, newebpay, smilepay
-Requires at least: 5.5
+Requires at least: 5.6
 Requires PHP: 7.3
 Tested up to: 5.8.1
-Stable tag: 1.7.8
+Stable tag: 1.7.10
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.txt
 
@@ -22,7 +22,7 @@ Let your WooCommerce store more with Taiwan's habits.
 = Minimum Requirements =
 
 * PHP 7.3.0+
-* WordPress 5.5+
+* WordPress 5.6+
 * WooCommerce 5.0+
 
 
@@ -39,7 +39,11 @@ Please visit the [plugin page](https://richer.tw/ry-woocommerce-tools/ " ") with
 
 == Changelog ==
 
-= 1.7.8 - 2021/09/16 =
+= 1.7.10 - 2021/09/17 =
+* 更新 - 修正綠界物流商品名稱長度限制錯誤
+* 更新 - 提升 WordPress 版本需求(配合 WooCommerce 之需求)
+
+= 1.7.9 - 2021/09/16 =
 * 新增 - 金流支援指定商品名稱
 * 移除 - 1.0 版本以前的版本更新相容性
 

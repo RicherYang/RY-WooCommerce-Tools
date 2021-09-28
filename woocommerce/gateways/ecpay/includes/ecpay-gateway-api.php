@@ -22,7 +22,7 @@ class RY_ECPay_Gateway_Api extends RY_Abstract_Api_ECPay
         list($MerchantID, $HashKey, $HashIV) = RY_ECPay_Gateway::get_ecpay_api_info();
 
         $item_name = self::get_item_name(RY_WT::get_option('payment_item_name', ''), $order);
-        $item_name = mb_substr($item_name, 0, 200);
+        $item_name = mb_substr($item_name, 0, 195);
 
         $args = [
             'MerchantID' => $MerchantID,
