@@ -7,6 +7,7 @@ class RY_ECPay_Shipping_Api extends RY_Abstract_Api_ECPay
         'print_UNIMARTC2C' => 'https://logistics-stage.ecpay.com.tw/Express/PrintUniMartC2COrderInfo',
         'print_FAMIC2C' => 'https://logistics-stage.ecpay.com.tw/Express/PrintFAMIC2COrderInfo',
         'print_HILIFEC2C' => 'https://logistics-stage.ecpay.com.tw/Express/PrintHILIFEC2COrderInfo',
+        'print_OKMARTC2C' => 'https://logistics-stage.ecpay.com.tw/Express/PrintOKMARTC2COrderInfo',
         'print_B2C' => 'https://logistics-stage.ecpay.com.tw/helper/printTradeDocument'
     ];
     public static $api_url = [
@@ -15,6 +16,7 @@ class RY_ECPay_Shipping_Api extends RY_Abstract_Api_ECPay
         'print_UNIMARTC2C' => 'https://logistics.ecpay.com.tw/Express/PrintUniMartC2COrderInfo',
         'print_FAMIC2C' => 'https://logistics.ecpay.com.tw/Express/PrintFAMIC2COrderInfo',
         'print_HILIFEC2C' => 'https://logistics.ecpay.com.tw/Express/PrintHILIFEC2COrderInfo',
+        'print_OKMARTC2C' => 'https://logistics.ecpay.com.tw/Express/PrintOKMARTC2COrderInfo',
         'print_B2C' => 'https://logistics.ecpay.com.tw/helper/printTradeDocument'
     ];
 

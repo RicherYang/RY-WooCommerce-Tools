@@ -5,7 +5,7 @@ Tags: woocommerce, payment, gateway, shipping, ecpay, newebpay, smilepay
 Requires at least: 5.6
 Requires PHP: 7.3
 Tested up to: 5.8.1
-Stable tag: 1.7.10
+Stable tag: 1.7.11
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.txt
 
@@ -38,6 +38,9 @@ Please visit the [plugin page](https://richer.tw/ry-woocommerce-tools/ " ") with
 4. NewebPay gateway global settings.
 
 == Changelog ==
+
+= 1.7.11 - 2021/09/17 =
+* 更新 - 支援綠界 OK 超商
 
 = 1.7.10 - 2021/09/17 =
 * 更新 - 修正綠界物流商品名稱長度限制錯誤
