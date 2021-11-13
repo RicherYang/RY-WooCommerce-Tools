@@ -12,6 +12,8 @@ final class RY_NewebPay_Shipping
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/shipping/ry-base.php';
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/abstracts/abstract-api.php';
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/abstracts/abstract-newebpay.php';
+        include_once RY_WT_PLUGIN_DIR . 'woocommerce/abstracts/abstract-shipping.php';
+
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/shipping/newebpay/newebpay-shipping-cvs.php';
 
         if ('yes' === RY_WT::get_option('newebpay_shipping', 'no')) {

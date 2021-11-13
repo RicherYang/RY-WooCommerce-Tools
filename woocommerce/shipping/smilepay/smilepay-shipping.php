@@ -15,6 +15,8 @@ final class RY_SmilePay_Shipping
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/shipping/ry-base.php';
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/abstracts/abstract-api.php';
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/abstracts/abstract-smilepay.php';
+        include_once RY_WT_PLUGIN_DIR . 'woocommerce/abstracts/abstract-shipping.php';
+
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/shipping/smilepay/includes/smilepay-shipping-api.php';
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/shipping/smilepay/includes/smilepay-shipping-response.php';
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/shipping/smilepay/includes/smilepay-shipping-base.php';
@@ -111,14 +113,19 @@ final class RY_SmilePay_Shipping
 
     public static function add_cvs_info($fields)
     {
-        $fields['shipping']['shipping_phone'] = [
-            'label' => __('Phone', 'ry-woocommerce-tools'),
-            'required' => true,
-            'type' => 'tel',
-            'validate' => ['phone'],
-            'class' => ['form-row-wide'],
-            'priority' => 100
-        ];
+        if (!isset($fields['shipping']['shipping_phone'])) {
+            $fields['shipping']['shipping_phone'] = [
+                'label' => __('Phone', 'ry-woocommerce-tools'),
+                'required' => true,
+                'type' => 'tel',
+                'validate' => ['phone'],
+                'class' => ['form-row-wide'],
+                'priority' => 100
+            ];
+        } else {
+            $fields['shipping']['shipping_phone']['required'] = true;
+            $fields['shipping']['shipping_phone']['type'] = 'tel';
+        }
         if ('no' == RY_WT::get_option('keep_shipping_phone', 'no')) {
             $fields['shipping']['shipping_phone']['class'][] = 'cvs-info';
         }

@@ -21,6 +21,7 @@ final class RY_ECPay_Shipping
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/shipping/ry-base.php';
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/abstracts/abstract-api.php';
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/abstracts/abstract-ecpay.php';
+        include_once RY_WT_PLUGIN_DIR . 'woocommerce/abstracts/abstract-shipping.php';
 
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/shipping/ecpay/includes/ecpay-shipping-api.php';
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/shipping/ecpay/includes/ecpay-shipping-response.php';
@@ -220,6 +221,23 @@ final class RY_ECPay_Shipping
 
     public static function add_cvs_info($fields)
     {
+        if (!isset($fields['shipping']['shipping_phone'])) {
+            $fields['shipping']['shipping_phone'] = [
+                'label' => __('Phone', 'ry-woocommerce-tools'),
+                'required' => true,
+                'type' => 'tel',
+                'validate' => ['phone'],
+                'class' => ['form-row-wide'],
+                'priority' => 100
+            ];
+        } else {
+            $fields['shipping']['shipping_phone']['required'] = true;
+            $fields['shipping']['shipping_phone']['type'] = 'tel';
+        }
+        if ('no' == RY_WT::get_option('keep_shipping_phone', 'no')) {
+            $fields['shipping']['shipping_phone']['class'][] = 'cvs-info';
+        }
+
         $fields['shipping']['LogisticsSubType'] = [
             'required' => false,
             'type' => 'hidden'
@@ -227,14 +245,6 @@ final class RY_ECPay_Shipping
         $fields['shipping']['CVSStoreID'] = [
             'required' => false,
             'type' => 'hidden'
-        ];
-        $fields['shipping']['shipping_phone'] = [
-            'label' => __('Phone', 'ry-woocommerce-tools'),
-            'required' => true,
-            'type' => 'tel',
-            'validate' => ['phone'],
-            'class' => ['form-row-wide'],
-            'priority' => 100
         ];
         $fields['shipping']['CVSStoreName'] = [
             'label' => __('Store Name', 'ry-woocommerce-tools'),
@@ -257,10 +267,6 @@ final class RY_ECPay_Shipping
             'class' => ['form-row-wide', 'cvs-info'],
             'priority' => 112
         ];
-
-        if ('no' == RY_WT::get_option('keep_shipping_phone', 'no')) {
-            $fields['shipping']['shipping_phone']['class'][] = 'cvs-info';
-        }
 
         if (is_checkout()) {
             $chosen_method = isset(WC()->session->chosen_shipping_methods) ? WC()->session->chosen_shipping_methods : [];
