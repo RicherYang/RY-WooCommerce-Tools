@@ -113,10 +113,10 @@ final class RY_Shipping
             $address['cvs_store_name'] = $order->get_meta('_shipping_cvs_store_name');
             $address['cvs_address'] = $order->get_meta('_shipping_cvs_store_address');
             $address['cvs_telephone'] = $order->get_meta('_shipping_cvs_store_telephone');
-            if (version_compare(WC_VERSION, '5.6.0', '>=')) {
-                $address['phone'] = $order->get_shipping_phone();
-            } else {
+            if (version_compare(WC_VERSION, '5.6.0', '<')) {
                 $address['phone'] = $order->get_meta('_shipping_phone');
+            } else {
+                $address['phone'] = $order->get_shipping_phone();
             }
             $address['country'] = 'CVS';
         }

@@ -20,9 +20,10 @@ return [
         'desc' => __('Enable logging', 'woocommerce') . '<br>'
             . sprintf(
                 /* translators: %s: Path of log file */
-                __('Log ECPay gateway events/message, inside %s', 'ry-woocommerce-tools'),
+                __('Log API / IPN information, inside %s', 'ry-woocommerce-tools'),
                 '<code>' . WC_Log_Handler_File::get_log_file_path('ry_ecpay_gateway') . '</code>'
             )
+            . '<br>' . __('Note: this may log personal information.', 'ry-woocommerce-tools')
     ],
     [
         'title' => __('Order no prefix', 'ry-woocommerce-tools'),
@@ -52,8 +53,9 @@ return [
         'title' => __('ECPay gateway sandbox', 'ry-woocommerce-tools'),
         'id' => RY_WT::$option_prefix . 'ecpay_gateway_testmode',
         'type' => 'checkbox',
-        'default' => 'yes',
+        'default' => 'no',
         'desc' => __('Enable ECPay gateway sandbox', 'ry-woocommerce-tools')
+            . '<br>' . __('Note: Recommend using this for development purposes only.', 'ry-woocommerce-tools')
     ],
     [
         'title' => __('MerchantID', 'ECPay', 'ry-woocommerce-tools'),

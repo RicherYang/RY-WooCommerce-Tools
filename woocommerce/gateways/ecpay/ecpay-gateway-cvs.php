@@ -3,6 +3,8 @@ class RY_ECPay_Gateway_Cvc extends RY_ECPay_Gateway_Base
 {
     public $payment_type = 'CVS';
 
+    protected $check_min_amount = 30;
+
     public function __construct()
     {
         $this->id = 'ry_ecpay_cvs';
@@ -25,7 +27,7 @@ class RY_ECPay_Gateway_Cvc extends RY_ECPay_Gateway_Base
         $this->title = $this->get_option('title');
         $this->description = $this->get_option('description');
         $this->expire_date = (int) $this->get_option('expire_date', 10080);
-        $this->min_amount = (int) $this->get_option('min_amount', 0);
+        $this->min_amount = (int) $this->get_option('min_amount', $this->check_min_amount);
         $this->max_amount = (int) $this->get_option('max_amount', 0);
 
         add_action('woocommerce_admin_order_data_after_billing_address', [$this, 'admin_payment_info']);
@@ -42,10 +44,10 @@ class RY_ECPay_Gateway_Cvc extends RY_ECPay_Gateway_Base
                 if ($total < 31) {
                     return false;
                 }
-                if ($this->min_amount > 0 and $total < $this->min_amount) {
+                if ($this->min_amount > 0 && $total < $this->min_amount) {
                     return false;
                 }
-                if ($this->max_amount > 0 and $total > $this->max_amount) {
+                if ($this->max_amount > 0 && $total > $this->max_amount) {
                     return false;
                 }
             }
@@ -73,13 +75,6 @@ class RY_ECPay_Gateway_Cvc extends RY_ECPay_Gateway_Base
         if ($_POST['woocommerce_ry_ecpay_cvs_expire_date'] < 1 || $_POST['woocommerce_ry_ecpay_cvs_expire_date'] > 86400) {
             $_POST['woocommerce_ry_ecpay_cvs_expire_date'] = 10080;
             WC_Admin_Settings::add_error(__('CVS payment deadline out of range. Set as default value.', 'ry-woocommerce-tools'));
-        }
-
-        $_POST['woocommerce_ry_ecpay_cvs_min_amount'] = (int) $_POST['woocommerce_ry_ecpay_cvs_min_amount'];
-        if ($_POST['woocommerce_ry_ecpay_cvs_min_amount'] > 0 && $_POST['woocommerce_ry_ecpay_cvs_min_amount'] < 30) {
-            $_POST['woocommerce_ry_ecpay_cvs_min_amount'] = 0;
-            /* translators: %s: Gateway method title */
-            WC_Admin_Settings::add_error(sprintf(__('%s minimum amount out of range. Set as default value.', 'ry-woocommerce-tools'), $this->method_title));
         }
 
         $_POST['woocommerce_ry_ecpay_cvs_max_amount'] = (int) $_POST['woocommerce_ry_ecpay_cvs_max_amount'];

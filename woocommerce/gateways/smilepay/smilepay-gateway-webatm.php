@@ -3,6 +3,8 @@ class RY_SmilePay_Gateway_Webatm extends RY_SmilePay_Gateway_Base
 {
     public $payment_type = 21;
 
+    protected $check_min_amount = 13;
+
     public function __construct()
     {
         $this->id = 'ry_smilepay_webatm';
@@ -17,7 +19,7 @@ class RY_SmilePay_Gateway_Webatm extends RY_SmilePay_Gateway_Base
         $this->title = $this->get_option('title');
         $this->description = $this->get_option('description');
         $this->expire_date = (int) $this->get_option('expire_date', 7);
-        $this->min_amount = (int) $this->get_option('min_amount', 0);
+        $this->min_amount = (int) $this->get_option('min_amount', $this->check_min_amount);
         $this->max_amount = (int) $this->get_option('max_amount', 0);
 
         parent::__construct();
@@ -59,15 +61,8 @@ class RY_SmilePay_Gateway_Webatm extends RY_SmilePay_Gateway_Base
 
     public function process_admin_options()
     {
-        $_POST['woocommerce_ry_smilepay_atm_min_amount'] = (int) $_POST['woocommerce_ry_smilepay_atm_min_amount'];
-        if ($_POST['woocommerce_ry_smilepay_atm_min_amount'] > 0 && $_POST['woocommerce_ry_smilepay_atm_min_amount'] < 13) {
-            $_POST['woocommerce_ry_smilepay_atm_min_amount'] = 0;
-            /* translators: %s: Gateway method title */
-            WC_Admin_Settings::add_error(sprintf(__('%s minimum amount out of range. Set as default value.', 'ry-woocommerce-tools'), $this->method_title));
-        }
-
-        $_POST['woocommerce_ry_smilepay_atm_max_amount'] = (int) $_POST['woocommerce_ry_smilepay_atm_max_amount'];
-        if ($_POST['woocommerce_ry_smilepay_atm_max_amount'] > 30000) {
+        $_POST['woocommerce_ry_smilepay_webatm_max_amount'] = (int) $_POST['woocommerce_ry_smilepay_webatm_max_amount'];
+        if ($_POST['woocommerce_ry_smilepay_webatm_max_amount'] > 30000) {
             /* translators: %1$s: Gateway method title, %2$d normal maximum */
             WC_Admin_Settings::add_message(sprintf(__('%1$s maximum amount more then normal maximum (%2$d).', 'ry-woocommerce-tools'), $this->method_title, 20000));
         }

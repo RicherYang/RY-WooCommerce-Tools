@@ -8,6 +8,7 @@ final class RY_NewebPay_Gateway
     {
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/abstracts/abstract-api.php';
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/abstracts/abstract-newebpay.php';
+        include_once RY_WT_PLUGIN_DIR . 'woocommerce/abstracts/abstract-payment-gateway.php';
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/gateways/newebpay/includes/newebpay-gateway-api.php';
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/gateways/newebpay/includes/newebpay-gateway-response.php';
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/gateways/newebpay/includes/newebpay-gateway-base.php';

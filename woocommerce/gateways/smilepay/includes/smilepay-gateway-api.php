@@ -81,7 +81,7 @@ success: function(result) {
         $order->save_meta_data();
 
         if (!$gateway->get_code_mode) {
-            if ('yes' === RY_WT::get_option('smilepay_gateway_testmode', 'yes')) {
+            if ('yes' === RY_WT::get_option('smilepay_gateway_testmode', 'no')) {
                 $url = self::$api_test_url['checkout'];
             } else {
                 $url = self::$api_url['checkout'];
@@ -89,7 +89,7 @@ success: function(result) {
             return $url . '?' . http_build_query($args, '', '&');
         }
 
-        if ('yes' === RY_WT::get_option('smilepay_gateway_testmode', 'yes')) {
+        if ('yes' === RY_WT::get_option('smilepay_gateway_testmode', 'no')) {
             $url = self::$api_test_url['api_checkout'];
         } else {
             $url = self::$api_url['api_checkout'];

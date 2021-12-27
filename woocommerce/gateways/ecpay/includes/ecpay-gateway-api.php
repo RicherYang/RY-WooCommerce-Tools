@@ -17,7 +17,7 @@ class RY_ECPay_Gateway_Api extends RY_Abstract_Api_ECPay
         RY_ECPay_Gateway::log('Generating payment form by ' . $gateway->id . ' for #' . $order->get_order_number());
 
         $notify_url = WC()->api_request_url('ry_ecpay_callback', true);
-        $return_url = $gateway->get_return_url($order);
+        $return_url = self::get_3rd_return_url($order);
 
         list($MerchantID, $HashKey, $HashIV) = RY_ECPay_Gateway::get_ecpay_api_info();
 
@@ -75,7 +75,7 @@ class RY_ECPay_Gateway_Api extends RY_Abstract_Api_ECPay
         $order->update_meta_data('_ecpay_MerchantTradeNo', $args['MerchantTradeNo']);
         $order->save_meta_data();
 
-        if ('yes' === RY_WT::get_option('ecpay_gateway_testmode', 'yes')) {
+        if ('yes' === RY_WT::get_option('ecpay_gateway_testmode', 'no')) {
             $url = self::$api_test_url['checkout'];
         } else {
             $url = self::$api_url['checkout'];

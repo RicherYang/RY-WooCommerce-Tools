@@ -8,6 +8,7 @@ final class RY_ECPay_Gateway
     {
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/abstracts/abstract-api.php';
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/abstracts/abstract-ecpay.php';
+        include_once RY_WT_PLUGIN_DIR . 'woocommerce/abstracts/abstract-payment-gateway.php';
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/gateways/ecpay/includes/ecpay-gateway-api.php';
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/gateways/ecpay/includes/ecpay-gateway-response.php';
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/gateways/ecpay/includes/ecpay-gateway-base.php';
@@ -67,7 +68,7 @@ final class RY_ECPay_Gateway
 
     public static function get_ecpay_api_info()
     {
-        if ('yes' === RY_WT::get_option('ecpay_gateway_testmode', 'yes')) {
+        if ('yes' === RY_WT::get_option('ecpay_gateway_testmode', 'no')) {
             $MerchantID = '2000132';
             $HashKey = '5294y06JbISpM5x9';
             $HashIV = 'v77hoKGq4kWxNNIS';
@@ -84,7 +85,7 @@ final class RY_ECPay_Gateway
     {
         if ('yes' == RY_WT::get_option('ecpay_gateway', 'yes')) {
             $enable = true;
-            if ('yes' !== RY_WT::get_option('ecpay_gateway_testmode', 'yes')) {
+            if ('yes' !== RY_WT::get_option('ecpay_gateway_testmode', 'no')) {
                 if (empty(RY_WT::get_option('ecpay_gateway_MerchantID'))) {
                     $enable = false;
                 }

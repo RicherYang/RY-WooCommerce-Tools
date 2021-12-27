@@ -1,5 +1,5 @@
 <?php
-class RY_ECPay_Gateway_Base extends WC_Payment_Gateway
+class RY_ECPay_Gateway_Base extends RY_Abstract_Payment_Gateway
 {
     public static $log_enabled = false;
     public static $log = false;
@@ -10,6 +10,10 @@ class RY_ECPay_Gateway_Base extends WC_Payment_Gateway
 
         if ($this->enabled) {
             add_action('woocommerce_receipt_' . $this->id, [$this, 'receipt_page']);
+        }
+
+        if ($this->min_amount < $this->check_min_amount) {
+            $this->min_amount = $this->check_min_amount;
         }
     }
 
@@ -22,13 +26,6 @@ class RY_ECPay_Gateway_Base extends WC_Payment_Gateway
 
     public function process_admin_options()
     {
-        $filed_name = 'woocommerce_' . $this->id . '_min_amount';
-        $_POST[$filed_name] = (int) $_POST[$filed_name];
-        if ($_POST[$filed_name] < 0) {
-            $_POST[$filed_name] = 0;
-            WC_Admin_Settings::add_error(sprintf(__('%s minimum amount out of range. Set as default value.', 'ry-woocommerce-tools'), $this->method_title));
-        }
-
         parent::process_admin_options();
     }
 

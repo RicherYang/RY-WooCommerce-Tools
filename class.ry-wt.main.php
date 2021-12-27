@@ -114,8 +114,10 @@ final class RY_WT
         if (is_admin()) {
             $address_formats['CVS'] = "{last_name}{first_name}\n{shipping_type}\n{cvs_store_name} ({cvs_store_ID})\n";
         } else {
-            $address_formats['CVS'] = "{cvs_store_name} ({cvs_store_ID})\n{cvs_store_address}\n{cvs_store_telephone}\n{last_name} {first_name}\n"
-                . '<p class="woocommerce-customer-details--phone">{phone}</p>';
+            $address_formats['CVS'] = "{cvs_store_name} ({cvs_store_ID})\n{cvs_store_address}\n{cvs_store_telephone}\n{last_name} {first_name}\n";
+            if (version_compare(WC_VERSION, '5.6.0', '<')) {
+                $address_formats['CVS'] .= '<p class="woocommerce-customer-details--phone">{phone}</p>';
+            }
         }
         return $address_formats;
     }

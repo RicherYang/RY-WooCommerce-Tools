@@ -4,9 +4,16 @@ class RY_NewebPay_Gateway_Response extends RY_NewebPay_Gateway_Api
     public static function init()
     {
         add_action('woocommerce_api_request', [__CLASS__, 'set_do_die']);
+        add_action('woocommerce_api_ry_newebpay_gateway_return', [__CLASS__, 'callback_gateway_return']);
         add_action('woocommerce_api_ry_newebpay_callback', [__CLASS__, 'check_callback']);
-        add_action('woocommerce_thankyou', [__CLASS__, 'check_callback'], 8);
         add_action('valid_newebpay_gateway_request', [__CLASS__, 'doing_callback']);
+    }
+
+    public static function callback_gateway_return()
+    {
+        self::set_not_do_die();
+        self::check_callback();
+        self::gateway_return();
     }
 
     public static function check_callback()
@@ -101,10 +108,10 @@ class RY_NewebPay_Gateway_Response extends RY_NewebPay_Gateway_Api
                 $order->update_meta_data('_shipping_cvs_store_name', $ipn_info->StoreName);
                 $order->update_meta_data('_shipping_cvs_store_address', $ipn_info->StoreAddr);
                 $order->update_meta_data('_shipping_cvs_store_type', $ipn_info->StoreType);
-                if (version_compare(WC_VERSION, '5.6.0', '>=')) {
-                    $order->set_shipping_phone($ipn_info->CVSCOMPhone);
-                } else {
+                if (version_compare(WC_VERSION, '5.6.0', '<')) {
                     $order->update_meta_data('_shipping_phone', $ipn_info->CVSCOMPhone);
+                } else {
+                    $order->set_shipping_phone($ipn_info->CVSCOMPhone);
                 }
 
                 $order->set_shipping_address_1($ipn_info->StoreAddr);

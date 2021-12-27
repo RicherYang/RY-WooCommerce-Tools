@@ -3,9 +3,9 @@ Contributors: fantasyworld
 Donate link: https://www.paypal.me/RicherYang
 Tags: woocommerce, payment, gateway, shipping, ecpay, newebpay, smilepay
 Requires at least: 5.6
-Requires PHP: 7.4
+Requires PHP: 7.3
 Tested up to: 5.8
-Stable tag: 1.8.0
+Stable tag: 1.8.8
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.txt
 
@@ -21,7 +21,7 @@ Let your WooCommerce store more with Taiwan's habits.
 
 = Minimum Requirements =
 
-* PHP 7.4.0+
+* PHP 7.3+
 * WordPress 5.6+
 * WooCommerce 5.0+
 
@@ -38,6 +38,28 @@ Please visit the [plugin page](https://richer.tw/ry-woocommerce-tools/ " ") with
 4. NewebPay gateway global settings.
 
 == Changelog ==
+
+= 1.8.8 - 2021/12/27 =
+* 調整 - 調整後台設定說明文字
+* 更新 - 調整除錯模式預設值
+
+= 1.8.7 - 2021/12/18 =
+* 更新 - 修正藍新 ATM 帳號資訊無法顯示
+
+= 1.8.5 - 2021/12/18 =
+* 更新 - 修正藍新超商取貨付款結帳失敗
+
+= 1.8.4 - 2021/12/16 =
+* 更新 - 調整金流最小訂購金額未限制情況下最小金額的問題
+
+= 1.8.3 - 2021/12/15 =
+* 更新 - 修正因為 cookie SameSite 的設定導致結帳從第三方跳回時呈現登出狀態的問題
+
+= 1.8.2 - 2021/11/25 =
+* 更新 - 修正超商取貨收件人電話重複出現
+
+= 1.8.1 - 2021/11/22 =
+* 更新 - 修正 PHP8 相容性
 
 = 1.8.0 - 2021/11/13 =
 * 更新 - 調整物流物件的通用性

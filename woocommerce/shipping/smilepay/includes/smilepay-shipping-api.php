@@ -41,10 +41,10 @@ class RY_SmilePay_Shipping_Api extends RY_Abstract_Api_SmilePay
             'MapRoturl' => WC()->api_request_url('ry_smilepay_shipping_map_callback', true),
             'Logistics_Roturl' => WC()->api_request_url('ry_smilepay_shipping_callback', true)
         ];
-        if (version_compare(WC_VERSION, '5.6.0', '>=')) {
-            $args['Mobile_number'] = $order->get_shipping_phone();
-        } else {
+        if (version_compare(WC_VERSION, '5.6.0', '<')) {
             $args['Mobile_number'] = $order->get_meta('_shipping_phone');
+        } else {
+            $args['Mobile_number'] = $order->get_shipping_phone();
         }
 
         if ($order->get_payment_method() == 'cod') {
@@ -63,7 +63,7 @@ class RY_SmilePay_Shipping_Api extends RY_Abstract_Api_SmilePay
 
         RY_SmilePay_Shipping::log('Get info POST: ' . var_export($args, true));
 
-        if ('yes' === RY_WT::get_option('smilepay_gateway_testmode', 'yes')) {
+        if ('yes' === RY_WT::get_option('smilepay_gateway_testmode', 'no')) {
             $url = self::$api_test_url['checkout'];
         } else {
             $url = self::$api_url['checkout'];
@@ -99,10 +99,10 @@ class RY_SmilePay_Shipping_Api extends RY_Abstract_Api_SmilePay
             'Logistics_Roturl' => WC()->api_request_url('ry_smilepay_shipping_callback', true),
             'Logistics_store' => $order->get_meta('_shipping_cvs_store_ID') . '/' . $order->get_meta('_shipping_cvs_store_name') . '/' . $order->get_meta('_shipping_cvs_store_address')
         ];
-        if (version_compare(WC_VERSION, '5.6.0', '>=')) {
-            $args['Mobile_number'] = $order->get_shipping_phone();
-        } else {
+        if (version_compare(WC_VERSION, '5.6.0', '<')) {
             $args['Mobile_number'] = $order->get_meta('_shipping_phone');
+        } else {
+            $args['Mobile_number'] = $order->get_shipping_phone();
         }
 
         foreach ($order->get_items('shipping') as $item_id => $item) {
@@ -115,7 +115,7 @@ class RY_SmilePay_Shipping_Api extends RY_Abstract_Api_SmilePay
             break;
         }
 
-        if ('yes' === RY_WT::get_option('smilepay_gateway_testmode', 'yes')) {
+        if ('yes' === RY_WT::get_option('smilepay_gateway_testmode', 'no')) {
             $url = self::$api_test_url['checkout'];
         } else {
             $url = self::$api_url['checkout'];
@@ -159,13 +159,13 @@ class RY_SmilePay_Shipping_Api extends RY_Abstract_Api_SmilePay
             RY_SmilePay_Shipping::log('Get code POST: ' . var_export($args, true));
 
             if ($info['IsCollection']) {
-                if ('yes' === RY_WT::get_option('smilepay_gateway_testmode', 'yes')) {
+                if ('yes' === RY_WT::get_option('smilepay_gateway_testmode', 'no')) {
                     $url = self::$api_test_url['pay'];
                 } else {
                     $url = self::$api_url['pay'];
                 }
             } else {
-                if ('yes' === RY_WT::get_option('smilepay_gateway_testmode', 'yes')) {
+                if ('yes' === RY_WT::get_option('smilepay_gateway_testmode', 'no')) {
                     $url = self::$api_test_url['unpay'];
                 } else {
                     $url = self::$api_url['unpay'];
@@ -236,7 +236,7 @@ class RY_SmilePay_Shipping_Api extends RY_Abstract_Api_SmilePay
         $args['Pay_subzg'] = $info_list[0]['type'];
         $args['PinCodes'] = implode(',', $no_list);
 
-        if ('yes' === RY_WT::get_option('smilepay_gateway_testmode', 'yes')) {
+        if ('yes' === RY_WT::get_option('smilepay_gateway_testmode', 'no')) {
             $url = self::$api_test_url['print'];
         } else {
             $url = self::$api_url['print'];

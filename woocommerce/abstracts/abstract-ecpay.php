@@ -1,6 +1,17 @@
 <?php
 abstract class RY_Abstract_Api_ECPay extends RY_Abstract_Api
 {
+    protected static function get_3rd_return_url($order = null)
+    {
+        $return_url = WC()->api_request_url('ry_ecpay_gateway_return');
+        if ($order) {
+            $return_url = add_query_arg('id', $order->get_id(), $return_url);
+            $return_url = add_query_arg('key', $order->get_order_key(), $return_url);
+        }
+
+        return $return_url;
+    }
+
     protected static function generate_trade_no($order_id, $order_prefix = '')
     {
         $trade_no = self::pre_generate_trade_no($order_id, $order_prefix);

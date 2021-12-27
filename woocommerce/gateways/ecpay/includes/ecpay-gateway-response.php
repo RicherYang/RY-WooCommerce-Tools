@@ -4,6 +4,7 @@ class RY_ECPay_Gateway_Response extends RY_Abstract_Api_ECPay
     public static function init()
     {
         add_action('woocommerce_api_request', [__CLASS__, 'set_do_die']);
+        add_action('woocommerce_api_ry_ecpay_gateway_return', [__CLASS__, 'gateway_return']);
         add_action('woocommerce_api_ry_ecpay_callback', [__CLASS__, 'check_callback']);
         add_action('valid_ecpay_gateway_request', [__CLASS__, 'doing_callback']);
 

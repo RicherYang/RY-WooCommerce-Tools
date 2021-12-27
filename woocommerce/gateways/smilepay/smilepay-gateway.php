@@ -7,6 +7,7 @@ final class RY_SmilePay_Gateway
     public static function init()
     {
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/abstracts/abstract-api.php';
+        include_once RY_WT_PLUGIN_DIR . 'woocommerce/abstracts/abstract-payment-gateway.php';
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/abstracts/abstract-smilepay.php';
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/gateways/smilepay/includes/smilepay-gateway-api.php';
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/gateways/smilepay/includes/smilepay-gateway-response.php';
@@ -72,7 +73,7 @@ final class RY_SmilePay_Gateway
 
     public static function get_smilepay_api_info()
     {
-        if ('yes' === RY_WT::get_option('smilepay_gateway_testmode', 'yes')) {
+        if ('yes' === RY_WT::get_option('smilepay_gateway_testmode', 'no')) {
             $Dcvc = '107';
             $Rvg2c = '1';
             $Verify_key = '174A02F97A95F72CE301137B3F98D128';
@@ -96,7 +97,7 @@ final class RY_SmilePay_Gateway
             }
 
             $enable = true;
-            if ('yes' !== RY_WT::get_option('smilepay_gateway_testmode', 'yes')) {
+            if ('yes' !== RY_WT::get_option('smilepay_gateway_testmode', 'no')) {
                 if (empty(RY_WT::get_option('smilepay_gateway_Dcvc'))) {
                     $enable = false;
                 }

@@ -3,6 +3,8 @@ class RY_ECPay_Gateway_Webatm extends RY_ECPay_Gateway_Base
 {
     public $payment_type = 'WebATM';
 
+    protected $check_min_amount = 5;
+
     public function __construct()
     {
         $this->id = 'ry_ecpay_webatm';
@@ -16,7 +18,7 @@ class RY_ECPay_Gateway_Webatm extends RY_ECPay_Gateway_Base
 
         $this->title = $this->get_option('title');
         $this->description = $this->get_option('description');
-        $this->min_amount = (int) $this->get_option('min_amount', 0);
+        $this->min_amount = (int) $this->get_option('min_amount', $this->check_min_amount);
         $this->max_amount = (int) $this->get_option('max_amount', 0);
 
         parent::__construct();
@@ -28,10 +30,10 @@ class RY_ECPay_Gateway_Webatm extends RY_ECPay_Gateway_Base
             $total = $this->get_order_total();
 
             if ($total > 0) {
-                if ($this->min_amount > 0 and $total < $this->min_amount) {
+                if ($this->min_amount > 0 && $total < $this->min_amount) {
                     return false;
                 }
-                if ($this->max_amount > 0 and $total > $this->max_amount) {
+                if ($this->max_amount > 0 && $total > $this->max_amount) {
                     return false;
                 }
             }
@@ -51,16 +53,5 @@ class RY_ECPay_Gateway_Webatm extends RY_ECPay_Gateway_Base
             'result'   => 'success',
             'redirect' => $order->get_checkout_payment_url(true),
         ];
-    }
-
-    public function process_admin_options()
-    {
-        if ($_POST['woocommerce_ry_ecpay_webatm_min_amount'] > 0 && $_POST['woocommerce_ry_ecpay_webatm_min_amount'] < 5) {
-            $_POST['woocommerce_ry_ecpay_webatm_min_amount'] = 0;
-            /* translators: %s: Gateway method title */
-            WC_Admin_Settings::add_error(sprintf(__('%s minimum amount out of range. Set as default value.', 'ry-woocommerce-tools'), $this->method_title));
-        }
-
-        parent::process_admin_options();
     }
 }

@@ -3,6 +3,8 @@ class RY_SmilePay_Gateway_Cvs_711 extends RY_SmilePay_Gateway_Base
 {
     public $payment_type = 4;
 
+    protected $check_min_amount = 35;
+
     public function __construct()
     {
         $this->id = 'ry_smilepay_cvs_711';
@@ -18,7 +20,7 @@ class RY_SmilePay_Gateway_Cvs_711 extends RY_SmilePay_Gateway_Base
         $this->title = $this->get_option('title');
         $this->description = $this->get_option('description');
         $this->expire_date = (int) $this->get_option('expire_date', 7);
-        $this->min_amount = (int) $this->get_option('min_amount', 0);
+        $this->min_amount = (int) $this->get_option('min_amount', $this->check_min_amount);
         $this->max_amount = (int) $this->get_option('max_amount', 0);
 
         add_action('woocommerce_admin_order_data_after_billing_address', [$this, 'admin_payment_info']);
@@ -70,13 +72,6 @@ class RY_SmilePay_Gateway_Cvs_711 extends RY_SmilePay_Gateway_Base
         if ($_POST['woocommerce_ry_smilepay_cvs_711_expire_date'] < 120 || $_POST['woocommerce_ry_smilepay_cvs_711_expire_date'] > 10080) {
             $_POST['woocommerce_ry_smilepay_cvs_711_expire_date'] = 10080;
             WC_Admin_Settings::add_error(__('CVS payment deadline out of range. Set as default value.', 'ry-woocommerce-tools'));
-        }
-
-        $_POST['woocommerce_ry_smilepay_cvs_711_min_amount'] = (int) $_POST['woocommerce_ry_smilepay_cvs_711_min_amount'];
-        if ($_POST['woocommerce_ry_smilepay_cvs_711_min_amount'] > 0 && $_POST['woocommerce_ry_smilepay_cvs_711_min_amount'] < 35) {
-            $_POST['woocommerce_ry_smilepay_cvs_711_min_amount'] = 0;
-            /* translators: %s: Gateway method title */
-            WC_Admin_Settings::add_error(sprintf(__('%s minimum amount out of range. Set as default value.', 'ry-woocommerce-tools'), $this->method_title));
         }
 
         $_POST['woocommerce_ry_smilepay_cvs_711_max_amount'] = (int) $_POST['woocommerce_ry_smilepay_cvs_711_max_amount'];

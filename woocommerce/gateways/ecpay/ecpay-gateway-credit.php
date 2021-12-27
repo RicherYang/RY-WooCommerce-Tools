@@ -16,7 +16,7 @@ class RY_ECPay_Gateway_Credit extends RY_ECPay_Gateway_Base
 
         $this->title = $this->get_option('title');
         $this->description = $this->get_option('description');
-        $this->min_amount = (int) $this->get_option('min_amount', 0);
+        $this->min_amount = (int) $this->get_option('min_amount', $this->check_min_amount);
 
         parent::__construct();
     }
@@ -27,7 +27,7 @@ class RY_ECPay_Gateway_Credit extends RY_ECPay_Gateway_Base
             $total = $this->get_order_total();
 
             if ($total > 0) {
-                if ($this->min_amount > 0 and $total < $this->min_amount) {
+                if ($this->min_amount > 0 && $total < $this->min_amount) {
                     return false;
                 }
             }
@@ -47,10 +47,5 @@ class RY_ECPay_Gateway_Credit extends RY_ECPay_Gateway_Base
             'result'   => 'success',
             'redirect' => $order->get_checkout_payment_url(true),
         ];
-    }
-
-    public function process_admin_options()
-    {
-        parent::process_admin_options();
     }
 }

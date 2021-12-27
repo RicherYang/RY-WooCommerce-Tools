@@ -1,6 +1,6 @@
 RY WooCommerce Tools
 
-Copyright 2018 - 2021 by Richer Yang
+Copyright 2018 - 2022 by Richer Yang
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 

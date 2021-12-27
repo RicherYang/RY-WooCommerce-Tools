@@ -24,11 +24,11 @@ return [
     'min_amount' => [
         'title' => __('Minimum order amount', 'ry-woocommerce-tools'),
         'type' => 'number',
-        'default' => 0,
-        'placeholder' => 0,
+        'default' => $this->check_min_amount,
+        'placeholder' => $this->check_min_amount,
         'description' => __('0 to disable minimum amount limit.', 'ry-woocommerce-tools'),
         'custom_attributes' => [
-            'min' => 0,
+            'min' => $this->check_min_amount,
             'step' => 1
         ]
     ],

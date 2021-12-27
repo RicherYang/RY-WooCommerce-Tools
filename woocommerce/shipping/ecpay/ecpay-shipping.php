@@ -37,7 +37,7 @@ final class RY_ECPay_Shipping
         self::$log_enabled = 'yes' === RY_WT::get_option('ecpay_shipping_log', 'no');
 
         if ('yes' === RY_WT::get_option('ecpay_shipping', 'no')) {
-            self::$testmode = 'yes' === RY_WT::get_option('ecpay_shipping_testmode', 'yes');
+            self::$testmode = 'yes' === RY_WT::get_option('ecpay_shipping_testmode', 'no');
 
             RY_ECPay_Shipping_Response::init();
 
@@ -123,7 +123,7 @@ final class RY_ECPay_Shipping
                 WC_Admin_Settings::add_error(__('Verification failed!', 'ry-woocommerce-tools') . ' ' . __('Cellphone format 09xxxxxxxx', 'ry-woocommerce-tools'));
                 RY_WT::update_option('ecpay_shipping_sender_cellphone', '');
             }
-            if ('yes' !== RY_WT::get_option('ecpay_shipping_testmode', 'yes')) {
+            if ('yes' !== RY_WT::get_option('ecpay_shipping_testmode', 'no')) {
                 if (empty(RY_WT::get_option('ecpay_shipping_MerchantID'))) {
                     $enable = false;
                 }

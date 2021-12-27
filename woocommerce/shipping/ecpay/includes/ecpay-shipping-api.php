@@ -84,10 +84,10 @@ class RY_ECPay_Shipping_Api extends RY_Abstract_Api_ECPay
                 'ServerReplyURL' => $notify_url,
                 'LogisticsC2CReplyURL' => $notify_url,
             ];
-            if (version_compare(WC_VERSION, '5.6.0', '>=')) {
-                $args['ReceiverCellPhone'] = $order->get_shipping_phone();
-            } else {
+            if (version_compare(WC_VERSION, '5.6.0', '<')) {
                 $args['ReceiverCellPhone'] = $order->get_meta('_shipping_phone');
+            } else {
+                $args['ReceiverCellPhone'] = $order->get_shipping_phone();
             }
 
             if ('yes' === RY_WT::get_option('ecpay_shipping_cleanup_receiver_name', 'no')) {
