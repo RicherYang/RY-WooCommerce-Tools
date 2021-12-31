@@ -3,9 +3,9 @@
  * Plugin Name: RY WooCommerce Tools
  * Plugin URI: https://richer.tw/ry-woocommerce-tools
  * Description: WooCommerce Tools
- * Version: 1.8.8
+ * Version: 1.8.9
  * Requires at least: 5.6
- * Requires PHP: 7.3
+ * Requires PHP: 7.4
  * Author: Richer Yang
  * Author URI: https://richer.tw/
  * License: GPLv2 or later
@@ -20,7 +20,7 @@
 
 function_exists('plugin_dir_url') or exit('No direct script access allowed');
 
-define('RY_WT_VERSION', '1.8.8');
+define('RY_WT_VERSION', '1.8.9');
 define('RY_WT_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('RY_WT_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('RY_WT_PLUGIN_BASENAME', plugin_basename(__FILE__));

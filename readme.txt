@@ -3,9 +3,9 @@ Contributors: fantasyworld
 Donate link: https://www.paypal.me/RicherYang
 Tags: woocommerce, payment, gateway, shipping, ecpay, newebpay, smilepay
 Requires at least: 5.6
-Requires PHP: 7.3
+Requires PHP: 7.4
 Tested up to: 5.8
-Stable tag: 1.8.8
+Stable tag: 1.8.9
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.txt
 
@@ -21,7 +21,7 @@ Let your WooCommerce store more with Taiwan's habits.
 
 = Minimum Requirements =
 
-* PHP 7.3+
+* PHP 7.4+
 * WordPress 5.6+
 * WooCommerce 5.0+
 
@@ -38,6 +38,9 @@ Please visit the [plugin page](https://richer.tw/ry-woocommerce-tools/ " ") with
 4. NewebPay gateway global settings.
 
 == Changelog ==
+
+= 1.8.9 - 2021/12/21 =
+* 調整 - PHP 版本需求
 
 = 1.8.8 - 2021/12/27 =
 * 調整 - 調整後台設定說明文字

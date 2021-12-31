@@ -144,6 +144,7 @@ class RY_NewebPay_Gateway_Response extends RY_NewebPay_Gateway_Api
             }
         }
 
+        $order = wc_get_order($order);
         if (!$order->is_paid()) {
             if (isset($ipn_info->PayTime)) {
                 $order->add_order_note(__('Payment completed', 'ry-woocommerce-tools'));
