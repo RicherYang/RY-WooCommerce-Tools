@@ -150,7 +150,7 @@ class RY_ECPay_Shipping_Api extends RY_Abstract_Api_ECPay
                 $create_datetime = new DateTime('', new DateTimeZone('Asia/Taipei'));
                 $args['MerchantTradeDate'] = $create_datetime->format('Y/m/d H:i:s');
                 $args['MerchantTradeNo'] = self::generate_trade_no($order->get_id(), RY_WT::get_option('ecpay_shipping_order_prefix'));
-                if ($i > 01) {
+                if ($i > 0) {
                     $args['IsCollection'] = 'N';
                     $args['CollectionAmount'] = 0;
                 }

@@ -11,7 +11,7 @@ class RY_SmilePay_Shipping_Meta_Box
 
             foreach ($theorder->get_items('shipping') as $item_id => $item) {
                 if (RY_SmilePay_Shipping::get_order_support_shipping($item) !== false) {
-                    add_meta_box('ry-smilepay-shipping-info', __('SmilePay shipping info', 'ry-woocommerce-tools'), [__CLASS__, 'output'], 'shop_order', 'normal', 'high');
+                    add_meta_box('ry-smilepay-shipping-info', __('SmilePay shipping info', 'ry-woocommerce-tools'), [__CLASS__, 'output'], 'shop_order', 'normal', 'default');
                     break;
                 }
             }
@@ -57,9 +57,7 @@ class RY_SmilePay_Shipping_Meta_Box
             <th>
                 <?=__('Shipping create time', 'ry-woocommerce-tools') ?>
             </th>
-            <th>
-                <?=__('Shipping booking note', 'ry-woocommerce-tools') ?>
-            </th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -100,7 +98,7 @@ class RY_SmilePay_Shipping_Meta_Box
                 <?php
                 } else {
                     ?>
-                <button type="button" class="button print_info" data-orderid="<?=$post->ID ?>" data-id="<?=$item['ID'] ?>"><?=__('Print', 'ry-woocommerce-tools') ?></button>
+                <button type="button" class="button print_info" data-orderid="<?=$post->ID ?>" data-id="<?=$item['ID'] ?>"><?=__('Print booking note', 'ry-woocommerce-tools') ?></button>
                 <?php
                 } ?>
             </td>

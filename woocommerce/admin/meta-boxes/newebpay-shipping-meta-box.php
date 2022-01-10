@@ -11,7 +11,7 @@ class RY_NewebPay_Shipping_Meta_Box
 
             foreach ($theorder->get_items('shipping') as $item_id => $item) {
                 if (RY_NewebPay_Shipping::get_order_support_shipping($item) !== false) {
-                    add_meta_box('ry-newebpay-shipping-info', __('NewebPay shipping info', 'ry-woocommerce-tools'), [__CLASS__, 'output'], 'shop_order', 'normal', 'high');
+                    add_meta_box('ry-newebpay-shipping-info', __('NewebPay shipping info', 'ry-woocommerce-tools'), [__CLASS__, 'output'], 'shop_order', 'normal', 'default');
                     break;
                 }
             }
