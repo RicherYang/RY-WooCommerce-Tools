@@ -47,11 +47,11 @@ return [
         'desc' => __('Always show shipping phone field in checkout form.', 'ry-woocommerce-tools')
     ],
     [
-        'title' => __('Auto completed order', 'ry-woocommerce-tools'),
-        'id' => RY_WT::$option_prefix . 'ecpay_shipping_auto_completed',
+        'title' => __('Auto change order status', 'ry-woocommerce-tools'),
+        'id' => RY_WT::$option_prefix . 'ecpay_shipping_auto_order_status',
         'type' => 'checkbox',
         'default' => 'yes',
-        'desc' => __('Auto completed order when user getted products.', 'ry-woocommerce-tools')
+        'desc' => __('Auto change order status when get shipping status change.', 'ry-woocommerce-tools')
     ],
     [
         'id' => 'base_options',

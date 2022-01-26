@@ -63,8 +63,10 @@ final class RY_WT_update
             RY_WT::update_option('version', '1.6.0');
         }
 
-        if (version_compare($now_version, '1.8.10', '<')) {
-            RY_WT::update_option('version', '1.8.10');
+        if (version_compare($now_version, '1.8.11', '<')) {
+            RY_WT::update_option('ecpay_shipping_auto_order_status', RY_WT::get_option('ecpay_shipping_auto_completed', 'yes'));
+
+            RY_WT::update_option('version', '1.8.11');
         }
     }
 }
