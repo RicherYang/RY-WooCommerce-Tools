@@ -200,12 +200,16 @@ class RY_SmilePay_Shipping_Response extends RY_Abstract_Api_SmilePay
 
     public static function shipping_at_cvs($ipn_info, $order)
     {
-        $order->update_status('ry-at-cvs');
+        if ($order->has_status(apply_filters('ry_smilepay_shipping_at_cvs_prev_status', ['processing'], $ipn_info, $order))) {
+            $order->update_status('ry-at-cvs');
+        }
     }
 
     public static function shipping_out_cvs($ipn_info, $order)
     {
-        $order->update_status('ry-out-cvs');
+        if ($order->has_status(apply_filters('ry_smilepay_shipping_out_cvs_prev_status', ['ry-at-cvs'], $ipn_info, $order))) {
+            $order->update_status('ry-out-cvs');
+        }
     }
 
     public static function shipping_completed($ipn_info, $order)

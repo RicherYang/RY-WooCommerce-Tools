@@ -12,8 +12,13 @@ class RY_ECPay_Shipping_Response extends RY_Abstract_Api_ECPay
             add_action('ry_ecpay_shipping_response_status_2063', [__CLASS__, 'shipping_at_cvs'], 10, 2);
             add_action('ry_ecpay_shipping_response_status_2073', [__CLASS__, 'shipping_at_cvs'], 10, 2);
             add_action('ry_ecpay_shipping_response_status_3018', [__CLASS__, 'shipping_at_cvs'], 10, 2);
+            add_action('ry_ecpay_shipping_response_status_2070', [__CLASS__, 'shipping_out_cvs'], 10, 2);
+            add_action('ry_ecpay_shipping_response_status_2072', [__CLASS__, 'shipping_out_cvs'], 10, 2);
             add_action('ry_ecpay_shipping_response_status_2074', [__CLASS__, 'shipping_out_cvs'], 10, 2);
+            add_action('ry_ecpay_shipping_response_status_3019', [__CLASS__, 'shipping_out_cvs'], 10, 2);
             add_action('ry_ecpay_shipping_response_status_3020', [__CLASS__, 'shipping_out_cvs'], 10, 2);
+            add_action('ry_ecpay_shipping_response_status_3023', [__CLASS__, 'shipping_out_cvs'], 10, 2);
+            add_action('ry_ecpay_shipping_response_status_3025', [__CLASS__, 'shipping_out_cvs'], 10, 2);
 
             add_action('ry_ecpay_shipping_response_status_2067', [__CLASS__, 'shipping_completed'], 10, 2);
             add_action('ry_ecpay_shipping_response_status_3003', [__CLASS__, 'shipping_completed'], 10, 2);
@@ -154,12 +159,16 @@ class RY_ECPay_Shipping_Response extends RY_Abstract_Api_ECPay
 
     public static function shipping_at_cvs($ipn_info, $order)
     {
-        $order->update_status('ry-at-cvs');
+        if ($order->has_status(apply_filters('ry_ecpay_shipping_at_cvs_prev_status', ['processing'], $ipn_info, $order))) {
+            $order->update_status('ry-at-cvs');
+        }
     }
 
     public static function shipping_out_cvs($ipn_info, $order)
     {
-        $order->update_status('ry-out-cvs');
+        if ($order->has_status(apply_filters('ry_ecpay_shipping_out_cvs_prev_status', ['ry-at-cvs'], $ipn_info, $order))) {
+            $order->update_status('ry-out-cvs');
+        }
     }
 
     public static function shipping_completed($ipn_info, $order)
