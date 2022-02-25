@@ -136,7 +136,7 @@ final class RY_ECPay_Shipping_admin
 
     public static function print_shipping()
     {
-        $order_ID = wp_unslash($_GET['orderid']);
+        $order_ID = wp_unslash($_GET['orderid'] ?? '');
         $logistics_ID = (int) $_GET['id'];
         $print_list = [];
 

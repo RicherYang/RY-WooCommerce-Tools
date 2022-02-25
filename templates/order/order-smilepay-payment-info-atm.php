@@ -22,34 +22,34 @@ if ($order->get_meta('_smilepay_payment_type') != '2') {
 ?>
 <section class="woocommerce-order-details">
     <h2 class="woocommerce-order-details__title">
-        <?=__('Payment details', 'ry-woocommerce-tools') ?>
+        <?php esc_html_e('Payment details', 'ry-woocommerce-tools') ?>
     </h2>
     <table class="woocommerce-table woocommerce-table--payment-details payment_details">
         <tbody>
             <tr>
                 <td>
-                    <?=__('Bank', 'ry-woocommerce-tools') ?>
+                    <?php esc_html_e('Bank', 'ry-woocommerce-tools') ?>
                 </td>
                 <td><?=_x($order->get_meta('_smilepay_atm_BankCode'), 'Bank code', 'ry-woocommerce-tools') ?>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <?=__('Bank code', 'ry-woocommerce-tools') ?>
+                    <?php esc_html_e('Bank code', 'ry-woocommerce-tools') ?>
                 </td>
-                <td><?=$order->get_meta('_smilepay_atm_BankCode')  ?>
+                <td><?php echo esc_html($order->get_meta('_smilepay_atm_BankCode')); ?>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <?=__('ATM Bank account', 'ry-woocommerce-tools') ?>
+                    <?php esc_html_e('ATM Bank account', 'ry-woocommerce-tools') ?>
                 </td>
                 <td><?=wordwrap($order->get_meta('_smilepay_atm_vAccount'), 4, '<span> </span>', true) ?>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <?=__('Payment deadline', 'ry-woocommerce-tools') ?>
+                    <?php esc_html_e('Payment deadline', 'ry-woocommerce-tools') ?>
                 </td>
                 <td>
                     <?php $expireDate = wc_string_to_datetime($order->get_meta('_smilepay_atm_ExpireDate')); ?>

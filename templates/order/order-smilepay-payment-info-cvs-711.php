@@ -22,21 +22,21 @@ if ($order->get_meta('_smilepay_payment_type') != '4') {
 ?>
 <section class="woocommerce-order-details">
     <h2 class="woocommerce-order-details__title">
-        <?=__('Payment details', 'ry-woocommerce-tools') ?>
+        <?php esc_html_e('Payment details', 'ry-woocommerce-tools') ?>
     </h2>
     <table class="woocommerce-table woocommerce-table--payment-details payment_details">
         <tbody>
             <tr>
                 <td>
-                    <?=__('CVS code', 'ry-woocommerce-tools') ?>
+                    <?php esc_html_e('CVS code', 'ry-woocommerce-tools') ?>
                 </td>
                 <td>
-                    <?=$order->get_meta('_smilepay_cvs_PaymentNo') ?>
+                    <?php echo esc_html($order->get_meta('_smilepay_cvs_PaymentNo')); ?>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <?=__('Payment deadline', 'ry-woocommerce-tools') ?>
+                    <?php esc_html_e('Payment deadline', 'ry-woocommerce-tools') ?>
                 </td>
                 <td>
                     <?php $expireDate = wc_string_to_datetime($order->get_meta('_smilepay_cvs_ExpireDate')); ?>

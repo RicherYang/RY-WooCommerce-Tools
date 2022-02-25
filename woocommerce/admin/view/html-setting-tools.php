@@ -1,5 +1,5 @@
 <h2>
-    <?=__('RY WooCommerce Tools', 'ry-woocommerce-tools') ?> <?=__('Tools', 'ry-woocommerce-tools') ?>
+    <?php esc_html_e('RY WooCommerce Tools', 'ry-woocommerce-tools') ?> <?php esc_html_e('Tools', 'ry-woocommerce-tools') ?>
 </h2>
 
 <?php if (isset($time_diff)) { ?>

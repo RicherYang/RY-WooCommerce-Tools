@@ -33,17 +33,17 @@ class RY_NewebPay_Shipping_Meta_Box
 <table cellpadding="0" cellspacing="0" class="widefat">
     <thead>
         <tr>
-            <th><?=__('NewebPay shipping ID', 'ry-woocommerce-tools') ?>
+            <th><?php esc_html_e('NewebPay shipping ID', 'ry-woocommerce-tools') ?>
             </th>
-            <th><?=__('Store ID', 'ry-woocommerce-tools') ?>
+            <th><?php esc_html_e('Store ID', 'ry-woocommerce-tools') ?>
             </th>
-            <th><?=__('declare amount', 'ry-woocommerce-tools') ?>
+            <th><?php esc_html_e('declare amount', 'ry-woocommerce-tools') ?>
             </th>
-            <th><?=__('Collection of money', 'ry-woocommerce-tools') ?>
+            <th><?php esc_html_e('Collection of money', 'ry-woocommerce-tools') ?>
             </th>
-            <th><?=__('Shipping status last change time', 'ry-woocommerce-tools') ?>
+            <th><?php esc_html_e('Shipping status last change time', 'ry-woocommerce-tools') ?>
             </th>
-            <th><?=__('Shipping create time', 'ry-woocommerce-tools') ?>
+            <th><?php esc_html_e('Shipping create time', 'ry-woocommerce-tools') ?>
             </th>
         </tr>
     </thead>

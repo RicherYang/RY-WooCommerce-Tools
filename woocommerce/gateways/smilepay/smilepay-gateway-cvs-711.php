@@ -88,19 +88,19 @@ class RY_SmilePay_Gateway_Cvs_711 extends RY_SmilePay_Gateway_Base
         if ($order->get_payment_method() != 'ry_smilepay_cvs_711') {
             return;
         } ?>
-<h3 style="clear:both"><?=__('Payment details', 'ry-woocommerce-tools') ?>
+<h3 style="clear:both"><?php esc_html_e('Payment details', 'ry-woocommerce-tools') ?>
 </h3>
 <table>
     <tr>
-        <td><?=__('CVS code', 'ry-woocommerce-tools') ?>
+        <td><?php esc_html_e('CVS code', 'ry-woocommerce-tools') ?>
         </td>
-        <td><?=$order->get_meta('_smilepay_cvs_PaymentNo') ?>
+        <td><?php echo esc_html($order->get_meta('_smilepay_cvs_PaymentNo')); ?>
         </td>
     </tr>
     <tr>
-        <td><?=__('Payment deadline', 'ry-woocommerce-tools') ?>
+        <td><?php esc_html_e('Payment deadline', 'ry-woocommerce-tools') ?>
         </td>
-        <td><?=$order->get_meta('_smilepay_cvs_ExpireDate') ?>
+        <td><?php echo esc_html($order->get_meta('_smilepay_cvs_ExpireDate')); ?>
         </td>
     </tr>
 </table>

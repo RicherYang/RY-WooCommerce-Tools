@@ -88,31 +88,31 @@ class RY_SmilePay_Gateway_Barcode extends RY_SmilePay_Gateway_Base
         if ($order->get_payment_method() != 'ry_smilepay_barcode') {
             return;
         } ?>
-<h3 style="clear:both"><?=__('Payment details', 'ry-woocommerce-tools') ?>
+<h3 style="clear:both"><?php esc_html_e('Payment details', 'ry-woocommerce-tools') ?>
 </h3>
 <table>
     <tr>
-        <td><?=__('Barcode 1', 'ry-woocommerce-tools') ?>
+        <td><?php esc_html_e('Barcode 1', 'ry-woocommerce-tools') ?>
         </td>
-        <td><?=$order->get_meta('_smilepay_barcode_Barcode1') ?>
-        </td>
-    </tr>
-    <tr>
-        <td><?=__('Barcode 2', 'ry-woocommerce-tools') ?>
-        </td>
-        <td><?=$order->get_meta('_smilepay_barcode_Barcode2') ?>
+        <td><?php echo esc_html($order->get_meta('_smilepay_barcode_Barcode1')); ?>
         </td>
     </tr>
     <tr>
-        <td><?=__('Barcode 3', 'ry-woocommerce-tools') ?>
+        <td><?php esc_html_e('Barcode 2', 'ry-woocommerce-tools') ?>
         </td>
-        <td><?=$order->get_meta('_smilepay_barcode_Barcode3') ?>
+        <td><?php echo esc_html($order->get_meta('_smilepay_barcode_Barcode2')); ?>
         </td>
     </tr>
     <tr>
-        <td><?=__('Payment deadline', 'ry-woocommerce-tools') ?>
+        <td><?php esc_html_e('Barcode 3', 'ry-woocommerce-tools') ?>
         </td>
-        <td><?=$order->get_meta('_smilepay_barcode_ExpireDate') ?>
+        <td><?php echo esc_html($order->get_meta('_smilepay_barcode_Barcode3')); ?>
+        </td>
+    </tr>
+    <tr>
+        <td><?php esc_html_e('Payment deadline', 'ry-woocommerce-tools') ?>
+        </td>
+        <td><?php echo esc_html($order->get_meta('_smilepay_barcode_ExpireDate')); ?>
         </td>
     </tr>
 </table>

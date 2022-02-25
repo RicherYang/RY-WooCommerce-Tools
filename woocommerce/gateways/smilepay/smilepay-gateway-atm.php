@@ -84,24 +84,24 @@ class RY_SmilePay_Gateway_Atm extends RY_SmilePay_Gateway_Base
         if ($order->get_payment_method() != 'ry_smilepay_atm') {
             return;
         } ?>
-<h3 style="clear:both"><?=__('Payment details', 'ry-woocommerce-tools') ?>
+<h3 style="clear:both"><?php esc_html_e('Payment details', 'ry-woocommerce-tools') ?>
 </h3>
 <table>
     <tr>
-        <td><?=__('Bank', 'ry-woocommerce-tools') ?>
+        <td><?php esc_html_e('Bank', 'ry-woocommerce-tools') ?>
         </td>
-        <td><?=_x($order->get_meta('_smilepay_atm_BankCode'), 'Bank code', 'ry-woocommerce-tools') ?> (<?=$order->get_meta('_smilepay_atm_BankCode') ?>)</td>
+        <td><?=_x($order->get_meta('_smilepay_atm_BankCode'), 'Bank code', 'ry-woocommerce-tools') ?> (<?php echo esc_html($order->get_meta('_smilepay_atm_BankCode')); ?>)</td>
     </tr>
     <tr>
-        <td><?=__('ATM Bank account', 'ry-woocommerce-tools') ?>
+        <td><?php esc_html_e('ATM Bank account', 'ry-woocommerce-tools') ?>
         </td>
-        <td><?=$order->get_meta('_smilepay_atm_vAccount') ?>
+        <td><?php echo esc_html($order->get_meta('_smilepay_atm_vAccount')); ?>
         </td>
     </tr>
     <tr>
-        <td><?=__('Payment deadline', 'ry-woocommerce-tools') ?>
+        <td><?php esc_html_e('Payment deadline', 'ry-woocommerce-tools') ?>
         </td>
-        <td><?=$order->get_meta('_smilepay_atm_ExpireDate') ?>
+        <td><?php echo esc_html($order->get_meta('_smilepay_atm_ExpireDate')); ?>
         </td>
     </tr>
 </table>

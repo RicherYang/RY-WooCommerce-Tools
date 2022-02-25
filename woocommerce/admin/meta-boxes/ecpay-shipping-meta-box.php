@@ -34,31 +34,31 @@ class RY_ECPay_Shipping_Meta_Box
     <thead>
         <tr>
             <th>
-                <?=__('ECPay shipping ID', 'ry-woocommerce-tools') ?>
+                <?php esc_html_e('ECPay shipping ID', 'ry-woocommerce-tools') ?>
             </th>
             <th>
-                <?=__('Shipping Type', 'ry-woocommerce-tools') ?>
+                <?php esc_html_e('Shipping Type', 'ry-woocommerce-tools') ?>
             </th>
             <th>
-                <?=__('Shipping no', 'ry-woocommerce-tools') ?>
+                <?php esc_html_e('Shipping no', 'ry-woocommerce-tools') ?>
             </th>
             <th>
-                <?=__('Store ID', 'ry-woocommerce-tools') ?>
+                <?php esc_html_e('Store ID', 'ry-woocommerce-tools') ?>
             </th>
             <th>
-                <?=__('Shipping status', 'ry-woocommerce-tools') ?>
+                <?php esc_html_e('Shipping status', 'ry-woocommerce-tools') ?>
             </th>
             <th>
-                <?=__('declare amount', 'ry-woocommerce-tools') ?>
+                <?php esc_html_e('declare amount', 'ry-woocommerce-tools') ?>
             </th>
             <th>
-                <?=__('Collection of money', 'ry-woocommerce-tools') ?>
+                <?php esc_html_e('Collection of money', 'ry-woocommerce-tools') ?>
             </th>
             <th>
-                <?=__('Shipping status last change time', 'ry-woocommerce-tools') ?>
+                <?php esc_html_e('Shipping status last change time', 'ry-woocommerce-tools') ?>
             </th>
             <th>
-                <?=__('Shipping create time', 'ry-woocommerce-tools') ?>
+                <?php esc_html_e('Shipping create time', 'ry-woocommerce-tools') ?>
             </th>
             <th></th>
         </tr>
@@ -107,7 +107,7 @@ class RY_ECPay_Shipping_Meta_Box
                 <?=sprintf(_x('%1$s %2$s', 'Datetime', 'ry-woocommerce-tools'), $item['create']->date_i18n(wc_date_format()), $item['create']->date_i18n(wc_time_format())) ?>
             </td>
             <td>
-                <a class="button" href="<?=esc_url(add_query_arg(['orderid' => $post->ID, 'id' => $item['ID'], 'noheader' => 1], admin_url('admin.php?page=ry_print_ecpay_shipping'))) ?>"><?=__('Print booking note', 'ry-woocommerce-tools') ?></a>
+                <a class="button" href="<?=esc_url(add_query_arg(['orderid' => $post->ID, 'id' => $item['ID'], 'noheader' => 1], admin_url('admin.php?page=ry_print_ecpay_shipping'))) ?>"><?php esc_html_e('Print booking note', 'ry-woocommerce-tools') ?></a>
             </td>
         </tr>
         <?php
