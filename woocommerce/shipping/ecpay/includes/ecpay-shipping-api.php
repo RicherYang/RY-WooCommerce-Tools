@@ -4,20 +4,12 @@ class RY_ECPay_Shipping_Api extends RY_Abstract_Api_ECPay
     public static $api_test_url = [
         'map' => 'https://logistics-stage.ecpay.com.tw/Express/map',
         'create' => 'https://logistics-stage.ecpay.com.tw/Express/Create',
-        'print_UNIMARTC2C' => 'https://logistics-stage.ecpay.com.tw/Express/PrintUniMartC2COrderInfo',
-        'print_FAMIC2C' => 'https://logistics-stage.ecpay.com.tw/Express/PrintFAMIC2COrderInfo',
-        'print_HILIFEC2C' => 'https://logistics-stage.ecpay.com.tw/Express/PrintHILIFEC2COrderInfo',
-        'print_OKMARTC2C' => 'https://logistics-stage.ecpay.com.tw/Express/PrintOKMARTC2COrderInfo',
-        'print_B2C' => 'https://logistics-stage.ecpay.com.tw/helper/printTradeDocument'
+        'print' => 'https://logistics-stage.ecpay.com.tw/Express/v2/PrintTradeDocument'
     ];
     public static $api_url = [
         'map' => 'https://logistics.ecpay.com.tw/Express/map',
         'create' => 'https://logistics.ecpay.com.tw/Express/Create',
-        'print_UNIMARTC2C' => 'https://logistics.ecpay.com.tw/Express/PrintUniMartC2COrderInfo',
-        'print_FAMIC2C' => 'https://logistics.ecpay.com.tw/Express/PrintFAMIC2COrderInfo',
-        'print_HILIFEC2C' => 'https://logistics.ecpay.com.tw/Express/PrintHILIFEC2COrderInfo',
-        'print_OKMARTC2C' => 'https://logistics.ecpay.com.tw/Express/PrintOKMARTC2COrderInfo',
-        'print_B2C' => 'https://logistics.ecpay.com.tw/helper/printTradeDocument'
+        'print' => 'https://logistics.ecpay.com.tw/Express/v2/PrintTradeDocument'
     ];
 
     public static function get_map_post_url()
@@ -231,59 +223,37 @@ class RY_ECPay_Shipping_Api extends RY_Abstract_Api_ECPay
     {
         list($MerchantID, $HashKey, $HashIV, $CVS_type) = RY_ECPay_Shipping::get_ecpay_api_info();
 
-        $print_type = $info[0]['LogisticsSubType'];
-        $CVS_type = strpos($info[0]['LogisticsSubType'], 'C2C') === false ? 'B2C' : 'C2C';
-
-        $args = [
+        $data = [
             'MerchantID' => $MerchantID,
-            'AllPayLogisticsID' => [],
-            'CVSPaymentNo' => [],
-            'CVSValidationNo' => []
+            'LogisticsID' => [],
+            'LogisticsSubType' => $info[0]['LogisticsSubType']
         ];
 
         foreach ($info as $item) {
-            if ($item['LogisticsSubType'] == $print_type) {
-                $args['AllPayLogisticsID'][] = $item['ID'];
-            }
-            if ($CVS_type == 'C2C') {
-                $args['CVSPaymentNo'][] = $item['PaymentNo'];
-            }
-            if ($item['LogisticsSubType'] == 'UNIMARTC2C') {
-                $args['CVSValidationNo'][] = $item['ValidationNo'];
+            if ($item['LogisticsSubType'] == $data['LogisticsSubType']) {
+                $data['LogisticsID'][] = $item['ID'];
             }
         }
 
-        foreach ($args as $key => $value) {
-            if (empty($value)) {
-                unset($args[$key]);
-            } elseif (is_array($value)) {
-                $args[$key] = implode(',', $value);
-            }
-        }
-        $args = self::add_check_value($args, $HashKey, $HashIV, 'md5');
+        $args = self::build_args($data, $MerchantID);
         RY_ECPay_Shipping::log('Print info POST: ' . var_export($args, true));
 
         if (RY_ECPay_Shipping::$testmode) {
-            if ($CVS_type == 'C2C') {
-                $post_url = self::$api_test_url['print_' . $print_type];
-            } else {
-                $post_url = self::$api_test_url['print_B2C'];
-            }
+            $post_url = self::$api_test_url['print'];
         } else {
-            if ($CVS_type == 'C2C') {
-                $post_url = self::$api_url['print_' . $print_type];
-            } else {
-                $post_url = self::$api_url['print_B2C'];
-            }
+            $post_url = self::$api_url['print'];
+        }
+        $response = self::link_v2_server($post_url, $args, $HashKey, $HashIV);
+        if (is_wp_error($response)) {
+            RY_ECPay_Shipping::log('Print failed. POST error: ' . implode("\n", $response->get_error_messages()), 'error');
+            exit();
         }
 
-        echo '<!DOCTYPE html><head><meta charset="' . get_bloginfo('charset', 'display') . '"></head><body>';
-        echo '<form method="post" id="ry-ecpay-form" action="' . esc_url($post_url) . '" style="display:none;">';
-        foreach ($args as $key => $value) {
-            echo '<input type="hidden" name="' . esc_attr($key) . '" value="' . esc_attr($value) . '">';
+        if ($response['response']['code'] != '200') {
+            RY_ECPay_Shipping::log('Print failed. Http code: ' . $response['response']['code'], 'error');
+            return;
         }
-        echo '</form>';
-        echo '<script>document.getElementById("ry-ecpay-form").submit();</script>';
-        echo '</body></html>';
+
+        echo $response['body'];
     }
 }

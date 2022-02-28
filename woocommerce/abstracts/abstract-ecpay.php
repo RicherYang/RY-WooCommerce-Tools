@@ -1,6 +1,8 @@
 <?php
 abstract class RY_Abstract_Api_ECPay extends RY_Abstract_Api
 {
+    protected static $encrypt_method = 'aes-128-cbc';
+
     protected static function get_3rd_return_url($order = null)
     {
         $return_url = WC()->api_request_url('ry_ecpay_gateway_return');
@@ -22,6 +24,21 @@ abstract class RY_Abstract_Api_ECPay extends RY_Abstract_Api
     protected static function add_check_value($args, $HashKey, $HashIV, $hash_algo, $skip_args = [])
     {
         $args['CheckMacValue'] = self::generate_check_value($args, $HashKey, $HashIV, $hash_algo, $skip_args);
+        return $args;
+    }
+
+    protected static function build_args($data, $MerchantID)
+    {
+        $args = [
+            'MerchantID' => $MerchantID,
+            'RqHeader' => [
+                'Timestamp' => new DateTime('', new DateTimeZone('Asia/Taipei')),
+                'Revision' => '1.0.0'
+            ],
+            'Data' => wp_json_encode($data)
+        ];
+        $args['RqHeader']['Timestamp'] = $args['RqHeader']['Timestamp']->format('U');
+
         return $args;
     }
 
@@ -60,6 +77,14 @@ abstract class RY_Abstract_Api_ECPay extends RY_Abstract_Api
         return $check_value;
     }
 
+    protected static function encrypt_data($args, $HashKey, $HashIV)
+    {
+        $args['Data'] = self::urlencode($args['Data']);
+        $args['Data'] = openssl_encrypt($args['Data'], self::$encrypt_method, $HashKey, 0, $HashIV);
+
+        return $args;
+    }
+
     protected static function link_server($post_url, $args)
     {
         wc_set_time_limit(40);
@@ -72,6 +97,22 @@ abstract class RY_Abstract_Api_ECPay extends RY_Abstract_Api
         return wp_remote_post($post_url, [
             'timeout' => 20,
             'body' => implode('&', $send_body)
+        ]);
+    }
+
+    protected static function link_v2_server($post_url, $args, $HashKey, $HashIV)
+    {
+        wc_set_time_limit(40);
+
+        $args['Data'] = self::urlencode($args['Data']);
+        $args['Data'] = openssl_encrypt($args['Data'], self::$encrypt_method, $HashKey, 0, $HashIV);
+
+        return wp_remote_post($post_url, [
+            'timeout' => 20,
+            'headers' => [
+                'Content-Type' => 'application/json'
+            ],
+            'body' => wp_json_encode($args)
         ]);
     }
 

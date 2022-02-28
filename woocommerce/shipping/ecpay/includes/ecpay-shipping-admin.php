@@ -137,7 +137,7 @@ final class RY_ECPay_Shipping_admin
     public static function print_shipping()
     {
         $order_ID = wp_unslash($_GET['orderid'] ?? '');
-        $logistics_ID = (int) $_GET['id'];
+        $logistics_ID = (int) wp_unslash($_GET['id'] ?? '');
         $print_list = [];
 
         if ($logistics_ID > 0) {
@@ -180,6 +180,7 @@ final class RY_ECPay_Shipping_admin
                                 }
                                 break;
                             case 'HILIFE':
+                            case 'HILIFEC2C':
                                 if ($print_type == 'cvs_hilife') {
                                     $print_list[] = $info;
                                 }
