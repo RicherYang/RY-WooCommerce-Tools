@@ -4,7 +4,7 @@ abstract class RY_Abstract_Api_SmilePay extends RY_Abstract_Api
     protected static function generate_trade_no($order_id, $order_prefix = '')
     {
         $trade_no = self::pre_generate_trade_no($order_id, $order_prefix);
-        $trade_no = apply_filters('ry_smilepay_trade_no', $trade_no);
+        $trade_no = apply_filters('ry_smilepay_trade_no', $trade_no, $order_id);
         return substr($trade_no, 0, 20);
     }
 
@@ -75,6 +75,7 @@ abstract class RY_Abstract_Api_SmilePay extends RY_Abstract_Api
     {
         if (isset($ipn_info['Data_id'])) {
             $order_id = self::trade_no_to_order_no($ipn_info['Data_id'], $order_prefix);
+            $order_id = apply_filters('ry_smilepay_trade_no_to_order_id', $order_id, $ipn_info['Data_id']);
             if ($order_id > 0) {
                 return $order_id;
             }
