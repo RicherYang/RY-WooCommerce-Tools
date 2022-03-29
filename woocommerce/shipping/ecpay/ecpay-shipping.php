@@ -303,13 +303,16 @@ final class RY_ECPay_Shipping
         }
 
         if (did_action('woocommerce_checkout_process')) {
+            $used = false;
             $used_cvs = false;
             $shipping_method = isset($_POST['shipping_method']) ? wc_clean($_POST['shipping_method']) : [];
             foreach ($shipping_method as $method) {
                 $method = strstr($method, ':', true);
-                if ($method && array_key_exists($method, self::$support_methods) && strpos($method, 'cvs') !== false) {
-                    $used_cvs = true;
-                    break;
+                if ($method && array_key_exists($method, self::$support_methods)) {
+                    $used = true;
+                    if (strpos($method, 'cvs') !== false) {
+                        $used_cvs = true;
+                    }
                 }
             }
 
@@ -323,10 +326,10 @@ final class RY_ECPay_Shipping
 
                 $fields['shipping']['shipping_phone']['required'] = true;
                 $fields['shipping']['CVSStoreName']['required'] = true;
+            } elseif ($used) {
+                $fields['shipping']['shipping_phone']['required'] = true;
             } else {
-                if ('no' == RY_WT::get_option('keep_shipping_phone', 'no')) {
-                    $fields['shipping']['shipping_phone']['required'] = false;
-                }
+                $fields['shipping']['shipping_phone']['required'] = false;
             }
         }
 
