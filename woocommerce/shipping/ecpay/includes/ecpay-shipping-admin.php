@@ -10,12 +10,14 @@ final class RY_ECPay_Shipping_admin
         add_filter('woocommerce_admin_shipping_fields', [__CLASS__, 'set_cvs_shipping_fields'], 99);
         add_action('woocommerce_shipping_zone_method_status_toggled', [__CLASS__, 'check_can_enable'], 10, 4);
         add_action('woocommerce_update_options_shipping_options', [__CLASS__, 'check_ship_destination']);
-        add_filter('woocommerce_order_actions', [__CLASS__, 'add_order_actions']);
-        add_action('woocommerce_order_action_get_new_ecpay_no', ['RY_ECPay_Shipping_Api', 'get_code']);
-        add_action('woocommerce_order_action_get_new_ecpay_no_cod', ['RY_ECPay_Shipping_Api', 'get_code_cod']);
-        add_action('woocommerce_order_action_send_at_cvs_email', ['RY_ECPay_Shipping', 'send_at_cvs_email']);
-
         add_action('add_meta_boxes', ['RY_ECPay_Shipping_Meta_Box', 'add_meta_box'], 40, 2);
+
+        if ('yes' === RY_WT::get_option('ecpay_shipping', 'no')) {
+            add_filter('woocommerce_order_actions', [__CLASS__, 'add_order_actions']);
+            add_action('woocommerce_order_action_get_new_ecpay_no', ['RY_ECPay_Shipping_Api', 'get_code']);
+            add_action('woocommerce_order_action_get_new_ecpay_no_cod', ['RY_ECPay_Shipping_Api', 'get_code_cod']);
+            add_action('woocommerce_order_action_send_at_cvs_email', ['RY_ECPay_Shipping', 'send_at_cvs_email']);
+        }
     }
 
     public static function admin_menu()
@@ -120,11 +122,11 @@ final class RY_ECPay_Shipping_admin
             $theorder = wc_get_order($post->ID);
         }
 
-        foreach ($theorder->get_items('shipping') as $item_id => $item) {
+        foreach ($theorder->get_items('shipping') as $item) {
             if (RY_ECPay_Shipping::get_order_support_shipping($item) !== false) {
                 $order_actions['get_new_ecpay_no'] = __('Get new Ecpay shipping no', 'ry-woocommerce-tools');
                 if ($theorder->get_payment_method() == 'cod') {
-                    $order_actions['get_new_ecpay_no_cod'] = __('Get new Ecpay shipping no with cod', 'ry-woocommerce-tools');
+                    $order_actions['get_new_ecpay_no_cod'] = __('Get new Ecpay shipping no (cod)', 'ry-woocommerce-tools');
                 }
                 if ($theorder->has_status(['ry-at-cvs'])) {
                     $order_actions['send_at_cvs_email'] = __('Resend at cvs notification', 'ry-woocommerce-tools');

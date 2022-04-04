@@ -59,14 +59,24 @@ abstract class RY_Shipping_Method extends WC_Shipping_Method
             'id' => $this->get_rate_id(),
             'label' => $this->title,
             'cost' => $this->cost,
-            'package' => $package,
-            'meta_data' => [
-                'no_count' => 1
-            ]
+            'package' => $package
         ];
 
-        if ((int) WC()->session->get('shipping_cvs_out_island') == 1) {
-            $rate['cost'] += $this->cost_offisland;
+        if (isset($this->cost_offisland)) {
+            if ((int) WC()->session->get('shipping_cvs_out_island') == 1) {
+                $rate['cost'] += $this->cost_offisland;
+            }
+        }
+
+        if (isset($this->cost_cool)) {
+            foreach (WC()->cart->get_cart() as $cart_item) {
+                $temp = $cart_item['data']->get_meta('_ry_shipping_temp', true);
+                $temp = empty($temp) ? '1' : $temp;
+                if ($temp != '1') {
+                    $rate['cost'] += $this->cost_cool;
+                    break;
+                }
+            }
         }
 
         if ($rate['cost'] > 0) {
@@ -109,8 +119,7 @@ abstract class RY_Shipping_Method extends WC_Shipping_Method
                 if ($this->weight_plus_cost > 0) {
                     $total_weight = WC()->cart->get_cart_contents_weight();
                     if ($total_weight > 0) {
-                        $rate['meta_data']['no_count'] = (int) ceil($total_weight / $this->weight_plus_cost);
-                        $rate['cost'] *= $rate['meta_data']['no_count'];
+                        $rate['cost'] *= (int) ceil($total_weight / $this->weight_plus_cost);
                     }
                 }
             }

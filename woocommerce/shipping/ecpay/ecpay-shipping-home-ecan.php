@@ -4,6 +4,8 @@ class RY_ECPay_Shipping_Home_Ecan extends RY_ECPay_Shipping_Base
     public static $LogisticsType = 'Home';
     public static $LogisticsSubType = 'ECAN';
 
+    public static $support_temp = ['1'];
+
     public function __construct($instance_id = 0)
     {
         $this->id = 'ry_ecpay_shipping_home_ecan';

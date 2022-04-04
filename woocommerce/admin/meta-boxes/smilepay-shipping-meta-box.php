@@ -9,7 +9,7 @@ class RY_SmilePay_Shipping_Meta_Box
                 $theorder = wc_get_order($post->ID);
             }
 
-            foreach ($theorder->get_items('shipping') as $item_id => $item) {
+            foreach ($theorder->get_items('shipping') as $item) {
                 if (RY_SmilePay_Shipping::get_order_support_shipping($item) !== false) {
                     add_meta_box('ry-smilepay-shipping-info', __('SmilePay shipping info', 'ry-woocommerce-tools'), [__CLASS__, 'output'], 'shop_order', 'normal', 'default');
                     break;
@@ -52,10 +52,10 @@ class RY_SmilePay_Shipping_Meta_Box
                 <?php esc_html_e('Collection of money', 'ry-woocommerce-tools') ?>
             </th>
             <th>
-                <?php esc_html_e('Shipping status last change time', 'ry-woocommerce-tools') ?>
+                <?php esc_html_e('Status change time', 'ry-woocommerce-tools') ?>
             </th>
             <th>
-                <?php esc_html_e('Shipping create time', 'ry-woocommerce-tools') ?>
+                <?php esc_html_e('Create time', 'ry-woocommerce-tools') ?>
             </th>
             <th></th>
         </tr>
@@ -98,7 +98,7 @@ class RY_SmilePay_Shipping_Meta_Box
                 <?php
                 } else {
                     ?>
-                <button type="button" class="button print_info" data-orderid="<?=$post->ID ?>" data-id="<?=$item['ID'] ?>"><?php esc_html_e('Print booking note', 'ry-woocommerce-tools') ?></button>
+                <button type="button" class="button print_info" data-orderid="<?=$post->ID ?>" data-id="<?=$item['ID'] ?>"><?php esc_html_e('Print', 'ry-woocommerce-tools') ?></button>
                 <?php
                 } ?>
             </td>

@@ -33,7 +33,7 @@ final class RY_WT_update
                         continue;
                     }
 
-                    foreach ($order->get_items('shipping') as $item_id => $item) {
+                    foreach ($order->get_items('shipping') as $item) {
                         $shipping_method = RY_ECPay_Shipping::get_order_support_shipping($item);
                         if ($shipping_method !== false) {
                             $method_class = RY_ECPay_Shipping::$support_methods[$shipping_method];
@@ -68,9 +68,9 @@ final class RY_WT_update
 
             RY_WT::update_option('version', '1.8.11');
         }
-        
-        if (version_compare($now_version, '1.8.18', '<')) {
-            RY_WT::update_option('version', '1.8.18');
+
+        if (version_compare($now_version, '1.9.0', '<')) {
+            RY_WT::update_option('version', '1.9.0');
         }
     }
 }

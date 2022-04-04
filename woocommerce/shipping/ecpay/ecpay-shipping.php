@@ -103,7 +103,7 @@ final class RY_ECPay_Shipping
 
     public static function check_option()
     {
-        if ('yes' == RY_WT::get_option('ecpay_shipping', 'yes')) {
+        if ('yes' == RY_WT::get_option('ecpay_shipping', 'no')) {
             $enable = true;
             $name = RY_WT::get_option('ecpay_shipping_sender_name');
             if (mb_strwidth($name) < 1 || mb_strwidth($name) > 10) {

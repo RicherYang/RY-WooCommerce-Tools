@@ -4,6 +4,8 @@ class RY_ECPay_Shipping_CVS_Ok extends RY_ECPay_Shipping_Base
     public static $LogisticsType = 'CVS';
     public static $LogisticsSubType = 'OKMART';
 
+    public static $support_temp = ['1'];
+
     public function __construct($instance_id = 0)
     {
         $this->id = 'ry_ecpay_shipping_cvs_ok';

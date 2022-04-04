@@ -153,7 +153,7 @@ final class RY_Shipping
     public static function save_order_update($order_id)
     {
         if ($order = wc_get_order($order_id)) {
-            foreach ($order->get_items('shipping') as $item_id => $item) {
+            foreach ($order->get_items('shipping') as $item) {
                 $shipping_method = false;
                 if (class_exists('RY_ECPay_Shipping')) {
                     $shipping_method = RY_ECPay_Shipping::get_order_support_shipping($item);

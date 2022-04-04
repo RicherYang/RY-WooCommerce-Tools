@@ -51,7 +51,7 @@ class RY_SmilePay_Shipping_Api extends RY_Abstract_Api_SmilePay
             $args['Pay_zg'] = 51;
         }
 
-        foreach ($order->get_items('shipping') as $item_id => $item) {
+        foreach ($order->get_items('shipping') as $item) {
             $shipping_method = RY_SmilePay_Shipping::get_order_support_shipping($item);
             if ($shipping_method == false) {
                 continue;
@@ -105,7 +105,7 @@ class RY_SmilePay_Shipping_Api extends RY_Abstract_Api_SmilePay
             $args['Mobile_number'] = $order->get_shipping_phone();
         }
 
-        foreach ($order->get_items('shipping') as $item_id => $item) {
+        foreach ($order->get_items('shipping') as $item) {
             $shipping_method = RY_SmilePay_Shipping::get_order_support_shipping($item);
             if ($shipping_method == false) {
                 continue;

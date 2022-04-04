@@ -107,7 +107,7 @@ final class RY_SmilePay_Shipping_admin
             $theorder = wc_get_order($post->ID);
         }
 
-        foreach ($theorder->get_items('shipping') as $item_id => $item) {
+        foreach ($theorder->get_items('shipping') as $item) {
             if (RY_SmilePay_Shipping::get_order_support_shipping($item) !== false) {
                 $order_actions['get_new_smilepay_no'] = __('Get new SmilePay shipping no', 'ry-woocommerce-tools');
                 if ($theorder->get_payment_method() == 'cod') {
@@ -133,7 +133,7 @@ final class RY_SmilePay_Shipping_admin
             exit();
         }
 
-        foreach ($order->get_items('shipping') as $item_id => $item) {
+        foreach ($order->get_items('shipping') as $item) {
             $shipping_list = $order->get_meta('_smilepay_shipping_info', true);
             if (!is_array($shipping_list)) {
                 continue;
@@ -161,7 +161,7 @@ final class RY_SmilePay_Shipping_admin
             exit();
         }
 
-        foreach ($order->get_items('shipping') as $item_id => $item) {
+        foreach ($order->get_items('shipping') as $item) {
             $shipping_list = $order->get_meta('_smilepay_shipping_info', true);
             if (!is_array($shipping_list)) {
                 continue;

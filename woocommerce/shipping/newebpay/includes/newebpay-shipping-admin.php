@@ -104,7 +104,7 @@ final class RY_NewebPay_Shipping_admin
             $theorder = wc_get_order($post->ID);
         }
 
-        foreach ($theorder->get_items('shipping') as $item_id => $item) {
+        foreach ($theorder->get_items('shipping') as $item) {
             if (RY_NewebPay_Shipping::get_order_support_shipping($item) !== false) {
                 if ($theorder->has_status(['ry-at-cvs'])) {
                     $order_actions['send_at_cvs_email'] = __('Resend at cvs notification', 'ry-woocommerce-tools');

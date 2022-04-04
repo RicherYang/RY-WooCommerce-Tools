@@ -21,7 +21,7 @@ class RY_ECPay_Shipping_Api extends RY_Abstract_Api_ECPay
         }
     }
 
-    public static function get_code($order_id, $collection = false)
+    public static function get_code($order_id, $collection = false, $for_temp = null)
     {
         $order = wc_get_order($order_id);
         if (!$order) {
@@ -37,36 +37,39 @@ class RY_ECPay_Shipping_Api extends RY_Abstract_Api_ECPay
                 continue;
             }
 
+            $method_class = RY_ECPay_Shipping::$support_methods[$shipping_method];
+            list($MerchantID, $HashKey, $HashIV, $CVS_type) = RY_ECPay_Shipping::get_ecpay_api_info();
+
+            $temp_list = [];
+            foreach ($order->get_items('line_item') as $item) {
+                $temp = $item->get_product()->get_meta('_ry_shipping_temp', true);
+                $temp = in_array($temp, $method_class::$support_temp) ? $temp : '1';
+                if ($for_temp !== null && $temp != $for_temp) {
+                    continue;
+                }
+                if (!isset($temp_list[$temp])) {
+                    $temp_list[$temp] = 0;
+                }
+                $temp_list[$temp] += $item->get_subtotal();
+            }
+
+            if (count($temp_list) == 0) {
+                continue;
+            }
+
             $shipping_list = $order->get_meta('_ecpay_shipping_info', true);
             if (!is_array($shipping_list)) {
                 $shipping_list = [];
             }
 
-            $get_count = 1;
-            if (count($shipping_list) == 0) {
-                $get_count = (int) $item->get_meta('no_count');
-            }
-            if ($get_count < 1) {
-                $get_count = 1;
-            }
-
-            $method_class = RY_ECPay_Shipping::$support_methods[$shipping_method];
-            list($MerchantID, $HashKey, $HashIV, $CVS_type) = RY_ECPay_Shipping::get_ecpay_api_info();
-
-            $total = ceil($order->get_total());
-            if ($total > 20000) {
-                $total = 19999;
-            }
-
             $notify_url = WC()->api_request_url('ry_ecpay_shipping_callback', true);
 
-            RY_ECPay_Shipping::log('Generating shipping for order #' . $order->get_order_number() . ' with ' . $get_count . ' times');
+            RY_ECPay_Shipping::log('Generating shipping for order #' . $order->get_order_number());
 
             $args = [
                 'MerchantID' => $MerchantID,
                 'LogisticsType' => $method_class::$LogisticsType,
                 'LogisticsSubType' => $method_class::$LogisticsSubType,
-                'GoodsAmount' => (int) $total,
                 'GoodsName' => $item_name,
                 'SenderName' => RY_WT::get_option('ecpay_shipping_sender_name'),
                 'SenderPhone' => RY_WT::get_option('ecpay_shipping_sender_phone'),
@@ -112,6 +115,7 @@ class RY_ECPay_Shipping_Api extends RY_Abstract_Api_ECPay
 
             if ($method_class::$LogisticsType == 'CVS') {
                 $args['ReceiverStoreID'] = $order->get_meta('_shipping_cvs_store_ID');
+                $temp_list['1'] = $order->get_total();
             }
 
             if ($method_class::$LogisticsType == 'Home') {
@@ -125,7 +129,6 @@ class RY_ECPay_Shipping_Api extends RY_Abstract_Api_ECPay
                 $args['SenderAddress'] = RY_WT::get_option('ecpay_shipping_sender_address');
                 $args['ReceiverZipCode'] = $order->get_shipping_postcode();
                 $args['ReceiverAddress'] = $full_state . $order->get_shipping_city() . $order->get_shipping_address_1() . $order->get_shipping_address_2();
-                $args['Temperature'] = '0001';
                 $args['Distance'] = '00';
                 $args['Specification'] = '0001';
                 $args['ScheduledPickupTime'] = '4';
@@ -138,13 +141,15 @@ class RY_ECPay_Shipping_Api extends RY_Abstract_Api_ECPay
                 $post_url = self::$api_url['create'];
             }
 
-            for ($i = 0; $i < $get_count; ++$i) {
+            foreach ($temp_list as $temp => $total) {
                 $create_datetime = new DateTime('', new DateTimeZone('Asia/Taipei'));
                 $args['MerchantTradeDate'] = $create_datetime->format('Y/m/d H:i:s');
                 $args['MerchantTradeNo'] = self::generate_trade_no($order->get_id(), RY_WT::get_option('ecpay_shipping_order_prefix'));
-                if ($i > 0) {
-                    $args['IsCollection'] = 'N';
-                    $args['CollectionAmount'] = 0;
+
+                $args['GoodsAmount'] = (int) $total;
+                if ($method_class::$LogisticsType == 'Home') {
+                    $args['Temperature'] = '000' . $temp;
+                    $args['MerchantTradeNo'] = substr($args['MerchantTradeNo'], 0, 18) . 'T' . $temp;
                 }
 
                 $args = self::add_check_value($args, $HashKey, $HashIV, 'md5');
@@ -203,6 +208,9 @@ class RY_ECPay_Shipping_Api extends RY_Abstract_Api_ECPay
                 $shipping_list[$result['AllPayLogisticsID']]['edit'] = (string) new WC_DateTime();
                 $shipping_list[$result['AllPayLogisticsID']]['amount'] = $args['GoodsAmount'];
                 $shipping_list[$result['AllPayLogisticsID']]['IsCollection'] = $args['IsCollection'];
+                if ($method_class::$LogisticsType == 'Home') {
+                    $shipping_list[$result['AllPayLogisticsID']]['temp'] = $temp;
+                }
 
                 $order->update_meta_data('_ecpay_shipping_info', $shipping_list);
                 $order->save_meta_data();
@@ -217,6 +225,16 @@ class RY_ECPay_Shipping_Api extends RY_Abstract_Api_ECPay
     public static function get_code_cod($order_id)
     {
         self::get_code($order_id, true);
+    }
+
+    public static function get_code_t2($order_id)
+    {
+        self::get_code($order_id, false, '2');
+    }
+
+    public static function get_code_t3($order_id)
+    {
+        self::get_code($order_id, false, '2');
     }
 
     public static function get_print_form($info = null)
