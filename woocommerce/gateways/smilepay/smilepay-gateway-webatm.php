@@ -4,6 +4,7 @@ class RY_SmilePay_Gateway_Webatm extends RY_SmilePay_Gateway_Base
     public $payment_type = 21;
 
     protected $check_min_amount = 13;
+    protected $check_max_amount = 30000;
 
     public function __construct()
     {
@@ -57,16 +58,5 @@ class RY_SmilePay_Gateway_Webatm extends RY_SmilePay_Gateway_Base
             'result'   => 'success',
             'redirect' => $order->get_checkout_payment_url(true),
         ];
-    }
-
-    public function process_admin_options()
-    {
-        $_POST['woocommerce_ry_smilepay_webatm_max_amount'] = (int) $_POST['woocommerce_ry_smilepay_webatm_max_amount'];
-        if ($_POST['woocommerce_ry_smilepay_webatm_max_amount'] > 30000) {
-            /* translators: %1$s: Gateway method title, %2$d normal maximum */
-            WC_Admin_Settings::add_message(sprintf(__('%1$s maximum amount more then normal maximum (%2$d).', 'ry-woocommerce-tools'), $this->method_title, 20000));
-        }
-
-        parent::process_admin_options();
     }
 }

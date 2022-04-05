@@ -30,21 +30,24 @@ if ($order->get_meta('_smilepay_payment_type') != '2') {
                 <td>
                     <?php esc_html_e('Bank', 'ry-woocommerce-tools') ?>
                 </td>
-                <td><?=_x($order->get_meta('_smilepay_atm_BankCode'), 'Bank code', 'ry-woocommerce-tools') ?>
+                <td>
+                    <?=_x($order->get_meta('_smilepay_atm_BankCode'), 'Bank code', 'ry-woocommerce-tools') ?>
                 </td>
             </tr>
             <tr>
                 <td>
                     <?php esc_html_e('Bank code', 'ry-woocommerce-tools') ?>
                 </td>
-                <td><?php echo esc_html($order->get_meta('_smilepay_atm_BankCode')); ?>
+                <td>
+                    <?php echo esc_html($order->get_meta('_smilepay_atm_BankCode')); ?>
                 </td>
             </tr>
             <tr>
                 <td>
                     <?php esc_html_e('ATM Bank account', 'ry-woocommerce-tools') ?>
                 </td>
-                <td><?=wordwrap($order->get_meta('_smilepay_atm_vAccount'), 4, '<span> </span>', true) ?>
+                <td>
+                    <?=wordwrap($order->get_meta('_smilepay_atm_vAccount'), 4, '<span> </span>', true) ?>
                 </td>
             </tr>
             <tr>
@@ -53,7 +56,7 @@ if ($order->get_meta('_smilepay_payment_type') != '2') {
                 </td>
                 <td>
                     <?php $expireDate = wc_string_to_datetime($order->get_meta('_smilepay_atm_ExpireDate')); ?>
-                    <?=$expireDate->date_i18n(wc_date_format()); ?>
+                    <?php echo esc_html($expireDate->date_i18n(wc_date_format())); ?>
                 </td>
             </tr>
         </tbody>

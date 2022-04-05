@@ -58,10 +58,14 @@ class RY_NewebPay_Gateway_Atm extends RY_NewebPay_Gateway_Base
 
     public function process_admin_options()
     {
-        $_POST['woocommerce_ry_newebpay_atm_expire_date'] = (int) $_POST['woocommerce_ry_newebpay_atm_expire_date'];
-        if ($_POST['woocommerce_ry_newebpay_atm_expire_date'] < 1 || $_POST['woocommerce_ry_newebpay_atm_expire_date'] > 180) {
+        if (isset($_POST['woocommerce_ry_newebpay_atm_expire_date'])) {
+            $_POST['woocommerce_ry_newebpay_atm_expire_date'] = (int) $_POST['woocommerce_ry_newebpay_atm_expire_date'];
+            if ($_POST['woocommerce_ry_newebpay_atm_expire_date'] < 1 || $_POST['woocommerce_ry_newebpay_atm_expire_date'] > 180) {
+                $_POST['woocommerce_ry_newebpay_atm_expire_date'] = 3;
+                WC_Admin_Settings::add_error(__('ATM payment deadline out of range. Set as default value.', 'ry-woocommerce-tools'));
+            }
+        } else {
             $_POST['woocommerce_ry_newebpay_atm_expire_date'] = 3;
-            WC_Admin_Settings::add_error(__('ATM payment deadline out of range. Set as default value.', 'ry-woocommerce-tools'));
         }
 
         parent::process_admin_options();

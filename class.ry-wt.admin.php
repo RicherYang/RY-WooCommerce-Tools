@@ -48,8 +48,7 @@ final class RY_WT_admin
         $hide_save_button = true;
 
         if (isset($_POST['ryt_check_time']) && $_POST['ryt_check_time'] == 'ryt_check_time') {
-            $time_diff = RY_WT::check_ntp_time();
-
+            RY_WT::check_ntp_time();
             if (RY_WT::get_option('ntp_time_error', false)) {
                 RY_WT::ntp_time_error();
             }

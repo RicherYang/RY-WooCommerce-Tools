@@ -56,7 +56,7 @@ if ($order->get_meta('_smilepay_payment_type') != '3') {
                 </td>
                 <td>
                     <?php $expireDate = wc_string_to_datetime($order->get_meta('_smilepay_barcode_ExpireDate')); ?>
-                    <?=$expireDate->date_i18n(wc_date_format()); ?>
+                    <?php echo esc_html($expireDate->date_i18n(wc_date_format())); ?>
                 </td>
             </tr>
         </tbody>

@@ -4,6 +4,7 @@ class RY_NewebPay_Gateway_Barcode extends RY_NewebPay_Gateway_Base
     public $payment_type = 'BARCODE';
 
     protected $check_min_amount = 20;
+    protected $check_max_amount = 40000;
 
     public function __construct()
     {
@@ -67,16 +68,14 @@ class RY_NewebPay_Gateway_Barcode extends RY_NewebPay_Gateway_Base
 
     public function process_admin_options()
     {
-        $_POST['woocommerce_ry_newebpay_barcode_expire_date'] = (int) $_POST['woocommerce_ry_newebpay_barcode_expire_date'];
-        if ($_POST['woocommerce_ry_newebpay_barcode_expire_date'] < 1 || $_POST['woocommerce_ry_newebpay_barcode_expire_date'] > 180) {
+        if (isset($_POST['woocommerce_ry_newebpay_barcode_expire_date'])) {
+            $_POST['woocommerce_ry_newebpay_barcode_expire_date'] = (int) $_POST['woocommerce_ry_newebpay_barcode_expire_date'];
+            if ($_POST['woocommerce_ry_newebpay_barcode_expire_date'] < 1 || $_POST['woocommerce_ry_newebpay_barcode_expire_date'] > 180) {
+                $_POST['woocommerce_ry_newebpay_barcode_expire_date'] = 7;
+                WC_Admin_Settings::add_error(__('BARCODE payment deadline out of range. Set as default value.', 'ry-woocommerce-tools'));
+            }
+        } else {
             $_POST['woocommerce_ry_newebpay_barcode_expire_date'] = 7;
-            WC_Admin_Settings::add_error(__('BARCODE payment deadline out of range. Set as default value.', 'ry-woocommerce-tools'));
-        }
-
-        $_POST['woocommerce_ry_newebpay_barcode_max_amount'] = (int) $_POST['woocommerce_ry_newebpay_barcode_max_amount'];
-        if ($_POST['woocommerce_ry_newebpay_barcode_max_amount'] > 40000) {
-            /* translators: %1$s: Gateway method title, %2$d normal maximum */
-            WC_Admin_Settings::add_message(sprintf(__('%1$s maximum amount more then normal maximum (%2$d).', 'ry-woocommerce-tools'), $this->method_title, 40000));
         }
 
         parent::process_admin_options();

@@ -34,28 +34,28 @@ class RY_SmilePay_Shipping_Meta_Box
     <thead>
         <tr>
             <th>
-                <?php esc_html_e('SmilePay shipping ID', 'ry-woocommerce-tools') ?>
+                <?php esc_html_e('SmilePay shipping ID', 'ry-woocommerce-tools'); ?>
             </th>
             <th>
-                <?php esc_html_e('Shipping no', 'ry-woocommerce-tools') ?>
+                <?php esc_html_e('Shipping no', 'ry-woocommerce-tools'); ?>
             </th>
             <th>
-                <?php esc_html_e('Store ID', 'ry-woocommerce-tools') ?>
+                <?php esc_html_e('Store ID', 'ry-woocommerce-tools'); ?>
             </th>
             <th>
-                <?php esc_html_e('Shipping status', 'ry-woocommerce-tools') ?>
+                <?php esc_html_e('Shipping status', 'ry-woocommerce-tools'); ?>
             </th>
             <th>
-                <?php esc_html_e('declare amount', 'ry-woocommerce-tools') ?>
+                <?php esc_html_e('declare amount', 'ry-woocommerce-tools'); ?>
             </th>
             <th>
-                <?php esc_html_e('Collection of money', 'ry-woocommerce-tools') ?>
+                <?php esc_html_e('Collection of money', 'ry-woocommerce-tools'); ?>
             </th>
             <th>
-                <?php esc_html_e('Status change time', 'ry-woocommerce-tools') ?>
+                <?php esc_html_e('Status change time', 'ry-woocommerce-tools'); ?>
             </th>
             <th>
-                <?php esc_html_e('Create time', 'ry-woocommerce-tools') ?>
+                <?php esc_html_e('Create time', 'ry-woocommerce-tools'); ?>
             </th>
             <th></th>
         </tr>
@@ -66,41 +66,47 @@ class RY_SmilePay_Shipping_Meta_Box
             $item['create'] = wc_string_to_datetime($item['create']); ?>
         <tr>
             <td>
-                <?=$item['ID']; ?>
+                <?php esc_html($item['ID']); ?>
             </td>
             <td>
-                <?=$item['PaymentNo'] . ' ' . $item['ValidationNo'] ?>
+                <?php esc_html($item['PaymentNo'] . ' ' . $item['ValidationNo']); ?>
             </td>
             <td>
-                <?=$item['storeID'] ?>
+                <?php esc_html($item['storeID']); ?>
             </td>
             <td>
-                <?=$item['status'] ?>
+                <?php esc_html($item['status']); ?>
             </td>
             <td>
-                <?=$item['amount']; ?>
+                <?php esc_html($item['amount']); ?>
             </td>
             <td>
-                <?=($item['IsCollection'] == '1') ? __('Yes') : __('No') ?>
-            </td>
-            <td>
-                <?php /* translators: %1$s: date %2$s: time */ ?>
-                <?=sprintf(_x('%1$s %2$s', 'Datetime', 'ry-woocommerce-tools'), $item['edit']->date_i18n(wc_date_format()), $item['edit']->date_i18n(wc_time_format())) ?>
-            </td>
-            <td>
-                <?php /* translators: %1$s: date %2$s: time */ ?>
-                <?=sprintf(_x('%1$s %2$s', 'Datetime', 'ry-woocommerce-tools'), $item['create']->date_i18n(wc_date_format()), $item['create']->date_i18n(wc_time_format())) ?>
+                <?php esc_html(($item['IsCollection'] == '1') ? __('Yes') : __('No')); ?>
             </td>
             <td>
                 <?php
-                if (empty($item['PaymentNo'])) {?>
-                <button type="button" class="button get_no" data-orderid="<?=$post->ID ?>" data-id="<?=$item['ID'] ?>"><?php esc_html_e('Get no', 'ry-woocommerce-tools') ?></button>
+                esc_html(sprintf(
+                    /* translators: %1$s: date %2$s: time */
+                    _x('%1$s %2$s', 'Datetime', 'ry-woocommerce-tools'),
+                $item['edit']->date_i18n(wc_date_format()),
+                $item['edit']->date_i18n(wc_time_format())
+            )); ?>
+            </td>
+            <td>
                 <?php
-                } else {
-                    ?>
-                <button type="button" class="button print_info" data-orderid="<?=$post->ID ?>" data-id="<?=$item['ID'] ?>"><?php esc_html_e('Print', 'ry-woocommerce-tools') ?></button>
-                <?php
-                } ?>
+                esc_html(sprintf(
+                    /* translators: %1$s: date %2$s: time */
+                    _x('%1$s %2$s', 'Datetime', 'ry-woocommerce-tools'),
+                    $item['create']->date_i18n(wc_date_format()),
+                    $item['create']->date_i18n(wc_time_format())
+                )); ?>
+            </td>
+            <td>
+                <?php if (empty($item['PaymentNo'])) {?>
+                <button type="button" class="button get_no" data-orderid="<?php esc_attr($post->ID); ?>" data-id="<?php esc_attr($item['ID']); ?>"><?php esc_html_e('Get no', 'ry-woocommerce-tools') ?></button>
+                <?php } else { ?>
+                <button type="button" class="button print_info" data-orderid="<?php esc_attr($post->ID); ?>" data-id="<?php esc_attr($item['ID']); ?>"><?php esc_html_e('Print', 'ry-woocommerce-tools') ?></button>
+                <?php } ?>
             </td>
         </tr>
         <?php
@@ -109,7 +115,7 @@ class RY_SmilePay_Shipping_Meta_Box
 </table>
 <?php
         wc_enqueue_js(
-                        'jQuery(function($) {
+                'jQuery(function($) {
 $(".get_no").click(function(){
     window.location = ajaxurl + "?" + $.param({
         action: "RY_SmilePay_Shipping_get_no",
@@ -125,6 +131,6 @@ $(".print_info").click(function(){
     }), "_blank", "toolbar=yes,scrollbars=yes,resizable=yes");
 });
 });'
-                    );
+            );
     }
 }

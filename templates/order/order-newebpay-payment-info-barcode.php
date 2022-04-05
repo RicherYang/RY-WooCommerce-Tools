@@ -56,7 +56,7 @@ if ($order->get_meta('_newebpay_payment_type') != 'BARCODE') {
                 </td>
                 <td>
                     <?php $expireDate = wc_string_to_datetime($order->get_meta('_newebpay_barcode_ExpireDate')); ?>
-                    <?=$expireDate->date_i18n(wc_date_format()); ?>
+                    <?php echo esc_html($expireDate->date_i18n(wc_date_format())); ?>
                 </td>
             </tr>
         </tbody>

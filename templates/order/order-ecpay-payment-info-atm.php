@@ -30,21 +30,24 @@ if ($order->get_meta('_ecpay_payment_type') != 'ATM') {
                 <td>
                     <?php esc_html_e('Bank', 'ry-woocommerce-tools') ?>
                 </td>
-                <td><?=_x($order->get_meta('_ecpay_atm_BankCode'), 'Bank code', 'ry-woocommerce-tools') ?>
+                <td>
+                    <?php echo esc_html(_x($order->get_meta('_ecpay_atm_BankCode'), 'Bank code', 'ry-woocommerce-tools')) ?>
                 </td>
             </tr>
             <tr>
                 <td>
                     <?php esc_html_e('Bank code', 'ry-woocommerce-tools') ?>
                 </td>
-                <td><?php echo esc_html($order->get_meta('_ecpay_atm_BankCode')); ?>
+                <td>
+                    <?php echo esc_html($order->get_meta('_ecpay_atm_BankCode')); ?>
                 </td>
             </tr>
             <tr>
                 <td>
                     <?php esc_html_e('ATM Bank account', 'ry-woocommerce-tools') ?>
                 </td>
-                <td><?=wordwrap($order->get_meta('_ecpay_atm_vAccount'), 4, '<span> </span>', true) ?>
+                <td>
+                    <?=wordwrap($order->get_meta('_ecpay_atm_vAccount'), 4, '<span> </span>', true) ?>
                 </td>
             </tr>
             <tr>

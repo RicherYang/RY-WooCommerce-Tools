@@ -69,21 +69,21 @@ class RY_ECPay_Shipping_Meta_Box
             $item['create'] = wc_string_to_datetime($item['create']); ?>
         <tr>
             <td>
-                <?=$item['ID']; ?>
+                <?php esc_html($item['ID']); ?>
             </td>
             <?php if ($item['LogisticsType'] == 'CVS') { ?>
             <td>
-                <?=_x('CVS', 'shipping type', 'ry-woocommerce-tools') ?>
+                <?php esc_html(_x('CVS', 'shipping type', 'ry-woocommerce-tools')); ?>
             </td>
             <td>
-                <?=$item['PaymentNo'] . ' ' . $item['ValidationNo'] ?>
+                <?php esc_html($item['PaymentNo'] . ' ' . $item['ValidationNo']); ?>
             </td>
             <td>
-                <?=$item['store_ID'] ?>
+                <?php esc_html($item['store_ID']); ?>
             </td>
             <?php } else { ?>
             <td>
-                <?=_x('Home', 'shipping type', 'ry-woocommerce-tools') ?>
+                <?php esc_html(_x('Home', 'shipping type', 'ry-woocommerce-tools')); ?>
                 <?php
                 if (isset($item['temp'])) {
                     if ($item['temp'] == 1) {
@@ -96,28 +96,39 @@ class RY_ECPay_Shipping_Meta_Box
                 }?>
             </td>
             <td>
-                <?=$item['BookingNote'] ?>
+                <?php esc_html($item['BookingNote']); ?>
             </td>
             <td></td>
             <?php } ?>
             <td>
-                <?=$item['status_msg'] ?>
+                <?php esc_html($item['status_msg']); ?>
             </td>
             <td>
-                <?=$item['amount']; ?>
+                <?php esc_html($item['amount']); ?>
             </td>
             <td>
-                <?=($item['IsCollection'] == 'Y') ? __('Yes') : __('No') ?>
+                <?php esc_html(($item['IsCollection'] == 'Y') ? __('Yes') : __('No')); ?>
             </td>
             <td>
-                <?php /* translators: %1$s: date %2$s: time */ ?>
-                <?=sprintf(_x('%1$s %2$s', 'Datetime', 'ry-woocommerce-tools'), $item['edit']->date_i18n(wc_date_format()), $item['edit']->date_i18n(wc_time_format())) ?>
+                <?php
+                esc_html(sprintf(
+                    /* translators: %1$s: date %2$s: time */
+                    _x('%1$s %2$s', 'Datetime', 'ry-woocommerce-tools'),
+                    $item['edit']->date_i18n(wc_date_format()),
+                    $item['edit']->date_i18n(wc_time_format())
+                )); ?>
             </td>
             <td>
-                <?=sprintf(_x('%1$s %2$s', 'Datetime', 'ry-woocommerce-tools'), $item['create']->date_i18n(wc_date_format()), $item['create']->date_i18n(wc_time_format())) ?>
+                <?php
+                esc_html(sprintf(
+                    /* translators: %1$s: date %2$s: time */
+                    _x('%1$s %2$s', 'Datetime', 'ry-woocommerce-tools'),
+                    $item['create']->date_i18n(wc_date_format()),
+                    $item['create']->date_i18n(wc_time_format())
+                )); ?>
             </td>
             <td>
-                <a class="button" href="<?=esc_url(add_query_arg(['orderid' => $post->ID, 'id' => $item['ID'], 'noheader' => 1], admin_url('admin.php?page=ry_print_ecpay_shipping'))) ?>"><?php esc_html_e('Print', 'ry-woocommerce-tools') ?></a>
+                <a class="button" href="<?php echo esc_url(add_query_arg(['orderid' => $post->ID, 'id' => $item['ID'], 'noheader' => 1], admin_url('admin.php?page=ry_print_ecpay_shipping'))); ?>"><?php esc_html_e('Print', 'ry-woocommerce-tools'); ?></a>
             </td>
         </tr>
         <?php

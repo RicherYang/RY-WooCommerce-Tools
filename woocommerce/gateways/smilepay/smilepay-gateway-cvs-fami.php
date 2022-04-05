@@ -4,6 +4,7 @@ class RY_SmilePay_Gateway_Cvs_Fami extends RY_SmilePay_Gateway_Base
     public $payment_type = 6;
 
     protected $check_min_amount = 35;
+    protected $check_max_amount = 20000;
 
     public function __construct()
     {
@@ -64,16 +65,14 @@ class RY_SmilePay_Gateway_Cvs_Fami extends RY_SmilePay_Gateway_Base
 
     public function process_admin_options()
     {
-        $_POST['woocommerce_ry_smilepay_cvs_fami_expire_date'] = (int) $_POST['woocommerce_ry_smilepay_cvs_fami_expire_date'];
-        if ($_POST['woocommerce_ry_smilepay_cvs_fami_expire_date'] < 120 || $_POST['woocommerce_ry_smilepay_cvs_fami_expire_date'] > 10080) {
+        if (isset($_POST['woocommerce_ry_smilepay_cvs_fami_expire_date'])) {
+            $_POST['woocommerce_ry_smilepay_cvs_fami_expire_date'] = (int) $_POST['woocommerce_ry_smilepay_cvs_fami_expire_date'];
+            if ($_POST['woocommerce_ry_smilepay_cvs_fami_expire_date'] < 120 || $_POST['woocommerce_ry_smilepay_cvs_fami_expire_date'] > 10080) {
+                $_POST['woocommerce_ry_smilepay_cvs_fami_expire_date'] = 4320;
+                WC_Admin_Settings::add_error(__('CVS payment deadline out of range. Set as default value.', 'ry-woocommerce-tools'));
+            }
+        } else {
             $_POST['woocommerce_ry_smilepay_cvs_fami_expire_date'] = 4320;
-            WC_Admin_Settings::add_error(__('CVS payment deadline out of range. Set as default value.', 'ry-woocommerce-tools'));
-        }
-
-        $_POST['woocommerce_ry_smilepay_cvs_fami_max_amount'] = (int) $_POST['woocommerce_ry_smilepay_cvs_fami_max_amount'];
-        if ($_POST['woocommerce_ry_smilepay_cvs_fami_max_amount'] > 20000) {
-            /* translators: %1$s: Gateway method title, %2$d normal maximum */
-            WC_Admin_Settings::add_message(sprintf(__('%1$s maximum amount more then normal maximum (%2$d).', 'ry-woocommerce-tools'), $this->method_title, 20000));
         }
 
         parent::process_admin_options();
