@@ -59,19 +59,19 @@ class RY_NewebPay_Shipping_Meta_Box
             $item['create'] = wc_string_to_datetime($item['create']); ?>
         <tr>
             <td>
-                <?php esc_html($item['ID']); ?>
+                <?php echo esc_html($item['ID']); ?>
             </td>
             <td>
-                <?php esc_html($item['store_ID']); ?>
+                <?php echo esc_html($item['store_ID']); ?>
             </td>
             <td>
-                <?php esc_html($item['amount']); ?>
+                <?php echo esc_html($item['amount']); ?>
             </td>
             <td>
-                <?php esc_html(($item['IsCollection'] == '1') ? __('Yes') : __('No')); ?>
+                <?php echo esc_html(($item['IsCollection'] == '1') ? __('Yes') : __('No')); ?>
             </td>
             <td>
-                <?php esc_html(sprintf(
+                <?php echo esc_html(sprintf(
                 /* translators: %1$s: date %2$s: time */
                 _x('%1$s %2$s', 'Datetime', 'ry-woocommerce-tools'),
                 $item['edit']->date_i18n(wc_date_format()),
@@ -79,7 +79,7 @@ class RY_NewebPay_Shipping_Meta_Box
             )); ?>
             </td>
             <td>
-                <?php esc_html(sprintf(
+                <?php echo esc_html(sprintf(
                 /* translators: %1$s: date %2$s: time */
                 _x('%1$s %2$s', 'Datetime', 'ry-woocommerce-tools'),
                 $item['create']->date_i18n(wc_date_format()),

@@ -69,21 +69,21 @@ class RY_ECPay_Shipping_Meta_Box
             $item['create'] = wc_string_to_datetime($item['create']); ?>
         <tr>
             <td>
-                <?php esc_html($item['ID']); ?>
+                <?php echo esc_html($item['ID']); ?>
             </td>
             <?php if ($item['LogisticsType'] == 'CVS') { ?>
             <td>
-                <?php esc_html(_x('CVS', 'shipping type', 'ry-woocommerce-tools')); ?>
+                <?php echo esc_html(_x('CVS', 'shipping type', 'ry-woocommerce-tools')); ?>
             </td>
             <td>
-                <?php esc_html($item['PaymentNo'] . ' ' . $item['ValidationNo']); ?>
+                <?php echo esc_html($item['PaymentNo'] . ' ' . $item['ValidationNo']); ?>
             </td>
             <td>
-                <?php esc_html($item['store_ID']); ?>
+                <?php echo esc_html($item['store_ID']); ?>
             </td>
             <?php } else { ?>
             <td>
-                <?php esc_html(_x('Home', 'shipping type', 'ry-woocommerce-tools')); ?>
+                <?php echo esc_html(_x('Home', 'shipping type', 'ry-woocommerce-tools')); ?>
                 <?php
                 if (isset($item['temp'])) {
                     if ($item['temp'] == 1) {
@@ -96,22 +96,22 @@ class RY_ECPay_Shipping_Meta_Box
                 }?>
             </td>
             <td>
-                <?php esc_html($item['BookingNote']); ?>
+                <?php echo esc_html($item['BookingNote']); ?>
             </td>
             <td></td>
             <?php } ?>
             <td>
-                <?php esc_html($item['status_msg']); ?>
+                <?php echo esc_html($item['status_msg']); ?>
             </td>
             <td>
-                <?php esc_html($item['amount']); ?>
+                <?php echo esc_html($item['amount']); ?>
             </td>
             <td>
-                <?php esc_html(($item['IsCollection'] == 'Y') ? __('Yes') : __('No')); ?>
+                <?php echo esc_html(($item['IsCollection'] == 'Y') ? __('Yes') : __('No')); ?>
             </td>
             <td>
                 <?php
-                esc_html(sprintf(
+                echo esc_html(sprintf(
                     /* translators: %1$s: date %2$s: time */
                     _x('%1$s %2$s', 'Datetime', 'ry-woocommerce-tools'),
                     $item['edit']->date_i18n(wc_date_format()),
@@ -120,7 +120,7 @@ class RY_ECPay_Shipping_Meta_Box
             </td>
             <td>
                 <?php
-                esc_html(sprintf(
+                echo esc_html(sprintf(
                     /* translators: %1$s: date %2$s: time */
                     _x('%1$s %2$s', 'Datetime', 'ry-woocommerce-tools'),
                     $item['create']->date_i18n(wc_date_format()),

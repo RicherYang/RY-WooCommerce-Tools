@@ -66,26 +66,26 @@ class RY_SmilePay_Shipping_Meta_Box
             $item['create'] = wc_string_to_datetime($item['create']); ?>
         <tr>
             <td>
-                <?php esc_html($item['ID']); ?>
+                <?php echo esc_html($item['ID']); ?>
             </td>
             <td>
-                <?php esc_html($item['PaymentNo'] . ' ' . $item['ValidationNo']); ?>
+                <?php echo esc_html($item['PaymentNo'] . ' ' . $item['ValidationNo']); ?>
             </td>
             <td>
-                <?php esc_html($item['storeID']); ?>
+                <?php echo esc_html($item['storeID']); ?>
             </td>
             <td>
-                <?php esc_html($item['status']); ?>
+                <?php echo esc_html($item['status']); ?>
             </td>
             <td>
-                <?php esc_html($item['amount']); ?>
+                <?php echo esc_html($item['amount']); ?>
             </td>
             <td>
-                <?php esc_html(($item['IsCollection'] == '1') ? __('Yes') : __('No')); ?>
+                <?php echo esc_html(($item['IsCollection'] == '1') ? __('Yes') : __('No')); ?>
             </td>
             <td>
                 <?php
-                esc_html(sprintf(
+                echo esc_html(sprintf(
                     /* translators: %1$s: date %2$s: time */
                     _x('%1$s %2$s', 'Datetime', 'ry-woocommerce-tools'),
                 $item['edit']->date_i18n(wc_date_format()),
@@ -94,12 +94,12 @@ class RY_SmilePay_Shipping_Meta_Box
             </td>
             <td>
                 <?php
-                esc_html(sprintf(
+                echo esc_html(sprintf(
                     /* translators: %1$s: date %2$s: time */
                     _x('%1$s %2$s', 'Datetime', 'ry-woocommerce-tools'),
-                    $item['create']->date_i18n(wc_date_format()),
-                    $item['create']->date_i18n(wc_time_format())
-                )); ?>
+                $item['create']->date_i18n(wc_date_format()),
+                $item['create']->date_i18n(wc_time_format())
+            )); ?>
             </td>
             <td>
                 <?php if (empty($item['PaymentNo'])) {?>
@@ -115,7 +115,7 @@ class RY_SmilePay_Shipping_Meta_Box
 </table>
 <?php
         wc_enqueue_js(
-                'jQuery(function($) {
+                    'jQuery(function($) {
 $(".get_no").click(function(){
     window.location = ajaxurl + "?" + $.param({
         action: "RY_SmilePay_Shipping_get_no",
@@ -131,6 +131,6 @@ $(".print_info").click(function(){
     }), "_blank", "toolbar=yes,scrollbars=yes,resizable=yes");
 });
 });'
-            );
+                );
     }
 }
