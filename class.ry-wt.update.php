@@ -69,8 +69,8 @@ final class RY_WT_update
             RY_WT::update_option('version', '1.8.11');
         }
 
-        if (version_compare($now_version, '1.9.2', '<')) {
-            RY_WT::update_option('version', '1.9.2');
+        if (version_compare($now_version, '1.9.3', '<')) {
+            RY_WT::update_option('version', '1.9.3');
         }
     }
 }
