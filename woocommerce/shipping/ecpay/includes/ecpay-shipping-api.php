@@ -43,6 +43,10 @@ class RY_ECPay_Shipping_Api extends RY_Abstract_Api_ECPay
             $temp_list = [];
             foreach ($order->get_items('line_item') as $item) {
                 $temp = $item->get_product()->get_meta('_ry_shipping_temp', true);
+                if (empty($temp) && $item->get_product()->get_type() == 'variation') {
+                    $parent_product = wc_get_product($item->get_product()->get_parent_id());
+                    $temp = $parent_product->get_meta('_ry_shipping_temp', true);
+                }
                 $temp = in_array($temp, $method_class::$support_temp) ? $temp : '1';
                 if ($for_temp !== null && $temp != $for_temp) {
                     continue;
