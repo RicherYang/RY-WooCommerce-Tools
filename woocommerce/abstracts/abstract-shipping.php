@@ -71,6 +71,10 @@ abstract class RY_Shipping_Method extends WC_Shipping_Method
         if (isset($this->cost_cool)) {
             foreach (WC()->cart->get_cart() as $cart_item) {
                 $temp = $cart_item['data']->get_meta('_ry_shipping_temp', true);
+                if (empty($temp) && $cart_item['data']->get_type() == 'variation') {
+                    $parent_product = wc_get_product($cart_item['data']->get_parent_id());
+                    $temp = $parent_product->get_meta('_ry_shipping_temp', true);
+                }
                 $temp = empty($temp) ? '1' : $temp;
                 if ($temp != '1') {
                     $rate['cost'] += $this->cost_cool;

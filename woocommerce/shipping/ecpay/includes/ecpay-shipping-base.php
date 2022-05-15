@@ -13,6 +13,10 @@ abstract class RY_ECPay_Shipping_Base extends RY_Shipping_Method
         if ($is_available) {
             foreach ($package['contents'] as $item_id => $values) {
                 $temp = $values['data']->get_meta('_ry_shipping_temp', true);
+                if (empty($temp) && $values['data']->get_type() == 'variation') {
+                    $parent_product = wc_get_product($values['data']->get_parent_id());
+                    $temp = $parent_product->get_meta('_ry_shipping_temp', true);
+                }
                 $temp = empty($temp) ? '1' : $temp;
                 if (!in_array($temp, static::$support_temp)) {
                     $is_available = false;
