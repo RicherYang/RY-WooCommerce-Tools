@@ -4,8 +4,8 @@ Donate link: https://www.paypal.me/RicherYang
 Tags: woocommerce, payment, gateway, shipping, ecpay, newebpay, smilepay
 Requires at least: 5.6
 Requires PHP: 7.4
-Tested up to: 5.9
-Stable tag: 1.9.5
+Tested up to: 6.0
+Stable tag: 1.9.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.txt
 
@@ -39,8 +39,11 @@ Please visit the [plugin page](https://richer.tw/ry-woocommerce-tools/ " ") with
 
 == Changelog ==
 
+= 1.9.6 - 2022/06/02 =
+* 更新 - 配合綠界終止台灣宅配通物流服務預告時間自動停止物流可用性。
+
 = 1.9.5 - 2022/05/15 =
-* 更新 - 修正可變商品物流單狀態辨識錯誤。
+* 更新 - 修正可變商品物流狀態辨識錯誤。
 
 = 1.9.4 - 2022/05/15 =
 * 更新 - 修正可變商品物流可用狀態辨識錯誤。

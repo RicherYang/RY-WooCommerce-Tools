@@ -26,4 +26,16 @@ class RY_ECPay_Shipping_Home_Ecan extends RY_ECPay_Shipping_Base
 
         $this->init();
     }
+
+    public function is_available($package)
+    {
+        $timezone = new DateTimeZone('Asia/Taipei');
+        $end = new DateTime('2022-06-14 23:30:00', $timezone);
+        $date = new DateTime('now', $timezone);
+        if ($end > $date) {
+            return parent::is_available($package);
+        }
+
+        return false;
+    }
 }
