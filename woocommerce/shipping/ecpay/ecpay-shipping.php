@@ -10,7 +10,6 @@ final class RY_ECPay_Shipping
         'ry_ecpay_shipping_cvs_family' => 'RY_ECPay_Shipping_CVS_Family',
         'ry_ecpay_shipping_cvs_hilife' => 'RY_ECPay_Shipping_CVS_Hilife',
         'ry_ecpay_shipping_cvs_ok' => 'RY_ECPay_Shipping_CVS_Ok',
-        'ry_ecpay_shipping_home_ecan' => 'RY_ECPay_Shipping_Home_Ecan',
         'ry_ecpay_shipping_home_tcat' => 'RY_ECPay_Shipping_Home_Tcat'
     ];
 
@@ -31,7 +30,6 @@ final class RY_ECPay_Shipping
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/shipping/ecpay/ecpay-shipping-cvs-family.php';
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/shipping/ecpay/ecpay-shipping-cvs-hilife.php';
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/shipping/ecpay/ecpay-shipping-cvs-ok.php';
-        include_once RY_WT_PLUGIN_DIR . 'woocommerce/shipping/ecpay/ecpay-shipping-home-ecan.php';
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/shipping/ecpay/ecpay-shipping-home-tcat.php';
 
         self::$log_enabled = 'yes' === RY_WT::get_option('ecpay_shipping_log', 'no');

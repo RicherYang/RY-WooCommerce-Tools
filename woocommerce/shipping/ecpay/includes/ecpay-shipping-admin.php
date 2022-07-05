@@ -197,11 +197,6 @@ final class RY_ECPay_Shipping_admin
                                     $print_list[] = $info;
                                 }
                                 break;
-                            case 'ECAN':
-                                if ($print_type == 'home_ecan') {
-                                    $print_list[] = $info;
-                                }
-                                break;
                         }
                     }
                 }
