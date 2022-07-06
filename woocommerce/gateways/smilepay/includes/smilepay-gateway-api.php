@@ -16,8 +16,10 @@ class RY_SmilePay_Gateway_Api extends RY_Abstract_Api_SmilePay
         $items_shipping = $order->get_items('shipping');
         $items_shipping = array_shift($items_shipping);
         if ($items_shipping) {
-            if (RY_SmilePay_Shipping::get_order_support_shipping($items_shipping) !== false) {
-                $get_shipping = true;
+            if (class_exists('RY_SmilePay_Shipping')) {
+                if (RY_SmilePay_Shipping::get_order_support_shipping($items_shipping) !== false) {
+                    $get_shipping = true;
+                }
             }
         }
 

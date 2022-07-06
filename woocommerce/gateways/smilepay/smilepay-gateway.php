@@ -77,7 +77,7 @@ final class RY_SmilePay_Gateway
             $Dcvc = '107';
             $Rvg2c = '1';
             $Verify_key = '174A02F97A95F72CE301137B3F98D128';
-            $Rot_check = '9527';
+            $Rot_check = '1111';
         } else {
             $Dcvc = RY_WT::get_option('smilepay_gateway_Dcvc');
             $Rvg2c = RY_WT::get_option('smilepay_gateway_Rvg2c');
