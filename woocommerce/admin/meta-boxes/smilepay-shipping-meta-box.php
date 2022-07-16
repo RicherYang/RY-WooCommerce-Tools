@@ -94,12 +94,12 @@ class RY_SmilePay_Shipping_Meta_Box
             </td>
             <td>
                 <?php
-                echo esc_html(sprintf(
-                    /* translators: %1$s: date %2$s: time */
-                    _x('%1$s %2$s', 'Datetime', 'ry-woocommerce-tools'),
-                $item['create']->date_i18n(wc_date_format()),
-                $item['create']->date_i18n(wc_time_format())
-            )); ?>
+                    echo esc_html(sprintf(
+                        /* translators: %1$s: date %2$s: time */
+                        _x('%1$s %2$s', 'Datetime', 'ry-woocommerce-tools'),
+                    $item['create']->date_i18n(wc_date_format()),
+                    $item['create']->date_i18n(wc_time_format())
+                )); ?>
             </td>
             <td>
                 <?php if (empty($item['PaymentNo'])) {?>
@@ -115,7 +115,7 @@ class RY_SmilePay_Shipping_Meta_Box
 </table>
 <?php
         wc_enqueue_js(
-                    'jQuery(function($) {
+                        'jQuery(function($) {
 $(".get_no").click(function(){
     window.location = ajaxurl + "?" + $.param({
         action: "RY_SmilePay_Shipping_get_no",
@@ -131,6 +131,6 @@ $(".print_info").click(function(){
     }), "_blank", "toolbar=yes,scrollbars=yes,resizable=yes");
 });
 });'
-                );
+                    );
     }
 }

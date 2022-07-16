@@ -197,8 +197,8 @@ class RY_SmilePay_Shipping_Api extends RY_Abstract_Api_SmilePay
 
             if ((string) $ipn_info->Status != '1') {
                 $order->add_order_note(sprintf(
-                /* translators: %1$s Error messade, %2$d Error messade ID */
-                __('Get Smilepay code error: %1$s (%2$d)', 'ry-woocommerce-tools'),
+                    /* translators: %1$s Error messade, %2$d Error messade ID */
+                    __('Get Smilepay code error: %1$s (%2$d)', 'ry-woocommerce-tools'),
                     (string) $ipn_info->Desc,
                     (string) $ipn_info->Status
                 ));
