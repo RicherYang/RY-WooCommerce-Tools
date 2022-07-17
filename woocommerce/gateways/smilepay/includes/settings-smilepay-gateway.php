@@ -23,7 +23,7 @@ return [
                 __('Log API / IPN information, inside %s', 'ry-woocommerce-tools'),
                 '<code>' . WC_Log_Handler_File::get_log_file_path('ry_smilepay_gateway') . '</code>'
             )
-            . '<br>' . __('Note: this may log personal information.', 'ry-woocommerce-tools')
+            . '<p class="description" style="margin-bottom:2px">' . __('Note: this may log personal information.', 'ry-woocommerce-tools') . '</p>'
     ],
     [
         'title' => __('Order no prefix', 'ry-woocommerce-tools'),
@@ -55,7 +55,7 @@ return [
         'type' => 'checkbox',
         'default' => 'no',
         'desc' => __('Enable SmilePay gateway sandbox', 'ry-woocommerce-tools')
-            . '<br>' . __('Note: Recommend using this for development purposes only.', 'ry-woocommerce-tools')
+            . '<p class="description" style="margin-bottom:2px">' . __('Note: Recommend using this for development purposes only.', 'ry-woocommerce-tools') . '<p>'
     ],
     [
         'title' => _x('Dcvc', 'SmilePay', 'ry-woocommerce-tools'),

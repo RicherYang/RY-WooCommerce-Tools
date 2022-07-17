@@ -1,12 +1,24 @@
 <?php
 final class RY_Gateway
 {
-    public static function init()
+    protected static $_instance = null;
+
+    public static function instance()
     {
-        add_action('woocommerce_api_ry_gateway_return', [__CLASS__, 'gateway_return']);
+        if (self::$_instance === null) {
+            self::$_instance = new self();
+            self::$_instance->do_init();
+        }
+
+        return self::$_instance;
     }
 
-    public static function gateway_return()
+    protected function do_init()
+    {
+        add_action('woocommerce_api_ry_gateway_return', [$this, 'gateway_return']);
+    }
+
+    public function gateway_return()
     {
         $order = null;
         $return_url = wc_get_endpoint_url('order-received', '', wc_get_checkout_url());
@@ -26,4 +38,4 @@ final class RY_Gateway
     }
 }
 
-RY_Gateway::init();
+RY_Gateway::instance();

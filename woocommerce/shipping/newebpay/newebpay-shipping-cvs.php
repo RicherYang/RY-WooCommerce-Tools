@@ -1,5 +1,5 @@
 <?php
-class RY_NewebPay_Shipping_CVS extends RY_Shipping_Method
+class RY_NewebPay_Shipping_CVS extends RY_WT_Shipping_Method
 {
     public function __construct($instance_id = 0)
     {

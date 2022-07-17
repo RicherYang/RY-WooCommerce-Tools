@@ -1,5 +1,5 @@
 <?php
-abstract class RY_Shipping_Method extends WC_Shipping_Method
+abstract class RY_WT_Shipping_Method extends WC_Shipping_Method
 {
     public function init()
     {

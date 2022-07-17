@@ -1,5 +1,5 @@
 <?php
-abstract class RY_ECPay_Shipping_Base extends RY_Shipping_Method
+abstract class RY_ECPay_Shipping_Base extends RY_WT_Shipping_Method
 {
     public function is_available($package)
     {

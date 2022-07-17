@@ -11,9 +11,9 @@ class RY_SmilePay_Shipping_Response extends RY_Abstract_Api_SmilePay
         add_action('valid_smilepay_shipping_admin_map_request', [__CLASS__, 'doing_admin_map_callback']);
         add_action('valid_smilepay_shipping_request', [__CLASS__, 'doing_callback']);
 
-        add_action('ry_smilepay_shipping_response_status_2', [__CLASS__, 'shipping_at_cvs'], 10, 2);
-        add_action('ry_smilepay_shipping_response_status_4', [__CLASS__, 'shipping_out_cvs'], 10, 2);
-        if ('yes' == RY_WT::get_option('ecpay_shipping_auto_completed', 'yes')) {
+        if ('yes' == RY_WT::get_option('smilepay_shipping_auto_order_status', 'yes')) {
+            add_action('ry_smilepay_shipping_response_status_2', [__CLASS__, 'shipping_at_cvs'], 10, 2);
+            add_action('ry_smilepay_shipping_response_status_4', [__CLASS__, 'shipping_out_cvs'], 10, 2);
             add_action('ry_smilepay_shipping_response_status_3', [__CLASS__, 'shipping_completed'], 10, 2);
         }
     }

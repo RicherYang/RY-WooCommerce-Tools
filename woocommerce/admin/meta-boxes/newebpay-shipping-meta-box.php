@@ -3,8 +3,9 @@ class RY_NewebPay_Shipping_Meta_Box
 {
     public static function add_meta_box($post_type, $post)
     {
+        global $theorder;
+
         if ($post_type == 'shop_order') {
-            global $theorder;
             if (!is_object($theorder)) {
                 $theorder = wc_get_order($post->ID);
             }

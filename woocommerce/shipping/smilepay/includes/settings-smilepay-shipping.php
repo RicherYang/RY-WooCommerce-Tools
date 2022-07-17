@@ -20,6 +20,13 @@ return [
         'desc' => __('Log status change at order notes.', 'ry-woocommerce-tools')
     ],
     [
+        'title' => __('Auto change order status', 'ry-woocommerce-tools'),
+        'id' => RY_WT::$option_prefix . 'smilepay_shipping_auto_order_status',
+        'type' => 'checkbox',
+        'default' => 'yes',
+        'desc' => __('Auto change order status when get shipping status change.', 'ry-woocommerce-tools')
+    ],
+    [
         'title' => __('Auto get shipping payment no', 'ry-woocommerce-tools'),
         'id' => RY_WT::$option_prefix . 'smilepay_shipping_auto_get_no',
         'type' => 'checkbox',
@@ -32,13 +39,6 @@ return [
         'type' => 'checkbox',
         'default' => 'no',
         'desc' => __('Always show shipping phone field in checkout form.', 'ry-woocommerce-tools')
-    ],
-    [
-        'title' => __('Auto completed order', 'ry-woocommerce-tools'),
-        'id' => RY_WT::$option_prefix . 'smilepay_shipping_auto_completed',
-        'type' => 'checkbox',
-        'default' => 'yes',
-        'desc' => __('Auto completed order when user getted products.', 'ry-woocommerce-tools')
     ],
     [
         'id' => 'base_options',

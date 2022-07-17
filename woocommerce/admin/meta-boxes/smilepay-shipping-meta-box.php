@@ -3,8 +3,9 @@ class RY_SmilePay_Shipping_Meta_Box
 {
     public static function add_meta_box($post_type, $post)
     {
+        global $theorder;
+
         if ($post_type == 'shop_order') {
-            global $theorder;
             if (!is_object($theorder)) {
                 $theorder = wc_get_order($post->ID);
             }
@@ -94,9 +95,9 @@ class RY_SmilePay_Shipping_Meta_Box
             </td>
             <td>
                 <?php
-                    echo esc_html(sprintf(
-                        /* translators: %1$s: date %2$s: time */
-                        _x('%1$s %2$s', 'Datetime', 'ry-woocommerce-tools'),
+                echo esc_html(sprintf(
+                    /* translators: %1$s: date %2$s: time */
+                    _x('%1$s %2$s', 'Datetime', 'ry-woocommerce-tools'),
                     $item['create']->date_i18n(wc_date_format()),
                     $item['create']->date_i18n(wc_time_format())
                 )); ?>
@@ -115,7 +116,7 @@ class RY_SmilePay_Shipping_Meta_Box
 </table>
 <?php
         wc_enqueue_js(
-                        'jQuery(function($) {
+                    'jQuery(function($) {
 $(".get_no").click(function(){
     window.location = ajaxurl + "?" + $.param({
         action: "RY_SmilePay_Shipping_get_no",
@@ -131,6 +132,6 @@ $(".print_info").click(function(){
     }), "_blank", "toolbar=yes,scrollbars=yes,resizable=yes");
 });
 });'
-                    );
+                );
     }
 }
