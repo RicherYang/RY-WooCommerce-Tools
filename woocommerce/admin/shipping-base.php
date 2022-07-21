@@ -187,6 +187,9 @@ final class RY_WT_Admin_Shipping
             return false;
         }
         $shipping_item = array_shift($shipping_items);
+        if (empty($shipping_item)) {
+            return false;
+        }
 
         $shipping_method = false;
         if ($shipping_method === false && class_exists('RY_ECPay_Shipping')) {
