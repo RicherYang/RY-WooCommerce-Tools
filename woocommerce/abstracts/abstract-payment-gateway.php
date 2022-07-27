@@ -11,6 +11,7 @@ abstract class RY_Abstract_Payment_Gateway extends WC_Payment_Gateway
             if ($_POST[$filed_name] < $this->check_min_amount) {
                 $_POST[$filed_name] = $this->check_min_amount;
                 WC_Admin_Settings::add_error(sprintf(
+                    /* translators: %s: minimum amount */
                     __('%s minimum amount out of range. Set as default value.', 'ry-woocommerce-tools'),
                     $this->method_title
                 ));

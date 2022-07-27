@@ -21,11 +21,10 @@ final class RY_NewebPay_Gateway
 
         self::$log_enabled = 'yes' === RY_WT::get_option('newebpay_gateway_log', 'no');
 
-        add_action('woocommerce_update_options_rytools_newebpay_gateway', [__CLASS__, 'check_option']);
-
         if (is_admin()) {
             add_filter('woocommerce_get_sections_rytools', [__CLASS__, 'add_sections']);
             add_filter('woocommerce_get_settings_rytools', [__CLASS__, 'add_setting'], 10, 2);
+            add_action('woocommerce_update_options_rytools_newebpay_gateway', [__CLASS__, 'check_option']);
         } else {
             add_action('woocommerce_thankyou', [__CLASS__, 'payment_info'], 9);
             add_action('woocommerce_view_order', [__CLASS__, 'payment_info'], 9);

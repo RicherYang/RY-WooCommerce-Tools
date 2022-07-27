@@ -5,7 +5,7 @@ Tags: woocommerce, payment, gateway, shipping, ecpay, newebpay, smilepay
 Requires at least: 5.6
 Requires PHP: 7.4
 Tested up to: 6.0
-Stable tag: 1.10.1
+Stable tag: 1.10.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.txt
 
@@ -38,6 +38,10 @@ Please visit the [plugin forum page](https://ry-plugin.com/ry-woocommerce-tools/
 4. NewebPay gateway global settings.
 
 == Changelog ==
+
+= 1.10.3 - 2022/07/27 =
+* 新增 - 可設定綠界物流預設取件時間與包裝尺寸
+* 新增 - 可依照商品尺寸調整綠界的包裝尺寸
 
 = 1.10.1 - 2022/07/18 =
 * 更新 - 修正無運送方式的訂單會無法更新。

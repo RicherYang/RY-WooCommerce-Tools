@@ -93,18 +93,21 @@ final class RY_WT
         if (!$order->is_paid()) {
             $title .= ' ' . __('(not paid)', 'ry-woocommerce-tools');
         }
+
         return $title;
     }
 
     public static function remove_unpay_title_notice($status)
     {
         remove_filter('woocommerce_order_get_payment_method_title', [__CLASS__, 'unpay_title_notice'], 10, 2);
+
         return $status;
     }
 
     public static function add_unpay_title_notice($status)
     {
         add_filter('woocommerce_order_get_payment_method_title', [__CLASS__, 'unpay_title_notice'], 10, 2);
+
         return $status;
     }
 
@@ -119,6 +122,7 @@ final class RY_WT
                 $address_formats['CVS'] .= '<p class="woocommerce-customer-details--phone">{phone}</p>';
             }
         }
+
         return $address_formats;
     }
 
@@ -127,6 +131,7 @@ final class RY_WT
         if (isset($actions['pay'])) {
             unset($actions['pay']);
         }
+
         return $actions;
     }
 
@@ -180,10 +185,8 @@ final class RY_WT
     public static function form_field_country_hidden($field, $key, $args, $value)
     {
         $custom_attributes = self::form_field_custom_attributes($args);
-
         $country = '';
         $countries = 'shipping_country' === $key ? WC()->countries->get_shipping_countries() : WC()->countries->get_allowed_countries();
-
         if (count($countries) == 1) {
             $country = current(array_keys($countries));
         } else {
@@ -193,7 +196,6 @@ final class RY_WT
                 }
             }
         }
-
         $field .= '<input type="hidden" name="' . esc_attr($key) . '" id="' . esc_attr($args['id']) . '" value="' . esc_attr($country) . '" ' . implode(' ', $custom_attributes) . ' class="country_to_state" readonly>';
 
         return $field;
@@ -203,17 +205,17 @@ final class RY_WT
     {
         if (empty($field)) {
             $custom_attributes = self::form_field_custom_attributes($args);
-
             $field .= '<input type="hidden" class="' . esc_attr(implode(' ', $args['input_class'])) . '" name="' . esc_attr($key) . '" id="' . esc_attr($args['id']) . '" value="' . esc_attr($value) . '" ' . implode(' ', $custom_attributes) . '>';
         }
+
         return $field;
     }
 
     public static function form_field_hidden_empty($field, $key, $args, $value)
     {
         $custom_attributes = self::form_field_custom_attributes($args);
-
         $field .= '<input type="hidden" class="' . esc_attr(implode(' ', $args['input_class'])) . '" name="' . esc_attr($key) . '" id="' . esc_attr($args['id']) . '" value="" ' . implode(' ', $custom_attributes) . '>';
+
         return $field;
     }
 
@@ -226,11 +228,9 @@ final class RY_WT
         } else {
             $required = '';
         }
-
         $field .= '<label class="' . esc_attr(implode(' ', $args['label_class'])) . '">' . $args['label'] . $required . '</label>';
         $field .= '<strong>' . esc_html($value) . '</strong>';
         $field .= '<input type="hidden" class="' . esc_attr(implode(' ', $args['input_class'])) . '" name="' . esc_attr($key) . '" id="' . esc_attr($args['id']) . '" value="' . esc_attr($value) . '" ' . implode(' ', $custom_attributes) . '>';
-
         $sort = $args['priority'] ? $args['priority'] : '';
         $field_container = '<p class="form-row %1$s" id="%2$s" data-priority="' . esc_attr($sort) . '">%3$s</p>';
         $container_class = esc_attr(implode(' ', $args['class']));
@@ -277,6 +277,7 @@ final class RY_WT
                 }
             }
         }
+
         return 0;
     }
 

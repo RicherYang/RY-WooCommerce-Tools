@@ -75,8 +75,11 @@ final class RY_WT_update
             RY_WT::update_option('version', '1.10.0');
         }
 
-        if (version_compare($now_version, '1.10.1', '<')) {
-            RY_WT::update_option('version', '1.10.1');
+        if (version_compare($now_version, '1.10.3', '<')) {
+            RY_WT::update_option('ecpay_shipping_pickup_time', 4);
+            RY_WT::update_option('ecpay_shipping_box_size', 1);
+
+            RY_WT::update_option('version', '1.10.3');
         }
     }
 }

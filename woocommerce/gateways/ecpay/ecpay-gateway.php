@@ -21,11 +21,10 @@ final class RY_ECPay_Gateway
 
         self::$log_enabled = 'yes' === RY_WT::get_option('ecpay_gateway_log', 'no');
 
-        add_action('woocommerce_update_options_rytools_ecpay_gateway', [__CLASS__, 'check_option']);
-
         if (is_admin()) {
             add_filter('woocommerce_get_sections_rytools', [__CLASS__, 'add_sections']);
             add_filter('woocommerce_get_settings_rytools', [__CLASS__, 'add_setting'], 10, 2);
+            add_action('woocommerce_update_options_rytools_ecpay_gateway', [__CLASS__, 'check_option']);
         } else {
             add_action('woocommerce_thankyou', [__CLASS__, 'payment_info'], 9);
             add_action('woocommerce_view_order', [__CLASS__, 'payment_info'], 9);
@@ -61,8 +60,9 @@ final class RY_ECPay_Gateway
     public static function add_setting($settings, $current_section)
     {
         if ($current_section == 'ecpay_gateway') {
-            $settings = include(RY_WT_PLUGIN_DIR . 'woocommerce/gateways/ecpay/includes/settings-ecpay-gateway.php');
+            $settings = include RY_WT_PLUGIN_DIR . 'woocommerce/gateways/ecpay/includes/settings-ecpay-gateway.php';
         }
+
         return $settings;
     }
 

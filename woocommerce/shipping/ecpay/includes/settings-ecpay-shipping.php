@@ -116,14 +116,50 @@ return [
         ]
     ],
     [
-        'title' => __('Sender zipcode', 'ry-woocommerce-tools'),
+        'title' => __('Sender zipcode', 'ry-woocommerce-tools')
+        . ' ' .  __('( Home delivery )', 'ry-woocommerce-tools'),
         'id' => RY_WT::$option_prefix . 'ecpay_shipping_sender_zipcode',
         'type' => 'text'
     ],
     [
-        'title' => __('Sender address', 'ry-woocommerce-tools'),
+        'title' => __('Sender address', 'ry-woocommerce-tools')
+            . ' ' .  __('( Home delivery )', 'ry-woocommerce-tools'),
         'id' => RY_WT::$option_prefix . 'ecpay_shipping_sender_address',
         'type' => 'text'
+    ],
+    [
+        'title' => __('Shipping box size', 'ry-woocommerce-tools')
+            . ' ' . __('( Home delivery )', 'ry-woocommerce-tools'),
+        'id' => RY_WT::$option_prefix . 'ecpay_shipping_box_size',
+        'type' => 'select',
+        'default' => '1',
+        'options' => [
+            '0' => _x('By product', 'box size', 'ry-woocommerce-tools'),
+            '1' => _x('60 cm', 'box size', 'ry-woocommerce-tools'),
+            '2' => _x('90 cm', 'box size', 'ry-woocommerce-tools'),
+            '3' => _x('120 cm', 'box size', 'ry-woocommerce-tools'),
+            '4' => _x('150 cm', 'box size', 'ry-woocommerce-tools')
+        ],
+        'desc' => __('By product is set box size to the biggest product size.', 'ry-woocommerce-tools'),
+        'desc_tip' => true,
+    ],
+    [
+        'title' => __('Product default weight (KG)', 'ry-woocommerce-tools')
+            . ' ' . __('( Home delivery )', 'ry-woocommerce-tools'),
+        'id' => RY_WT::$option_prefix . 'ecpay_shipping_product_weight',
+        'type' => 'text'
+    ],
+    [
+        'title' => __('Pickup time', 'ry-woocommerce-tools')
+        . ' ' .  __('( Home delivery )', 'ry-woocommerce-tools'),
+        'id' => RY_WT::$option_prefix . 'ecpay_shipping_pickup_time',
+        'type' => 'select',
+        'default' => '4',
+        'options' => [
+            '1' => _x('morning', 'Pickup time', 'ry-woocommerce-tools'),
+            '2' => _x('afternoon', 'Pickup time', 'ry-woocommerce-tools'),
+            '4' => _x('unlimited', 'Pickup time', 'ry-woocommerce-tools')
+        ]
     ],
     [
         'id' => 'note_options',

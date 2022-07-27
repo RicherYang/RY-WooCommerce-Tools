@@ -52,9 +52,22 @@ class RY_ECPay_Shipping_Api extends RY_Abstract_Api_ECPay
                     continue;
                 }
                 if (!isset($temp_list[$temp])) {
-                    $temp_list[$temp] = 0;
+                    $temp_list[$temp] = [
+                        'price' => 0,
+                        'weight' => 0,
+                        'size' => 0
+                    ];
                 }
-                $temp_list[$temp] += $item->get_subtotal();
+                $temp_list[$temp]['price'] += $item->get_subtotal();
+                $weight = (float) $item->get_product()->get_weight();
+                if ($weight == 0) {
+                    $weight = (float) RY_WT::get_option('ecpay_shipping_product_weight', 0);
+                }
+                $temp_list[$temp]['weight'] += $weight * $item->get_quantity();
+                $size = (float) $item->get_product()->get_length() + (float) $item->get_product()->get_width() + (float) $item->get_product()->get_height();
+                if ($size > 0) {
+                    $temp_list[$temp]['size'] = max($size, $temp_list[$temp]['size']);
+                }
             }
 
             if (count($temp_list) == 0) {
@@ -119,7 +132,7 @@ class RY_ECPay_Shipping_Api extends RY_Abstract_Api_ECPay
 
             if ($method_class::$LogisticsType == 'CVS') {
                 $args['ReceiverStoreID'] = $order->get_meta('_shipping_cvs_store_ID');
-                $temp_list['1'] = $order->get_total();
+                $temp_list['1']['price'] = $order->get_total();
             }
 
             if ($method_class::$LogisticsType == 'Home') {
@@ -133,9 +146,10 @@ class RY_ECPay_Shipping_Api extends RY_Abstract_Api_ECPay
                 $args['SenderAddress'] = RY_WT::get_option('ecpay_shipping_sender_address');
                 $args['ReceiverZipCode'] = $order->get_shipping_postcode();
                 $args['ReceiverAddress'] = $full_state . $order->get_shipping_city() . $order->get_shipping_address_1() . $order->get_shipping_address_2();
+                $args['Specification'] = '000' . RY_WT::get_option('ecpay_shipping_box_size');
                 $args['Distance'] = '00';
-                $args['Specification'] = '0001';
-                $args['ScheduledPickupTime'] = '4';
+
+                $args['ScheduledPickupTime'] = RY_WT::get_option('ecpay_shipping_pickup_time');
                 $args['ScheduledDeliveryTime'] = '4';
             }
 
@@ -145,13 +159,32 @@ class RY_ECPay_Shipping_Api extends RY_Abstract_Api_ECPay
                 $post_url = self::$api_url['create'];
             }
 
-            foreach ($temp_list as $temp => $total) {
+            foreach ($temp_list as $temp => $temp_info) {
                 $create_datetime = new DateTime('', new DateTimeZone('Asia/Taipei'));
                 $args['MerchantTradeDate'] = $create_datetime->format('Y/m/d H:i:s');
                 $args['MerchantTradeNo'] = self::generate_trade_no($order->get_id(), RY_WT::get_option('ecpay_shipping_order_prefix'));
 
-                $args['GoodsAmount'] = (int) $total;
+                $args['GoodsAmount'] = (int) $temp_info['price'];
                 if ($method_class::$LogisticsType == 'Home') {
+                    if ($temp_info['weight'] > 0) {
+                        $args['GoodsWeight'] = wc_get_weight($temp_info['weight'], 'kg');
+                    }
+                    if ($args['Specification'] == '0000') {
+                        if ($temp_info['size'] > 0) {
+                            $temp_info['size'] = wc_get_dimension($temp_info['size'], 'cm');
+                            if ($temp_info['size'] <= 60) {
+                                $args['Specification'] = '0001';
+                            } elseif ($temp_info['size'] <= 90) {
+                                $args['Specification'] = '0002';
+                            } elseif ($temp_info['size'] <= 120) {
+                                $args['Specification'] = '0003';
+                            } else {
+                                $args['Specification'] = '0004';
+                            }
+                        } else {
+                            $args['Specification'] = '0001';
+                        }
+                    }
                     $args['Temperature'] = '000' . $temp;
                     $args['MerchantTradeNo'] = substr($args['MerchantTradeNo'], 0, 18) . 'T' . $temp;
                 }
@@ -211,7 +244,7 @@ class RY_ECPay_Shipping_Api extends RY_Abstract_Api_ECPay
                 $shipping_list[$result['AllPayLogisticsID']]['create'] = $create_datetime->format(DATE_ATOM);
                 $shipping_list[$result['AllPayLogisticsID']]['edit'] = (string) new WC_DateTime();
                 $shipping_list[$result['AllPayLogisticsID']]['amount'] = $args['GoodsAmount'];
-                $shipping_list[$result['AllPayLogisticsID']]['IsCollection'] = $args['IsCollection'];
+                $shipping_list[$result['AllPayLogisticsID']]['IsCollection'] = $args['IsCollection'] ?? 'N';
                 if ($method_class::$LogisticsType == 'Home') {
                     $shipping_list[$result['AllPayLogisticsID']]['temp'] = $temp;
                 }
