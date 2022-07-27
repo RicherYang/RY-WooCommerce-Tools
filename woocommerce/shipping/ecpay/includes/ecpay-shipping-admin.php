@@ -103,6 +103,11 @@ final class RY_ECPay_Shipping_admin
                                     $print_list[] = $info;
                                 }
                                 break;
+                            case 'POST':
+                                if ($print_type == 'home_post') {
+                                    $print_list[] = $info;
+                                }
+                                break;
                         }
                     }
                 }
