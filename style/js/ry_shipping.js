@@ -114,6 +114,9 @@ function RYECPaySendCvsPost() {
     for (var idx in ecpayShippingInfo) {
         html += '<input type="hidden" name="' + idx + '" value="' + ecpayShippingInfo[idx] + '">';
     }
+    if (window.innerWidth < 1024) {
+        html += '<input type="hidden" name="Device" value="1">';
+    }
     html += '</form>';
     document.body.innerHTML += html;
     document.getElementById('RYECPaySendCvsForm').submit();
