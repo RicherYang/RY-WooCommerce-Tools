@@ -2,14 +2,14 @@
 # This file is distributed under the GPLv2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: RY WooCommerce Tools 1.10.3\n"
+"Project-Id-Version: RY WooCommerce Tools 1.11.3\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/ry-woocommerce-tools\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-07-27T19:45:55+08:00\n"
+"POT-Creation-Date: 2022-09-04T12:22:25+08:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 "X-Domain: ry-woocommerce-tools\n"
@@ -21,7 +21,7 @@ msgid "RY WooCommerce Tools"
 msgstr ""
 
 #. Plugin URI of the plugin
-msgid "https://richer.tw/ry-woocommerce-tools"
+msgid "https://ry-plugin.com/ry-woocommerce-tools"
 msgstr ""
 
 #. Description of the plugin
@@ -555,22 +555,22 @@ msgid "All cvs shipping methods set to disable."
 msgstr ""
 
 #: woocommerce/admin/shipping-base.php:133
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:248
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:250
 msgid "Store Name"
 msgstr ""
 
 #: woocommerce/admin/shipping-base.php:137
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:255
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:257
 msgid "Store Address"
 msgstr ""
 
 #: woocommerce/admin/shipping-base.php:141
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:262
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:264
 msgid "Store Telephone"
 msgstr ""
 
 #: woocommerce/admin/shipping-base.php:150
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:224
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:226
 #: woocommerce/shipping/smilepay/smilepay-shipping.php:118
 msgid "Phone"
 msgstr ""
@@ -725,7 +725,7 @@ msgstr ""
 #: woocommerce/gateways/ecpay/ecpay-gateway.php:105
 #: woocommerce/gateways/newebpay/newebpay-gateway.php:103
 #: woocommerce/gateways/smilepay/smilepay-gateway.php:126
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:141
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:143
 msgid "Order no prefix only letters and numbers allowed allowed"
 msgstr ""
 
@@ -739,21 +739,25 @@ msgstr ""
 msgid "ECPay"
 msgstr ""
 
-#: woocommerce/gateways/ecpay/includes/ecpay-gateway-response.php:96
+#: woocommerce/gateways/ecpay/includes/ecpay-gateway-response.php:106
 #: woocommerce/gateways/newebpay/includes/newebpay-gateway-response.php:150
 #: woocommerce/gateways/smilepay/includes/smilepay-gateway-response.php:90
 msgid "Payment completed"
 msgstr ""
 
-#: woocommerce/gateways/ecpay/includes/ecpay-gateway-response.php:139
+#: woocommerce/gateways/ecpay/includes/ecpay-gateway-response.php:154
 #: woocommerce/gateways/smilepay/includes/smilepay-gateway-response.php:99
 msgid "Payment failed within paid order"
 msgstr ""
 
-#. translators: Error status message
-#: woocommerce/gateways/ecpay/includes/ecpay-gateway-response.php:146
-#: woocommerce/gateways/smilepay/includes/smilepay-gateway-response.php:104
-msgid "Payment failed (%s)"
+#. translators: %1$s: status message, %2$d status code
+#: woocommerce/gateways/ecpay/includes/ecpay-gateway-response.php:161
+msgid "Payment failed: %1$s (%2$d)"
+msgstr ""
+
+#. translators: %1$s: status message, %2$d status code
+#: woocommerce/gateways/ecpay/includes/ecpay-gateway-response.php:171
+msgid "Payment unkonw status: %1$s (%2$d)"
 msgstr ""
 
 #. translators: %s: Gateway method title
@@ -964,7 +968,7 @@ msgstr ""
 
 #. translators: 1: Store name 2: Store ID
 #: woocommerce/gateways/newebpay/includes/newebpay-gateway-response.php:103
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:348
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:350
 msgid "CVS store %1$s (%2$s)"
 msgstr ""
 
@@ -1113,6 +1117,11 @@ msgstr ""
 
 #: woocommerce/gateways/smilepay/includes/smilepay-gateway-base.php:24
 msgid "SmilePay"
+msgstr ""
+
+#. translators: Error status message
+#: woocommerce/gateways/smilepay/includes/smilepay-gateway-response.php:104
+msgid "Payment failed (%s)"
 msgstr ""
 
 #: woocommerce/gateways/smilepay/smilepay-gateway-atm.php:14
@@ -1319,46 +1328,50 @@ msgstr ""
 msgid "ECPay shipping CVS Ok"
 msgstr ""
 
+#: woocommerce/shipping/ecpay/ecpay-shipping-home-post.php:13
+msgid "ECPay shipping home Post"
+msgstr ""
+
 #: woocommerce/shipping/ecpay/ecpay-shipping-home-tcat.php:13
 msgid "ECPay shipping home Tcat"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:82
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:84
 msgid "ECPay shipping options"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:94
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:96
 msgctxt "Cvs type"
 msgid "Disable"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:96
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:98
 #: woocommerce/shipping/newebpay/newebpay-shipping.php:51
 #: woocommerce/shipping/smilepay/smilepay-shipping.php:78
 msgid "Cvs only can enable with shipping destination not force to billing address."
 msgstr ""
 
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:109
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:115
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:121
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:111
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:117
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:123
 msgid "Verification failed!"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:109
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:111
 msgid "Name length between 1 to 10 letter (5 if chinese)"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:115
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:117
 #: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:100
 msgid "Phone format (0x)xxxxxxx#xx"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:121
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:123
 #: woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php:111
 msgid "Cellphone format 09xxxxxxxx"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/ecpay-shipping.php:136
+#: woocommerce/shipping/ecpay/ecpay-shipping.php:138
 msgid "ECPay shipping method failed to enable!"
 msgstr ""
 
