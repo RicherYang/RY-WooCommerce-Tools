@@ -1,8 +1,9 @@
-@import url('https://fonts.googleapis.com/css?family=Libre+Barcode+39+Text');
+@import url('https://fonts.googleapis.com/css2?family=Libre+Barcode+39+Text');
 
 .free3of9 {
     font-family: 'Libre Barcode 39 Text', cursive;
     font-size: 40px;
+    font-weight: normal;
     line-height: normal;
     letter-spacing: 0;
 }
