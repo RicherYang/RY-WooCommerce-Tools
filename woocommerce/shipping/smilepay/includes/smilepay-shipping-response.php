@@ -1,4 +1,5 @@
 <?php
+
 class RY_SmilePay_Shipping_Response extends RY_Abstract_Api_SmilePay
 {
     public static function init()
@@ -175,7 +176,7 @@ class RY_SmilePay_Shipping_Response extends RY_Abstract_Api_SmilePay
                 if (isset($old_info['status'])) {
                     if ($old_info['status'] != $shipping_list[$list_id]['status']) {
                         $order->add_order_note(sprintf(
-                            /* translators: 1: EcPay ID 2: Old status no 3: New status no */
+                            /* translators: 1: ECPay ID 2: Old status no 3: New status no */
                             __('%1$s shipping status from %2$s to %3$s', 'ry-woocommerce-tools'),
                             $ipn_info['AllPayLogisticsID'],
                             $old_info['status'],

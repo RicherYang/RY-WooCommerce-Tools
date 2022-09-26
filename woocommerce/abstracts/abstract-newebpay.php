@@ -1,4 +1,5 @@
 <?php
+
 abstract class RY_Abstract_Api_NewebPay extends RY_Abstract_Api
 {
     protected static $do_die = false;
@@ -29,7 +30,6 @@ abstract class RY_Abstract_Api_NewebPay extends RY_Abstract_Api
 
         $pad = 32 - (strlen($args_string) % 32);
         $args_string .= str_repeat(chr($pad), $pad);
-
         if (function_exists('openssl_encrypt')) {
             $encrypt_string = openssl_encrypt($args_string, 'aes-256-cbc', $HashKey, OPENSSL_RAW_DATA | OPENSSL_ZERO_PADDING, $HashIV);
         }
@@ -45,7 +45,6 @@ abstract class RY_Abstract_Api_NewebPay extends RY_Abstract_Api
         if (function_exists('openssl_decrypt')) {
             $decrypt_string = openssl_decrypt($string, 'aes-256-cbc', $HashKey, OPENSSL_RAW_DATA | OPENSSL_ZERO_PADDING, $HashIV);
         }
-
         $slast = ord(substr($decrypt_string, -1));
         $slastc = chr($slast);
         if (preg_match("/$slastc{" . $slast . "}/", $decrypt_string)) {

@@ -1,4 +1,5 @@
 <?php
+
 class RY_NewebPay_Gateway_Api extends RY_Abstract_Api_NewebPay
 {
     public static $api_test_url = [
@@ -24,7 +25,7 @@ class RY_NewebPay_Gateway_Api extends RY_Abstract_Api_NewebPay
             'MerchantID' => $MerchantID,
             'RespondType' => 'JSON',
             'TimeStamp' => new DateTime('', new DateTimeZone('Asia/Taipei')),
-            'Version' => '1.5',
+            'Version' => '2.0',
             'MerchantOrderNo' => self::generate_trade_no($order->get_id(), RY_WT::get_option('newebpay_gateway_order_prefix')),
             'Amt' => (int) ceil($order->get_total()),
             'ItemDesc' => $item_name,
@@ -37,6 +38,7 @@ class RY_NewebPay_Gateway_Api extends RY_Abstract_Api_NewebPay
             'CREDIT' => 0,
             'ANDROIDPAY' => 0,
             'SAMSUNGPAY' => 0,
+            'LINEPAY' => 0,
             'InstFlag' => 0,
             'CreditRed' => 0,
             'UNIONPAY' => 0,
@@ -44,7 +46,11 @@ class RY_NewebPay_Gateway_Api extends RY_Abstract_Api_NewebPay
             'VACC' => 0,
             'CVS' => 0,
             'BARCODE' => 0,
-            'P2G' => 0,
+            'ESUNWALLET' => 0,
+            'TAIWANPAY' => 0,
+            'EZPAY' => 0,
+            'EZPWECHAT' => 0,
+            'EZPALIPAY' => 0,
             'CVSCOM' => 0
         ];
         $args['TimeStamp'] = $args['TimeStamp']->format('U');
@@ -65,7 +71,8 @@ class RY_NewebPay_Gateway_Api extends RY_Abstract_Api_NewebPay
         $form_data = [
             'MerchantID' => $MerchantID,
             'TradeInfo' => self::args_encrypt($args, $HashKey, $HashIV),
-            'Version' => '1.5'
+            'Version' => '2.0',
+            'EncryptType' => 0
         ];
         $form_data['TradeSha'] = self::generate_hash_value($form_data['TradeInfo'], $HashKey, $HashIV);
 

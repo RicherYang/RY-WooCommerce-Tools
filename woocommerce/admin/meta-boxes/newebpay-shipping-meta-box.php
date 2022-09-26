@@ -38,6 +38,9 @@ class RY_NewebPay_Shipping_Meta_Box
                 <?php esc_html_e('NewebPay shipping ID', 'ry-woocommerce-tools'); ?>
             </th>
             <th>
+                <?php esc_html_e('Shipping Type', 'ry-woocommerce-tools'); ?>
+            </th>
+            <th>
                 <?php esc_html_e('Store ID', 'ry-woocommerce-tools'); ?>
             </th>
             <th>
@@ -61,6 +64,9 @@ class RY_NewebPay_Shipping_Meta_Box
         <tr>
             <td>
                 <?php echo esc_html($item['ID']); ?>
+            </td>
+            <td>
+                <?php echo esc_html($item['Type']); ?>
             </td>
             <td>
                 <?php echo esc_html($item['store_ID']); ?>

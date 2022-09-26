@@ -2,14 +2,14 @@
 # This file is distributed under the GPLv2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: RY WooCommerce Tools 1.11.3\n"
+"Project-Id-Version: RY WooCommerce Tools 1.12.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/ry-woocommerce-tools\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-09-04T12:22:25+08:00\n"
+"POT-Creation-Date: 2022-09-26T12:04:33+08:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 "X-Domain: ry-woocommerce-tools\n"
@@ -414,8 +414,8 @@ msgstr ""
 #: templates/order/order-smilepay-payment-info-cvs-fami.php:44
 #: woocommerce/admin/meta-boxes/ecpay-shipping-meta-box.php:117
 #: woocommerce/admin/meta-boxes/ecpay-shipping-meta-box.php:126
-#: woocommerce/admin/meta-boxes/newebpay-shipping-meta-box.php:77
-#: woocommerce/admin/meta-boxes/newebpay-shipping-meta-box.php:85
+#: woocommerce/admin/meta-boxes/newebpay-shipping-meta-box.php:83
+#: woocommerce/admin/meta-boxes/newebpay-shipping-meta-box.php:91
 #: woocommerce/admin/meta-boxes/smilepay-shipping-meta-box.php:91
 #: woocommerce/admin/meta-boxes/smilepay-shipping-meta-box.php:100
 msgctxt "Datetime"
@@ -456,6 +456,7 @@ msgid "ECPay shipping ID"
 msgstr ""
 
 #: woocommerce/admin/meta-boxes/ecpay-shipping-meta-box.php:41
+#: woocommerce/admin/meta-boxes/newebpay-shipping-meta-box.php:41
 msgid "Shipping Type"
 msgstr ""
 
@@ -465,7 +466,7 @@ msgid "Shipping no"
 msgstr ""
 
 #: woocommerce/admin/meta-boxes/ecpay-shipping-meta-box.php:47
-#: woocommerce/admin/meta-boxes/newebpay-shipping-meta-box.php:41
+#: woocommerce/admin/meta-boxes/newebpay-shipping-meta-box.php:44
 #: woocommerce/admin/meta-boxes/smilepay-shipping-meta-box.php:44
 #: woocommerce/admin/shipping-base.php:129
 msgid "Store ID"
@@ -477,25 +478,25 @@ msgid "Shipping status"
 msgstr ""
 
 #: woocommerce/admin/meta-boxes/ecpay-shipping-meta-box.php:53
-#: woocommerce/admin/meta-boxes/newebpay-shipping-meta-box.php:44
+#: woocommerce/admin/meta-boxes/newebpay-shipping-meta-box.php:47
 #: woocommerce/admin/meta-boxes/smilepay-shipping-meta-box.php:50
 msgid "declare amount"
 msgstr ""
 
 #: woocommerce/admin/meta-boxes/ecpay-shipping-meta-box.php:56
-#: woocommerce/admin/meta-boxes/newebpay-shipping-meta-box.php:47
+#: woocommerce/admin/meta-boxes/newebpay-shipping-meta-box.php:50
 #: woocommerce/admin/meta-boxes/smilepay-shipping-meta-box.php:53
 msgid "Collection of money"
 msgstr ""
 
 #: woocommerce/admin/meta-boxes/ecpay-shipping-meta-box.php:59
-#: woocommerce/admin/meta-boxes/newebpay-shipping-meta-box.php:50
+#: woocommerce/admin/meta-boxes/newebpay-shipping-meta-box.php:53
 #: woocommerce/admin/meta-boxes/smilepay-shipping-meta-box.php:56
 msgid "Status change time"
 msgstr ""
 
 #: woocommerce/admin/meta-boxes/ecpay-shipping-meta-box.php:62
-#: woocommerce/admin/meta-boxes/newebpay-shipping-meta-box.php:53
+#: woocommerce/admin/meta-boxes/newebpay-shipping-meta-box.php:56
 #: woocommerce/admin/meta-boxes/smilepay-shipping-meta-box.php:59
 msgid "Create time"
 msgstr ""
@@ -731,7 +732,7 @@ msgstr ""
 
 #. translators: %d number of periods
 #: woocommerce/gateways/ecpay/includes/ecpay-gateway-api.php:111
-#: woocommerce/gateways/newebpay/includes/newebpay-gateway-api.php:123
+#: woocommerce/gateways/newebpay/includes/newebpay-gateway-api.php:130
 msgid "Credit installment to %d"
 msgstr ""
 
@@ -1394,8 +1395,8 @@ msgstr ""
 msgid "Get shipping code error: %s"
 msgstr ""
 
-#. translators: 1: EcPay ID 2: Old status mag 3: Old status no 4: New status mag 5: New status no
-#: woocommerce/shipping/ecpay/includes/ecpay-shipping-response.php:140
+#. translators: 1: ECPay ID 2: Old status mag 3: Old status no 4: New status mag 5: New status no
+#: woocommerce/shipping/ecpay/includes/ecpay-shipping-response.php:141
 msgid "%1$s shipping status from %2$s(%3$d) to %4$s(%5$d)"
 msgstr ""
 
@@ -1659,8 +1660,8 @@ msgstr ""
 msgid "Get new SmilePay shipping no with cod"
 msgstr ""
 
-#. translators: 1: EcPay ID 2: Old status no 3: New status no
-#: woocommerce/shipping/smilepay/includes/smilepay-shipping-response.php:179
+#. translators: 1: ECPay ID 2: Old status no 3: New status no
+#: woocommerce/shipping/smilepay/includes/smilepay-shipping-response.php:180
 msgid "%1$s shipping status from %2$s to %3$s"
 msgstr ""
 
