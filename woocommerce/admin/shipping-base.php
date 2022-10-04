@@ -1,4 +1,5 @@
 <?php
+
 final class RY_WT_Admin_Shipping
 {
     protected static $_instance = null;
@@ -56,10 +57,10 @@ final class RY_WT_Admin_Shipping
                     $order->update_meta_data('_shipping_cvs_store_telephone', wc_clean(wp_unslash($_POST['_shipping_cvs_store_telephone'])));
                     $order->save_meta_data();
 
-                    // I know this is not the bast way to do thios thing
-                    $shipping_address = $order->get_address('shipping');
-                    update_post_meta($order_id, '_shipping_address_1', wc_clean(wp_unslash($_POST['_shipping_cvs_store_address'])));
-                    update_post_meta($order_id, '_shipping_address_index', implode(' ', $shipping_address));
+                    remove_action('woocommerce_update_order', [$this, 'save_order_update']);
+                    $order->set_shipping_address_1(wc_clean(wp_unslash($_POST['_shipping_cvs_store_address'])));
+                    $order->save();
+                    add_action('woocommerce_update_order', [$this, 'save_order_update']);
                 }
             }
         }
