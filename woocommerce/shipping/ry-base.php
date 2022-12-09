@@ -34,6 +34,7 @@ final class RY_WT_Shipping
     {
         $order_statuses['wc-ry-at-cvs'] = _x('Wait pickup (cvs)', 'Order status', 'ry-woocommerce-tools');
         $order_statuses['wc-ry-out-cvs'] = _x('Overdue return (cvs)', 'Order status', 'ry-woocommerce-tools');
+        $order_statuses['wc-ry-transporting'] = _x('Transporting', 'Order status', 'ry-woocommerce-tools');
 
         return $order_statuses;
     }
@@ -42,6 +43,7 @@ final class RY_WT_Shipping
     {
         $order_statuses[] = 'ry-at-cvs';
         $order_statuses[] = 'ry-out-cvs';
+        $order_statuses[] = 'ry-transporting';
 
         return $order_statuses;
     }
@@ -50,6 +52,7 @@ final class RY_WT_Shipping
     {
         $statuses[] = 'ry-at-cvs';
         $statuses[] = 'ry-out-cvs';
+        $statuses[] = 'ry-transporting';
 
         return $statuses;
     }
@@ -74,6 +77,16 @@ final class RY_WT_Shipping
             'show_in_admin_status_list' => true,
             /* translators: %s: number of orders */
             'label_count' => _n_noop('Overdue return (cvs) <span class="count">(%s)</span>', 'Overdue return (cvs) <span class="count">(%s)</span>', 'ry-woocommerce-tools'),
+        ]);
+
+        register_post_status('wc-ry-transporting', [
+            'label' => _x('Transporting', 'Order status', 'ry-woocommerce-tools'),
+            'public' => false,
+            'exclude_from_search' => false,
+            'show_in_admin_all_list' => true,
+            'show_in_admin_status_list' => true,
+            /* translators: %s: number of orders */
+            'label_count' => _n_noop('Transporting <span class="count">(%s)</span>', 'Transporting <span class="count">(%s)</span>', 'ry-woocommerce-tools'),
         ]);
     }
 
