@@ -37,7 +37,7 @@ abstract class RY_Abstract_Api_ECPay extends RY_Abstract_Api
             ],
             'Data' => wp_json_encode($data)
         ];
-        $args['RqHeader']['Timestamp'] = $args['RqHeader']['Timestamp']->format('U');
+        $args['RqHeader']['Timestamp'] = $args['RqHeader']['Timestamp']->getTimestamp();
 
         return $args;
     }

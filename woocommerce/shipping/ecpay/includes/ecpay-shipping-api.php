@@ -206,7 +206,7 @@ class RY_ECPay_Shipping_Api extends RY_Abstract_Api_ECPay
                 RY_ECPay_Shipping::log('Shipping request result: ' . $response['body']);
                 $body = explode('|', $response['body']);
                 if (count($body) != 2) {
-                    RY_ECPay_Shipping::log('Shipping failed. Explode result failed.', 'error');
+                    RY_ECPay_Shipping::log('Shipping failed. Explode result failed.', 'warning');
                     continue;
                 }
 
@@ -221,7 +221,7 @@ class RY_ECPay_Shipping_Api extends RY_Abstract_Api_ECPay
 
                 parse_str($body[1], $result);
                 if (!is_array($result)) {
-                    RY_ECPay_Shipping::log('Shipping failed. Parse result failed.', 'error');
+                    RY_ECPay_Shipping::log('Shipping failed. Parse result failed.', 'warning');
                     continue;
                 }
 

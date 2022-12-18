@@ -60,7 +60,7 @@ class RY_ECPay_Gateway_Response extends RY_Abstract_Api_ECPay
 
             self::die_success();
         } else {
-            RY_ECPay_Gateway::log('Order not found', 'error');
+            RY_ECPay_Gateway::log('Order not found', 'warning');
             self::die_error();
         }
     }

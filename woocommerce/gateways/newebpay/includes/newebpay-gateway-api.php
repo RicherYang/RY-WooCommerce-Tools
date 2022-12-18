@@ -24,7 +24,7 @@ class RY_NewebPay_Gateway_Api extends RY_Abstract_Api_NewebPay
         $args = [
             'MerchantID' => $MerchantID,
             'RespondType' => 'JSON',
-            'TimeStamp' => new DateTime('', new DateTimeZone('Asia/Taipei')),
+            'TimeStamp' => new DateTime('now', new DateTimeZone('Asia/Taipei')),
             'Version' => '2.0',
             'MerchantOrderNo' => self::generate_trade_no($order->get_id(), RY_WT::get_option('newebpay_gateway_order_prefix')),
             'Amt' => (int) ceil($order->get_total()),
@@ -53,7 +53,7 @@ class RY_NewebPay_Gateway_Api extends RY_Abstract_Api_NewebPay
             'EZPALIPAY' => 0,
             'CVSCOM' => 0
         ];
-        $args['TimeStamp'] = $args['TimeStamp']->format('U');
+        $args['TimeStamp'] = $args['TimeStamp']->getTimestamp();
         switch (get_locale()) {
             case 'zh_HK':
             case 'zh_TW':

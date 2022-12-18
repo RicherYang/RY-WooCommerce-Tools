@@ -44,7 +44,7 @@ final class RY_SmilePay_Gateway
 
     public static function log($message, $level = 'info')
     {
-        if (self::$log_enabled) {
+        if (self::$log_enabled || $level == 'error') {
             if (empty(self::$log)) {
                 self::$log = wc_get_logger();
             }

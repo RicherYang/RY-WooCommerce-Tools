@@ -80,7 +80,7 @@ class RY_NewebPay_Gateway_Response extends RY_NewebPay_Gateway_Api
 
             self::die_success();
         } else {
-            RY_NewebPay_Gateway::log('Order not found', 'error');
+            RY_NewebPay_Gateway::log('Order not found', 'warning');
             self::die_error();
         }
     }

@@ -194,7 +194,7 @@ class RY_SmilePay_Shipping_Response extends RY_Abstract_Api_SmilePay
 
             self::die_success();
         } else {
-            RY_SmilePay_Shipping::log('Order not found #' . $order_id, 'error');
+            RY_SmilePay_Shipping::log('Order not found', 'warning');
             self::die_error();
         }
     }

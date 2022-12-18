@@ -189,7 +189,7 @@ class RY_SmilePay_Shipping_Api extends RY_Abstract_Api_SmilePay
 
             $ipn_info = @simplexml_load_string($body);
             if (!$ipn_info) {
-                RY_SmilePay_Shipping::log('Get code failed. Parse result failed.', 'error');
+                RY_SmilePay_Shipping::log('Get code failed. Parse result failed.', 'warning');
                 return false;
             }
 

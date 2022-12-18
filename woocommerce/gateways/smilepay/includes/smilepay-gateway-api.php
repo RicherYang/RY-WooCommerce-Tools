@@ -114,7 +114,7 @@ success: function(result) {
 
         $ipn_info = @simplexml_load_string($body);
         if (!$ipn_info) {
-            RY_ECPay_Shipping::log('Get code failed. Parse result failed.', 'error');
+            RY_ECPay_Shipping::log('Get code failed. Parse result failed.', 'warning');
             return false;
         }
 

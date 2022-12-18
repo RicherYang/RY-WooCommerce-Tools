@@ -117,7 +117,7 @@ class RY_SmilePay_Gateway_Response extends RY_SmilePay_Gateway_Api
             }
             self::die_success();
         } else {
-            RY_SmilePay_Gateway::log('Order not found', 'error');
+            RY_SmilePay_Gateway::log('Order not found', 'warning');
             self::die_error();
         }
     }

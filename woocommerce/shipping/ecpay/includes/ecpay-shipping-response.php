@@ -155,7 +155,7 @@ class RY_ECPay_Shipping_Response extends RY_Abstract_Api_ECPay
             self::die_success();
         }
 
-        RY_ECPay_Shipping::log('Order not found', 'error');
+        RY_ECPay_Shipping::log('Order not found', 'warning');
         self::die_error();
     }
 
