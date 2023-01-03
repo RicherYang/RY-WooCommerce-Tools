@@ -29,7 +29,7 @@ return [
         'title' => __('Order no prefix', 'ry-woocommerce-tools'),
         'id' => RY_WT::$option_prefix . 'newebpay_gateway_order_prefix',
         'type' => 'text',
-        'desc' => __('The prefix string of order no. Only letters and numbers allowed allowed.', 'ry-woocommerce-tools'),
+        'desc' => __('The prefix string of order no. Only letters and numbers allowed.', 'ry-woocommerce-tools'),
         'desc_tip' => true
     ],
     [

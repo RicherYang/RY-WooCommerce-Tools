@@ -123,7 +123,7 @@ final class RY_SmilePay_Gateway
         }
 
         if (!preg_match('/^[a-z0-9]*$/i', RY_WT::get_option('smilepay_gateway_order_prefix'))) {
-            WC_Admin_Settings::add_error(__('Order no prefix only letters and numbers allowed allowed', 'ry-woocommerce-tools'));
+            WC_Admin_Settings::add_error(__('Order no prefix only letters and numbers allowed', 'ry-woocommerce-tools'));
             RY_WT::update_option('smilepay_gateway_order_prefix', '');
         }
     }
