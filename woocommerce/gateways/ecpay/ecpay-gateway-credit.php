@@ -1,4 +1,5 @@
 <?php
+
 class RY_ECPay_Gateway_Credit extends RY_ECPay_Gateway_Base
 {
     public $payment_type = 'Credit';

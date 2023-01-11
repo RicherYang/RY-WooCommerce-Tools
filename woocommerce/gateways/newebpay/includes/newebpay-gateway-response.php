@@ -1,4 +1,5 @@
 <?php
+
 class RY_NewebPay_Gateway_Response extends RY_NewebPay_Gateway_Api
 {
     public static function init()

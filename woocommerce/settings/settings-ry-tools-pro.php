@@ -1,4 +1,5 @@
 <?php
+
 return [
     [
         'title' => __('Pro version', 'ry-woocommerce-tools'),

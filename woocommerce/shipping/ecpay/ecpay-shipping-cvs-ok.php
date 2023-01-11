@@ -1,4 +1,5 @@
 <?php
+
 class RY_ECPay_Shipping_CVS_Ok extends RY_ECPay_Shipping_Base
 {
     public static $LogisticsType = 'CVS';

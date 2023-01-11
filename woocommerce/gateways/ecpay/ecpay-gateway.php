@@ -1,4 +1,5 @@
 <?php
+
 final class RY_ECPay_Gateway
 {
     public static $log_enabled = false;

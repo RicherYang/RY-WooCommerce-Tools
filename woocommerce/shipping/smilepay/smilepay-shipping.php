@@ -1,4 +1,5 @@
 <?php
+
 final class RY_SmilePay_Shipping
 {
     public static $log = false;

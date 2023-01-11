@@ -1,4 +1,5 @@
 <?php
+
 final class RY_ECPay_Shipping
 {
     public static $log_enabled = false;

@@ -1,4 +1,5 @@
 <?php
+
 class RY_SmilePay_Shipping_CVS_Fami extends RY_SmilePay_Shipping_Base
 {
     public static $Type = 'FAMI';

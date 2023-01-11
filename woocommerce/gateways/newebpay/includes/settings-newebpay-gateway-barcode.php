@@ -1,4 +1,5 @@
 <?php
+
 return [
     'enabled' => [
         'title' => __('Enable/Disable', 'woocommerce'),

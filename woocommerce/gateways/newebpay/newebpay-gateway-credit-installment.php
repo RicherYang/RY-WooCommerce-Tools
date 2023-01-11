@@ -1,4 +1,5 @@
 <?php
+
 class RY_NewebPay_Gateway_Credit_Installment extends RY_NewebPay_Gateway_Base
 {
     public $payment_type = 'InstFlag';

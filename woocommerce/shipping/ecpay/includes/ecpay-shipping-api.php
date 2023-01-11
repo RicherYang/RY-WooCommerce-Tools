@@ -1,4 +1,5 @@
 <?php
+
 class RY_ECPay_Shipping_Api extends RY_Abstract_Api_ECPay
 {
     public static $api_test_url = [

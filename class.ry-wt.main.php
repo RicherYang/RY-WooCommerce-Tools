@@ -1,4 +1,5 @@
 <?php
+
 final class RY_WT
 {
     public static $options = [];

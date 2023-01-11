@@ -1,4 +1,5 @@
 <?php
+
 final class RY_SmilePay_Shipping_admin
 {
     public static function init()
@@ -41,7 +42,8 @@ final class RY_SmilePay_Shipping_admin
 
     public static function get_code_no()
     {
-        $order_ID = (int) $_GET['orderid'] ?? '';
+        $order_ID = (int) wp_unslash($_GET['id'] ?? 0);
+        ;
         $logistics_id = wp_unslash($_GET['id']);
 
         $print_info = '';
@@ -69,7 +71,7 @@ final class RY_SmilePay_Shipping_admin
 
     public static function print_info()
     {
-        $order_ID = (int) $_GET['orderid'] ?? '';
+        $order_ID = (int) wp_unslash($_GET['id'] ?? 0);
         $logistics_id = wp_unslash($_GET['id']);
 
         $print_info = '';

@@ -1,4 +1,5 @@
 <?php
+
 abstract class RY_Abstract_Api_ECPay extends RY_Abstract_Api
 {
     protected static $encrypt_method = 'aes-128-cbc';

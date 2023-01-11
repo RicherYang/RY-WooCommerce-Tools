@@ -1,4 +1,5 @@
 <?php
+
 class RY_NewebPay_Gateway_Credit extends RY_NewebPay_Gateway_Base
 {
     public $payment_type = 'CREDIT';

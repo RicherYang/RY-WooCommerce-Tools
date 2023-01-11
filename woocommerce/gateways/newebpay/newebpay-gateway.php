@@ -1,4 +1,5 @@
 <?php
+
 final class RY_NewebPay_Gateway
 {
     public static $log_enabled = false;

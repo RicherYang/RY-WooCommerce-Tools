@@ -1,4 +1,5 @@
 <?php
+
 class RY_SmilePay_Gateway_Response extends RY_SmilePay_Gateway_Api
 {
     public static function init()

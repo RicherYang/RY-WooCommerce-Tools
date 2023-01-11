@@ -101,3 +101,4 @@ class RY_NewebPay_Shipping_Meta_Box
 <?php
     }
 }
+?>

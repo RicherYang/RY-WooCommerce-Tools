@@ -1,4 +1,5 @@
 <?php
+
 return [
     [
         'title' => __('Base options', 'ry-woocommerce-tools'),

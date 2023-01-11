@@ -1,4 +1,5 @@
 <?php
+
 class RY_SmilePay_Shipping_Api extends RY_Abstract_Api_SmilePay
 {
     public static $api_test_url = [

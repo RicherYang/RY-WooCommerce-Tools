@@ -1,4 +1,5 @@
 <?php
+
 class RY_SmilePay_Gateway_Base extends RY_Abstract_Payment_Gateway
 {
     public static $log_enabled = false;

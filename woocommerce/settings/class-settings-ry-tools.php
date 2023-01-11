@@ -1,4 +1,5 @@
 <?php
+
 class WC_Settings_RY_Tools extends WC_Settings_Page
 {
     public function __construct()

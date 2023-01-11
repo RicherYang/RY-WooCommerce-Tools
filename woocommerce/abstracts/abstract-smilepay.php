@@ -1,4 +1,5 @@
 <?php
+
 abstract class RY_Abstract_Api_SmilePay extends RY_Abstract_Api
 {
     protected static function generate_trade_no($order_id, $order_prefix = '')

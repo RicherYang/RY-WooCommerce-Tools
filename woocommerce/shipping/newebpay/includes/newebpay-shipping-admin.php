@@ -1,4 +1,5 @@
 <?php
+
 final class RY_NewebPay_Shipping_admin
 {
     public static function init()

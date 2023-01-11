@@ -85,8 +85,7 @@ class RY_SmilePay_Shipping_Meta_Box
                 <?php echo esc_html(($item['IsCollection'] == '1') ? __('Yes') : __('No')); ?>
             </td>
             <td>
-                <?php
-                echo esc_html(sprintf(
+                <?php echo esc_html(sprintf(
                     /* translators: %1$s: date %2$s: time */
                     _x('%1$s %2$s', 'Datetime', 'ry-woocommerce-tools'),
                 $item['edit']->date_i18n(wc_date_format()),
@@ -94,8 +93,7 @@ class RY_SmilePay_Shipping_Meta_Box
             )); ?>
             </td>
             <td>
-                <?php
-                echo esc_html(sprintf(
+                <?php echo esc_html(sprintf(
                     /* translators: %1$s: date %2$s: time */
                     _x('%1$s %2$s', 'Datetime', 'ry-woocommerce-tools'),
                     $item['create']->date_i18n(wc_date_format()),
@@ -135,3 +133,4 @@ $(".print_info").click(function(){
                 );
     }
 }
+?>

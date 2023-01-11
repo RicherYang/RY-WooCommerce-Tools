@@ -1,4 +1,5 @@
 <?php
+
 class RY_SmilePay_Shipping_CVS_711 extends RY_SmilePay_Shipping_Base
 {
     public static $Type = '7NET';

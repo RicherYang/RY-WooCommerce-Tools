@@ -1,4 +1,5 @@
 <?php
+
 final class RY_SmilePay_Gateway
 {
     public static $log_enabled = false;
@@ -130,7 +131,7 @@ final class RY_SmilePay_Gateway
 
     public static function get_code()
     {
-        $order_id = isset($_GET['id']) ? (int) $_GET['id'] : 0;
+        $order_id = (int) wp_unslash($_GET['id'] ?? 0);
         $order = wc_get_order($order_id);
         $url = false;
         if ($order) {
@@ -145,7 +146,8 @@ final class RY_SmilePay_Gateway
 
     public static function shipping_get_code()
     {
-        $order_id = isset($_GET['id']) ? (int) $_GET['id'] : 0;
+        $order_id = (int) wp_unslash($_GET['id'] ?? 0);
+        ;
         $order = wc_get_order($order_id);
         $url = false;
         if ($order) {

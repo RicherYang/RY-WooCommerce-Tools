@@ -1,4 +1,5 @@
 <?php
+
 $settings = [
     'title' => [
         'title' => __('Title', 'woocommerce'),

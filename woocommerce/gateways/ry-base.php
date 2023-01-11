@@ -1,4 +1,5 @@
 <?php
+
 final class RY_Gateway
 {
     protected static $_instance = null;
@@ -20,16 +21,13 @@ final class RY_Gateway
 
     public function gateway_return()
     {
-        $order = null;
-        $return_url = wc_get_endpoint_url('order-received', '', wc_get_checkout_url());
-
-        if (isset($_GET['id'], $_GET['key'])) {
-            $order_key = wc_clean(wp_unslash($_GET['key']));
-            $order = wc_get_order((int) $_GET['id']);
-
-            if ($order && hash_equals($order->get_order_key(), $order_key)) {
-                $return_url = $order->get_checkout_order_received_url();
-            }
+        $order_key = wp_unslash($_GET['key'] ?? '');
+        $order_ID = (int) wp_unslash($_GET['id'] ?? 0);
+        $order = wc_get_order($order_ID);
+        if ($order && hash_equals($order->get_order_key(), $order_key)) {
+            $return_url = $order->get_checkout_order_received_url();
+        } else {
+            $return_url = wc_get_endpoint_url('order-received', '', wc_get_checkout_url());
         }
 
         $return_url = apply_filters('woocommerce_get_return_url', $return_url, $order);

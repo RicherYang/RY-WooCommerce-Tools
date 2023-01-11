@@ -1,4 +1,5 @@
 <?php
+
 class RY_SmilePay_Gateway_Webatm extends RY_SmilePay_Gateway_Base
 {
     public $payment_type = 21;

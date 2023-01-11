@@ -111,8 +111,7 @@ class RY_ECPay_Shipping_Meta_Box
                 <?php echo esc_html(($item['IsCollection'] == 'Y') ? __('Yes') : __('No')); ?>
             </td>
             <td>
-                <?php
-                echo esc_html(sprintf(
+                <?php echo esc_html(sprintf(
                     /* translators: %1$s: date %2$s: time */
                     _x('%1$s %2$s', 'Datetime', 'ry-woocommerce-tools'),
                     $item['edit']->date_i18n(wc_date_format()),
@@ -120,8 +119,7 @@ class RY_ECPay_Shipping_Meta_Box
                 )); ?>
             </td>
             <td>
-                <?php
-                echo esc_html(sprintf(
+                <?php echo esc_html(sprintf(
                     /* translators: %1$s: date %2$s: time */
                     _x('%1$s %2$s', 'Datetime', 'ry-woocommerce-tools'),
                     $item['create']->date_i18n(wc_date_format()),
@@ -129,7 +127,7 @@ class RY_ECPay_Shipping_Meta_Box
                 )); ?>
             </td>
             <td>
-                <a class="button" href="<?php echo esc_url(add_query_arg(['orderid' => $post->ID, 'id' => $item['ID'], 'noheader' => 1], admin_url('admin.php?page=ry_print_ecpay_shipping'))); ?>"><?php esc_html_e('Print', 'ry-woocommerce-tools'); ?></a>
+                <a class="button" href="<?php echo esc_url(add_query_arg(['orderid' => $post->ID, 'id' => $item['ID']], admin_url('admin-post.php?action=ry-print-ecpay-shipping'))); ?>"><?php esc_html_e('Print', 'ry-woocommerce-tools'); ?></a>
             </td>
         </tr>
         <?php
@@ -139,3 +137,4 @@ class RY_ECPay_Shipping_Meta_Box
 <?php
     }
 }
+?>

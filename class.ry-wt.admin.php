@@ -1,4 +1,5 @@
 <?php
+
 final class RY_WT_admin
 {
     protected static $_instance = null;

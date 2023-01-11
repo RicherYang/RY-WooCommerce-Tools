@@ -1,4 +1,5 @@
 <?php
+
 abstract class RY_Abstract_Payment_Gateway extends WC_Payment_Gateway
 {
     protected $check_min_amount = 0;
