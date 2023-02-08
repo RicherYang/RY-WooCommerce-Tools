@@ -1,9 +1,23 @@
 #order_data .order_data_column .form-field._shipping_cvs_store_name_field,
 #order_data .order_data_column .form-field._shipping_cvs_store_telephone_field {
-	float: right;
-	clear: right;
+    float: right;
+    clear: right;
 }
+
 #order_data .order_data_column .form-field._shipping_phone_field {
-	width: 100%;
-	clear: both;
+    width: 100%;
+    clear: both;
+}
+
+#ry-ecpay-shipping-info .ry-shipping-notes,
+#ry-newebpay-shipping-info .ry-shipping-notes,
+#ry-smilepay-shipping-info .ry-shipping-notes {
+    margin: 0;
+    overflow-x: auto;
+}
+
+#ry-ecpay-shipping-info .ry-shipping-notes th,
+#ry-newebpay-shipping-info .ry-shipping-notes th,
+#ry-smilepay-shipping-info .ry-shipping-notes th {
+    word-break: keep-all;
 }
