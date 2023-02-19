@@ -2,7 +2,11 @@
 
 abstract class RY_Abstract_Payment_Gateway extends WC_Payment_Gateway
 {
+    public $min_amount = 0;
+    public $expire_date = 0;
+
     protected $check_min_amount = 0;
+    protected $check_max_amount = 0;
 
     public function process_admin_options()
     {

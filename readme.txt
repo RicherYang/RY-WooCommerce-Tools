@@ -5,7 +5,7 @@ Tags: woocommerce, payment, gateway, shipping, ecpay, newebpay, smilepay
 Requires at least: 5.6
 Requires PHP: 7.4
 Tested up to: 6.1
-Stable tag: 1.12.4
+Stable tag: 1.12.5
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.txt
 
@@ -41,6 +41,9 @@ Please visit the [plugin forum page](https://ry-plugin.com/ry-woocommerce-tools/
 4. NewebPay gateway global settings.
 
 == Changelog ==
+
+= 1.12.5 = 2023/02/19 =
+* 更新 - 修正 PHP 8.1 相容性問題。
 
 = 1.12.4 = 2023/02/08 =
 * 更新 - 修正使用手機無法完整瀏覽物流資訊問題。

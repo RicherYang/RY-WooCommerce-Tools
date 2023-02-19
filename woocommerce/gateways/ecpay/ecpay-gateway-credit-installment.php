@@ -2,6 +2,8 @@
 
 class RY_ECPay_Gateway_Credit_Installment extends RY_ECPay_Gateway_Base
 {
+    public $number_of_periods = '';
+
     public $payment_type = 'Credit';
 
     public function __construct()
@@ -44,12 +46,14 @@ class RY_ECPay_Gateway_Credit_Installment extends RY_ECPay_Gateway_Base
     public function payment_fields()
     {
         parent::payment_fields();
-        echo '<p>' . _x('Number of periods', 'Checkout info', 'ry-woocommerce-tools');
-        echo ' <select name="ecpay_number_of_periods">';
-        foreach ($this->number_of_periods as $number_of_periods) {
-            echo '<option value="' . $number_of_periods . '">' . $number_of_periods . '</option>';
+        if (is_array($this->number_of_periods)) {
+            echo '<p>' . _x('Number of periods', 'Checkout info', 'ry-woocommerce-tools');
+            echo ' <select name="ecpay_number_of_periods">';
+            foreach ($this->number_of_periods as $number_of_periods) {
+                echo '<option value="' . $number_of_periods . '">' . $number_of_periods . '</option>';
+            }
+            echo '</select>';
         }
-        echo '</select>';
     }
 
     public function process_payment($order_id)

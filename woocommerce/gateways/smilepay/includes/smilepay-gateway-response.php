@@ -112,9 +112,12 @@ class RY_SmilePay_Gateway_Response extends RY_SmilePay_Gateway_Api
 
             do_action('ry_smilepay_gateway_response', $ipn_info, $order);
 
-            if (!wc_get_payment_gateway_by_order($order)->get_code_mode) {
-                wp_redirect($order->get_checkout_order_received_url());
-                return ;
+            $payment_gateway = wc_get_payment_gateway_by_order($order);
+            if (property_exists($payment_gateway, 'get_code_mode')) {
+                if (!$payment_gateway->get_code_mode) {
+                    wp_redirect($order->get_checkout_order_received_url());
+                    return ;
+                }
             }
             self::die_success();
         } else {

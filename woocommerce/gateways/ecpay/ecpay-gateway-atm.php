@@ -103,3 +103,4 @@ class RY_ECPay_Gateway_Atm extends RY_ECPay_Gateway_Base
 <?php
     }
 }
+?>

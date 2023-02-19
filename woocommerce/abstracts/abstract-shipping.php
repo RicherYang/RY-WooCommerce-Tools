@@ -2,6 +2,14 @@
 
 abstract class RY_WT_Shipping_Method extends WC_Shipping_Method
 {
+    public $cost = 0;
+    public $cost_requires = '';
+    public $min_amount = 0;
+    public $weight_plus_cost = 0;
+
+    public $cost_offisland = 0;
+    public $cost_cool = 0;
+
     public function init()
     {
         $this->init_settings();
@@ -63,13 +71,13 @@ abstract class RY_WT_Shipping_Method extends WC_Shipping_Method
             'package' => $package
         ];
 
-        if (isset($this->cost_offisland)) {
+        if ($this->cost_offisland > 0) {
             if ((int) WC()->session->get('shipping_cvs_out_island') == 1) {
                 $rate['cost'] += $this->cost_offisland;
             }
         }
 
-        if (isset($this->cost_cool)) {
+        if ($this->cost_cool > 0) {
             foreach (WC()->cart->get_cart() as $cart_item) {
                 $temp = $cart_item['data']->get_meta('_ry_shipping_temp', true);
                 if (empty($temp) && $cart_item['data']->get_type() == 'variation') {
