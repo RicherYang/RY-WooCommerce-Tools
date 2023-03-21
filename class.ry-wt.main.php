@@ -25,7 +25,7 @@ final class RY_WT
             if (is_admin()) {
                 include_once RY_WT_PLUGIN_DIR . 'class.ry-wt.admin.php';
             } else {
-                if ('yes' == self::get_option('show_unpay_title', 'yes')) {
+                if ('yes' === self::get_option('show_unpay_title', 'yes')) {
                     if (apply_filters('ry_show_unpay_title_notice', true)) {
                         self::add_unpay_title_notice(true);
                         add_filter('woocommerce_email_setup_locale', [__CLASS__, 'remove_unpay_title_notice']);
@@ -41,49 +41,48 @@ final class RY_WT
 
             add_filter('woocommerce_localisation_address_formats', [__CLASS__, 'add_address_format']);
 
-            if ('yes' == self::get_option('enabled_ecpay_gateway', 'no')) {
+            if ('yes' === self::get_option('enabled_ecpay_gateway', 'no')) {
                 include_once RY_WT_PLUGIN_DIR . 'woocommerce/gateways/ecpay/ecpay-gateway.php';
             }
-            if ('yes' == self::get_option('enabled_ecpay_shipping', 'no')) {
+            if ('yes' === self::get_option('enabled_ecpay_shipping', 'no')) {
                 include_once RY_WT_PLUGIN_DIR . 'woocommerce/shipping/ecpay/ecpay-shipping.php';
             }
 
-            if ('yes' == self::get_option('enabled_newebpay_gateway', 'no')) {
+            if ('yes' === self::get_option('enabled_newebpay_gateway', 'no')) {
                 include_once RY_WT_PLUGIN_DIR . 'woocommerce/gateways/newebpay/newebpay-gateway.php';
             }
-            if ('yes' == self::get_option('enabled_newebpay_shipping', 'no')) {
+            if ('yes' === self::get_option('enabled_newebpay_shipping', 'no')) {
                 include_once RY_WT_PLUGIN_DIR . 'woocommerce/shipping/newebpay/newebpay-shipping.php';
             }
 
-            if ('yes' == self::get_option('enabled_smilepay_gateway', 'no')) {
+            if ('yes' === self::get_option('enabled_smilepay_gateway', 'no')) {
                 include_once RY_WT_PLUGIN_DIR . 'woocommerce/gateways/smilepay/smilepay-gateway.php';
             }
-            if ('yes' == self::get_option('enabled_smilepay_shipping', 'no')) {
+            if ('yes' === self::get_option('enabled_smilepay_shipping', 'no')) {
                 include_once RY_WT_PLUGIN_DIR . 'woocommerce/shipping/smilepay/smilepay-shipping.php';
             }
 
-            if ('no' == self::get_option('repay_action', 'no')) {
+            if ('no' === self::get_option('repay_action', 'no')) {
                 add_filter('woocommerce_my_account_my_orders_actions', [__CLASS__, 'remove_pay_action']);
             }
-            if ('no' == self::get_option('strength_password', 'yes')) {
+            if ('no' === self::get_option('strength_password', 'yes')) {
                 if ((!is_admin() || defined('DOING_AJAX')) && !defined('DOING_CRON')) {
                     add_action('wp_enqueue_scripts', [__CLASS__, 'remove_strength_password_script'], 20);
                 }
             }
 
             add_filter('woocommerce_form_field_hidden', [__CLASS__, 'form_field_hidden'], 20, 4);
-            add_filter('woocommerce_form_field_hidden_empty', [__CLASS__, 'form_field_hidden_empty'], 20, 4);
             add_filter('woocommerce_form_field_hiddentext', [__CLASS__, 'form_field_hiddentext'], 20, 4);
 
-            if ('no' == self::get_option('show_country_select', 'no')) {
+            if ('no' === self::get_option('show_country_select', 'no')) {
                 add_filter('woocommerce_billing_fields', [__CLASS__, 'hide_country_select'], 20);
                 add_filter('woocommerce_shipping_fields', [__CLASS__, 'hide_country_select'], 20);
                 add_filter('woocommerce_form_field_country_hidden', [__CLASS__, 'form_field_country_hidden'], 20, 4);
             }
-            if ('yes' == self::get_option('last_name_first', 'no')) {
+            if ('yes' === self::get_option('last_name_first', 'no')) {
                 add_filter('woocommerce_default_address_fields', [__CLASS__, 'last_name_first']);
             }
-            if ('yes' == self::get_option('address_zip_first', 'no')) {
+            if ('yes' === self::get_option('address_zip_first', 'no')) {
                 add_filter('woocommerce_default_address_fields', [__CLASS__, 'address_zip_first']);
             }
         }
@@ -188,7 +187,7 @@ final class RY_WT
         $custom_attributes = self::form_field_custom_attributes($args);
         $country = '';
         $countries = 'shipping_country' === $key ? WC()->countries->get_shipping_countries() : WC()->countries->get_allowed_countries();
-        if (count($countries) == 1) {
+        if (1 === count($countries)) {
             $country = current(array_keys($countries));
         } else {
             foreach ($countries as $ckey => $cvalue) {
@@ -208,14 +207,6 @@ final class RY_WT
             $custom_attributes = self::form_field_custom_attributes($args);
             $field .= '<input type="hidden" class="' . esc_attr(implode(' ', $args['input_class'])) . '" name="' . esc_attr($key) . '" id="' . esc_attr($args['id']) . '" value="' . esc_attr($value) . '" ' . implode(' ', $custom_attributes) . '>';
         }
-
-        return $field;
-    }
-
-    public static function form_field_hidden_empty($field, $key, $args, $value)
-    {
-        $custom_attributes = self::form_field_custom_attributes($args);
-        $field .= '<input type="hidden" class="' . esc_attr(implode(' ', $args['input_class'])) . '" name="' . esc_attr($key) . '" id="' . esc_attr($args['id']) . '" value="" ' . implode(' ', $custom_attributes) . '>';
 
         return $field;
     }

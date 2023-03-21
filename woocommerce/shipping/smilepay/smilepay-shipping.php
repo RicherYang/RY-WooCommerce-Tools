@@ -73,7 +73,7 @@ final class RY_SmilePay_Shipping
     public static function add_setting($settings, $current_section)
     {
         if ($current_section == 'smilepay_shipping') {
-            $settings = include(RY_WT_PLUGIN_DIR . 'woocommerce/shipping/smilepay/includes/settings-smilepay-shipping.php');
+            $settings = include RY_WT_PLUGIN_DIR . 'woocommerce/shipping/smilepay/includes/settings-smilepay-shipping.php';
             if ('billing_only' === get_option('woocommerce_ship_to_destination')) {
                 $key = array_search(RY_WT::$option_prefix . 'smilepay_shipping', array_column($settings, 'id'));
                 $settings[$key]['desc'] .= '<br>' . __('Cvs only can enable with shipping destination not force to billing address.', 'ry-woocommerce-tools');
@@ -89,9 +89,9 @@ final class RY_SmilePay_Shipping
             RY_WT::update_option('smilepay_shipping', 'no');
         }
 
-        if ('yes' == RY_WT::get_option('smilepay_shipping', 'no')) {
+        if ('yes' === RY_WT::get_option('smilepay_shipping', 'no')) {
             $enable = true;
-            if ('no' == RY_WT::get_option('smilepay_gateway', 'no')) {
+            if ('no' === RY_WT::get_option('smilepay_gateway', 'no')) {
                 WC_Admin_Settings::add_error(__('SmilePay shipping method need enable SmilePay gateway.', 'ry-woocommerce-tools'));
                 $enable = false;
             }
@@ -127,7 +127,7 @@ final class RY_SmilePay_Shipping
             $fields['shipping']['shipping_phone']['required'] = true;
             $fields['shipping']['shipping_phone']['type'] = 'tel';
         }
-        if ('no' == RY_WT::get_option('keep_shipping_phone', 'no')) {
+        if ('no' === RY_WT::get_option('keep_shipping_phone', 'no')) {
             $fields['shipping']['shipping_phone']['class'][] = 'cvs-info';
         }
 
@@ -178,7 +178,7 @@ final class RY_SmilePay_Shipping
                 $fields['shipping']['shipping_postcode']['required'] = false;
                 $fields['shipping']['shipping_phone']['required'] = true;
             } else {
-                if ('no' == RY_WT::get_option('keep_shipping_phone', 'no')) {
+                if ('no' === RY_WT::get_option('keep_shipping_phone', 'no')) {
                     $fields['shipping']['shipping_phone']['required'] = false;
                 }
             }
@@ -194,7 +194,7 @@ final class RY_SmilePay_Shipping
             $chosen_shipping = array_intersect($chosen_shipping, array_keys(self::$support_methods));
             if (count($chosen_shipping)) {
                 foreach ($_available_gateways as $key => $gateway) {
-                    if (strpos($key, 'ry_smilepay_') === 0) {
+                    if (0 === strpos($key, 'ry_smilepay_')) {
                         continue;
                     }
                     if ($key == 'cod') {
@@ -253,7 +253,7 @@ final class RY_SmilePay_Shipping
 
     public static function shipping_choose_cvs()
     {
-        wp_enqueue_script('ry-shipping');
+        wp_enqueue_script('ry-wt-shipping');
         $chosen_shipping = wc_get_chosen_shipping_method_ids();
         $chosen_shipping = array_intersect($chosen_shipping, array_keys(self::$support_methods));
         $chosen_shipping = array_shift($chosen_shipping);
@@ -287,7 +287,7 @@ final class RY_SmilePay_Shipping
     public static function get_order_support_shipping($items)
     {
         foreach (self::$support_methods as $method => $method_class) {
-            if (strpos($items->get_method_id(), $method) === 0) {
+            if (0 === strpos($items->get_method_id(), $method)) {
                 return $method;
             }
         }

@@ -12,7 +12,7 @@ class RY_SmilePay_Shipping_Response extends RY_Abstract_Api_SmilePay
         add_action('valid_smilepay_shipping_admin_map_request', [__CLASS__, 'doing_admin_map_callback']);
         add_action('valid_smilepay_shipping_request', [__CLASS__, 'doing_callback']);
 
-        if ('yes' == RY_WT::get_option('smilepay_shipping_auto_order_status', 'yes')) {
+        if ('yes' === RY_WT::get_option('smilepay_shipping_auto_order_status', 'yes')) {
             add_action('ry_smilepay_shipping_response_status_2', [__CLASS__, 'shipping_at_cvs'], 10, 2);
             add_action('ry_smilepay_shipping_response_status_4', [__CLASS__, 'shipping_out_cvs'], 10, 2);
             add_action('ry_smilepay_shipping_response_status_3', [__CLASS__, 'shipping_completed'], 10, 2);
@@ -24,7 +24,7 @@ class RY_SmilePay_Shipping_Response extends RY_Abstract_Api_SmilePay
         if (!empty($_POST)) {
             $ipn_info = self::clean_post_data();
             RY_SmilePay_Shipping::log('IPN request: ' . var_export($ipn_info, true));
-            if (self::get_status($ipn_info) == 1) {
+            if (1 == self::get_status($ipn_info)) {
                 do_action('valid_smilepay_shipping_map_request', $ipn_info);
                 return;
             }
@@ -92,12 +92,12 @@ class RY_SmilePay_Shipping_Response extends RY_Abstract_Api_SmilePay
         if (!empty($_POST)) {
             $ipn_info = self::clean_post_data();
             RY_SmilePay_Shipping::log('IPN request: ' . var_export($ipn_info, true));
-            if (self::get_status($ipn_info) == 1) {
+            if (1 == self::get_status($ipn_info)) {
                 do_action('valid_smilepay_shipping_admin_map_request', $ipn_info);
                 return;
             }
         }
-        wp_redirect(admin_url('edit.php?post_type=shop_order'));
+        wp_safe_redirect(admin_url('edit.php?post_type=shop_order'));
     }
 
     public static function doing_admin_map_callback($ipn_info)

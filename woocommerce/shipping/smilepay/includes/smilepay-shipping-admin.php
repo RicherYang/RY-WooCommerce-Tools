@@ -49,7 +49,7 @@ final class RY_SmilePay_Shipping_admin
         $print_info = '';
         $order = wc_get_order($order_ID);
         if (!$order) {
-            wp_redirect(admin_url('edit.php?post_type=shop_order'));
+            wp_safe_redirect(admin_url('edit.php?post_type=shop_order'));
             exit();
         }
 
@@ -65,7 +65,7 @@ final class RY_SmilePay_Shipping_admin
             }
         }
 
-        wp_redirect(admin_url('post.php?post=' . $order_ID . '&action=edit'));
+        wp_safe_redirect(admin_url('post.php?post=' . $order_ID . '&action=edit'));
         exit();
     }
 
@@ -77,7 +77,7 @@ final class RY_SmilePay_Shipping_admin
         $print_info = '';
         $order = wc_get_order($order_ID);
         if (!$order) {
-            wp_redirect(admin_url('edit.php?post_type=shop_order'));
+            wp_safe_redirect(admin_url('edit.php?post_type=shop_order'));
             exit();
         }
 
@@ -99,7 +99,7 @@ final class RY_SmilePay_Shipping_admin
             }
         }
 
-        wp_redirect(admin_url('post.php?post=' . $order_ID . '&action=edit'));
+        wp_safe_redirect(admin_url('post.php?post=' . $order_ID . '&action=edit'));
         exit();
     }
 }

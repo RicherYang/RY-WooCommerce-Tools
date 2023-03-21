@@ -72,7 +72,7 @@ abstract class RY_WT_Shipping_Method extends WC_Shipping_Method
         ];
 
         if ($this->cost_offisland > 0) {
-            if ((int) WC()->session->get('shipping_cvs_out_island') == 1) {
+            if (1 == (int) WC()->session->get('shipping_cvs_out_island')) {
                 $rate['cost'] += $this->cost_offisland;
             }
         }
@@ -80,7 +80,7 @@ abstract class RY_WT_Shipping_Method extends WC_Shipping_Method
         if ($this->cost_cool > 0) {
             foreach (WC()->cart->get_cart() as $cart_item) {
                 $temp = $cart_item['data']->get_meta('_ry_shipping_temp', true);
-                if (empty($temp) && $cart_item['data']->get_type() == 'variation') {
+                if (empty($temp) && 'variation' == $cart_item['data']->get_type()) {
                     $parent_product = wc_get_product($cart_item['data']->get_parent_id());
                     $temp = $parent_product->get_meta('_ry_shipping_temp', true);
                 }

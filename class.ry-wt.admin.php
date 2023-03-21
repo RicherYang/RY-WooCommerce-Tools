@@ -27,7 +27,7 @@ final class RY_WT_admin
     public function plugin_action_links($links)
     {
         return array_merge([
-            'settings' => '<a href="' . admin_url('admin.php?page=wc-settings&tab=rytools') . '">' . __('Settings') . '</a>'
+            'settings' => '<a href="' . esc_url(admin_url('admin.php?page=wc-settings&tab=rytools')) . '">' . __('Settings') . '</a>'
         ], $links);
     }
 

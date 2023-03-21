@@ -9,7 +9,7 @@ class RY_ECPay_Shipping_Response extends RY_Abstract_Api_ECPay
         add_action('woocommerce_api_ry_ecpay_shipping_callback', [__CLASS__, 'check_shipping_callback']);
         add_action('valid_ecpay_shipping_request', [__CLASS__, 'shipping_callback']);
 
-        if ('yes' == RY_WT::get_option('ecpay_shipping_auto_order_status', 'yes')) {
+        if ('yes' === RY_WT::get_option('ecpay_shipping_auto_order_status', 'yes')) {
             add_action('ry_ecpay_shipping_response_status_2063', [__CLASS__, 'shipping_at_cvs'], 10, 2);
             add_action('ry_ecpay_shipping_response_status_2073', [__CLASS__, 'shipping_at_cvs'], 10, 2);
             add_action('ry_ecpay_shipping_response_status_3018', [__CLASS__, 'shipping_at_cvs'], 10, 2);
@@ -48,7 +48,7 @@ class RY_ECPay_Shipping_Response extends RY_Abstract_Api_ECPay
                     if ($order) {
                         RY_ECPay_Shipping::save_cvs_info($order, $cvs_info);
                         $order->save();
-                        wp_redirect(admin_url('post.php?post=' . $order->get_id() . '&action=edit'));
+                        wp_safe_redirect(admin_url('post.php?post=' . $order->get_id() . '&action=edit'));
                         die();
                     }
                 }

@@ -89,7 +89,7 @@ final class RY_ECPay_Shipping
     public static function add_setting($settings, $current_section)
     {
         if ($current_section == 'ecpay_shipping') {
-            $settings = include(RY_WT_PLUGIN_DIR . 'woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php');
+            $settings = include RY_WT_PLUGIN_DIR . 'woocommerce/shipping/ecpay/includes/settings-ecpay-shipping.php';
 
             if ('billing_only' === get_option('woocommerce_ship_to_destination')) {
                 $key = array_search(RY_WT::$option_prefix . 'ecpay_shipping_cvs_type', array_column($settings, 'id'));
@@ -104,7 +104,7 @@ final class RY_ECPay_Shipping
 
     public static function check_option()
     {
-        if ('yes' == RY_WT::get_option('ecpay_shipping', 'no')) {
+        if ('yes' === RY_WT::get_option('ecpay_shipping', 'no')) {
             $enable = true;
             $name = RY_WT::get_option('ecpay_shipping_sender_name');
             if (mb_strwidth($name) < 1 || mb_strwidth($name) > 10) {
@@ -204,11 +204,11 @@ final class RY_ECPay_Shipping
             }
         }
 
-        wp_localize_script('ry-shipping', 'ry_shipping_params', array_merge([
+        wp_localize_script('ry-wt-shipping', 'ry_shipping_params', array_merge([
             'postUrl' => RY_ECPay_Shipping_Api::get_map_post_url()
         ], self::$js_data));
 
-        wp_enqueue_script('ry-shipping');
+        wp_enqueue_script('ry-wt-shipping');
     }
 
     public static function shipping_choose_cvs_info($fragments)
@@ -235,7 +235,7 @@ final class RY_ECPay_Shipping
             $fields['shipping']['shipping_phone']['required'] = true;
             $fields['shipping']['shipping_phone']['type'] = 'tel';
         }
-        if ('no' == RY_WT::get_option('keep_shipping_phone', 'no')) {
+        if ('no' === RY_WT::get_option('keep_shipping_phone', 'no')) {
             $fields['shipping']['shipping_phone']['class'][] = 'cvs-info';
         }
 
@@ -369,7 +369,7 @@ final class RY_ECPay_Shipping
     public static function get_order_support_shipping($items)
     {
         foreach (self::$support_methods as $method => $method_class) {
-            if (strpos($items->get_method_id(), $method) === 0) {
+            if (0 === strpos($items->get_method_id(), $method)) {
                 return $method;
             }
         }
@@ -383,7 +383,7 @@ final class RY_ECPay_Shipping
         if (!is_array($shipping_list)) {
             $shipping_list = [];
         }
-        if (count($shipping_list) == 0) {
+        if (0 === count($shipping_list)) {
             RY_ECPay_Shipping_Api::get_code($order_id);
         }
     }
@@ -398,7 +398,7 @@ final class RY_ECPay_Shipping
 
     public static function add_email_class($emails)
     {
-        $emails['RY_ECPay_Shipping_Email_Customer_CVS_Store'] = include(RY_WT_PLUGIN_DIR . 'woocommerce/emails/ecpay-shipping-customer-cvs-store.php');
+        $emails['RY_ECPay_Shipping_Email_Customer_CVS_Store'] = include RY_WT_PLUGIN_DIR . 'woocommerce/emails/ecpay-shipping-customer-cvs-store.php';
 
         return $emails;
     }

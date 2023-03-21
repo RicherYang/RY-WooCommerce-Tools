@@ -5,7 +5,7 @@ class RY_ECPay_Shipping_Meta_Box
     {
         global $theorder;
 
-        if ($post_type == 'shop_order') {
+        if ('shop_order' == $post_type) {
             if (!is_object($theorder)) {
                 $theorder = wc_get_order($post->ID);
             }
@@ -73,7 +73,7 @@ class RY_ECPay_Shipping_Meta_Box
                 <td>
                     <?php echo esc_html($item['ID']); ?>
                 </td>
-                <?php if ($item['LogisticsType'] == 'CVS') { ?>
+                <?php if ('CVS' == $item['LogisticsType']) { ?>
                 <td>
                     <?php echo esc_html(_x('CVS', 'shipping type', 'ry-woocommerce-tools')); ?>
                 </td>
@@ -88,11 +88,11 @@ class RY_ECPay_Shipping_Meta_Box
                     <?php echo esc_html(_x('Home', 'shipping type', 'ry-woocommerce-tools')); ?>
                     <?php
                     if (isset($item['temp'])) {
-                        if ($item['temp'] == 1) {
+                        if (1 == $item['temp']) {
                             echo '(' . _x('Normal temperature', 'Transport temp', 'ry-woocommerce-tools') . ')';
-                        } elseif ($item['temp'] == 2) {
+                        } elseif (2 == $item['temp']) {
                             echo '(' . _x('Refrigerated', 'Transport temp', 'ry-woocommerce-tools') . ')';
-                        } elseif ($item['temp'] == 3) {
+                        } elseif (3 == $item['temp']) {
                             echo '(' . _x('Freezer', 'Transport temp', 'ry-woocommerce-tools') . ')';
                         }
                     }?>

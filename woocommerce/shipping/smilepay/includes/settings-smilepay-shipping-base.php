@@ -65,7 +65,7 @@ if (!empty($shipping_classes)) {
         'type' => 'title',
         'default' => '',
         /* translators: %s: shipping class setting url */
-        'description' => sprintf(__('These shipping available based on the <a href="%s">product shipping class</a>.', 'ry-woocommerce-tools'), admin_url('admin.php?page=wc-settings&tab=shipping&section=classes')),
+        'description' => sprintf(__('These shipping available based on the <a href="%s">product shipping class</a>.', 'ry-woocommerce-tools'), esc_url(admin_url('admin.php?page=wc-settings&tab=shipping&section=classes'))),
     ];
     foreach ($shipping_classes as $shipping_class) {
         if (!isset($shipping_class->term_id)) {

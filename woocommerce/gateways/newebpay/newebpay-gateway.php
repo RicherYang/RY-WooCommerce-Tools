@@ -61,7 +61,7 @@ final class RY_NewebPay_Gateway
     public static function add_setting($settings, $current_section)
     {
         if ($current_section == 'newebpay_gateway') {
-            $settings = include(RY_WT_PLUGIN_DIR . 'woocommerce/gateways/newebpay/includes/settings-newebpay-gateway.php');
+            $settings = include RY_WT_PLUGIN_DIR . 'woocommerce/gateways/newebpay/includes/settings-newebpay-gateway.php';
         }
         return $settings;
     }
@@ -77,7 +77,7 @@ final class RY_NewebPay_Gateway
 
     public static function check_option()
     {
-        if ('yes' == RY_WT::get_option('newebpay_gateway', 'no')) {
+        if ('yes' === RY_WT::get_option('newebpay_gateway', 'no')) {
             $enable = true;
             if (empty(RY_WT::get_option('newebpay_gateway_MerchantID'))) {
                 $enable = false;
@@ -93,8 +93,8 @@ final class RY_NewebPay_Gateway
                 RY_WT::update_option('newebpay_gateway', 'no');
             }
         }
-        if ('no' == RY_WT::get_option('newebpay_gateway', 'no')) {
-            if ('yes' == RY_WT::get_option('newebpay_shipping', 'no')) {
+        if ('no' === RY_WT::get_option('newebpay_gateway', 'no')) {
+            if ('yes' === RY_WT::get_option('newebpay_shipping', 'no')) {
                 WC_Admin_Settings::add_error(__('NewebPay shipping method need enable NewebPay gateway.', 'ry-woocommerce-tools'));
                 RY_WT::update_option('newebpay_shipping', 'no');
             }

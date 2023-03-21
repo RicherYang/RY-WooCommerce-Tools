@@ -20,7 +20,7 @@ class RY_ECPay_Shipping_Home_Post extends RY_ECPay_Shipping_Base
         ];
 
         if (empty($this->instance_form_fields)) {
-            $this->instance_form_fields = include(RY_WT_PLUGIN_DIR . 'woocommerce/shipping/ecpay/includes/settings-ecpay-shipping-base.php');
+            $this->instance_form_fields = include RY_WT_PLUGIN_DIR . 'woocommerce/shipping/ecpay/includes/settings-ecpay-shipping-base.php';
         }
         $this->instance_form_fields['title']['default'] = $this->method_title;
         $this->instance_form_fields['cost']['default'] = 80;

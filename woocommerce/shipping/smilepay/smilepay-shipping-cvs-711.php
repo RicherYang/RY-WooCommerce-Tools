@@ -17,7 +17,7 @@ class RY_SmilePay_Shipping_CVS_711 extends RY_SmilePay_Shipping_Base
         ];
 
         if (empty($this->instance_form_fields)) {
-            $this->instance_form_fields = include(RY_WT_PLUGIN_DIR . 'woocommerce/shipping/smilepay/includes/settings-smilepay-shipping-base.php');
+            $this->instance_form_fields = include RY_WT_PLUGIN_DIR . 'woocommerce/shipping/smilepay/includes/settings-smilepay-shipping-base.php';
         }
         $this->instance_form_fields['title']['default'] = $this->method_title;
 

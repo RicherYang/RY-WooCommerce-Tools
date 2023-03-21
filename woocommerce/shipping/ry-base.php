@@ -27,7 +27,7 @@ final class RY_WT_Shipping
         if (is_admin()) {
             include_once RY_WT_PLUGIN_DIR . 'woocommerce/admin/shipping-base.php';
         } else {
-            wp_register_script('ry-shipping', RY_WT_PLUGIN_URL . 'style/js/ry_shipping.js', ['jquery'], RY_WT_VERSION, true);
+            wp_register_script('ry-wt-shipping', RY_WT_PLUGIN_URL . 'style/js/ry-shipping.js', ['jquery'], RY_WT_VERSION, true);
         }
     }
 
@@ -102,19 +102,19 @@ final class RY_WT_Shipping
                 if ($items_shipping) {
                     $items_shipping = $items_shipping->get_method_id();
 
-                    if ('yes' == RY_WT::get_option('enabled_ecpay_shipping', 'no')) {
+                    if ('yes' === RY_WT::get_option('enabled_ecpay_shipping', 'no')) {
                         if (array_key_exists($items_shipping, RY_ECPay_Shipping::$support_methods)) {
                             return $this->set_store_address($address, $order, $items_shipping);
                         }
                     }
 
-                    if ('yes' == RY_WT::get_option('enabled_newebpay_shipping', 'no')) {
+                    if ('yes' === RY_WT::get_option('enabled_newebpay_shipping', 'no')) {
                         if (array_key_exists($items_shipping, RY_NewebPay_Shipping::$support_methods)) {
                             return $this->set_store_address($address, $order, $items_shipping);
                         }
                     }
 
-                    if ('yes' == RY_WT::get_option('enabled_smilepay_shipping', 'no')) {
+                    if ('yes' === RY_WT::get_option('enabled_smilepay_shipping', 'no')) {
                         if (array_key_exists($items_shipping, RY_SmilePay_Shipping::$support_methods)) {
                             return $this->set_store_address($address, $order, $items_shipping);
                         }

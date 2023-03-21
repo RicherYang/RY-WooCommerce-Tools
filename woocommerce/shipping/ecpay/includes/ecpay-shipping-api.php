@@ -61,7 +61,7 @@ class RY_ECPay_Shipping_Api extends RY_Abstract_Api_ECPay
                 }
                 $temp_list[$temp]['price'] += $item->get_subtotal();
                 $weight = (float) $item->get_product()->get_weight();
-                if ($weight == 0) {
+                if (0 == $weight) {
                     $weight = (float) RY_WT::get_option('ecpay_shipping_product_weight', 0);
                 }
                 $temp_list[$temp]['weight'] += $weight * $item->get_quantity();
@@ -71,7 +71,7 @@ class RY_ECPay_Shipping_Api extends RY_Abstract_Api_ECPay
                 }
             }
 
-            if (count($temp_list) == 0) {
+            if (0 === count($temp_list)) {
                 continue;
             }
 
@@ -117,7 +117,7 @@ class RY_ECPay_Shipping_Api extends RY_Abstract_Api_ECPay
                 $args['LogisticsSubType'] .= ('C2C' == $CVS_type) ? 'C2C' : '';
             }
 
-            if (count($shipping_list) == 0) {
+            if (0 === count($shipping_list)) {
                 if ($order->get_payment_method() == 'cod') {
                     $args['IsCollection'] = 'Y';
                     $args['CollectionAmount'] = $order->get_total();

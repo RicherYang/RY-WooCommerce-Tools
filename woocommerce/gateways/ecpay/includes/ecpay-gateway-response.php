@@ -85,7 +85,7 @@ class RY_ECPay_Gateway_Response extends RY_Abstract_Api_ECPay
         if (isset($ipn_info['PaymentType'])) {
             $payment_type = $ipn_info['PaymentType'];
             $payment_type = explode('_', $payment_type);
-            if (count($payment_type) == 1) {
+            if (1 == count($payment_type)) {
                 $payment_type[] = '';
             }
             return $payment_type;

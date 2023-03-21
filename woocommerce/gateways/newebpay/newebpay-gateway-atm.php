@@ -11,7 +11,7 @@ class RY_NewebPay_Gateway_Atm extends RY_NewebPay_Gateway_Base
         $this->method_title = __('NewebPay ATM', 'ry-woocommerce-tools');
         $this->method_description = '';
 
-        $this->form_fields = include(RY_WT_PLUGIN_DIR . 'woocommerce/gateways/newebpay/includes/settings-newebpay-gateway-atm.php');
+        $this->form_fields = include RY_WT_PLUGIN_DIR . 'woocommerce/gateways/newebpay/includes/settings-newebpay-gateway-atm.php';
         $this->init_settings();
 
         $this->title = $this->get_option('title');
@@ -27,7 +27,7 @@ class RY_NewebPay_Gateway_Atm extends RY_NewebPay_Gateway_Base
 
     public function is_available()
     {
-        if ('yes' == $this->enabled && WC()->cart) {
+        if ('yes' === $this->enabled && WC()->cart) {
             $total = $this->get_order_total();
 
             if ($total > 0) {
@@ -101,3 +101,4 @@ class RY_NewebPay_Gateway_Atm extends RY_NewebPay_Gateway_Base
 <?php
     }
 }
+?>

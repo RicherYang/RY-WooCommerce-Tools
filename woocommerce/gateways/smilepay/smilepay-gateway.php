@@ -66,7 +66,15 @@ final class RY_SmilePay_Gateway
     public static function add_setting($settings, $current_section)
     {
         if ($current_section == 'smilepay_gateway') {
-            $settings = include(RY_WT_PLUGIN_DIR . 'woocommerce/gateways/smilepay/includes/settings-smilepay-gateway.php');
+            $settings = include RY_WT_PLUGIN_DIR . 'woocommerce/gateways/smilepay/includes/settings-smilepay-gateway.php';
+            if ('yes' === RY_WT::get_option('smilepay_gateway', 'no')) {
+                if (!defined('RY_WSI_VERSION')) {
+                    $settings[1]['desc'] .= sprintf(
+                        __('<p>If you need SmilePay Invoice support, you can try %s</p>', 'ry-woocommerce-tools'),
+                        '<a href="https://ry-plugin.com/ry-woocommerce-smilepay-invoice">RY WooCommerce SmilePay Invoice</a>'
+                    );
+                }
+            }
         }
         return $settings;
     }
@@ -90,7 +98,7 @@ final class RY_SmilePay_Gateway
 
     public static function check_option()
     {
-        if ('yes' == RY_WT::get_option('smilepay_gateway', 'no')) {
+        if ('yes' === RY_WT::get_option('smilepay_gateway', 'no')) {
             if (!extension_loaded('simplexml')) {
                 WC_Admin_Settings::add_error(__('SmilePay gateway method need php simplexml extension.', 'ry-woocommerce-tools'));
                 RY_WT::update_option('smilepay_gateway', 'no');
@@ -116,8 +124,8 @@ final class RY_SmilePay_Gateway
                 RY_WT::update_option('smilepay_gateway', 'no');
             }
         }
-        if ('no' == RY_WT::get_option('smilepay_gateway', 'no')) {
-            if ('yes' == RY_WT::get_option('smilepay_shipping', 'no')) {
+        if ('no' === RY_WT::get_option('smilepay_gateway', 'no')) {
+            if ('yes' === RY_WT::get_option('smilepay_shipping', 'no')) {
                 WC_Admin_Settings::add_error(__('SmilePay shipping method need enable SmilePay gateway.', 'ry-woocommerce-tools'));
                 RY_WT::update_option('smilepay_shipping', 'no');
             }

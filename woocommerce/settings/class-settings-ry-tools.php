@@ -46,15 +46,15 @@ class WC_Settings_RY_Tools extends WC_Settings_Page
         }
 
         if ($current_section == '') {
-            if ('yes' == RY_WT::get_option('enabled_newebpay_shipping', 'no')) {
-                if ('no' == RY_WT::get_option('enabled_newebpay_gateway', 'no')) {
+            if ('yes' === RY_WT::get_option('enabled_newebpay_shipping', 'no')) {
+                if ('no' === RY_WT::get_option('enabled_newebpay_gateway', 'no')) {
                     WC_Admin_Settings::add_error(__('NewebPay shipping method need enable NewebPay gateway.', 'ry-woocommerce-tools'));
                     RY_WT::update_option('enabled_newebpay_shipping', 'no');
                 }
             }
 
-            if ('yes' == RY_WT::get_option('enabled_smilepay_shipping', 'no')) {
-                if ('no' == RY_WT::get_option('enabled_smilepay_gateway', 'no')) {
+            if ('yes' === RY_WT::get_option('enabled_smilepay_shipping', 'no')) {
+                if ('no' === RY_WT::get_option('enabled_smilepay_gateway', 'no')) {
                     WC_Admin_Settings::add_error(__('SmilePay shipping method need enable SmilePay gateway.', 'ry-woocommerce-tools'));
                     RY_WT::update_option('enabled_smilepay_shipping', 'no');
                 }

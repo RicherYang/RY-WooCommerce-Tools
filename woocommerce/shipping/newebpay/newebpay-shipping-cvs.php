@@ -15,7 +15,7 @@ class RY_NewebPay_Shipping_CVS extends RY_WT_Shipping_Method
         ];
 
         if (empty($this->instance_form_fields)) {
-            $this->instance_form_fields = include(RY_WT_PLUGIN_DIR . 'woocommerce/shipping/newebpay/includes/settings-newebpay-shipping-cvs.php');
+            $this->instance_form_fields = include RY_WT_PLUGIN_DIR . 'woocommerce/shipping/newebpay/includes/settings-newebpay-shipping-cvs.php';
         }
         $this->instance_form_fields['title']['default'] = $this->method_title;
 

@@ -14,7 +14,7 @@ class RY_ECPay_Gateway_Barcode extends RY_ECPay_Gateway_Base
         $this->method_title = __('ECPay BARCODE', 'ry-woocommerce-tools');
         $this->method_description = '';
 
-        $this->form_fields = include(RY_WT_PLUGIN_DIR . 'woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-barcode.php');
+        $this->form_fields = include RY_WT_PLUGIN_DIR . 'woocommerce/gateways/ecpay/includes/settings-ecpay-gateway-barcode.php';
         $this->init_settings();
 
         $this->title = $this->get_option('title');
@@ -34,7 +34,7 @@ class RY_ECPay_Gateway_Barcode extends RY_ECPay_Gateway_Base
 
     public function is_available()
     {
-        if ('yes' == $this->enabled && WC()->cart) {
+        if ('yes' === $this->enabled && WC()->cart) {
             $total = $this->get_order_total();
 
             if ($total > 0) {
@@ -117,3 +117,4 @@ class RY_ECPay_Gateway_Barcode extends RY_ECPay_Gateway_Base
 <?php
     }
 }
+?>

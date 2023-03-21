@@ -87,7 +87,7 @@ final class RY_ECPay_Shipping_admin
         }
 
         if (empty($print_list)) {
-            wp_redirect(admin_url('edit.php?post_type=shop_order'));
+            wp_safe_redirect(admin_url('edit.php?post_type=shop_order'));
         } else {
             RY_ECPay_Shipping_Api::get_print_form($print_list);
         }

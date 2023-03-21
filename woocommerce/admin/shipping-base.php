@@ -32,8 +32,8 @@ final class RY_WT_Admin_Shipping
         $screen_id = $screen ? $screen->id : '';
 
         if (in_array($screen_id, ['shop_order', 'edit-shop_order'])) {
-            wp_enqueue_style('ry-shipping-admin-style', RY_WT_PLUGIN_URL . 'style/admin/ry_shipping.css', [], RY_WT_VERSION);
-            wp_enqueue_script('ry-shipping-admin', RY_WT_PLUGIN_URL . 'style/js/admin/ry_shipping.js', ['jquery'], RY_WT_VERSION);
+            wp_enqueue_style('ry-wt-shipping-admin', RY_WT_PLUGIN_URL . 'style/admin/ry-shipping.css', [], RY_WT_VERSION);
+            wp_enqueue_script('ry-wt-shipping-admin', RY_WT_PLUGIN_URL . 'style/js/admin/ry-shipping.js', ['jquery'], RY_WT_VERSION);
         }
     }
 
@@ -146,7 +146,7 @@ final class RY_WT_Admin_Shipping
             $shipping_fields['phone'] = [
                 'label' => __('Phone', 'woocommerce')
             ];
-        } elseif ('yes' == RY_WT::get_option('keep_shipping_phone', 'no')) {
+        } elseif ('yes' === RY_WT::get_option('keep_shipping_phone', 'no')) {
             $shipping_fields['phone'] = [
                 'label' => __('Phone', 'ry-woocommerce-tools')
             ];

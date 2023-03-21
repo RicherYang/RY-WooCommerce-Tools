@@ -42,10 +42,10 @@ class RY_SmilePay_Gateway_Response extends RY_SmilePay_Gateway_Api
                 $strlen = strlen($ipn_info_check_value);
                 $odd = $even = 0;
                 for ($i = 0; $i < $strlen; ++$i) {
-                    if ($i%2 == 0) {
+                    if (0 === $i%2) {
                         $even = $even + $ipn_info_check_value[$i];
                     }
-                    if ($i%2 == 1) {
+                    if (1 === $i%2) {
                         $odd = $odd + $ipn_info_check_value[$i];
                     }
                 }
@@ -95,7 +95,7 @@ class RY_SmilePay_Gateway_Response extends RY_SmilePay_Gateway_Api
 
             switch ($payment_type) {
                 case 1:
-                    if ($ipn_info['Response_id'] == 0) {
+                    if (0 == $ipn_info['Response_id']) {
                         if ($order->is_paid()) {
                             $order->add_order_note(__('Payment failed within paid order', 'ry-woocommerce-tools'));
                             $order->save();
