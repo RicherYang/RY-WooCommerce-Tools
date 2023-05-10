@@ -74,6 +74,12 @@ final class RY_SmilePay_Shipping
     {
         if ($current_section == 'smilepay_shipping') {
             $settings = include RY_WT_PLUGIN_DIR . 'woocommerce/shipping/smilepay/includes/settings-smilepay-shipping.php';
+
+            $checkout_page_id = wc_get_page_id('checkout');
+            if($checkout_page_id && has_block('woocommerce/checkout', $checkout_page_id)) {
+                echo '<div class="notice notice-info"><p><strong>' . esc_html__('NOT test can work with WooCommerce checkout block! Shortcode are recommended.', 'ry-woocommerce-tools') . '</strong></p></div>';
+            }
+
             if ('billing_only' === get_option('woocommerce_ship_to_destination')) {
                 $key = array_search(RY_WT::$option_prefix . 'smilepay_shipping', array_column($settings, 'id'));
                 $settings[$key]['desc'] .= '<br>' . __('Cvs only can enable with shipping destination not force to billing address.', 'ry-woocommerce-tools');

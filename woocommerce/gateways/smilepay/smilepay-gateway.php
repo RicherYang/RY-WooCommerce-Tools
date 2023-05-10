@@ -67,13 +67,17 @@ final class RY_SmilePay_Gateway
     {
         if ($current_section == 'smilepay_gateway') {
             $settings = include RY_WT_PLUGIN_DIR . 'woocommerce/gateways/smilepay/includes/settings-smilepay-gateway.php';
-            if ('yes' === RY_WT::get_option('smilepay_gateway', 'no')) {
-                if (!defined('RY_WSI_VERSION')) {
-                    $settings[1]['desc'] .= sprintf(
-                        __('<p>If you need SmilePay Invoice support, you can try %s</p>', 'ry-woocommerce-tools'),
-                        '<a href="https://ry-plugin.com/ry-woocommerce-smilepay-invoice">RY WooCommerce SmilePay Invoice</a>'
-                    );
-                }
+
+            $checkout_page_id = wc_get_page_id('checkout');
+            if($checkout_page_id && has_block('woocommerce/checkout', $checkout_page_id)) {
+                echo '<div class="notice notice-info"><p><strong>' . esc_html__('NOT test can work with WooCommerce checkout block! Shortcode are recommended.', 'ry-woocommerce-tools') . '</strong></p></div>';
+            }
+
+            if (!defined('RY_WSI_VERSION')) {
+                $settings[1]['desc'] .= sprintf(
+                    __('<p>If you need SmilePay Invoice support, you can try %s</p>', 'ry-woocommerce-tools'),
+                    '<a href="https://ry-plugin.com/ry-woocommerce-smilepay-invoice">RY WooCommerce SmilePay Invoice</a>'
+                );
             }
         }
         return $settings;

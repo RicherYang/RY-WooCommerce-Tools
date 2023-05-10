@@ -62,13 +62,17 @@ final class RY_ECPay_Gateway
     {
         if ($current_section == 'ecpay_gateway') {
             $settings = include RY_WT_PLUGIN_DIR . 'woocommerce/gateways/ecpay/includes/settings-ecpay-gateway.php';
-            if ('yes' === RY_WT::get_option('ecpay_gateway', 'no')) {
-                if (!defined('RY_WEI_VERSION')) {
-                    $settings[1]['desc'] .= sprintf(
-                        __('<p>If you need ECPay Invoice support, you can try %s</p>', 'ry-woocommerce-tools'),
-                        '<a href="https://ry-plugin.com/ry-woocommerce-ecpay-invoice">RY WooCommerce ECPay Invoice</a>'
-                    );
-                }
+
+            $checkout_page_id = wc_get_page_id('checkout');
+            if($checkout_page_id && has_block('woocommerce/checkout', $checkout_page_id)) {
+                echo '<div class="notice notice-info"><p><strong>' . esc_html__('NOT test can work with WooCommerce checkout block! Shortcode are recommended.', 'ry-woocommerce-tools') . '</strong></p></div>';
+            }
+
+            if (!defined('RY_WEI_VERSION')) {
+                $settings[1]['desc'] .= sprintf(
+                    __('<p>If you need ECPay Invoice support, you can try %s</p>', 'ry-woocommerce-tools'),
+                    '<a href="https://ry-plugin.com/ry-woocommerce-ecpay-invoice">RY WooCommerce ECPay Invoice</a>'
+                );
             }
         }
 

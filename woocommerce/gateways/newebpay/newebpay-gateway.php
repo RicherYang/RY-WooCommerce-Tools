@@ -62,6 +62,11 @@ final class RY_NewebPay_Gateway
     {
         if ($current_section == 'newebpay_gateway') {
             $settings = include RY_WT_PLUGIN_DIR . 'woocommerce/gateways/newebpay/includes/settings-newebpay-gateway.php';
+
+            $checkout_page_id = wc_get_page_id('checkout');
+            if($checkout_page_id && has_block('woocommerce/checkout', $checkout_page_id)) {
+                echo '<div class="notice notice-info"><p><strong>' . esc_html__('NOT test can work with WooCommerce checkout block! Shortcode are recommended.', 'ry-woocommerce-tools') . '</strong></p></div>';
+            }
         }
         return $settings;
     }
