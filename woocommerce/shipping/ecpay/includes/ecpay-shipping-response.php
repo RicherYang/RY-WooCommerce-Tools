@@ -17,6 +17,7 @@ class RY_ECPay_Shipping_Response extends RY_Abstract_Api_ECPay
             add_action('ry_ecpay_shipping_response_status_2070', [__CLASS__, 'shipping_out_cvs'], 10, 2);
             add_action('ry_ecpay_shipping_response_status_2072', [__CLASS__, 'shipping_out_cvs'], 10, 2);
             add_action('ry_ecpay_shipping_response_status_2074', [__CLASS__, 'shipping_out_cvs'], 10, 2);
+            add_action('ry_ecpay_shipping_response_status_2076', [__CLASS__, 'shipping_out_cvs'], 10, 2);
             add_action('ry_ecpay_shipping_response_status_3019', [__CLASS__, 'shipping_out_cvs'], 10, 2);
             add_action('ry_ecpay_shipping_response_status_3020', [__CLASS__, 'shipping_out_cvs'], 10, 2);
             add_action('ry_ecpay_shipping_response_status_3023', [__CLASS__, 'shipping_out_cvs'], 10, 2);

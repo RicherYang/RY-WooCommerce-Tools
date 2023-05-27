@@ -5,9 +5,9 @@ Tags: woocommerce, payment, gateway, shipping, ecpay, newebpay, smilepay
 Requires at least: 5.6
 Requires PHP: 7.4
 Tested up to: 6.2
-Stable tag: 1.12.7.1
-License: GPLv2 or later
-License URI: https://www.gnu.org/licenses/gpl-2.0.txt
+Stable tag: 2.0.0
+License: GPLv3
+License URI: https://www.gnu.org/licenses/gpl-3.0.txt
 
 Accept your WooCommerce store payment with ECPay / NewebPay / SmilePay and shipping with ECPay / NewebPay / SmilePay.
 
@@ -41,6 +41,10 @@ Please visit the [plugin forum page](https://ry-plugin.com/ry-woocommerce-tools/
 4. NewebPay gateway global settings.
 
 == Changelog ==
+
+= 2.0.0 - 2023/05/27 =
+* 變更 - 調整授權條款為 GPLv3。
+* 新增 - 支援綠界物流回應狀態碼 2076 。
 
 = 1.12.7.1 - 2023/05/03 =
 * 更新 - 調整 WooCommerce Blocks 的相容性提示內容。
