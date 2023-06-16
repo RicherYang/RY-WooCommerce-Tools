@@ -93,8 +93,7 @@ class RY_NewebPay_Gateway_Api extends RY_Abstract_Api_NewebPay
             echo '<input type="hidden" name="' . esc_attr($key) . '" value="' . esc_attr($value) . '">';
         }
         echo '</form>';
-
-        wc_enqueue_js(self::blockUI_script() . '$("#ry-newebpay-form").submit();');
+        self::submit_sctipt('$("#ry-newebpay-form").submit();', $order);
 
         do_action('ry_newebpay_gateway_checkout', $args, $order, $gateway);
     }

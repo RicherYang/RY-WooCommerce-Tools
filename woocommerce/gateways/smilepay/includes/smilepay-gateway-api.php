@@ -24,19 +24,18 @@ class RY_SmilePay_Gateway_Api extends RY_Abstract_Api_SmilePay
             }
         }
 
-        wc_enqueue_js(self::blockUI_script() . '
-$.ajax({
-type: "GET",
-url: wc_checkout_params.ajax_url,
-data: {
-    action: "' . ($get_shipping ? 'RY_SmilePay_shipping_getcode' : 'RY_SmilePay_getcode') . '",
-    id: ' . $order->get_id() . '
-},
-dataType: "text",
-success: function(result) {
-    window.location = result;
-}
-});');
+        self::submit_sctipt('$.ajax({
+            type: "GET",
+            url: wc_checkout_params.ajax_url,
+            data: {
+                action: "' . ($get_shipping ? 'RY_SmilePay_shipping_getcode' : 'RY_SmilePay_getcode') . '",
+                id: ' . $order->get_id() . '
+            },
+            dataType: "text",
+            success: function(result) {
+                window.location = result;
+            }
+        });', $order);
 
         do_action('ry_smilepay_gateway_checkout', $order);
     }

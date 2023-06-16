@@ -1,9 +1,3 @@
-RY WooCommerce Tools
-
-Copyright 2018 - 2023 by Richer Yang
-
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-
                     GNU GENERAL PUBLIC LICENSE
                        Version 3, 29 June 2007
 
