@@ -61,17 +61,17 @@ abstract class RY_Abstract_Api
                 border: "3px solid #aaa",
                 backgroundColor: "#fff",
             },
-            onBlock: function() {' . $action_script . '}
+            onBlock: function(){ ' . $action_script . ' }
         });';
-        echo "\n" . '<script type="text/javascript">
+        echo "\n" . '<script type="text/javascript">window.addEventListener("pageshow", function(e) {
             let submitID = sessionStorage.getItem("RYWT_submitID");
             if(submitID == "' . esc_attr($submit_ID) . '") {
                 location.href = ' . json_encode($order->get_checkout_order_received_url()) . '
             } else {
                 sessionStorage.setItem("RYWT_submitID", "' . esc_attr($submit_ID) . '");
-                jQuery(function($) {' . $blockUI . '});
+                jQuery(function($){ ' . $blockUI . ' });
             }
-        </script>' . "\n";
+        });</script>' . "\n";
     }
 
     public static function set_do_die()
