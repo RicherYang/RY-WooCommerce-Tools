@@ -24,7 +24,7 @@ class RY_SmilePay_Gateway_Api extends RY_Abstract_Api_SmilePay
             }
         }
 
-        self::submit_sctipt('$.ajax({
+        self::submit_sctipt('jQuery(function($){ $.ajax({
             type: "GET",
             url: wc_checkout_params.ajax_url,
             data: {
@@ -35,7 +35,7 @@ class RY_SmilePay_Gateway_Api extends RY_Abstract_Api_SmilePay
             success: function(result) {
                 window.location = result;
             }
-        });', $order);
+        }); });', $order);
 
         do_action('ry_smilepay_gateway_checkout', $order);
     }

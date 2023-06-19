@@ -86,7 +86,7 @@ class RY_ECPay_Gateway_Api extends RY_Abstract_Api_ECPay
             echo '<input type="hidden" name="' . esc_attr($key) . '" value="' . esc_attr($value) . '">';
         }
         echo '</form>';
-        self::submit_sctipt('$("#ry-ecpay-form").submit();', $order);
+        self::submit_sctipt('document.getElementById("ry-ecpay-form").submit();', $order);
 
         do_action('ry_ecpay_gateway_checkout', $args, $order, $gateway);
     }

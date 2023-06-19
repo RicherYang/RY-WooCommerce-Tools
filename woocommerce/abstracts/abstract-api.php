@@ -60,8 +60,7 @@ abstract class RY_Abstract_Api
                 textAlign: "center",
                 border: "3px solid #aaa",
                 backgroundColor: "#fff",
-            },
-            onBlock: function(){ ' . $action_script . ' }
+            }
         });';
         echo "\n" . '<script type="text/javascript">window.addEventListener("pageshow", function(e) {
             let submitID = sessionStorage.getItem("RYWT_submitID");
@@ -69,7 +68,11 @@ abstract class RY_Abstract_Api
                 location.href = ' . json_encode($order->get_checkout_order_received_url()) . '
             } else {
                 sessionStorage.setItem("RYWT_submitID", "' . esc_attr($submit_ID) . '");
-                jQuery(function($){ ' . $blockUI . ' });
+                if($ === undefined) {
+                    jQuery(function($){ ' . $blockUI . ' setTimeout(function() { ' . $action_script . ' }, 250); });
+                } else {
+                    ' . $blockUI . ' setTimeout(function() { ' . $action_script . ' }, 250);
+                }
             }
         });</script>' . "\n";
     }
