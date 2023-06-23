@@ -46,7 +46,6 @@ abstract class RY_Abstract_Api
 
     protected static function submit_sctipt($action_script, $order)
     {
-        $submit_ID = time();
         $blockUI = '$.blockUI({
             message: "' . __('Please wait.<br>Getting checkout info.', 'ry-woocommerce-tools') . '",
             baseZ: 99999,
@@ -62,19 +61,8 @@ abstract class RY_Abstract_Api
                 backgroundColor: "#fff",
             }
         });';
-        echo "\n" . '<script type="text/javascript">window.addEventListener("pageshow", function(e) {
-            let submitID = sessionStorage.getItem("RYWT_submitID");
-            if(submitID == "' . esc_attr($submit_ID) . '") {
-                location.href = ' . json_encode($order->get_checkout_order_received_url()) . '
-            } else {
-                sessionStorage.setItem("RYWT_submitID", "' . esc_attr($submit_ID) . '");
-                if($ === undefined) {
-                    jQuery(function($){ ' . $blockUI . ' setTimeout(function() { ' . $action_script . ' }, 250); });
-                } else {
-                    ' . $blockUI . ' setTimeout(function() { ' . $action_script . ' }, 250);
-                }
-            }
-        });</script>' . "\n";
+
+        wc_enqueue_js($blockUI . ' setTimeout(function() { ' . $action_script . ' }, 100);');
     }
 
     public static function set_do_die()

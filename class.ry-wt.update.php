@@ -83,8 +83,8 @@ final class RY_WT_update
             RY_WT::update_option('version', '1.10.3');
         }
 
-        if (version_compare($now_version, '2.0.2', '<')) {
-            RY_WT::update_option('version', '2.0.2');
+        if (version_compare($now_version, '2.0.3', '<')) {
+            RY_WT::update_option('version', '2.0.3');
         }
     }
 }
