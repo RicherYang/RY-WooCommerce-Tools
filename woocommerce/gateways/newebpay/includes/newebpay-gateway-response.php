@@ -184,11 +184,16 @@ class RY_NewebPay_Gateway_Response extends RY_NewebPay_Gateway_Api
     protected static function payment_status_unknow($order, $ipn_info, $payment_status)
     {
         RY_NewebPay_Gateway::log('Unknow status: ' . self::get_status($ipn_info) . '(' . self::get_status_msg($ipn_info) . ')');
-        $order->update_status('failed', sprintf(
-            /* translators: 1: Error status code 2: Error status message */
-            __('Payment failed: %1$s (%2$s)', 'ry-woocommerce-tools'),
-            self::get_status($ipn_info),
-            self::get_status_msg($ipn_info)
-        ));
+        if ($order->is_paid()) {
+            $order->add_order_note(__('Payment failed within paid order', 'ry-woocommerce-tools'));
+            $order->save();
+        } else {
+            $order->update_status('failed', sprintf(
+                /* translators: 1: Error status code 2: Error status message */
+                __('Payment failed: %1$s (%2$s)', 'ry-woocommerce-tools'),
+                self::get_status($ipn_info),
+                self::get_status_msg($ipn_info)
+            ));
+        }
     }
 }
