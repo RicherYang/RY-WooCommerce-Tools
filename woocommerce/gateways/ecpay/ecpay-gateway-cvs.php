@@ -3,7 +3,7 @@ class RY_ECPay_Gateway_Cvc extends RY_ECPay_Gateway_Base
 {
     public $payment_type = 'CVS';
 
-    protected $check_min_amount = 30;
+    protected $check_min_amount = 33;
     protected $check_max_amount = 6000;
 
     public function __construct()
@@ -65,7 +65,7 @@ class RY_ECPay_Gateway_Cvc extends RY_ECPay_Gateway_Base
         wc_release_stock_for_order($order);
 
         return [
-            'result'   => 'success',
+            'result' => 'success',
             'redirect' => $order->get_checkout_payment_url(true),
         ];
     }

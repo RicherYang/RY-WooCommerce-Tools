@@ -5,6 +5,7 @@ class RY_ECPay_Gateway_Webatm extends RY_ECPay_Gateway_Base
     public $payment_type = 'WebATM';
 
     protected $check_min_amount = 5;
+    protected $check_max_amount = 49999;
 
     public function __construct()
     {
@@ -51,7 +52,7 @@ class RY_ECPay_Gateway_Webatm extends RY_ECPay_Gateway_Base
         wc_release_stock_for_order($order);
 
         return [
-            'result'   => 'success',
+            'result' => 'success',
             'redirect' => $order->get_checkout_payment_url(true),
         ];
     }

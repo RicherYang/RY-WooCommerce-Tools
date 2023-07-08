@@ -31,10 +31,10 @@ $settings = [
         'default' => '',
         'options' => [
             '' => __('N/A', 'woocommerce'),
-            'coupon'     => __('A valid free shipping coupon', 'woocommerce'),
+            'coupon' => __('A valid free shipping coupon', 'woocommerce'),
             'min_amount' => __('A minimum order amount', 'woocommerce'),
-            'min_amount_or_coupon'     => __('A minimum order amount OR a coupon', 'woocommerce'),
-            'min_amount_and_coupon'       => __('A minimum order amount AND a coupon', 'woocommerce'),
+            'min_amount_or_coupon' => __('A minimum order amount OR a coupon', 'woocommerce'),
+            'min_amount_and_coupon' => __('A minimum order amount AND a coupon', 'woocommerce'),
         ],
         'class' => 'wc-enhanced-select'
     ],

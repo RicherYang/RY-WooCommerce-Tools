@@ -11,6 +11,6 @@ return [
     ],
     [
         'type' => 'sectionend',
-        'id'   => 'pro_version_info',
+        'id' => 'pro_version_info',
     ],
 ];

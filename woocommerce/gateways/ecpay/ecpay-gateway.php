@@ -82,9 +82,21 @@ final class RY_ECPay_Gateway
     public static function get_ecpay_api_info()
     {
         if ('yes' === RY_WT::get_option('ecpay_gateway_testmode', 'no')) {
-            $MerchantID = '2000132';
-            $HashKey = '5294y06JbISpM5x9';
-            $HashIV = 'v77hoKGq4kWxNNIS';
+            $MerchantID = RY_WT::get_option('ecpay_gateway_MerchantID');
+            switch($MerchantID) {
+                case '3002607':
+                    $HashKey = 'pwFHCqoQZGmho4w6';
+                    $HashIV = 'EkRm7iFT261dpevs';
+                    break;
+                case '2000132':
+                default:
+                    $MerchantID = '2000132';
+                    $HashKey = '5294y06JbISpM5x9';
+                    $HashIV = 'v77hoKGq4kWxNNIS';
+                    break;
+            }
+
+
         } else {
             $MerchantID = RY_WT::get_option('ecpay_gateway_MerchantID');
             $HashKey = RY_WT::get_option('ecpay_gateway_HashKey');

@@ -3,7 +3,7 @@ class RY_SmilePay_Gateway_Atm extends RY_SmilePay_Gateway_Base
 {
     public $payment_type = 2;
 
-    protected $check_min_amount = 13;
+    protected $check_min_amount = 8;
     protected $check_max_amount = 30000;
 
     public function __construct()
@@ -58,7 +58,7 @@ class RY_SmilePay_Gateway_Atm extends RY_SmilePay_Gateway_Base
         wc_release_stock_for_order($order);
 
         return [
-            'result'   => 'success',
+            'result' => 'success',
             'redirect' => $order->get_checkout_payment_url(true),
         ];
     }

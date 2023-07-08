@@ -58,7 +58,7 @@ class RY_SmilePay_Gateway_Cvs_Fami extends RY_SmilePay_Gateway_Base
         wc_release_stock_for_order($order);
 
         return [
-            'result'   => 'success',
+            'result' => 'success',
             'redirect' => $order->get_checkout_payment_url(true),
         ];
     }
