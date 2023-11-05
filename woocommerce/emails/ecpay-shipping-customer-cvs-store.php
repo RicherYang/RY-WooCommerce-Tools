@@ -32,12 +32,12 @@ if (!class_exists('RY_ECPay_Shipping_Email_Customer_CVS_Store', false)) {
             return __('Product Pickup Notice', 'ry-woocommerce-tools');
         }
 
-        public function trigger($order_id, $order = false)
+        public function trigger($order_ID, $order = false)
         {
             $this->setup_locale();
 
-            if ($order_id && ! is_a($order, 'WC_Order')) {
-                $order = wc_get_order($order_id);
+            if ($order_ID && ! is_a($order, 'WC_Order')) {
+                $order = wc_get_order($order_ID);
             }
 
             if (is_a($order, 'WC_Order')) {

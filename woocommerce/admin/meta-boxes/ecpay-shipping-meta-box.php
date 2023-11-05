@@ -1,33 +1,26 @@
 <?php
-class RY_ECPay_Shipping_Meta_Box
+
+class RY_ECPay_Shipping_Meta_Box extends RY_WT_WC_Meta_Box
 {
-    public static function add_meta_box($post_type, $post)
+    public static function add_meta_box($post_type, $data_object)
     {
-        global $theorder;
+        if ('shop_order' === $post_type || 'woocommerce_page_wc-orders' === $post_type) {
+            $order = self::get_order_object($data_object);
 
-        if ('shop_order' == $post_type) {
-            if (!is_object($theorder)) {
-                $theorder = wc_get_order($post->ID);
-            }
-
-            foreach ($theorder->get_items('shipping') as $item) {
-                if (RY_ECPay_Shipping::get_order_support_shipping($item) !== false) {
-                    add_meta_box('ry-ecpay-shipping-info', __('ECPay shipping info', 'ry-woocommerce-tools'), [__CLASS__, 'output'], 'shop_order', 'normal', 'default');
+            foreach ($order->get_items('shipping') as $item) {
+                if (false !== RY_WT_WC_ECPay_Shipping::instance()->get_order_support_shipping($item)) {
+                    add_meta_box('ry-ecpay-shipping-info', __('ECPay shipping info', 'ry-woocommerce-tools'), [__CLASS__, 'output'], $post_type, 'normal', 'default');
                     break;
                 }
             }
         }
     }
 
-    public static function output($post)
+    public static function output($data_object)
     {
-        global $theorder;
+        $order = self::get_order_object($data_object);
 
-        if (!is_object($theorder)) {
-            $theorder = wc_get_order($post->ID);
-        }
-
-        $shipping_list = $theorder->get_meta('_ecpay_shipping_info', true);
+        $shipping_list = $order->get_meta('_ecpay_shipping_info', true);
         if (!is_array($shipping_list)) {
             $shipping_list = [];
         } ?>
@@ -109,7 +102,7 @@ class RY_ECPay_Shipping_Meta_Box
                     <?php echo esc_html($item['amount']); ?>
                 </td>
                 <td>
-                    <?php echo esc_html(($item['IsCollection'] == 'Y') ? __('Yes') : __('No')); ?>
+                    <?php echo esc_html(('Y' === $item['IsCollection']) ? __('Yes') : __('No')); ?>
                 </td>
                 <td>
                     <?php echo esc_html(sprintf(
@@ -128,7 +121,7 @@ class RY_ECPay_Shipping_Meta_Box
                     )); ?>
                 </td>
                 <td>
-                    <a class="button" href="<?php echo esc_url(add_query_arg(['orderid' => $post->ID, 'id' => $item['ID']], admin_url('admin-post.php?action=ry-print-ecpay-shipping'))); ?>"><?php esc_html_e('Print', 'ry-woocommerce-tools'); ?></a>
+                    <a class="button" href="<?php echo esc_url(add_query_arg(['orderid' => $order->get_id(), 'id' => $item['ID']], admin_url('admin-post.php?action=ry-print-ecpay-shipping'))); ?>"><?php esc_html_e('Print', 'ry-woocommerce-tools'); ?></a>
                 </td>
             </tr>
             <?php

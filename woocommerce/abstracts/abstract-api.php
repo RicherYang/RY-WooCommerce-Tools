@@ -1,20 +1,20 @@
 <?php
 
-abstract class RY_Abstract_Api
+abstract class RY_WT_WC_Api
 {
-    protected static $do_die = false;
+    protected $do_die = false;
 
-    protected static function pre_generate_trade_no($order_id, $order_prefix = '')
+    protected function pre_generate_trade_no($order_ID, $order_prefix = '')
     {
-        return $order_prefix . $order_id . 'TS' . rand(0, 9) . strrev((string) time());
+        return $order_prefix . $order_ID . 'TS' . rand(0, 9) . strrev((string) time());
     }
 
-    protected static function trade_no_to_order_no($trade_no, $order_prefix = '')
+    protected function trade_no_to_order_no($trade_no, $order_prefix = '')
     {
         return (int) substr($trade_no, strlen($order_prefix), strrpos($trade_no, 'TS'));
     }
 
-    protected static function get_item_name($item_name, $order)
+    protected function get_item_name($item_name, $order)
     {
         if (empty($item_name)) {
             $items = $order->get_items();
@@ -28,7 +28,7 @@ abstract class RY_Abstract_Api
         return $item_name;
     }
 
-    public static function gateway_return()
+    public function gateway_return()
     {
         $order_key = wp_unslash($_GET['key'] ?? '');
         $order_ID = (int) wp_unslash($_GET['id'] ?? 0);
@@ -41,10 +41,10 @@ abstract class RY_Abstract_Api
 
         $return_url = apply_filters('woocommerce_get_return_url', $return_url, $order);
         wp_redirect($return_url);
-        die();
+        exit();
     }
 
-    protected static function submit_sctipt($action_script, $order)
+    protected function submit_sctipt($action_script, $order)
     {
         $blockUI = '$.blockUI({
             message: "' . __('Please wait.<br>Getting checkout info.', 'ry-woocommerce-tools') . '",
@@ -65,26 +65,26 @@ abstract class RY_Abstract_Api
         wc_enqueue_js($blockUI . ' setTimeout(function() { ' . $action_script . ' }, 100);');
     }
 
-    public static function set_do_die()
+    public function set_do_die()
     {
-        self::$do_die = true;
+        $this->do_die = true;
     }
 
-    public static function set_not_do_die()
+    public function set_not_do_die()
     {
-        self::$do_die = false;
+        $this->do_die = false;
     }
 
-    protected static function die_success()
+    protected function die_success()
     {
-        if (self::$do_die) {
+        if ($this->do_die) {
             die('1|OK');
         }
     }
 
-    protected static function die_error()
+    protected function die_error()
     {
-        if (self::$do_die) {
+        if ($this->do_die) {
             die('0|');
         }
     }
