@@ -38,15 +38,15 @@ final class RY_WT_WC_Admin_Shipping
             $order = wc_get_order($order_ID);
             $shipping_method = $this->get_ry_shipping_method($order);
             if ($shipping_method && false !== strpos($shipping_method, '_cvs')) {
+                remove_action('woocommerce_update_order', [$this, 'save_order_update']);
+
                 $order->update_meta_data('_shipping_cvs_store_ID', wc_clean(wp_unslash($_POST['_shipping_cvs_store_ID'])));
                 $order->update_meta_data('_shipping_cvs_store_name', wc_clean(wp_unslash($_POST['_shipping_cvs_store_name'])));
                 $order->update_meta_data('_shipping_cvs_store_address', wc_clean(wp_unslash($_POST['_shipping_cvs_store_address'])));
                 $order->update_meta_data('_shipping_cvs_store_telephone', wc_clean(wp_unslash($_POST['_shipping_cvs_store_telephone'])));
-                $order->save();
-
-                remove_action('woocommerce_update_order', [$this, 'save_order_update']);
                 $order->set_shipping_address_1(wc_clean(wp_unslash($_POST['_shipping_cvs_store_address'])));
                 $order->save();
+
                 add_action('woocommerce_update_order', [$this, 'save_order_update']);
             }
         }

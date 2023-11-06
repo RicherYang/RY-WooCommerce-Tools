@@ -90,5 +90,9 @@ final class RY_WT_Update
 
             RY_WT::update_option('version', '3.0.0');
         }
+		
+		if (version_compare($now_version, '3.0.1', '<')) {
+            RY_WT::update_option('version', '3.0.1');
+        }
     }
 }
