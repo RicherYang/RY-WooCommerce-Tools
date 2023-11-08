@@ -100,15 +100,15 @@ final class RY_WT_WC_Shipping
                 if (count($items_shipping)) {
                     $shipping_method_ID = $items_shipping[array_key_first($items_shipping)]->get_method_id();
 
-                    if (array_key_exists($shipping_method_ID, RY_WT_WC_ECPay_Shipping::$support_methods)) {
+                    if (class_exists('RY_WT_WC_ECPay_Shipping') && array_key_exists($shipping_method_ID, RY_WT_WC_ECPay_Shipping::$support_methods)) {
                         return $this->set_store_address($address, $order, $shipping_method_ID);
                     }
 
-                    if (array_key_exists($shipping_method_ID, RY_WT_WC_NewebPay_Shipping::$support_methods)) {
+                    if (class_exists('RY_WT_WC_NewebPay_Shipping') && array_key_exists($shipping_method_ID, RY_WT_WC_NewebPay_Shipping::$support_methods)) {
                         return $this->set_store_address($address, $order, $shipping_method_ID);
                     }
 
-                    if (array_key_exists($shipping_method_ID, RY_WT_WC_SmilePay_Shipping::$support_methods)) {
+                    if (class_exists('RY_WT_WC_SmilePay_Shipping') && array_key_exists($shipping_method_ID, RY_WT_WC_SmilePay_Shipping::$support_methods)) {
                         return $this->set_store_address($address, $order, $shipping_method_ID);
                     }
                 }

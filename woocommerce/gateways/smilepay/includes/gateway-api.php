@@ -125,7 +125,7 @@ class RY_WT_WC_SmilePay_Gateway_Api extends RY_WT_EC_SmilePay_Api
 
         $ipn_info = @simplexml_load_string($body);
         if (!$ipn_info) {
-            RY_WT_WC_ECPay_Shipping::instance()->log('Get code failed. Parse result failed.', 'warning');
+            RY_WT_WC_SmilePay_Gateway::instance()->log('Get code failed. Parse result failed.', 'warning');
             return false;
         }
 

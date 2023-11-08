@@ -87,7 +87,7 @@ class RY_WT_WC_ECPay_Gateway_Api extends RY_WT_WC_ECPay_Api
         $order->update_meta_data('_ecpay_MerchantTradeNo', $args['MerchantTradeNo']);
         $order->save();
 
-        if (RY_WT_WC_ECPay_Shipping::instance()->testmode) {
+        if (RY_WT_WC_ECPay_Gateway::instance()->testmode) {
             $url = $this->api_test_url['checkout'];
         } else {
             $url = $this->api_url['checkout'];
