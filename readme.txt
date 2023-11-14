@@ -5,7 +5,7 @@ Tags: woocommerce, payment, gateway, shipping, ecpay, newebpay, smilepay
 Requires at least: 6.2
 Requires PHP: 7.4
 Tested up to: 6.3
-Stable tag: 3.0.2
+Stable tag: 3.0.3.1
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.txt
 
@@ -42,7 +42,7 @@ Please visit the [plugin forum page](https://ry-plugin.com/ry-woocommerce-tools/
 
 == Changelog ==
 
-= 3.0.3 - 2023/11/14 =
+= 3.0.3.1 - 2023/11/14 =
 * 修正 - 藍新超商取貨無法使用貨到付款錯誤
 
 = 3.0.2 - 2023/11/07 =
