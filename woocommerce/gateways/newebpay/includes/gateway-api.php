@@ -111,38 +111,40 @@ class RY_WT_WC_NewebPay_Gateway_Api extends RY_WT_WC_NewebPay_Api
 
     protected function add_type_info($args, $order, $gateway)
     {
-        if (isset($args[$gateway::Payment_Type])) {
-            $args[$gateway::Payment_Type] = 1;
-        }
-        switch ($gateway::Payment_Type) {
-            case 'VACC':
-            case 'CVS':
-            case 'BARCODE':
-                $now = new DateTime('', new DateTimeZone('Asia/Taipei'));
-                $now->add(new DateInterval('P' . $gateway->expire_date . 'D'));
-                $args['ExpireDate'] = $now->format('Ymd');
-                break;
-            case 'InstFlag':
-                if (isset($gateway->number_of_periods) && !empty($gateway->number_of_periods)) {
-                    if (is_array($gateway->number_of_periods)) {
-                        $number_of_periods = (int) $order->get_meta('_newebpay_payment_number_of_periods', true);
-                        if (!in_array($number_of_periods, $gateway->number_of_periods)) {
-                            $number_of_periods = 0;
+        if(defined(get_class($gateway) . '::Payment_Type')) {
+            if (isset($args[$gateway::Payment_Type])) {
+                $args[$gateway::Payment_Type] = 1;
+            }
+            switch ($gateway::Payment_Type) {
+                case 'VACC':
+                case 'CVS':
+                case 'BARCODE':
+                    $now = new DateTime('', new DateTimeZone('Asia/Taipei'));
+                    $now->add(new DateInterval('P' . $gateway->expire_date . 'D'));
+                    $args['ExpireDate'] = $now->format('Ymd');
+                    break;
+                case 'InstFlag':
+                    if (isset($gateway->number_of_periods) && !empty($gateway->number_of_periods)) {
+                        if (is_array($gateway->number_of_periods)) {
+                            $number_of_periods = (int) $order->get_meta('_newebpay_payment_number_of_periods', true);
+                            if (!in_array($number_of_periods, $gateway->number_of_periods)) {
+                                $number_of_periods = 0;
+                            }
+                        } else {
+                            $number_of_periods = (int) $gateway->number_of_periods;
                         }
-                    } else {
-                        $number_of_periods = (int) $gateway->number_of_periods;
+                        if (in_array($number_of_periods, [3, 6, 12, 18, 24, 30])) {
+                            $args['InstFlag'] = $number_of_periods;
+                            $order->add_order_note(sprintf(
+                                /* translators: %d number of periods */
+                                __('Credit installment to %d', 'ry-woocommerce-tools'),
+                                $number_of_periods
+                            ));
+                            $order->save();
+                        }
                     }
-                    if (in_array($number_of_periods, [3, 6, 12, 18, 24, 30])) {
-                        $args['InstFlag'] = $number_of_periods;
-                        $order->add_order_note(sprintf(
-                            /* translators: %d number of periods */
-                            __('Credit installment to %d', 'ry-woocommerce-tools'),
-                            $number_of_periods
-                        ));
-                        $order->save();
-                    }
-                }
-                break;
+                    break;
+            }
         }
 
         $items_shipping = $order->get_items('shipping');

@@ -2,7 +2,7 @@
 Contributors: fantasyworld
 Donate link: https://www.paypal.me/RicherYang
 Tags: woocommerce, payment, gateway, shipping, ecpay, newebpay, smilepay
-Requires at least: 5.6
+Requires at least: 6.2
 Requires PHP: 7.4
 Tested up to: 6.3
 Stable tag: 3.0.2
@@ -25,7 +25,7 @@ You can contribute to this plugin to [GitHub repository](https://github.com/Rich
 = Minimum Requirements =
 
 * PHP 7.4+
-* WordPress 5.6+
+* WordPress 6.2+
 * WooCommerce 7.0+
 
 
@@ -41,6 +41,9 @@ Please visit the [plugin forum page](https://ry-plugin.com/ry-woocommerce-tools/
 4. NewebPay gateway global settings.
 
 == Changelog ==
+
+= 3.0.3 - 2023/11/14 =
+* 修正 - 藍新超商取貨無法使用貨到付款錯誤
 
 = 3.0.2 - 2023/11/07 =
 * 修正 - 無法單獨啟動綠界金流模組錯誤。
