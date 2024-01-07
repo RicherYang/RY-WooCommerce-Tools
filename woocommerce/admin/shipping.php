@@ -89,7 +89,7 @@ final class RY_WT_WC_Admin_Shipping
     {
         global $wpdb;
 
-        if ($is_enabled != 1) {
+        if (1 != $is_enabled) {
             return;
         }
 

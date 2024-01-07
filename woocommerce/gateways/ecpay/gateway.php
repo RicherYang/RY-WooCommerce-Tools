@@ -76,6 +76,9 @@ final class RY_WT_WC_ECPay_Gateway extends RY_WT_WC_Model
             case 'ry_ecpay_barcode':
                 $template_file = 'order/order-ecpay-payment-info-barcode.php';
                 break;
+            case 'ry_ecpay_bnpl':
+                $template_file = 'order/order-ecpay-payment-info-bnpl.php';
+                break;
             case 'ry_ecpay_cvs':
                 $template_file = 'order/order-ecpay-payment-info-cvs.php';
                 break;

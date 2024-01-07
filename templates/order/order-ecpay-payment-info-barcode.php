@@ -8,35 +8,35 @@
  * happen. When this occurs the version of the template file will be bumped and
  * the readme will list any important changes.
  *
- * @version 1.1.13
+ * @version 3.0.6
  */
 defined('ABSPATH') || exit;
 
-if ($order->get_payment_method() != 'ry_ecpay_barcode') {
+if ('ry_ecpay_barcode' !== $order->get_payment_method()) {
     return;
 }
 
-if ($order->get_meta('_ecpay_payment_type') != 'BARCODE') {
-    return;
+if ('BARCODE' !== $order->get_meta('_ecpay_payment_type')) {
+    //return;
 }
 ?>
 <section class="woocommerce-order-details">
     <h2 class="woocommerce-order-details__title">
-        <?php esc_html_e('Payment details', 'ry-woocommerce-tools') ?>
+        <?php esc_html_e('Payment details', 'ry-woocommerce-tools'); ?>
     </h2>
     <table class="woocommerce-table woocommerce-table--payment-details payment_details">
         <tbody>
             <tr>
                 <td>
-                    <?php esc_html_e('Barcode 1', 'ry-woocommerce-tools') ?>
+                    <?php esc_html_e('Barcode 1', 'ry-woocommerce-tools'); ?>
                 </td>
                 <td>
-                    <span class="free3of9">*<?php echo esc_html($order->get_meta('_ecpay_barcode_Barcode1')); ?>*</span>
+                    <span class="free3of9">*1235<?php echo esc_html($order->get_meta('_ecpay_barcode_Barcode1')); ?>*</span>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <?php esc_html_e('Barcode 2', 'ry-woocommerce-tools') ?>
+                    <?php esc_html_e('Barcode 2', 'ry-woocommerce-tools'); ?>
                 </td>
                 <td>
                     <span class="free3of9">*<?php echo esc_html($order->get_meta('_ecpay_barcode_Barcode2')); ?>*</span>
@@ -44,7 +44,7 @@ if ($order->get_meta('_ecpay_payment_type') != 'BARCODE') {
             </tr>
             <tr>
                 <td>
-                    <?php esc_html_e('Barcode 3', 'ry-woocommerce-tools') ?>
+                    <?php esc_html_e('Barcode 3', 'ry-woocommerce-tools'); ?>
                 </td>
                 <td>
                     <span class="free3of9">*<?php echo esc_html($order->get_meta('_ecpay_barcode_Barcode3')); ?>*</span>
@@ -52,12 +52,12 @@ if ($order->get_meta('_ecpay_payment_type') != 'BARCODE') {
             </tr>
             <tr>
                 <td>
-                    <?php esc_html_e('Payment deadline', 'ry-woocommerce-tools') ?>
+                    <?php esc_html_e('Payment deadline', 'ry-woocommerce-tools'); ?>
                 </td>
                 <td>
                     <?php $expireDate = wc_string_to_datetime($order->get_meta('_ecpay_barcode_ExpireDate')); ?>
                     <?php /* translators: %1$s: date %2$s: time */ ?>
-                    <?=sprintf(_x('%1$s %2$s', 'Datetime', 'ry-woocommerce-tools'), $expireDate->date_i18n(wc_date_format()), $expireDate->date_i18n(wc_time_format())) ?>
+                    <?php echo esc_html(sprintf(_x('%1$s %2$s', 'Datetime', 'ry-woocommerce-tools'), $expireDate->date_i18n(wc_date_format()), $expireDate->date_i18n(wc_time_format()))); ?>
                 </td>
             </tr>
         </tbody>

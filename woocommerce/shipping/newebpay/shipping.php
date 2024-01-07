@@ -71,7 +71,7 @@ final class RY_WT_WC_NewebPay_Shipping extends RY_WT_WC_Model
                     if (isset($filed['class'])) {
                         $fields['shipping'][$key]['class'][] = 'ry-hide';
                     } elseif (isset($filed['type'])) {
-                        if ($filed['type'] != 'hidden') {
+                        if ('hidden' !== $filed['type']) {
                             $fields['shipping'][$key]['class'] = ['ry-hide'];
                         }
                     }

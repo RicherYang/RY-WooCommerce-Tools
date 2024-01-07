@@ -73,7 +73,7 @@ class RY_WT_WC_NewebPay_Gateway_Response extends RY_WT_WC_NewebPay_Gateway_Api
             RY_WT_WC_NewebPay_Gateway::instance()->log('Found order #' . $order->get_id() . ' Payment status: ' . $payment_status);
 
             $transaction_ID = (string) $order->get_transaction_id();
-            if ($transaction_ID == '' || $transaction_ID != $this->get_transaction_id($ipn_info)) {
+            if ($transaction_ID === '' || $transaction_ID != $this->get_transaction_id($ipn_info)) {
                 $payment_type = $this->get_payment_type($ipn_info);
                 $order->set_transaction_id($this->get_transaction_id($ipn_info));
                 $order->update_meta_data('_newebpay_payment_type', $payment_type);

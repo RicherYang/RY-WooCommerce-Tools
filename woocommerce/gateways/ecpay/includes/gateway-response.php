@@ -80,7 +80,7 @@ class RY_WT_WC_ECPay_Gateway_Response extends RY_WT_WC_ECPay_Api
     protected function set_transaction_info($order, $ipn_info)
     {
         $transaction_ID = (string) $order->get_transaction_id();
-        if ($transaction_ID == '' || !$order->is_paid() || $transaction_ID != $this->get_transaction_id($ipn_info)) {
+        if ('' === $transaction_ID || !$order->is_paid() || $transaction_ID != $this->get_transaction_id($ipn_info)) {
             list($payment_type, $payment_subtype) = $this->get_payment_info($ipn_info);
             $order->set_transaction_id($this->get_transaction_id($ipn_info));
             $order->update_meta_data('_ecpay_payment_type', $payment_type);
@@ -127,12 +127,20 @@ class RY_WT_WC_ECPay_Gateway_Response extends RY_WT_WC_ECPay_Api
             return;
         }
 
-        $expireDate = new DateTime($ipn_info['ExpireDate'], new DateTimeZone('Asia/Taipei'));
-        $order->update_meta_data('_ecpay_atm_BankCode', $ipn_info['BankCode']);
-        $order->update_meta_data('_ecpay_atm_vAccount', $ipn_info['vAccount']);
-        $order->update_meta_data('_ecpay_atm_ExpireDate', $expireDate->format(DATE_ATOM));
-        $order->save();
-        $order->update_status('on-hold');
+        switch($order->get_payment_method()) {
+            case 'ry_ecpay_atm':
+                $expireDate = new DateTime($ipn_info['ExpireDate'], new DateTimeZone('Asia/Taipei'));
+                $order->update_meta_data('_ecpay_atm_BankCode', $ipn_info['BankCode']);
+                $order->update_meta_data('_ecpay_atm_vAccount', $ipn_info['vAccount']);
+                $order->update_meta_data('_ecpay_atm_ExpireDate', $expireDate->format(DATE_ATOM));
+                $order->update_status('on-hold');
+                break;
+            case 'ry_ecpay_bnpl':
+                $order->update_meta_data('_ecpay_bnpl_TradeNo', $ipn_info['BNPLTradeNo']);
+                $order->update_meta_data('_ecpay_bnpl_Installment', $ipn_info['BNPLInstallment']);
+                $order->payment_complete();
+                break;
+        }
     }
 
     public function payment_wait_cvs($ipn_info, $order): void
@@ -143,19 +151,22 @@ class RY_WT_WC_ECPay_Gateway_Response extends RY_WT_WC_ECPay_Api
             return;
         }
 
-        list($payment_type, $payment_subtype) = $this->get_payment_info($ipn_info);
-        $expireDate = new DateTime($ipn_info['ExpireDate'], new DateTimeZone('Asia/Taipei'));
-        if ($payment_type == 'CVS') {
-            $order->update_meta_data('_ecpay_cvs_PaymentNo', $ipn_info['PaymentNo']);
-            $order->update_meta_data('_ecpay_cvs_ExpireDate', $expireDate->format(DATE_ATOM));
-        } else {
-            $order->update_meta_data('_ecpay_barcode_Barcode1', $ipn_info['Barcode1']);
-            $order->update_meta_data('_ecpay_barcode_Barcode2', $ipn_info['Barcode2']);
-            $order->update_meta_data('_ecpay_barcode_Barcode3', $ipn_info['Barcode3']);
-            $order->update_meta_data('_ecpay_barcode_ExpireDate', $expireDate->format(DATE_ATOM));
+        switch($order->get_payment_method()) {
+            case 'ry_ecpay_barcode':
+                $expireDate = new DateTime($ipn_info['ExpireDate'], new DateTimeZone('Asia/Taipei'));
+                $order->update_meta_data('_ecpay_barcode_Barcode1', $ipn_info['Barcode1']);
+                $order->update_meta_data('_ecpay_barcode_Barcode2', $ipn_info['Barcode2']);
+                $order->update_meta_data('_ecpay_barcode_Barcode3', $ipn_info['Barcode3']);
+                $order->update_meta_data('_ecpay_barcode_ExpireDate', $expireDate->format(DATE_ATOM));
+                $order->update_status('on-hold');
+                break;
+            case 'ry_ecpay_cvs':
+                $expireDate = new DateTime($ipn_info['ExpireDate'], new DateTimeZone('Asia/Taipei'));
+                $order->update_meta_data('_ecpay_cvs_PaymentNo', $ipn_info['PaymentNo']);
+                $order->update_meta_data('_ecpay_cvs_ExpireDate', $expireDate->format(DATE_ATOM));
+                $order->update_status('on-hold');
+                break;
         }
-        $order->save();
-        $order->update_status('on-hold');
     }
 
     public function payment_failed($ipn_info, $order): void

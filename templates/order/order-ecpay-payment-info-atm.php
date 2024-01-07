@@ -8,35 +8,35 @@
  * happen. When this occurs the version of the template file will be bumped and
  * the readme will list any important changes.
  *
- * @version 1.2.1
+ * @version 3.0.6
  */
 defined('ABSPATH') || exit;
 
-if ($order->get_payment_method() != 'ry_ecpay_atm') {
+if ('ry_ecpay_atm' !== $order->get_payment_method()) {
     return;
 }
 
-if ($order->get_meta('_ecpay_payment_type') != 'ATM') {
+if ('ATM' !== $order->get_meta('_ecpay_payment_type')) {
     return;
 }
 ?>
 <section class="woocommerce-order-details">
     <h2 class="woocommerce-order-details__title">
-        <?php esc_html_e('Payment details', 'ry-woocommerce-tools') ?>
+        <?php esc_html_e('Payment details', 'ry-woocommerce-tools'); ?>
     </h2>
     <table class="woocommerce-table woocommerce-table--payment-details payment_details">
         <tbody>
             <tr>
                 <td>
-                    <?php esc_html_e('Bank', 'ry-woocommerce-tools') ?>
+                    <?php esc_html_e('Bank', 'ry-woocommerce-tools'); ?>
                 </td>
                 <td>
-                    <?php echo esc_html(_x($order->get_meta('_ecpay_atm_BankCode'), 'Bank code', 'ry-woocommerce-tools')) ?>
+                    <?php echo esc_html(_x($order->get_meta('_ecpay_atm_BankCode'), 'Bank code', 'ry-woocommerce-tools')); ?>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <?php esc_html_e('Bank code', 'ry-woocommerce-tools') ?>
+                    <?php esc_html_e('Bank code', 'ry-woocommerce-tools'); ?>
                 </td>
                 <td>
                     <?php echo esc_html($order->get_meta('_ecpay_atm_BankCode')); ?>
@@ -44,19 +44,19 @@ if ($order->get_meta('_ecpay_payment_type') != 'ATM') {
             </tr>
             <tr>
                 <td>
-                    <?php esc_html_e('ATM Bank account', 'ry-woocommerce-tools') ?>
+                    <?php esc_html_e('ATM Bank account', 'ry-woocommerce-tools'); ?>
                 </td>
                 <td>
-                    <?=wordwrap($order->get_meta('_ecpay_atm_vAccount'), 4, '<span> </span>', true) ?>
+                    <?php echo wordwrap(esc_html($order->get_meta('_ecpay_atm_vAccount')), 4, '<span> </span>', true); ?>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <?php esc_html_e('Payment deadline', 'ry-woocommerce-tools') ?>
+                    <?php esc_html_e('Payment deadline', 'ry-woocommerce-tools'); ?>
                 </td>
                 <td>
                     <?php $expireDate = wc_string_to_datetime($order->get_meta('_ecpay_atm_ExpireDate')); ?>
-                    <?=$expireDate->date_i18n(wc_date_format()); ?>
+                    <?php echo $expireDate->date_i18n(wc_date_format()); ?>
                 </td>
             </tr>
         </tbody>

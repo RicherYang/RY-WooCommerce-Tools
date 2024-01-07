@@ -19,33 +19,35 @@ final class RY_WT_Update
         if (version_compare($now_version, '1.1.2', '<')) {
             @set_time_limit(300);
 
-            include_once RY_WT_PLUGIN_DIR . 'woocommerce/shipping/ecpay/ecpay-shipping.php';
+            if (!empty($now_version) ) {
+                include_once RY_WT_PLUGIN_DIR . 'woocommerce/shipping/ecpay/shipping.php';
 
-            $wpdb->update($wpdb->postmeta, ['meta_key' => '_ecpay_shipping_info'], ['meta_key' => '_shipping_cvs_info']);
+                $wpdb->update($wpdb->postmeta, ['meta_key' => '_ecpay_shipping_info'], ['meta_key' => '_shipping_cvs_info']);
 
-            $cvs_type = RY_WT::get_option('ecpay_shipping_cvs_type');
-            $meta_rows = $wpdb->get_results(
-                "SELECT post_id FROM {$wpdb->postmeta} WHERE meta_key = '_ecpay_shipping_info'"
-            );
-            foreach ($meta_rows as $meta_row) {
-                if ($order = wc_get_order($meta_row->post_id)) {
-                    $shipping_list = $order->get_meta('_ecpay_shipping_info', true);
-                    if (!is_array($shipping_list)) {
-                        continue;
-                    }
+                $cvs_type = RY_WT::get_option('ecpay_shipping_cvs_type');
+                $meta_rows = $wpdb->get_results(
+                    "SELECT post_id FROM {$wpdb->postmeta} WHERE meta_key = '_ecpay_shipping_info'"
+                );
+                foreach ($meta_rows as $meta_row) {
+                    if ($order = wc_get_order($meta_row->post_id)) {
+                        $shipping_list = $order->get_meta('_ecpay_shipping_info', true);
+                        if (!is_array($shipping_list)) {
+                            continue;
+                        }
 
-                    foreach ($order->get_items('shipping') as $item) {
-                        $shipping_method = RY_WT_WC_ECPay_Shipping::instance()->get_order_support_shipping($item);
-                        if (false !== $shipping_method) {
-                            $method_class = RY_WT_WC_ECPay_Shipping::$support_methods[$shipping_method];
-                            foreach ($shipping_list as &$info) {
-                                $info['LogisticsType'] = $method_class::Shipping_Type;
-                                $info['LogisticsSubType'] = $method_class::Shipping_Sub_Type . (('C2C' === $cvs_type) ? 'C2C' : '');
+                        foreach ($order->get_items('shipping') as $item) {
+                            $shipping_method = RY_WT_WC_ECPay_Shipping::instance()->get_order_support_shipping($item);
+                            if (false !== $shipping_method) {
+                                $method_class = RY_WT_WC_ECPay_Shipping::$support_methods[$shipping_method];
+                                foreach ($shipping_list as &$info) {
+                                    $info['LogisticsType'] = $method_class::Shipping_Type;
+                                    $info['LogisticsSubType'] = $method_class::Shipping_Sub_Type . (('C2C' === $cvs_type) ? 'C2C' : '');
+                                }
                             }
                         }
+                        $order->update_meta_data('_ecpay_shipping_info', $shipping_list);
+                        $order->save();
                     }
-                    $order->update_meta_data('_ecpay_shipping_info', $shipping_list);
-                    $order->save();
                 }
             }
 
@@ -90,9 +92,9 @@ final class RY_WT_Update
 
             RY_WT::update_option('version', '3.0.0');
         }
-		
-		if (version_compare($now_version, '3.0.3.1', '<')) {
-            RY_WT::update_option('version', '3.0.3.1');
+
+        if (version_compare($now_version, '3.0.6', '<')) {
+            RY_WT::update_option('version', '3.0.6');
         }
     }
 }

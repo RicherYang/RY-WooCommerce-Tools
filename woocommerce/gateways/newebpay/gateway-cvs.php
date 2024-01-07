@@ -47,21 +47,21 @@ class RY_NewebPay_Gateway_Cvs extends RY_WT_WC_NewebPay_Payment_Gateway
 
     public function admin_payment_info($order)
     {
-        if ($order->get_payment_method() != 'ry_newebpay_cvs') {
+        if ($this->id !== $order->get_payment_method()) {
             return;
         }
-        $payment_type = $order->get_meta('_newebpay_payment_type'); ?>
-<h3 style="clear:both"><?php esc_html_e('Payment details', 'ry-woocommerce-tools') ?>
+        ?>
+<h3 style="clear:both"><?php esc_html_e('Payment details', 'ry-woocommerce-tools'); ?>
 </h3>
 <table>
     <tr>
-        <td><?php esc_html_e('CVS code', 'ry-woocommerce-tools') ?>
+        <td><?php esc_html_e('CVS code', 'ry-woocommerce-tools'); ?>
         </td>
         <td><?php echo esc_html($order->get_meta('_newebpay_cvs_PaymentNo')); ?>
         </td>
     </tr>
     <tr>
-        <td><?php esc_html_e('Payment deadline', 'ry-woocommerce-tools') ?>
+        <td><?php esc_html_e('Payment deadline', 'ry-woocommerce-tools'); ?>
         </td>
         <td><?php echo esc_html($order->get_meta('_newebpay_cvs_ExpireDate')); ?>
         </td>

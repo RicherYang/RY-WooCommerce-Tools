@@ -47,24 +47,25 @@ class RY_ECPay_Gateway_Atm extends RY_WT_WC_ECPay_Payment_Gateway
 
     public function admin_payment_info($order)
     {
-        if ($order->get_payment_method() != 'ry_ecpay_atm') {
+        if ($this->id !== $order->get_payment_method()) {
             return;
-        }?>
-<h3 style="clear:both"><?php esc_html_e('Payment details', 'ry-woocommerce-tools') ?></h3>
+        }
+        ?>
+<h3 style="clear:both"><?php esc_html_e('Payment details', 'ry-woocommerce-tools'); ?></h3>
 <table>
     <tr>
-        <td><?php esc_html_e('Bank', 'ry-woocommerce-tools') ?>
+        <td><?php esc_html_e('Bank', 'ry-woocommerce-tools'); ?>
         </td>
-        <td><?=_x($order->get_meta('_ecpay_atm_BankCode'), 'Bank code', 'ry-woocommerce-tools') ?> (<?php echo esc_html($order->get_meta('_ecpay_atm_BankCode')); ?>)</td>
+        <td><?=_x($order->get_meta('_ecpay_atm_BankCode'), 'Bank code', 'ry-woocommerce-tools'); ?> (<?php echo esc_html($order->get_meta('_ecpay_atm_BankCode')); ?>)</td>
     </tr>
     <tr>
-        <td><?php esc_html_e('ATM Bank account', 'ry-woocommerce-tools') ?>
+        <td><?php esc_html_e('ATM Bank account', 'ry-woocommerce-tools'); ?>
         </td>
         <td><?php echo esc_html($order->get_meta('_ecpay_atm_vAccount')); ?>
         </td>
     </tr>
     <tr>
-        <td><?php esc_html_e('Payment deadline', 'ry-woocommerce-tools') ?>
+        <td><?php esc_html_e('Payment deadline', 'ry-woocommerce-tools'); ?>
         </td>
         <td><?php echo esc_html($order->get_meta('_ecpay_atm_ExpireDate')); ?>
         </td>

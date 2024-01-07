@@ -96,6 +96,9 @@ final class RY_WT
     {
         wp_register_script('ry-wt-shipping', RY_WT_PLUGIN_URL . 'style/js/shipping.js', ['jquery'], RY_WT_VERSION, true);
 
+        if (is_checkout() || is_view_order_page() || is_order_received_page()) {
+            wp_enqueue_style('ry_wt_ecpay_shipping', RY_WT_PLUGIN_URL . 'style/ry-wt.css');
+        }
     }
 
     public static function get_option($option, $default = false)

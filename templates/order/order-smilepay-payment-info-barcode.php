@@ -8,27 +8,27 @@
  * happen. When this occurs the version of the template file will be bumped and
  * the readme will list any important changes.
  *
- * @version 1.1.13
+ * @version 3.0.6
  */
 defined('ABSPATH') || exit;
 
-if ($order->get_payment_method() != 'ry_smilepay_barcode') {
+if ('ry_smilepay_barcode' !== $order->get_payment_method()) {
     return;
 }
 
-if ($order->get_meta('_smilepay_payment_type') != '3') {
+if ('3' !== $order->get_meta('_smilepay_payment_type')) {
     return;
 }
 ?>
 <section class="woocommerce-order-details">
     <h2 class="woocommerce-order-details__title">
-        <?php esc_html_e('Payment details', 'ry-woocommerce-tools') ?>
+        <?php esc_html_e('Payment details', 'ry-woocommerce-tools'); ?>
     </h2>
     <table class="woocommerce-table woocommerce-table--payment-details payment_details">
         <tbody>
             <tr>
                 <td>
-                    <?php esc_html_e('Barcode 1', 'ry-woocommerce-tools') ?>
+                    <?php esc_html_e('Barcode 1', 'ry-woocommerce-tools'); ?>
                 </td>
                 <td>
                     <span class="free3of9">*<?php echo esc_html($order->get_meta('_smilepay_barcode_Barcode1')); ?>*</span>
@@ -36,7 +36,7 @@ if ($order->get_meta('_smilepay_payment_type') != '3') {
             </tr>
             <tr>
                 <td>
-                    <?php esc_html_e('Barcode 2', 'ry-woocommerce-tools') ?>
+                    <?php esc_html_e('Barcode 2', 'ry-woocommerce-tools'); ?>
                 </td>
                 <td>
                     <span class="free3of9">*<?php echo esc_html($order->get_meta('_smilepay_barcode_Barcode2')); ?>*</span>
@@ -44,7 +44,7 @@ if ($order->get_meta('_smilepay_payment_type') != '3') {
             </tr>
             <tr>
                 <td>
-                    <?php esc_html_e('Barcode 3', 'ry-woocommerce-tools') ?>
+                    <?php esc_html_e('Barcode 3', 'ry-woocommerce-tools'); ?>
                 </td>
                 <td>
                     <span class="free3of9">*<?php echo esc_html($order->get_meta('_smilepay_barcode_Barcode3')); ?>*</span>
@@ -52,7 +52,7 @@ if ($order->get_meta('_smilepay_payment_type') != '3') {
             </tr>
             <tr>
                 <td>
-                    <?php esc_html_e('Payment deadline', 'ry-woocommerce-tools') ?>
+                    <?php esc_html_e('Payment deadline', 'ry-woocommerce-tools'); ?>
                 </td>
                 <td>
                     <?php $expireDate = wc_string_to_datetime($order->get_meta('_smilepay_barcode_ExpireDate')); ?>

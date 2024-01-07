@@ -169,7 +169,7 @@ final class RY_WT_WC_ECPay_Shipping extends RY_WT_WC_Model
                             }
                         }
                     } elseif (isset($filed['type'])) {
-                        if ($filed['type'] != 'hidden') {
+                        if ('hidden' !== $filed['type']) {
                             $fields['shipping'][$key]['class'] = ['ry-hide'];
                         }
                     }
@@ -284,7 +284,9 @@ final class RY_WT_WC_ECPay_Shipping extends RY_WT_WC_Model
             if (false === strpos($chosen_shipping[0], 'cvs')) {
                 $this->js_data['ecpay_home'] = true;
             } else {
-                wc_get_template('cart/cart-choose-cvs.php', [], '', RY_WT_PLUGIN_DIR . 'templates/');
+                wc_get_template('cart/cart-choose-cvs.php', [
+                    'post_url' => RY_WT_WC_ECPay_Shipping_Api::instance()->get_map_post_url()
+                ], '', RY_WT_PLUGIN_DIR . 'templates/');
 
                 list($MerchantID, $HashKey, $HashIV, $CVS_type) = $this->get_api_info();
                 $method_class = self::$support_methods[$chosen_shipping[0]];
@@ -299,9 +301,9 @@ final class RY_WT_WC_ECPay_Shipping extends RY_WT_WC_Model
             }
         }
 
-        wp_localize_script('ry-wt-shipping', 'ry_shipping_params', array_merge([
+        wp_localize_script('ry-wt-shipping', 'ry_shipping_params', [
             'postUrl' => RY_WT_WC_ECPay_Shipping_Api::instance()->get_map_post_url()
-        ], $this->js_data));
+        ]);
 
         wp_enqueue_script('ry-wt-shipping');
     }

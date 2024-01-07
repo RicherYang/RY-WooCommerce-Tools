@@ -8,18 +8,18 @@
  * happen. When this occurs the version of the template file will be bumped and
  * the readme will list any important changes.
  *
- * @version 1.1.7
+ * @version 3.0.4
  */
 defined('ABSPATH') || exit;
 ?>
 <tr>
     <th>
-        <?php echo __('Convenience store', 'ry-woocommerce-tools') ?>
+        <?php esc_html_e('Convenience store', 'ry-woocommerce-tools') ?>
     </th>
-    <td data-title="<?php echo esc_attr__('Choose convenience Store', 'ry-woocommerce-tools') ?>">
+    <td data-title="<?php esc_attr_e('Choose convenience Store', 'ry-woocommerce-tools') ?>">
         <div class="choose_cvs">
-            <button type="button" class="button" onclick="RYECPaySendCvsPost();"><?php echo __('Choose convenience store', 'ry-woocommerce-tools') ?></button>
-            <span class="show_choose_cvs_name"><br><?php echo __('Convenience store:', 'ry-woocommerce-tools') ?>
+            <button type="button" class="button" onclick="RYECPaySendCvsPost('<?php echo esc_attr($post_url); ?>');"><?php esc_html_e('Choose convenience store', 'ry-woocommerce-tools') ?></button>
+            <span class="show_choose_cvs_name"><br><?php esc_html_e('Convenience store:', 'ry-woocommerce-tools') ?>
                 <span class="choose_cvs_name"></span>
             </span>
         </div>

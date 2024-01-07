@@ -1,10 +1,6 @@
-var ecpayShippingInfo;
+let ecpayShippingInfo;
 
 jQuery(function ($) {
-
-    if (typeof ry_shipping_params !== 'undefined') {
-        ecpayShippingInfo = ry_shipping_params.postData;
-    }
     $('.woocommerce-checkout p.ry-hide').hide();
 
     $(document.body).on('updated_checkout', function (e, data) {
@@ -69,13 +65,13 @@ jQuery(function ($) {
         }
 
         if (window.sessionStorage.getItem('RYECPayTempCheckoutForm') !== null) {
-            var formData = JSON.parse(window.sessionStorage.getItem('RYECPayTempCheckoutForm')),
+            let formData = JSON.parse(window.sessionStorage.getItem('RYECPayTempCheckoutForm')),
                 notSetData = ['LogisticsSubType', 'CVSStoreID', 'CVSStoreName', 'CVSAddress', 'CVSTelephone', 'terms'];
-            for (var idx in formData) {
-                if (formData[idx].name.substr(0, 1) == '_') {
-                } else if (notSetData.includes(formData[idx].name)) {
+            for (const key in formData) {
+                if (formData[key].name.substr(0, 1) == '_') {
+                } else if (notSetData.includes(formData[key].name)) {
                 } else {
-                    var $item = jQuery('[name="' + formData[idx].name + '"]');
+                    let $item = jQuery('[name="' + formData[key].name + '"]');
                     switch ($item.prop('tagName')) {
                         case 'INPUT':
                             if ($item.attr('type') == 'checkbox') {
@@ -85,7 +81,7 @@ jQuery(function ($) {
                                 break;
                             }
                             if ($item.attr('type') == 'radio') {
-                                $item = jQuery('[name="' + formData[idx].name + '"][value="' + formData[idx].value + '"]');
+                                $item = jQuery('[name="' + formData[key].name + '"][value="' + formData[key].value + '"]');
                                 if ($item.prop('checked') === false) {
                                     $item.trigger('click');
                                 }
@@ -93,9 +89,9 @@ jQuery(function ($) {
                             }
                         case 'TEXTAREA':
                         case 'SELECT':
-                            var oldVal = $item.val();
-                            $item.val(formData[idx].value);
-                            if (oldVal != formData[idx].value) {
+                            const oldVal = $item.val();
+                            $item.val(formData[key].value);
+                            if (oldVal != formData[key].value) {
                                 $item.trigger('change');
                             }
                             break;
@@ -109,11 +105,14 @@ jQuery(function ($) {
     });
 });
 
-function RYECPaySendCvsPost() {
+function RYECPaySendCvsPost(postUrl) {
+    if (postUrl === undefined && ry_shipping_params !== undefined) {
+        postUrl = ry_shipping_params.postUrl;
+    }
     window.sessionStorage.setItem('RYECPayTempCheckoutForm', JSON.stringify(jQuery('form.checkout').serializeArray()));
-    var html = '<form id="RYECPaySendCvsForm" action="' + ry_shipping_params.postUrl + '" method="post">';
-    for (var idx in ecpayShippingInfo) {
-        html += '<input type="hidden" name="' + idx + '" value="' + ecpayShippingInfo[idx] + '">';
+    let html = '<form id="RYECPaySendCvsForm" action="' + postUrl + '" method="post">';
+    for (const key in ecpayShippingInfo) {
+        html += '<input type="hidden" name="' + key + '" value="' + ecpayShippingInfo[key] + '">';
     }
     if (window.innerWidth < 1024) {
         html += '<input type="hidden" name="Device" value="1">';

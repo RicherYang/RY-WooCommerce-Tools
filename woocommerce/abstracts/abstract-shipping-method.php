@@ -65,7 +65,7 @@ abstract class RY_WT_WC_Shipping_Method extends WC_Shipping_Method
                     }
                 }
                 foreach ($found_shipping_class as $shipping_class_term_id => $value) {
-                    if ('yes' != $this->get_option('class_available_' . $shipping_class_term_id, 'yes')) {
+                    if ('yes' !== $this->get_option('class_available_' . $shipping_class_term_id, 'yes')) {
                         $available = false;
                         break;
                     }
@@ -104,7 +104,7 @@ abstract class RY_WT_WC_Shipping_Method extends WC_Shipping_Method
                     $temp = $parent_product->get_meta('_ry_shipping_temp', true);
                 }
                 $temp = empty($temp) ? '1' : $temp;
-                if ($temp != '1') {
+                if ($temp !== '1') {
                     $rate['cost'] += $this->cost_cool;
                     break;
                 }

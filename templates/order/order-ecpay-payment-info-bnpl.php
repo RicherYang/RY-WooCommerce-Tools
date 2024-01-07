@@ -1,6 +1,6 @@
 <?php
 /**
- * This template can be overridden by copying it to yourtheme/woocommerce/order/order-newebpay-payment-info-cvs.php
+ * This template can be overridden by copying it to yourtheme/woocommerce/order/order-ecpay-payment-info-bnpl.php
  *
  * HOWEVER, on occasion RY WooCommerce Tools will need to update template files and you
  * (the theme developer) will need to copy the new files to your theme to
@@ -12,11 +12,11 @@
  */
 defined('ABSPATH') || exit;
 
-if ('ry_newebpay_cvs' !== $order->get_payment_method()) {
+if ('ry_ecpay_bnpl' !== $order->get_payment_method()) {
     return;
 }
 
-if ('CVS' !== $order->get_meta('_newebpay_payment_type')) {
+if ('BNPL' !== $order->get_meta('_ecpay_payment_type')) {
     return;
 }
 ?>
@@ -28,19 +28,10 @@ if ('CVS' !== $order->get_meta('_newebpay_payment_type')) {
         <tbody>
             <tr>
                 <td>
-                    <?php esc_html_e('CVS code', 'ry-woocommerce-tools'); ?>
+                    <?php esc_html_e('Installment', 'ry-woocommerce-tools'); ?>
                 </td>
                 <td>
-                    <?php echo esc_html($order->get_meta('_newebpay_cvs_PaymentNo')); ?>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <?php esc_html_e('Payment deadline', 'ry-woocommerce-tools'); ?>
-                </td>
-                <td>
-                    <?php $expireDate = wc_string_to_datetime($order->get_meta('_newebpay_cvs_ExpireDate')); ?>
-                    <?php echo esc_html($expireDate->date_i18n(wc_date_format())); ?>
+                    <?php echo esc_html($order->get_meta('_ecpay_bnpl_Installment')); ?>
                 </td>
             </tr>
         </tbody>

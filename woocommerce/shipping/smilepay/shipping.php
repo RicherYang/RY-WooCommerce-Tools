@@ -99,7 +99,7 @@ final class RY_WT_WC_SmilePay_Shipping extends RY_WT_WC_Model
                             }
                         }
                     } elseif (isset($filed['type'])) {
-                        if ($filed['type'] != 'hidden') {
+                        if ('hidden' !== $filed['type']) {
                             $fields['shipping'][$key]['class'] = ['ry-hide'];
                         }
                     }
