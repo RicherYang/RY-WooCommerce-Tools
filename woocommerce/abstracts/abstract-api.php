@@ -6,7 +6,7 @@ abstract class RY_WT_WC_Api
 
     protected function pre_generate_trade_no($order_ID, $order_prefix = '')
     {
-        return $order_prefix . $order_ID . 'TS' . rand(0, 9) . strrev((string) time());
+        return $order_prefix . $order_ID . 'TS' . random_int(0, 9) . strrev((string) time());
     }
 
     protected function trade_no_to_order_no($trade_no, $order_prefix = '')

@@ -19,7 +19,7 @@ final class RY_WT_Update
         if (version_compare($now_version, '1.1.2', '<')) {
             @set_time_limit(300);
 
-            if (!empty($now_version) ) {
+            if (!empty($now_version)) {
                 include_once RY_WT_PLUGIN_DIR . 'woocommerce/shipping/ecpay/shipping.php';
 
                 $wpdb->update($wpdb->postmeta, ['meta_key' => '_ecpay_shipping_info'], ['meta_key' => '_shipping_cvs_info']);
@@ -93,8 +93,8 @@ final class RY_WT_Update
             RY_WT::update_option('version', '3.0.0');
         }
 
-        if (version_compare($now_version, '3.0.6', '<')) {
-            RY_WT::update_option('version', '3.0.6');
+        if (version_compare($now_version, '3.1.0', '<')) {
+            RY_WT::update_option('version', '3.1.0');
         }
     }
 }

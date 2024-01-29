@@ -3,7 +3,6 @@
 class RY_SmilePay_Shipping_CVS_Fami extends RY_WT_WC_SmilePay_Shipping_Method
 {
     public const Shipping_Type = 'FAMI';
-    public const Support_Temp = ['1'];
 
     public function __construct($instance_ID = 0)
     {

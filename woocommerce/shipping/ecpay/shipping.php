@@ -227,6 +227,7 @@ final class RY_WT_WC_ECPay_Shipping extends RY_WT_WC_Model
     public function remove_metadata($item)
     {
         if (array_key_exists($item->get_method_id(), self::$support_methods)) {
+            $item->delete_meta_data('LogisticsType');
             $item->delete_meta_data('LogisticsSubType');
             $item->delete_meta_data('LogisticsInfo');
         }
@@ -288,13 +289,35 @@ final class RY_WT_WC_ECPay_Shipping extends RY_WT_WC_Model
                     'post_url' => RY_WT_WC_ECPay_Shipping_Api::instance()->get_map_post_url()
                 ], '', RY_WT_PLUGIN_DIR . 'templates/');
 
-                list($MerchantID, $HashKey, $HashIV, $CVS_type) = $this->get_api_info();
+                list($MerchantID, $HashKey, $HashIV, $cvs_type) = $this->get_api_info();
                 $method_class = self::$support_methods[$chosen_shipping[0]];
 
+                $subtype = $method_class::Shipping_Sub_Type;
+                if('C2C' === $cvs_type) {
+                    $subtype .= 'C2C';
+                }
+                if('B2C' === $cvs_type) {
+                    if('UNIMART' === $method_class::Shipping_Sub_Type) {
+                        $temp_list = [];
+                        foreach (WC()->cart->get_cart() as $cart_item_key => $cart_item) {
+                            $temp = $cart_item['data']->get_meta('_ry_shipping_temp', true);
+                            if (empty($temp) && $cart_item['data']->get_type() == 'variation') {
+                                $parent_product = wc_get_product($cart_item['data']->get_parent_id());
+                                $temp = $parent_product->get_meta('_ry_shipping_temp', true);
+                            }
+                            $temp = in_array($temp, $method_class::get_support_temp()) ? $temp : '1';
+                            $temp_list[$temp] = true;
+                        }
+
+                        if(isset($temp_list[3])) {
+                            $subtype .= 'FREEZE';
+                        }
+                    }
+                }
                 $this->js_data['postData'] = [
                     'MerchantID' => $MerchantID,
                     'LogisticsType' => $method_class::Shipping_Type,
-                    'LogisticsSubType' => $method_class::Shipping_Sub_Type . (('C2C' == $CVS_type) ? 'C2C' : ''),
+                    'LogisticsSubType' => $subtype,
                     'IsCollection' => 'Y',
                     'ServerReplyURL' => esc_url(WC()->api_request_url('ry_ecpay_map_callback'))
                 ];
@@ -335,7 +358,7 @@ final class RY_WT_WC_ECPay_Shipping extends RY_WT_WC_Model
     {
         $cvs_type = RY_WT::get_option('ecpay_shipping_cvs_type');
         if ($this->testmode) {
-            if ('C2C' == $cvs_type) {
+            if ('C2C' === $cvs_type) {
                 $MerchantID = '2000933';
                 $HashKey = 'XBERn1YOvpM9nfZc';
                 $HashIV = 'h1ONHk4P4yqbl5LK';

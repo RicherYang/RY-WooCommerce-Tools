@@ -17,7 +17,7 @@ abstract class RY_WT_WC_NewebPay_Api extends RY_WT_WC_Api
     {
         $trade_no = $this->pre_generate_trade_no($order_ID, $order_prefix);
         $trade_no = apply_filters('ry_newebpay_trade_no', $trade_no, $order_ID);
-        return substr($trade_no, 0, 30);
+        return substr($trade_no, 0, 18);
     }
 
     protected function args_encrypt($args, $HashKey, $HashIV)

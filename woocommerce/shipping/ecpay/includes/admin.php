@@ -110,6 +110,7 @@ final class RY_WT_WC_ECPay_Shipping_Admin
                         switch ($info['LogisticsSubType']) {
                             case 'UNIMART':
                             case 'UNIMARTC2C':
+                            case 'UNIMARTFREEZE':
                                 if ($print_type == 'cvs_711') {
                                     $print_list[] = $info;
                                 }

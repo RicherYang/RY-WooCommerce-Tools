@@ -29,6 +29,11 @@ abstract class RY_WT_WC_Shipping_Method extends WC_Shipping_Method
         add_action('admin_footer', [$this, 'enqueue_admin_js'], 10);
     }
 
+    public static function get_support_temp()
+    {
+        return ['1'];
+    }
+
     public function get_instance_form_fields()
     {
         return parent::get_instance_form_fields();
@@ -38,17 +43,9 @@ abstract class RY_WT_WC_Shipping_Method extends WC_Shipping_Method
     {
         $available = $this->is_enabled();
 
-        foreach ($package['contents'] as $values) {
-            $temp = $values['data']->get_meta('_ry_shipping_temp', true);
-            if (empty($temp) && $values['data']->get_type() == 'variation') {
-                $parent_product = wc_get_product($values['data']->get_parent_id());
-                $temp = $parent_product->get_meta('_ry_shipping_temp', true);
-            }
-            $temp = empty($temp) ? '1' : $temp;
-            if (!in_array($temp, get_called_class()::Support_Temp)) {
-                $available = false;
-                break;
-            }
+        if($available) {
+            $temps = $this->get_package_temp($package['contents']);
+            $available = 0 === count(array_diff($temps, $this->get_support_temp()));
         }
 
         if($available) {
@@ -86,7 +83,10 @@ abstract class RY_WT_WC_Shipping_Method extends WC_Shipping_Method
             'id' => $this->get_rate_id(),
             'label' => $this->title,
             'cost' => $this->cost,
-            'package' => $package
+            'package' => $package,
+            'meta_data' => [
+                'temps' => $this->get_package_temp($package['contents'])
+            ]
         ];
         $rate = $this->add_rate_meta_data($rate);
 
@@ -161,6 +161,22 @@ abstract class RY_WT_WC_Shipping_Method extends WC_Shipping_Method
         do_action('woocommerce_' . $this->id . '_shipping_add_rate', $this, $rate);
     }
 
+    protected function get_package_temp($package_contents)
+    {
+        $temps = [];
+        foreach ($package_contents as $values) {
+            $temp = $values['data']->get_meta('_ry_shipping_temp', true);
+            if (empty($temp) && $values['data']->get_type() == 'variation') {
+                $parent_product = wc_get_product($values['data']->get_parent_id());
+                $temp = $parent_product->get_meta('_ry_shipping_temp', true);
+            }
+            $temps[] = empty($temp) ? '1' : $temp;
+        }
+        $temps = array_unique($temps);
+
+        return $temps;
+    }
+
     protected function add_rate_meta_data($rate)
     {
         return $rate;
@@ -210,6 +226,9 @@ abstract class RY_WT_WC_Shipping_Method extends WC_Shipping_Method
                     'function ' . $this->id . '_MinAmountField(el) {
     let form = $(el).closest("form");
     let minAmountField = $("#woocommerce_' . $this->id . '_min_amount", form).closest("tr");
+    if(minAmountField.length == 0) {
+        minAmountField = $("#woocommerce_' . $this->id . '_min_amount", form).closest("fieldset");
+    }
     switch( $(el).val() ) {
         case "min_amount":
         case "min_amount_or_coupon":

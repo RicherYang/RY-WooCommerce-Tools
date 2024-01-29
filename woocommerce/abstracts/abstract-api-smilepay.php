@@ -6,7 +6,7 @@ abstract class RY_WT_EC_SmilePay_Api extends RY_WT_WC_Api
     {
         $trade_no = $this->pre_generate_trade_no($order_ID, $order_prefix);
         $trade_no = apply_filters('ry_smilepay_trade_no', $trade_no, $order_ID);
-        return substr($trade_no, 0, 20);
+        return substr($trade_no, 0, 18);
     }
 
     protected function link_server($post_url, $args)

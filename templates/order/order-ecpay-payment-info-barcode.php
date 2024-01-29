@@ -31,7 +31,7 @@ if ('BARCODE' !== $order->get_meta('_ecpay_payment_type')) {
                     <?php esc_html_e('Barcode 1', 'ry-woocommerce-tools'); ?>
                 </td>
                 <td>
-                    <span class="free3of9">*1235<?php echo esc_html($order->get_meta('_ecpay_barcode_Barcode1')); ?>*</span>
+                    <span class="free3of9">*<?php echo esc_html($order->get_meta('_ecpay_barcode_Barcode1')); ?>*</span>
                 </td>
             </tr>
             <tr>

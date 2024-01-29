@@ -41,7 +41,7 @@ class RY_SmilePay_Shipping_Meta_Box extends RY_WT_WC_Meta_Box
                     <?php esc_html_e('Shipping status', 'ry-woocommerce-tools'); ?>
                 </th>
                 <th>
-                    <?php esc_html_e('declare amount', 'ry-woocommerce-tools'); ?>
+                    <?php esc_html_e('Declare amount', 'ry-woocommerce-tools'); ?>
                 </th>
                 <th>
                     <?php esc_html_e('Collection of money', 'ry-woocommerce-tools'); ?>
@@ -76,7 +76,7 @@ class RY_SmilePay_Shipping_Meta_Box extends RY_WT_WC_Meta_Box
                     <?php echo esc_html($item['amount']); ?>
                 </td>
                 <td>
-                    <?php echo esc_html(($item['IsCollection'] == '1') ? __('Yes') : __('No')); ?>
+                    <?php echo esc_html(($item['IsCollection'] == '1') ? __('Yes', 'ry-woocommerce-tools') : __('No', 'ry-woocommerce-tools')); ?>
                 </td>
                 <td>
                     <?php echo esc_html(sprintf(

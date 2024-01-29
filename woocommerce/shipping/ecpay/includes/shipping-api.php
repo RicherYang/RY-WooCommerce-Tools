@@ -50,7 +50,7 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_WC_ECPay_Api
             }
 
             $method_class = RY_WT_WC_ECPay_Shipping::$support_methods[$shipping_method];
-            list($MerchantID, $HashKey, $HashIV, $CVS_type) = RY_WT_WC_ECPay_Shipping::instance()->get_api_info();
+            list($MerchantID, $HashKey, $HashIV, $cvs_type) = RY_WT_WC_ECPay_Shipping::instance()->get_api_info();
 
             $temp_list = [];
             foreach ($order->get_items('line_item') as $item) {
@@ -59,7 +59,7 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_WC_ECPay_Api
                     $parent_product = wc_get_product($item->get_product()->get_parent_id());
                     $temp = $parent_product->get_meta('_ry_shipping_temp', true);
                 }
-                $temp = in_array($temp, $method_class::Support_Temp) ? $temp : '1';
+                $temp = in_array($temp, $method_class::get_support_temp()) ? $temp : '1';
                 if (null !== $for_temp && $temp != $for_temp) {
                     continue;
                 }
@@ -82,6 +82,7 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_WC_ECPay_Api
                 }
             }
 
+            ksort($temp_list);
             if (0 === count($temp_list)) {
                 continue;
             }
@@ -100,6 +101,8 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_WC_ECPay_Api
                 'LogisticsType' => $method_class::Shipping_Type,
                 'LogisticsSubType' => $method_class::Shipping_Sub_Type,
                 'GoodsName' => $item_name,
+                'IsCollection' => 'N',
+                'CollectionAmount' => 0,
                 'SenderName' => RY_WT::get_option('ecpay_shipping_sender_name'),
                 'SenderPhone' => RY_WT::get_option('ecpay_shipping_sender_phone'),
                 'SenderCellPhone' => RY_WT::get_option('ecpay_shipping_sender_cellphone'),
@@ -121,16 +124,15 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_WC_ECPay_Api
             }
 
             if ($args['LogisticsType'] == 'CVS') {
-                $args['LogisticsSubType'] .= ('C2C' == $CVS_type) ? 'C2C' : '';
+                if(('C2C' === $cvs_type)) {
+                    $args['LogisticsSubType'] .= 'C2C';
+                }
             }
 
             if (0 === count($shipping_list)) {
                 if ($order->get_payment_method() == 'cod') {
                     $args['IsCollection'] = 'Y';
                     $args['CollectionAmount'] = $order->get_total();
-                } else {
-                    $args['IsCollection'] = 'N';
-                    $args['CollectionAmount'] = 0;
                 }
             }
             if ($collection == true) {
@@ -140,7 +142,6 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_WC_ECPay_Api
 
             if ($method_class::Shipping_Type == 'CVS') {
                 $args['ReceiverStoreID'] = $order->get_meta('_shipping_cvs_store_ID');
-                $temp_list['1']['price'] = $order->get_total();
             }
 
             if ($method_class::Shipping_Type == 'Home') {
@@ -170,12 +171,17 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_WC_ECPay_Api
             foreach ($temp_list as $temp => $temp_info) {
                 $create_datetime = new DateTime('', new DateTimeZone('Asia/Taipei'));
                 $args['MerchantTradeDate'] = $create_datetime->format('Y/m/d H:i:s');
-                $args['MerchantTradeNo'] = $this->generate_trade_no($order->get_id(), RY_WT::get_option('ecpay_shipping_order_prefix'));
+                $args['MerchantTradeNo'] = $this->generate_trade_no($order->get_id(), RY_WT::get_option('ecpay_shipping_order_prefix')) . 'T' . $temp;
 
                 $args['GoodsAmount'] = (int) $temp_info['price'];
+                if('UNIMARTC2C' === $args['LogisticsSubType']) {
+                    if('Y' === $args['IsCollection']) {
+                        $args['GoodsAmount'] = $args['CollectionAmount'];
+                    }
+                }
                 if ($method_class::Shipping_Type == 'Home') {
                     if ($temp_info['weight'] > 0) {
-                        $args['GoodsWeight'] = wc_get_weight($temp_info['weight'], 'kg');
+                        $args['GoodsWeight'] = round(wc_get_weight($temp_info['weight'], 'kg'), 3);
                     }
                     if ($args['Specification'] == '0000') {
                         if ($temp_info['size'] > 0) {
@@ -194,7 +200,6 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_WC_ECPay_Api
                         }
                     }
                     $args['Temperature'] = '000' . $temp;
-                    $args['MerchantTradeNo'] = substr($args['MerchantTradeNo'], 0, 18) . 'T' . $temp;
                 }
 
                 $args = $this->add_check_value($args, $HashKey, $HashIV, 'md5');
@@ -252,15 +257,16 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_WC_ECPay_Api
                 $shipping_list[$result['AllPayLogisticsID']]['create'] = $create_datetime->format(DATE_ATOM);
                 $shipping_list[$result['AllPayLogisticsID']]['edit'] = (string) new WC_DateTime();
                 $shipping_list[$result['AllPayLogisticsID']]['amount'] = $args['GoodsAmount'];
-                $shipping_list[$result['AllPayLogisticsID']]['IsCollection'] = $args['IsCollection'] ?? 'N';
-                if ($method_class::Shipping_Type == 'Home') {
-                    $shipping_list[$result['AllPayLogisticsID']]['temp'] = $temp;
-                }
+                $shipping_list[$result['AllPayLogisticsID']]['IsCollection'] = $args['IsCollection'] === 'Y' ? $args['CollectionAmount'] : 'N';
+                $shipping_list[$result['AllPayLogisticsID']]['temp'] = $temp;
 
                 $order->update_meta_data('_ecpay_shipping_info', $shipping_list);
                 $order->save();
 
                 do_action('ry_ecpay_shipping_get_cvs_no', $result, $shipping_list[$result['AllPayLogisticsID']], $order);
+
+                $args['IsCollection'] = 'N';
+                $args['CollectionAmount'] = 0;
             }
 
             do_action('ry_ecpay_shipping_get_all_cvs_no', $shipping_list, $order);
@@ -284,7 +290,7 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_WC_ECPay_Api
 
     public function get_print_form($info = null)
     {
-        list($MerchantID, $HashKey, $HashIV, $CVS_type) = RY_WT_WC_ECPay_Shipping::instance()->get_api_info();
+        list($MerchantID, $HashKey, $HashIV, $cvs_type) = RY_WT_WC_ECPay_Shipping::instance()->get_api_info();
 
         $data = [
             'MerchantID' => $MerchantID,

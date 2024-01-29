@@ -22,16 +22,15 @@ abstract class RY_WT_WC_ECPay_Shipping_Method extends RY_WT_WC_Shipping_Method
 
     protected function add_rate_meta_data($rate)
     {
-        $rate['meta_data'] = [
-            'LogisticsType' => get_called_class()::Shipping_Type,
-            'LogisticsSubType' => get_called_class()::Shipping_Sub_Type
-        ];
+        $rate['meta_data']['LogisticsType'] = get_called_class()::Shipping_Type;
+        $rate['meta_data']['LogisticsSubType'] = get_called_class()::Shipping_Sub_Type;
         if('CVS' == $rate['meta_data']['LogisticsType']) {
-            list($MerchantID, $HashKey, $HashIV, $CVS_type) = RY_WT_WC_ECPay_Shipping::instance()->get_api_info();
-            if('C2C' == $CVS_type) {
+            list($MerchantID, $HashKey, $HashIV, $cvs_type) = RY_WT_WC_ECPay_Shipping::instance()->get_api_info();
+            if('C2C' === $cvs_type) {
                 $rate['meta_data']['LogisticsSubType'] .= 'C2C';
             }
         }
+
         $cvs_info = (array) WC()->session->get('ry-ecpay-cvs-info', []);
         if(isset($cvs_info['shipping_methods']) && $cvs_info['shipping_methods'] === WC()->session->get('chosen_shipping_methods')) {
             $rate['meta_data']['LogisticsInfo'] = $cvs_info;

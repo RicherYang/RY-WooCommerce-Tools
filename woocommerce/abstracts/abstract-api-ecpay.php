@@ -2,7 +2,7 @@
 
 abstract class RY_WT_WC_ECPay_Api extends RY_WT_WC_Api
 {
-    protected static $encrypt_method = 'aes-128-cbc';
+    protected const Encrypt_Method = 'aes-128-cbc';
 
     protected function get_3rd_return_url($order = null)
     {
@@ -19,7 +19,7 @@ abstract class RY_WT_WC_ECPay_Api extends RY_WT_WC_Api
     {
         $trade_no = $this->pre_generate_trade_no($order_ID, $order_prefix);
         $trade_no = apply_filters('ry_ecpay_trade_no', $trade_no, $order_ID);
-        return substr($trade_no, 0, 20);
+        return substr($trade_no, 0, 18);
     }
 
     protected function add_check_value($args, $HashKey, $HashIV, $hash_algo, $skip_args = [])
@@ -98,7 +98,7 @@ abstract class RY_WT_WC_ECPay_Api extends RY_WT_WC_Api
         wc_set_time_limit(40);
 
         $args['Data'] = $this->urlencode($args['Data']);
-        $args['Data'] = openssl_encrypt($args['Data'], self::$encrypt_method, $HashKey, 0, $HashIV);
+        $args['Data'] = openssl_encrypt($args['Data'], self::Encrypt_Method, $HashKey, 0, $HashIV);
 
         return wp_remote_post($post_url, [
             'timeout' => 20,

@@ -44,7 +44,7 @@ class RY_ECPay_Shipping_Meta_Box extends RY_WT_WC_Meta_Box
                     <?php esc_html_e('Shipping status', 'ry-woocommerce-tools'); ?>
                 </th>
                 <th>
-                    <?php esc_html_e('declare amount', 'ry-woocommerce-tools'); ?>
+                    <?php esc_html_e('Declare amount', 'ry-woocommerce-tools'); ?>
                 </th>
                 <th>
                     <?php esc_html_e('Collection of money', 'ry-woocommerce-tools'); ?>
@@ -69,6 +69,15 @@ class RY_ECPay_Shipping_Meta_Box extends RY_WT_WC_Meta_Box
                 <?php if ('CVS' == $item['LogisticsType']) { ?>
                 <td>
                     <?php echo esc_html(_x('CVS', 'shipping type', 'ry-woocommerce-tools')); ?>
+                    <?php if (isset($item['temp'])) {
+                        if (1 == $item['temp']) {
+                            echo '(' . _x('Normal temperature', 'Transport temp', 'ry-woocommerce-tools') . ')';
+                        } elseif (2 == $item['temp']) {
+                            echo '(' . _x('Refrigerated', 'Transport temp', 'ry-woocommerce-tools') . ')';
+                        } elseif (3 == $item['temp']) {
+                            echo '(' . _x('Freezer', 'Transport temp', 'ry-woocommerce-tools') . ')';
+                        }
+                    } ?>
                 </td>
                 <td>
                     <?php echo esc_html($item['PaymentNo'] . ' ' . $item['ValidationNo']); ?>
@@ -79,8 +88,7 @@ class RY_ECPay_Shipping_Meta_Box extends RY_WT_WC_Meta_Box
                 <?php } else { ?>
                 <td>
                     <?php echo esc_html(_x('Home', 'shipping type', 'ry-woocommerce-tools')); ?>
-                    <?php
-                    if (isset($item['temp'])) {
+                    <?php if (isset($item['temp'])) {
                         if (1 == $item['temp']) {
                             echo '(' . _x('Normal temperature', 'Transport temp', 'ry-woocommerce-tools') . ')';
                         } elseif (2 == $item['temp']) {
@@ -88,7 +96,7 @@ class RY_ECPay_Shipping_Meta_Box extends RY_WT_WC_Meta_Box
                         } elseif (3 == $item['temp']) {
                             echo '(' . _x('Freezer', 'Transport temp', 'ry-woocommerce-tools') . ')';
                         }
-                    }?>
+                    } ?>
                 </td>
                 <td>
                     <?php echo esc_html($item['BookingNote']); ?>
@@ -102,7 +110,14 @@ class RY_ECPay_Shipping_Meta_Box extends RY_WT_WC_Meta_Box
                     <?php echo esc_html($item['amount']); ?>
                 </td>
                 <td>
-                    <?php echo esc_html(('Y' === $item['IsCollection']) ? __('Yes') : __('No')); ?>
+                    <?php if('Y' === $item['IsCollection']) {
+                        esc_html_e('Yes', 'ry-woocommerce-tools');
+                    } elseif('N' === $item['IsCollection']) {
+                        esc_html_e('No', 'ry-woocommerce-tools');
+                    } else {
+                        esc_html_e('Yes', 'ry-woocommerce-tools');
+                        echo ' ( ' . esc_html($item['IsCollection']) . ' )';
+                    } ?>
                 </td>
                 <td>
                     <?php echo esc_html(sprintf(

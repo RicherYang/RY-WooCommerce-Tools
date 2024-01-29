@@ -4,7 +4,6 @@ class RY_ECPay_Shipping_Home_Tcat extends RY_WT_WC_ECPay_Shipping_Method
 {
     public const Shipping_Type = 'Home';
     public const Shipping_Sub_Type = 'TCAT';
-    public const Support_Temp = ['1'];
 
     public function __construct($instance_ID = 0)
     {

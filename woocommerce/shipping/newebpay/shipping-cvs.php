@@ -2,8 +2,6 @@
 
 class RY_NewebPay_Shipping_CVS extends RY_WT_WC_NewebPay_Shipping_Method
 {
-    public const Support_Temp = ['1'];
-
     public function __construct($instance_ID = 0)
     {
         $this->id = 'ry_newebpay_shipping_cvs';

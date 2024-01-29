@@ -106,7 +106,7 @@ class RY_WT_WC_ECPay_Shipping_Response extends RY_WT_WC_ECPay_Api
     {
         RY_WT_WC_ECPay_Shipping::instance()->log('IPN request: ' . var_export($ipn_info, true));
 
-        list($MerchantID, $HashKey, $HashIV, $CVS_type) = RY_WT_WC_ECPay_Shipping::instance()->get_api_info();
+        list($MerchantID, $HashKey, $HashIV, $cvs_type) = RY_WT_WC_ECPay_Shipping::instance()->get_api_info();
         $check_value = $this->get_check_value($ipn_info);
         $ipn_info_check_value = $this->generate_check_value($ipn_info, $HashKey, $HashIV, 'md5');
         if ($check_value == $ipn_info_check_value) {
