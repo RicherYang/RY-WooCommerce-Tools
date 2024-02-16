@@ -31,7 +31,7 @@ if ('VACC' !== $order->get_meta('_newebpay_payment_type')) {
                     <?php esc_html_e('Bank', 'ry-woocommerce-tools'); ?>
                 </td>
                 <td>
-                    <?php echo esc_html(_x($order->get_meta('_newebpay_atm_BankCode'), 'Bank code', 'ry-woocommerce-tools')); ?>
+                    <?php echo esc_html_x($order->get_meta('_newebpay_atm_BankCode'), 'Bank code', 'ry-woocommerce-tools'); ?>
                 </td>
             </tr>
             <tr>

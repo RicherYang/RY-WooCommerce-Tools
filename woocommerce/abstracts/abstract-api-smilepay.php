@@ -6,6 +6,7 @@ abstract class RY_WT_EC_SmilePay_Api extends RY_WT_WC_Api
     {
         $trade_no = $this->pre_generate_trade_no($order_ID, $order_prefix);
         $trade_no = apply_filters('ry_smilepay_trade_no', $trade_no, $order_ID);
+
         return substr($trade_no, 0, 18);
     }
 
@@ -50,6 +51,7 @@ abstract class RY_WT_EC_SmilePay_Api extends RY_WT_WC_Api
         if (isset($ipn_info['Smseid'])) {
             return $ipn_info['Smseid'];
         }
+
         return false;
     }
 
@@ -61,6 +63,7 @@ abstract class RY_WT_EC_SmilePay_Api extends RY_WT_WC_Api
         if (isset($ipn_info['Status'])) {
             return trim($ipn_info['Status']);
         }
+
         return false;
     }
 
@@ -69,6 +72,7 @@ abstract class RY_WT_EC_SmilePay_Api extends RY_WT_WC_Api
         if (isset($ipn_info['Mid_smilepay'])) {
             return $ipn_info['Mid_smilepay'];
         }
+
         return false;
     }
 
@@ -81,6 +85,7 @@ abstract class RY_WT_EC_SmilePay_Api extends RY_WT_WC_Api
                 return $order_ID;
             }
         }
+
         return false;
     }
 

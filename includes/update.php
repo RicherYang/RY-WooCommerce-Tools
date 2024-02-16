@@ -93,8 +93,12 @@ final class RY_WT_Update
             RY_WT::update_option('version', '3.0.0');
         }
 
-        if (version_compare($now_version, '3.1.0', '<')) {
-            RY_WT::update_option('version', '3.1.0');
+        if (version_compare($now_version, '3.2.1', '<')) {
+            add_action('init', function () {
+                WC()->queue()->schedule_single(time() + 10, 'ry_wt_update_3_2_0');
+
+                RY_WT::update_option('version', '3.2.1');
+            });
         }
     }
 }

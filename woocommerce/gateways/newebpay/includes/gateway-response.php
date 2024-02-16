@@ -133,8 +133,9 @@ class RY_WT_WC_NewebPay_Gateway_Response extends RY_WT_WC_NewebPay_Gateway_Api
                     $shipping_list[$ipn_info->TradeNo] = [];
                 }
                 $shipping_list[$ipn_info->TradeNo]['ID'] = $ipn_info->TradeNo;
+                $shipping_list[$ipn_info->TradeNo]['LogisticsType'] = 'CVS';
                 $shipping_list[$ipn_info->TradeNo]['Type'] = $ipn_info->StoreType;
-                $shipping_list[$ipn_info->TradeNo]['PaymentNo'] = $ipn_info->TradeNo;
+                $shipping_list[$ipn_info->TradeNo]['PaymentNo'] = $ipn_info->LgsNo;
                 $shipping_list[$ipn_info->TradeNo]['store_ID'] = $ipn_info->StoreCode;
                 $shipping_list[$ipn_info->TradeNo]['create'] = (string) new WC_DateTime();
                 $shipping_list[$ipn_info->TradeNo]['edit'] = (string) new WC_DateTime();

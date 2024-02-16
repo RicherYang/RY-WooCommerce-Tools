@@ -17,7 +17,7 @@ if ('ry_ecpay_barcode' !== $order->get_payment_method()) {
 }
 
 if ('BARCODE' !== $order->get_meta('_ecpay_payment_type')) {
-    //return;
+    return;
 }
 ?>
 <section class="woocommerce-order-details">

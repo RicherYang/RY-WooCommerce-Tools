@@ -34,6 +34,7 @@ final class RY_WT_WC_SmilePay_Gateway_Admin
 
             if (!defined('RY_WSI_VERSION')) {
                 $settings[0]['desc'] = sprintf(
+                    /* translators: %s: link to RY WooCommerce SmilePay Invoice */
                     __('<p>If you need SmilePay Invoice support, you can try %s</p>', 'ry-woocommerce-tools'),
                     '<a href="https://ry-plugin.com/ry-woocommerce-smilepay-invoice">RY WooCommerce SmilePay Invoice</a>'
                 );

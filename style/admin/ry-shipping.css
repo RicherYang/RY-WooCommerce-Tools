@@ -9,15 +9,31 @@
     clear: both;
 }
 
-#ry-ecpay-shipping-info .ry-shipping-notes,
-#ry-newebpay-shipping-info .ry-shipping-notes,
-#ry-smilepay-shipping-info .ry-shipping-notes {
-    margin: 0;
+#ry-ecpay-shipping-info .button,
+#ry-newebpay-shipping-info .button,
+#ry-smilepay-shipping-info .button{
+    margin-right: 0.5em;
+}
+
+.ry-shipping-infos {
+    margin-top: 1em;
     overflow-x: auto;
 }
 
-#ry-ecpay-shipping-info .ry-shipping-notes th,
-#ry-newebpay-shipping-info .ry-shipping-notes th,
-#ry-smilepay-shipping-info .ry-shipping-notes th {
+.ry-shipping-infos th {
     word-break: keep-all;
+}
+
+.ry-shipping-infos td {
+    vertical-align: middle;
+}
+
+.ry-shipping-infos .button {
+    line-height: 2;
+    min-height: initial;
+}
+
+.ry-shipping-infos .validationno,
+.post-type-shop_order .wp-list-table .ry_shipping_no .validationno {
+    padding-left: 0.25em;
 }

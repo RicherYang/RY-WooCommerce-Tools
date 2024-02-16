@@ -58,7 +58,7 @@ class RY_SmilePay_Gateway_Atm extends RY_WT_WC_SmilePay_Payment_Gateway
     <tr>
         <td><?php esc_html_e('Bank', 'ry-woocommerce-tools'); ?>
         </td>
-        <td><?=_x($order->get_meta('_smilepay_atm_BankCode'), 'Bank code', 'ry-woocommerce-tools'); ?> (<?php echo esc_html($order->get_meta('_smilepay_atm_BankCode')); ?>)</td>
+        <td><?php echo esc_html_x($order->get_meta('_smilepay_atm_BankCode'), 'Bank code', 'ry-woocommerce-tools'); ?> (<?php echo esc_html($order->get_meta('_smilepay_atm_BankCode')); ?>)</td>
     </tr>
     <tr>
         <td><?php esc_html_e('ATM Bank account', 'ry-woocommerce-tools'); ?>

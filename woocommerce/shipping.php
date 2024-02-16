@@ -24,6 +24,10 @@ final class RY_WT_WC_Shipping
         add_filter('woocommerce_get_order_address', [$this, 'show_store_in_address'], 10, 3);
         add_filter('woocommerce_formatted_address_replacements', [$this, 'add_cvs_address_replacements'], 10, 2);
 
+        add_filter('woocommerce_email_classes', [$this, 'add_email_class']);
+        add_filter('woocommerce_email_actions', [$this, 'add_email_action']);
+        add_action('woocommerce_order_status_ry-at-cvs', [$this, 'send_at_cvs_email'], 10, 2);
+
         if (is_admin()) {
             include_once RY_WT_PLUGIN_DIR . 'woocommerce/admin/shipping.php';
             RY_WT_WC_Admin_Shipping::instance();
@@ -151,5 +155,28 @@ final class RY_WT_WC_Shipping
         }
 
         return $replacements;
+    }
+
+    public function add_email_class($emails)
+    {
+        $emails['RY_Shipping_Email_Customer_CVS_Store'] = include RY_WT_PLUGIN_DIR . 'woocommerce/emails/shipping-customer-cvs-store.php';
+
+        return $emails;
+    }
+
+    public function add_email_action($actions)
+    {
+        $actions[] = 'ry_shipping_customer_cvs_store';
+
+        return $actions;
+    }
+
+    public function send_at_cvs_email($order_ID, $order = null)
+    {
+        if (!is_object($order)) {
+            $order = wc_get_order($order_ID);
+        }
+
+        do_action('ry_shipping_customer_cvs_store', $order_ID, $order);
     }
 }

@@ -69,6 +69,7 @@ class RY_WT_WC_SmilePay_Gateway_Response extends RY_WT_WC_SmilePay_Gateway_Api
             }
         }
         RY_WT_WC_SmilePay_Gateway::instance()->log('IPN request check failed. Response:' . $check_value . ' Self:' . $ipn_info_check_value, 'error');
+
         return false;
     }
 

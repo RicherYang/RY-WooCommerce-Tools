@@ -1,5 +1,7 @@
 <?php
 
+use Automattic\WooCommerce\Utilities\I18nUtil;
+
 return [
     [
         'title' => __('Base options', 'ry-woocommerce-tools'),
@@ -103,20 +105,29 @@ return [
         ]
     ],
     [
-        'title' => __('Sender zipcode', 'ry-woocommerce-tools')
-        . ' ' . __('( Home delivery )', 'ry-woocommerce-tools'),
+        'title' => __('Sender zipcode ( Home delivery )', 'ry-woocommerce-tools'),
         'id' => RY_WT::Option_Prefix . 'ecpay_shipping_sender_zipcode',
         'type' => 'text'
     ],
     [
-        'title' => __('Sender address', 'ry-woocommerce-tools')
-            . ' ' . __('( Home delivery )', 'ry-woocommerce-tools'),
+        'title' => __('Sender address ( Home delivery )', 'ry-woocommerce-tools'),
         'id' => RY_WT::Option_Prefix . 'ecpay_shipping_sender_address',
         'type' => 'text'
     ],
     [
-        'title' => __('Shipping box size', 'ry-woocommerce-tools')
-            . ' ' . __('( Home delivery )', 'ry-woocommerce-tools'),
+        'title' => __('Shipping declare amount over 20000', 'ry-woocommerce-tools'),
+        'id' => RY_WT::Option_Prefix . 'ecpay_shipping_declare_over',
+        'type' => 'select',
+        'default' => 'keep',
+        'options' => [
+            'keep' => __('keep amount', 'ry-woocommerce-tools'),
+            'limit' => __('limit 2000', 'ry-woocommerce-tools')
+        ],
+        'desc' => __('Use product regular price as declare amount.', 'ry-woocommerce-tools'),
+        'desc_tip' => true,
+    ],
+    [
+        'title' => __('Shipping box size ( Home delivery )', 'ry-woocommerce-tools'),
         'id' => RY_WT::Option_Prefix . 'ecpay_shipping_box_size',
         'type' => 'select',
         'default' => '1',
@@ -131,14 +142,17 @@ return [
         'desc_tip' => true,
     ],
     [
-        'title' => __('Product default weight (KG)', 'ry-woocommerce-tools')
-            . ' ' . __('( Home delivery )', 'ry-woocommerce-tools'),
+        'title' => sprintf(
+            /* translators: %s: Weight unit */
+            __('Product default weight (%s) ( Home delivery )', 'ry-woocommerce-tools'),
+            I18nUtil::get_weight_unit_label(get_option('woocommerce_weight_unit'))
+        ),
         'id' => RY_WT::Option_Prefix . 'ecpay_shipping_product_weight',
+        'default' => '0',
         'type' => 'text'
     ],
     [
-        'title' => __('Pickup time', 'ry-woocommerce-tools')
-        . ' ' . __('( Home delivery )', 'ry-woocommerce-tools'),
+        'title' => __('Pickup time ( Home delivery )', 'ry-woocommerce-tools'),
         'id' => RY_WT::Option_Prefix . 'ecpay_shipping_pickup_time',
         'type' => 'select',
         'default' => '4',

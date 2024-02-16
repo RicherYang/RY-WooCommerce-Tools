@@ -41,6 +41,7 @@ abstract class RY_WT_WC_Api
 
         $return_url = apply_filters('woocommerce_get_return_url', $return_url, $order);
         wp_redirect($return_url);
+
         exit();
     }
 

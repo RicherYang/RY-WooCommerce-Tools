@@ -53,12 +53,14 @@ class RY_WT_WC_NewebPay_Gateway_Api extends RY_WT_WC_NewebPay_Api
             'InstFlag' => 0,
             'CreditRed' => 0,
             'UNIONPAY' => 0,
+            'CREDITAE' => 0,
             'WEBATM' => 0,
             'VACC' => 0,
             'CVS' => 0,
             'BARCODE' => 0,
             'ESUNWALLET' => 0,
             'TAIWANPAY' => 0,
+            'FULA' => 0,
             'EZPAY' => 0,
             'EZPWECHAT' => 0,
             'EZPALIPAY' => 0,
@@ -68,6 +70,9 @@ class RY_WT_WC_NewebPay_Gateway_Api extends RY_WT_WC_NewebPay_Api
         switch (get_locale()) {
             case 'zh_HK':
             case 'zh_TW':
+                break;
+            case 'ja':
+                $args['Language'] = 'jp';
                 break;
             case 'en_US':
             case 'en_AU':

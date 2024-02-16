@@ -62,7 +62,7 @@ class RY_WT_WC_ECPay_Shipping_Response extends RY_WT_WC_ECPay_Api
             if ($order) {
                 RY_WT_WC_ECPay_Shipping::instance()->save_order_cvs_info($order, $cvs_info);
                 $order->save();
-                wp_safe_redirect(admin_url('post.php?post=' . $order->get_id() . '&action=edit'));
+                wp_safe_redirect($order->get_edit_order_url());
                 exit();
             }
         }

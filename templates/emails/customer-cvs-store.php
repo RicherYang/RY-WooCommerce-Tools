@@ -18,7 +18,7 @@ defined('ABSPATH') || exit;
 do_action('woocommerce_email_header', $email_heading, $email); ?>
 
 <p>
-    <?php _e("Your order product has been sended to the convenience store.", 'ry-woocommerce-tools'); ?>
+    <?php esc_html_e("Your order product has been sended to the convenience store.", 'ry-woocommerce-tools'); ?>
 </p>
 
 <?php

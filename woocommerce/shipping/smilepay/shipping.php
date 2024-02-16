@@ -33,6 +33,8 @@ final class RY_WT_WC_SmilePay_Shipping extends RY_WT_WC_Model
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/shipping/smilepay/shipping-cvs-711.php';
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/shipping/smilepay/shipping-cvs-fami.php';
 
+        $this->log_enabled = 'yes' === RY_WT::get_option('smilepay_shipping_log', 'no');
+
         RY_WT_WC_Shipping::instance();
         RY_WT_WC_SmilePay_Shipping_Response::instance();
 

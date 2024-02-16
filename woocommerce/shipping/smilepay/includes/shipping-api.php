@@ -64,6 +64,7 @@ class RY_WT_WC_SmilePay_Shipping_Api extends RY_WT_EC_SmilePay_Api
             if ($shipping_method == false) {
                 continue;
             }
+
             $method_class = RY_WT_WC_SmilePay_Shipping::$support_methods[$shipping_method];
             $args['Pay_subzg'] = $method_class::Shipping_Type;
             break;
@@ -76,10 +77,11 @@ class RY_WT_WC_SmilePay_Shipping_Api extends RY_WT_EC_SmilePay_Api
         } else {
             $url = $this->api_url['checkout'];
         }
+
         return $url . '?' . http_build_query($args, '', '&');
     }
 
-    public function get_csv_no($order_ID, $cod = false)
+    public function get_admin_csv_info($order_ID, $collection = false)
     {
         $order = wc_get_order($order_ID);
         if (!$order) {
@@ -97,27 +99,34 @@ class RY_WT_WC_SmilePay_Shipping_Api extends RY_WT_EC_SmilePay_Api
             'Dcvc' => $Dcvc,
             'Rvg2c' => $Rvg2c,
             'Od_sob' => $item_name,
-            'Pay_zg' => $cod ? 51 : 52,
+            'Pay_zg' => 52,
             'Data_id' => $this->generate_trade_no($order->get_id(), RY_WT::get_option('smilepay_gateway_order_prefix')),
             'Amount' => (int) ceil($order->get_total()),
             'Pur_name' => $order->get_shipping_last_name() . $order->get_shipping_first_name(),
             'Mobile_number' => $order->get_shipping_phone(),
             'Roturl' => WC()->api_request_url('ry_smilepay_callback', true),
             'Roturl_status' => 'RY_SmilePay',
-            'MapRoturl' => WC()->api_request_url('ry_smilepay_shipping_admin_map_callback', true),
+            'MapRoturl' => WC()->api_request_url('ry_smilepay_shipping_admin_callback', true),
             'Logistics_Roturl' => WC()->api_request_url('ry_smilepay_shipping_callback', true),
-            'Logistics_store' => $order->get_meta('_shipping_cvs_store_ID') . '/' . $order->get_meta('_shipping_cvs_store_name') . '/' . $order->get_meta('_shipping_cvs_store_address')
+            'Logistics_store' => $order->get_meta('_shipping_cvs_store_ID')
         ];
+
+        if (true === $collection) {
+            $args['Pay_zg'] = 51;
+        }
 
         foreach ($order->get_items('shipping') as $item) {
             $shipping_method = RY_WT_WC_SmilePay_Shipping::instance()->get_order_support_shipping($item);
             if ($shipping_method == false) {
                 continue;
             }
+
             $method_class = RY_WT_WC_SmilePay_Shipping::$support_methods[$shipping_method];
             $args['Pay_subzg'] = $method_class::Shipping_Type;
             break;
         }
+
+        RY_WT_WC_SmilePay_Shipping::instance()->log('Get admin info POST: ' . var_export($args, true));
 
         if (RY_WT_WC_SmilePay_Gateway::instance()->testmode) {
             $url = $this->api_test_url['checkout'];
@@ -125,13 +134,7 @@ class RY_WT_WC_SmilePay_Shipping_Api extends RY_WT_EC_SmilePay_Api
             $url = $this->api_url['checkout'];
         }
 
-        wp_redirect($url . '?' . http_build_query($args, '', '&'));
-        exit();
-    }
-
-    public function get_csv_no_cod($order_ID)
-    {
-        self::get_csv_no($order_ID, true);
+        return $url . '?' . http_build_query($args, '', '&');
     }
 
     public function get_code_no($order_ID, $get_smse_id)
@@ -219,32 +222,26 @@ class RY_WT_WC_SmilePay_Shipping_Api extends RY_WT_EC_SmilePay_Api
         }
     }
 
-    public function get_print_url($info_list, $multi = false)
+    public function get_print_url($info_list, $print_type)
     {
         list($Dcvc, $Rvg2c, $Verify_key, $Rot_check) = RY_WT_WC_SmilePay_Gateway::instance()->get_api_info();
 
         $args = [
             'Dcvc' => $Dcvc,
             'Rvg2c' => $Rvg2c,
-            'Verify_key' => $Verify_key
+            'Verify_key' => $Verify_key,
+            'Pay_subzg' => $print_type
         ];
-        if (!$multi) {
-            $info_list = [$info_list];
-        }
 
-        $no_list = [];
-        foreach ($info_list as $info) {
-            $no_list[] = $info['PaymentNo'] . $info['ValidationNo'];
-        }
-        $no_list = array_filter($no_list);
-        $args['Pay_subzg'] = $info_list[0]['type'];
-        $args['PinCodes'] = implode(',', $no_list);
+        $info_list = array_filter($info_list);
+        $args['PinCodes'] = implode(',', $info_list);
 
         if (RY_WT_WC_SmilePay_Gateway::instance()->testmode) {
             $url = $this->api_test_url['print'];
         } else {
             $url = $this->api_url['print'];
         }
-        return $url . '?' . http_build_query($args, '', '&');
+
+        wp_redirect($url . '?' . http_build_query($args, '', '&'));
     }
 }

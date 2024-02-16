@@ -4,6 +4,10 @@
     font-family: 'Libre Barcode 39 Text', cursive;
     font-size: 40px;
     font-weight: normal;
-    line-height: normal;
+    line-height: 1;
     letter-spacing: 0;
+    padding: 8px;
+    background-color: #fff;
+    color: #000;
+    display: inline-block;
 }

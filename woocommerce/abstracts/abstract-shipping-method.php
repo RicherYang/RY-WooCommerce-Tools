@@ -166,7 +166,7 @@ abstract class RY_WT_WC_Shipping_Method extends WC_Shipping_Method
         $temps = [];
         foreach ($package_contents as $values) {
             $temp = $values['data']->get_meta('_ry_shipping_temp', true);
-            if (empty($temp) && $values['data']->get_type() == 'variation') {
+            if (empty($temp) && 'variation' === $values['data']->get_type()) {
                 $parent_product = wc_get_product($values['data']->get_parent_id());
                 $temp = $parent_product->get_meta('_ry_shipping_temp', true);
             }

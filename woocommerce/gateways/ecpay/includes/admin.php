@@ -34,6 +34,7 @@ final class RY_WT_WC_ECPay_Gateway_Admin
 
             if (!defined('RY_WEI_VERSION')) {
                 $settings[0]['desc'] = sprintf(
+                    /* translators: %s: link to RY WooCommerce ECPay Invoice */
                     __('<p>If you need ECPay Invoice support, you can try %s</p>', 'ry-woocommerce-tools'),
                     '<a href="https://ry-plugin.com/ry-woocommerce-ecpay-invoice">RY WooCommerce ECPay Invoice</a>'
                 );

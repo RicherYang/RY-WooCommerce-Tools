@@ -34,6 +34,7 @@ final class RY_WT_WC_SmilePay_Gateway_Ajax
             $url = $order->get_checkout_order_received_url();
         }
         echo($url);
+
         wp_die();
     }
 
@@ -49,6 +50,7 @@ final class RY_WT_WC_SmilePay_Gateway_Ajax
             $url = $order->get_checkout_order_received_url();
         }
         echo($url);
+
         wp_die();
     }
 }

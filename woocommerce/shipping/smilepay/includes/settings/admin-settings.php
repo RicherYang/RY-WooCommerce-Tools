@@ -7,6 +7,19 @@ return [
         'type' => 'title'
     ],
     [
+        'title' => __('Debug log', 'woocommerce'),
+        'id' => RY_WT::Option_Prefix . 'smilepay_shipping_log',
+        'type' => 'checkbox',
+        'default' => 'no',
+        'desc' => __('Enable logging', 'woocommerce') . '<br>'
+            . sprintf(
+                /* translators: %s: Path of log file */
+                __('Log API / IPN information, inside %s', 'ry-woocommerce-tools'),
+                '<code>' . WC_Log_Handler_File::get_log_file_path('ry_smilepay_shipping') . '</code>'
+            )
+            . '<p class="description">' . __('Note: this may log personal information.', 'ry-woocommerce-tools') . '</p>'
+    ],
+    [
         'title' => __('Log status change', 'ry-woocommerce-tools'),
         'id' => RY_WT::Option_Prefix . 'smilepay_shipping_log_status_change',
         'type' => 'checkbox',

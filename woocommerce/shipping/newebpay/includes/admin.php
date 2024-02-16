@@ -15,16 +15,19 @@ final class RY_WT_WC_NewebPay_Shipping_Admin
 
     protected function do_init(): void
     {
-        include_once RY_WT_PLUGIN_DIR . 'woocommerce/admin/meta-boxes/newebpay-shipping-meta-box.php';
+        add_action('add_meta_boxes', [$this, 'add_meta_box'], 10, 2);
 
         add_filter('woocommerce_get_sections_rytools', [$this, 'add_sections']);
         add_filter('woocommerce_get_settings_rytools', [$this, 'add_setting'], 10, 2);
         add_action('woocommerce_update_options_rytools_newebpay_shipping', [$this, 'check_option']);
 
         add_action('add_meta_boxes', ['RY_NewebPay_Shipping_Meta_Box', 'add_meta_box'], 40, 2);
+    }
 
-        add_filter('woocommerce_order_actions', [$this, 'add_order_actions']);
-        add_action('woocommerce_order_action_send_at_cvs_email', ['RY_NewebPay_Shipping', 'send_at_cvs_email']);
+    public function add_meta_box($post_type, $data_object)
+    {
+        include_once RY_WT_PLUGIN_DIR . 'woocommerce/shipping/newebpay/includes/meta-box.php';
+        RY_NewebPay_Shipping_Meta_Box::add_meta_box($post_type, $data_object);
     }
 
     public function add_sections($sections)
@@ -49,22 +52,4 @@ final class RY_WT_WC_NewebPay_Shipping_Admin
     }
 
     public function check_option() {}
-
-    public function add_order_actions($order_actions)
-    {
-        global $theorder, $post;
-
-        if (!is_object($theorder)) {
-            $theorder = wc_get_order($post->ID);
-        }
-
-        foreach ($theorder->get_items('shipping') as $item) {
-            if (false !== RY_WT_WC_NewebPay_Shipping::instance()->get_order_support_shipping($item)) {
-                if ($theorder->has_status(['ry-at-cvs'])) {
-                    $order_actions['send_at_cvs_email'] = __('Resend at cvs notification', 'ry-woocommerce-tools');
-                }
-            }
-        }
-        return $order_actions;
-    }
 }

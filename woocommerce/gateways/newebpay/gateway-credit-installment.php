@@ -52,10 +52,10 @@ class RY_NewebPay_Gateway_Credit_Installment extends RY_WT_WC_NewebPay_Payment_G
     {
         parent::payment_fields();
         if (is_array($this->number_of_periods)) {
-            echo '<p>' . _x('Number of periods', 'Checkout info', 'ry-woocommerce-tools');
+            echo '<p>' . esc_html_x('Number of periods', 'Checkout info', 'ry-woocommerce-tools');
             echo ' <select name="newebpay_number_of_periods">';
             foreach ($this->number_of_periods as $number_of_periods) {
-                echo '<option value="' . $number_of_periods . '">' . $number_of_periods . '</option>';
+                echo '<option value="' . esc_attr($number_of_periods) . '">' . esc_html($number_of_periods) . '</option>';
             }
             echo '</select>';
         }

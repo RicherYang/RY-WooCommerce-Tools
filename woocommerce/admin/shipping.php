@@ -24,12 +24,29 @@ final class RY_WT_WC_Admin_Shipping
         add_filter('woocommerce_admin_shipping_fields', [$this, 'set_cvs_shipping_fields'], 99);
         add_filter('woocommerce_shipping_address_map_url_parts', [$this, 'fix_cvs_map_address']);
         add_filter('woocommerce_admin_order_actions', [$this, 'add_admin_order_actions'], 10, 2);
+
+        add_filter('woocommerce_order_actions', [$this, 'add_order_actions']);
+        add_action('woocommerce_order_action_send_at_cvs_email', [$this, 'send_at_cvs_email']);
+
+        add_action('wp_ajax_RY_delete_shipping_info', [$this, 'delete_shipping_info']);
     }
 
     public function add_scripts()
     {
         wp_enqueue_style('ry-wt-shipping-admin', RY_WT_PLUGIN_URL . 'style/admin/ry-shipping.css', [], RY_WT_VERSION);
-        wp_register_script('ry-wt-admin-shipping', RY_WT_PLUGIN_URL . 'style/js/admin/ry-shipping.js', ['jquery'], RY_WT_VERSION, true);
+
+        wp_enqueue_script('ry-wt-admin-shipping', RY_WT_PLUGIN_URL . 'style/js/admin/ry-shipping.js', ['jquery'], RY_WT_VERSION, true);
+        wp_localize_script('ry-wt-admin-shipping', 'ry_wt_admin_shipping', [
+            'ajax_url' => admin_url('admin-ajax.php'),
+            'nonce' => [
+                'get_shipping_info' => wp_create_nonce('get-shipping-info'),
+                'delete_shipping_info' => wp_create_nonce('delete-shipping-info'),
+                'smilepay_shipping_no' => wp_create_nonce('smilepay-shipping-no'),
+            ],
+            'i18n' => [
+                'delete_shipping_info' => __('It only delete the information at website.', 'ry-woocommerce-tools')
+            ]
+        ]);
     }
 
     public function save_order_update($order_ID)
@@ -40,11 +57,11 @@ final class RY_WT_WC_Admin_Shipping
             if ($shipping_method && false !== strpos($shipping_method, '_cvs')) {
                 remove_action('woocommerce_update_order', [$this, 'save_order_update']);
 
-                $order->update_meta_data('_shipping_cvs_store_ID', wc_clean(wp_unslash($_POST['_shipping_cvs_store_ID'])));
-                $order->update_meta_data('_shipping_cvs_store_name', wc_clean(wp_unslash($_POST['_shipping_cvs_store_name'])));
-                $order->update_meta_data('_shipping_cvs_store_address', wc_clean(wp_unslash($_POST['_shipping_cvs_store_address'])));
-                $order->update_meta_data('_shipping_cvs_store_telephone', wc_clean(wp_unslash($_POST['_shipping_cvs_store_telephone'])));
-                $order->set_shipping_address_1(wc_clean(wp_unslash($_POST['_shipping_cvs_store_address'])));
+                $order->update_meta_data('_shipping_cvs_store_ID', wc_clean(wp_unslash($_POST['_shipping_cvs_store_ID'] ?? '')));
+                $order->update_meta_data('_shipping_cvs_store_name', wc_clean(wp_unslash($_POST['_shipping_cvs_store_name'] ?? '')));
+                $order->update_meta_data('_shipping_cvs_store_address', wc_clean(wp_unslash($_POST['_shipping_cvs_store_address'] ?? '')));
+                $order->update_meta_data('_shipping_cvs_store_telephone', wc_clean(wp_unslash($_POST['_shipping_cvs_store_telephone'] ?? '')));
+                $order->set_shipping_address_1(wc_clean(wp_unslash($_POST['_shipping_cvs_store_address'] ?? '')));
                 $order->save();
 
                 add_action('woocommerce_update_order', [$this, 'save_order_update']);
@@ -157,6 +174,55 @@ final class RY_WT_WC_Admin_Shipping
         }
 
         return $actions;
+    }
+
+    public function add_order_actions($order_actions)
+    {
+        global $theorder, $post;
+
+        if (!is_object($theorder)) {
+            $theorder = wc_get_order($post->ID);
+        }
+
+        $shipping_method = $this->get_ry_shipping_method($theorder);
+        if ($shipping_method) {
+            if ($theorder->has_status(['ry-at-cvs'])) {
+                $order_actions['send_at_cvs_email'] = __('Resend at cvs notification', 'ry-woocommerce-tools');
+            }
+        }
+
+        return $order_actions;
+    }
+
+    public function delete_shipping_info()
+    {
+        check_ajax_referer('delete-shipping-info', 'security');
+
+        $order_ID = (int) wp_unslash($_POST['orderid'] ?? 0);
+        $logistics_ID = (int) wp_unslash($_POST['id'] ?? 0);
+
+        $order = wc_get_order($order_ID);
+        if (!empty($order)) {
+            foreach(['_ecpay_shipping_info', '_newebpay_shipping_info', '_smilepay_shipping_info'] as $meta_key) {
+                $shipping_list = $order->get_meta($meta_key, true);
+                if (is_array($shipping_list)) {
+                    foreach ($shipping_list as $idx => $info) {
+                        if ($info['ID'] == $logistics_ID) {
+                            unset($shipping_list[$idx]);
+                            $order->update_meta_data($meta_key, $shipping_list);
+                            $order->save();
+                        }
+                    }
+                }
+            }
+        }
+
+        wp_die();
+    }
+
+    public function send_at_cvs_email($order)
+    {
+        do_action('ry_shipping_customer_cvs_store', $order->get_id(), $order);
     }
 
     protected function get_ry_shipping_method($order)

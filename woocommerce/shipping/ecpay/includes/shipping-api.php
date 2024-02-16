@@ -42,9 +42,10 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_WC_ECPay_Api
 
         $item_name = $this->get_item_name(RY_WT::get_option('shipping_item_name', ''), $order);
         $item_name = mb_substr($item_name, 0, 20);
+        $declare_over_type = RY_WT::get_option('ecpay_shipping_declare_over', 'keep');
 
-        foreach ($order->get_items('shipping') as $item) {
-            $shipping_method = RY_WT_WC_ECPay_Shipping::instance()->get_order_support_shipping($item);
+        foreach ($order->get_items('shipping') as $shipping_item) {
+            $shipping_method = RY_WT_WC_ECPay_Shipping::instance()->get_order_support_shipping($shipping_item);
             if ($shipping_method == false) {
                 continue;
             }
@@ -52,40 +53,96 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_WC_ECPay_Api
             $method_class = RY_WT_WC_ECPay_Shipping::$support_methods[$shipping_method];
             list($MerchantID, $HashKey, $HashIV, $cvs_type) = RY_WT_WC_ECPay_Shipping::instance()->get_api_info();
 
-            $temp_list = [];
+            $package_list = [];
+            $temp_package = [];
+            $basic_package = [
+                'price' => 0,
+                'amount' => 0,
+                'weight' => 0,
+                'size' => 0,
+                'items' => 0
+            ];
             foreach ($order->get_items('line_item') as $item) {
-                $temp = $item->get_product()->get_meta('_ry_shipping_temp', true);
-                if (empty($temp) && $item->get_product()->get_type() == 'variation') {
-                    $parent_product = wc_get_product($item->get_product()->get_parent_id());
+                $product = $item->get_product();
+                $temp = $product->get_meta('_ry_shipping_temp', true);
+                if (empty($temp) && 'variation' === $product->get_type()) {
+                    $parent_product = wc_get_product($product->get_parent_id());
                     $temp = $parent_product->get_meta('_ry_shipping_temp', true);
                 }
                 $temp = in_array($temp, $method_class::get_support_temp()) ? $temp : '1';
                 if (null !== $for_temp && $temp != $for_temp) {
                     continue;
                 }
-                if (!isset($temp_list[$temp])) {
-                    $temp_list[$temp] = [
-                        'price' => 0,
-                        'weight' => 0,
-                        'size' => 0
-                    ];
+
+                if(!isset($temp_package[$temp])) {
+                    $package_list[] = $basic_package;
+                    $temp_package[$temp] = array_key_last($package_list);
+                    $package_list[$temp_package[$temp]]['temp'] = $temp;
                 }
-                $temp_list[$temp]['price'] += $item->get_subtotal();
-                $weight = (float) $item->get_product()->get_weight();
-                if (0 == $weight) {
-                    $weight = (float) RY_WT::get_option('ecpay_shipping_product_weight', 0);
+
+                $weight = $product->get_weight();
+                if ('' == $weight) {
+                    $weight = RY_WT::get_option('ecpay_shipping_product_weight', 0);
                 }
-                $temp_list[$temp]['weight'] += $weight * $item->get_quantity();
-                $size = (float) $item->get_product()->get_length() + (float) $item->get_product()->get_width() + (float) $item->get_product()->get_height();
-                if ($size > 0) {
-                    $temp_list[$temp]['size'] = max($size, $temp_list[$temp]['size']);
+                $weight = (float) $weight;
+                $size = (float) $product->get_length() + (float) $product->get_width() + (float) $product->get_height();
+                $amount = $product->get_meta('_ry_shipping_amount', true);
+                if('' == $amount) {
+                    if ('variation' === $product->get_type()) {
+                        $parent_product = wc_get_product($product->get_parent_id());
+                        $amount = $parent_product->get_meta('_ry_shipping_amount', true);
+                    }
+                    if('' == $amount) {
+                        $amount = $product->get_regular_price();
+                    }
                 }
+
+                $item_price = (float) $amount * $item->get_quantity();
+                if ('multi' === $declare_over_type) {
+                    if(20000 < $item_price) {
+                        array_unshift($package_list, $basic_package);
+                        $package_list[0]['temp'] = $temp;
+                        $package_list[0]['items'] += 1;
+                        $package_list[0]['price'] += $item_price;
+                        $package_list[0]['amount'] += $item->get_total();
+                        $package_list[0]['weight'] += $weight * $item->get_quantity();
+                        $package_list[0]['size'] = $size;
+
+                        $temp_package[$temp] += 1;
+                        continue;
+                    }
+
+                    if(20000 < $package_list[$temp_package[$temp]]['price'] + $item_price) {
+                        $package_list[] = $basic_package;
+                        $temp_package[$temp] = array_key_last($package_list);
+                        $package_list[$temp_package[$temp]]['temp'] = $temp;
+                    }
+                }
+
+                $package_list[$temp_package[$temp]]['items'] += 1;
+                $package_list[$temp_package[$temp]]['price'] += $item_price;
+                $package_list[$temp_package[$temp]]['amount'] += $item->get_total();
+                $package_list[$temp_package[$temp]]['weight'] += $weight * $item->get_quantity();
+                $package_list[$temp_package[$temp]]['size'] = max($size, $package_list[$temp_package[$temp]]['size']);
             }
 
-            ksort($temp_list);
-            if (0 === count($temp_list)) {
+            foreach ($package_list as $idx => $package_info) {
+                if(0 === $package_info['items']) {
+                    unset($package_list[$idx]);
+                    continue;
+                }
+
+                $package_info['price'] = (int) $package_info['price'];
+                $package_info['amount'] = (int) $package_info['amount'];
+            }
+
+            if (0 === count($package_list)) {
                 continue;
             }
+
+            usort($package_list, function ($a, $b) {
+                return $a['temp'] <=> $b['temp'];
+            });
 
             $shipping_list = $order->get_meta('_ecpay_shipping_info', true);
             if (!is_array($shipping_list)) {
@@ -132,12 +189,19 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_WC_ECPay_Api
             if (0 === count($shipping_list)) {
                 if ($order->get_payment_method() == 'cod') {
                     $args['IsCollection'] = 'Y';
-                    $args['CollectionAmount'] = $order->get_total();
                 }
             }
-            if ($collection == true) {
+            if (true === $collection) {
                 $args['IsCollection'] = 'Y';
-                $args['CollectionAmount'] = $order->get_total();
+            }
+            if('Y' === $args['IsCollection']) {
+                $total_amount = 0;
+                foreach ($package_list as $package_info) {
+                    $total_amount += $package_info['amount'];
+                }
+                if($order->get_total() != $total_amount) {
+                    $package_list[0]['amount'] += $order->get_total() - $total_amount;
+                }
             }
 
             if ($method_class::Shipping_Type == 'CVS') {
@@ -168,29 +232,35 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_WC_ECPay_Api
                 $post_url = $this->api_url['create'];
             }
 
-            foreach ($temp_list as $temp => $temp_info) {
+            foreach ($package_list as $package_info) {
                 $create_datetime = new DateTime('', new DateTimeZone('Asia/Taipei'));
                 $args['MerchantTradeDate'] = $create_datetime->format('Y/m/d H:i:s');
-                $args['MerchantTradeNo'] = $this->generate_trade_no($order->get_id(), RY_WT::get_option('ecpay_shipping_order_prefix')) . 'T' . $temp;
+                $args['MerchantTradeNo'] = $this->generate_trade_no($order->get_id(), RY_WT::get_option('ecpay_shipping_order_prefix')) . 'T' . $package_info['temp'];
 
-                $args['GoodsAmount'] = (int) $temp_info['price'];
-                if('UNIMARTC2C' === $args['LogisticsSubType']) {
-                    if('Y' === $args['IsCollection']) {
+                if ('limit' === $declare_over_type) {
+                    if(20000 < $package_info['price']) {
+                        $package_info['price'] = 20000;
+                    }
+                }
+                $args['GoodsAmount'] = (int) $package_info['price'];
+                if('Y' === $args['IsCollection']) {
+                    $args['CollectionAmount'] = (int) $package_info['amount'];
+                    if('UNIMARTC2C' === $args['LogisticsSubType']) {
                         $args['GoodsAmount'] = $args['CollectionAmount'];
                     }
                 }
                 if ($method_class::Shipping_Type == 'Home') {
-                    if ($temp_info['weight'] > 0) {
-                        $args['GoodsWeight'] = round(wc_get_weight($temp_info['weight'], 'kg'), 3);
+                    if ($package_info['weight'] > 0) {
+                        $args['GoodsWeight'] = round(wc_get_weight($package_info['weight'], 'kg'), 3);
                     }
                     if ($args['Specification'] == '0000') {
-                        if ($temp_info['size'] > 0) {
-                            $temp_info['size'] = wc_get_dimension($temp_info['size'], 'cm');
-                            if ($temp_info['size'] <= 60) {
+                        if ($package_info['size'] > 0) {
+                            $package_info['size'] = wc_get_dimension($package_info['size'], 'cm');
+                            if ($package_info['size'] <= 60) {
                                 $args['Specification'] = '0001';
-                            } elseif ($temp_info['size'] <= 90) {
+                            } elseif ($package_info['size'] <= 90) {
                                 $args['Specification'] = '0002';
-                            } elseif ($temp_info['size'] <= 120) {
+                            } elseif ($package_info['size'] <= 120) {
                                 $args['Specification'] = '0003';
                             } else {
                                 $args['Specification'] = '0004';
@@ -199,7 +269,7 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_WC_ECPay_Api
                             $args['Specification'] = '0001';
                         }
                     }
-                    $args['Temperature'] = '000' . $temp;
+                    $args['Temperature'] = '000' . $package_info['temp'];
                 }
 
                 $args = $this->add_check_value($args, $HashKey, $HashIV, 'md5');
@@ -258,34 +328,16 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_WC_ECPay_Api
                 $shipping_list[$result['AllPayLogisticsID']]['edit'] = (string) new WC_DateTime();
                 $shipping_list[$result['AllPayLogisticsID']]['amount'] = $args['GoodsAmount'];
                 $shipping_list[$result['AllPayLogisticsID']]['IsCollection'] = $args['IsCollection'] === 'Y' ? $args['CollectionAmount'] : 'N';
-                $shipping_list[$result['AllPayLogisticsID']]['temp'] = $temp;
+                $shipping_list[$result['AllPayLogisticsID']]['temp'] = $package_info['temp'];
 
                 $order->update_meta_data('_ecpay_shipping_info', $shipping_list);
                 $order->save();
 
                 do_action('ry_ecpay_shipping_get_cvs_no', $result, $shipping_list[$result['AllPayLogisticsID']], $order);
-
-                $args['IsCollection'] = 'N';
-                $args['CollectionAmount'] = 0;
             }
 
             do_action('ry_ecpay_shipping_get_all_cvs_no', $shipping_list, $order);
         }
-    }
-
-    public function get_code_cod($order_ID)
-    {
-        $this->get_code($order_ID, true);
-    }
-
-    public function get_code_t2($order_ID)
-    {
-        $this->get_code($order_ID, false, '2');
-    }
-
-    public function get_code_t3($order_ID)
-    {
-        $this->get_code($order_ID, false, '2');
     }
 
     public function get_print_form($info = null)

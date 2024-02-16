@@ -48,8 +48,6 @@ final class RY_WT_WC_ECPay_Shipping extends RY_WT_WC_Model
         RY_WT_WC_ECPay_Shipping_Response::instance();
 
         add_filter('woocommerce_shipping_methods', [$this, 'add_method']);
-        add_filter('woocommerce_email_classes', [$this, 'add_email_class']);
-        add_filter('woocommerce_email_actions', [$this, 'add_email_action']);
 
         add_filter('woocommerce_checkout_fields', [$this, 'add_cvs_info'], 9999);
         add_filter('woocommerce_update_order_review_fragments', [$this, 'checkout_choose_cvs_info']);
@@ -59,7 +57,6 @@ final class RY_WT_WC_ECPay_Shipping extends RY_WT_WC_Model
         if ('yes' === RY_WT::get_option('ecpay_shipping_auto_get_no', 'yes')) {
             add_action('woocommerce_order_status_processing', [$this, 'get_code'], 10, 2);
         }
-        add_action('woocommerce_order_status_ry-at-cvs', [$this, 'send_at_cvs_email'], 10, 2);
 
         if (is_admin()) {
             include_once RY_WT_PLUGIN_DIR . 'woocommerce/shipping/ecpay/includes/admin.php';
@@ -85,20 +82,6 @@ final class RY_WT_WC_ECPay_Shipping extends RY_WT_WC_Model
         }
 
         return $shipping_methods;
-    }
-
-    public function add_email_class($emails)
-    {
-        $emails['RY_ECPay_Shipping_Email_Customer_CVS_Store'] = include RY_WT_PLUGIN_DIR . 'woocommerce/emails/ecpay-shipping-customer-cvs-store.php';
-
-        return $emails;
-    }
-
-    public function add_email_action($actions)
-    {
-        $actions[] = 'ry_ecpay_shipping_cvs_to_store';
-
-        return $actions;
     }
 
     public function add_cvs_info($fields)
@@ -242,12 +225,6 @@ final class RY_WT_WC_ECPay_Shipping extends RY_WT_WC_Model
             $order->set_shipping_state('');
             $order->set_shipping_postcode('');
 
-            $order->add_order_note(sprintf(
-                /* translators: 1: Store name 2: Store ID */
-                __('CVS store %1$s (%2$s)', 'ry-woocommerce-tools'),
-                $data['CVSStoreName'],
-                $data['CVSStoreID']
-            ));
             $order->update_meta_data('_shipping_cvs_store_ID', $data['CVSStoreID']);
             $order->update_meta_data('_shipping_cvs_store_name', $data['CVSStoreName']);
             $order->update_meta_data('_shipping_cvs_store_address', $data['CVSAddress']);
@@ -265,14 +242,6 @@ final class RY_WT_WC_ECPay_Shipping extends RY_WT_WC_Model
         if (0 === count($shipping_list)) {
             RY_WT_WC_ECPay_Shipping_Api::instance()->get_code($order_ID);
         }
-    }
-
-    public function send_at_cvs_email($order_ID, $order = null)
-    {
-        if (!is_object($order)) {
-            $order = wc_get_order($order_ID);
-        }
-        do_action('ry_ecpay_shipping_cvs_to_store', $order_ID, $order);
     }
 
     public function checkout_choose_cvs()
@@ -301,7 +270,7 @@ final class RY_WT_WC_ECPay_Shipping extends RY_WT_WC_Model
                         $temp_list = [];
                         foreach (WC()->cart->get_cart() as $cart_item_key => $cart_item) {
                             $temp = $cart_item['data']->get_meta('_ry_shipping_temp', true);
-                            if (empty($temp) && $cart_item['data']->get_type() == 'variation') {
+                            if (empty($temp) && 'variation' === $cart_item['data']->get_type()) {
                                 $parent_product = wc_get_product($cart_item['data']->get_parent_id());
                                 $temp = $parent_product->get_meta('_ry_shipping_temp', true);
                             }
@@ -376,10 +345,10 @@ final class RY_WT_WC_ECPay_Shipping extends RY_WT_WC_Model
         return [$MerchantID, $HashKey, $HashIV, $cvs_type];
     }
 
-    public function get_order_support_shipping($items)
+    public function get_order_support_shipping($item)
     {
         foreach (self::$support_methods as $method => $method_class) {
-            if (0 === strpos($items->get_method_id(), $method)) {
+            if (0 === strpos($item->get_method_id(), $method)) {
                 return $method;
             }
         }
