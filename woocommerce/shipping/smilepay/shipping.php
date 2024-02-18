@@ -128,6 +128,8 @@ final class RY_WT_WC_SmilePay_Shipping extends RY_WT_WC_Model
                 $fields['shipping']['shipping_state']['required'] = false;
                 $fields['shipping']['shipping_postcode']['required'] = false;
                 $fields['shipping']['shipping_phone']['required'] = true;
+            } else {
+                $fields['shipping']['shipping_phone']['required'] = false;
             }
         }
 

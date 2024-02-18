@@ -151,7 +151,7 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_WC_ECPay_Api
 
             $notify_url = WC()->api_request_url('ry_ecpay_shipping_callback', true);
 
-            RY_WT_WC_ECPay_Shipping::instance()->log('Generating shipping for order #' . $order->get_order_number());
+            RY_WT_WC_ECPay_Shipping::instance()->log('Generating shipping for #' . $order->get_id(), WC_Log_Levels::INFO);
 
             $args = [
                 'MerchantID' => $MerchantID,
@@ -273,23 +273,22 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_WC_ECPay_Api
                 }
 
                 $args = $this->add_check_value($args, $HashKey, $HashIV, 'md5');
-                RY_WT_WC_ECPay_Shipping::instance()->log('Shipping POST: ' . var_export($args, true));
+                RY_WT_WC_ECPay_Shipping::instance()->log('Shipping POST data', WC_Log_Levels::INFO, ['data' => $args]);
 
                 $response = $this->link_server($post_url, $args);
                 if (is_wp_error($response)) {
-                    RY_WT_WC_ECPay_Shipping::instance()->log('Shipping failed. POST error: ' . implode("\n", $response->get_error_messages()), 'error');
+                    RY_WT_WC_ECPay_Shipping::instance()->log('Shipping POST failed', WC_Log_Levels::ERROR, ['info' => $response->get_error_messages()]);
                     continue;
                 }
 
-                if ($response['response']['code'] != '200') {
-                    RY_WT_WC_ECPay_Shipping::instance()->log('Shipping failed. Http code: ' . $response['response']['code'], 'error');
+                if (wp_remote_retrieve_response_code($response) != '200') {
+                    RY_WT_WC_ECPay_Shipping::instance()->log('Shipping POST HTTP status error', WC_Log_Levels::ERROR, ['code' => wp_remote_retrieve_response_code($response)]);
                     continue;
                 }
 
-                RY_WT_WC_ECPay_Shipping::instance()->log('Shipping request result: ' . $response['body']);
-                $body = explode('|', $response['body']);
+                $body = explode('|', wp_remote_retrieve_body($response));
                 if (count($body) != 2) {
-                    RY_WT_WC_ECPay_Shipping::instance()->log('Shipping failed. Explode result failed.', 'warning');
+                    RY_WT_WC_ECPay_Shipping::instance()->log('Shipping POST result explode failed', WC_Log_Levels::WARNING, ['data' => wp_remote_retrieve_body($response)]);
                     continue;
                 }
 
@@ -304,9 +303,11 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_WC_ECPay_Api
 
                 parse_str($body[1], $result);
                 if (!is_array($result)) {
-                    RY_WT_WC_ECPay_Shipping::instance()->log('Shipping failed. Parse result failed.', 'warning');
+                    RY_WT_WC_ECPay_Shipping::instance()->log('Shipping POST result parse failed', WC_Log_Levels::WARNING, ['data' => wp_remote_retrieve_body($response)]);
                     continue;
                 }
+
+                RY_WT_WC_ECPay_Shipping::instance()->log('Shipping POST result', WC_Log_Levels::INFO, ['status' => $body[0], 'data' => $result]);
 
                 $shipping_list = $order->get_meta('_ecpay_shipping_info', true);
                 if (!is_array($shipping_list)) {
@@ -357,7 +358,7 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_WC_ECPay_Api
         }
 
         $args = $this->build_args($data, $MerchantID);
-        RY_WT_WC_ECPay_Shipping::instance()->log('Print info POST: ' . var_export($args, true));
+        RY_WT_WC_ECPay_Shipping::instance()->log('Print POST data', WC_Log_Levels::INFO, ['data' => $args]);
 
         if (RY_WT_WC_ECPay_Shipping::instance()->testmode) {
             $post_url = $this->api_test_url['print'];
@@ -366,15 +367,15 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_WC_ECPay_Api
         }
         $response = $this->link_v2_server($post_url, $args, $HashKey, $HashIV);
         if (is_wp_error($response)) {
-            RY_WT_WC_ECPay_Shipping::instance()->log('Print failed. POST error: ' . implode("\n", $response->get_error_messages()), 'error');
+            RY_WT_WC_ECPay_Shipping::instance()->log('Print POST failed', WC_Log_Levels::ERROR, ['info' => $response->get_error_messages()]);
             exit();
         }
 
-        if ($response['response']['code'] != '200') {
-            RY_WT_WC_ECPay_Shipping::instance()->log('Print failed. Http code: ' . $response['response']['code'], 'error');
+        if (wp_remote_retrieve_response_code($response) != '200') {
+            RY_WT_WC_ECPay_Shipping::instance()->log('Print POST HTTP status error', WC_Log_Levels::ERROR, ['code' => wp_remote_retrieve_response_code($response)]);
             return;
         }
 
-        echo $response['body'];
+        echo wp_remote_retrieve_body($response);
     }
 }

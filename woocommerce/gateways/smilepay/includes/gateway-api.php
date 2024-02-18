@@ -66,7 +66,7 @@ class RY_WT_WC_SmilePay_Gateway_Api extends RY_WT_EC_SmilePay_Api
         }
 
         $gateway = $payment_gateways[$payment_method];
-        RY_WT_WC_SmilePay_Gateway::instance()->log('Generating payment form by ' . $gateway->id . ' for #' . $order->get_order_number());
+        RY_WT_WC_SmilePay_Gateway::instance()->log('Generating payment by ' . $gateway->id . ' for #' . $order->get_id(), WC_Log_Levels::INFO);
 
         list($Dcvc, $Rvg2c, $Verify_key, $Rot_check) = RY_WT_WC_SmilePay_Gateway::instance()->get_api_info();
 
@@ -88,7 +88,7 @@ class RY_WT_WC_SmilePay_Gateway_Api extends RY_WT_EC_SmilePay_Api
         }
 
         $args = $this->add_type_info($args, $order, $gateway);
-        RY_WT_WC_SmilePay_Gateway::instance()->log('Get code POST: ' . var_export($args, true));
+        RY_WT_WC_SmilePay_Gateway::instance()->log('Payment POST data', WC_Log_Levels::INFO, ['data' => $args]);
 
         $order->update_meta_data('_smilepay_Data_id', $args['Data_id']);
         $order->save();
@@ -110,58 +110,54 @@ class RY_WT_WC_SmilePay_Gateway_Api extends RY_WT_EC_SmilePay_Api
 
         $response = $this->link_server($url, $args);
         if (is_wp_error($response)) {
-            RY_WT_WC_SmilePay_Gateway::instance()->log('Get code failed. POST error: ' . implode("\n", $response->get_error_messages()), 'error');
+            RY_WT_WC_SmilePay_Gateway::instance()->log('Payment POST failed', WC_Log_Levels::ERROR, ['info' => $response->get_error_messages()]);
             return false;
         }
 
-        $response_code = wp_remote_retrieve_response_code($response);
-        if (200 != $response_code) {
-            RY_WT_WC_SmilePay_Gateway::instance()->log('Get code failed. Http code: ' . $response_code, 'error');
+        if (wp_remote_retrieve_response_code($response) != '200') {
+            RY_WT_WC_SmilePay_Gateway::instance()->log('Payment POST HTTP status error', WC_Log_Levels::ERROR, ['code' => wp_remote_retrieve_response_code($response)]);
             return false;
         }
 
-        $body = wp_remote_retrieve_body($response);
-        RY_WT_WC_SmilePay_Gateway::instance()->log('Get code result: ' . $body);
-
-        $ipn_info = @simplexml_load_string($body);
-        if (!$ipn_info) {
-            RY_WT_WC_SmilePay_Gateway::instance()->log('Get code failed. Parse result failed.', 'warning');
+        $result = @simplexml_load_string(wp_remote_retrieve_body($response));
+        if (!$result) {
+            RY_WT_WC_SmilePay_Gateway::instance()->log('Payment code POST result parse failed', WC_Log_Levels::WARNING, ['data' => wp_remote_retrieve_body($response)]);
             return false;
         }
 
-        RY_WT_WC_SmilePay_Gateway::instance()->log('Get code result data: ' . var_export($ipn_info, true));
+        RY_WT_WC_SmilePay_Gateway::instance()->log('Shipping code POST result', WC_Log_Levels::INFO, ['data' => $result]);
 
-        if ((string) $ipn_info->Status != '1') {
+        if ((string) $result->Status != '1') {
             $order->add_order_note(sprintf(
                 /* translators: %1$s Error messade, %2$d Error messade ID */
                 __('Get Smilepay code error: %1$s (%2$d)', 'ry-woocommerce-tools'),
-                $ipn_info->Desc,
-                $ipn_info->Status
+                $result->Desc,
+                $result->Status
             ));
             return false;
         }
 
-        $order = $this->set_transaction_info($order, $ipn_info, $gateway::Payment_Type);
+        $order = $this->set_transaction_info($order, $result, $gateway::Payment_Type);
 
         switch ($gateway::Payment_Type) {
             case 2:
-                $order->update_meta_data('_smilepay_atm_BankCode', (string) $ipn_info->AtmBankNo);
-                $order->update_meta_data('_smilepay_atm_vAccount', (string) $ipn_info->AtmNo);
-                $order->update_meta_data('_smilepay_atm_ExpireDate', (string) $ipn_info->PayEndDate);
+                $order->update_meta_data('_smilepay_atm_BankCode', (string) $result->AtmBankNo);
+                $order->update_meta_data('_smilepay_atm_vAccount', (string) $result->AtmNo);
+                $order->update_meta_data('_smilepay_atm_ExpireDate', (string) $result->PayEndDate);
                 break;
             case 3:
-                $order->update_meta_data('_smilepay_barcode_Barcode1', (string) $ipn_info->Barcode1);
-                $order->update_meta_data('_smilepay_barcode_Barcode2', (string) $ipn_info->Barcode2);
-                $order->update_meta_data('_smilepay_barcode_Barcode3', (string) $ipn_info->Barcode3);
-                $order->update_meta_data('_smilepay_barcode_ExpireDate', (string) $ipn_info->PayEndDate);
+                $order->update_meta_data('_smilepay_barcode_Barcode1', (string) $result->Barcode1);
+                $order->update_meta_data('_smilepay_barcode_Barcode2', (string) $result->Barcode2);
+                $order->update_meta_data('_smilepay_barcode_Barcode3', (string) $result->Barcode3);
+                $order->update_meta_data('_smilepay_barcode_ExpireDate', (string) $result->PayEndDate);
                 break;
             case 4:
-                $order->update_meta_data('_smilepay_cvs_PaymentNo', (string) $ipn_info->IbonNo);
-                $order->update_meta_data('_smilepay_cvs_ExpireDate', (string) $ipn_info->PayEndDate);
+                $order->update_meta_data('_smilepay_cvs_PaymentNo', (string) $result->IbonNo);
+                $order->update_meta_data('_smilepay_cvs_ExpireDate', (string) $result->PayEndDate);
                 break;
             case 6:
-                $order->update_meta_data('_smilepay_cvs_PaymentNo', (string) $ipn_info->FamiNO);
-                $order->update_meta_data('_smilepay_cvs_ExpireDate', (string) $ipn_info->PayEndDate);
+                $order->update_meta_data('_smilepay_cvs_PaymentNo', (string) $result->FamiNO);
+                $order->update_meta_data('_smilepay_cvs_ExpireDate', (string) $result->PayEndDate);
                 break;
         }
         $order->save();
@@ -190,11 +186,11 @@ class RY_WT_WC_SmilePay_Gateway_Api extends RY_WT_EC_SmilePay_Api
         return $args;
     }
 
-    protected function set_transaction_info($order, $ipn_info, $payment_type)
+    protected function set_transaction_info($order, $result, $payment_type)
     {
         $transaction_ID = (string) $order->get_transaction_id();
-        if ($transaction_ID == '' || !$order->is_paid() || $transaction_ID != $this->get_transaction_id($ipn_info)) {
-            $order->set_transaction_id($this->get_transaction_id($ipn_info));
+        if ($transaction_ID == '' || !$order->is_paid() || $transaction_ID != $this->get_transaction_id($result)) {
+            $order->set_transaction_id($this->get_transaction_id($result));
             $order->update_meta_data('_smilepay_payment_type', $payment_type);
             $order->save();
             $order = wc_get_order($order->get_id());

@@ -34,7 +34,7 @@ class RY_WT_WC_SmilePay_Shipping_Response extends RY_WT_EC_SmilePay_Api
     {
         if (!empty($_POST)) {
             $ipn_info = $this->clean_post_data();
-            RY_WT_WC_SmilePay_Shipping::instance()->log('IPN request: ' . var_export($ipn_info, true));
+            RY_WT_WC_SmilePay_Shipping::instance()->log('IPN request', WC_Log_Levels::INFO, ['data' => $ipn_info]);
             if (1 == $this->get_status($ipn_info)) {
                 do_action('valid_smilepay_shipping_map_request', $ipn_info, false);
                 return;
@@ -48,7 +48,7 @@ class RY_WT_WC_SmilePay_Shipping_Response extends RY_WT_EC_SmilePay_Api
     {
         if (!empty($_POST)) {
             $ipn_info = $this->clean_post_data();
-            RY_WT_WC_SmilePay_Shipping::instance()->log('IPN request: ' . var_export($ipn_info, true));
+            RY_WT_WC_SmilePay_Shipping::instance()->log('IPN request', WC_Log_Levels::INFO, ['data' => $ipn_info]);
             if (1 == $this->get_status($ipn_info)) {
                 do_action('valid_smilepay_shipping_map_request', $ipn_info, true);
                 return;
@@ -62,7 +62,7 @@ class RY_WT_WC_SmilePay_Shipping_Response extends RY_WT_EC_SmilePay_Api
     {
         if (!empty($_POST)) {
             $ipn_info = $this->clean_post_data(true);
-            RY_WT_WC_SmilePay_Shipping::instance()->log('IPN request: ' . var_export($ipn_info, true));
+            RY_WT_WC_SmilePay_Shipping::instance()->log('IPN request', WC_Log_Levels::INFO, ['data' => $ipn_info]);
             do_action('valid_smilepay_shipping_request', $ipn_info);
             return;
         }
@@ -75,7 +75,7 @@ class RY_WT_WC_SmilePay_Shipping_Response extends RY_WT_EC_SmilePay_Api
 
         $order_ID = $this->get_order_id($ipn_info, RY_WT::get_option('smilepay_gateway_order_prefix'));
         if ($order = wc_get_order($order_ID)) {
-            RY_WT_WC_SmilePay_Shipping::instance()->log('Found order #' . $order->get_id());
+            RY_WT_WC_SmilePay_Shipping::instance()->log('Found order #' . $order->get_id(), WC_Log_Levels::INFO);
 
             $transaction_ID = $this->get_transaction_id($ipn_info);
             if ($transaction_ID) {
@@ -139,7 +139,6 @@ class RY_WT_WC_SmilePay_Shipping_Response extends RY_WT_EC_SmilePay_Api
             }
         }
 
-        RY_WT_WC_SmilePay_Shipping::instance()->log('Redirect: ' . $url);
         wp_redirect($url);
     }
 
@@ -147,7 +146,7 @@ class RY_WT_WC_SmilePay_Shipping_Response extends RY_WT_EC_SmilePay_Api
     {
         $order_ID = $this->get_order_id($ipn_info, RY_WT::get_option('smilepay_gateway_order_prefix'));
         if ($order = wc_get_order($order_ID)) {
-            RY_WT_WC_SmilePay_Shipping::instance()->log('Found order #' . $order->get_id());
+            RY_WT_WC_SmilePay_Shipping::instance()->log('Found order #' . $order->get_id(), WC_Log_Levels::INFO);
 
             $shipping_list = $order->get_meta('_smilepay_shipping_info', true);
             if (!is_array($shipping_list)) {
@@ -183,7 +182,7 @@ class RY_WT_WC_SmilePay_Shipping_Response extends RY_WT_EC_SmilePay_Api
 
             $this->die_success();
         } else {
-            RY_WT_WC_SmilePay_Shipping::instance()->log('Order not found', 'warning');
+            RY_WT_WC_SmilePay_Shipping::instance()->log('Order not found', WC_Log_Levels::WARNING);
             $this->die_error();
         }
     }

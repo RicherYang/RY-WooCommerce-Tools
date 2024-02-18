@@ -45,14 +45,14 @@ class RY_WT_WC_ECPay_Gateway_Response extends RY_WT_WC_ECPay_Api
     {
         $check_value = $this->get_check_value($ipn_info);
         if ($check_value) {
-            RY_WT_WC_ECPay_Gateway::instance()->log('IPN request: ' . var_export($ipn_info, true));
+            RY_WT_WC_ECPay_Gateway::instance()->log('IPN request', WC_Log_Levels::INFO, ['data' => $ipn_info]);
             list($MerchantID, $HashKey, $HashIV) = RY_WT_WC_ECPay_Gateway::instance()->get_api_info();
 
             $ipn_info_check_value = $this->generate_check_value($ipn_info, $HashKey, $HashIV, 'sha256');
-            if ($check_value == $ipn_info_check_value) {
+            if ($check_value === $ipn_info_check_value) {
                 return true;
             }
-            RY_WT_WC_ECPay_Gateway::instance()->log('IPN request check failed. Response:' . $check_value . ' Self:' . $ipn_info_check_value, 'error');
+            RY_WT_WC_ECPay_Gateway::instance()->log('IPN request check failed', WC_Log_Levels::ERROR, ['response' => $check_value, 'self' => $ipn_info_check_value]);
         }
 
         return false;
@@ -63,7 +63,7 @@ class RY_WT_WC_ECPay_Gateway_Response extends RY_WT_WC_ECPay_Api
         $order_ID = $this->get_order_id($ipn_info, RY_WT::get_option('ecpay_gateway_order_prefix'));
         if ($order = wc_get_order($order_ID)) {
             $payment_status = $this->get_status($ipn_info);
-            RY_WT_WC_ECPay_Gateway::instance()->log('Found order #' . $order->get_id() . ' Payment status: ' . $payment_status);
+            RY_WT_WC_ECPay_Gateway::instance()->log('Found #' . $order->get_id() . ' Payment status: ' . $payment_status, WC_Log_Levels::INFO);
 
             $order = $this->set_transaction_info($order, $ipn_info);
 
@@ -72,7 +72,7 @@ class RY_WT_WC_ECPay_Gateway_Response extends RY_WT_WC_ECPay_Api
 
             $this->die_success();
         } else {
-            RY_WT_WC_ECPay_Gateway::instance()->log('Order not found', 'warning');
+            RY_WT_WC_ECPay_Gateway::instance()->log('Order not found', WC_Log_Levels::WARNING);
             $this->die_error();
         }
     }
@@ -189,6 +189,7 @@ class RY_WT_WC_ECPay_Gateway_Response extends RY_WT_WC_ECPay_Api
 
     public function add_noaction_note($ipn_info, $order): void
     {
+        RY_WT_WC_ECPay_Gateway::instance()->log('Unknow status', WC_Log_Levels::INFO, ['status' => $this->get_status($ipn_info), 'status_msg' => $this->get_status_msg($ipn_info)]);
         $order->add_order_note(sprintf(
             /* translators: %1$s: status message, %2$d status code */
             __('Payment unkonw status: %1$s (%2$d)', 'ry-woocommerce-tools'),

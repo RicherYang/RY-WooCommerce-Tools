@@ -104,16 +104,16 @@ class RY_WT_WC_ECPay_Shipping_Response extends RY_WT_WC_ECPay_Api
 
     protected function ipn_request_is_valid($ipn_info)
     {
-        RY_WT_WC_ECPay_Shipping::instance()->log('IPN request: ' . var_export($ipn_info, true));
-
-        list($MerchantID, $HashKey, $HashIV, $cvs_type) = RY_WT_WC_ECPay_Shipping::instance()->get_api_info();
         $check_value = $this->get_check_value($ipn_info);
-        $ipn_info_check_value = $this->generate_check_value($ipn_info, $HashKey, $HashIV, 'md5');
-        if ($check_value == $ipn_info_check_value) {
-            return true;
-        } else {
-            RY_WT_WC_ECPay_Shipping::instance()->log('IPN request check failed. Response:' . $check_value . ' Self:' . $ipn_info_check_value, 'error');
-            return false;
+        if ($check_value) {
+            RY_WT_WC_ECPay_Shipping::instance()->log('IPN request', WC_Log_Levels::INFO, ['data' => $ipn_info]);
+            list($MerchantID, $HashKey, $HashIV, $cvs_type) = RY_WT_WC_ECPay_Shipping::instance()->get_api_info();
+
+            $ipn_info_check_value = $this->generate_check_value($ipn_info, $HashKey, $HashIV, 'md5');
+            if ($check_value === $ipn_info_check_value) {
+                return true;
+            }
+            RY_WT_WC_ECPay_Shipping::instance()->log('IPN request check failed', WC_Log_Levels::ERROR, ['response' => $check_value, 'self' => $ipn_info_check_value]);
         }
     }
 
@@ -121,6 +121,8 @@ class RY_WT_WC_ECPay_Shipping_Response extends RY_WT_WC_ECPay_Api
     {
         $order_ID = $this->get_order_id($ipn_info, RY_WT::get_option('ecpay_shipping_order_prefix'));
         if ($order = wc_get_order($order_ID)) {
+            RY_WT_WC_ECPay_Shipping::instance()->log('Found order #' . $order->get_id(), WC_Log_Levels::INFO);
+
             $shipping_list = $order->get_meta('_ecpay_shipping_info', true);
             if (!is_array($shipping_list)) {
                 $shipping_list = [];
@@ -158,10 +160,10 @@ class RY_WT_WC_ECPay_Shipping_Response extends RY_WT_WC_ECPay_Api
             do_action('ry_ecpay_shipping_response', $ipn_info, $order);
 
             $this->die_success();
+        } else {
+            RY_WT_WC_ECPay_Shipping::instance()->log('Order not found', WC_Log_Levels::WARNING);
+            $this->die_error();
         }
-
-        RY_WT_WC_ECPay_Shipping::instance()->log('Order not found', 'warning');
-        $this->die_error();
     }
 
     public function shipping_at_cvs($ipn_info, $order)

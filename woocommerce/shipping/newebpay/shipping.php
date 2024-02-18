@@ -99,6 +99,8 @@ final class RY_WT_WC_NewebPay_Shipping extends RY_WT_WC_Model
                 $fields['shipping']['shipping_city']['required'] = false;
                 $fields['shipping']['shipping_state']['required'] = false;
                 $fields['shipping']['shipping_postcode']['required'] = false;
+            } else {
+                $fields['shipping']['shipping_postcode']['required'] = false;
             }
         }
 

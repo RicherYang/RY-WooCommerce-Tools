@@ -147,7 +147,7 @@ final class RY_WT_WC_Admin_Shipping
                 ];
             }
             $shipping_fields['phone'] = [
-                'label' => __('Phone', 'woocommerce')
+                'label' => __('Phone', 'ry-woocommerce-tools')
             ];
         }
         return $shipping_fields;
@@ -199,7 +199,7 @@ final class RY_WT_WC_Admin_Shipping
         check_ajax_referer('delete-shipping-info', 'security');
 
         $order_ID = (int) wp_unslash($_POST['orderid'] ?? 0);
-        $logistics_ID = (int) wp_unslash($_POST['id'] ?? 0);
+        $logistics_ID = wp_unslash($_POST['id'] ?? '');
 
         $order = wc_get_order($order_ID);
         if (!empty($order)) {

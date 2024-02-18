@@ -26,7 +26,7 @@ class RY_WT_WC_ECPay_Gateway_Api extends RY_WT_WC_ECPay_Api
 
     public function checkout_form($order, $gateway)
     {
-        RY_WT_WC_ECPay_Gateway::instance()->log('Generating payment form by ' . $gateway->id . ' for #' . $order->get_order_number());
+        RY_WT_WC_ECPay_Gateway::instance()->log('Generating payment by ' . $gateway->id . ' for #' . $order->get_id(), WC_Log_Levels::INFO);
 
         $notify_url = WC()->api_request_url('ry_ecpay_callback', true);
         $return_url = $this->get_3rd_return_url($order);
@@ -82,7 +82,7 @@ class RY_WT_WC_ECPay_Gateway_Api extends RY_WT_WC_ECPay_Api
 
         $args = $this->add_type_info($args, $order, $gateway);
         $args = $this->add_check_value($args, $HashKey, $HashIV, 'sha256');
-        RY_WT_WC_ECPay_Gateway::instance()->log('Checkout POST: ' . var_export($args, true));
+        RY_WT_WC_ECPay_Gateway::instance()->log('Payment POST data', WC_Log_Levels::INFO, ['data' => $args]);
 
         $order->update_meta_data('_ecpay_MerchantTradeNo', $args['MerchantTradeNo']);
         $order->save();

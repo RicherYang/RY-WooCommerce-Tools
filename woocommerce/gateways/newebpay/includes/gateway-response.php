@@ -43,16 +43,17 @@ class RY_WT_WC_NewebPay_Gateway_Response extends RY_WT_WC_NewebPay_Gateway_Api
 
     protected function ipn_request_is_valid($ipn_info)
     {
-        $info_value = $this->get_tradeInfo_value($ipn_info);
-        if ($info_value) {
-            RY_WT_WC_NewebPay_Gateway::instance()->log('IPN request: ' . var_export($ipn_info, true));
+        $check_value = $this->get_tradeSha_value($ipn_info);
+        if ($check_value) {
+            RY_WT_WC_NewebPay_Gateway::instance()->log('IPN request', WC_Log_Levels::INFO, ['data' => $ipn_info]);
             list($MerchantID, $HashKey, $HashIV) = RY_WT_WC_NewebPay_Gateway::instance()->get_api_info();
 
-            $info_sha_value = $this->get_tradeSha_value($ipn_info);
-            if ($info_sha_value == $this->generate_hash_value($info_value, $HashKey, $HashIV)) {
+            $info_value = $this->get_tradeInfo_value($ipn_info);
+            $ipn_info_check_value = $this->generate_hash_value($info_value, $HashKey, $HashIV);
+            if ($check_value === $ipn_info_check_value) {
                 return true;
             }
-            RY_WT_WC_NewebPay_Gateway::instance()->log('IPN request check failed. Response:' . $info_sha_value . ' Self:' . $this->generate_hash_value($info_value, $HashKey, $HashIV), 'error');
+            RY_WT_WC_NewebPay_Gateway::instance()->log('IPN request check failed', WC_Log_Levels::ERROR, ['response' => $check_value, 'self' => $ipn_info_check_value]);
         }
 
         return false;
@@ -65,12 +66,12 @@ class RY_WT_WC_NewebPay_Gateway_Response extends RY_WT_WC_NewebPay_Gateway_Api
         $ipn_info = $this->get_tradeInfo_value($ipn_info);
         $ipn_info = $this->args_decrypt($ipn_info, $HashKey, $HashIV);
         $ipn_info = json_decode($ipn_info);
-        RY_WT_WC_NewebPay_Gateway::instance()->log('IPN decrypt request: ' . var_export($ipn_info, true));
+        RY_WT_WC_NewebPay_Gateway::instance()->log('IPN request decrypt', WC_Log_Levels::INFO, ['data' => $ipn_info]);
 
         $order_ID = $this->get_order_id($ipn_info, RY_WT::get_option('newebpay_gateway_order_prefix'));
         if ($order = wc_get_order($order_ID)) {
             $payment_status = $this->get_status($ipn_info);
-            RY_WT_WC_NewebPay_Gateway::instance()->log('Found order #' . $order->get_id() . ' Payment status: ' . $payment_status);
+            RY_WT_WC_NewebPay_Gateway::instance()->log('Found #' . $order->get_id() . ' Payment status: ' . $payment_status, WC_Log_Levels::INFO);
 
             $transaction_ID = (string) $order->get_transaction_id();
             if ($transaction_ID === '' || $transaction_ID != $this->get_transaction_id($ipn_info)) {
@@ -92,7 +93,7 @@ class RY_WT_WC_NewebPay_Gateway_Response extends RY_WT_WC_NewebPay_Gateway_Api
 
             $this->die_success();
         } else {
-            RY_WT_WC_NewebPay_Gateway::instance()->log('Order not found', 'warning');
+            RY_WT_WC_NewebPay_Gateway::instance()->log('Order not found', WC_Log_Levels::WARNING);
             $this->die_error();
         }
     }
@@ -191,7 +192,7 @@ class RY_WT_WC_NewebPay_Gateway_Response extends RY_WT_WC_NewebPay_Gateway_Api
 
     protected function payment_status_unknow($order, $ipn_info, $payment_status)
     {
-        RY_WT_WC_NewebPay_Gateway::instance()->log('Unknow status: ' . $this->get_status($ipn_info) . '(' . $this->get_status_msg($ipn_info) . ')');
+        RY_WT_WC_NewebPay_Gateway::instance()->log('Unknow status', WC_Log_Levels::INFO, ['status' => $this->get_status($ipn_info), 'status_msg' => $this->get_status_msg($ipn_info)]);
         if ($order->is_paid()) {
             $order->add_order_note(__('Payment failed within paid order', 'ry-woocommerce-tools'));
             $order->save();
