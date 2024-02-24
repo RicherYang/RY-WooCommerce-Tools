@@ -66,8 +66,6 @@ class RY_WT_WC_SmilePay_Gateway_Api extends RY_WT_EC_SmilePay_Api
         }
 
         $gateway = $payment_gateways[$payment_method];
-        RY_WT_WC_SmilePay_Gateway::instance()->log('Generating payment by ' . $gateway->id . ' for #' . $order->get_id(), WC_Log_Levels::INFO);
-
         list($Dcvc, $Rvg2c, $Verify_key, $Rot_check) = RY_WT_WC_SmilePay_Gateway::instance()->get_api_info();
 
         $item_name = $this->get_item_name(RY_WT::get_option('payment_item_name', ''), $order);
@@ -88,7 +86,7 @@ class RY_WT_WC_SmilePay_Gateway_Api extends RY_WT_EC_SmilePay_Api
         }
 
         $args = $this->add_type_info($args, $order, $gateway);
-        RY_WT_WC_SmilePay_Gateway::instance()->log('Payment POST data', WC_Log_Levels::INFO, ['data' => $args]);
+        RY_WT_WC_SmilePay_Gateway::instance()->log('Generating payment by ' . $gateway->id . ' for #' . $order->get_id(), WC_Log_Levels::INFO, ['data' => $args]);
 
         $order->update_meta_data('_smilepay_Data_id', $args['Data_id']);
         $order->save();

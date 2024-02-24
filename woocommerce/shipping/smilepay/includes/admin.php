@@ -47,7 +47,7 @@ final class RY_WT_WC_SmilePay_Shipping_Admin
             $settings = include RY_WT_PLUGIN_DIR . 'woocommerce/shipping/smilepay/includes/settings/admin-settings.php';
 
             if ('billing_only' === get_option('woocommerce_ship_to_destination')) {
-                $setting_idx = array_search(RY_WT::Option_Prefix . 'smilepay_shipping', array_column($settings, 'id'));
+                $setting_idx = array_search(RY_WT::OPTION_PREFIX . 'smilepay_shipping', array_column($settings, 'id'));
                 $settings[$setting_idx]['desc'] .= '<br>' . __('Cvs only can enable with shipping destination not force to billing address.', 'ry-woocommerce-tools');
             }
         }
@@ -153,13 +153,12 @@ final class RY_WT_WC_SmilePay_Shipping_Admin
                     if ($info['ID'] == $logistics_ID) {
                         if (empty($shipping_list[$logistics_ID]['PaymentNo'])) {
                             RY_WT_WC_SmilePay_Shipping_Api::instance()->get_code_no($order_ID, $info['ID']);
-                            $order = wc_get_order($order_ID);
                         }
 
                         include_once RY_WT_PLUGIN_DIR . 'woocommerce/shipping/smilepay/includes/meta-box.php';
 
                         echo '<div>';
-                        RY_SmilePay_Shipping_Meta_Box::output($order);
+                        RY_SmilePay_Shipping_Meta_Box::output($order->get_id());
                         echo '</div>';
                     }
                 }

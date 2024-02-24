@@ -10,7 +10,7 @@ return [
     ],
     [
         'title' => __('Debug log', 'woocommerce'),
-        'id' => RY_WT::Option_Prefix . 'ecpay_shipping_log',
+        'id' => RY_WT::OPTION_PREFIX . 'ecpay_shipping_log',
         'type' => 'checkbox',
         'default' => 'no',
         'desc' => __('Enable logging', 'woocommerce') . '<br>'
@@ -23,21 +23,21 @@ return [
     ],
     [
         'title' => __('Log status change', 'ry-woocommerce-tools'),
-        'id' => RY_WT::Option_Prefix . 'ecpay_shipping_log_status_change',
+        'id' => RY_WT::OPTION_PREFIX . 'ecpay_shipping_log_status_change',
         'type' => 'checkbox',
         'default' => 'no',
         'desc' => __('Log status change at order notes.', 'ry-woocommerce-tools')
     ],
     [
         'title' => __('Auto change order status', 'ry-woocommerce-tools'),
-        'id' => RY_WT::Option_Prefix . 'ecpay_shipping_auto_order_status',
+        'id' => RY_WT::OPTION_PREFIX . 'ecpay_shipping_auto_order_status',
         'type' => 'checkbox',
         'default' => 'yes',
         'desc' => __('Auto change order status when get shipping status change.', 'ry-woocommerce-tools')
     ],
     [
         'title' => __('Auto get shipping payment no', 'ry-woocommerce-tools'),
-        'id' => RY_WT::Option_Prefix . 'ecpay_shipping_auto_get_no',
+        'id' => RY_WT::OPTION_PREFIX . 'ecpay_shipping_auto_get_no',
         'type' => 'checkbox',
         'default' => 'yes',
         'desc' => __('Auto get shipping payment no when order status is change to processing.', 'ry-woocommerce-tools')
@@ -53,14 +53,14 @@ return [
     ],
     [
         'title' => __('Order no prefix', 'ry-woocommerce-tools'),
-        'id' => RY_WT::Option_Prefix . 'ecpay_shipping_order_prefix',
+        'id' => RY_WT::OPTION_PREFIX . 'ecpay_shipping_order_prefix',
         'type' => 'text',
         'desc' => __('The prefix string of order no. Only letters and numbers allowed.', 'ry-woocommerce-tools'),
         'desc_tip' => true
     ],
     [
         'title' => __('shipping item name', 'ry-woocommerce-tools'),
-        'id' => RY_WT::Option_Prefix . 'shipping_item_name',
+        'id' => RY_WT::OPTION_PREFIX . 'shipping_item_name',
         'type' => 'text',
         'default' => '',
         'desc' => __('If empty use the first product name.', 'ry-woocommerce-tools'),
@@ -68,7 +68,7 @@ return [
     ],
     [
         'title' => __('Cvs shipping type', 'ry-woocommerce-tools'),
-        'id' => RY_WT::Option_Prefix . 'ecpay_shipping_cvs_type',
+        'id' => RY_WT::OPTION_PREFIX . 'ecpay_shipping_cvs_type',
         'type' => 'select',
         'default' => 'C2C',
         'options' => [
@@ -77,14 +77,14 @@ return [
     ],
     [
         'title' => __('Sender name', 'ry-woocommerce-tools'),
-        'id' => RY_WT::Option_Prefix . 'ecpay_shipping_sender_name',
+        'id' => RY_WT::OPTION_PREFIX . 'ecpay_shipping_sender_name',
         'type' => 'text',
         'desc' => __('Name length between 1 to 10 letter', 'ry-woocommerce-tools'),
         'desc_tip' => true
     ],
     [
         'title' => __('Sender phone', 'ry-woocommerce-tools'),
-        'id' => RY_WT::Option_Prefix . 'ecpay_shipping_sender_phone',
+        'id' => RY_WT::OPTION_PREFIX . 'ecpay_shipping_sender_phone',
         'type' => 'text',
         'desc' => __('Phone format (0x)xxxxxxx#xx', 'ry-woocommerce-tools'),
         'desc_tip' => true,
@@ -95,7 +95,7 @@ return [
     ],
     [
         'title' => __('Sender cellphone', 'ry-woocommerce-tools'),
-        'id' => RY_WT::Option_Prefix . 'ecpay_shipping_sender_cellphone',
+        'id' => RY_WT::OPTION_PREFIX . 'ecpay_shipping_sender_cellphone',
         'type' => 'text',
         'desc' => __('Cellphone format 09xxxxxxxx', 'ry-woocommerce-tools'),
         'desc_tip' => true,
@@ -106,17 +106,17 @@ return [
     ],
     [
         'title' => __('Sender zipcode ( Home delivery )', 'ry-woocommerce-tools'),
-        'id' => RY_WT::Option_Prefix . 'ecpay_shipping_sender_zipcode',
+        'id' => RY_WT::OPTION_PREFIX . 'ecpay_shipping_sender_zipcode',
         'type' => 'text'
     ],
     [
         'title' => __('Sender address ( Home delivery )', 'ry-woocommerce-tools'),
-        'id' => RY_WT::Option_Prefix . 'ecpay_shipping_sender_address',
+        'id' => RY_WT::OPTION_PREFIX . 'ecpay_shipping_sender_address',
         'type' => 'text'
     ],
     [
         'title' => __('Shipping declare amount over 20000', 'ry-woocommerce-tools'),
-        'id' => RY_WT::Option_Prefix . 'ecpay_shipping_declare_over',
+        'id' => RY_WT::OPTION_PREFIX . 'ecpay_shipping_declare_over',
         'type' => 'select',
         'default' => 'keep',
         'options' => [
@@ -128,7 +128,7 @@ return [
     ],
     [
         'title' => __('Shipping box size ( Home delivery )', 'ry-woocommerce-tools'),
-        'id' => RY_WT::Option_Prefix . 'ecpay_shipping_box_size',
+        'id' => RY_WT::OPTION_PREFIX . 'ecpay_shipping_box_size',
         'type' => 'select',
         'default' => '1',
         'options' => [
@@ -147,13 +147,13 @@ return [
             __('Product default weight (%s) ( Home delivery )', 'ry-woocommerce-tools'),
             I18nUtil::get_weight_unit_label(get_option('woocommerce_weight_unit'))
         ),
-        'id' => RY_WT::Option_Prefix . 'ecpay_shipping_product_weight',
+        'id' => RY_WT::OPTION_PREFIX . 'ecpay_shipping_product_weight',
         'default' => '0',
         'type' => 'text'
     ],
     [
         'title' => __('Pickup time ( Home delivery )', 'ry-woocommerce-tools'),
-        'id' => RY_WT::Option_Prefix . 'ecpay_shipping_pickup_time',
+        'id' => RY_WT::OPTION_PREFIX . 'ecpay_shipping_pickup_time',
         'type' => 'select',
         'default' => '4',
         'options' => [
@@ -173,7 +173,7 @@ return [
     ],
     [
         'title' => __('ECPay shipping sandbox', 'ry-woocommerce-tools'),
-        'id' => RY_WT::Option_Prefix . 'ecpay_shipping_testmode',
+        'id' => RY_WT::OPTION_PREFIX . 'ecpay_shipping_testmode',
         'type' => 'checkbox',
         'default' => 'no',
         'desc' => __('Enable ECPay shipping sandbox', 'ry-woocommerce-tools')
@@ -181,19 +181,19 @@ return [
     ],
     [
         'title' => __('MerchantID', 'ry-woocommerce-tools'),
-        'id' => RY_WT::Option_Prefix . 'ecpay_shipping_MerchantID',
+        'id' => RY_WT::OPTION_PREFIX . 'ecpay_shipping_MerchantID',
         'type' => 'text',
         'default' => ''
     ],
     [
         'title' => __('HashKey', 'ry-woocommerce-tools'),
-        'id' => RY_WT::Option_Prefix . 'ecpay_shipping_HashKey',
+        'id' => RY_WT::OPTION_PREFIX . 'ecpay_shipping_HashKey',
         'type' => 'text',
         'default' => ''
     ],
     [
         'title' => __('HashIV', 'ry-woocommerce-tools'),
-        'id' => RY_WT::Option_Prefix . 'ecpay_shipping_HashIV',
+        'id' => RY_WT::OPTION_PREFIX . 'ecpay_shipping_HashIV',
         'type' => 'text',
         'default' => ''
     ],

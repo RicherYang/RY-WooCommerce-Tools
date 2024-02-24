@@ -47,7 +47,10 @@ final class RY_WT_WC_Admin
 
         if (isset($_POST['ryt_check_time']) && 'ryt_check_time' === $_POST['ryt_check_time']) {
             RY_WT_Cron::check_ntp_time();
-            printf('<div class="notice notice-success is-dismissible"><p><strong>%s</strong></p></div>', __('Check server time success.', 'ry-woocommerce-tools'));
+            printf(
+                '<div class="notice notice-success is-dismissible"><p><strong>%s</strong></p></div>',
+                esc_html__('Check server time success.', 'ry-woocommerce-tools')
+            );
         }
 
         include RY_WT_PLUGIN_DIR . 'woocommerce/admin/settings/html/tools.php';

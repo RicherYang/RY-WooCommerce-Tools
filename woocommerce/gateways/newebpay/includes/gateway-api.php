@@ -22,8 +22,6 @@ class RY_WT_WC_NewebPay_Gateway_Api extends RY_WT_WC_NewebPay_Api
 
     public function checkout_form($order, $gateway)
     {
-        RY_WT_WC_NewebPay_Gateway::instance()->log('Generating payment by ' . $gateway->id . ' for #' . $order->get_id(), WC_Log_Levels::INFO);
-
         $notify_url = WC()->api_request_url('ry_newebpay_callback', true);
         $return_url = $this->get_3rd_return_url($order);
 
@@ -91,8 +89,7 @@ class RY_WT_WC_NewebPay_Gateway_Api extends RY_WT_WC_NewebPay_Api
             'EncryptType' => 0
         ];
         $form_data['TradeSha'] = $this->generate_hash_value($form_data['TradeInfo'], $HashKey, $HashIV);
-
-        RY_WT_WC_NewebPay_Gateway::instance()->log('Payment POST data', WC_Log_Levels::INFO, ['form' => $form_data, 'data' => $args]);
+        RY_WT_WC_NewebPay_Gateway::instance()->log('Generating payment by ' . $gateway->id . ' for #' . $order->get_id(), WC_Log_Levels::INFO, ['form' => $form_data, 'data' => $args]);
 
         $order->update_meta_data('_newebpay_MerchantOrderNo', $args['MerchantOrderNo']);
         $order->save();
@@ -139,6 +136,7 @@ class RY_WT_WC_NewebPay_Gateway_Api extends RY_WT_WC_NewebPay_Api
                         }
                         if (in_array($number_of_periods, [3, 6, 12, 18, 24, 30])) {
                             $args['InstFlag'] = $number_of_periods;
+
                             $order->add_order_note(sprintf(
                                 /* translators: %d number of periods */
                                 __('Credit installment to %d', 'ry-woocommerce-tools'),

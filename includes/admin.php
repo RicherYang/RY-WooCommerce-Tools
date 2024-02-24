@@ -31,14 +31,17 @@ final class RY_WT_Admin
                 __('RY WooCommerce Tools', 'ry-woocommerce-tools'),
                 RY_WT::$min_WooCommerce_version
             );
-            printf('<div class="error"><p>%s</p></div>', $message);
+            printf('<div class="error"><p>%s</p></div>', wp_kses($message, ['strong' => []]));
         }
     }
 
     public function show_time_error(): void
     {
         if (RY_WT::get_option('ntp_time_error', false)) {
-            printf('<div class="notice notice-error"><p>%s</p></div>', __('Please check your server time setting. Server time is differs from NTP more than one minute.', 'ry-woocommerce-tools'));
+            printf(
+                '<div class="notice notice-error"><p>%s</p></div>',
+                esc_html__('Please check your server time setting. Server time is differs from NTP more than one minute.', 'ry-woocommerce-tools')
+            );
         }
     }
 

@@ -19,7 +19,7 @@ final class RY_WT_WC_ECPay_Shipping_Admin
 
         add_filter('woocommerce_get_sections_rytools', [$this, 'add_sections']);
         add_filter('woocommerce_get_settings_rytools', [$this, 'add_setting'], 10, 2);
-        add_filter('woocommerce_admin_settings_sanitize_option_' . RY_WT::Option_Prefix . 'ecpay_shipping_product_weight', [$this, 'only_number']);
+        add_filter('woocommerce_admin_settings_sanitize_option_' . RY_WT::OPTION_PREFIX . 'ecpay_shipping_product_weight', [$this, 'only_number']);
         add_action('woocommerce_update_options_rytools_ecpay_shipping', [$this, 'check_option']);
 
         add_action('admin_post_ry-print-ecpay-shipping', [$this, 'print_shipping']);
@@ -45,7 +45,7 @@ final class RY_WT_WC_ECPay_Shipping_Admin
             $settings = include RY_WT_PLUGIN_DIR . 'woocommerce/shipping/ecpay/includes/settings/admin-settings.php';
 
             if ('billing_only' === get_option('woocommerce_ship_to_destination')) {
-                $setting_idx = array_search(RY_WT::Option_Prefix . 'ecpay_shipping_cvs_type', array_column($settings, 'id'));
+                $setting_idx = array_search(RY_WT::OPTION_PREFIX . 'ecpay_shipping_cvs_type', array_column($settings, 'id'));
                 $settings[$setting_idx]['options'] = [
                     'disable' => _x('Disable', 'Cvs type', 'ry-woocommerce-tools')
                 ];
@@ -182,11 +182,12 @@ final class RY_WT_WC_ECPay_Shipping_Admin
 
             foreach ($order->get_items('shipping') as $item) {
                 if (false !== RY_WT_WC_ECPay_Shipping::instance()->get_order_support_shipping($item)) {
+                    RY_WT_WC_ECPay_Shipping_Api::instance()->get_code($order, $collection, $temp);
+
                     include_once RY_WT_PLUGIN_DIR . 'woocommerce/shipping/ecpay/includes/meta-box.php';
 
-                    RY_WT_WC_ECPay_Shipping_Api::instance()->get_code($order, $collection, $temp);
                     echo '<div>';
-                    RY_ECPay_Shipping_Meta_Box::output($order);
+                    RY_ECPay_Shipping_Meta_Box::output($order->get_id());
                     echo '</div>';
                     break;
                 }

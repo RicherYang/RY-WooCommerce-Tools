@@ -68,14 +68,14 @@ class RY_ECPay_Shipping_Meta_Box extends RY_WT_WC_Meta_Box
                 </td>
                 <?php if ('CVS' == $item['LogisticsType']) { ?>
                 <td>
-                    <?php echo esc_html(_x('CVS', 'shipping type', 'ry-woocommerce-tools')); ?>
+                    <?php echo esc_html_x('CVS', 'shipping type', 'ry-woocommerce-tools'); ?>
                     <?php if (isset($item['temp'])) {
                         if (1 == $item['temp']) {
-                            echo '(' . _x('Normal temperature', 'Transport temp', 'ry-woocommerce-tools') . ')';
+                            echo '(' . esc_html_x('Normal temperature', 'Transport temp', 'ry-woocommerce-tools') . ')';
                         } elseif (2 == $item['temp']) {
-                            echo '(' . _x('Refrigerated', 'Transport temp', 'ry-woocommerce-tools') . ')';
+                            echo '(' . esc_html_x('Refrigerated', 'Transport temp', 'ry-woocommerce-tools') . ')';
                         } elseif (3 == $item['temp']) {
-                            echo '(' . _x('Freezer', 'Transport temp', 'ry-woocommerce-tools') . ')';
+                            echo '(' . esc_html_x('Freezer', 'Transport temp', 'ry-woocommerce-tools') . ')';
                         }
                     } ?>
                 </td>
@@ -87,14 +87,14 @@ class RY_ECPay_Shipping_Meta_Box extends RY_WT_WC_Meta_Box
                 </td>
                 <?php } else { ?>
                 <td>
-                    <?php echo esc_html(_x('Home', 'shipping type', 'ry-woocommerce-tools')); ?>
+                    <?php echo esc_html_x('Home', 'shipping type', 'ry-woocommerce-tools'); ?>
                     <?php if (isset($item['temp'])) {
                         if (1 == $item['temp']) {
-                            echo '(' . _x('Normal temperature', 'Transport temp', 'ry-woocommerce-tools') . ')';
+                            echo '(' . esc_html_x('Normal temperature', 'Transport temp', 'ry-woocommerce-tools') . ')';
                         } elseif (2 == $item['temp']) {
-                            echo '(' . _x('Refrigerated', 'Transport temp', 'ry-woocommerce-tools') . ')';
+                            echo '(' . esc_html_x('Refrigerated', 'Transport temp', 'ry-woocommerce-tools') . ')';
                         } elseif (3 == $item['temp']) {
-                            echo '(' . _x('Freezer', 'Transport temp', 'ry-woocommerce-tools') . ')';
+                            echo '(' . esc_html_x('Freezer', 'Transport temp', 'ry-woocommerce-tools') . ')';
                         }
                     } ?>
                 </td>

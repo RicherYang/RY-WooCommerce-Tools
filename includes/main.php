@@ -2,7 +2,7 @@
 
 final class RY_WT
 {
-    public const Option_Prefix = 'RY_WT_';
+    public const OPTION_PREFIX = 'RY_WT_';
 
     public static $min_WooCommerce_version = '8.0.0';
 
@@ -103,17 +103,17 @@ final class RY_WT
 
     public static function get_option($option, $default = false)
     {
-        return get_option(self::Option_Prefix . $option, $default);
+        return get_option(self::OPTION_PREFIX . $option, $default);
     }
 
     public static function update_option($option, $value, $autoload = null): bool
     {
-        return update_option(self::Option_Prefix . $option, $value, $autoload);
+        return update_option(self::OPTION_PREFIX . $option, $value, $autoload);
     }
 
     public static function delete_option($option): bool
     {
-        return delete_option(self::Option_Prefix . $option);
+        return delete_option(self::OPTION_PREFIX . $option);
     }
 
     public static function plugin_activation(): void

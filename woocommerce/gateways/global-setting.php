@@ -3,8 +3,11 @@
 return [
     'enabled' => [
         'title' => __('Enable/Disable', 'woocommerce'),
-        /* translators: %s: Gateway method title */
-        'label' => sprintf(__('Enable %s', 'ry-woocommerce-tools'), $this->method_title),
+        'label' => sprintf(
+            /* translators: %s: Gateway method title */
+            __('Enable %s', 'ry-woocommerce-tools'),
+            $this->method_title
+        ),
         'type' => 'checkbox',
         'default' => 'no',
     ],

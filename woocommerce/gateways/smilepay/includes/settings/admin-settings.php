@@ -8,7 +8,7 @@ return [
     ],
     [
         'title' => __('Debug log', 'woocommerce'),
-        'id' => RY_WT::Option_Prefix . 'smilepay_gateway_log',
+        'id' => RY_WT::OPTION_PREFIX . 'smilepay_gateway_log',
         'type' => 'checkbox',
         'default' => 'no',
         'desc' => __('Enable logging', 'woocommerce') . '<br>'
@@ -21,14 +21,14 @@ return [
     ],
     [
         'title' => __('Order no prefix', 'ry-woocommerce-tools'),
-        'id' => RY_WT::Option_Prefix . 'smilepay_gateway_order_prefix',
+        'id' => RY_WT::OPTION_PREFIX . 'smilepay_gateway_order_prefix',
         'type' => 'text',
         'desc' => __('The prefix string of order no. Only letters and numbers allowed.', 'ry-woocommerce-tools'),
         'desc_tip' => true
     ],
     [
         'title' => __('payment item name', 'ry-woocommerce-tools'),
-        'id' => RY_WT::Option_Prefix . 'payment_item_name',
+        'id' => RY_WT::OPTION_PREFIX . 'payment_item_name',
         'type' => 'text',
         'default' => '',
         'desc' => __('If empty use the first product name.', 'ry-woocommerce-tools'),
@@ -45,7 +45,7 @@ return [
     ],
     [
         'title' => __('SmilePay gateway sandbox', 'ry-woocommerce-tools'),
-        'id' => RY_WT::Option_Prefix . 'smilepay_gateway_testmode',
+        'id' => RY_WT::OPTION_PREFIX . 'smilepay_gateway_testmode',
         'type' => 'checkbox',
         'default' => 'no',
         'desc' => __('Enable SmilePay gateway sandbox', 'ry-woocommerce-tools')
@@ -53,25 +53,25 @@ return [
     ],
     [
         'title' => _x('Dcvc', 'SmilePay', 'ry-woocommerce-tools'),
-        'id' => RY_WT::Option_Prefix . 'smilepay_gateway_Dcvc',
+        'id' => RY_WT::OPTION_PREFIX . 'smilepay_gateway_Dcvc',
         'type' => 'text',
         'default' => ''
     ],
     [
         'title' => _x('Rvg2c', 'SmilePay', 'ry-woocommerce-tools'),
-        'id' => RY_WT::Option_Prefix . 'smilepay_gateway_Rvg2c',
+        'id' => RY_WT::OPTION_PREFIX . 'smilepay_gateway_Rvg2c',
         'type' => 'text',
         'default' => ''
     ],
     [
         'title' => _x('Verify_key', 'SmilePay', 'ry-woocommerce-tools'),
-        'id' => RY_WT::Option_Prefix . 'smilepay_gateway_Verify_key',
+        'id' => RY_WT::OPTION_PREFIX . 'smilepay_gateway_Verify_key',
         'type' => 'text',
         'default' => ''
     ],
     [
         'title' => _x('Rot_check', 'SmilePay', 'ry-woocommerce-tools'),
-        'id' => RY_WT::Option_Prefix . 'smilepay_gateway_Rot_check',
+        'id' => RY_WT::OPTION_PREFIX . 'smilepay_gateway_Rot_check',
         'type' => 'text',
         'default' => ''
     ],

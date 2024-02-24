@@ -47,8 +47,11 @@ $settings = [
         'desc_tip' => true
     ],
     'weight_plus_cost' => [
-        // translators: %s WooCommerce weight unit
-        'title' => sprintf(__('Every weight (%s) to plus times of cost', 'ry-woocommerce-tools'), __(get_option('woocommerce_weight_unit'), 'woocommerce')),
+        'title' => sprintf(
+            /* translators: %s WooCommerce weight unit */
+            __('Every weight (%s) to plus times of cost', 'ry-woocommerce-tools'),
+            __(get_option('woocommerce_weight_unit'), 'woocommerce')
+        ),
         'type' => 'number',
         'default' => 0,
         'placeholder' => 0,
@@ -64,16 +67,22 @@ if (!empty($shipping_classes)) {
         'title' => __('Shipping available', 'ry-woocommerce-tools'),
         'type' => 'title',
         'default' => '',
-        /* translators: %s: shipping class setting url */
-        'description' => sprintf(__('These shipping available based on the <a href="%s">product shipping class</a>.', 'ry-woocommerce-tools'), esc_url(admin_url('admin.php?page=wc-settings&tab=shipping&section=classes'))),
+        'description' => sprintf(
+            /* translators: %s: shipping class setting url */
+            __('These shipping available based on the <a href="%s">product shipping class</a>.', 'ry-woocommerce-tools'),
+            esc_url(admin_url('admin.php?page=wc-settings&tab=shipping&section=classes'))
+        ),
     ];
     foreach ($shipping_classes as $shipping_class) {
         if (!isset($shipping_class->term_id)) {
             continue;
         }
         $settings['class_available_' . $shipping_class->term_id] = [
-            /* translators: %s: shipping class name */
-            'title' => sprintf(__('"%s" available', 'ry-woocommerce-tools'), esc_html($shipping_class->name)),
+            'title' => sprintf(
+                /* translators: %s: shipping class name */
+                __('"%s" available', 'ry-woocommerce-tools'),
+                esc_html($shipping_class->name)
+            ),
             'type' => 'checkbox',
             'default' => $this->get_option('class_available_' . $shipping_class->term_id, 'yes')
         ];

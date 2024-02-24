@@ -52,24 +52,24 @@ class RY_SmilePay_Shipping_Info_List_Table extends RY_WT_Shipping_Info_List_Tabl
     public function column_status($item)
     {
         $status_msg = [
-            '1' => _x('寄貨中', 'SmilePay shipping status', 'ry-woocommerce-tools'),
-            '2' => _x('已到收件門市', 'SmilePay shipping status', 'ry-woocommerce-tools'),
-            '3' => _x('已取貨', 'SmilePay shipping status', 'ry-woocommerce-tools'),
-            '4' => _x('退貨', 'SmilePay shipping status', 'ry-woocommerce-tools'),
-            '5' => _x('退貨到店', 'SmilePay shipping status', 'ry-woocommerce-tools'),
-            '6' => _x('退貨取貨', 'SmilePay shipping status', 'ry-woocommerce-tools'),
-            '7' => _x('退貨至物流中心', 'SmilePay shipping status', 'ry-woocommerce-tools'),
-            '812' => _x('收件門市資料更新', 'SmilePay shipping status', 'ry-woocommerce-tools'),
-            '822' => _x('退貨門市資料更新', 'SmilePay shipping status', 'ry-woocommerce-tools'),
-            '811' => _x('收件門市重選門市', 'SmilePay shipping status', 'ry-woocommerce-tools'),
-            '821' => _x('退貨門市重選門市', 'SmilePay shipping status', 'ry-woocommerce-tools'),
-            '901' => _x('商品遺失查詢中', 'SmilePay shipping status', 'ry-woocommerce-tools'),
-            '902' => _x('商品確定已遺失', 'SmilePay shipping status', 'ry-woocommerce-tools'),
-            '903' => _x('進入判賠流程', 'SmilePay shipping status', 'ry-woocommerce-tools'),
-            '904' => _x('商品判賠完成', 'SmilePay shipping status', 'ry-woocommerce-tools'),
-            '905' => _x('物流中心待宅配', 'SmilePay shipping status', 'ry-woocommerce-tools'),
-            '906' => _x('提交宅配資料', 'SmilePay shipping status', 'ry-woocommerce-tools'),
-            '907' => _x('宅配出貨', 'SmilePay shipping status', 'ry-woocommerce-tools'),
+            '1' => '寄貨中',
+            '2' => '已到收件門市',
+            '3' => '已取貨',
+            '4' => '退貨',
+            '5' => '退貨到店',
+            '6' => '退貨取貨',
+            '7' => '退貨至物流中心',
+            '812' => '收件門市資料更新',
+            '822' => '退貨門市資料更新',
+            '811' => '收件門市重選門市',
+            '821' => '退貨門市重選門市',
+            '901' => '商品遺失查詢中',
+            '902' => '商品確定已遺失',
+            '903' => '進入判賠流程',
+            '904' => '商品判賠完成',
+            '905' => '物流中心待宅配',
+            '906' => '提交宅配資料',
+            '907' => '宅配出貨'
         ];
 
         if(!empty($item['PaymentNo'])) {

@@ -24,8 +24,9 @@ class RY_WT_WC_ECPay_Gateway_Response extends RY_WT_WC_ECPay_Api
         add_action('ry_ecpay_gateway_response_status_1', [$this, 'payment_complete'], 10, 2);
         add_action('ry_ecpay_gateway_response_status_2', [$this, 'payment_wait_atm'], 10, 2);
         add_action('ry_ecpay_gateway_response_status_10100073', [$this, 'payment_wait_cvs'], 10, 2);
-        add_action('ry_ecpay_gateway_response_status_10100058', [$this, 'payment_failed'], 10, 2);
-        add_action('ry_ecpay_gateway_response_status_10100248', [$this, 'payment_failed'], 10, 2);
+        add_action('ry_ecpay_gateway_response_status_10100058', [$this, 'payment_failed'], 10, 2); // Pay Fail
+        add_action('ry_ecpay_gateway_response_status_10100248', [$this, 'payment_failed'], 10, 2); // 拒絕交易
+        add_action('ry_ecpay_gateway_response_status_10100282', [$this, 'payment_failed'], 10, 2); // 3D授權未完成
         add_action('ry_ecpay_gateway_response', [$this, 'add_noaction_note'], 10, 2);
     }
 

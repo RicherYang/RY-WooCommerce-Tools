@@ -43,7 +43,7 @@ final class RY_WT_WC_NewebPay_Shipping_Admin
             $settings = include RY_WT_PLUGIN_DIR . 'woocommerce/shipping/newebpay/includes/settings/admin-settings.php';
 
             if ('billing_only' === get_option('woocommerce_ship_to_destination')) {
-                $setting_idx = array_search(RY_WT::Option_Prefix . 'newebpay_shipping', array_column($settings, 'id'));
+                $setting_idx = array_search(RY_WT::OPTION_PREFIX . 'newebpay_shipping', array_column($settings, 'id'));
                 $settings[$setting_idx]['desc'] .= '<br>' . __('Cvs only can enable with shipping destination not force to billing address.', 'ry-woocommerce-tools');
             }
         }
