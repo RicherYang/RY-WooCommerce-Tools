@@ -5,7 +5,7 @@ Tags: woocommerce, payment, gateway, shipping, ecpay, newebpay, smilepay
 Requires at least: 6.3
 Requires PHP: 8.0
 Tested up to: 6.4
-Stable tag: 3.2.3
+Stable tag: 3.2.4
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.txt
 
