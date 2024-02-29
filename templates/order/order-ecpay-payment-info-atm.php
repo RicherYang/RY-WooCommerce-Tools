@@ -2,7 +2,7 @@
 /**
  * This template can be overridden by copying it to yourtheme/woocommerce/order/order-ecpay-payment-info-atm.php
  *
- * HOWEVER, on occasion RY WooCommerce Tools will need to update template files and you
+ * HOWEVER, on occasion RY Tools for WooCommerce will need to update template files and you
  * (the theme developer) will need to copy the new files to your theme to
  * maintain compatibility. We try to do this as little as possible, but it does
  * happen. When this occurs the version of the template file will be bumped and
@@ -56,7 +56,7 @@ if ('ATM' !== $order->get_meta('_ecpay_payment_type')) {
                 </td>
                 <td>
                     <?php $expireDate = wc_string_to_datetime($order->get_meta('_ecpay_atm_ExpireDate')); ?>
-                    <?php echo $expireDate->date_i18n(wc_date_format()); ?>
+                    <?php echo esc_html($expireDate->date_i18n(wc_date_format())); ?>
                 </td>
             </tr>
         </tbody>

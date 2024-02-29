@@ -28,7 +28,7 @@ final class RY_WT_Admin
             $message = sprintf(
                 /* translators: %1$s: Name of this plugin %2$s: min require version */
                 __('<strong>%1$s</strong> is inactive. It require WooCommerce version %2$s or newer.', 'ry-woocommerce-tools'),
-                __('RY WooCommerce Tools', 'ry-woocommerce-tools'),
+                __('RY Tools for WooCommerce', 'ry-woocommerce-tools'),
                 RY_WT::$min_WooCommerce_version
             );
             printf('<div class="error"><p>%s</p></div>', wp_kses($message, ['strong' => []]));

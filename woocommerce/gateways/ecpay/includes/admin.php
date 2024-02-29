@@ -33,11 +33,11 @@ final class RY_WT_WC_ECPay_Gateway_Admin
             $settings = include RY_WT_PLUGIN_DIR . 'woocommerce/gateways/ecpay/includes/settings/admin-settings.php';
 
             if (!defined('RY_WEI_VERSION')) {
-                $settings[0]['desc'] = sprintf(
-                    /* translators: %s: link to RY WooCommerce ECPay Invoice */
-                    __('<p>If you need ECPay Invoice support, you can try %s</p>', 'ry-woocommerce-tools'),
-                    '<a href="https://ry-plugin.com/ry-woocommerce-ecpay-invoice">RY WooCommerce ECPay Invoice</a>'
-                );
+                $settings[0]['desc'] = '<p>' . sprintf(
+                    /* translators: %s: link to RY ECPay Invoice for WooCommerce */
+                    __('If you need ECPay Invoice support, you can try %s', 'ry-woocommerce-tools'),
+                    '<a href="https://ry-plugin.com/ry-woocommerce-ecpay-invoice">RY ECPay Invoice for WooCommerce</a>'
+                ) . '</p>';
             }
         }
 

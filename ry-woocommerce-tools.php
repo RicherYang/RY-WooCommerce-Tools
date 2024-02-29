@@ -1,9 +1,9 @@
 <?php
 /**
- * Plugin Name: RY WooCommerce Tools
+ * Plugin Name: RY Tools for WooCommerce
  * Plugin URI: https://ry-plugin.com/ry-woocommerce-tools
  * Description: WooCommerce paymet and shipping tools
- * Version: 3.2.4
+ * Version: 3.3.0
  * Requires at least: 6.3
  * Requires PHP: 8.0
  * Author: Richer Yang
@@ -19,7 +19,7 @@
 
 function_exists('plugin_dir_url') or exit('No direct script access allowed');
 
-define('RY_WT_VERSION', '3.2.4');
+define('RY_WT_VERSION', '3.3.0');
 define('RY_WT_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('RY_WT_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('RY_WT_PLUGIN_BASENAME', plugin_basename(__FILE__));

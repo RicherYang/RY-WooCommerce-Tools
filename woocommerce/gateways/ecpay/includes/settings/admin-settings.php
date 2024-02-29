@@ -52,19 +52,19 @@ return [
             . '<p class="description">' . __('Note: Recommend using this for development purposes only.', 'ry-woocommerce-tools') . '<p>'
     ],
     [
-        'title' => __('MerchantID', 'ECPay', 'ry-woocommerce-tools'),
+        'title' => _x('MerchantID', 'ECPay', 'ry-woocommerce-tools'),
         'id' => RY_WT::OPTION_PREFIX . 'ecpay_gateway_MerchantID',
         'type' => 'text',
         'default' => ''
     ],
     [
-        'title' => __('HashKey', 'ECPay', 'ry-woocommerce-tools'),
+        'title' => _x('HashKey', 'ECPay', 'ry-woocommerce-tools'),
         'id' => RY_WT::OPTION_PREFIX . 'ecpay_gateway_HashKey',
         'type' => 'text',
         'default' => ''
     ],
     [
-        'title' => __('HashIV', 'ECPay', 'ry-woocommerce-tools'),
+        'title' => _x('HashIV', 'ECPay', 'ry-woocommerce-tools'),
         'id' => RY_WT::OPTION_PREFIX . 'ecpay_gateway_HashIV',
         'type' => 'text',
         'default' => ''

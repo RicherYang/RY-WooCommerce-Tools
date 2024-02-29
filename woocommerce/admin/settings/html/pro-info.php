@@ -1,6 +1,6 @@
 <h2>專業版資訊</h2>
 <p>專業版將提供更多方便店家管理賣場的功能。</p>
-<p>更完整的說明請至 <a href="https://ry-plugin.com/ry-woocommerce-tools-pro/" target="_blank">RY WooCommerce Tools Pro</a> 觀看。</p>
+<p>更完整的說明請至 <a href="https://ry-plugin.com/ry-woocommerce-tools-pro/" target="_blank">RY Tools (Pro) for WooCommerce</a> 觀看。</p>
 <p>提供的功能計有</p>
 <ol>
     <li>前台的訂單詳細資訊頁面中顯示超商取貨的相關資訊。</li>

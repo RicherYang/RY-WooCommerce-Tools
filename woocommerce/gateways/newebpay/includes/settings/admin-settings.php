@@ -59,19 +59,19 @@ return [
             . '<p class="description">' . __('Note: Recommend using this for development purposes only.', 'ry-woocommerce-tools') . '<p>'
     ],
     [
-        'title' => __('MerchantID', 'NewebPay', 'ry-woocommerce-tools'),
+        'title' => _x('MerchantID', 'NewebPay', 'ry-woocommerce-tools'),
         'id' => RY_WT::OPTION_PREFIX . 'newebpay_gateway_MerchantID',
         'type' => 'text',
         'default' => ''
     ],
     [
-        'title' => __('HashKey', 'NewebPay', 'ry-woocommerce-tools'),
+        'title' => _x('HashKey', 'NewebPay', 'ry-woocommerce-tools'),
         'id' => RY_WT::OPTION_PREFIX . 'newebpay_gateway_HashKey',
         'type' => 'text',
         'default' => ''
     ],
     [
-        'title' => __('HashIV', 'NewebPay', 'ry-woocommerce-tools'),
+        'title' => _x('HashIV', 'NewebPay', 'ry-woocommerce-tools'),
         'id' => RY_WT::OPTION_PREFIX . 'newebpay_gateway_HashIV',
         'type' => 'text',
         'default' => ''

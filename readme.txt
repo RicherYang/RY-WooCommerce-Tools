@@ -1,11 +1,11 @@
-=== RY WooCommerce Tools ===
+=== RY Tools for WooCommerce ===
 Contributors: fantasyworld
 Donate link: https://www.paypal.me/RicherYang
-Tags: woocommerce, payment, gateway, shipping, ecpay, newebpay, smilepay
+Tags: woocommerce, payment, gateway, shipping
 Requires at least: 6.3
 Requires PHP: 8.0
 Tested up to: 6.4
-Stable tag: 3.2.4
+Stable tag: 3.3.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.txt
 
@@ -42,9 +42,13 @@ Please visit the [plugin forum page](https://ry-plugin.com/ry-woocommerce-tools/
 
 == Changelog ==
 
+= 3.3.0 - 2024/02/29 =
+* 變更外掛名稱。
+* 修正頁面資訊輸出驗證不完全導致的潛在安全性風險。
+
 = 3.2.4 - 2024/02/24 =
 * 修正頁面資訊輸出驗證不完全導致的潛在安全性風險
-* 調整程式碼架構
+* 調整程式碼架構。
 
 = 3.2.3 - 2024/02/23 =
 * 修正 - 後台手動取得物流單號後，物流資訊可能未正常更新。

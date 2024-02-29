@@ -132,7 +132,7 @@ final class RY_WT_WC_SmilePay_Shipping_Admin
             foreach ($order->get_items('shipping') as $item) {
                 if (false !== RY_WT_WC_SmilePay_Shipping::instance()->get_order_support_shipping($item)) {
                     $url = RY_WT_WC_SmilePay_Shipping_Api::instance()->get_admin_csv_info($order, $collection);
-                    echo $url;
+                    echo esc_url($url);
                 }
             }
         }
