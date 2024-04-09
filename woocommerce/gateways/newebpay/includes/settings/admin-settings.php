@@ -7,13 +7,6 @@ return [
         'type' => 'title',
     ],
     [
-        'title' => __('Enable/Disable', 'woocommerce'),
-        'id' => RY_WT::OPTION_PREFIX . 'newebpay_gateway',
-        'type' => 'checkbox',
-        'default' => 'no',
-        'desc' => __('Enable NewebPay gateway method', 'ry-woocommerce-tools')
-    ],
-    [
         'title' => __('Debug log', 'woocommerce'),
         'id' => RY_WT::OPTION_PREFIX . 'newebpay_gateway_log',
         'type' => 'checkbox',

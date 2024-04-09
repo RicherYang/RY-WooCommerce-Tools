@@ -5,7 +5,7 @@ Tags: woocommerce, payment, gateway, shipping
 Requires at least: 6.3
 Requires PHP: 8.0
 Tested up to: 6.4
-Stable tag: 3.3.0
+Stable tag: 3.3.2
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.txt
 
@@ -37,10 +37,15 @@ Please visit the [plugin forum page](https://ry-plugin.com/ry-woocommerce-tools/
 
 1. Basic WooCommerce settings.
 2. ECPay gateway global settings.
-3. ECPay shipping global settings.
-4. NewebPay gateway global settings.
+3. SmilePay gateway global settings.
 
 == Changelog ==
+
+= 3.3.2 - 2024/04/09 =
+* 修正 - 配合藍新調整 API 傳遞參數。
+
+= 3.3.1 - 2024/04/01 =
+* 修正 - 移除不必要的設定選項。
 
 = 3.3.0 - 2024/02/29 =
 * 變更外掛名稱。

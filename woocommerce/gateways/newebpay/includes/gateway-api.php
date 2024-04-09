@@ -5,10 +5,10 @@ class RY_WT_WC_NewebPay_Gateway_Api extends RY_WT_WC_NewebPay_Api
     protected static $_instance = null;
 
     protected $api_test_url = [
-        'checkout' => 'https://ccore.newebpay.com/MPG/mpg_gateway'
+        'checkout' => 'https://ccore.newebpay.com/MPG/mpg_gateway',
     ];
     protected $api_url = [
-        'checkout' => 'https://core.newebpay.com/MPG/mpg_gateway'
+        'checkout' => 'https://core.newebpay.com/MPG/mpg_gateway',
     ];
 
     public static function instance(): RY_WT_WC_NewebPay_Gateway_Api
@@ -43,7 +43,6 @@ class RY_WT_WC_NewebPay_Gateway_Api extends RY_WT_WC_NewebPay_Api
             'CustomerURL' => $return_url,
             'Email' => $order->get_billing_email(),
             'EmailModify' => 0,
-            'LoginType' => 0,
             'CREDIT' => 0,
             'ANDROIDPAY' => 0,
             'SAMSUNGPAY' => 0,
@@ -58,11 +57,12 @@ class RY_WT_WC_NewebPay_Gateway_Api extends RY_WT_WC_NewebPay_Api
             'BARCODE' => 0,
             'ESUNWALLET' => 0,
             'TAIWANPAY' => 0,
+            'BITOPAY' => 0,
             'FULA' => 0,
             'EZPAY' => 0,
             'EZPWECHAT' => 0,
             'EZPALIPAY' => 0,
-            'CVSCOM' => 0
+            'CVSCOM' => 0,
         ];
         $args['TimeStamp'] = $args['TimeStamp']->getTimestamp();
         switch (get_locale()) {
@@ -86,7 +86,7 @@ class RY_WT_WC_NewebPay_Gateway_Api extends RY_WT_WC_NewebPay_Api
             'MerchantID' => $MerchantID,
             'TradeInfo' => $this->args_encrypt($args, $HashKey, $HashIV),
             'Version' => '2.0',
-            'EncryptType' => 0
+            'EncryptType' => 0,
         ];
         $form_data['TradeSha'] = $this->generate_hash_value($form_data['TradeInfo'], $HashKey, $HashIV);
         RY_WT_WC_NewebPay_Gateway::instance()->log('Generating payment by ' . $gateway->id . ' for #' . $order->get_id(), WC_Log_Levels::INFO, ['form' => $form_data, 'data' => $args]);
