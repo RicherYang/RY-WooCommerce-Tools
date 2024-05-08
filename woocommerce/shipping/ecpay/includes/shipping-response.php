@@ -150,7 +150,7 @@ class RY_WT_WC_ECPay_Shipping_Response extends RY_WT_WC_ECPay_Api
                             $old_info['status_msg'],
                             $old_info['status'],
                             $shipping_list[$ipn_info['AllPayLogisticsID']]['status_msg'],
-                            $shipping_list[$ipn_info['AllPayLogisticsID']]['status']
+                            $shipping_list[$ipn_info['AllPayLogisticsID']]['status'],
                         ));
                     }
                 }
@@ -168,7 +168,7 @@ class RY_WT_WC_ECPay_Shipping_Response extends RY_WT_WC_ECPay_Api
 
     public function shipping_at_cvs($ipn_info, $order)
     {
-        if ($order->has_status(apply_filters('ry_ecpay_shipping_at_cvs_prev_status', ['processing'], $ipn_info, $order))) {
+        if ($order->has_status(apply_filters('ry_ecpay_shipping_at_cvs_prev_status', ['processing', 'ry-transporting'], $ipn_info, $order))) {
             $order->update_status('ry-at-cvs');
         }
     }
