@@ -7,12 +7,12 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_WC_ECPay_Api
     protected $api_test_url = [
         'map' => 'https://logistics-stage.ecpay.com.tw/Express/map',
         'create' => 'https://logistics-stage.ecpay.com.tw/Express/Create',
-        'print' => 'https://logistics-stage.ecpay.com.tw/Express/v2/PrintTradeDocument'
+        'print' => 'https://logistics-stage.ecpay.com.tw/Express/v2/PrintTradeDocument',
     ];
     protected $api_url = [
         'map' => 'https://logistics.ecpay.com.tw/Express/map',
         'create' => 'https://logistics.ecpay.com.tw/Express/Create',
-        'print' => 'https://logistics.ecpay.com.tw/Express/v2/PrintTradeDocument'
+        'print' => 'https://logistics.ecpay.com.tw/Express/v2/PrintTradeDocument',
     ];
 
     public static function instance(): RY_WT_WC_ECPay_Shipping_Api
@@ -26,7 +26,7 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_WC_ECPay_Api
 
     public function get_map_post_url()
     {
-        if (RY_WT_WC_ECPay_Shipping::instance()->testmode) {
+        if (RY_WT_WC_ECPay_Shipping::instance()->is_testmode()) {
             return $this->api_test_url['map'];
         } else {
             return $this->api_url['map'];
@@ -60,7 +60,7 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_WC_ECPay_Api
                 'amount' => 0,
                 'weight' => 0,
                 'size' => 0,
-                'items' => 0
+                'items' => 0,
             ];
             foreach ($order->get_items('line_item') as $item) {
                 $product = $item->get_product();
@@ -226,7 +226,7 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_WC_ECPay_Api
                 $args['ScheduledDeliveryTime'] = '4';
             }
 
-            if (RY_WT_WC_ECPay_Shipping::instance()->testmode) {
+            if (RY_WT_WC_ECPay_Shipping::instance()->is_testmode()) {
                 $post_url = $this->api_test_url['create'];
             } else {
                 $post_url = $this->api_url['create'];
@@ -296,7 +296,7 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_WC_ECPay_Api
                     $order->add_order_note(sprintf(
                         /* translators: %s Error messade */
                         __('Get shipping code error: %s', 'ry-woocommerce-tools'),
-                        $body[1]
+                        $body[1],
                     ));
                     continue;
                 }
@@ -348,7 +348,7 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_WC_ECPay_Api
         $data = [
             'MerchantID' => $MerchantID,
             'LogisticsID' => [],
-            'LogisticsSubType' => $info[0]['LogisticsSubType']
+            'LogisticsSubType' => $info[0]['LogisticsSubType'],
         ];
 
         foreach ($info as $item) {
@@ -360,7 +360,7 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_WC_ECPay_Api
         $args = $this->build_args($data, $MerchantID);
         RY_WT_WC_ECPay_Shipping::instance()->log('Print POST data', WC_Log_Levels::INFO, ['data' => $args]);
 
-        if (RY_WT_WC_ECPay_Shipping::instance()->testmode) {
+        if (RY_WT_WC_ECPay_Shipping::instance()->is_testmode()) {
             $post_url = $this->api_test_url['print'];
         } else {
             $post_url = $this->api_url['print'];

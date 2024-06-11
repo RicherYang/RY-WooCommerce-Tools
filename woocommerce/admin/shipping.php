@@ -18,8 +18,6 @@ final class RY_WT_WC_Admin_Shipping
     {
         add_action('admin_enqueue_scripts', [$this, 'add_scripts']);
         add_action('woocommerce_update_order', [$this, 'save_order_update']);
-        add_action('woocommerce_update_options_shipping_options', [$this, 'check_ship_destination']);
-        add_action('woocommerce_shipping_zone_method_status_toggled', [$this, 'check_can_enable'], 10, 4);
 
         add_filter('woocommerce_admin_shipping_fields', [$this, 'set_cvs_shipping_fields'], 99);
         add_filter('woocommerce_shipping_address_map_url_parts', [$this, 'fix_cvs_map_address']);
@@ -33,24 +31,27 @@ final class RY_WT_WC_Admin_Shipping
 
     public function add_scripts()
     {
-        wp_enqueue_style('ry-wt-shipping-admin', RY_WT_PLUGIN_URL . 'style/admin/ry-shipping.css', [], RY_WT_VERSION);
+        $asset_info = include RY_WT_PLUGIN_DIR . 'assets/admin/ry-shipping.asset.php';
 
-        wp_enqueue_script('ry-wt-admin-shipping', RY_WT_PLUGIN_URL . 'style/js/admin/ry-shipping.js', ['jquery'], RY_WT_VERSION, true);
-        wp_localize_script('ry-wt-admin-shipping', 'ry_wt_admin_shipping', [
+        wp_enqueue_script('ry-admin-shipping', RY_WT_PLUGIN_URL . 'assets/admin/ry-shipping.js', $asset_info['dependencies'], $asset_info['version'], true);
+        wp_localize_script('ry-admin-shipping', 'ryAdminShippingParams', [
             'ajax_url' => admin_url('admin-ajax.php'),
-            'nonce' => [
-                'get_shipping_info' => wp_create_nonce('get-shipping-info'),
-                'delete_shipping_info' => wp_create_nonce('delete-shipping-info'),
-                'smilepay_shipping_no' => wp_create_nonce('smilepay-shipping-no'),
+            '_nonce' => [
+                'get' => wp_create_nonce('get-shipping-info'),
+                'delete' => wp_create_nonce('delete-shipping-info'),
+                'smilepay' => wp_create_nonce('smilepay-shipping-no'),
             ],
             'i18n' => [
-                'delete_shipping_info' => __('It only delete the information at website.', 'ry-woocommerce-tools')
-            ]
+                'delete_shipping_info' => __('It only delete the information at website.', 'ry-woocommerce-tools'),
+            ],
         ]);
+
+        wp_enqueue_style('ry-admin-shipping', RY_WT_PLUGIN_URL . 'assets/admin/ry-shipping.css', [], $asset_info['version']);
     }
 
     public function save_order_update($order_ID)
     {
+
         if (isset($_POST['_shipping_cvs_store_ID'])) {
             $order = wc_get_order($order_ID);
             $shipping_method = $this->get_ry_shipping_method($order);
@@ -69,59 +70,6 @@ final class RY_WT_WC_Admin_Shipping
         }
     }
 
-    public function check_ship_destination()
-    {
-        global $wpdb;
-
-        if ('billing_only' === get_option('woocommerce_ship_to_destination')) {
-            $disabled = false;
-            $cvs_methods = $this->get_all_cvs_methods();
-            $zones = WC_Shipping_Zones::get_zones();
-            foreach ($zones as $zone_obj) {
-                foreach ($zone_obj['shipping_methods'] as $shipping_method) {
-                    if (!$shipping_method->is_enabled()) {
-                        continue;
-                    }
-
-                    if (!in_array($shipping_method->id, $cvs_methods)) {
-                        continue;
-                    }
-
-                    $wpdb->update($wpdb->prefix . 'woocommerce_shipping_zone_methods', [
-                        'is_enabled' => 0
-                    ], [
-                        'instance_id' => $shipping_method->instance_id
-                    ]);
-                    $disabled = true;
-                }
-            }
-
-            if ($disabled) {
-                WC_Admin_Settings::add_error(__('All cvs shipping methods set to disable.', 'ry-woocommerce-tools'));
-            }
-        }
-    }
-
-    public function check_can_enable($instance_ID, $method_ID, $zone_ID, $is_enabled)
-    {
-        global $wpdb;
-
-        if (1 != $is_enabled) {
-            return;
-        }
-
-        $cvs_methods = $this->get_all_cvs_methods();
-        if ('billing_only' === get_option('woocommerce_ship_to_destination')) {
-            if (in_array($method_ID, $cvs_methods)) {
-                $wpdb->update($wpdb->prefix . 'woocommerce_shipping_zone_methods', [
-                    'is_enabled' => 0
-                ], [
-                    'instance_id' => absint($instance_ID)
-                ]);
-            }
-        }
-    }
-
     public function set_cvs_shipping_fields($shipping_fields)
     {
         global $theorder;
@@ -131,23 +79,23 @@ final class RY_WT_WC_Admin_Shipping
             if (false !== strpos($shipping_method, 'cvs')) {
                 $shipping_fields['cvs_store_ID'] = [
                     'label' => __('Store ID', 'ry-woocommerce-tools'),
-                    'show' => false
+                    'show' => false,
                 ];
                 $shipping_fields['cvs_store_name'] = [
                     'label' => __('Store Name', 'ry-woocommerce-tools'),
-                    'show' => false
+                    'show' => false,
                 ];
                 $shipping_fields['cvs_store_address'] = [
                     'label' => __('Store Address', 'ry-woocommerce-tools'),
-                    'show' => false
+                    'show' => false,
                 ];
                 $shipping_fields['cvs_store_telephone'] = [
                     'label' => __('Store Telephone', 'ry-woocommerce-tools'),
-                    'show' => false
+                    'show' => false,
                 ];
             }
             $shipping_fields['phone'] = [
-                'label' => __('Phone', 'ry-woocommerce-tools')
+                'label' => __('Phone', 'ry-woocommerce-tools'),
             ];
         }
         return $shipping_fields;
@@ -157,7 +105,7 @@ final class RY_WT_WC_Admin_Shipping
     {
         if (isset($address['cvs_address'])) {
             $address = [
-                $address['cvs_address']
+                $address['cvs_address'],
             ];
         }
         return $address;
@@ -196,7 +144,7 @@ final class RY_WT_WC_Admin_Shipping
 
     public function delete_shipping_info()
     {
-        check_ajax_referer('delete-shipping-info', 'security');
+        check_ajax_referer('delete-shipping-info');
 
         $order_ID = (int) wp_unslash($_POST['orderid'] ?? 0);
         $logistics_ID = wp_unslash($_POST['id'] ?? '');

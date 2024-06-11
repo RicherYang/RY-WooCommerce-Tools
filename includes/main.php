@@ -3,8 +3,7 @@
 final class RY_WT
 {
     public const OPTION_PREFIX = 'RY_WT_';
-
-    public static $min_WooCommerce_version = '8.0.0';
+    public const MIN_WC_VERSION = '8.0.0';
 
     protected static $_instance = null;
 
@@ -41,7 +40,7 @@ final class RY_WT
         if (!defined('WC_VERSION')) {
             return;
         }
-        if (version_compare(WC_VERSION, self::$min_WooCommerce_version, '<')) {
+        if (version_compare(WC_VERSION, self::MIN_WC_VERSION, '<')) {
             return;
         }
 
@@ -94,10 +93,12 @@ final class RY_WT
 
     public function load_scripts()
     {
-        wp_register_script('ry-wt-shipping', RY_WT_PLUGIN_URL . 'style/js/shipping.js', ['jquery'], RY_WT_VERSION, true);
+        $asset_info = include RY_WT_PLUGIN_DIR . 'assets/ry-checkout.asset.php';
+        wp_register_script('ry-checkout', RY_WT_PLUGIN_URL . 'assets/ry-checkout.js', $asset_info['dependencies'], $asset_info['version'], true);
 
         if (is_checkout() || is_view_order_page() || is_order_received_page()) {
-            wp_enqueue_style('ry_wt_ecpay_shipping', RY_WT_PLUGIN_URL . 'style/ry-wt.css', [], RY_WT_VERSION);
+            $asset_info = include RY_WT_PLUGIN_DIR . 'assets/ry-payment.asset.php';
+            wp_enqueue_style('ry-payment', RY_WT_PLUGIN_URL . 'assets/ry-payment.css', [], $asset_info['version']);
         }
     }
 

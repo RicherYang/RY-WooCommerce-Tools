@@ -32,11 +32,21 @@ final class RY_WT_WC_ECPay_Gateway_Admin
         if ($current_section == 'ecpay_gateway') {
             $settings = include RY_WT_PLUGIN_DIR . 'woocommerce/gateways/ecpay/includes/settings/admin-settings.php';
 
+            if (RY_WT_WC_ECPay_Gateway::instance()->is_testmode()) {
+                list($MerchantID, $HashKey, $HashIV) = RY_WT_WC_ECPay_Gateway::instance()->get_api_info();
+                $setting_idx = array_search(RY_WT::OPTION_PREFIX . 'ecpay_gateway_MerchantID', array_column($settings, 'id'));
+                $settings[$setting_idx]['desc'] = '<p class="description">' . sprintf(
+                    /* translators: %s: MerchantID */
+                    __('Used MerchantID "%s"', 'ry-woocommerce-tools'),
+                    $MerchantID,
+                ) . '</p>';
+            }
+
             if (!defined('RY_WEI_VERSION')) {
                 $settings[0]['desc'] = '<p>' . sprintf(
                     /* translators: %s: link to RY ECPay Invoice for WooCommerce */
                     __('If you need ECPay Invoice support, you can try %s', 'ry-woocommerce-tools'),
-                    '<a href="https://ry-plugin.com/ry-woocommerce-ecpay-invoice">RY ECPay Invoice for WooCommerce</a>'
+                    '<a href="https://ry-plugin.com/ry-woocommerce-ecpay-invoice">RY ECPay Invoice for WooCommerce</a>',
                 ) . '</p>';
             }
         }

@@ -115,8 +115,9 @@ class RY_WT_WC_NewebPay_Gateway_Response extends RY_WT_WC_NewebPay_Gateway_Api
                     /* translators: 1: Store name 2: Store ID */
                     __('CVS store %1$s (%2$s)', 'ry-woocommerce-tools'),
                     $ipn_info->StoreName,
-                    $ipn_info->StoreCode
+                    $ipn_info->StoreCode,
                 ));
+
                 $order->update_meta_data('_shipping_cvs_store_ID', $ipn_info->StoreCode);
                 $order->update_meta_data('_shipping_cvs_store_name', $ipn_info->StoreName);
                 $order->update_meta_data('_shipping_cvs_store_address', $ipn_info->StoreAddr);
@@ -201,7 +202,7 @@ class RY_WT_WC_NewebPay_Gateway_Response extends RY_WT_WC_NewebPay_Gateway_Api
                 /* translators: 1: Error status code 2: Error status message */
                 __('Payment failed: %1$s (%2$s)', 'ry-woocommerce-tools'),
                 $this->get_status($ipn_info),
-                $this->get_status_msg($ipn_info)
+                $this->get_status_msg($ipn_info),
             ));
         }
     }

@@ -115,6 +115,7 @@ class RY_WT_WC_SmilePay_Shipping_Response extends RY_WT_EC_SmilePay_Api
                     $order->set_shipping_state('');
                     $order->set_shipping_postcode('');
                     $order->set_shipping_address_1($ipn_info['Storeaddress']);
+
                     $order->update_meta_data('_shipping_cvs_store_ID', $ipn_info['Storeid']);
                     $order->update_meta_data('_shipping_cvs_store_name', $ipn_info['Storename']);
                     $order->update_meta_data('_shipping_cvs_store_address', $ipn_info['Storeaddress']);
@@ -168,7 +169,7 @@ class RY_WT_WC_SmilePay_Shipping_Response extends RY_WT_EC_SmilePay_Api
                             __('%1$s shipping status from %2$s to %3$s', 'ry-woocommerce-tools'),
                             $ipn_info['AllPayLogisticsID'],
                             $old_info['status'],
-                            $shipping_list[$transaction_ID]['status']
+                            $shipping_list[$transaction_ID]['status'],
                         ));
                     }
                 }

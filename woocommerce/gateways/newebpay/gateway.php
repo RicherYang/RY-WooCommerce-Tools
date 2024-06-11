@@ -4,7 +4,7 @@ final class RY_WT_WC_NewebPay_Gateway extends RY_WT_WC_Model
 {
     protected static $_instance = null;
 
-    protected $log_source = 'ry_newebpay_gateway';
+    protected $model_type = 'newebpay_gateway';
 
     public static function instance(): RY_WT_WC_NewebPay_Gateway
     {
@@ -29,9 +29,6 @@ final class RY_WT_WC_NewebPay_Gateway extends RY_WT_WC_Model
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/gateways/newebpay/gateway-credit.php';
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/gateways/newebpay/gateway-cvs.php';
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/gateways/newebpay/gateway-webatm.php';
-
-        $this->log_enabled = 'yes' === RY_WT::get_option('newebpay_gateway_log', 'no');
-        $this->testmode = 'yes' === RY_WT::get_option('newebpay_gateway_testmode', 'no');
 
         RY_WT_WC_NewebPay_Gateway_Response::instance();
 
@@ -81,7 +78,7 @@ final class RY_WT_WC_NewebPay_Gateway extends RY_WT_WC_Model
 
         if (isset($template_file)) {
             $args = [
-                'order' => $order
+                'order' => $order,
             ];
             wc_get_template($template_file, $args, '', RY_WT_PLUGIN_DIR . 'templates/');
         }

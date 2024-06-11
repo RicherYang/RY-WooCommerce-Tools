@@ -1,0 +1,40 @@
+#order_data .order_data_column .form-field {
+    &._shipping_cvs_store_name_field,
+    &._shipping_cvs_store_telephone_field {
+        float: right;
+        clear: right;
+    }
+    &._shipping_phone_field {
+        width: 100%;
+        clear: both;
+    }
+}
+
+#ry-ecpay-shipping-info,
+#ry-newebpay-shipping-info,
+#ry-smilepay-shipping-info {
+    .button {
+        margin-right: 0.5em;
+    }
+}
+
+.ry-shipping-infos {
+    margin-top: 1em;
+    overflow-x: auto;
+
+    th {
+        word-break: keep-all;
+    }
+    td {
+        vertical-align: middle;
+    }
+    .button {
+        line-height: 2;
+        min-height: initial;
+    }
+}
+
+.ry-shipping-infos .validationno,
+.post-type-shop_order .wp-list-table .ry_shipping_no .validationno {
+    padding-left: 0.25em;
+}

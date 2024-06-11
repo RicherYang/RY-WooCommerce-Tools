@@ -6,11 +6,11 @@ class RY_WT_WC_SmilePay_Gateway_Api extends RY_WT_EC_SmilePay_Api
 
     protected $api_test_url = [
         'checkout' => 'https://ssl.smse.com.tw/ezpos_test/mtmk_utf.asp',
-        'api_checkout' => 'https://ssl.smse.com.tw/api/SPPayment.asp'
+        'api_checkout' => 'https://ssl.smse.com.tw/api/SPPayment.asp',
     ];
     protected $api_url = [
         'checkout' => 'https://ssl.smse.com.tw/ezpos/mtmk_utf.asp',
-        'api_checkout' => 'https://ssl.smse.com.tw/api/SPPayment.asp'
+        'api_checkout' => 'https://ssl.smse.com.tw/api/SPPayment.asp',
     ];
 
     public static function instance(): RY_WT_WC_SmilePay_Gateway_Api
@@ -79,7 +79,7 @@ class RY_WT_WC_SmilePay_Gateway_Api extends RY_WT_EC_SmilePay_Api
             'Data_id' => $this->generate_trade_no($order->get_id(), RY_WT::get_option('smilepay_gateway_order_prefix')),
             'Amount' => (int) ceil($order->get_total()),
             'Roturl' => WC()->api_request_url('ry_smilepay_callback', true),
-            'Roturl_status' => 'RY_SmilePay'
+            'Roturl_status' => 'RY_SmilePay',
         ];
         if ($gateway->get_code_mode) {
             $args['Verify_key'] = $Verify_key;
@@ -92,7 +92,7 @@ class RY_WT_WC_SmilePay_Gateway_Api extends RY_WT_EC_SmilePay_Api
         $order->save();
 
         if (!$gateway->get_code_mode) {
-            if (RY_WT_WC_SmilePay_Gateway::instance()->testmode) {
+            if (RY_WT_WC_SmilePay_Gateway::instance()->is_testmode()) {
                 $url = $this->api_test_url['checkout'];
             } else {
                 $url = $this->api_url['checkout'];
@@ -100,7 +100,7 @@ class RY_WT_WC_SmilePay_Gateway_Api extends RY_WT_EC_SmilePay_Api
             return $url . '?' . http_build_query($args, '', '&');
         }
 
-        if (RY_WT_WC_SmilePay_Gateway::instance()->testmode) {
+        if (RY_WT_WC_SmilePay_Gateway::instance()->is_testmode()) {
             $url = $this->api_test_url['api_checkout'];
         } else {
             $url = $this->api_url['api_checkout'];
@@ -130,7 +130,7 @@ class RY_WT_WC_SmilePay_Gateway_Api extends RY_WT_EC_SmilePay_Api
                 /* translators: %1$s Error messade, %2$d Error messade ID */
                 __('Get Smilepay code error: %1$s (%2$d)', 'ry-woocommerce-tools'),
                 $result->Desc,
-                $result->Status
+                $result->Status,
             ));
             return false;
         }

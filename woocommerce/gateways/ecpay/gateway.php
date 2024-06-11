@@ -4,7 +4,7 @@ final class RY_WT_WC_ECPay_Gateway extends RY_WT_WC_Model
 {
     protected static $_instance = null;
 
-    protected $log_source = 'ry_ecpay_gateway';
+    protected $model_type = 'ecpay_gateway';
 
     public static function instance(): RY_WT_WC_ECPay_Gateway
     {
@@ -30,9 +30,6 @@ final class RY_WT_WC_ECPay_Gateway extends RY_WT_WC_Model
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/gateways/ecpay/gateway-cvs.php';
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/gateways/ecpay/gateway-twqr.php';
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/gateways/ecpay/gateway-webatm.php';
-
-        $this->log_enabled = 'yes' === RY_WT::get_option('ecpay_gateway_log', 'no');
-        $this->testmode = 'yes' === RY_WT::get_option('ecpay_gateway_testmode', 'no');
 
         RY_WT_WC_ECPay_Gateway_Response::instance();
 
@@ -86,7 +83,7 @@ final class RY_WT_WC_ECPay_Gateway extends RY_WT_WC_Model
 
         if (isset($template_file)) {
             $args = [
-                'order' => $order
+                'order' => $order,
             ];
             wc_get_template($template_file, $args, '', RY_WT_PLUGIN_DIR . 'templates/');
         }
@@ -95,11 +92,17 @@ final class RY_WT_WC_ECPay_Gateway extends RY_WT_WC_Model
     public function get_api_info()
     {
         $MerchantID = RY_WT::get_option('ecpay_gateway_MerchantID');
-        if ($this->testmode) {
+        if ($this->is_testmode()) {
             switch($MerchantID) {
                 case '3002607':
+                    $MerchantID = '3002607';
                     $HashKey = 'pwFHCqoQZGmho4w6';
                     $HashIV = 'EkRm7iFT261dpevs';
+                    break;
+                case '2000933':
+                    $MerchantID = '2000933';
+                    $HashKey = 'XBERn1YOvpM9nfZc';
+                    $HashIV = 'h1ONHk4P4yqbl5LK';
                     break;
                 case '2000132':
                 default:

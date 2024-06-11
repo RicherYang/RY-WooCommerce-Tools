@@ -46,11 +46,13 @@ class RY_WT_WC_ECPay_Shipping_Response extends RY_WT_WC_ECPay_Api
         $cvs_info = [];
         if (!empty($_POST)) {
             foreach (['LogisticsSubType', 'CVSStoreID', 'CVSStoreName', 'CVSAddress', 'CVSTelephone', 'CVSOutSide'] as $key) {
-                $cvs_info[$key] = wp_unslash($_POST[$key] ?? '');
+                if (isset($_POST[$key])) {
+                    $cvs_info[$key] = wp_unslash($_POST[$key]);
+                }
             }
         }
 
-        if (empty($cvs_info['CVSStoreID'])) {
+        if (6 !== count($cvs_info) || empty($cvs_info['CVSStoreID'])) {
             wp_redirect(wc_get_checkout_url());
             exit();
         }
@@ -67,23 +69,9 @@ class RY_WT_WC_ECPay_Shipping_Response extends RY_WT_WC_ECPay_Api
             }
         }
 
-        $out_island = (int) WC()->session->get('shipping_cvs_out_island');
-        if ($cvs_info['CVSOutSide'] != $out_island) {
-            $package_key = 0;
-            do {
-                $stored_rates = WC()->session->get('shipping_for_package_' . $package_key);
-                if (empty($stored_rates)) {
-                    break;
-                }
-                WC()->session->set('shipping_for_package_' . $package_key, '');
-                $package_key += 1;
-            } while (true);
-            WC()->session->set('shipping_cvs_out_island', (int) $cvs_info['CVSOutSide']);
-        }
-
         echo '<!doctype html><html><head><title>AutoSubmitForm</title></head><body>';
         echo '<form method="post" id="ry-ecpay-map-redirect" action="' . esc_url(wc_get_checkout_url()) . '">';
-        echo '<input type="hidden" name="ry-ecpay-cvsmap-info" value="' . esc_attr(wp_json_encode($cvs_info)) . '">';
+        echo '<input type="hidden" name="ry-ecpay-cvsmap-info" value="' . esc_attr(base64_encode(wp_json_encode($cvs_info))) . '">';
         echo '</form>';
         echo '<script type="text/javascript">document.getElementById("ry-ecpay-map-redirect").submit();</script>';
         echo '</body></html>';

@@ -94,7 +94,7 @@ class RY_WT_WC_NewebPay_Gateway_Api extends RY_WT_WC_NewebPay_Api
         $order->update_meta_data('_newebpay_MerchantOrderNo', $args['MerchantOrderNo']);
         $order->save();
 
-        if (RY_WT_WC_NewebPay_Gateway::instance()->testmode) {
+        if (RY_WT_WC_NewebPay_Gateway::instance()->is_testmode()) {
             $url = $this->api_test_url['checkout'];
         } else {
             $url = $this->api_url['checkout'];
@@ -140,7 +140,7 @@ class RY_WT_WC_NewebPay_Gateway_Api extends RY_WT_WC_NewebPay_Api
                             $order->add_order_note(sprintf(
                                 /* translators: %d number of periods */
                                 __('Credit installment to %d', 'ry-woocommerce-tools'),
-                                $number_of_periods
+                                $number_of_periods,
                             ));
                             $order->save();
                         }

@@ -34,9 +34,9 @@ abstract class RY_WT_WC_ECPay_Api extends RY_WT_WC_Api
             'MerchantID' => $MerchantID,
             'RqHeader' => [
                 'Timestamp' => new DateTime('', new DateTimeZone('Asia/Taipei')),
-                'Revision' => '1.0.0'
+                'Revision' => '1.0.0',
             ],
-            'Data' => wp_json_encode($data)
+            'Data' => wp_json_encode($data),
         ];
         $args['RqHeader']['Timestamp'] = $args['RqHeader']['Timestamp']->getTimestamp();
 
@@ -48,7 +48,7 @@ abstract class RY_WT_WC_ECPay_Api extends RY_WT_WC_Api
         $string = str_replace(
             ['%2D', '%2d', '%5F', '%5f', '%2E', '%2e', '%2A', '%2a', '%21', '%28', '%29'],
             [  '-',   '-',   '_',   '_',    '.',  '.',   '*',   '*',   '!',   '(',   ')'],
-            urlencode($string)
+            urlencode($string),
         );
         return $string;
     }
@@ -88,8 +88,8 @@ abstract class RY_WT_WC_ECPay_Api extends RY_WT_WC_Api
         }
 
         return wp_remote_post($post_url, [
-            'timeout' => 20,
-            'body' => implode('&', $send_body)
+            'timeout' => 30,
+            'body' => implode('&', $send_body),
         ]);
     }
 
@@ -101,11 +101,11 @@ abstract class RY_WT_WC_ECPay_Api extends RY_WT_WC_Api
         $args['Data'] = openssl_encrypt($args['Data'], self::Encrypt_Method, $HashKey, 0, $HashIV);
 
         return wp_remote_post($post_url, [
-            'timeout' => 20,
+            'timeout' => 30,
             'headers' => [
-                'Content-Type' => 'application/json'
+                'Content-Type' => 'application/json',
             ],
-            'body' => wp_json_encode($args)
+            'body' => wp_json_encode($args),
         ]);
     }
 

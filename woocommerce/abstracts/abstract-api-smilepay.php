@@ -15,7 +15,7 @@ abstract class RY_WT_EC_SmilePay_Api extends RY_WT_WC_Api
         wc_set_time_limit(40);
 
         return wp_remote_post($post_url . '?' . http_build_query($args, '', '&'), [
-            'timeout' => 20
+            'timeout' => 30,
         ]);
     }
 

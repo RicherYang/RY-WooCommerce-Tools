@@ -50,7 +50,7 @@ class RY_WT_WC_ECPay_Gateway_Api extends RY_WT_WC_ECPay_Api
             'IgnorePayment' => '',
             'EncryptType' => 1,
             'PaymentInfoURL' => $notify_url,
-            'ClientRedirectURL' => $return_url
+            'ClientRedirectURL' => $return_url,
         ];
         $args['TradeDesc'] = preg_replace('/[\x{21}-\x{2f}\x{3a}-\x{40}\x{5b}-\x{60}\x{7b}-\x{7e}]/', ' ', $args['TradeDesc']);
         $args['TradeDesc'] = mb_substr($args['TradeDesc'], 0, 100);
@@ -85,7 +85,7 @@ class RY_WT_WC_ECPay_Gateway_Api extends RY_WT_WC_ECPay_Api
         $order->update_meta_data('_ecpay_MerchantTradeNo', $args['MerchantTradeNo']);
         $order->save();
 
-        if (RY_WT_WC_ECPay_Gateway::instance()->testmode) {
+        if (RY_WT_WC_ECPay_Gateway::instance()->is_testmode()) {
             $url = $this->api_test_url['checkout'];
         } else {
             $url = $this->api_url['checkout'];
@@ -118,7 +118,7 @@ class RY_WT_WC_ECPay_Gateway_Api extends RY_WT_WC_ECPay_Api
                         $order->add_order_note(sprintf(
                             /* translators: %d number of periods */
                             __('Credit installment to %d', 'ry-woocommerce-tools'),
-                            $number_of_periods
+                            $number_of_periods,
                         ));
                         $order->save();
                     }

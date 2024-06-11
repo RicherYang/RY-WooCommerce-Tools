@@ -4,13 +4,13 @@ final class RY_WT_WC_SmilePay_Shipping extends RY_WT_WC_Model
 {
     public static $support_methods = [
         'ry_smilepay_shipping_cvs_711' => 'RY_SmilePay_Shipping_CVS_711',
-        'ry_smilepay_shipping_cvs_fami' => 'RY_SmilePay_Shipping_CVS_Fami'
+        'ry_smilepay_shipping_cvs_fami' => 'RY_SmilePay_Shipping_CVS_Fami',
     ];
 
     protected static $_instance = null;
 
     protected $js_data;
-    protected $log_source = 'ry_smilepay_shipping';
+    protected $model_type = 'smilepay_shipping';
 
     public static function instance(): RY_WT_WC_SmilePay_Shipping
     {
@@ -33,7 +33,6 @@ final class RY_WT_WC_SmilePay_Shipping extends RY_WT_WC_Model
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/shipping/smilepay/shipping-cvs-711.php';
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/shipping/smilepay/shipping-cvs-fami.php';
 
-        $this->log_enabled = 'yes' === RY_WT::get_option('smilepay_shipping_log', 'no');
 
         RY_WT_WC_Shipping::instance();
         RY_WT_WC_SmilePay_Shipping_Response::instance();
@@ -75,7 +74,7 @@ final class RY_WT_WC_SmilePay_Shipping extends RY_WT_WC_Model
                 'type' => 'tel',
                 'validate' => ['phone'],
                 'class' => ['form-row-wide'],
-                'priority' => 100
+                'priority' => 100,
             ];
         } else {
             $fields['shipping']['shipping_phone']['required'] = true;
@@ -93,16 +92,12 @@ final class RY_WT_WC_SmilePay_Shipping extends RY_WT_WC_Model
                 }
             }
             if ($used_cvs) {
-                foreach ($fields['shipping'] as $key => $filed) {
-                    if (isset($filed['class'])) {
-                        if (!in_array('cvs-info', $filed['class'])) {
-                            if (!in_array($key, ['shipping_first_name', 'shipping_last_name', 'shipping_phone'])) {
-                                $fields['shipping'][$key]['class'][] = 'ry-hide';
-                            }
-                        }
-                    } elseif (isset($filed['type'])) {
-                        if ('hidden' !== $filed['type']) {
-                            $fields['shipping'][$key]['class'] = ['ry-hide'];
+                foreach (['shipping_postcode', 'shipping_state', 'shipping_city', 'shipping_address_1', 'shipping_address_2'] as $key) {
+                    if(isset($fields['shipping'][$key])) {
+                        if(isset($fields['shipping'][$key]['class'])) {
+                            $fields['shipping'][$key]['class'][] = 'ry-cvs-hide';
+                        } else {
+                            $fields['shipping'][$key]['class'] = ['ry-cvs-hide'];
                         }
                     }
                 }
@@ -193,14 +188,14 @@ final class RY_WT_WC_SmilePay_Shipping extends RY_WT_WC_Model
 
     public function shipping_choose_cvs()
     {
-        wp_enqueue_script('ry-wt-shipping');
+        wp_enqueue_script('ry-checkout');
         $chosen_shipping = wc_get_chosen_shipping_method_ids();
         $chosen_shipping = array_intersect($chosen_shipping, array_keys(self::$support_methods));
         $chosen_shipping = array_shift($chosen_shipping);
         $this->js_data = [];
 
         if ($chosen_shipping) {
-            $this->js_data['postData'] = [];
+            $this->js_data['smilepay_cvs'] = true;
         }
     }
 
@@ -218,7 +213,7 @@ final class RY_WT_WC_SmilePay_Shipping extends RY_WT_WC_Model
     public function shipping_choose_cvs_info($fragments)
     {
         if (!empty($this->js_data)) {
-            $fragments['smilepay_shipping_info'] = $this->js_data;
+            $fragments['ry_shipping_info'] = $this->js_data;
         }
 
         return $fragments;

@@ -3,13 +3,13 @@
 final class RY_WT_WC_NewebPay_Shipping extends RY_WT_WC_Model
 {
     public static $support_methods = [
-        'ry_newebpay_shipping_cvs' => 'RY_NewebPay_Shipping_CVS'
+        'ry_newebpay_shipping_cvs' => 'RY_NewebPay_Shipping_CVS',
     ];
 
     protected static $_instance = null;
 
     protected $js_data;
-    protected $log_source = 'ry_newebpay_shipping';
+    protected $model_type = 'newebpay_shipping';
 
     public static function instance(): RY_WT_WC_NewebPay_Shipping
     {
@@ -57,22 +57,25 @@ final class RY_WT_WC_NewebPay_Shipping extends RY_WT_WC_Model
     public function add_cvs_info($fields)
     {
         if (is_checkout()) {
-            $chosen_method = isset(WC()->session->chosen_shipping_methods) ? WC()->session->chosen_shipping_methods : [];
-            $is_support = false;
+            $chosen_method = WC()->session->get('chosen_shipping_methods', []);
+            $used_cvs = false;
             if (count($chosen_method)) {
-                foreach (self::$support_methods as $method => $method_class) {
-                    if (0 === strpos($chosen_method[0], $method)) {
-                        $is_support = true;
+                foreach ($chosen_method as $method) {
+                    $method = strstr($method, ':', true);
+                    if ($method && array_key_exists($method, self::$support_methods) && false !== strpos($method, 'cvs')) {
+                        $used_cvs = true;
+                        break;
                     }
                 }
             }
-            if ($is_support) {
-                foreach ($fields['shipping'] as $key => $filed) {
-                    if (isset($filed['class'])) {
-                        $fields['shipping'][$key]['class'][] = 'ry-hide';
-                    } elseif (isset($filed['type'])) {
-                        if ('hidden' !== $filed['type']) {
-                            $fields['shipping'][$key]['class'] = ['ry-hide'];
+
+            if ($used_cvs) {
+                foreach (['shipping_postcode', 'shipping_state', 'shipping_city', 'shipping_address_1', 'shipping_address_2'] as $key) {
+                    if(isset($fields['shipping'][$key])) {
+                        if(isset($fields['shipping'][$key]['class'])) {
+                            $fields['shipping'][$key]['class'][] = 'ry-cvs-hide';
+                        } else {
+                            $fields['shipping'][$key]['class'] = ['ry-cvs-hide'];
                         }
                     }
                 }
@@ -165,7 +168,7 @@ final class RY_WT_WC_NewebPay_Shipping extends RY_WT_WC_Model
     public function shipping_choose_cvs_info($fragments)
     {
         if (!empty($this->js_data)) {
-            $fragments['newebpay_shipping_info'] = $this->js_data;
+            $fragments['ry_shipping_info'] = $this->js_data;
         }
 
         return $fragments;
@@ -173,14 +176,14 @@ final class RY_WT_WC_NewebPay_Shipping extends RY_WT_WC_Model
 
     public function shipping_choose_cvs()
     {
-        wp_enqueue_script('ry-wt-shipping');
+        wp_enqueue_script('ry-checkout');
         $chosen_shipping = wc_get_chosen_shipping_method_ids();
         $chosen_shipping = array_intersect($chosen_shipping, array_keys(self::$support_methods));
         $chosen_shipping = array_shift($chosen_shipping);
         $this->js_data = [];
 
         if ($chosen_shipping) {
-            $this->js_data['postData'] = [];
+            $this->js_data['newebpay_cvs'] = true;
         }
     }
 

@@ -99,8 +99,8 @@ final class RY_WT_Update
             });
         }
 
-        if (version_compare($now_version, '3.3.4', '<')) {
-            RY_WT::update_option('version', '3.3.4');
+        if (version_compare($now_version, '3.4.0', '<')) {
+            RY_WT::update_option('version', '3.4.0');
         }
     }
 }

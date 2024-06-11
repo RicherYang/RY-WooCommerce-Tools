@@ -25,8 +25,6 @@ abstract class RY_WT_WC_Shipping_Method extends WC_Shipping_Method
         }
 
         add_action('woocommerce_update_options_shipping_' . $this->id, [$this, 'process_admin_options']);
-
-        add_action('admin_footer', [$this, 'enqueue_admin_js'], 10);
     }
 
     public static function get_support_temp()
@@ -85,29 +83,23 @@ abstract class RY_WT_WC_Shipping_Method extends WC_Shipping_Method
             'cost' => $this->cost,
             'package' => $package,
             'meta_data' => [
-                'temps' => $this->get_package_temp($package['contents'])
-            ]
+                'temps' => $this->get_package_temp($package['contents']),
+            ],
         ];
         $rate = $this->add_rate_meta_data($rate);
 
         if ($this->cost_offisland > 0) {
-            if (1 === (int) WC()->session->get('shipping_cvs_out_island')) {
+            $cvs_info = (array) WC()->session->get('ry-ecpay-cvs-info', []);
+            if (isset($cvs_info['CVSOutSide']) && $cvs_info['CVSOutSide']) {
                 $rate['cost'] += $this->cost_offisland;
             }
         }
 
         if ($this->cost_cool > 0) {
-            foreach (WC()->cart->get_cart() as $cart_item) {
-                $temp = $cart_item['data']->get_meta('_ry_shipping_temp', true);
-                if (empty($temp) && 'variation' === $cart_item['data']->get_type()) {
-                    $parent_product = wc_get_product($cart_item['data']->get_parent_id());
-                    $temp = $parent_product->get_meta('_ry_shipping_temp', true);
-                }
-                $temp = empty($temp) ? '1' : $temp;
-                if ($temp !== '1') {
-                    $rate['cost'] += $this->cost_cool;
-                    break;
-                }
+            if(in_array('2', $rate['meta_data']['temps'])) {
+                $rate['cost'] += $this->cost_cool;
+            } elseif(in_array('3', $rate['meta_data']['temps'])) {
+                $rate['cost'] += $this->cost_cool;
             }
         }
 
@@ -182,7 +174,7 @@ abstract class RY_WT_WC_Shipping_Method extends WC_Shipping_Method
         return $rate;
     }
 
-    protected function check_has_coupon($requires, $check_requires_list)
+    protected function check_has_coupon($requires, $check_requires_list): bool
     {
         if (in_array($requires, $check_requires_list)) {
             $coupons = WC()->cart->get_coupons();
@@ -190,15 +182,15 @@ abstract class RY_WT_WC_Shipping_Method extends WC_Shipping_Method
                 foreach ($coupons as $code => $coupon) {
                     if ($coupon->is_valid() && $coupon->get_free_shipping()) {
                         return true;
-                        break;
                     }
                 }
             }
         }
+
         return false;
     }
 
-    protected function check_has_min_amount($requires, $check_requires_list, $original = false)
+    protected function check_has_min_amount($requires, $check_requires_list, $original = false): bool
     {
         if (in_array($requires, $check_requires_list)) {
             $total = WC()->cart->get_displayed_subtotal();
@@ -213,46 +205,7 @@ abstract class RY_WT_WC_Shipping_Method extends WC_Shipping_Method
                 return true;
             }
         }
-        return false;
-    }
 
-    public function enqueue_admin_js()
-    {
-        static $is_print = [];
-        if (is_admin()) {
-            if (!isset($is_print[$this->id])) {
-                $is_print[$this->id] = true;
-                wc_enqueue_js(
-                    'function ' . $this->id . '_MinAmountField(el) {
-    let form = $(el).closest("form");
-    let minAmountField = $("#woocommerce_' . $this->id . '_min_amount", form).closest("tr");
-    if(minAmountField.length == 0) {
-        minAmountField = $("#woocommerce_' . $this->id . '_min_amount", form).closest("fieldset");
-    }
-    switch( $(el).val() ) {
-        case "min_amount":
-        case "min_amount_or_coupon":
-        case "min_amount_and_coupon":
-        case "min_amount_except_discount":
-        case "min_amount_except_discount_or_coupon":
-        case "min_amount_except_discount_and_coupon":
-            minAmountField.show();
-            break;
-        default:
-            minAmountField.hide();
-            break;
-    }
-}
-$(document.body).on("change", "#woocommerce_' . $this->id . '_cost_requires", function(){
-    ' . $this->id . '_MinAmountField(this);
-}).change();
-$(document.body).on("wc_backbone_modal_loaded", function(evt, target) {
-    if("wc-modal-shipping-method-settings" === target ) {
-        ' . $this->id . '_MinAmountField($("#wc-backbone-modal-dialog #woocommerce_' . $this->id . '_cost_requires", evt.currentTarget));
-    }
-});'
-                );
-            }
-        }
+        return false;
     }
 }

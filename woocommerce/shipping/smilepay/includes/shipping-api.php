@@ -8,13 +8,13 @@ class RY_WT_WC_SmilePay_Shipping_Api extends RY_WT_EC_SmilePay_Api
         'checkout' => 'https://ssl.smse.com.tw/ezpos_test/mtmk_utf.asp',
         'pay' => 'https://ssl.smse.com.tw/api/C2CPayment.asp',
         'unpay' => 'https://ssl.smse.com.tw/api/C2CPaymentU.asp',
-        'print' => 'https://ssl.smse.com.tw/api/C2C_MultiplePrint.asp'
+        'print' => 'https://ssl.smse.com.tw/api/C2C_MultiplePrint.asp',
     ];
     protected $api_url = [
         'checkout' => 'https://ssl.smse.com.tw/ezpos/mtmk_utf.asp',
         'pay' => 'https://ssl.smse.com.tw/api/C2CPayment.asp',
         'unpay' => 'https://ssl.smse.com.tw/api/C2CPaymentU.asp',
-        'print' => 'https://ssl.smse.com.tw/api/C2C_MultiplePrint.asp'
+        'print' => 'https://ssl.smse.com.tw/api/C2C_MultiplePrint.asp',
     ];
 
     public static function instance(): RY_WT_WC_SmilePay_Shipping_Api
@@ -52,7 +52,7 @@ class RY_WT_WC_SmilePay_Shipping_Api extends RY_WT_EC_SmilePay_Api
             'Roturl' => WC()->api_request_url('ry_smilepay_callback', true),
             'Roturl_status' => 'RY_SmilePay',
             'MapRoturl' => WC()->api_request_url('ry_smilepay_shipping_map_callback', true),
-            'Logistics_Roturl' => WC()->api_request_url('ry_smilepay_shipping_callback', true)
+            'Logistics_Roturl' => WC()->api_request_url('ry_smilepay_shipping_callback', true),
         ];
 
         if ($order->get_payment_method() == 'cod') {
@@ -72,7 +72,7 @@ class RY_WT_WC_SmilePay_Shipping_Api extends RY_WT_EC_SmilePay_Api
 
         RY_WT_WC_SmilePay_Shipping::instance()->log('Shipping POST data', WC_Log_Levels::INFO, ['data' => $args]);
 
-        if (RY_WT_WC_SmilePay_Gateway::instance()->testmode) {
+        if (RY_WT_WC_SmilePay_Gateway::instance()->is_testmode()) {
             $url = $this->api_test_url['checkout'];
         } else {
             $url = $this->api_url['checkout'];
@@ -108,7 +108,7 @@ class RY_WT_WC_SmilePay_Shipping_Api extends RY_WT_EC_SmilePay_Api
             'Roturl_status' => 'RY_SmilePay',
             'MapRoturl' => WC()->api_request_url('ry_smilepay_shipping_admin_callback', true),
             'Logistics_Roturl' => WC()->api_request_url('ry_smilepay_shipping_callback', true),
-            'Logistics_store' => $order->get_meta('_shipping_cvs_store_ID')
+            'Logistics_store' => $order->get_meta('_shipping_cvs_store_ID'),
         ];
 
         if (true === $collection) {
@@ -128,7 +128,7 @@ class RY_WT_WC_SmilePay_Shipping_Api extends RY_WT_EC_SmilePay_Api
 
         RY_WT_WC_SmilePay_Shipping::instance()->log('Shipping POST data', WC_Log_Levels::INFO, ['data' => $args]);
 
-        if (RY_WT_WC_SmilePay_Gateway::instance()->testmode) {
+        if (RY_WT_WC_SmilePay_Gateway::instance()->is_testmode()) {
             $url = $this->api_test_url['checkout'];
         } else {
             $url = $this->api_url['checkout'];
@@ -162,19 +162,19 @@ class RY_WT_WC_SmilePay_Shipping_Api extends RY_WT_EC_SmilePay_Api
                 'Verify_key' => $Verify_key,
                 'smseid' => $info['ID'],
                 'Pay_subzg' => $info['type'],
-                'types' => 'Xml'
+                'types' => 'Xml',
             ];
 
             RY_WT_WC_SmilePay_Shipping::instance()->log('Shipping code POST data', WC_Log_Levels::INFO, ['data' => $args]);
 
             if ($info['IsCollection']) {
-                if (RY_WT_WC_SmilePay_Gateway::instance()->testmode) {
+                if (RY_WT_WC_SmilePay_Gateway::instance()->is_testmode()) {
                     $url = $this->api_test_url['pay'];
                 } else {
                     $url = $this->api_url['pay'];
                 }
             } else {
-                if (RY_WT_WC_SmilePay_Gateway::instance()->testmode) {
+                if (RY_WT_WC_SmilePay_Gateway::instance()->is_testmode()) {
                     $url = $this->api_test_url['unpay'];
                 } else {
                     $url = $this->api_url['unpay'];
@@ -205,7 +205,7 @@ class RY_WT_WC_SmilePay_Shipping_Api extends RY_WT_EC_SmilePay_Api
                     /* translators: %1$s Error messade, %2$d Error messade ID */
                     __('Get Smilepay code error: %1$s (%2$d)', 'ry-woocommerce-tools'),
                     (string) $result->Desc,
-                    (string) $result->Status
+                    (string) $result->Status,
                 ));
                 return false;
             }
@@ -228,13 +228,13 @@ class RY_WT_WC_SmilePay_Shipping_Api extends RY_WT_EC_SmilePay_Api
             'Dcvc' => $Dcvc,
             'Rvg2c' => $Rvg2c,
             'Verify_key' => $Verify_key,
-            'Pay_subzg' => $print_type
+            'Pay_subzg' => $print_type,
         ];
 
         $info_list = array_filter($info_list);
         $args['PinCodes'] = implode(',', $info_list);
 
-        if (RY_WT_WC_SmilePay_Gateway::instance()->testmode) {
+        if (RY_WT_WC_SmilePay_Gateway::instance()->is_testmode()) {
             $url = $this->api_test_url['print'];
         } else {
             $url = $this->api_url['print'];

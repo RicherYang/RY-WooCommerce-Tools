@@ -43,7 +43,7 @@ abstract class RY_WT_WC_SmilePay_Payment_Gateway extends RY_WT_WC_Payment_Gatewa
 
     public function get_icon_url()
     {
-        return apply_filters('ry_gateway_smilepay_icon', RY_WT_PLUGIN_URL . 'icon/smilepay_logo.png');
+        return apply_filters('ry_gateway_smilepay_icon', RY_WT_PLUGIN_URL . 'assets/icons/smilepay_logo.png');
     }
 
     public function get_icon()

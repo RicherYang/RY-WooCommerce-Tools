@@ -4,7 +4,7 @@ final class RY_WT_WC_SmilePay_Gateway extends RY_WT_WC_Model
 {
     protected static $_instance = null;
 
-    protected $log_source = 'ry_smilepay_gateway';
+    protected $model_type = 'smilepay_gateway';
 
     public static function instance(): RY_WT_WC_SmilePay_Gateway
     {
@@ -30,9 +30,6 @@ final class RY_WT_WC_SmilePay_Gateway extends RY_WT_WC_Model
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/gateways/smilepay/gateway-cvs-711.php';
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/gateways/smilepay/gateway-cvs-fami.php';
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/gateways/smilepay/gateway-webatm.php';
-
-        $this->log_enabled = 'yes' === RY_WT::get_option('smilepay_gateway_log', 'no');
-        $this->testmode = 'yes' === RY_WT::get_option('smilepay_gateway_testmode', 'no');
 
         RY_WT_WC_SmilePay_Gateway_Ajax::instance();
         RY_WT_WC_SmilePay_Gateway_Response::instance();
@@ -87,7 +84,7 @@ final class RY_WT_WC_SmilePay_Gateway extends RY_WT_WC_Model
 
         if (isset($template_file)) {
             $args = [
-                'order' => $order
+                'order' => $order,
             ];
             wc_get_template($template_file, $args, '', RY_WT_PLUGIN_DIR . 'templates/');
         }
@@ -95,7 +92,7 @@ final class RY_WT_WC_SmilePay_Gateway extends RY_WT_WC_Model
 
     public function get_api_info()
     {
-        if ($this->testmode) {
+        if ($this->is_testmode()) {
             $Dcvc = '107';
             $Rvg2c = '1';
             $Verify_key = '174A02F97A95F72CE301137B3F98D128';

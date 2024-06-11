@@ -35,13 +35,13 @@ abstract class RY_WT_WC_ECPay_Payment_Gateway extends RY_WT_WC_Payment_Gateway
 
         return [
             'result' => 'success',
-            'redirect' => $order->get_checkout_payment_url(true)
+            'redirect' => $order->get_checkout_payment_url(true),
         ];
     }
 
     public function get_icon_url()
     {
-        return apply_filters('ry_gateway_ecpay_icon', RY_WT_PLUGIN_URL . 'icon/ecpay_logo.png');
+        return apply_filters('ry_gateway_ecpay_icon', RY_WT_PLUGIN_URL . 'assets/icons/ecpay_logo.png');
     }
 
     public function get_icon()

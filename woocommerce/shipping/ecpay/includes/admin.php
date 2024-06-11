@@ -44,12 +44,14 @@ final class RY_WT_WC_ECPay_Shipping_Admin
         if ($current_section == 'ecpay_shipping') {
             $settings = include RY_WT_PLUGIN_DIR . 'woocommerce/shipping/ecpay/includes/settings/admin-settings.php';
 
-            if ('billing_only' === get_option('woocommerce_ship_to_destination')) {
-                $setting_idx = array_search(RY_WT::OPTION_PREFIX . 'ecpay_shipping_cvs_type', array_column($settings, 'id'));
-                $settings[$setting_idx]['options'] = [
-                    'disable' => _x('Disable', 'Cvs type', 'ry-woocommerce-tools')
-                ];
-                $settings[$setting_idx]['desc'] = __('Cvs only can enable with shipping destination not force to billing address.', 'ry-woocommerce-tools');
+            if (RY_WT_WC_ECPay_Shipping::instance()->is_testmode()) {
+                list($MerchantID, $HashKey, $HashIV, $cvs_type) = RY_WT_WC_ECPay_Shipping::instance()->get_api_info();
+                $setting_idx = array_search(RY_WT::OPTION_PREFIX . 'ecpay_shipping_MerchantID', array_column($settings, 'id'));
+                $settings[$setting_idx]['desc'] = '<p class="description">' . sprintf(
+                    /* translators: %s: MerchantID */
+                    __('Used MerchantID "%s"', 'ry-woocommerce-tools'),
+                    $MerchantID,
+                ) . '</p>';
             }
         }
 
@@ -168,7 +170,7 @@ final class RY_WT_WC_ECPay_Shipping_Admin
 
     public function get_shipping_info()
     {
-        check_ajax_referer('get-shipping-info', 'security');
+        check_ajax_referer('get-shipping-info');
 
         $order_ID = (int) wp_unslash($_POST['orderid'] ?? 0);
 

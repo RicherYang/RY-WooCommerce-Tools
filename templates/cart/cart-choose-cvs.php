@@ -11,17 +11,33 @@
  * @version 3.0.4
  */
 defined('ABSPATH') || exit;
+
+$checkout = WC()->checkout();
 ?>
 <tr>
     <th>
         <?php esc_html_e('Convenience store', 'ry-woocommerce-tools') ?>
     </th>
-    <td data-title="<?php esc_attr_e('Choose convenience Store', 'ry-woocommerce-tools') ?>">
-        <div class="choose_cvs">
-            <button type="button" class="button" onclick="RYECPaySendCvsPost('<?php echo esc_attr($post_url); ?>');"><?php esc_html_e('Choose convenience store', 'ry-woocommerce-tools') ?></button>
-            <span class="show_choose_cvs_name"><br><?php esc_html_e('Convenience store:', 'ry-woocommerce-tools') ?>
-                <span class="choose_cvs_name"></span>
+    <td data-title="<?php esc_attr_e('Choose convenience store', 'ry-woocommerce-tools') ?>">
+        <button type="button" class="button ry-choose-cvs" data-ry-url="<?php echo esc_attr($post_url); ?>"><?php esc_html_e('Choose convenience store', 'ry-woocommerce-tools') ?></button>
+        <div class="ry-cvs-store-info" style="display:none">
+            <span>
+                <?php esc_html_e('Store name:', 'ry-woocommerce-tools') ?>
+                <span class="store-name"></span><br>
             </span>
+            <span>
+                <?php esc_html_e('Store address:', 'ry-woocommerce-tools') ?>
+                <span class="store-address"></span><br>
+            </span>
+            <span>
+                <?php esc_html_e('Store telephone:', 'ry-woocommerce-tools') ?>
+                <span class="store-telephone"></span><br>
+            </span>
+            <?php
+$fields = $checkout->get_checkout_fields('rycvs');
+foreach ($fields as $key => $field) {
+    echo '<input type="hidden" name="' . esc_attr($key) . '" id="' . esc_attr($key) . '" value="' . esc_attr($checkout->get_value($key)) . '"/>';
+} ?>
         </div>
     </td>
 </tr>

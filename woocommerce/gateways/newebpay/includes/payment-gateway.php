@@ -41,7 +41,7 @@ abstract class RY_WT_WC_NewebPay_Payment_Gateway extends RY_WT_WC_Payment_Gatewa
 
     public function get_icon_url()
     {
-        return apply_filters('ry_gateway_newebpay_icon', RY_WT_PLUGIN_URL . 'icon/newebpay_logo.png');
+        return apply_filters('ry_gateway_newebpay_icon', RY_WT_PLUGIN_URL . 'assets/icons/newebpay_logo.png');
     }
 
     public function get_icon()
