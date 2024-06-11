@@ -5,7 +5,7 @@ Tags: woocommerce, payment, gateway, shipping
 Requires at least: 6.3
 Requires PHP: 8.0
 Tested up to: 6.5
-Stable tag: 3.4.0
+Stable tag: 3.4.1
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.txt
 
@@ -40,8 +40,9 @@ Please visit the [plugin forum page](https://ry-plugin.com/ry-woocommerce-tools/
 
 == Changelog ==
 
-= 3.4.0 - 2024/06/11 =
-* 更新 - 取消超商取貨需客戶運送地址限制
+= 3.4.1 - 2024/06/11 =
+* 更新 - 取消超商取貨需客戶運送地址限制。
+* 修正 - 速買配串接金額問題。
 
 = 3.3.4 - 2024/05/08 =
 * 修正 - 綠界調整為等待取貨前置狀態驗證錯誤。
