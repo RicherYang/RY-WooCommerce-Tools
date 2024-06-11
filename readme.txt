@@ -5,7 +5,7 @@ Tags: woocommerce, payment, gateway, shipping
 Requires at least: 6.3
 Requires PHP: 8.0
 Tested up to: 6.5
-Stable tag: 3.4.1
+Stable tag: 3.4.2
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.txt
 
@@ -39,6 +39,9 @@ Please visit the [plugin forum page](https://ry-plugin.com/ry-woocommerce-tools/
 3. SmilePay gateway global settings.
 
 == Changelog ==
+
+= 3.4.2 - 2024/06/11 =
+* 修正 - 綠界選取超商門市後，結帳欄位內容未復原問題。
 
 = 3.4.1 - 2024/06/11 =
 * 更新 - 取消超商取貨需客戶運送地址限制。

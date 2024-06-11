@@ -40,50 +40,54 @@ $(function () {
                 }
             }
         }
-        /*
+
         if (window.sessionStorage.getItem('RyTempCheckout') !== null) {
-            let formData = JSON.parse(window.sessionStorage.getItem('RyTempCheckout')),
-                notSetData = ['LogisticsSubType', 'CVSStoreID', 'CVSStoreName', 'CVSAddress', 'CVSTelephone', 'terms'];
+            let formData = JSON.parse(window.sessionStorage.getItem('RyTempCheckout'));
             for (const key in formData) {
-                if (formData[key].name.substr(0, 1) == '_') {
-                } else if (notSetData.includes(formData[key].name)) {
-                } else {
-                    let $item = jQuery('[name="' + formData[key].name + '"]');
-                    switch ($item.prop('tagName')) {
-                        case 'INPUT':
-                            if ($item.attr('type') == 'checkbox') {
-                                if ($item.prop('checked') === false) {
-                                    $item.trigger('click');
-                                }
-                                break;
-                            }
-                            if ($item.attr('type') == 'radio') {
-                                $item = jQuery('[name="' + formData[key].name + '"][value="' + formData[key].value + '"]');
-                                if ($item.prop('checked') === false) {
-                                    $item.trigger('click');
-                                }
-                                break;
-                            }
-                        case 'TEXTAREA':
-                        case 'SELECT':
-                            const oldVal = $item.val();
-                            $item.val(formData[key].value);
-                            if (oldVal != formData[key].value) {
-                                $item.trigger('change');
+                let $item = jQuery('[name="' + formData[key].name + '"]');
+                switch ($item.prop('tagName')) {
+                    case 'INPUT':
+                        if ($item.attr('type') == 'checkbox') {
+                            if ($item.prop('checked') === false) {
+                                $item.trigger('click');
                             }
                             break;
-                        default:
+                        }
+                        if ($item.attr('type') == 'radio') {
+                            $item = jQuery('[name="' + formData[key].name + '"][value="' + formData[key].value + '"]');
+                            if ($item.prop('checked') === false) {
+                                $item.trigger('click');
+                            }
                             break;
-                    }
+                        }
+                    case 'TEXTAREA':
+                    case 'SELECT':
+                        const oldVal = $item.val();
+                        $item.val(formData[key].value);
+                        if (oldVal != formData[key].value) {
+                            $item.trigger('change');
+                        }
+                        break;
+                    default:
+                        break;
                 }
             }
             window.sessionStorage.removeItem('RyTempCheckout');
         }
-        */
     });
 
     $('.woocommerce-checkout').on('click', '.ry-choose-cvs', function () {
-        window.sessionStorage.setItem('RyTempCheckout', JSON.stringify(jQuery('form.checkout').serializeArray()));
+        let formData = $('form.checkout').serializeArray();
+        formData = formData.filter(function (d) {
+            if (d.name.substring(0, 1) == '_') {
+                return false;
+            }
+            if (d.name.substring(0, 3) == 'RY_') {
+                return false;
+            }
+            return ['terms'].indexOf(d.name) === -1;
+        });
+        window.sessionStorage.setItem('RyTempCheckout', JSON.stringify(formData));
         let html = '<form id="RyECPayChooseCvs" action="' + $(this).data('ry-url') + '" method="post">';
         for (const key in ecpayShippingInfo) {
             html += '<input type="hidden" name="' + key + '" value="' + ecpayShippingInfo[key] + '">';
