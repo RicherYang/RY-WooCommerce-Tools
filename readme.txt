@@ -5,7 +5,7 @@ Tags: woocommerce, payment, gateway, shipping
 Requires at least: 6.3
 Requires PHP: 8.0
 Tested up to: 6.5
-Stable tag: 3.3.4
+Stable tag: 3.4.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.txt
 
@@ -28,7 +28,6 @@ You can contribute to this plugin to [GitHub repository](https://github.com/Rich
 * WordPress 6.3+
 * WooCommerce 8.0+
 
-
 == Frequently Asked Questions ==
 Basically I didn't follow the support forum at wordpress.org.
 Please visit the [plugin forum page](https://ry-plugin.com/ry-woocommerce-tools/forum " ") with any questions.
@@ -40,6 +39,9 @@ Please visit the [plugin forum page](https://ry-plugin.com/ry-woocommerce-tools/
 3. SmilePay gateway global settings.
 
 == Changelog ==
+
+= 3.4.0 - 2024/06/11 =
+* 更新 - 取消超商取貨需客戶運送地址限制
 
 = 3.3.4 - 2024/05/08 =
 * 修正 - 綠界調整為等待取貨前置狀態驗證錯誤。
