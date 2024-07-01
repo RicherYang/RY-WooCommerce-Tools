@@ -1,6 +1,6 @@
 <?php
 
-final class RY_WT_WC_ECPay_Shipping extends RY_WT_WC_Model
+final class RY_WT_WC_ECPay_Shipping extends RY_WT_Shipping_Model
 {
     public static $support_methods = [
         'ry_ecpay_shipping_cvs_711' => 'RY_ECPay_Shipping_CVS_711',
@@ -83,20 +83,6 @@ final class RY_WT_WC_ECPay_Shipping extends RY_WT_WC_Model
 
     public function add_cvs_info($fields)
     {
-        if (!isset($fields['shipping']['shipping_phone'])) {
-            $fields['shipping']['shipping_phone'] = [
-                'label' => __('Phone', 'ry-woocommerce-tools'),
-                'required' => true,
-                'type' => 'tel',
-                'validate' => ['phone'],
-                'class' => ['form-row-wide'],
-                'priority' => 100,
-            ];
-        } else {
-            $fields['shipping']['shipping_phone']['required'] = true;
-            $fields['shipping']['shipping_phone']['type'] = 'tel';
-        }
-
         $fields['rycvs']['RY_LogisticsSubType'] = [
             'required' => false,
             'type' => 'hidden',
@@ -122,49 +108,7 @@ final class RY_WT_WC_ECPay_Shipping extends RY_WT_WC_Model
             'type' => 'hidden',
         ];
 
-        $cvs_hide_fields = ['shipping_postcode', 'shipping_state', 'shipping_city', 'shipping_address_1', 'shipping_address_2'];
-        if (is_checkout()) {
-            foreach ($cvs_hide_fields as $key) {
-                if(isset($fields['shipping'][$key])) {
-                    if(isset($fields['shipping'][$key]['class'])) {
-                        $fields['shipping'][$key]['class'][] = 'ry-cvs-hide';
-                    } else {
-                        $fields['shipping'][$key]['class'] = ['ry-cvs-hide'];
-                    }
-                }
-            }
-        }
-
-        if (did_action('woocommerce_checkout_process')) {
-            $used = false;
-            $used_cvs = false;
-            $shipping_method = isset($_POST['shipping_method']) ? wc_clean($_POST['shipping_method']) : [];
-            foreach ($shipping_method as $method) {
-                $method = strstr($method, ':', true);
-                if ($method && array_key_exists($method, self::$support_methods)) {
-                    $used = true;
-                    if (false !== strpos($method, 'cvs')) {
-                        $used_cvs = true;
-                    }
-                }
-            }
-
-            if ($used_cvs) {
-                foreach ($cvs_hide_fields as $key) {
-                    if(isset($fields['shipping'][$key])) {
-                        $fields['shipping'][$key]['required'] = false;
-                    }
-                }
-
-                $fields['shipping']['shipping_phone']['required'] = true;
-            } elseif ($used) {
-                $fields['shipping']['shipping_phone']['required'] = true;
-            } else {
-                $fields['shipping']['shipping_phone']['required'] = false;
-            }
-        }
-
-        return $fields;
+        return parent::add_cvs_info($fields);
     }
 
     public function checkout_choose_cvs_info($fragments)

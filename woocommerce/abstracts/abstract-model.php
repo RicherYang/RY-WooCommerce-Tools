@@ -1,6 +1,6 @@
 <?php
 
-abstract class RY_WT_WC_Model
+abstract class RY_WT_Model
 {
     protected $model_type = 'woocommerce_tools';
     protected $log_enabled = null;

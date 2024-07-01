@@ -1,6 +1,6 @@
 <?php
 
-abstract class RY_WT_EC_SmilePay_Api extends RY_WT_WC_Api
+abstract class RY_WT_SmilePay_Api extends RY_WT_Api
 {
     protected function generate_trade_no($order_ID, $order_prefix = '')
     {

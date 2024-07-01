@@ -1,6 +1,6 @@
 <?php
 
-final class RY_WT_WC_SmilePay_Shipping extends RY_WT_WC_Model
+final class RY_WT_WC_SmilePay_Shipping extends RY_WT_Shipping_Model
 {
     public static $support_methods = [
         'ry_smilepay_shipping_cvs_711' => 'RY_SmilePay_Shipping_CVS_711',
@@ -63,72 +63,6 @@ final class RY_WT_WC_SmilePay_Shipping extends RY_WT_WC_Model
         $shipping_methods = array_merge($shipping_methods, self::$support_methods);
 
         return $shipping_methods;
-    }
-
-    public function add_cvs_info($fields)
-    {
-        if (!isset($fields['shipping']['shipping_phone'])) {
-            $fields['shipping']['shipping_phone'] = [
-                'label' => __('Phone', 'ry-woocommerce-tools'),
-                'required' => true,
-                'type' => 'tel',
-                'validate' => ['phone'],
-                'class' => ['form-row-wide'],
-                'priority' => 100,
-            ];
-        } else {
-            $fields['shipping']['shipping_phone']['required'] = true;
-            $fields['shipping']['shipping_phone']['type'] = 'tel';
-        }
-
-        if (is_checkout()) {
-            $chosen_method = isset(WC()->session->chosen_shipping_methods) ? WC()->session->chosen_shipping_methods : [];
-            $used_cvs = false;
-            if (count($chosen_method)) {
-                foreach (self::$support_methods as $method => $method_class) {
-                    if ($method && array_key_exists($method, self::$support_methods) && false !== strpos($method, 'cvs')) {
-                        $used_cvs = true;
-                    }
-                }
-            }
-            if ($used_cvs) {
-                foreach (['shipping_postcode', 'shipping_state', 'shipping_city', 'shipping_address_1', 'shipping_address_2'] as $key) {
-                    if(isset($fields['shipping'][$key])) {
-                        if(isset($fields['shipping'][$key]['class'])) {
-                            $fields['shipping'][$key]['class'][] = 'ry-cvs-hide';
-                        } else {
-                            $fields['shipping'][$key]['class'] = ['ry-cvs-hide'];
-                        }
-                    }
-                }
-            }
-        }
-
-        if (did_action('woocommerce_checkout_process')) {
-            $used_cvs = false;
-            $shipping_method = isset($_POST['shipping_method']) ? wc_clean($_POST['shipping_method']) : [];
-            foreach ($shipping_method as $method) {
-                $method = strstr($method, ':', true);
-                if ($method && array_key_exists($method, self::$support_methods) && false !== strpos($method, 'cvs')) {
-                    $used_cvs = true;
-                    break;
-                }
-            }
-
-            if ($used_cvs) {
-                $fields['shipping']['shipping_country']['required'] = false;
-                $fields['shipping']['shipping_address_1']['required'] = false;
-                $fields['shipping']['shipping_address_2']['required'] = false;
-                $fields['shipping']['shipping_city']['required'] = false;
-                $fields['shipping']['shipping_state']['required'] = false;
-                $fields['shipping']['shipping_postcode']['required'] = false;
-                $fields['shipping']['shipping_phone']['required'] = true;
-            } else {
-                $fields['shipping']['shipping_phone']['required'] = false;
-            }
-        }
-
-        return $fields;
     }
 
     public function only_smilepay_gateway($_available_gateways)

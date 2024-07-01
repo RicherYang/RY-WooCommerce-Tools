@@ -1,6 +1,6 @@
 <?php
 
-class RY_WT_WC_ECPay_Gateway_Response extends RY_WT_WC_ECPay_Api
+class RY_WT_WC_ECPay_Gateway_Response extends RY_WT_ECPay_Api
 {
     protected static $_instance = null;
 
@@ -184,7 +184,7 @@ class RY_WT_WC_ECPay_Gateway_Response extends RY_WT_WC_ECPay_Api
             /* translators: %1$s: status message, %2$d status code */
             __('Payment failed: %1$s (%2$d)', 'ry-woocommerce-tools'),
             $this->get_status_msg($ipn_info),
-            $this->get_status($ipn_info)
+            $this->get_status($ipn_info),
         ));
     }
 
@@ -195,7 +195,7 @@ class RY_WT_WC_ECPay_Gateway_Response extends RY_WT_WC_ECPay_Api
             /* translators: %1$s: status message, %2$d status code */
             __('Payment unkonw status: %1$s (%2$d)', 'ry-woocommerce-tools'),
             $this->get_status_msg($ipn_info),
-            $this->get_status($ipn_info)
+            $this->get_status($ipn_info),
         ));
     }
 }

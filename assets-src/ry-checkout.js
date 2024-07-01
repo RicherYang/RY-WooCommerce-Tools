@@ -7,12 +7,16 @@ $(function () {
         if (data !== undefined) {
             ecpayShippingInfo = undefined;
             $('.woocommerce-checkout .ry-cvs-hide').show();
+            $('.woocommerce-checkout .ry-ecpay-cvs-hide').show();
+            $('.woocommerce-checkout .ry-newebpay-cvs-hide').show();
+            $('.woocommerce-checkout .ry-smilepay-cvs-hide').show();
             if (data.fragments.ry_shipping_info !== undefined) {
                 if (data.fragments.ry_shipping_info.ecpay_home === true) {
                 }
                 if (data.fragments.ry_shipping_info.ecpay_cvs === true) {
                     ecpayShippingInfo = data.fragments.ry_shipping_info.postData;
                     $('.woocommerce-checkout .ry-cvs-hide').hide();
+                    $('.woocommerce-checkout .ry-ecpay-cvs-hide').hide();
 
                     $('.ry-cvs-store-info').hide();
                     if ($('input#RY_CVSStoreID').val() != '') {
@@ -34,9 +38,11 @@ $(function () {
                 }
                 if (data.fragments.ry_shipping_info.newebpay_cvs === true) {
                     $('.woocommerce-checkout .ry-cvs-hide').hide();
+                    $('.woocommerce-checkout .ry-newebpay-cvs-hide').hide();
                 }
                 if (data.fragments.ry_shipping_info.smilepay_cvs === true) {
                     $('.woocommerce-checkout .ry-cvs-hide').hide();
+                    $('.woocommerce-checkout .ry-smilepay-cvs-hide').hide();
                 }
             }
         }

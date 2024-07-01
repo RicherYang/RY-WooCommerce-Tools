@@ -1,6 +1,6 @@
 <?php
 
-abstract class RY_WT_WC_NewebPay_Api extends RY_WT_WC_Api
+abstract class RY_WT_NewebPay_Api extends RY_WT_Api
 {
     protected function get_3rd_return_url($order = null)
     {

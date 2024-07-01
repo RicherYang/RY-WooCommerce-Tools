@@ -1,6 +1,6 @@
 <?php
 
-class RY_ECPay_Shipping_Meta_Box extends RY_WT_WC_Meta_Box
+class RY_ECPay_Shipping_Meta_Box extends RY_WT_Meta_Box
 {
     public static function add_meta_box($post_type, $data_object): void
     {

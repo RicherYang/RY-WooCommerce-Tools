@@ -1,6 +1,6 @@
 <?php
 
-class RY_WT_WC_ECPay_Gateway_Api extends RY_WT_WC_ECPay_Api
+class RY_WT_WC_ECPay_Gateway_Api extends RY_WT_ECPay_Api
 {
     protected static $_instance = null;
 

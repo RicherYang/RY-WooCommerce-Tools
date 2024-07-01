@@ -1,6 +1,6 @@
 <?php
 
-class RY_WT_WC_NewebPay_Gateway_Api extends RY_WT_WC_NewebPay_Api
+class RY_WT_WC_NewebPay_Gateway_Api extends RY_WT_NewebPay_Api
 {
     protected static $_instance = null;
 

@@ -1,6 +1,6 @@
 <?php
 
-final class RY_WT_WC_SmilePay_Gateway extends RY_WT_WC_Model
+final class RY_WT_WC_SmilePay_Gateway extends RY_WT_Model
 {
     protected static $_instance = null;
 

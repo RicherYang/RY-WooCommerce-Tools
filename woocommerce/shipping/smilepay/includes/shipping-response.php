@@ -1,6 +1,6 @@
 <?php
 
-class RY_WT_WC_SmilePay_Shipping_Response extends RY_WT_EC_SmilePay_Api
+class RY_WT_WC_SmilePay_Shipping_Response extends RY_WT_SmilePay_Api
 {
     protected static $_instance = null;
 

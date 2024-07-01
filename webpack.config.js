@@ -35,13 +35,14 @@ module.exports = {
     output: {
         ...defaultConfig.output,
         path: distPath,
-        filename: '[name].js',
+        filename: '[name].js'
     },
     plugins: [
         ...defaultConfig.plugins.filter((plugin) => plugin.constructor.name !== 'CleanWebpackPlugin'),
         new CleanWebpackPlugin({
-            //cleanOnceBeforeBuildPatterns: [],
-            cleanAfterEveryBuildPatterns: ['!fonts/**', '!images/**'],
+            cleanOnceBeforeBuildPatterns: [
+                path.join(distPath)
+            ],
             cleanStaleWebpackAssets: false,
         }),
         new CopyWebpackPlugin({

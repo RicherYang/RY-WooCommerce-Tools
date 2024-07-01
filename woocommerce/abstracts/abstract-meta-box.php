@@ -1,6 +1,6 @@
 <?php
 
-abstract class RY_WT_WC_Meta_Box
+abstract class RY_WT_Meta_Box
 {
     protected static function get_order_object($data_object)
     {

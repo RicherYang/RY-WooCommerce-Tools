@@ -1,6 +1,6 @@
 <?php
 
-abstract class RY_WT_WC_Api
+abstract class RY_WT_Api
 {
     protected $do_die = false;
 
