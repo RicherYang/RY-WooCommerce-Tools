@@ -14,7 +14,7 @@ if (!class_exists('RY_Shipping_Email_Customer_CVS_Store', false)) {
             $this->template_html = 'emails/customer-cvs-store.php';
             $this->template_plain = 'emails/plain/customer-cvs-store.php';
             $this->placeholders = [
-                '{site_title}' => $this->get_blogname()
+                '{site_title}' => $this->get_blogname(),
             ];
 
             add_action('ry_shipping_customer_cvs_store_notification', [$this, 'trigger'], 10, 2);

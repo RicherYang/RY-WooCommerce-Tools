@@ -49,7 +49,7 @@ final class RY_WT_WC_Admin
             RY_WT_Cron::check_ntp_time();
             printf(
                 '<div class="notice notice-success is-dismissible"><p><strong>%s</strong></p></div>',
-                esc_html__('Check server time success.', 'ry-woocommerce-tools')
+                esc_html__('Check server time success.', 'ry-woocommerce-tools'),
             );
         }
 

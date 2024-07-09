@@ -11,8 +11,8 @@ $setting['expire_date'] = [
     'custom_attributes' => [
         'min' => 1,
         'max' => 10080,
-        'step' => 1
-    ]
+        'step' => 1,
+    ],
 ];
 
 return $setting;

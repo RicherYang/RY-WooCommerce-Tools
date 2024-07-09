@@ -38,7 +38,7 @@ abstract class RY_WT_WC_Payment_Gateway extends WC_Payment_Gateway
                         /* translators: %1$s: Gateway method title, %2$d normal minimum */
                         __('%1$s minimum amount less then normal minimum (%2$d).', 'ry-woocommerce-tools'),
                         $this->method_title,
-                        $this->check_min_amount
+                        $this->check_min_amount,
                     ));
                 }
             }
@@ -53,7 +53,7 @@ abstract class RY_WT_WC_Payment_Gateway extends WC_Payment_Gateway
                         /* translators: %1$s: Gateway method title, %2$d normal maximum */
                         __('%1$s maximum amount more then normal maximum (%2$d).', 'ry-woocommerce-tools'),
                         $this->method_title,
-                        $this->check_max_amount
+                        $this->check_max_amount,
                     ));
                 }
             }

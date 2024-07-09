@@ -36,7 +36,7 @@ final class RY_WT_WC_SmilePay_Gateway_Admin
                 $settings[0]['desc'] = '<p>' . sprintf(
                     /* translators: %s: link to RY SmilePay Invoice for WooCommerce */
                     __('If you need SmilePay Invoice support, you can try %s', 'ry-woocommerce-tools'),
-                    '<a href="https://ry-plugin.com/ry-woocommerce-smilepay-invoice">RY SmilePay Invoice for WooCommerce</a>'
+                    '<a href="https://ry-plugin.com/ry-woocommerce-smilepay-invoice">RY SmilePay Invoice for WooCommerce</a>',
                 ) . '</p>';
             }
         }

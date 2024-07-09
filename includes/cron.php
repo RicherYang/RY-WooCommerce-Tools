@@ -12,7 +12,7 @@ final class RY_WT_Cron
     public static function check_ntp_time()
     {
         if (!function_exists('stream_socket_client')) {
-            wp_clear_scheduled_hook('ry_check_ntp_time');
+            wp_unschedule_hook('ry_check_ntp_time');
             return;
         }
 
@@ -49,7 +49,7 @@ final class RY_WT_Cron
                 'key' => ['_ecpay_shipping_info', '_newebpay_shipping_info', '_smilepay_shipping_info'],
                 'compare_key' => 'IN',
                 'value' => 'LogisticsType',
-                'compare' => 'NOT LIKE'
+                'compare' => 'NOT LIKE',
             ]],
             'orderby' => 'id',
             'order' => 'DESC',

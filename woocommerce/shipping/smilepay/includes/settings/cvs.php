@@ -6,7 +6,7 @@ $settings = [
         'type' => 'text',
         'default' => $this->method_title,
         'description' => __('This controls the title which the user sees during checkout.', 'woocommerce'),
-        'desc_tip' => true
+        'desc_tip' => true,
     ],
     'tax_status' => [
         'title' => __('Tax status', 'woocommerce'),
@@ -14,7 +14,7 @@ $settings = [
         'default' => 'none',
         'options' => [
             'taxable' => __('Taxable', 'woocommerce'),
-            'none' => _x('None', 'Tax status', 'woocommerce')
+            'none' => _x('None', 'Tax status', 'woocommerce'),
         ],
         'class' => 'wc-enhanced-select',
     ],
@@ -23,7 +23,7 @@ $settings = [
         'type' => 'number',
         'default' => 73,
         'min' => 0,
-        'step' => 1
+        'step' => 1,
     ],
     'cost_requires' => [
         'title' => __('Free shipping requires...', 'woocommerce'),
@@ -36,7 +36,7 @@ $settings = [
             'min_amount_or_coupon' => __('A minimum order amount OR a coupon', 'woocommerce'),
             'min_amount_and_coupon' => __('A minimum order amount AND a coupon', 'woocommerce'),
         ],
-        'class' => 'wc-enhanced-select'
+        'class' => 'wc-enhanced-select',
     ],
     'min_amount' => [
         'title' => __('Minimum order amount', 'ry-woocommerce-tools'),
@@ -44,20 +44,20 @@ $settings = [
         'default' => 0,
         'placeholder' => wc_format_localized_price(0),
         'description' => __('Users will need to spend this amount to get free shipping (if enabled above).', 'woocommerce'),
-        'desc_tip' => true
+        'desc_tip' => true,
     ],
     'weight_plus_cost' => [
         'title' => sprintf(
             /* translators: %s WooCommerce weight unit */
             __('Every weight (%s) to plus times of cost', 'ry-woocommerce-tools'),
-            __(get_option('woocommerce_weight_unit'), 'woocommerce')
+            __(get_option('woocommerce_weight_unit'), 'woocommerce'),
         ),
         'type' => 'number',
         'default' => 0,
         'placeholder' => 0,
         'description' => __('Calculate free shipping first. 0 to disable plus cost by weight.', 'ry-woocommerce-tools'),
-        'desc_tip' => true
-    ]
+        'desc_tip' => true,
+    ],
 ];
 
 $shipping_classes = WC()->shipping->get_shipping_classes();
@@ -70,7 +70,7 @@ if (!empty($shipping_classes)) {
         'description' => sprintf(
             /* translators: %s: shipping class setting url */
             __('These shipping available based on the <a href="%s">product shipping class</a>.', 'ry-woocommerce-tools'),
-            esc_url(admin_url('admin.php?page=wc-settings&tab=shipping&section=classes'))
+            esc_url(admin_url('admin.php?page=wc-settings&tab=shipping&section=classes')),
         ),
     ];
     foreach ($shipping_classes as $shipping_class) {
@@ -81,10 +81,10 @@ if (!empty($shipping_classes)) {
             'title' => sprintf(
                 /* translators: %s: shipping class name */
                 __('"%s" available', 'ry-woocommerce-tools'),
-                esc_html($shipping_class->name)
+                esc_html($shipping_class->name),
             ),
             'type' => 'checkbox',
-            'default' => $this->get_option('class_available_' . $shipping_class->term_id, 'yes')
+            'default' => $this->get_option('class_available_' . $shipping_class->term_id, 'yes'),
         ];
     }
 }

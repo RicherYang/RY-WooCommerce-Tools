@@ -69,7 +69,7 @@ class RY_SmilePay_Shipping_Info_List_Table extends RY_WT_Shipping_Info_List_Tabl
             '904' => '商品判賠完成',
             '905' => '物流中心待宅配',
             '906' => '提交宅配資料',
-            '907' => '宅配出貨'
+            '907' => '宅配出貨',
         ];
 
         if(!empty($item['PaymentNo'])) {
@@ -84,7 +84,7 @@ class RY_SmilePay_Shipping_Info_List_Table extends RY_WT_Shipping_Info_List_Tabl
         } else {
             $url = add_query_arg([
                 'orderid' => $this->order->get_id(),
-                'id' => $item['ID']
+                'id' => $item['ID'],
             ], admin_url('admin-post.php?action=ry-print-smilepay-shipping'));
 
             echo '<a class="button" href="' . esc_url($url) . '">' . esc_html__('Print', 'ry-woocommerce-tools') . '</a>';

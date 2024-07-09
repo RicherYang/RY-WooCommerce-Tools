@@ -39,7 +39,7 @@ class RY_ECPay_Shipping_Info_List_Table extends RY_WT_Shipping_Info_List_Table
     {
         $url = add_query_arg([
             'orderid' => $this->order->get_id(),
-            'id' => $item['ID']
+            'id' => $item['ID'],
         ], admin_url('admin-post.php?action=ry-print-ecpay-shipping'));
 
         echo '<a class="button" href="' . esc_url($url) . '">' . esc_html__('Print', 'ry-woocommerce-tools') . '</a>';

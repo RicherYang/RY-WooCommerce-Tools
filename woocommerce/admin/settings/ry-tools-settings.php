@@ -17,7 +17,7 @@ class RY_WT_WC_Admin_Settings extends WC_Settings_Page
     public function get_sections()
     {
         $sections = [
-            '' => __('Base options', 'ry-woocommerce-tools')
+            '' => __('Base options', 'ry-woocommerce-tools'),
         ];
 
         return apply_filters('woocommerce_get_sections_' . $this->id, $sections);
@@ -94,7 +94,7 @@ class RY_WT_WC_Admin_Settings extends WC_Settings_Page
                         . (wc_checkout_is_https() ? '' : '<br>' . __('For correct link with ECPay API, need enable secure checkout.', 'ry-woocommerce-tools')),
                     'id' => RY_WT::OPTION_PREFIX . 'enabled_ecpay_gateway',
                     'type' => 'checkbox',
-                    'default' => 'no'
+                    'default' => 'no',
                 ],
                 [
                     'title' => __('Shipping method', 'ry-woocommerce-tools'),
@@ -120,7 +120,7 @@ class RY_WT_WC_Admin_Settings extends WC_Settings_Page
                         . (wc_checkout_is_https() ? '' : '<br>' . __('For correct link with NewebPay API, need enable secure checkout.', 'ry-woocommerce-tools')),
                     'id' => RY_WT::OPTION_PREFIX . 'enabled_newebpay_gateway',
                     'type' => 'checkbox',
-                    'default' => 'no'
+                    'default' => 'no',
                 ],
                 [
                     'title' => __('Shipping method', 'ry-woocommerce-tools'),
@@ -146,7 +146,7 @@ class RY_WT_WC_Admin_Settings extends WC_Settings_Page
                         . (wc_checkout_is_https() ? '' : '<br>' . __('For correct link with SmilePay API, need enable secure checkout.', 'ry-woocommerce-tools')),
                     'id' => RY_WT::OPTION_PREFIX . 'enabled_smilepay_gateway',
                     'type' => 'checkbox',
-                    'default' => 'no'
+                    'default' => 'no',
                 ],
                 [
                     'title' => __('Shipping method', 'ry-woocommerce-tools'),
@@ -220,7 +220,7 @@ class RY_WT_WC_Admin_Settings extends WC_Settings_Page
                 [
                     'type' => 'sectionend',
                     'id' => 'checkout_page_options',
-                ]
+                ],
             ];
 
             if($checkout_with_block) {

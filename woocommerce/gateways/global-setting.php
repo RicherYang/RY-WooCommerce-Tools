@@ -6,7 +6,7 @@ return [
         'label' => sprintf(
             /* translators: %s: Gateway method title */
             __('Enable %s', 'ry-woocommerce-tools'),
-            $this->method_title
+            $this->method_title,
         ),
         'type' => 'checkbox',
         'default' => 'no',
@@ -35,8 +35,8 @@ return [
         'description' => __('0 to disable minimum amount limit.', 'ry-woocommerce-tools'),
         'custom_attributes' => [
             'min' => 0,
-            'step' => 1
-        ]
+            'step' => 1,
+        ],
     ],
     'max_amount' => [
         'title' => __('Maximum order amount', 'ry-woocommerce-tools'),
@@ -46,7 +46,7 @@ return [
         'description' => __('0 to disable maximum amount limit.', 'ry-woocommerce-tools'),
         'custom_attributes' => [
             'min' => 0,
-            'step' => 1
-        ]
-    ]
+            'step' => 1,
+        ],
+    ],
 ];

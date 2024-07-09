@@ -119,7 +119,7 @@ class RY_WT_Shipping_Info_List_Table extends WP_List_Table
             /* translators: %1$s: date %2$s: time */
             _x('%1$s %2$s', 'Datetime', 'ry-woocommerce-tools'),
             $item['edit']->date_i18n(wc_date_format()),
-            $item['edit']->date_i18n(wc_time_format())
+            $item['edit']->date_i18n(wc_time_format()),
         ));
     }
 
@@ -129,7 +129,7 @@ class RY_WT_Shipping_Info_List_Table extends WP_List_Table
             /* translators: %1$s: date %2$s: time */
             _x('%1$s %2$s', 'Datetime', 'ry-woocommerce-tools'),
             $item['create']->date_i18n(wc_date_format()),
-            $item['create']->date_i18n(wc_time_format())
+            $item['create']->date_i18n(wc_time_format()),
         ));
     }
 
