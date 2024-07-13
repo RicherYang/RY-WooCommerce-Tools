@@ -31,7 +31,7 @@ if ('2' !== $order->get_meta('_smilepay_payment_type')) {
                     <?php esc_html_e('Bank', 'ry-woocommerce-tools'); ?>
                 </td>
                 <td>
-                    <?php echo esc_html_x($order->get_meta('_smilepay_atm_BankCode'), 'Bank code', 'ry-woocommerce-tools'); ?>
+                    <?php echo esc_html(rywt_bank_code_to_name($order->get_meta('_smilepay_atm_BankCode'))); ?>
                 </td>
             </tr>
             <tr>

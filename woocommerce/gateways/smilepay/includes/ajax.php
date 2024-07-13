@@ -1,5 +1,7 @@
 <?php
 
+use WordPress\Plugin_Check\Checker\AJAX_Runner;
+
 final class RY_WT_WC_SmilePay_Gateway_Ajax
 {
     protected static $_instance = null;
@@ -24,6 +26,8 @@ final class RY_WT_WC_SmilePay_Gateway_Ajax
 
     public function get_code()
     {
+        check_ajax_referer('smilepay-getcode');
+
         $order_ID = (int) wp_unslash($_GET['id'] ?? 0);
         $order = wc_get_order($order_ID);
         $url = false;
@@ -33,13 +37,15 @@ final class RY_WT_WC_SmilePay_Gateway_Ajax
         if (!$url) {
             $url = $order->get_checkout_order_received_url();
         }
-        echo $url;
+        echo esc_url($url);
 
         wp_die();
     }
 
     public function shipping_get_code()
     {
+        check_ajax_referer('smilepay-getcode');
+
         $order_ID = (int) wp_unslash($_GET['id'] ?? 0);
         $order = wc_get_order($order_ID);
         $url = false;
@@ -49,7 +55,7 @@ final class RY_WT_WC_SmilePay_Gateway_Ajax
         if (!$url) {
             $url = $order->get_checkout_order_received_url();
         }
-        echo $url;
+        echo esc_url($url);
 
         wp_die();
     }

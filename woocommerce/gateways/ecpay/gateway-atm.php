@@ -56,7 +56,7 @@ class RY_ECPay_Gateway_Atm extends RY_WT_WC_ECPay_Payment_Gateway
     <tr>
         <td><?php esc_html_e('Bank', 'ry-woocommerce-tools'); ?>
         </td>
-        <td><?php echo esc_html_x($order->get_meta('_ecpay_atm_BankCode'), 'Bank code', 'ry-woocommerce-tools'); ?> (<?php echo esc_html($order->get_meta('_ecpay_atm_BankCode')); ?>)</td>
+        <td><?php echo esc_html(rywt_bank_code_to_name($order->get_meta('_ecpay_atm_BankCode'))); ?> (<?php echo esc_html($order->get_meta('_ecpay_atm_BankCode')); ?>)</td>
     </tr>
     <tr>
         <td><?php esc_html_e('ATM Bank account', 'ry-woocommerce-tools'); ?>

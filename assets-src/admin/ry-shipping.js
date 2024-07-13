@@ -38,11 +38,10 @@ $(function () {
         };
         $metabox.on('click', '.ry-delete-shipping-info', function () {
             if (window.confirm(ryAdminShippingParams.i18n.delete_shipping_info)) {
-                let $btn = $(this),
-                    $tr = $btn.closest('tr');
+                const $btn = $(this);
                 blockinfo();
                 $.ajax({
-                    url: ryAdminShippingParams.ajax_url,
+                    url: ajaxurl,
                     method: 'POST',
                     data: {
                         action: 'RY_delete_shipping_info',
@@ -51,9 +50,8 @@ $(function () {
                         _ajax_nonce: ryAdminShippingParams._nonce.delete
                     }
                 }).done(function () {
-                    let $table = $tr.closest('table');
-                    $tr.remove();
-                    if ($table.find('tbody tr').length == 0) {
+                    $btn.closest('tr').remove();
+                    if ($btn.closest('table').find('tbody tr').length == 0) {
                         $metainfo.find('.button:gt(0)').remove();
                     }
                 }).always(function () {
@@ -63,10 +61,10 @@ $(function () {
         });
 
         $metabox.on('click', '.ry-ecpay-shipping-info', function () {
-            let $btn = $(this);
+            const $btn = $(this);
             blockinfo();
             $.ajax({
-                url: ryAdminShippingParams.ajax_url,
+                url: ajaxurl,
                 method: 'POST',
                 data: {
                     action: 'RY_ecpay_shipping_info',
@@ -74,20 +72,17 @@ $(function () {
                     temp: $btn.data('temp'),
                     collection: $btn.data('collection'),
                     _ajax_nonce: ryAdminShippingParams._nonce.get
-                },
-                dataType: 'html'
-            }).done(function (data) {
-                $metainfo.html(data);
+                }
             }).always(function () {
-                $metainfo.unblock();
+                location.reload();
             });
         });
 
         $metabox.on('click', '.ry-smilepay-shipping-info', function () {
-            let $btn = $(this);
+            const $btn = $(this);
             blockinfo();
             $.ajax({
-                url: ryAdminShippingParams.ajax_url,
+                url: ajaxurl,
                 method: 'POST',
                 data: {
                     action: 'RY_smilepay_shipping_info',
@@ -107,30 +102,27 @@ $(function () {
         });
 
         $metabox.on('click', '.ry-smilepay-shipping-no', function () {
-            let $btn = $(this);
+            const $btn = $(this);
             blockinfo();
             $.ajax({
-                url: ryAdminShippingParams.ajax_url,
+                url: ajaxurl,
                 method: 'POST',
                 data: {
                     action: 'RY_smilepay_shipping_no',
                     id: $btn.data('id'),
                     orderid: $btn.data('orderid'),
                     _ajax_nonce: ryAdminShippingParams._nonce.smilepay
-                },
-                dataType: 'html'
-            }).done(function (data) {
-                $metainfo.html(data);
+                }
             }).always(function () {
-                $metainfo.unblock();
+                location.reload();
             });
         });
     }
 
     $(document).on('change', '.ry-shipping-cost_requires', function () {
-        let $form = $(this).closest('form');
+        const $form = $(this).closest('form');
         if ($form.length) {
-            let $minAmountField = $form.find('.ry-shipping-min_amount')
+            const $minAmountField = $form.find('.ry-shipping-min_amount')
             switch ($(this).val()) {
                 case 'min_amount':
                 case 'min_amount_or_coupon':

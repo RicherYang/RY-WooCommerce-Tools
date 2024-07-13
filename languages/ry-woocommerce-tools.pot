@@ -2,14 +2,14 @@
 # This file is distributed under the GPLv3.
 msgid ""
 msgstr ""
-"Project-Id-Version: RY Tools for WooCommerce 3.4.3\n"
+"Project-Id-Version: RY Tools for WooCommerce 3.4.5\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/ry-woocommerce-tools\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-07-01T14:48:56+08:00\n"
+"POT-Creation-Date: 2024-07-12T16:43:00+08:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.10.0\n"
 "X-Domain: ry-woocommerce-tools\n"
@@ -48,336 +48,6 @@ msgstr ""
 
 #: includes/admin.php:43
 msgid "Please check your server time setting. Server time is differs from NTP more than one minute."
-msgstr ""
-
-#: includes/main.php:137
-msgctxt "Bank code"
-msgid "004"
-msgstr ""
-
-#: includes/main.php:138
-msgctxt "Bank code"
-msgid "005"
-msgstr ""
-
-#: includes/main.php:139
-msgctxt "Bank code"
-msgid "006"
-msgstr ""
-
-#: includes/main.php:140
-msgctxt "Bank code"
-msgid "007"
-msgstr ""
-
-#: includes/main.php:141
-msgctxt "Bank code"
-msgid "008"
-msgstr ""
-
-#: includes/main.php:142
-msgctxt "Bank code"
-msgid "009"
-msgstr ""
-
-#: includes/main.php:143
-msgctxt "Bank code"
-msgid "011"
-msgstr ""
-
-#: includes/main.php:144
-msgctxt "Bank code"
-msgid "012"
-msgstr ""
-
-#: includes/main.php:145
-msgctxt "Bank code"
-msgid "013"
-msgstr ""
-
-#: includes/main.php:146
-msgctxt "Bank code"
-msgid "015"
-msgstr ""
-
-#: includes/main.php:147
-msgctxt "Bank code"
-msgid "016"
-msgstr ""
-
-#: includes/main.php:148
-msgctxt "Bank code"
-msgid "017"
-msgstr ""
-
-#: includes/main.php:149
-msgctxt "Bank code"
-msgid "021"
-msgstr ""
-
-#: includes/main.php:150
-msgctxt "Bank code"
-msgid "048"
-msgstr ""
-
-#: includes/main.php:151
-msgctxt "Bank code"
-msgid "050"
-msgstr ""
-
-#: includes/main.php:152
-msgctxt "Bank code"
-msgid "052"
-msgstr ""
-
-#: includes/main.php:153
-msgctxt "Bank code"
-msgid "053"
-msgstr ""
-
-#: includes/main.php:154
-msgctxt "Bank code"
-msgid "054"
-msgstr ""
-
-#: includes/main.php:155
-msgctxt "Bank code"
-msgid "081"
-msgstr ""
-
-#: includes/main.php:156
-msgctxt "Bank code"
-msgid "101"
-msgstr ""
-
-#: includes/main.php:157
-msgctxt "Bank code"
-msgid "102"
-msgstr ""
-
-#: includes/main.php:158
-msgctxt "Bank code"
-msgid "103"
-msgstr ""
-
-#: includes/main.php:159
-msgctxt "Bank code"
-msgid "108"
-msgstr ""
-
-#: includes/main.php:160
-msgctxt "Bank code"
-msgid "118"
-msgstr ""
-
-#: includes/main.php:161
-msgctxt "Bank code"
-msgid "147"
-msgstr ""
-
-#: includes/main.php:162
-msgctxt "Bank code"
-msgid "803"
-msgstr ""
-
-#: includes/main.php:163
-msgctxt "Bank code"
-msgid "805"
-msgstr ""
-
-#: includes/main.php:164
-msgctxt "Bank code"
-msgid "806"
-msgstr ""
-
-#: includes/main.php:165
-msgctxt "Bank code"
-msgid "807"
-msgstr ""
-
-#: includes/main.php:166
-msgctxt "Bank code"
-msgid "808"
-msgstr ""
-
-#: includes/main.php:167
-msgctxt "Bank code"
-msgid "809"
-msgstr ""
-
-#: includes/main.php:168
-msgctxt "Bank code"
-msgid "810"
-msgstr ""
-
-#: includes/main.php:169
-msgctxt "Bank code"
-msgid "812"
-msgstr ""
-
-#: includes/main.php:170
-msgctxt "Bank code"
-msgid "816"
-msgstr ""
-
-#: includes/main.php:171
-msgctxt "Bank code"
-msgid "822"
-msgstr ""
-
-#: includes/main.php:172
-msgctxt "Bank code"
-msgid "823"
-msgstr ""
-
-#: includes/main.php:173
-msgctxt "Bank code"
-msgid "824"
-msgstr ""
-
-#: includes/main.php:174
-msgctxt "Bank code"
-msgid "826"
-msgstr ""
-
-#: includes/main.php:176
-msgctxt "Bank code"
-msgid "020"
-msgstr ""
-
-#: includes/main.php:177
-msgctxt "Bank code"
-msgid "022"
-msgstr ""
-
-#: includes/main.php:178
-msgctxt "Bank code"
-msgid "023"
-msgstr ""
-
-#: includes/main.php:179
-msgctxt "Bank code"
-msgid "025"
-msgstr ""
-
-#: includes/main.php:180
-msgctxt "Bank code"
-msgid "028"
-msgstr ""
-
-#: includes/main.php:181
-msgctxt "Bank code"
-msgid "029"
-msgstr ""
-
-#: includes/main.php:182
-msgctxt "Bank code"
-msgid "030"
-msgstr ""
-
-#: includes/main.php:183
-msgctxt "Bank code"
-msgid "037"
-msgstr ""
-
-#: includes/main.php:184
-msgctxt "Bank code"
-msgid "039"
-msgstr ""
-
-#: includes/main.php:185
-msgctxt "Bank code"
-msgid "072"
-msgstr ""
-
-#: includes/main.php:186
-msgctxt "Bank code"
-msgid "075"
-msgstr ""
-
-#: includes/main.php:187
-msgctxt "Bank code"
-msgid "076"
-msgstr ""
-
-#: includes/main.php:188
-msgctxt "Bank code"
-msgid "078"
-msgstr ""
-
-#: includes/main.php:189
-msgctxt "Bank code"
-msgid "082"
-msgstr ""
-
-#: includes/main.php:190
-msgctxt "Bank code"
-msgid "083"
-msgstr ""
-
-#: includes/main.php:191
-msgctxt "Bank code"
-msgid "085"
-msgstr ""
-
-#: includes/main.php:192
-msgctxt "Bank code"
-msgid "086"
-msgstr ""
-
-#: includes/main.php:193
-msgctxt "Bank code"
-msgid "092"
-msgstr ""
-
-#: includes/main.php:194
-msgctxt "Bank code"
-msgid "093"
-msgstr ""
-
-#: includes/main.php:195
-msgctxt "Bank code"
-msgid "097"
-msgstr ""
-
-#: includes/main.php:196
-msgctxt "Bank code"
-msgid "098"
-msgstr ""
-
-#: includes/main.php:197
-msgctxt "Bank code"
-msgid "321"
-msgstr ""
-
-#: includes/main.php:198
-msgctxt "Bank code"
-msgid "324"
-msgstr ""
-
-#: includes/main.php:199
-msgctxt "Bank code"
-msgid "325"
-msgstr ""
-
-#: includes/main.php:200
-msgctxt "Bank code"
-msgid "326"
-msgstr ""
-
-#: includes/main.php:201
-msgctxt "Bank code"
-msgid "328"
-msgstr ""
-
-#: includes/main.php:202
-msgctxt "Bank code"
-msgid "329"
-msgstr ""
-
-#: includes/main.php:203
-msgctxt "Bank code"
-msgid "330"
 msgstr ""
 
 #: templates/cart/cart-choose-cvs.php:19
@@ -776,6 +446,451 @@ msgstr ""
 msgid "Product Pickup Notice"
 msgstr ""
 
+#: woocommerce/functions.php:7
+msgctxt "Bank code"
+msgid "004"
+msgstr ""
+
+#: woocommerce/functions.php:9
+msgctxt "Bank code"
+msgid "005"
+msgstr ""
+
+#: woocommerce/functions.php:11
+msgctxt "Bank code"
+msgid "006"
+msgstr ""
+
+#: woocommerce/functions.php:13
+msgctxt "Bank code"
+msgid "007"
+msgstr ""
+
+#: woocommerce/functions.php:15
+msgctxt "Bank code"
+msgid "008"
+msgstr ""
+
+#: woocommerce/functions.php:17
+msgctxt "Bank code"
+msgid "009"
+msgstr ""
+
+#: woocommerce/functions.php:19
+msgctxt "Bank code"
+msgid "011"
+msgstr ""
+
+#: woocommerce/functions.php:21
+msgctxt "Bank code"
+msgid "012"
+msgstr ""
+
+#: woocommerce/functions.php:23
+msgctxt "Bank code"
+msgid "013"
+msgstr ""
+
+#: woocommerce/functions.php:25
+msgctxt "Bank code"
+msgid "015"
+msgstr ""
+
+#: woocommerce/functions.php:27
+msgctxt "Bank code"
+msgid "016"
+msgstr ""
+
+#: woocommerce/functions.php:29
+msgctxt "Bank code"
+msgid "017"
+msgstr ""
+
+#: woocommerce/functions.php:31
+msgctxt "Bank code"
+msgid "021"
+msgstr ""
+
+#: woocommerce/functions.php:33
+msgctxt "Bank code"
+msgid "048"
+msgstr ""
+
+#: woocommerce/functions.php:35
+msgctxt "Bank code"
+msgid "050"
+msgstr ""
+
+#: woocommerce/functions.php:37
+msgctxt "Bank code"
+msgid "052"
+msgstr ""
+
+#: woocommerce/functions.php:39
+msgctxt "Bank code"
+msgid "053"
+msgstr ""
+
+#: woocommerce/functions.php:41
+msgctxt "Bank code"
+msgid "054"
+msgstr ""
+
+#: woocommerce/functions.php:43
+msgctxt "Bank code"
+msgid "081"
+msgstr ""
+
+#: woocommerce/functions.php:45
+msgctxt "Bank code"
+msgid "101"
+msgstr ""
+
+#: woocommerce/functions.php:47
+msgctxt "Bank code"
+msgid "102"
+msgstr ""
+
+#: woocommerce/functions.php:49
+msgctxt "Bank code"
+msgid "103"
+msgstr ""
+
+#: woocommerce/functions.php:51
+msgctxt "Bank code"
+msgid "108"
+msgstr ""
+
+#: woocommerce/functions.php:53
+msgctxt "Bank code"
+msgid "118"
+msgstr ""
+
+#: woocommerce/functions.php:55
+msgctxt "Bank code"
+msgid "147"
+msgstr ""
+
+#: woocommerce/functions.php:57
+msgctxt "Bank code"
+msgid "803"
+msgstr ""
+
+#: woocommerce/functions.php:59
+msgctxt "Bank code"
+msgid "805"
+msgstr ""
+
+#: woocommerce/functions.php:61
+msgctxt "Bank code"
+msgid "806"
+msgstr ""
+
+#: woocommerce/functions.php:63
+msgctxt "Bank code"
+msgid "807"
+msgstr ""
+
+#: woocommerce/functions.php:65
+msgctxt "Bank code"
+msgid "808"
+msgstr ""
+
+#: woocommerce/functions.php:67
+msgctxt "Bank code"
+msgid "809"
+msgstr ""
+
+#: woocommerce/functions.php:69
+msgctxt "Bank code"
+msgid "810"
+msgstr ""
+
+#: woocommerce/functions.php:71
+msgctxt "Bank code"
+msgid "812"
+msgstr ""
+
+#: woocommerce/functions.php:73
+msgctxt "Bank code"
+msgid "816"
+msgstr ""
+
+#: woocommerce/functions.php:75
+msgctxt "Bank code"
+msgid "822"
+msgstr ""
+
+#: woocommerce/functions.php:77
+msgctxt "Bank code"
+msgid "823"
+msgstr ""
+
+#: woocommerce/functions.php:79
+msgctxt "Bank code"
+msgid "824"
+msgstr ""
+
+#: woocommerce/functions.php:81
+msgctxt "Bank code"
+msgid "826"
+msgstr ""
+
+#: woocommerce/functions.php:84
+msgctxt "Bank code"
+msgid "020"
+msgstr ""
+
+#: woocommerce/functions.php:86
+msgctxt "Bank code"
+msgid "022"
+msgstr ""
+
+#: woocommerce/functions.php:88
+msgctxt "Bank code"
+msgid "023"
+msgstr ""
+
+#: woocommerce/functions.php:90
+msgctxt "Bank code"
+msgid "025"
+msgstr ""
+
+#: woocommerce/functions.php:92
+msgctxt "Bank code"
+msgid "028"
+msgstr ""
+
+#: woocommerce/functions.php:94
+msgctxt "Bank code"
+msgid "029"
+msgstr ""
+
+#: woocommerce/functions.php:96
+msgctxt "Bank code"
+msgid "030"
+msgstr ""
+
+#: woocommerce/functions.php:98
+msgctxt "Bank code"
+msgid "037"
+msgstr ""
+
+#: woocommerce/functions.php:100
+msgctxt "Bank code"
+msgid "039"
+msgstr ""
+
+#: woocommerce/functions.php:102
+msgctxt "Bank code"
+msgid "072"
+msgstr ""
+
+#: woocommerce/functions.php:104
+msgctxt "Bank code"
+msgid "075"
+msgstr ""
+
+#: woocommerce/functions.php:106
+msgctxt "Bank code"
+msgid "076"
+msgstr ""
+
+#: woocommerce/functions.php:108
+msgctxt "Bank code"
+msgid "078"
+msgstr ""
+
+#: woocommerce/functions.php:110
+msgctxt "Bank code"
+msgid "082"
+msgstr ""
+
+#: woocommerce/functions.php:112
+msgctxt "Bank code"
+msgid "083"
+msgstr ""
+
+#: woocommerce/functions.php:114
+msgctxt "Bank code"
+msgid "085"
+msgstr ""
+
+#: woocommerce/functions.php:116
+msgctxt "Bank code"
+msgid "086"
+msgstr ""
+
+#: woocommerce/functions.php:118
+msgctxt "Bank code"
+msgid "092"
+msgstr ""
+
+#: woocommerce/functions.php:120
+msgctxt "Bank code"
+msgid "093"
+msgstr ""
+
+#: woocommerce/functions.php:122
+msgctxt "Bank code"
+msgid "097"
+msgstr ""
+
+#: woocommerce/functions.php:124
+msgctxt "Bank code"
+msgid "098"
+msgstr ""
+
+#: woocommerce/functions.php:126
+msgctxt "Bank code"
+msgid "321"
+msgstr ""
+
+#: woocommerce/functions.php:128
+msgctxt "Bank code"
+msgid "324"
+msgstr ""
+
+#: woocommerce/functions.php:130
+msgctxt "Bank code"
+msgid "325"
+msgstr ""
+
+#: woocommerce/functions.php:132
+msgctxt "Bank code"
+msgid "326"
+msgstr ""
+
+#: woocommerce/functions.php:134
+msgctxt "Bank code"
+msgid "328"
+msgstr ""
+
+#: woocommerce/functions.php:136
+msgctxt "Bank code"
+msgid "329"
+msgstr ""
+
+#: woocommerce/functions.php:138
+msgctxt "Bank code"
+msgid "330"
+msgstr ""
+
+#: woocommerce/functions.php:141
+msgctxt "Bank code"
+msgid "104"
+msgstr ""
+
+#: woocommerce/functions.php:143
+msgctxt "Bank code"
+msgid "114"
+msgstr ""
+
+#: woocommerce/functions.php:145
+msgctxt "Bank code"
+msgid "115"
+msgstr ""
+
+#: woocommerce/functions.php:147
+msgctxt "Bank code"
+msgid "119"
+msgstr ""
+
+#: woocommerce/functions.php:149
+msgctxt "Bank code"
+msgid "120"
+msgstr ""
+
+#: woocommerce/functions.php:151
+msgctxt "Bank code"
+msgid "124"
+msgstr ""
+
+#: woocommerce/functions.php:153
+msgctxt "Bank code"
+msgid "127"
+msgstr ""
+
+#: woocommerce/functions.php:155
+msgctxt "Bank code"
+msgid "130"
+msgstr ""
+
+#: woocommerce/functions.php:157
+msgctxt "Bank code"
+msgid "132"
+msgstr ""
+
+#: woocommerce/functions.php:159
+msgctxt "Bank code"
+msgid "146"
+msgstr ""
+
+#: woocommerce/functions.php:161
+msgctxt "Bank code"
+msgid "158"
+msgstr ""
+
+#: woocommerce/functions.php:163
+msgctxt "Bank code"
+msgid "161"
+msgstr ""
+
+#: woocommerce/functions.php:165
+msgctxt "Bank code"
+msgid "162"
+msgstr ""
+
+#: woocommerce/functions.php:167
+msgctxt "Bank code"
+msgid "163"
+msgstr ""
+
+#: woocommerce/functions.php:169
+msgctxt "Bank code"
+msgid "165"
+msgstr ""
+
+#: woocommerce/functions.php:171
+msgctxt "Bank code"
+msgid "178"
+msgstr ""
+
+#: woocommerce/functions.php:173
+msgctxt "Bank code"
+msgid "188"
+msgstr ""
+
+#: woocommerce/functions.php:175
+msgctxt "Bank code"
+msgid "204"
+msgstr ""
+
+#: woocommerce/functions.php:177
+msgctxt "Bank code"
+msgid "215"
+msgstr ""
+
+#: woocommerce/functions.php:179
+msgctxt "Bank code"
+msgid "216"
+msgstr ""
+
+#: woocommerce/functions.php:181
+msgctxt "Bank code"
+msgid "222"
+msgstr ""
+
+#: woocommerce/functions.php:183
+msgctxt "Bank code"
+msgid "223"
+msgstr ""
+
+#: woocommerce/functions.php:185
+msgctxt "Bank code"
+msgid "224"
+msgstr ""
+
 #: woocommerce/gateways/ecpay/gateway-atm.php:14
 #: woocommerce/gateways/newebpay/gateway-atm.php:11
 #: woocommerce/gateways/smilepay/gateway-atm.php:14
@@ -1076,9 +1191,7 @@ msgid "Enable %s"
 msgstr ""
 
 #: woocommerce/gateways/global-setting.php:31
-#: woocommerce/shipping/global-setting.php:42
-#: woocommerce/shipping/newebpay/includes/settings/cvs.php:42
-#: woocommerce/shipping/smilepay/includes/settings/cvs.php:42
+#: woocommerce/shipping/global-setting.php:44
 msgid "Minimum order amount"
 msgstr ""
 
@@ -1641,42 +1754,30 @@ msgstr ""
 msgid "No convenience store has been chosen."
 msgstr ""
 
-#: woocommerce/shipping/global-setting.php:22
-#: woocommerce/shipping/newebpay/includes/settings/cvs.php:22
-#: woocommerce/shipping/smilepay/includes/settings/cvs.php:22
+#: woocommerce/shipping/global-setting.php:24
 msgid "Shipping cost"
 msgstr ""
 
 #. translators: %s WooCommerce weight unit
-#: woocommerce/shipping/global-setting.php:53
-#: woocommerce/shipping/newebpay/includes/settings/cvs.php:52
-#: woocommerce/shipping/smilepay/includes/settings/cvs.php:52
+#: woocommerce/shipping/global-setting.php:55
 msgid "Every weight (%s) to plus times of cost"
 msgstr ""
 
-#: woocommerce/shipping/global-setting.php:59
-#: woocommerce/shipping/newebpay/includes/settings/cvs.php:58
-#: woocommerce/shipping/smilepay/includes/settings/cvs.php:58
+#: woocommerce/shipping/global-setting.php:61
 msgid "Calculate free shipping first. 0 to disable plus cost by weight."
 msgstr ""
 
-#: woocommerce/shipping/global-setting.php:68
-#: woocommerce/shipping/newebpay/includes/settings/cvs.php:67
-#: woocommerce/shipping/smilepay/includes/settings/cvs.php:67
+#: woocommerce/shipping/global-setting.php:70
 msgid "Shipping available"
 msgstr ""
 
 #. translators: %s: shipping class setting url
-#: woocommerce/shipping/global-setting.php:73
-#: woocommerce/shipping/newebpay/includes/settings/cvs.php:72
-#: woocommerce/shipping/smilepay/includes/settings/cvs.php:72
+#: woocommerce/shipping/global-setting.php:75
 msgid "These shipping available based on the <a href=\"%s\">product shipping class</a>."
 msgstr ""
 
 #. translators: %s: shipping class name
-#: woocommerce/shipping/global-setting.php:84
-#: woocommerce/shipping/newebpay/includes/settings/cvs.php:83
-#: woocommerce/shipping/smilepay/includes/settings/cvs.php:83
+#: woocommerce/shipping/global-setting.php:86
 msgid "\"%s\" available"
 msgstr ""
 

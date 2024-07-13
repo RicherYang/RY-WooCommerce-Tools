@@ -185,12 +185,6 @@ final class RY_WT_WC_ECPay_Shipping_Admin
             foreach ($order->get_items('shipping') as $item) {
                 if (false !== RY_WT_WC_ECPay_Shipping::instance()->get_order_support_shipping($item)) {
                     RY_WT_WC_ECPay_Shipping_Api::instance()->get_code($order, $collection, $temp);
-
-                    include_once RY_WT_PLUGIN_DIR . 'woocommerce/shipping/ecpay/includes/meta-box.php';
-
-                    echo '<div>';
-                    RY_ECPay_Shipping_Meta_Box::output($order->get_id());
-                    echo '</div>';
                     break;
                 }
             }

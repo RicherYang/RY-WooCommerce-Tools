@@ -40,7 +40,8 @@ class RY_WT_WC_SmilePay_Gateway_Api extends RY_WT_SmilePay_Api
             url: wc_checkout_params.ajax_url,
             data: {
                 action: "' . ($get_shipping ? 'RY_SmilePay_shipping_getcode' : 'RY_SmilePay_getcode') . '",
-                id: ' . $order->get_id() . '
+                id: ' . $order->get_id() . ',
+                _ajax_nonce: "' . wp_create_nonce('smilepay-getcode') . '"
             },
             dataType: "text",
             success: function(result) {

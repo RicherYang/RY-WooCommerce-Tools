@@ -1,5 +1,7 @@
 <?php
 
+use Automattic\WooCommerce\Utilities\I18nUtil;
+
 $settings = [
     'title' => [
         'title' => __('Title', 'woocommerce'),
@@ -51,7 +53,7 @@ $settings = [
         'title' => sprintf(
             /* translators: %s WooCommerce weight unit */
             __('Every weight (%s) to plus times of cost', 'ry-woocommerce-tools'),
-            __(get_option('woocommerce_weight_unit'), 'woocommerce'),
+            I18nUtil::get_weight_unit_label(get_option('woocommerce_weight_unit')),
         ),
         'type' => 'number',
         'default' => 0,

@@ -137,6 +137,8 @@ final class RY_WT_WC_SmilePay_Shipping_Admin
 
     public function get_code_no()
     {
+        check_ajax_referer('smilepay-shipping-no');
+
         $order_ID = (int) wp_unslash($_POST['orderid'] ?? 0);
         $logistics_ID = wp_unslash($_POST['id'] ?? '');
 
@@ -149,12 +151,6 @@ final class RY_WT_WC_SmilePay_Shipping_Admin
                         if (empty($shipping_list[$logistics_ID]['PaymentNo'])) {
                             RY_WT_WC_SmilePay_Shipping_Api::instance()->get_code_no($order_ID, $info['ID']);
                         }
-
-                        include_once RY_WT_PLUGIN_DIR . 'woocommerce/shipping/smilepay/includes/meta-box.php';
-
-                        echo '<div>';
-                        RY_SmilePay_Shipping_Meta_Box::output($order->get_id());
-                        echo '</div>';
                     }
                 }
             }
