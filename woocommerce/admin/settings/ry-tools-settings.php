@@ -1,5 +1,7 @@
 <?php
 
+use Automattic\WooCommerce\Blocks\Utils\CartCheckoutUtils;
+
 if (class_exists('RY_WT_WC_Admin_Settings', false)) {
     return new RY_WT_WC_Admin_Settings();
 }
@@ -77,8 +79,7 @@ class RY_WT_WC_Admin_Settings extends WC_Settings_Page
 
     public function get_settings($current_section = '')
     {
-        $checkout_page_id = wc_get_page_id('checkout');
-        $checkout_with_block = $checkout_page_id && has_block('woocommerce/checkout', $checkout_page_id);
+        $checkout_with_block = CartCheckoutUtils::is_checkout_block_default();
 
         $settings = [];
         if ($current_section == '') {

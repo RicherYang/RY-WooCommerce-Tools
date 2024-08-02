@@ -1,5 +1,7 @@
 <?php
 
+use Automattic\WooCommerce\Utilities\NumberUtil;
+
 class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_ECPay_Api
 {
     protected static $_instance = null;
@@ -57,7 +59,7 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_ECPay_Api
             $temp_package = [];
             $basic_package = [
                 'price' => 0,
-                'amount' => 0,
+                'fee' => 0,
                 'weight' => 0,
                 'size' => 0,
                 'items' => 0,
@@ -86,25 +88,27 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_ECPay_Api
                 }
                 $weight = (float) $weight;
                 $size = (float) $product->get_length() + (float) $product->get_width() + (float) $product->get_height();
-                $amount = $product->get_meta('_ry_shipping_amount', true);
-                if('' == $amount) {
+                $shipping_amount = $product->get_meta('_ry_shipping_amount', true);
+                if('' == $shipping_amount) {
                     if ('variation' === $product->get_type()) {
                         $parent_product = wc_get_product($product->get_parent_id());
-                        $amount = $parent_product->get_meta('_ry_shipping_amount', true);
-                    }
-                    if('' == $amount) {
-                        $amount = $product->get_regular_price();
+                        $shipping_amount = $parent_product->get_meta('_ry_shipping_amount', true);
                     }
                 }
+                $shipping_amount = NumberUtil::round($shipping_amount, wc_get_price_decimals());
+                if(0 >= $shipping_amount) {
+                    $shipping_amount = $product->get_regular_price();
+                }
+                $shipping_amount = NumberUtil::round($shipping_amount, wc_get_price_decimals());
 
-                $item_price = (float) $amount * $item->get_quantity();
+                $item_price = $shipping_amount * $item->get_quantity();
                 if ('multi' === $declare_over_type) {
                     if(20000 < $item_price) {
                         array_unshift($package_list, $basic_package);
                         $package_list[0]['temp'] = $temp;
                         $package_list[0]['items'] += 1;
                         $package_list[0]['price'] += $item_price;
-                        $package_list[0]['amount'] += $item->get_total();
+                        $package_list[0]['fee'] += $item->get_total();
                         $package_list[0]['weight'] += $weight * $item->get_quantity();
                         $package_list[0]['size'] = $size;
 
@@ -121,7 +125,7 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_ECPay_Api
 
                 $package_list[$temp_package[$temp]]['items'] += 1;
                 $package_list[$temp_package[$temp]]['price'] += $item_price;
-                $package_list[$temp_package[$temp]]['amount'] += $item->get_total();
+                $package_list[$temp_package[$temp]]['fee'] += $item->get_total();
                 $package_list[$temp_package[$temp]]['weight'] += $weight * $item->get_quantity();
                 $package_list[$temp_package[$temp]]['size'] = max($size, $package_list[$temp_package[$temp]]['size']);
             }
@@ -133,7 +137,7 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_ECPay_Api
                 }
 
                 $package_info['price'] = (int) $package_info['price'];
-                $package_info['amount'] = (int) $package_info['amount'];
+                $package_info['fee'] = (int) $package_info['fee'];
             }
 
             if (0 === count($package_list)) {
@@ -181,7 +185,7 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_ECPay_Api
             }
 
             if ($args['LogisticsType'] == 'CVS') {
-                if(('C2C' === $cvs_type)) {
+                if('C2C' === $cvs_type) {
                     $args['LogisticsSubType'] .= 'C2C';
                 }
             }
@@ -197,10 +201,10 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_ECPay_Api
             if('Y' === $args['IsCollection']) {
                 $total_amount = 0;
                 foreach ($package_list as $package_info) {
-                    $total_amount += $package_info['amount'];
+                    $total_amount += $package_info['fee'];
                 }
                 if($order->get_total() != $total_amount) {
-                    $package_list[0]['amount'] += $order->get_total() - $total_amount;
+                    $package_list[0]['fee'] += $order->get_total() - $total_amount;
                 }
             }
 
@@ -244,7 +248,7 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_ECPay_Api
                 }
                 $args['GoodsAmount'] = (int) $package_info['price'];
                 if('Y' === $args['IsCollection']) {
-                    $args['CollectionAmount'] = (int) $package_info['amount'];
+                    $args['CollectionAmount'] = (int) $package_info['fee'];
                     if('UNIMARTC2C' === $args['LogisticsSubType']) {
                         $args['GoodsAmount'] = $args['CollectionAmount'];
                     }

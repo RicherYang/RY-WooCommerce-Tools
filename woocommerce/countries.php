@@ -104,9 +104,13 @@ final class RY_WT_WC_Countries
         }
 
         if(2 === count($priority)) {
-            if($priority['first_name'] < $priority['last_name']) {
-                $fields['first_name']['priority'] = $priority['last_name'];
-                $fields['last_name']['priority'] = $priority['first_name'];
+            if($priority['first_name'] <= $priority['last_name']) {
+                if($priority['first_name'] == $priority['last_name']) {
+                    $fields['first_name']['priority'] += 0.1;
+                } else {
+                    $fields['first_name']['priority'] = $priority['last_name'];
+                    $fields['last_name']['priority'] = $priority['first_name'];
+                }
 
                 $first_class_key = array_search('form-row-first', $fields['first_name']['class']);
                 $last_class_key = array_search('form-row-last', $fields['last_name']['class']);

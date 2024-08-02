@@ -93,24 +93,9 @@ final class RY_WT_WC_ECPay_Gateway extends RY_WT_Model
     {
         $MerchantID = RY_WT::get_option('ecpay_gateway_MerchantID');
         if ($this->is_testmode()) {
-            switch($MerchantID) {
-                case '3002607':
-                    $MerchantID = '3002607';
-                    $HashKey = 'pwFHCqoQZGmho4w6';
-                    $HashIV = 'EkRm7iFT261dpevs';
-                    break;
-                case '2000933':
-                    $MerchantID = '2000933';
-                    $HashKey = 'XBERn1YOvpM9nfZc';
-                    $HashIV = 'h1ONHk4P4yqbl5LK';
-                    break;
-                case '2000132':
-                default:
-                    $MerchantID = '2000132';
-                    $HashKey = '5294y06JbISpM5x9';
-                    $HashIV = 'v77hoKGq4kWxNNIS';
-                    break;
-            }
+            $MerchantID = '3002607';
+            $HashKey = 'pwFHCqoQZGmho4w6';
+            $HashIV = 'EkRm7iFT261dpevs';
         } else {
             $HashKey = RY_WT::get_option('ecpay_gateway_HashKey');
             $HashIV = RY_WT::get_option('ecpay_gateway_HashIV');
