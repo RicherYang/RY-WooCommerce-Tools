@@ -167,7 +167,7 @@ final class RY_WT_WC_ECPay_Shipping extends RY_WT_Shipping_Model
         $this->js_data = [];
 
         if (isset($chosen_shipping[0])) {
-            if (false === strpos($chosen_shipping[0], 'cvs')) {
+            if (false === strpos($chosen_shipping[0], '_cvs')) {
                 $this->js_data['ecpay_home'] = true;
             } else {
                 $this->js_data['ecpay_cvs'] = true;
@@ -238,7 +238,7 @@ final class RY_WT_WC_ECPay_Shipping extends RY_WT_Shipping_Model
             if (count($chosen_method)) {
                 foreach ($chosen_method as $method) {
                     $method = strstr($method, ':', true);
-                    if ($method && array_key_exists($method, self::$support_methods) && false !== strpos($method, 'cvs')) {
+                    if ($method && array_key_exists($method, self::$support_methods) && false !== strpos($method, '_cvs')) {
                         $used_cvs = true;
                         break;
                     }

@@ -48,7 +48,7 @@ class RY_WT_WC_SmilePay_Shipping_Api extends RY_WT_SmilePay_Api
             'Data_id' => $this->generate_trade_no($order->get_id(), RY_WT::get_option('smilepay_gateway_order_prefix')),
             'Amount' => (int) ceil($order->get_total()),
             'Pur_name' => $order->get_shipping_last_name() . $order->get_shipping_first_name(),
-            'Mobile_number' => $order->get_shipping_phone(),
+            'Mobile_number' => str_replace(['-', ' '], ' ', $order->get_shipping_phone()),
             'Roturl' => WC()->api_request_url('ry_smilepay_callback', true),
             'Roturl_status' => 'RY_SmilePay',
             'MapRoturl' => WC()->api_request_url('ry_smilepay_shipping_map_callback', true),

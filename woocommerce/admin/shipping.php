@@ -75,7 +75,7 @@ final class RY_WT_WC_Admin_Shipping
 
         $shipping_method = $this->get_ry_shipping_method($theorder);
         if ($shipping_method) {
-            if (false !== strpos($shipping_method, 'cvs')) {
+            if (false !== strpos($shipping_method, '_cvs')) {
                 $shipping_fields['cvs_store_ID'] = [
                     'label' => __('Store ID', 'ry-woocommerce-tools'),
                     'show' => false,

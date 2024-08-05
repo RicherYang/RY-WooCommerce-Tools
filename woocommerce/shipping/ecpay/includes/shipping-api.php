@@ -168,7 +168,7 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_ECPay_Api
                 'SenderPhone' => RY_WT::get_option('ecpay_shipping_sender_phone'),
                 'SenderCellPhone' => RY_WT::get_option('ecpay_shipping_sender_cellphone'),
                 'ReceiverName' => $order->get_shipping_last_name() . $order->get_shipping_first_name(),
-                'ReceiverCellPhone' => $order->get_shipping_phone(),
+                'ReceiverCellPhone' => str_replace(['-', ' '], ' ', $order->get_shipping_phone()),
                 'ReceiverStoreID' => '',
                 'ServerReplyURL' => $notify_url,
                 'LogisticsC2CReplyURL' => $notify_url,
