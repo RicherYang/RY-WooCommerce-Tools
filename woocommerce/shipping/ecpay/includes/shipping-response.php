@@ -58,7 +58,7 @@ class RY_WT_WC_ECPay_Shipping_Response extends RY_WT_ECPay_Api
         }
 
         $extra_data = wp_unslash($_POST['ExtraData'] ?? '');
-        if (substr($extra_data, 0, 2) == 'ry') {
+        if (substr($extra_data, 0, 2) === 'ry') {
             $order_ID = (int) substr($extra_data, 2);
             $order = wc_get_order($order_ID);
             if ($order) {

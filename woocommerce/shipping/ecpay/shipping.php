@@ -14,6 +14,7 @@ final class RY_WT_WC_ECPay_Shipping extends RY_WT_Shipping_Model
     protected static $_instance = null;
 
     protected $js_data;
+
     protected $model_type = 'ecpay_shipping';
 
     public static function instance(): RY_WT_WC_ECPay_Shipping
@@ -67,7 +68,6 @@ final class RY_WT_WC_ECPay_Shipping extends RY_WT_Shipping_Model
             add_filter('default_checkout_RY_CVSAddress', [$this, 'get_cvs_info'], 10, 2);
             add_filter('default_checkout_RY_CVSTelephone', [$this, 'get_cvs_info'], 10, 2);
             add_filter('default_checkout_RY_CVSOutSide', [$this, 'get_cvs_info'], 10, 2);
-
         }
     }
 
@@ -206,7 +206,7 @@ final class RY_WT_WC_ECPay_Shipping extends RY_WT_Shipping_Model
                     'LogisticsType' => $method_class::Shipping_Type,
                     'LogisticsSubType' => $subtype,
                     'IsCollection' => 'Y',
-                    'ServerReplyURL' => esc_url(WC()->api_request_url('ry_ecpay_map_callback')),
+                    'ServerReplyURL' => esc_url(add_query_arg('lang', get_locale(), WC()->api_request_url('ry_ecpay_map_callback'))),
                 ];
             }
         }
