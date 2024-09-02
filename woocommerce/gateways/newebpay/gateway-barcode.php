@@ -5,6 +5,7 @@ class RY_NewebPay_Gateway_Barcode extends RY_WT_WC_NewebPay_Payment_Gateway
     public const Payment_Type = 'BARCODE';
 
     protected $check_min_amount = 20;
+
     protected $check_max_amount = 40000;
 
     public function __construct()

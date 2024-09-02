@@ -3,10 +3,15 @@
 abstract class RY_WT_WC_Shipping_Method extends WC_Shipping_Method
 {
     public $cost = 0;
+
     public $cost_requires = '';
+
     public $min_amount = 0;
+
     public $weight_plus_cost = 0;
+
     public $cost_offisland = 0;
+
     public $cost_cool = 0;
 
     public function init()
@@ -41,12 +46,12 @@ abstract class RY_WT_WC_Shipping_Method extends WC_Shipping_Method
     {
         $available = $this->is_enabled();
 
-        if($available) {
+        if ($available) {
             $temps = $this->get_package_temp($package['contents']);
             $available = 0 === count(array_diff($temps, $this->get_support_temp()));
         }
 
-        if($available) {
+        if ($available) {
             $shipping_classes = WC()->shipping->get_shipping_classes();
             if (!empty($shipping_classes)) {
                 $found_shipping_class = [];
@@ -96,9 +101,9 @@ abstract class RY_WT_WC_Shipping_Method extends WC_Shipping_Method
         }
 
         if ($this->cost_cool > 0) {
-            if(in_array('2', $rate['meta_data']['temps'])) {
+            if (in_array('2', $rate['meta_data']['temps'])) {
                 $rate['cost'] += $this->cost_cool;
-            } elseif(in_array('3', $rate['meta_data']['temps'])) {
+            } elseif (in_array('3', $rate['meta_data']['temps'])) {
                 $rate['cost'] += $this->cost_cool;
             }
         }
@@ -164,9 +169,7 @@ abstract class RY_WT_WC_Shipping_Method extends WC_Shipping_Method
             }
             $temps[] = empty($temp) ? '1' : $temp;
         }
-        $temps = array_unique($temps);
-
-        return $temps;
+        return array_unique($temps);
     }
 
     protected function add_rate_meta_data($rate)

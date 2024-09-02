@@ -5,6 +5,7 @@ class RY_ECPay_Gateway_Credit extends RY_WT_WC_ECPay_Payment_Gateway
     public const Payment_Type = 'Credit';
 
     protected $check_min_amount = 5;
+
     protected $check_max_amount = 200000;
 
     public function __construct()

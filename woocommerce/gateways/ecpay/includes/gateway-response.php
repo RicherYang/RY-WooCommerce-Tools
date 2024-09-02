@@ -128,7 +128,7 @@ class RY_WT_WC_ECPay_Gateway_Response extends RY_WT_ECPay_Api
             return;
         }
 
-        switch($order->get_payment_method()) {
+        switch ($order->get_payment_method()) {
             case 'ry_ecpay_atm':
                 $expireDate = new DateTime($ipn_info['ExpireDate'], new DateTimeZone('Asia/Taipei'));
                 $order->update_meta_data('_ecpay_atm_BankCode', $ipn_info['BankCode']);
@@ -152,7 +152,7 @@ class RY_WT_WC_ECPay_Gateway_Response extends RY_WT_ECPay_Api
             return;
         }
 
-        switch($order->get_payment_method()) {
+        switch ($order->get_payment_method()) {
             case 'ry_ecpay_barcode':
                 $expireDate = new DateTime($ipn_info['ExpireDate'], new DateTimeZone('Asia/Taipei'));
                 $order->update_meta_data('_ecpay_barcode_Barcode1', $ipn_info['Barcode1']);

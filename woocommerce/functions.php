@@ -2,7 +2,7 @@
 
 function rywt_bank_code_to_name($bank_code)
 {
-    switch($bank_code) {
+    switch ($bank_code) {
         case '004': // 臺灣銀行
             return _x('004', 'Bank code', 'ry-woocommerce-tools');
         case '005': // 臺灣土地銀行
@@ -79,7 +79,6 @@ function rywt_bank_code_to_name($bank_code)
             return _x('824', 'Bank code', 'ry-woocommerce-tools');
         case '826': // 樂天國際商業銀行
             return _x('826', 'Bank code', 'ry-woocommerce-tools');
-
         case '020': // 日商瑞穗銀行
             return _x('020', 'Bank code', 'ry-woocommerce-tools');
         case '022': // 美商美國銀行
@@ -136,7 +135,6 @@ function rywt_bank_code_to_name($bank_code)
             return _x('329', 'Bank code', 'ry-woocommerce-tools');
         case '330': // 韓商韓亞銀行
             return _x('330', 'Bank code', 'ry-woocommerce-tools');
-
         case '104': // 台北市第五信用合作社
             return _x('104', 'Bank code', 'ry-woocommerce-tools');
         case '114': // 基隆第一信用合作社

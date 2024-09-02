@@ -7,12 +7,13 @@ class RY_ECPay_Gateway_Credit_Installment extends RY_WT_WC_ECPay_Payment_Gateway
     public $number_of_periods = [];
 
     protected $check_min_amount = 5;
+
     protected $check_max_amount = 200000;
 
     public function __construct()
     {
         $this->id = 'ry_ecpay_credit_installment';
-        $this->has_fields = false;
+        $this->has_fields = true;
         $this->order_button_text = __('Pay via Credit(installment)', 'ry-woocommerce-tools');
         $this->method_title = __('ECPay Credit(installment)', 'ry-woocommerce-tools');
         $this->method_description = '';
@@ -33,7 +34,7 @@ class RY_ECPay_Gateway_Credit_Installment extends RY_WT_WC_ECPay_Payment_Gateway
     public function is_available()
     {
         $is_available = parent::is_available();
-        if($is_available) {
+        if ($is_available) {
             $is_available = !empty($this->number_of_periods);
         }
 

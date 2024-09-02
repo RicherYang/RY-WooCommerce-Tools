@@ -123,7 +123,7 @@ final class RY_WT_WC_ECPay_Shipping extends RY_WT_Shipping_Model
     public function remove_metadata($item, $package_key, $package, $order)
     {
         if (array_key_exists($item->get_method_id(), self::$support_methods)) {
-            if('CVS' === $item->get_meta('LogisticsType')) {
+            if ('CVS' === $item->get_meta('LogisticsType')) {
                 $this->save_order_cvs_info($order, $item->get_meta('LogisticsInfo'));
             }
             $item->delete_meta_data('LogisticsType');
@@ -180,11 +180,11 @@ final class RY_WT_WC_ECPay_Shipping extends RY_WT_Shipping_Model
                 $method_class = self::$support_methods[$chosen_shipping[0]];
 
                 $subtype = $method_class::Shipping_Sub_Type;
-                if('C2C' === $cvs_type) {
+                if ('C2C' === $cvs_type) {
                     $subtype .= 'C2C';
                 }
-                if('B2C' === $cvs_type) {
-                    if('UNIMART' === $method_class::Shipping_Sub_Type) {
+                if ('B2C' === $cvs_type) {
+                    if ('UNIMART' === $method_class::Shipping_Sub_Type) {
                         $temp_list = [];
                         foreach (WC()->cart->get_cart() as $cart_item_key => $cart_item) {
                             $temp = $cart_item['data']->get_meta('_ry_shipping_temp', true);
@@ -196,7 +196,7 @@ final class RY_WT_WC_ECPay_Shipping extends RY_WT_Shipping_Model
                             $temp_list[$temp] = true;
                         }
 
-                        if(isset($temp_list[3])) {
+                        if (isset($temp_list[3])) {
                             $subtype .= 'FREEZE';
                         }
                     }
@@ -218,9 +218,9 @@ final class RY_WT_WC_ECPay_Shipping extends RY_WT_Shipping_Model
     {
         if (isset($_POST['ry-ecpay-cvsmap-info'])) {
             $cvs_info = (array) json_decode(base64_decode(wp_unslash($_POST['ry-ecpay-cvsmap-info']), true), true);
-            if(is_array($cvs_info) && 6 === count($cvs_info)) {
+            if (is_array($cvs_info) && 6 === count($cvs_info)) {
                 $cvs_info['shipping_methods'] = WC()->session->get('chosen_shipping_methods', []);
-                foreach($cvs_info['shipping_methods'] as $package_key => $t) {
+                foreach ($cvs_info['shipping_methods'] as $package_key => $t) {
                     WC()->session->set('shipping_for_package_' . $package_key, '');
                 }
                 WC()->session->set('ry-ecpay-cvs-info', $cvs_info);
@@ -245,8 +245,8 @@ final class RY_WT_WC_ECPay_Shipping extends RY_WT_Shipping_Model
                 }
             }
 
-            if($used_cvs) {
-                if(empty($data['RY_CVSStoreID'])) {
+            if ($used_cvs) {
+                if (empty($data['RY_CVSStoreID'])) {
                     $errors->add('shipping', __('No convenience store has been chosen.', 'ry-woocommerce-tools'));
                 }
             }
@@ -256,7 +256,7 @@ final class RY_WT_WC_ECPay_Shipping extends RY_WT_Shipping_Model
     public function get_cvs_info($value, $input)
     {
         $cvs_info = (array) WC()->session->get('ry-ecpay-cvs-info', []);
-        if(isset($cvs_info['shipping_methods']) && $cvs_info['shipping_methods'] === WC()->session->get('chosen_shipping_methods')) {
+        if (isset($cvs_info['shipping_methods']) && $cvs_info['shipping_methods'] === WC()->session->get('chosen_shipping_methods')) {
             return $cvs_info[substr($input, 3)] ?? '';
         }
 
@@ -267,7 +267,7 @@ final class RY_WT_WC_ECPay_Shipping extends RY_WT_Shipping_Model
     {
         $cvs_type = RY_WT::get_option('ecpay_shipping_cvs_type');
         if ($this->is_testmode()) {
-            if('C2C' === $cvs_type) {
+            if ('C2C' === $cvs_type) {
                 $MerchantID = '2000933';
                 $HashKey = 'XBERn1YOvpM9nfZc';
                 $HashIV = 'h1ONHk4P4yqbl5LK';

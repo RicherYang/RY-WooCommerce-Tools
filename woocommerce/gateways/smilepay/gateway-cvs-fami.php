@@ -5,6 +5,7 @@ class RY_SmilePay_Gateway_Cvs_Fami extends RY_WT_WC_SmilePay_Payment_Gateway
     public const Payment_Type = 6;
 
     protected $check_min_amount = 35;
+
     protected $check_max_amount = 20000;
 
     public function __construct()

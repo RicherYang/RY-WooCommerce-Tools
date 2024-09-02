@@ -224,7 +224,7 @@ class RY_WT_WC_Admin_Settings extends WC_Settings_Page
                 ],
             ];
 
-            if($checkout_with_block) {
+            if ($checkout_with_block) {
                 $setting_idx = array_search(RY_WT::OPTION_PREFIX . 'show_country_select', array_column($settings, 'id'));
                 unset($settings[$setting_idx]);
                 $settings = array_values($settings);

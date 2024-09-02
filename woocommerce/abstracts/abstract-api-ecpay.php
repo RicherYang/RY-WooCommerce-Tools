@@ -45,12 +45,11 @@ abstract class RY_WT_ECPay_Api extends RY_WT_Api
 
     protected function urlencode($string)
     {
-        $string = str_replace(
+        return str_replace(
             ['%2D', '%2d', '%5F', '%5f', '%2E', '%2e', '%2A', '%2a', '%21', '%28', '%29'],
-            [  '-',   '-',   '_',   '_',    '.',  '.',   '*',   '*',   '!',   '(',   ')'],
+            ['-', '-', '_', '_', '.', '.', '*', '*', '!', '(', ')'],
             urlencode($string),
         );
-        return $string;
     }
 
     protected function generate_check_value($args, $HashKey, $HashIV, $hash_algo, $skip_args = [])
@@ -73,9 +72,7 @@ abstract class RY_WT_ECPay_Api extends RY_WT_Api
         $args_string = $this->urlencode($args_string);
         $args_string = strtolower($args_string);
         $check_value = hash($hash_algo, $args_string);
-        $check_value = strtoupper($check_value);
-
-        return $check_value;
+        return strtoupper($check_value);
     }
 
     protected function link_server($post_url, $args)

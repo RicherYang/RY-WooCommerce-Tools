@@ -130,7 +130,7 @@ class RY_WT_WC_SmilePay_Gateway_Response extends RY_WT_WC_SmilePay_Gateway_Api
             if (property_exists($payment_gateway, 'get_code_mode')) {
                 if (!$payment_gateway->get_code_mode) {
                     wp_redirect($order->get_checkout_order_received_url());
-                    return ;
+                    return;
                 }
             }
             $this->die_success();

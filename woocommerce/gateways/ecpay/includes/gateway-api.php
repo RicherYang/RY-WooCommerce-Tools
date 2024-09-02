@@ -9,6 +9,7 @@ class RY_WT_WC_ECPay_Gateway_Api extends RY_WT_ECPay_Api
         'query' => 'https://payment-stage.ecpay.com.tw/Cashier/QueryTradeInfo/V5',
         'sptoken' => 'https://payment-stage.ecpay.com.tw/SP/CreateTrade',
     ];
+
     protected $api_url = [
         'checkout' => 'https://payment.ecpay.com.tw/Cashier/AioCheckOut/V5',
         'query' => 'https://payment.ecpay.com.tw/Cashier/QueryTradeInfo/V5',

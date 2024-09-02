@@ -5,6 +5,7 @@ class RY_ECPay_Gateway_Cvs extends RY_WT_WC_ECPay_Payment_Gateway
     public const Payment_Type = 'CVS';
 
     protected $check_min_amount = 33;
+
     protected $check_max_amount = 6000;
 
     public function __construct()

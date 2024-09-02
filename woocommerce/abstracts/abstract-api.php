@@ -23,9 +23,7 @@ abstract class RY_WT_Api
                 $item_name = trim($item->get_name());
             }
         }
-        $item_name = str_replace(['^','\'','`','!','@','＠','#','%','&','*','+','\\','"','<','>','|','_','[',']'], '', $item_name);
-
-        return $item_name;
+        return str_replace(['^', '\'', '`', '!', '@', '＠', '#', '%', '&', '*', '+', '\\', '"', '<', '>', '|', '_', '[', ']'], '', $item_name);
     }
 
     public function gateway_return()
@@ -79,14 +77,14 @@ abstract class RY_WT_Api
     protected function die_success()
     {
         if ($this->do_die) {
-            die('1|OK');
+            exit('1|OK');
         }
     }
 
     protected function die_error()
     {
         if ($this->do_die) {
-            die('0|');
+            exit('0|');
         }
     }
 }

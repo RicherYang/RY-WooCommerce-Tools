@@ -3,18 +3,20 @@
 abstract class RY_WT_WC_Payment_Gateway extends WC_Payment_Gateway
 {
     public $min_amount = 0;
+
     public $expire_date = 0;
 
     protected $check_min_amount = 0;
+
     protected $check_max_amount = 0;
 
     public function is_available()
     {
         $is_available = ('yes' === $this->enabled);
 
-        if(WC()->cart) {
+        if (WC()->cart) {
             $total = $this->get_order_total();
-            if(0 < $total) {
+            if (0 < $total) {
                 if ($this->min_amount > 0 && $total < $this->min_amount) {
                     $is_available = false;
                 }
@@ -29,7 +31,7 @@ abstract class RY_WT_WC_Payment_Gateway extends WC_Payment_Gateway
 
     public function process_admin_options()
     {
-        if($this->check_min_amount > 0) {
+        if ($this->check_min_amount > 0) {
             $filed_name = 'woocommerce_' . $this->id . '_min_amount';
             if (isset($_POST[$filed_name])) {
                 $_POST[$filed_name] = (int) $_POST[$filed_name];
@@ -44,7 +46,7 @@ abstract class RY_WT_WC_Payment_Gateway extends WC_Payment_Gateway
             }
         }
 
-        if($this->check_max_amount > 0) {
+        if ($this->check_max_amount > 0) {
             $filed_name = 'woocommerce_' . $this->id . '_max_amount';
             if (isset($_POST[$filed_name])) {
                 $_POST[$filed_name] = (int) $_POST[$filed_name];

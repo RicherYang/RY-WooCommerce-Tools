@@ -10,11 +10,11 @@ class RY_SmilePay_Shipping_Info_List_Table extends RY_WT_Shipping_Info_List_Tabl
     {
         parent::prepare_items($order);
 
-        foreach($this->items as $idx => $item) {
-            if(!isset($this->items[$idx]['LogisticsType'])) {
+        foreach ($this->items as $idx => $item) {
+            if (!isset($this->items[$idx]['LogisticsType'])) {
                 $this->items[$idx]['LogisticsType'] = 'CVS';
             }
-            if(!isset($this->items[$idx]['store_ID'])) {
+            if (!isset($this->items[$idx]['store_ID'])) {
                 $this->items[$idx]['store_ID'] = $item['storeID'];
             }
         }
@@ -22,7 +22,7 @@ class RY_SmilePay_Shipping_Info_List_Table extends RY_WT_Shipping_Info_List_Tabl
 
     public function get_columns()
     {
-        $columns = [
+        return [
             'id' => __('SmilePay shipping ID', 'ry-woocommerce-tools'),
             'type' => __('Shipping Type', 'ry-woocommerce-tools'),
             'no' => __('Shipping no', 'ry-woocommerce-tools'),
@@ -34,7 +34,6 @@ class RY_SmilePay_Shipping_Info_List_Table extends RY_WT_Shipping_Info_List_Tabl
             'create_time' => __('Create time', 'ry-woocommerce-tools'),
             'action' => '',
         ];
-        return $columns;
     }
 
     public function column_type($item)
@@ -72,7 +71,7 @@ class RY_SmilePay_Shipping_Info_List_Table extends RY_WT_Shipping_Info_List_Tabl
             '907' => '宅配出貨',
         ];
 
-        if(!empty($item['PaymentNo'])) {
+        if (!empty($item['PaymentNo'])) {
             echo esc_html($status_msg[$item['status']] ?? $item['status']);
         }
     }

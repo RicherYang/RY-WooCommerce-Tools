@@ -50,7 +50,6 @@ final class RY_WT_WC_Admin_Shipping
 
     public function save_order_update($order_ID)
     {
-
         if (isset($_POST['_shipping_cvs_store_ID'])) {
             $order = wc_get_order($order_ID);
             $shipping_method = $this->get_ry_shipping_method($order);
@@ -150,7 +149,7 @@ final class RY_WT_WC_Admin_Shipping
 
         $order = wc_get_order($order_ID);
         if (!empty($order)) {
-            foreach(['_ecpay_shipping_info', '_newebpay_shipping_info', '_smilepay_shipping_info'] as $meta_key) {
+            foreach (['_ecpay_shipping_info', '_newebpay_shipping_info', '_smilepay_shipping_info'] as $meta_key) {
                 $shipping_list = $order->get_meta($meta_key, true);
                 if (is_array($shipping_list)) {
                     foreach ($shipping_list as $idx => $info) {
@@ -213,9 +212,8 @@ final class RY_WT_WC_Admin_Shipping
         if (class_exists('RY_WT_WC_SmilePay_Shipping')) {
             $cvs_methods = array_merge($cvs_methods, array_keys(RY_WT_WC_SmilePay_Shipping::$support_methods));
         }
-        $cvs_methods = array_filter($cvs_methods, function ($method) {
+        return array_filter($cvs_methods, function ($method) {
             return false !== strpos($method, '_cvs');
         });
-        return $cvs_methods;
     }
 }

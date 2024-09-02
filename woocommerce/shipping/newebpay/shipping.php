@@ -9,7 +9,9 @@ final class RY_WT_WC_NewebPay_Shipping extends RY_WT_Shipping_Model
     protected static $_instance = null;
 
     protected $js_data;
+
     protected $model_type = 'newebpay_shipping';
+
     protected $cvs_hide_fields = ['shipping_first_name', 'shipping_last_name', 'shipping_phone'];
 
     public static function instance(): RY_WT_WC_NewebPay_Shipping
@@ -50,9 +52,7 @@ final class RY_WT_WC_NewebPay_Shipping extends RY_WT_Shipping_Model
 
     public static function add_method($shipping_methods)
     {
-        $shipping_methods = array_merge($shipping_methods, self::$support_methods);
-
-        return $shipping_methods;
+        return array_merge($shipping_methods, self::$support_methods);
     }
 
     public function only_newebpay_gateway($_available_gateways)

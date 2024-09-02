@@ -14,7 +14,7 @@ class RY_WT_Shipping_Info_List_Table extends WP_List_Table
             $this->items = [];
         }
 
-        foreach($this->items as $idx => $item) {
+        foreach ($this->items as $idx => $item) {
             $this->items[$idx]['edit'] = wc_string_to_datetime($item['edit']);
             $this->items[$idx]['create'] = wc_string_to_datetime($item['create']);
         }
@@ -42,7 +42,7 @@ class RY_WT_Shipping_Info_List_Table extends WP_List_Table
     {
         echo '<button type="button" class="button ry-' . esc_attr($type) . '-shipping-info" data-orderid="' . esc_attr($this->order->get_id()) . '">' . esc_html__('Get shipping no', 'ry-woocommerce-tools') . '</button>';
 
-        if($this->has_items()) {
+        if ($this->has_items()) {
             if ('cod' === $this->order->get_payment_method()) {
                 echo '<button type="button" class="button ry-' . esc_attr($type) . '-shipping-info" data-orderid="' . esc_attr($this->order->get_id()) . '" data-collection="Y">' . esc_html__('Get shipping no (cod)', 'ry-woocommerce-tools') . '</button>';
             }

@@ -48,14 +48,12 @@ final class RY_WT_WC_Countries
     public function field_hidden_country($field, $key, $args, $value)
     {
         $custom_attributes = $this->form_field_custom_attributes($args);
-        if(empty($value)) {
+        if (empty($value)) {
             $countries = 'shipping_country' === $key ? WC()->countries->get_shipping_countries() : WC()->countries->get_allowed_countries();
             $value = array_key_first($countries);
         }
 
-        $field = '<input type="hidden" class="' . esc_attr(implode(' ', $args['input_class'])) . '" name="' . esc_attr($key) . '" id="' . esc_attr($args['id']) . '" value="' . esc_attr($value) . '" ' . implode(' ', $custom_attributes) . '>';
-
-        return $field;
+        return '<input type="hidden" class="' . esc_attr(implode(' ', $args['input_class'])) . '" name="' . esc_attr($key) . '" id="' . esc_attr($args['id']) . '" value="' . esc_attr($value) . '" ' . implode(' ', $custom_attributes) . '>';
     }
 
     public function field_hidden_text($field, $key, $args, $value)
@@ -75,9 +73,7 @@ final class RY_WT_WC_Countries
         $field_container = '<p class="form-row %1$s" id="%2$s" data-priority="' . esc_attr($sort) . '">%3$s</p>';
         $container_class = esc_attr(implode(' ', $args['class']));
         $container_ID = esc_attr($args['id']) . '_field';
-        $field = sprintf($field_container, $container_class, $container_ID, $field);
-
-        return $field;
+        return sprintf($field_container, $container_class, $container_ID, $field);
     }
 
     public function hide_country($fields)
@@ -97,15 +93,15 @@ final class RY_WT_WC_Countries
     public function last_name_first($fields)
     {
         $priority = [];
-        foreach(['first_name', 'last_name'] as $type) {
-            if(isset($fields[$type], $fields[$type]['priority'])) {
+        foreach (['first_name', 'last_name'] as $type) {
+            if (isset($fields[$type], $fields[$type]['priority'])) {
                 $priority[$type] = $fields[$type]['priority'];
             }
         }
 
-        if(2 === count($priority)) {
-            if($priority['first_name'] <= $priority['last_name']) {
-                if($priority['first_name'] == $priority['last_name']) {
+        if (2 === count($priority)) {
+            if ($priority['first_name'] <= $priority['last_name']) {
+                if ($priority['first_name'] == $priority['last_name']) {
                     $fields['first_name']['priority'] += 0.1;
                 } else {
                     $fields['first_name']['priority'] = $priority['last_name'];
@@ -114,7 +110,7 @@ final class RY_WT_WC_Countries
 
                 $first_class_key = array_search('form-row-first', $fields['first_name']['class']);
                 $last_class_key = array_search('form-row-last', $fields['last_name']['class']);
-                if(false !== $first_class_key && false !== $last_class_key) {
+                if (false !== $first_class_key && false !== $last_class_key) {
                     unset($fields['first_name']['class'][$first_class_key]);
                     unset($fields['last_name']['class'][$last_class_key]);
 
@@ -130,14 +126,14 @@ final class RY_WT_WC_Countries
     public function address_zip_first($fields)
     {
         $priority = [];
-        foreach(['postcode', 'state', 'city', 'address_1', 'address_2'] as $type) {
-            if(isset($fields[$type], $fields[$type]['priority'])) {
+        foreach (['postcode', 'state', 'city', 'address_1', 'address_2'] as $type) {
+            if (isset($fields[$type], $fields[$type]['priority'])) {
                 $priority[] = $fields[$type]['priority'];
             }
         }
         sort($priority);
-        foreach(['postcode', 'state', 'city', 'address_1', 'address_2'] as $type) {
-            if(isset($fields[$type])) {
+        foreach (['postcode', 'state', 'city', 'address_1', 'address_2'] as $type) {
+            if (isset($fields[$type])) {
                 $fields[$type]['priority'] = array_shift($priority);
             }
         }

@@ -31,9 +31,7 @@ abstract class RY_WT_NewebPay_Api extends RY_WT_Api
         if (function_exists('openssl_encrypt')) {
             $encrypt_string = openssl_encrypt($args_string, 'aes-256-cbc', $HashKey, OPENSSL_RAW_DATA | OPENSSL_ZERO_PADDING, $HashIV);
         }
-        $encrypt_string = trim(bin2hex($encrypt_string));
-
-        return $encrypt_string;
+        return trim(bin2hex($encrypt_string));
     }
 
     protected function args_decrypt($string, $HashKey, $HashIV)
@@ -45,9 +43,8 @@ abstract class RY_WT_NewebPay_Api extends RY_WT_Api
         }
         $slast = ord(substr($decrypt_string, -1));
         $slastc = chr($slast);
-        if (preg_match("/$slastc{" . $slast . "}/", $decrypt_string)) {
-            $decrypt_string = substr($decrypt_string, 0, strlen($decrypt_string) - $slast);
-            return $decrypt_string;
+        if (preg_match("/$slastc{" . $slast . '}/', $decrypt_string)) {
+            return substr($decrypt_string, 0, strlen($decrypt_string) - $slast);
         } else {
             return false;
         }
@@ -57,9 +54,7 @@ abstract class RY_WT_NewebPay_Api extends RY_WT_Api
     {
         $string = 'HashKey=' . $HashKey . '&' . $string . '&HashIV=' . $HashIV;
         $string = hash('sha256', $string);
-        $string = strtoupper($string);
-
-        return $string;
+        return strtoupper($string);
     }
 
     protected function get_tradeInfo_value($ipn_info)

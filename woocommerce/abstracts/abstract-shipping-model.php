@@ -23,9 +23,9 @@ abstract class RY_WT_Shipping_Model extends RY_WT_Model
         $cvs_hide_fields = ['shipping_postcode', 'shipping_state', 'shipping_city', 'shipping_address_1', 'shipping_address_2'];
         if (is_checkout()) {
             foreach ($cvs_hide_fields as $key) {
-                if(isset($fields['shipping'][$key])) {
-                    if(isset($fields['shipping'][$key]['class'])) {
-                        if(!is_array($fields['shipping'][$key]['class'])) {
+                if (isset($fields['shipping'][$key])) {
+                    if (isset($fields['shipping'][$key]['class'])) {
+                        if (!is_array($fields['shipping'][$key]['class'])) {
                             $fields['shipping'][$key]['class'] = [$fields['shipping'][$key]['class']];
                         }
                     } else {
@@ -35,9 +35,9 @@ abstract class RY_WT_Shipping_Model extends RY_WT_Model
                 }
             }
             foreach ($this->cvs_hide_fields as $key) {
-                if(isset($fields['shipping'][$key])) {
-                    if(isset($fields['shipping'][$key]['class'])) {
-                        if(!is_array($fields['shipping'][$key]['class'])) {
+                if (isset($fields['shipping'][$key])) {
+                    if (isset($fields['shipping'][$key]['class'])) {
+                        if (!is_array($fields['shipping'][$key]['class'])) {
                             $fields['shipping'][$key]['class'] = [$fields['shipping'][$key]['class']];
                         }
                     } else {
@@ -64,12 +64,12 @@ abstract class RY_WT_Shipping_Model extends RY_WT_Model
 
             if ($used_cvs) {
                 foreach ($cvs_hide_fields as $key) {
-                    if(isset($fields['shipping'][$key])) {
+                    if (isset($fields['shipping'][$key])) {
                         $fields['shipping'][$key]['required'] = false;
                     }
                 }
                 foreach ($this->cvs_hide_fields as $key) {
-                    if(isset($fields['shipping'][$key])) {
+                    if (isset($fields['shipping'][$key])) {
                         $fields['shipping'][$key]['required'] = false;
                     }
                 }

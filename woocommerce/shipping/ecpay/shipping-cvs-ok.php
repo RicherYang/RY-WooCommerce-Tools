@@ -3,6 +3,7 @@
 class RY_ECPay_Shipping_CVS_Ok extends RY_WT_WC_ECPay_Shipping_Method
 {
     public const Shipping_Type = 'CVS';
+
     public const Shipping_Sub_Type = 'OKMART';
 
     public function __construct($instance_ID = 0)

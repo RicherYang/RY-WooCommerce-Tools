@@ -16,7 +16,7 @@ echo "=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n";
 echo esc_html(wp_strip_all_tags($email_heading));
 echo "\n=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n\n";
 
-echo esc_html__("Your order product has been sended to the convenience store.", 'ry-woocommerce-tools') . "\n\n";
+echo esc_html__('Your order product has been sended to the convenience store.', 'ry-woocommerce-tools') . "\n\n";
 
 echo "=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n\n";
 

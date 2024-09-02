@@ -10,6 +10,7 @@ class RY_WT_WC_SmilePay_Shipping_Api extends RY_WT_SmilePay_Api
         'unpay' => 'https://ssl.smse.com.tw/api/C2CPaymentU.asp',
         'print' => 'https://ssl.smse.com.tw/api/C2C_MultiplePrint.asp',
     ];
+
     protected $api_url = [
         'checkout' => 'https://ssl.smse.com.tw/ezpos/mtmk_utf.asp',
         'pay' => 'https://ssl.smse.com.tw/api/C2CPayment.asp',

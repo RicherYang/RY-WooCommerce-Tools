@@ -10,6 +10,7 @@ final class RY_WT_WC_SmilePay_Shipping extends RY_WT_Shipping_Model
     protected static $_instance = null;
 
     protected $js_data;
+
     protected $model_type = 'smilepay_shipping';
 
     public static function instance(): RY_WT_WC_SmilePay_Shipping
@@ -32,7 +33,6 @@ final class RY_WT_WC_SmilePay_Shipping extends RY_WT_Shipping_Model
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/shipping/smilepay/includes/shipping-method.php';
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/shipping/smilepay/shipping-cvs-711.php';
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/shipping/smilepay/shipping-cvs-fami.php';
-
 
         RY_WT_WC_Shipping::instance();
         RY_WT_WC_SmilePay_Shipping_Response::instance();
@@ -60,9 +60,7 @@ final class RY_WT_WC_SmilePay_Shipping extends RY_WT_Shipping_Model
 
     public function add_method($shipping_methods)
     {
-        $shipping_methods = array_merge($shipping_methods, self::$support_methods);
-
-        return $shipping_methods;
+        return array_merge($shipping_methods, self::$support_methods);
     }
 
     public function only_smilepay_gateway($_available_gateways)

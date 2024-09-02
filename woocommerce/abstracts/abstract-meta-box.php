@@ -12,7 +12,7 @@ abstract class RY_WT_Meta_Box
             return $data_object;
         }
 
-        if(is_int($data_object)) {
+        if (is_int($data_object)) {
             return wc_get_order($data_object);
         }
 

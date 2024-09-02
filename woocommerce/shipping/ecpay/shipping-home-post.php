@@ -3,6 +3,7 @@
 class RY_ECPay_Shipping_Home_Post extends RY_WT_WC_ECPay_Shipping_Method
 {
     public const Shipping_Type = 'Home';
+
     public const Shipping_Sub_Type = 'POST';
 
     public function __construct($instance_ID = 0)

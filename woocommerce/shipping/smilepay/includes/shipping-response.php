@@ -97,7 +97,7 @@ class RY_WT_WC_SmilePay_Shipping_Response extends RY_WT_SmilePay_Api
                 $shipping_list[$transaction_ID]['create'] = (string) new WC_DateTime();
                 $shipping_list[$transaction_ID]['edit'] = (string) new WC_DateTime();
 
-                switch($ipn_info['Classif']) {
+                switch ($ipn_info['Classif']) {
                     case 'T':
                     case 'V':
                         $shipping_list[$transaction_ID]['IsCollection'] = 1;
@@ -108,7 +108,7 @@ class RY_WT_WC_SmilePay_Shipping_Response extends RY_WT_SmilePay_Api
                         break;
                 }
 
-                if(!$is_admin) {
+                if (!$is_admin) {
                     $order->set_shipping_company('');
                     $order->set_shipping_address_2('');
                     $order->set_shipping_city('');
@@ -128,7 +128,7 @@ class RY_WT_WC_SmilePay_Shipping_Response extends RY_WT_SmilePay_Api
                 $order->update_meta_data('_smilepay_shipping_info', $shipping_list);
                 $order->save();
 
-                if($is_admin) {
+                if ($is_admin) {
                     $url = $order->get_edit_order_url();
                 } else {
                     if ($ipn_info['Classif'] == 'T') {

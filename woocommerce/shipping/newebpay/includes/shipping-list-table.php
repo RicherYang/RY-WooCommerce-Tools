@@ -10,8 +10,8 @@ class RY_NewebPay_Shipping_Info_List_Table extends RY_WT_Shipping_Info_List_Tabl
     {
         parent::prepare_items($order);
 
-        foreach($this->items as $idx => $item) {
-            if(!isset($this->items[$idx]['LogisticsType'])) {
+        foreach ($this->items as $idx => $item) {
+            if (!isset($this->items[$idx]['LogisticsType'])) {
                 $this->items[$idx]['LogisticsType'] = 'CVS';
             }
         }
@@ -19,7 +19,7 @@ class RY_NewebPay_Shipping_Info_List_Table extends RY_WT_Shipping_Info_List_Tabl
 
     public function get_columns()
     {
-        $columns = [
+        return [
             'id' => __('NewebPay shipping ID', 'ry-woocommerce-tools'),
             'type' => __('Shipping Type', 'ry-woocommerce-tools'),
             'no' => __('Shipping no', 'ry-woocommerce-tools'),
@@ -30,7 +30,6 @@ class RY_NewebPay_Shipping_Info_List_Table extends RY_WT_Shipping_Info_List_Tabl
             'create_time' => __('Create time', 'ry-woocommerce-tools'),
             'action' => '',
         ];
-        return $columns;
     }
 
     public function column_type($item)

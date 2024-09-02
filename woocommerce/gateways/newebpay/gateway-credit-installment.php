@@ -9,7 +9,7 @@ class RY_NewebPay_Gateway_Credit_Installment extends RY_WT_WC_NewebPay_Payment_G
     public function __construct()
     {
         $this->id = 'ry_newebpay_credit_installment';
-        $this->has_fields = false;
+        $this->has_fields = true;
         $this->order_button_text = __('Pay via Credit(installment)', 'ry-woocommerce-tools');
         $this->method_title = __('NewebPay Credit(installment)', 'ry-woocommerce-tools');
         $this->method_description = '';
@@ -30,7 +30,7 @@ class RY_NewebPay_Gateway_Credit_Installment extends RY_WT_WC_NewebPay_Payment_G
     public function is_available()
     {
         $is_available = parent::is_available();
-        if($is_available) {
+        if ($is_available) {
             $is_available = !empty($this->number_of_periods);
         }
 

@@ -120,7 +120,7 @@ final class RY_WT_WC_SmilePay_Shipping_Admin
         if (!empty($order)) {
             $collection = 'Y' === wp_unslash($_POST['collection'] ?? '');
             $temp = substr(wp_unslash($_POST['temp'] ?? ''), 0, 1);
-            if(empty($temp)) {
+            if (empty($temp)) {
                 $temp = null;
             }
 

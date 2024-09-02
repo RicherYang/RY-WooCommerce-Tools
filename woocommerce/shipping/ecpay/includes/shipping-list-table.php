@@ -8,7 +8,7 @@ class RY_ECPay_Shipping_Info_List_Table extends RY_WT_Shipping_Info_List_Table
 
     public function get_columns()
     {
-        $columns = [
+        return [
             'id' => __('ECPay shipping ID', 'ry-woocommerce-tools'),
             'type' => __('Shipping Type', 'ry-woocommerce-tools'),
             'no' => __('Shipping no', 'ry-woocommerce-tools'),
@@ -20,14 +20,13 @@ class RY_ECPay_Shipping_Info_List_Table extends RY_WT_Shipping_Info_List_Table
             'create_time' => __('Create time', 'ry-woocommerce-tools'),
             'action' => '',
         ];
-        return $columns;
     }
 
     public function column_money($item)
     {
-        if('Y' === $item['IsCollection']) {
+        if ('Y' === $item['IsCollection']) {
             esc_html_e('Yes', 'ry-woocommerce-tools');
-        } elseif('N' === $item['IsCollection']) {
+        } elseif ('N' === $item['IsCollection']) {
             esc_html_e('No', 'ry-woocommerce-tools');
         } else {
             esc_html_e('Yes', 'ry-woocommerce-tools');

@@ -91,6 +91,6 @@ abstract class RY_WT_SmilePay_Api extends RY_WT_Api
 
     protected function die_success()
     {
-        die('<Roturlstatus>RY_SmilePay</Roturlstatus>');
+        exit('<Roturlstatus>RY_SmilePay</Roturlstatus>');
     }
 }

@@ -5,6 +5,7 @@ class RY_ECPay_Gateway_Barcode extends RY_WT_WC_ECPay_Payment_Gateway
     public const Payment_Type = 'BARCODE';
 
     protected $check_min_amount = 17;
+
     protected $check_max_amount = 20000;
 
     public function __construct()

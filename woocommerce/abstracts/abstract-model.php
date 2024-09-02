@@ -3,6 +3,7 @@
 abstract class RY_WT_Model
 {
     protected $model_type = 'woocommerce_tools';
+
     protected $log_enabled = null;
 
     private $log;
@@ -14,7 +15,7 @@ abstract class RY_WT_Model
 
     public function log($message, $level = WC_Log_Levels::INFO, $context = [])
     {
-        if(null === $this->log_enabled) {
+        if (null === $this->log_enabled) {
             $this->log_enabled = 'yes' === RY_WT::get_option($this->model_type . '_log', 'no');
         }
 
@@ -23,7 +24,7 @@ abstract class RY_WT_Model
                 $this->log = wc_get_logger();
             }
 
-            if(version_compare(WC_VERSION, '8.6', '<')) {
+            if (version_compare(WC_VERSION, '8.6', '<')) {
                 $message .= ' CONTEXT: ' . wp_json_encode($context);
                 $this->log->log($level, $message, [
                     'source' => 'ry_' . $this->model_type,

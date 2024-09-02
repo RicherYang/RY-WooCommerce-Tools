@@ -6,7 +6,7 @@ abstract class RY_WT_WC_SmilePay_Shipping_Method extends RY_WT_WC_Shipping_Metho
     {
         $available = $this->is_enabled();
 
-        if($available) {
+        if ($available) {
             list($MerchantID, $HashKey, $HashIV) = RY_WT_WC_SmilePay_Gateway::instance()->get_api_info();
             if (!empty($MerchantID) && !empty($HashKey) && !empty($HashIV)) {
                 $is_available = true;

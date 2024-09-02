@@ -5,6 +5,7 @@ class RY_ECPay_Gateway_Webatm extends RY_WT_WC_ECPay_Payment_Gateway
     public const Payment_Type = 'WebATM';
 
     protected $check_min_amount = 16;
+
     protected $check_max_amount = 49999;
 
     public function __construct()

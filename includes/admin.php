@@ -51,5 +51,4 @@ final class RY_WT_Admin
             'settings' => '<a href="' . esc_url(admin_url('admin.php?page=wc-settings&tab=rytools')) . '">' . __('Settings') . '</a>',
         ], $links);
     }
-
 }

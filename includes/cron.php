@@ -55,28 +55,28 @@ final class RY_WT_Cron
             'order' => 'DESC',
             'limit' => 100,
         ];
-        while(true) {
+        while (true) {
             $query = new WC_Order_Query($args);
             $order_IDs = $query->get_orders();
-            if(empty($order_IDs)) {
+            if (empty($order_IDs)) {
                 break;
             }
 
-            foreach($order_IDs as $order_ID) {
+            foreach ($order_IDs as $order_ID) {
                 $order = wc_get_order($order_ID);
-                if($order) {
-                    foreach(['_ecpay_shipping_info', '_newebpay_shipping_info', '_smilepay_shipping_info'] as $meta_key) {
+                if ($order) {
+                    foreach (['_ecpay_shipping_info', '_newebpay_shipping_info', '_smilepay_shipping_info'] as $meta_key) {
                         $shipping_list = $order->get_meta($meta_key, true);
                         if (is_array($shipping_list)) {
                             foreach ($shipping_list as $idx => $info) {
-                                if(!isset($shipping_list[$idx]['LogisticsType'])) {
+                                if (!isset($shipping_list[$idx]['LogisticsType'])) {
                                     $shipping_list[$idx]['LogisticsType'] = 'CVS';
                                 }
-                                if(!isset($shipping_list[$idx]['store_ID'])) {
+                                if (!isset($shipping_list[$idx]['store_ID'])) {
                                     $shipping_list[$idx]['store_ID'] = $info['storeID'];
                                     unset($shipping_list[$idx]['storeID']);
                                 }
-                                if($info['ID'] == $info['PaymentNo']) {
+                                if ($info['ID'] == $info['PaymentNo']) {
                                     $shipping_list[$idx]['PaymentNo'] = '';
                                 }
                             }
@@ -87,7 +87,7 @@ final class RY_WT_Cron
                 }
             }
 
-            if(10 < microtime(true) - $start_time) {
+            if (10 < microtime(true) - $start_time) {
                 WC()->queue()->schedule_single(time() + 10, 'ry_wt_update_3_2_0');
                 return;
             }
