@@ -210,8 +210,6 @@ final class RY_WT_WC_ECPay_Shipping extends RY_WT_Shipping_Model
                 ];
             }
         }
-
-        wp_enqueue_script('ry-checkout');
     }
 
     public function save_cvs_info()

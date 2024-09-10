@@ -120,7 +120,6 @@ final class RY_WT_WC_SmilePay_Shipping extends RY_WT_Shipping_Model
 
     public function shipping_choose_cvs()
     {
-        wp_enqueue_script('ry-checkout');
         $chosen_shipping = wc_get_chosen_shipping_method_ids();
         $chosen_shipping = array_intersect($chosen_shipping, array_keys(self::$support_methods));
         $chosen_shipping = array_shift($chosen_shipping);

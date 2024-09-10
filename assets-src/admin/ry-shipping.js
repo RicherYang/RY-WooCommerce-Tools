@@ -37,7 +37,7 @@ $(function () {
             });
         };
         $metabox.on('click', '.ry-delete-shipping-info', function () {
-            if (window.confirm(ryAdminShippingParams.i18n.delete_shipping_info)) {
+            if (window.confirm(RyAdminShippingParams.i18n.delete_shipping_info)) {
                 const $btn = $(this);
                 blockinfo();
                 $.ajax({
@@ -47,7 +47,7 @@ $(function () {
                         action: 'RY_delete_shipping_info',
                         id: $btn.data('id'),
                         orderid: $btn.data('orderid'),
-                        _ajax_nonce: ryAdminShippingParams._nonce.delete
+                        _ajax_nonce: RyAdminShippingParams._nonce.delete
                     }
                 }).done(function () {
                     $btn.closest('tr').remove();
@@ -71,7 +71,7 @@ $(function () {
                     orderid: $btn.data('orderid'),
                     temp: $btn.data('temp'),
                     collection: $btn.data('collection'),
-                    _ajax_nonce: ryAdminShippingParams._nonce.get
+                    _ajax_nonce: RyAdminShippingParams._nonce.get
                 }
             }).always(function () {
                 location.reload();
@@ -89,7 +89,7 @@ $(function () {
                     orderid: $btn.data('orderid'),
                     temp: $btn.data('temp'),
                     collection: $btn.data('collection'),
-                    _ajax_nonce: ryAdminShippingParams._nonce.get
+                    _ajax_nonce: RyAdminShippingParams._nonce.get
                 },
                 dataType: 'text'
             }).done(function (data) {
@@ -111,7 +111,7 @@ $(function () {
                     action: 'RY_smilepay_shipping_no',
                     id: $btn.data('id'),
                     orderid: $btn.data('orderid'),
-                    _ajax_nonce: ryAdminShippingParams._nonce.smilepay
+                    _ajax_nonce: RyAdminShippingParams._nonce.smilepay
                 }
             }).always(function () {
                 location.reload();

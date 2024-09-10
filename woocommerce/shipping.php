@@ -31,6 +31,8 @@ final class RY_WT_WC_Shipping
         if (is_admin()) {
             include_once RY_WT_PLUGIN_DIR . 'woocommerce/admin/shipping.php';
             RY_WT_WC_Admin_Shipping::instance();
+        } else {
+            add_action('woocommerce_review_order_after_shipping', [$this, 'set_script'], 9);
         }
     }
 
@@ -176,5 +178,21 @@ final class RY_WT_WC_Shipping
         }
 
         do_action('ry_shipping_customer_cvs_store', $order_ID, $order);
+    }
+
+    public function set_script()
+    {
+        wp_enqueue_script('ry-checkout');
+        if (true === WC()->cart->needs_shipping_address()) {
+            $fields = WC()->checkout()->get_checkout_fields('shipping');
+            if (isset($fields['shipping_phone']) && false === $fields['shipping_phone']['required']) {
+                wp_localize_script('ry-checkout', 'RyCheckoutParams', [
+                    'i18n' => [
+                        'required' => '<abbr class="required" title="' . esc_attr__('required', 'woocommerce') . '">*</abbr>',
+                        'optional' => '<span class="optional">(' . esc_html__('optional', 'woocommerce') . ')</span>',
+                    ],
+                ]);
+            }
+        }
     }
 }

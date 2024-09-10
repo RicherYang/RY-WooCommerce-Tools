@@ -3,6 +3,21 @@ import $ from 'jquery';
 let ecpayShippingInfo;
 
 $(function () {
+    const setShippingPhone = function (required) {
+        if (typeof RyCheckoutParams !== 'undefined') {
+            $('.woocommerce-checkout #shipping_phone_field label .required').remove();
+            $('.woocommerce-checkout #shipping_phone_field label .optional').remove();
+            if (required) {
+                $('.woocommerce-checkout #shipping_phone_field').addClass(['validate-required']);
+                $('.woocommerce-checkout #shipping_phone_field label').append(RyCheckoutParams.i18n.required);
+            } else {
+                $('.woocommerce-checkout #shipping_phone_field').removeClass(['validate-required']);
+                $('.woocommerce-checkout #shipping_phone_field label').append(RyCheckoutParams.i18n.optional);
+            }
+            $('.woocommerce-checkout #shipping_phone').trigger('change');
+        }
+    }
+
     $(document.body).on('updated_checkout', function (e, data) {
         if (data !== undefined) {
             ecpayShippingInfo = undefined;
@@ -12,8 +27,10 @@ $(function () {
             $('.woocommerce-checkout .ry-smilepay-cvs-hide').show();
             if (data.fragments.ry_shipping_info !== undefined) {
                 if (data.fragments.ry_shipping_info.ecpay_home === true) {
+                    setShippingPhone(true);
                 }
                 if (data.fragments.ry_shipping_info.ecpay_cvs === true) {
+                    setShippingPhone(true);
                     ecpayShippingInfo = data.fragments.ry_shipping_info.postData;
                     $('.woocommerce-checkout .ry-cvs-hide').hide();
                     $('.woocommerce-checkout .ry-ecpay-cvs-hide').hide();
@@ -37,13 +54,17 @@ $(function () {
                     }
                 }
                 if (data.fragments.ry_shipping_info.newebpay_cvs === true) {
+                    setShippingPhone(false);
                     $('.woocommerce-checkout .ry-cvs-hide').hide();
                     $('.woocommerce-checkout .ry-newebpay-cvs-hide').hide();
                 }
                 if (data.fragments.ry_shipping_info.smilepay_cvs === true) {
+                    setShippingPhone(true);
                     $('.woocommerce-checkout .ry-cvs-hide').hide();
                     $('.woocommerce-checkout .ry-smilepay-cvs-hide').hide();
                 }
+            } else {
+                setShippingPhone(false);
             }
         }
 

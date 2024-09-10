@@ -34,7 +34,7 @@ final class RY_WT_WC_Admin_Shipping
         $asset_info = include RY_WT_PLUGIN_DIR . 'assets/admin/ry-shipping.asset.php';
 
         wp_enqueue_script('ry-admin-shipping', RY_WT_PLUGIN_URL . 'assets/admin/ry-shipping.js', $asset_info['dependencies'], $asset_info['version'], true);
-        wp_localize_script('ry-admin-shipping', 'ryAdminShippingParams', [
+        wp_localize_script('ry-admin-shipping', 'RyAdminShippingParams', [
             '_nonce' => [
                 'get' => wp_create_nonce('get-shipping-info'),
                 'delete' => wp_create_nonce('delete-shipping-info'),

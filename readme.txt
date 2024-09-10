@@ -5,7 +5,7 @@ Tags: woocommerce, payment, gateway, shipping
 Requires at least: 6.3
 Requires PHP: 8.0
 Tested up to: 6.6
-Stable tag: 3.4.10
+Stable tag: 3.4.11
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.txt
 
@@ -39,6 +39,9 @@ Please visit the [plugin forum page](https://ry-plugin.com/ry-woocommerce-tools/
 3. SmilePay gateway global settings.
 
 == Changelog ==
+
+= 3.4.11 - 2024-09-10 =
+* 修正 - 運送到不同地址的電話欄位必填選填提示未正確切換。
 
 = 3.4.10 - 2024-09-02 =
 * 修正 - 信用卡分期選單在沒有輸入描述的時候無法顯示。
