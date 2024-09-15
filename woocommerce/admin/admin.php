@@ -18,10 +18,21 @@ final class RY_WT_WC_Admin
     {
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/abstracts/abstract-meta-box.php';
 
+        add_action('admin_bar_menu', [$this, 'site_visibility_badge'], 40);
+
         add_filter('woocommerce_get_settings_pages', [$this, 'get_settings_page']);
         add_filter('woocommerce_get_sections_rytools', [$this, 'add_sections'], 11);
         add_filter('ry_setting_section_tools', '__return_false');
         add_action('ry_setting_section_ouput_tools', [$this, 'output_tools']);
+    }
+
+    public function site_visibility_badge($wp_admin_bar)
+    {
+        if ('yes' === RY_WT::get_option('remove_site_visibility', 'no')) {
+            if (get_option('woocommerce_coming_soon') !== 'yes') {
+                $wp_admin_bar->remove_node('woocommerce-site-visibility-badge');
+            }
+        }
     }
 
     public function get_settings_page($settings)

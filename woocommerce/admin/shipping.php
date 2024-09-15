@@ -53,7 +53,7 @@ final class RY_WT_WC_Admin_Shipping
         if (isset($_POST['_shipping_cvs_store_ID'])) {
             $order = wc_get_order($order_ID);
             $shipping_method = $this->get_ry_shipping_method($order);
-            if ($shipping_method && false !== strpos($shipping_method, '_cvs')) {
+            if ($shipping_method && str_contains($shipping_method, '_cvs')) {
                 remove_action('woocommerce_update_order', [$this, 'save_order_update']);
 
                 $order->update_meta_data('_shipping_cvs_store_ID', wc_clean(wp_unslash($_POST['_shipping_cvs_store_ID'] ?? '')));
@@ -74,7 +74,7 @@ final class RY_WT_WC_Admin_Shipping
 
         $shipping_method = $this->get_ry_shipping_method($theorder);
         if ($shipping_method) {
-            if (false !== strpos($shipping_method, '_cvs')) {
+            if (str_contains($shipping_method, '_cvs')) {
                 $shipping_fields['cvs_store_ID'] = [
                     'label' => __('Store ID', 'ry-woocommerce-tools'),
                     'show' => false,
@@ -213,7 +213,7 @@ final class RY_WT_WC_Admin_Shipping
             $cvs_methods = array_merge($cvs_methods, array_keys(RY_WT_WC_SmilePay_Shipping::$support_methods));
         }
         return array_filter($cvs_methods, function ($method) {
-            return false !== strpos($method, '_cvs');
+            return str_contains($method, '_cvs');
         });
     }
 }

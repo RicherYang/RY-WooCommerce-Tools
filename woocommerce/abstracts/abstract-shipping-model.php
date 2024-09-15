@@ -56,7 +56,7 @@ abstract class RY_WT_Shipping_Model extends RY_WT_Model
                 $method = strstr($method, ':', true);
                 if ($method && array_key_exists($method, static::$support_methods)) {
                     $used = true;
-                    if (false !== strpos($method, '_cvs')) {
+                    if (str_contains($method, '_cvs')) {
                         $used_cvs = true;
                     }
                 }

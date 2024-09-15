@@ -70,7 +70,7 @@ final class RY_WT_WC_SmilePay_Shipping extends RY_WT_Shipping_Model
             $chosen_shipping = array_intersect($chosen_shipping, array_keys(self::$support_methods));
             if (count($chosen_shipping)) {
                 foreach ($_available_gateways as $key => $gateway) {
-                    if (0 === strpos($key, 'ry_smilepay_')) {
+                    if (str_starts_with($key, 'ry_smilepay_')) {
                         continue;
                     }
                     if ($key == 'cod') {
@@ -153,7 +153,7 @@ final class RY_WT_WC_SmilePay_Shipping extends RY_WT_Shipping_Model
     public function get_order_support_shipping($items)
     {
         foreach (self::$support_methods as $method => $method_class) {
-            if (0 === strpos($items->get_method_id(), $method)) {
+            if (str_starts_with($items->get_method_id(), $method)) {
                 return $method;
             }
         }

@@ -5,6 +5,7 @@ return [
         'title' => __('Base options', 'ry-woocommerce-tools'),
         'id' => 'base_options',
         'type' => 'title',
+        'desc' => '',
     ],
     [
         'title' => __('Debug log', 'woocommerce'),

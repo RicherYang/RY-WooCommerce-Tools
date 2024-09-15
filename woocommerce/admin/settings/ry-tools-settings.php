@@ -92,7 +92,9 @@ class RY_WT_WC_Admin_Settings extends WC_Settings_Page
                 [
                     'title' => __('Gateway method', 'ry-woocommerce-tools'),
                     'desc' => __('Enable ECPay gateway method', 'ry-woocommerce-tools')
-                        . (wc_checkout_is_https() ? '' : '<br>' . __('For correct link with ECPay API, need enable secure checkout.', 'ry-woocommerce-tools')),
+                        . (wc_checkout_is_https() ? '' : '<br>' . __('For correct link with ECPay API, need enable secure checkout.', 'ry-woocommerce-tools'))
+                        /* translators: %s: link to RY Tools (Pro) for WooCommerce */
+                        . ($checkout_with_block || defined('RY_WTP_VERSION') ? '' : '<br>' . sprintf(__('Need %s to support block checkout.', 'ry-woocommerce-tools'), '<a href="https://ry-plugin.com/ry-woocommerce-tools-pro">RY Tools (Pro) for WooCommerce</a>')),
                     'id' => RY_WT::OPTION_PREFIX . 'enabled_ecpay_gateway',
                     'type' => 'checkbox',
                     'default' => 'no',
@@ -118,7 +120,9 @@ class RY_WT_WC_Admin_Settings extends WC_Settings_Page
                 [
                     'title' => __('Gateway method', 'ry-woocommerce-tools'),
                     'desc' => __('Enable NewebPay gateway method', 'ry-woocommerce-tools')
-                        . (wc_checkout_is_https() ? '' : '<br>' . __('For correct link with NewebPay API, need enable secure checkout.', 'ry-woocommerce-tools')),
+                        . (wc_checkout_is_https() ? '' : '<br>' . __('For correct link with NewebPay API, need enable secure checkout.', 'ry-woocommerce-tools'))
+                        /* translators: %s: link to RY Tools (Pro) for WooCommerce */
+                        . ($checkout_with_block || defined('RY_WTP_VERSION') ? '' : '<br>' . sprintf(__('Need %s to support block checkout.', 'ry-woocommerce-tools'), '<a href="https://ry-plugin.com/ry-woocommerce-tools-pro">RY Tools (Pro) for WooCommerce</a>')),
                     'id' => RY_WT::OPTION_PREFIX . 'enabled_newebpay_gateway',
                     'type' => 'checkbox',
                     'default' => 'no',
@@ -144,7 +148,9 @@ class RY_WT_WC_Admin_Settings extends WC_Settings_Page
                 [
                     'title' => __('Gateway method', 'ry-woocommerce-tools'),
                     'desc' => __('Enable SmilePay gateway method', 'ry-woocommerce-tools')
-                        . (wc_checkout_is_https() ? '' : '<br>' . __('For correct link with SmilePay API, need enable secure checkout.', 'ry-woocommerce-tools')),
+                        . (wc_checkout_is_https() ? '' : '<br>' . __('For correct link with SmilePay API, need enable secure checkout.', 'ry-woocommerce-tools'))
+                        /* translators: %s: link to RY Tools (Pro) for WooCommerce */
+                        . ($checkout_with_block || defined('RY_WTP_VERSION') ? '' : '<br>' . sprintf(__('Need %s to support block checkout.', 'ry-woocommerce-tools'), '<a href="https://ry-plugin.com/ry-woocommerce-tools-pro">RY Tools (Pro) for WooCommerce</a>')),
                     'id' => RY_WT::OPTION_PREFIX . 'enabled_smilepay_gateway',
                     'type' => 'checkbox',
                     'default' => 'no',
@@ -161,7 +167,6 @@ class RY_WT_WC_Admin_Settings extends WC_Settings_Page
                     'type' => 'sectionend',
                     'id' => 'smilepay_support',
                 ],
-
                 [
                     'title' => __('General options', 'ry-woocommerce-tools'),
                     'type' => 'title',
@@ -187,6 +192,13 @@ class RY_WT_WC_Admin_Settings extends WC_Settings_Page
                     'id' => RY_WT::OPTION_PREFIX . 'show_unpay_title',
                     'type' => 'checkbox',
                     'default' => 'yes',
+                ],
+                [
+                    'title' => __('Remove site visibility', 'ry-woocommerce-tools'),
+                    'desc' => __('Remove online site visibility at admin bar.', 'ry-woocommerce-tools'),
+                    'id' => RY_WT::OPTION_PREFIX . 'remove_site_visibility',
+                    'type' => 'checkbox',
+                    'default' => 'no',
                 ],
                 [
                     'type' => 'sectionend',

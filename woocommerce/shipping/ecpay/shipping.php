@@ -167,9 +167,7 @@ final class RY_WT_WC_ECPay_Shipping extends RY_WT_Shipping_Model
         $this->js_data = [];
 
         if (isset($chosen_shipping[0])) {
-            if (false === strpos($chosen_shipping[0], '_cvs')) {
-                $this->js_data['ecpay_home'] = true;
-            } else {
+            if (str_contains($chosen_shipping[0], '_cvs')) {
                 $this->js_data['ecpay_cvs'] = true;
 
                 wc_get_template('cart/cart-choose-cvs.php', [
@@ -208,6 +206,8 @@ final class RY_WT_WC_ECPay_Shipping extends RY_WT_Shipping_Model
                     'IsCollection' => 'Y',
                     'ServerReplyURL' => esc_url(add_query_arg('lang', get_locale(), WC()->api_request_url('ry_ecpay_map_callback'))),
                 ];
+            } else {
+                $this->js_data['ecpay_home'] = true;
             }
         }
     }
@@ -236,7 +236,7 @@ final class RY_WT_WC_ECPay_Shipping extends RY_WT_Shipping_Model
             if (count($chosen_method)) {
                 foreach ($chosen_method as $method) {
                     $method = strstr($method, ':', true);
-                    if ($method && array_key_exists($method, self::$support_methods) && false !== strpos($method, '_cvs')) {
+                    if ($method && array_key_exists($method, self::$support_methods) && str_contains($method, '_cvs')) {
                         $used_cvs = true;
                         break;
                     }
@@ -286,7 +286,7 @@ final class RY_WT_WC_ECPay_Shipping extends RY_WT_Shipping_Model
     public function get_order_support_shipping($item)
     {
         foreach (self::$support_methods as $method => $method_class) {
-            if (0 === strpos($item->get_method_id(), $method)) {
+            if (str_starts_with($item->get_method_id(), $method)) {
                 return $method;
             }
         }
