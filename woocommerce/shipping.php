@@ -47,9 +47,11 @@ final class RY_WT_WC_Shipping
 
     public function add_reports_order_statuses($order_statuses)
     {
-        $order_statuses[] = 'ry-at-cvs';
-        $order_statuses[] = 'ry-out-cvs';
-        $order_statuses[] = 'ry-transporting';
+        if (is_array($order_statuses)) {
+            $order_statuses[] = 'ry-at-cvs';
+            $order_statuses[] = 'ry-out-cvs';
+            $order_statuses[] = 'ry-transporting';
+        }
 
         return $order_statuses;
     }
