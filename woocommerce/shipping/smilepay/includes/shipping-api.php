@@ -56,7 +56,7 @@ class RY_WT_WC_SmilePay_Shipping_Api extends RY_WT_SmilePay_Api
             'Logistics_Roturl' => WC()->api_request_url('ry_smilepay_shipping_callback', true),
         ];
 
-        if ($order->get_payment_method() == 'cod') {
+        if ('cod' === $order->get_payment_method()) {
             $args['Pay_zg'] = 51;
         }
 

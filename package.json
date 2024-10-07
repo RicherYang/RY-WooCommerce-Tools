@@ -1,7 +1,7 @@
 {
     "name": "ry-woocommerce-tools",
     "title": "RY Tools for WooCommerce",
-    "version": "3.4.11",
+    "version": "3.4.14",
     "author": "Richer Yang",
     "private": true,
     "devDependencies": {
@@ -15,6 +15,7 @@
         "build:all": "npm run build:assets && npm run build:i18n",
         "build:assets": "wp-scripts build",
         "build:i18n": "npm run i18n:pot",
-        "i18n:pot": "wp i18n make-pot \"\" \"languages/ry-woocommerce-tools.pot\" --slug=\"ry-woocommerce-tools\" --domain=\"ry-woocommerce-tools\" --exclude=\"node_modules,assets-src\""
+        "i18n:pot": "wp i18n make-pot \"\" \"languages/ry-woocommerce-tools.pot\" --slug=\"ry-woocommerce-tools\" --domain=\"ry-woocommerce-tools\" --exclude=\"node_modules,assets-src\"",
+        "update": "npm update"
     }
 }

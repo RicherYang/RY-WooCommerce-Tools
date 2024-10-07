@@ -45,6 +45,7 @@ class RY_WT_WC_NewebPay_Gateway_Api extends RY_WT_NewebPay_Api
             'Email' => $order->get_billing_email(),
             'EmailModify' => 0,
             'CREDIT' => 0,
+            'APPLEPAY' => 0,
             'ANDROIDPAY' => 0,
             'SAMSUNGPAY' => 0,
             'LINEPAY' => 0,
@@ -59,7 +60,6 @@ class RY_WT_WC_NewebPay_Gateway_Api extends RY_WT_NewebPay_Api
             'ESUNWALLET' => 0,
             'TAIWANPAY' => 0,
             'BITOPAY' => 0,
-            'FULA' => 0,
             'EZPAY' => 0,
             'EZPWECHAT' => 0,
             'EZPALIPAY' => 0,
@@ -154,7 +154,7 @@ class RY_WT_WC_NewebPay_Gateway_Api extends RY_WT_NewebPay_Api
         $items_shipping = array_shift($items_shipping);
         if ($items_shipping) {
             if ($items_shipping->get_method_id() == 'ry_newebpay_shipping_cvs') {
-                if ($gateway->id == 'cod') {
+                if ('cod' === $gateway->id) {
                     $args['CVSCOM'] = 2;
                 } else {
                     $args['CVSCOM'] = 1;

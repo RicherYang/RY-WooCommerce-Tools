@@ -73,7 +73,7 @@ final class RY_WT_WC_SmilePay_Shipping extends RY_WT_Shipping_Model
                     if (str_starts_with($key, 'ry_smilepay_')) {
                         continue;
                     }
-                    if ($key == 'cod') {
+                    if ('cod' === $key) {
                         continue;
                     }
                     unset($_available_gateways[$key]);

@@ -67,12 +67,37 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_ECPay_Api
             ];
             foreach ($order->get_items('line_item') as $item) {
                 $product = $item->get_product();
-                $temp = $product->get_meta('_ry_shipping_temp', true);
-                if (empty($temp) && 'variation' === $product->get_type()) {
-                    $parent_product = wc_get_product($product->get_parent_id());
-                    $temp = $parent_product->get_meta('_ry_shipping_temp', true);
+
+                if ($product) {
+                    $temp = $product->get_meta('_ry_shipping_temp', true);
+                    if (empty($temp) && 'variation' === $product->get_type()) {
+                        $parent_product = wc_get_product($product->get_parent_id());
+                        $temp = $parent_product->get_meta('_ry_shipping_temp', true);
+                    }
+                    $temp = in_array($temp, $method_class::get_support_temp()) ? $temp : '1';
+                    $weight = $product->get_weight();
+                    $size = (float) $product->get_length() + (float) $product->get_width() + (float) $product->get_height();
+
+                    $shipping_amount = $product->get_meta('_ry_shipping_amount', true);
+                    if ('' == $shipping_amount) {
+                        if ('variation' === $product->get_type()) {
+                            $parent_product = wc_get_product($product->get_parent_id());
+                            $shipping_amount = $parent_product->get_meta('_ry_shipping_amount', true);
+                        }
+                    }
+                    $shipping_amount = NumberUtil::round($shipping_amount, wc_get_price_decimals());
+                    if (0 >= $shipping_amount) {
+                        $shipping_amount = $product->get_regular_price();
+                    }
+                    $shipping_amount = NumberUtil::round($shipping_amount, wc_get_price_decimals());
+                    $item_price = $shipping_amount * $item->get_quantity();
+                } else {
+                    $temp = 1;
+                    $weight = '';
+                    $size = 0;
+                    $item_price = $item->get_subtotal();
                 }
-                $temp = in_array($temp, $method_class::get_support_temp()) ? $temp : '1';
+
                 if (null !== $for_temp && $temp != $for_temp) {
                     continue;
                 }
@@ -83,26 +108,11 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_ECPay_Api
                     $package_list[$temp_package[$temp]]['temp'] = $temp;
                 }
 
-                $weight = $product->get_weight();
                 if ('' == $weight) {
                     $weight = RY_WT::get_option('ecpay_shipping_product_weight', 0);
                 }
                 $weight = (float) $weight;
-                $size = (float) $product->get_length() + (float) $product->get_width() + (float) $product->get_height();
-                $shipping_amount = $product->get_meta('_ry_shipping_amount', true);
-                if ('' == $shipping_amount) {
-                    if ('variation' === $product->get_type()) {
-                        $parent_product = wc_get_product($product->get_parent_id());
-                        $shipping_amount = $parent_product->get_meta('_ry_shipping_amount', true);
-                    }
-                }
-                $shipping_amount = NumberUtil::round($shipping_amount, wc_get_price_decimals());
-                if (0 >= $shipping_amount) {
-                    $shipping_amount = $product->get_regular_price();
-                }
-                $shipping_amount = NumberUtil::round($shipping_amount, wc_get_price_decimals());
 
-                $item_price = $shipping_amount * $item->get_quantity();
                 if ('multi' === $declare_over_type) {
                     if (20000 < $item_price) {
                         array_unshift($package_list, $basic_package);
@@ -192,7 +202,7 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_ECPay_Api
             }
 
             if (0 === count($shipping_list)) {
-                if ($order->get_payment_method() == 'cod') {
+                if ('cod' === $order->get_payment_method()) {
                     $args['IsCollection'] = 'Y';
                 }
             }

@@ -52,6 +52,13 @@ class RY_WT_WC_Admin_Settings extends WC_Settings_Page
         }
 
         if ($current_section == '') {
+            if ('yes' === RY_WT::get_option('enabled_newebpay_gateway', 'no')) {
+                if (!function_exists('openssl_encrypt') || !function_exists('openssl_decrypt')) {
+                    WC_Admin_Settings::add_error(__('NewebPay gateway required PHP function `openssl_encrypt` and `openssl_decrypt`.', 'ry-woocommerce-tools'));
+                    RY_WT::update_option('enabled_newebpay_gateway', 'no');
+                }
+            }
+
             if ('yes' === RY_WT::get_option('enabled_newebpay_shipping', 'no')) {
                 if ('no' === RY_WT::get_option('enabled_newebpay_gateway', 'no')) {
                     WC_Admin_Settings::add_error(__('NewebPay shipping method need enable NewebPay gateway.', 'ry-woocommerce-tools'));
@@ -60,8 +67,8 @@ class RY_WT_WC_Admin_Settings extends WC_Settings_Page
             }
 
             if ('yes' === RY_WT::get_option('enabled_smilepay_gateway', 'no')) {
-                if (!extension_loaded('simplexml')) {
-                    WC_Admin_Settings::add_error(__('SmilePay gateway method need php simplexml extension.', 'ry-woocommerce-tools'));
+                if (!function_exists('simplexml_load_string')) {
+                    WC_Admin_Settings::add_error(__('SmilePay gateway method need PHP function `simplexml_load_string`.', 'ry-woocommerce-tools'));
                     RY_WT::update_option('enabled_smilepay_gateway', 'no');
                 }
             }

@@ -94,6 +94,8 @@ final class RY_WT
         }
 
         do_action('ry_woo_tools_loaded');
+
+        add_action('admin_bar_menu', [$this, 'site_visibility_badge'], 40);
     }
 
     public function load_scripts()
@@ -104,6 +106,15 @@ final class RY_WT
         if (is_checkout() || is_view_order_page() || is_order_received_page()) {
             $asset_info = include RY_WT_PLUGIN_DIR . 'assets/ry-payment.asset.php';
             wp_enqueue_style('ry-payment', RY_WT_PLUGIN_URL . 'assets/ry-payment.css', [], $asset_info['version']);
+        }
+    }
+
+    public function site_visibility_badge($wp_admin_bar)
+    {
+        if ('yes' === RY_WT::get_option('remove_site_visibility', 'no')) {
+            if (get_option('woocommerce_coming_soon') !== 'yes') {
+                $wp_admin_bar->remove_node('woocommerce-site-visibility-badge');
+            }
         }
     }
 

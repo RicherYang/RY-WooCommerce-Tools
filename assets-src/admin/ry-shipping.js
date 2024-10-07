@@ -50,10 +50,10 @@ $(function () {
                         _ajax_nonce: RyAdminShippingParams._nonce.delete
                     }
                 }).done(function () {
-                    $btn.closest('tr').remove();
                     if ($btn.closest('table').find('tbody tr').length == 0) {
                         $metainfo.find('.button:gt(0)').remove();
                     }
+                    $btn.closest('tr').remove();
                 }).always(function () {
                     $metainfo.unblock();
                 });

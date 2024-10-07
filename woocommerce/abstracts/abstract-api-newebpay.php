@@ -23,24 +23,17 @@ abstract class RY_WT_NewebPay_Api extends RY_WT_Api
     protected function args_encrypt($args, $HashKey, $HashIV)
     {
         ksort($args);
-
         $args_string = http_build_query($args);
+        $encrypt_string = openssl_encrypt($args_string, 'aes-256-cbc', $HashKey, OPENSSL_RAW_DATA, $HashIV);
 
-        $pad = 32 - (strlen($args_string) % 32);
-        $args_string .= str_repeat(chr($pad), $pad);
-        if (function_exists('openssl_encrypt')) {
-            $encrypt_string = openssl_encrypt($args_string, 'aes-256-cbc', $HashKey, OPENSSL_RAW_DATA | OPENSSL_ZERO_PADDING, $HashIV);
-        }
-        return trim(bin2hex($encrypt_string));
+        return bin2hex($encrypt_string);
     }
 
     protected function args_decrypt($string, $HashKey, $HashIV)
     {
         $string = hex2bin($string);
+        $decrypt_string = openssl_decrypt($string, 'aes-256-cbc', $HashKey, OPENSSL_RAW_DATA | OPENSSL_ZERO_PADDING, $HashIV);
 
-        if (function_exists('openssl_decrypt')) {
-            $decrypt_string = openssl_decrypt($string, 'aes-256-cbc', $HashKey, OPENSSL_RAW_DATA | OPENSSL_ZERO_PADDING, $HashIV);
-        }
         $slast = ord(substr($decrypt_string, -1));
         $slastc = chr($slast);
         if (preg_match("/$slastc{" . $slast . '}/', $decrypt_string)) {

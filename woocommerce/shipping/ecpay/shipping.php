@@ -1,5 +1,7 @@
 <?php
 
+use Automattic\WooCommerce\StoreApi\Exceptions\RouteException;
+
 final class RY_WT_WC_ECPay_Shipping extends RY_WT_Shipping_Model
 {
     public static $support_methods = [
@@ -62,6 +64,8 @@ final class RY_WT_WC_ECPay_Shipping extends RY_WT_Shipping_Model
             add_action('woocommerce_review_order_after_shipping', [$this, 'checkout_choose_cvs']);
             add_action('template_redirect', [$this, 'save_cvs_info']);
             add_action('woocommerce_after_checkout_validation', [$this, 'check_choose_cvs'], 10, 2);
+            add_action('woocommerce_store_api_checkout_update_customer_from_request', [$this, 'check_choose_cvs'], 10, 2);
+
             add_filter('default_checkout_RY_LogisticsSubType', [$this, 'get_cvs_info'], 10, 2);
             add_filter('default_checkout_RY_CVSStoreID', [$this, 'get_cvs_info'], 10, 2);
             add_filter('default_checkout_RY_CVSStoreName', [$this, 'get_cvs_info'], 10, 2);
@@ -232,20 +236,28 @@ final class RY_WT_WC_ECPay_Shipping extends RY_WT_Shipping_Model
     {
         if (WC()->cart->needs_shipping()) {
             $chosen_method = WC()->session->get('chosen_shipping_methods', []);
-            $used_cvs = false;
+            $cvs_method = false;
             if (count($chosen_method)) {
                 foreach ($chosen_method as $method) {
                     $method = strstr($method, ':', true);
                     if ($method && array_key_exists($method, self::$support_methods) && str_contains($method, '_cvs')) {
-                        $used_cvs = true;
+                        $cvs_method = $method;
                         break;
                     }
                 }
             }
 
-            if ($used_cvs) {
-                if (empty($data['RY_CVSStoreID'])) {
-                    $errors->add('shipping', __('No convenience store has been chosen.', 'ry-woocommerce-tools'));
+            if ($cvs_method) {
+                $csv_info = WC()->session->get('ry-ecpay-cvs-info', []);
+                $cvs_type = RY_WT::get_option('ecpay_shipping_cvs_type');
+
+                if (!isset($csv_info['LogisticsSubType']) || $csv_info['LogisticsSubType'] !== $cvs_method::Shipping_Sub_Type . (('C2C' === $cvs_type) ? 'C2C' : '')) {
+                    // 傳統結帳
+                    if (is_array($data)) {
+                        $errors->add('shipping', __('No convenience store has been chosen.', 'ry-woocommerce-tools'));
+                    } else {
+                        throw new RouteException('woocommerce_rest_checkout_missing_required_field', __('No convenience store has been chosen.', 'ry-woocommerce-tools'), 400);
+                    }
                 }
             }
         }
