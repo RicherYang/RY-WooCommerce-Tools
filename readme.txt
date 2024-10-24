@@ -40,6 +40,9 @@ Please visit the [plugin forum page](https://ry-plugin.com/ry-woocommerce-tools/
 
 == Changelog ==
 
+= 3.4.15 - 2024-10-24 =
+* 修正 - 在部份情況下無法正確的辨識是否已選擇超商門市。
+
 = 3.4.14 - 2024-10-07 =
 * 更新 - 配合藍新調整金流參數內容。
 * 修正 - 前台工具列未隱藏上線狀態。

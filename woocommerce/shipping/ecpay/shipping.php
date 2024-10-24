@@ -251,7 +251,7 @@ final class RY_WT_WC_ECPay_Shipping extends RY_WT_Shipping_Model
                 $csv_info = WC()->session->get('ry-ecpay-cvs-info', []);
                 $cvs_type = RY_WT::get_option('ecpay_shipping_cvs_type');
 
-                if (!isset($csv_info['LogisticsSubType']) || $csv_info['LogisticsSubType'] !== $cvs_method::Shipping_Sub_Type . (('C2C' === $cvs_type) ? 'C2C' : '')) {
+                if (!isset($csv_info['LogisticsSubType']) || !str_starts_with($csv_info['LogisticsSubType'], $cvs_method::Shipping_Sub_Type)) {
                     // 傳統結帳
                     if (is_array($data)) {
                         $errors->add('shipping', __('No convenience store has been chosen.', 'ry-woocommerce-tools'));
