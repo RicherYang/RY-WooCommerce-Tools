@@ -5,7 +5,7 @@ Tags: woocommerce, payment, gateway, shipping
 Requires at least: 6.3
 Requires PHP: 8.0
 Tested up to: 6.6
-Stable tag: 3.4.14
+Stable tag: 3.4.16
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.txt
 
@@ -40,7 +40,7 @@ Please visit the [plugin forum page](https://ry-plugin.com/ry-woocommerce-tools/
 
 == Changelog ==
 
-= 3.4.15 - 2024-10-24 =
+= 3.4.16 - 2024-10-24 =
 * 修正 - 在部份情況下無法正確的辨識是否已選擇超商門市。
 
 = 3.4.14 - 2024-10-07 =
