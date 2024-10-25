@@ -171,7 +171,6 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_ECPay_Api
             $args = [
                 'MerchantID' => $MerchantID,
                 'LogisticsType' => $method_class::Shipping_Type,
-                'LogisticsSubType' => $method_class::Shipping_Sub_Type,
                 'GoodsName' => $item_name,
                 'IsCollection' => 'N',
                 'CollectionAmount' => 0,
@@ -195,12 +194,6 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_ECPay_Api
                 }
             }
 
-            if ($args['LogisticsType'] == 'CVS') {
-                if ('C2C' === $cvs_type) {
-                    $args['LogisticsSubType'] .= 'C2C';
-                }
-            }
-
             if (0 === count($shipping_list)) {
                 if ('cod' === $order->get_payment_method()) {
                     $args['IsCollection'] = 'Y';
@@ -219,11 +212,11 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_ECPay_Api
                 }
             }
 
-            if ($method_class::Shipping_Type == 'CVS') {
+            if ('CVS' === $args['LogisticsType']) {
                 $args['ReceiverStoreID'] = $order->get_meta('_shipping_cvs_store_ID');
             }
 
-            if ($method_class::Shipping_Type == 'Home') {
+            if ('Home' === $args['LogisticsType']) {
                 $country = $order->get_shipping_country();
 
                 $state = $order->get_shipping_state();
@@ -252,19 +245,18 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_ECPay_Api
                 $args['MerchantTradeDate'] = $create_datetime->format('Y/m/d H:i:s');
                 $args['MerchantTradeNo'] = $this->generate_trade_no($order->get_id(), RY_WT::get_option('ecpay_shipping_order_prefix')) . 'T' . $package_info['temp'];
 
-                if ('limit' === $declare_over_type) {
-                    if (20000 < $package_info['price']) {
-                        $package_info['price'] = 20000;
+                if ('CVS' === $args['LogisticsType']) {
+                    $args['LogisticsSubType'] = $method_class::Shipping_Sub_Type;
+                    if ('C2C' === $cvs_type) {
+                        $args['LogisticsSubType'] .= 'C2C';
+                    }
+                    if ('UNIMART' === $args['LogisticsSubType']) {
+                        if ('3' == $package_info['temp']) {
+                            $args['LogisticsSubType'] .= 'FREEZE';
+                        }
                     }
                 }
-                $args['GoodsAmount'] = (int) $package_info['price'];
-                if ('Y' === $args['IsCollection']) {
-                    $args['CollectionAmount'] = (int) $package_info['fee'];
-                    if ('UNIMARTC2C' === $args['LogisticsSubType']) {
-                        $args['GoodsAmount'] = $args['CollectionAmount'];
-                    }
-                }
-                if ($method_class::Shipping_Type == 'Home') {
+                if ('Home' === $args['LogisticsType']) {
                     if ($package_info['weight'] > 0) {
                         $args['GoodsWeight'] = round(wc_get_weight($package_info['weight'], 'kg'), 3);
                     }
@@ -285,6 +277,19 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_ECPay_Api
                         }
                     }
                     $args['Temperature'] = '000' . $package_info['temp'];
+                }
+
+                if ('limit' === $declare_over_type) {
+                    if (20000 < $package_info['price']) {
+                        $package_info['price'] = 20000;
+                    }
+                }
+                $args['GoodsAmount'] = (int) $package_info['price'];
+                if ('Y' === $args['IsCollection']) {
+                    $args['CollectionAmount'] = (int) $package_info['fee'];
+                    if ('UNIMARTC2C' === $args['LogisticsSubType']) {
+                        $args['GoodsAmount'] = $args['CollectionAmount'];
+                    }
                 }
 
                 $args = $this->add_check_value($args, $HashKey, $HashIV, 'md5');

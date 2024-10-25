@@ -69,6 +69,7 @@ class RY_WT_WC_ECPay_Shipping_Response extends RY_WT_ECPay_Api
             }
         }
 
+        add_filter('woocommerce_set_cookie_enabled', '__return_false');
         echo '<!doctype html><html><head><title>AutoSubmitForm</title></head><body>';
         echo '<form method="post" id="ry-ecpay-map-redirect" action="' . esc_url(wc_get_checkout_url()) . '">';
         echo '<input type="hidden" name="ry-ecpay-cvsmap-info" value="' . esc_attr(base64_encode(wp_json_encode($cvs_info))) . '">';
