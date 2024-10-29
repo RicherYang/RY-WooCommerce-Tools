@@ -257,6 +257,7 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_ECPay_Api
                     }
                 }
                 if ('Home' === $args['LogisticsType']) {
+                    $args['LogisticsSubType'] = $method_class::Shipping_Sub_Type;
                     if ($package_info['weight'] > 0) {
                         $args['GoodsWeight'] = round(wc_get_weight($package_info['weight'], 'kg'), 3);
                     }
