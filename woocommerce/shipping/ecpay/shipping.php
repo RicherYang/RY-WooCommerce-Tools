@@ -87,6 +87,8 @@ final class RY_WT_WC_ECPay_Shipping extends RY_WT_Shipping_Model
 
     public function add_cvs_info($fields)
     {
+        $fields = parent::add_cvs_info($fields);
+
         $fields['rycvs']['RY_LogisticsSubType'] = [
             'required' => false,
             'type' => 'hidden',
@@ -112,7 +114,7 @@ final class RY_WT_WC_ECPay_Shipping extends RY_WT_Shipping_Model
             'type' => 'hidden',
         ];
 
-        return parent::add_cvs_info($fields);
+        return $fields;
     }
 
     public function checkout_choose_cvs_info($fragments)

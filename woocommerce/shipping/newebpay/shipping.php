@@ -55,6 +55,31 @@ final class RY_WT_WC_NewebPay_Shipping extends RY_WT_Shipping_Model
         return array_merge($shipping_methods, self::$support_methods);
     }
 
+    public function add_cvs_info($fields)
+    {
+        $fields = parent::add_cvs_info($fields);
+        if (did_action('woocommerce_checkout_process')) {
+            $used = false;
+            $used_cvs = false;
+            $shipping_method = isset($_POST['shipping_method']) ? wc_clean($_POST['shipping_method']) : [];
+            foreach ($shipping_method as $method) {
+                $method = strstr($method, ':', true);
+                if ($method && array_key_exists($method, self::$support_methods)) {
+                    $used = true;
+                    if (str_contains($method, '_cvs')) {
+                        $used_cvs = true;
+                    }
+                }
+            }
+
+            if ($used_cvs) {
+                $fields['shipping']['shipping_phone']['required'] = false;
+            }
+        }
+
+        return $fields;
+    }
+
     public function only_newebpay_gateway($_available_gateways)
     {
         if (WC()->cart && WC()->cart->needs_shipping()) {
