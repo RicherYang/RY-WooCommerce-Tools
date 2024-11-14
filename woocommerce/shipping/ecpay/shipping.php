@@ -128,7 +128,7 @@ final class RY_WT_WC_ECPay_Shipping extends RY_WT_Shipping_Model
 
     public function remove_metadata($item, $package_key, $package, $order)
     {
-        if (array_key_exists($item->get_method_id(), self::$support_methods)) {
+        if (isset(self::$support_methods[$item->get_method_id()])) {
             if ('CVS' === $item->get_meta('LogisticsType')) {
                 $this->save_order_cvs_info($order, $item->get_meta('LogisticsInfo'));
             }
@@ -241,10 +241,11 @@ final class RY_WT_WC_ECPay_Shipping extends RY_WT_Shipping_Model
             $cvs_method = false;
             if (count($chosen_method)) {
                 foreach ($chosen_method as $method) {
-                    $method = strstr($method, ':', true);
-                    if ($method && array_key_exists($method, self::$support_methods) && str_contains($method, '_cvs')) {
-                        $cvs_method = $method;
-                        break;
+                    $method_ID = strstr($method, ':', true);
+                    if ($method_ID && isset(self::$support_methods[$method_ID])) {
+                        if (str_contains($method_ID, '_cvs')) {
+                            $cvs_method = $method_ID;
+                        }
                     }
                 }
             }
@@ -299,10 +300,9 @@ final class RY_WT_WC_ECPay_Shipping extends RY_WT_Shipping_Model
 
     public function get_order_support_shipping($item)
     {
-        foreach (self::$support_methods as $method => $method_class) {
-            if (str_starts_with($item->get_method_id(), $method)) {
-                return $method;
-            }
+        $method_ID = $item->get_method_id();
+        if (isset(self::$support_methods[$method_ID])) {
+            return $method_ID;
         }
 
         return false;

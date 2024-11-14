@@ -53,10 +53,10 @@ abstract class RY_WT_Shipping_Model extends RY_WT_Model
             $used_cvs = false;
             $shipping_method = isset($_POST['shipping_method']) ? wc_clean($_POST['shipping_method']) : [];
             foreach ($shipping_method as $method) {
-                $method = strstr($method, ':', true);
-                if ($method && array_key_exists($method, static::$support_methods)) {
+                $method_ID = strstr($method, ':', true);
+                if ($method_ID && isset(static::$support_methods[$method_ID])) {
                     $used = true;
-                    if (str_contains($method, '_cvs')) {
+                    if (str_contains($method_ID, '_cvs')) {
                         $used_cvs = true;
                     }
                 }

@@ -201,13 +201,6 @@ class RY_WT_WC_Admin_Settings extends WC_Settings_Page
                     'default' => 'yes',
                 ],
                 [
-                    'title' => __('Remove site visibility', 'ry-woocommerce-tools'),
-                    'desc' => __('Remove online site visibility at admin bar.', 'ry-woocommerce-tools'),
-                    'id' => RY_WT::OPTION_PREFIX . 'remove_site_visibility',
-                    'type' => 'checkbox',
-                    'default' => 'no',
-                ],
-                [
                     'type' => 'sectionend',
                     'id' => 'general_options',
                 ],

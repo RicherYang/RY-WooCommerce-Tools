@@ -101,22 +101,20 @@ final class RY_WT_WC_Shipping
     public function show_store_in_address($address, $type, $order)
     {
         if ('shipping' === $type) {
-            if (!empty($order->get_meta('_shipping_cvs_store_ID'))) {
-                $items_shipping = $order->get_items('shipping');
-                if (count($items_shipping)) {
-                    $shipping_method_ID = $items_shipping[array_key_first($items_shipping)]->get_method_id();
+            $items_shipping = $order->get_items('shipping');
+            if (count($items_shipping)) {
+                $method_ID = $items_shipping[array_key_first($items_shipping)]->get_method_id();
 
-                    if (class_exists('RY_WT_WC_ECPay_Shipping') && array_key_exists($shipping_method_ID, RY_WT_WC_ECPay_Shipping::$support_methods)) {
-                        return $this->set_store_address($address, $order, $shipping_method_ID);
-                    }
+                if (class_exists('RY_WT_WC_ECPay_Shipping') && isset(RY_WT_WC_ECPay_Shipping::$support_methods[$method_ID]) && str_contains($method_ID, '_cvs')) {
+                    return $this->set_store_address($address, $order, $method_ID);
+                }
 
-                    if (class_exists('RY_WT_WC_NewebPay_Shipping') && array_key_exists($shipping_method_ID, RY_WT_WC_NewebPay_Shipping::$support_methods)) {
-                        return $this->set_store_address($address, $order, $shipping_method_ID);
-                    }
+                if (class_exists('RY_WT_WC_NewebPay_Shipping') && isset(RY_WT_WC_NewebPay_Shipping::$support_methods[$method_ID]) && str_contains($method_ID, '_cvs')) {
+                    return $this->set_store_address($address, $order, $method_ID);
+                }
 
-                    if (class_exists('RY_WT_WC_SmilePay_Shipping') && array_key_exists($shipping_method_ID, RY_WT_WC_SmilePay_Shipping::$support_methods)) {
-                        return $this->set_store_address($address, $order, $shipping_method_ID);
-                    }
+                if (class_exists('RY_WT_WC_SmilePay_Shipping') && isset(RY_WT_WC_SmilePay_Shipping::$support_methods[$method_ID]) && str_contains($method_ID, '_cvs')) {
+                    return $this->set_store_address($address, $order, $method_ID);
                 }
             }
         }

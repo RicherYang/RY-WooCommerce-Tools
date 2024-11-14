@@ -181,7 +181,6 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_ECPay_Api
                 'ReceiverCellPhone' => str_replace(['-', ' '], ' ', $order->get_shipping_phone()),
                 'ReceiverStoreID' => '',
                 'ServerReplyURL' => $notify_url,
-                'LogisticsC2CReplyURL' => $notify_url,
             ];
 
             if ('yes' === RY_WT::get_option('ecpay_shipping_cleanup_receiver_name', 'no')) {
