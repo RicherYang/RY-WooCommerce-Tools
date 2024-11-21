@@ -5,7 +5,7 @@ Tags: woocommerce, payment, gateway, shipping
 Requires at least: 6.5
 Requires PHP: 8.0
 Tested up to: 6.7
-Stable tag: 3.4.21
+Stable tag: 3.4.22
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.txt
 
@@ -40,8 +40,9 @@ Please visit the [plugin forum page](https://ry-plugin.com/ry-woocommerce-tools/
 
 == Changelog ==
 
-= 3.4.21 - 2024-11-21 =
+= 3.4.22 - 2024-11-21 =
 * 修正 - 調整 WordPress 的支援版本限制。
+* 修正 - 綠界郵局宅配時無法自動完成訂單問題。
 
 = 3.4.20 - 2024-11-14 =
 * 修正 - 配合 WordPress 6.7 調整系統運作順序。

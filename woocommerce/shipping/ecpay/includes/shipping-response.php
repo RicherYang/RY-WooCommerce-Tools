@@ -38,6 +38,8 @@ class RY_WT_WC_ECPay_Shipping_Response extends RY_WT_ECPay_Api
             add_action('ry_ecpay_shipping_response_status_2067', [$this, 'shipping_completed'], 10, 2);
             add_action('ry_ecpay_shipping_response_status_3003', [$this, 'shipping_completed'], 10, 2);
             add_action('ry_ecpay_shipping_response_status_3022', [$this, 'shipping_completed'], 10, 2);
+            add_action('ry_ecpay_shipping_response_status_3308', [$this, 'shipping_completed'], 10, 2);
+            add_action('ry_ecpay_shipping_response_status_3309', [$this, 'shipping_completed'], 10, 2);
         }
     }
 
