@@ -1,7 +1,5 @@
 <?php
 
-use Automattic\WooCommerce\Utilities\NumberUtil;
-
 class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_ECPay_Api
 {
     protected static $_instance = null;
@@ -46,6 +44,7 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_ECPay_Api
         $item_name = $this->get_item_name(RY_WT::get_option('shipping_item_name', ''), $order);
         $item_name = mb_substr($item_name, 0, 20);
         $declare_over_type = RY_WT::get_option('ecpay_shipping_declare_over', 'keep');
+        $default_weight = RY_WT::get_option('ecpay_shipping_product_weight', 0);
 
         foreach ($order->get_items('shipping') as $shipping_item) {
             $shipping_method = RY_WT_WC_ECPay_Shipping::instance()->get_order_support_shipping($shipping_item);
@@ -56,108 +55,11 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_ECPay_Api
             $method_class = RY_WT_WC_ECPay_Shipping::$support_methods[$shipping_method];
             list($MerchantID, $HashKey, $HashIV, $cvs_type) = RY_WT_WC_ECPay_Shipping::instance()->get_api_info();
 
-            $package_list = [];
-            $temp_package = [];
-            $basic_package = [
-                'price' => 0,
-                'fee' => 0,
-                'weight' => 0,
-                'size' => 0,
-                'items' => 0,
-            ];
-            foreach ($order->get_items('line_item') as $item) {
-                $product = $item->get_product();
-
-                if ($product) {
-                    $temp = $product->get_meta('_ry_shipping_temp', true);
-                    if (empty($temp) && 'variation' === $product->get_type()) {
-                        $parent_product = wc_get_product($product->get_parent_id());
-                        $temp = $parent_product->get_meta('_ry_shipping_temp', true);
-                    }
-                    $temp = in_array($temp, $method_class::get_support_temp()) ? $temp : '1';
-                    $weight = $product->get_weight();
-                    $size = (float) $product->get_length() + (float) $product->get_width() + (float) $product->get_height();
-
-                    $shipping_amount = $product->get_meta('_ry_shipping_amount', true);
-                    if ('' == $shipping_amount) {
-                        if ('variation' === $product->get_type()) {
-                            $parent_product = wc_get_product($product->get_parent_id());
-                            $shipping_amount = $parent_product->get_meta('_ry_shipping_amount', true);
-                        }
-                    }
-                    $shipping_amount = NumberUtil::round($shipping_amount, wc_get_price_decimals());
-                    if (0 >= $shipping_amount) {
-                        $shipping_amount = $product->get_regular_price();
-                    }
-                    $shipping_amount = NumberUtil::round($shipping_amount, wc_get_price_decimals());
-                    $item_price = $shipping_amount * $item->get_quantity();
-                } else {
-                    $temp = 1;
-                    $weight = '';
-                    $size = 0;
-                    $item_price = $item->get_subtotal();
-                }
-
-                if (null !== $for_temp && $temp != $for_temp) {
-                    continue;
-                }
-
-                if (!isset($temp_package[$temp])) {
-                    $package_list[] = $basic_package;
-                    $temp_package[$temp] = array_key_last($package_list);
-                    $package_list[$temp_package[$temp]]['temp'] = $temp;
-                }
-
-                if ('' == $weight) {
-                    $weight = RY_WT::get_option('ecpay_shipping_product_weight', 0);
-                }
-                $weight = (float) $weight;
-
-                if ('multi' === $declare_over_type) {
-                    if (20000 < $item_price) {
-                        array_unshift($package_list, $basic_package);
-                        $package_list[0]['temp'] = $temp;
-                        $package_list[0]['items'] += 1;
-                        $package_list[0]['price'] += $item_price;
-                        $package_list[0]['fee'] += $item->get_total();
-                        $package_list[0]['weight'] += $weight * $item->get_quantity();
-                        $package_list[0]['size'] = $size;
-
-                        $temp_package[$temp] += 1;
-                        continue;
-                    }
-
-                    if (20000 < $package_list[$temp_package[$temp]]['price'] + $item_price) {
-                        $package_list[] = $basic_package;
-                        $temp_package[$temp] = array_key_last($package_list);
-                        $package_list[$temp_package[$temp]]['temp'] = $temp;
-                    }
-                }
-
-                $package_list[$temp_package[$temp]]['items'] += 1;
-                $package_list[$temp_package[$temp]]['price'] += $item_price;
-                $package_list[$temp_package[$temp]]['fee'] += $item->get_total();
-                $package_list[$temp_package[$temp]]['weight'] += $weight * $item->get_quantity();
-                $package_list[$temp_package[$temp]]['size'] = max($size, $package_list[$temp_package[$temp]]['size']);
-            }
-
-            foreach ($package_list as $idx => $package_info) {
-                if (0 === $package_info['items']) {
-                    unset($package_list[$idx]);
-                    continue;
-                }
-
-                $package_info['price'] = (int) $package_info['price'];
-                $package_info['fee'] = (int) $package_info['fee'];
-            }
+            $package_list = $this->get_shipping_package($order, $method_class, $declare_over_type, $for_temp, $default_weight);
 
             if (0 === count($package_list)) {
                 continue;
             }
-
-            usort($package_list, function ($a, $b) {
-                return $a['temp'] <=> $b['temp'];
-            });
 
             $shipping_list = $order->get_meta('_ecpay_shipping_info', true);
             if (!is_array($shipping_list)) {
@@ -358,6 +260,7 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_ECPay_Api
             }
 
             do_action('ry_ecpay_shipping_get_all_cvs_no', $shipping_list, $order);
+            break;
         }
     }
 

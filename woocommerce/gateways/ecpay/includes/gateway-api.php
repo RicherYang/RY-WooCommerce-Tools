@@ -96,7 +96,7 @@ class RY_WT_WC_ECPay_Gateway_Api extends RY_WT_ECPay_Api
             echo '<input type="hidden" name="' . esc_attr($key) . '" value="' . esc_attr($value) . '">';
         }
         echo '</form>';
-        $this->submit_sctipt('document.getElementById("ry-ecpay-form").submit();', $order);
+        $this->submit_sctipt('document.getElementById("ry-ecpay-form").submit();');
 
         do_action('ry_ecpay_gateway_checkout', $args, $order, $gateway);
     }

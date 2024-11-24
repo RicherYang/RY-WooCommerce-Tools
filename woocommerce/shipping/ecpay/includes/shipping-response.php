@@ -16,6 +16,11 @@ class RY_WT_WC_ECPay_Shipping_Response extends RY_WT_ECPay_Api
 
     protected function do_init(): void
     {
+        if ('ry-ecpay-map-redirect' === wp_unslash($_GET['ry-ecpay-map-redirect'] ?? '')) {
+            do_action('woocommerce_api_ry_ecpay_map_callback');
+            $this->map_redirect();
+        }
+
         add_action('woocommerce_api_request', [$this, 'set_do_die']);
         add_action('woocommerce_api_ry_ecpay_map_callback', [$this, 'map_redirect']);
         add_action('woocommerce_api_ry_ecpay_shipping_callback', [$this, 'check_shipping_callback']);
@@ -54,27 +59,36 @@ class RY_WT_WC_ECPay_Shipping_Response extends RY_WT_ECPay_Api
             }
         }
 
-        if (6 !== count($cvs_info) || empty($cvs_info['CVSStoreID'])) {
+        if (6 !== count($cvs_info) || '' === $cvs_info['CVSStoreID']) {
             wp_redirect(wc_get_checkout_url());
             exit();
         }
 
         $extra_data = wp_unslash($_POST['ExtraData'] ?? '');
         if (str_starts_with($extra_data, 'ry')) {
+            if (!did_action('woocommerce_after_register_post_type')) {
+                return;
+            }
+
             $order_ID = (int) substr($extra_data, 2);
             $order = wc_get_order($order_ID);
             if ($order) {
                 RY_WT_WC_ECPay_Shipping::instance()->save_order_cvs_info($order, $cvs_info);
                 $order->save();
                 wp_safe_redirect($order->get_edit_order_url());
-                exit();
+            } else {
+                wp_safe_redirect(admin_url());
             }
+            exit();
         }
 
         add_filter('woocommerce_set_cookie_enabled', '__return_false');
-        echo '<!doctype html><html><head><title>AutoSubmitForm</title></head><body>';
+        remove_all_actions('shutdown');
+
+        echo '<!doctype html><html ' . get_language_attributes() . '><head charset="' . get_bloginfo('charset', 'display') . '"><title>AutoSubmitForm</title></head><body>';
+        echo '<p style="margin-top:100px;text-align:center">' . esc_html__('Transaction data processing… DO NOT refresh or close the webpage.', 'ry-woocommerce-tools') . '</p>';
         echo '<form method="post" id="ry-ecpay-map-redirect" action="' . esc_url(wc_get_checkout_url()) . '">';
-        echo '<input type="hidden" name="ry-ecpay-cvsmap-info" value="' . esc_attr(base64_encode(wp_json_encode($cvs_info))) . '">';
+        echo '<input type="hidden" name="ry-ecpay-cvsmap-info" value="' . esc_attr(rtrim(base64_encode(wp_json_encode($cvs_info)), '=')) . '">';
         echo '</form>';
         echo '<script type="text/javascript">document.getElementById("ry-ecpay-map-redirect").submit();</script>';
         echo '</body></html>';

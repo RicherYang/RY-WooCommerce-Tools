@@ -87,9 +87,7 @@ abstract class RY_WT_WC_Shipping_Method extends WC_Shipping_Method
             'label' => $this->title,
             'cost' => $this->cost,
             'package' => $package,
-            'meta_data' => [
-                'temps' => $this->get_package_temp($package['contents']),
-            ],
+            'meta_data' => [],
         ];
         $rate = $this->add_rate_meta_data($rate);
 
@@ -101,9 +99,10 @@ abstract class RY_WT_WC_Shipping_Method extends WC_Shipping_Method
         }
 
         if ($this->cost_cool > 0) {
-            if (in_array('2', $rate['meta_data']['temps'])) {
+            $temps = $this->get_package_temp($package['contents']);
+            if (in_array('2', $temps)) {
                 $rate['cost'] += $this->cost_cool;
-            } elseif (in_array('3', $rate['meta_data']['temps'])) {
+            } elseif (in_array('3', $temps)) {
                 $rate['cost'] += $this->cost_cool;
             }
         }

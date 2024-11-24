@@ -210,7 +210,10 @@ final class RY_WT_WC_ECPay_Shipping extends RY_WT_Shipping_Model
                     'LogisticsType' => $method_class::Shipping_Type,
                     'LogisticsSubType' => $subtype,
                     'IsCollection' => 'Y',
-                    'ServerReplyURL' => esc_url(add_query_arg('lang', get_locale(), WC()->api_request_url('ry_ecpay_map_callback'))),
+                    'ServerReplyURL' => esc_url(add_query_arg([
+                        'ry-ecpay-map-redirect' => 'ry-ecpay-map-redirect',
+                        'lang' => get_locale(),
+                    ], WC()->api_request_url('ry_ecpay_map_callback'))),
                 ];
             } else {
                 $this->js_data['ecpay_home'] = true;

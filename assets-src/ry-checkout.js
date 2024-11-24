@@ -26,9 +26,6 @@ $(function () {
             $('.woocommerce-checkout .ry-newebpay-cvs-hide').show();
             $('.woocommerce-checkout .ry-smilepay-cvs-hide').show();
             if (data.fragments.ry_shipping_info !== undefined) {
-                if (data.fragments.ry_shipping_info.ecpay_home === true) {
-                    setShippingPhone(true);
-                }
                 if (data.fragments.ry_shipping_info.ecpay_cvs === true) {
                     setShippingPhone(true);
                     ecpayShippingInfo = data.fragments.ry_shipping_info.postData;
@@ -53,11 +50,16 @@ $(function () {
                         }
                     }
                 }
+                if (data.fragments.ry_shipping_info.ecpay_home === true) {
+                    setShippingPhone(true);
+                }
+
                 if (data.fragments.ry_shipping_info.newebpay_cvs === true) {
                     setShippingPhone(false);
                     $('.woocommerce-checkout .ry-cvs-hide').hide();
                     $('.woocommerce-checkout .ry-newebpay-cvs-hide').hide();
                 }
+
                 if (data.fragments.ry_shipping_info.smilepay_cvs === true) {
                     setShippingPhone(true);
                     $('.woocommerce-checkout .ry-cvs-hide').hide();

@@ -48,7 +48,7 @@ class RY_WT_WC_SmilePay_Gateway_Api extends RY_WT_SmilePay_Api
             success: function(result) {
                 window.location = result;
             }
-        });', $order);
+        });');
 
         do_action('ry_smilepay_gateway_checkout', $order);
     }
