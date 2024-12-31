@@ -190,7 +190,7 @@ class RY_WT_WC_SmilePay_Shipping_Response extends RY_WT_SmilePay_Api
 
     public function shipping_at_cvs($ipn_info, $order)
     {
-        if ($order->has_status(apply_filters('ry_smilepay_shipping_at_cvs_prev_status', ['processing'], $ipn_info, $order))) {
+        if ($order->has_status(apply_filters('ry_smilepay_shipping_at_cvs_prev_status', ['processing', 'ry-transporting'], $ipn_info, $order))) {
             $order->update_status('ry-at-cvs');
         }
     }
