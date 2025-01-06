@@ -89,7 +89,7 @@ class RY_WT_WC_SmilePay_Shipping_Response extends RY_WT_SmilePay_Api
                 $shipping_list[$transaction_ID]['ID'] = $transaction_ID;
                 $shipping_list[$transaction_ID]['LogisticsType'] = 'CVS';
                 $shipping_list[$transaction_ID]['amount'] = (int) $ipn_info['Amount'];
-                $shipping_list[$transaction_ID]['store_ID'] = $ipn_info['Storeid'];
+                $shipping_list[$transaction_ID]['store_ID'] = $ipn_info['Storeid'] ?? '';
                 $shipping_list[$transaction_ID]['PaymentNo'] = '';
                 $shipping_list[$transaction_ID]['ValidationNo'] = '';
                 $shipping_list[$transaction_ID]['type'] = $ipn_info['Classif_sub'];
@@ -119,19 +119,18 @@ class RY_WT_WC_SmilePay_Shipping_Response extends RY_WT_SmilePay_Api
                     $order->update_meta_data('_shipping_cvs_store_ID', $ipn_info['Storeid']);
                     $order->update_meta_data('_shipping_cvs_store_name', $ipn_info['Storename']);
                     $order->update_meta_data('_shipping_cvs_store_address', $ipn_info['Storeaddress']);
-                    if ($ipn_info['Classif'] == 'T') {
-                        if (!$order->is_paid()) {
-                            $order->update_status($order->has_downloadable_item() ? 'on-hold' : 'processing');
-                        }
-                    }
                 }
                 $order->update_meta_data('_smilepay_shipping_info', $shipping_list);
                 $order->save();
+                $order = wc_get_order($order_ID);
 
                 if ($is_admin) {
                     $url = $order->get_edit_order_url();
                 } else {
-                    if ($ipn_info['Classif'] == 'T') {
+                    if ('T' === $ipn_info['Classif']) {
+                        if (!$order->is_paid()) {
+                            $order->update_status($order->has_downloadable_item() ? 'on-hold' : 'processing');
+                        }
                         $url = $order->get_checkout_order_received_url();
                     } else {
                         $url = RY_WT_WC_SmilePay_Gateway_Api::instance()->get_code($order);

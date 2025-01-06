@@ -65,6 +65,9 @@ $(function () {
                     $('.woocommerce-checkout .ry-cvs-hide').hide();
                     $('.woocommerce-checkout .ry-smilepay-cvs-hide').hide();
                 }
+                if (data.fragments.ry_shipping_info.smilepay_home === true) {
+                    setShippingPhone(true);
+                }
             } else {
                 setShippingPhone(false);
             }

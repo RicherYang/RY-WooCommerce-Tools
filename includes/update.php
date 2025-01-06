@@ -33,9 +33,9 @@ final class RY_WT_Update
                             continue;
                         }
 
-                        foreach ($order->get_items('shipping') as $item) {
-                            $shipping_method = RY_WT_WC_ECPay_Shipping::instance()->get_order_support_shipping($item);
-                            if (false !== $shipping_method) {
+                        foreach ($order->get_items('shipping') as $shipping_item) {
+                            $shipping_method = RY_WT_WC_ECPay_Shipping::instance()->get_order_support_shipping($shipping_item);
+                            if ($shipping_method) {
                                 $method_class = RY_WT_WC_ECPay_Shipping::$support_methods[$shipping_method];
                                 foreach ($shipping_list as &$info) {
                                     $info['LogisticsType'] = $method_class::Shipping_Type;
@@ -105,8 +105,8 @@ final class RY_WT_Update
             RY_WT::update_option('version', '3.4.20', true);
         }
 
-        if (version_compare($now_version, '3.4.24', '<')) {
-            RY_WT::update_option('version', '3.4.24', true);
+        if (version_compare($now_version, '3.5.0', '<')) {
+            RY_WT::update_option('version', '3.5.0', true);
         }
     }
 }

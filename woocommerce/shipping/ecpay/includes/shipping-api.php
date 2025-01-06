@@ -48,7 +48,7 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_ECPay_Api
 
         foreach ($order->get_items('shipping') as $shipping_item) {
             $shipping_method = RY_WT_WC_ECPay_Shipping::instance()->get_order_support_shipping($shipping_item);
-            if ($shipping_method == false) {
+            if (false === $shipping_method) {
                 continue;
             }
 
@@ -56,7 +56,6 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_ECPay_Api
             list($MerchantID, $HashKey, $HashIV, $cvs_type) = RY_WT_WC_ECPay_Shipping::instance()->get_api_info();
 
             $package_list = $this->get_shipping_package($order, $method_class, $declare_over_type, $for_temp, $default_weight);
-
             if (0 === count($package_list)) {
                 continue;
             }
@@ -68,7 +67,7 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_ECPay_Api
 
             $notify_url = WC()->api_request_url('ry_ecpay_shipping_callback', true);
 
-            RY_WT_WC_ECPay_Shipping::instance()->log('Generating shipping for #' . $order->get_id(), WC_Log_Levels::INFO);
+            RY_WT_WC_ECPay_Shipping::instance()->log('Generating no for #' . $order->get_id(), WC_Log_Levels::INFO);
 
             $args = [
                 'MerchantID' => $MerchantID,
@@ -119,7 +118,6 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_ECPay_Api
 
             if ('Home' === $args['LogisticsType']) {
                 $country = $order->get_shipping_country();
-
                 $state = $order->get_shipping_state();
                 $states = WC()->countries->get_states($country);
                 $full_state = ($state && isset($states[$state])) ? $states[$state] : $state;
@@ -128,17 +126,17 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_ECPay_Api
                 $args['SenderAddress'] = RY_WT::get_option('ecpay_shipping_sender_address');
                 $args['ReceiverZipCode'] = $order->get_shipping_postcode();
                 $args['ReceiverAddress'] = $full_state . $order->get_shipping_city() . $order->get_shipping_address_1() . $order->get_shipping_address_2();
-                $args['Specification'] = '000' . RY_WT::get_option('ecpay_shipping_box_size');
+                $args['Specification'] = '000' . RY_WT::get_option('ecpay_shipping_box_size', '0');
                 $args['Distance'] = '00';
 
-                $args['ScheduledPickupTime'] = RY_WT::get_option('ecpay_shipping_pickup_time');
+                $args['ScheduledPickupTime'] = '4';
                 $args['ScheduledDeliveryTime'] = '4';
             }
 
             if (RY_WT_WC_ECPay_Shipping::instance()->is_testmode()) {
-                $post_url = $this->api_test_url['create'];
+                $url = $this->api_test_url['create'];
             } else {
-                $post_url = $this->api_url['create'];
+                $url = $this->api_url['create'];
             }
 
             foreach ($package_list as $package_info) {
@@ -197,7 +195,7 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_ECPay_Api
                 $args = $this->add_check_value($args, $HashKey, $HashIV, 'md5');
                 RY_WT_WC_ECPay_Shipping::instance()->log('Shipping POST data', WC_Log_Levels::INFO, ['data' => $args]);
 
-                $response = $this->link_server($post_url, $args);
+                $response = $this->link_server($url, $args);
                 if (is_wp_error($response)) {
                     RY_WT_WC_ECPay_Shipping::instance()->log('Shipping POST failed', WC_Log_Levels::ERROR, ['info' => $response->get_error_messages()]);
                     continue;
@@ -284,11 +282,11 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_ECPay_Api
         RY_WT_WC_ECPay_Shipping::instance()->log('Print POST data', WC_Log_Levels::INFO, ['data' => $args]);
 
         if (RY_WT_WC_ECPay_Shipping::instance()->is_testmode()) {
-            $post_url = $this->api_test_url['print'];
+            $url = $this->api_test_url['print'];
         } else {
-            $post_url = $this->api_url['print'];
+            $url = $this->api_url['print'];
         }
-        $response = $this->link_v2_server($post_url, $args, $HashKey, $HashIV);
+        $response = $this->link_v2_server($url, $args, $HashKey, $HashIV);
         if (is_wp_error($response)) {
             RY_WT_WC_ECPay_Shipping::instance()->log('Print POST failed', WC_Log_Levels::ERROR, ['info' => $response->get_error_messages()]);
             exit();

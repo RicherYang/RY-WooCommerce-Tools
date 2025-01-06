@@ -151,6 +151,7 @@ return [
         'default' => '0',
         'type' => 'text',
     ],
+    /* 綠界取消支援
     [
         'title' => __('Pickup time ( Home delivery )', 'ry-woocommerce-tools'),
         'id' => RY_WT::OPTION_PREFIX . 'ecpay_shipping_pickup_time',
@@ -162,6 +163,7 @@ return [
             '4' => _x('unlimited', 'Pickup time', 'ry-woocommerce-tools'),
         ],
     ],
+    */
     [
         'id' => 'note_options',
         'type' => 'sectionend',

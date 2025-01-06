@@ -178,23 +178,19 @@ final class RY_WT_WC_Admin_Shipping
         }
 
         $shipping_items = $order->get_items('shipping');
-        if (!is_array($shipping_items)) {
-            return false;
-        }
-        $shipping_item = array_shift($shipping_items);
-        if (empty($shipping_item)) {
+        if (0 === count($shipping_items)) {
             return false;
         }
 
         $shipping_method = false;
         if (false === $shipping_method && class_exists('RY_WT_WC_ECPay_Shipping')) {
-            $shipping_method = RY_WT_WC_ECPay_Shipping::instance()->get_order_support_shipping($shipping_item);
+            $shipping_method = RY_WT_WC_ECPay_Shipping::instance()->get_order_support_shipping($shipping_items[array_key_first($shipping_items)]);
         }
         if (false === $shipping_method && class_exists('RY_WT_WC_NewebPay_Shipping')) {
-            $shipping_method = RY_WT_WC_NewebPay_Shipping::instance()->get_order_support_shipping($shipping_item);
+            $shipping_method = RY_WT_WC_NewebPay_Shipping::instance()->get_order_support_shipping($shipping_items[array_key_first($shipping_items)]);
         }
         if (false === $shipping_method && class_exists('RY_WT_WC_SmilePay_Shipping')) {
-            $shipping_method = RY_WT_WC_SmilePay_Shipping::instance()->get_order_support_shipping($shipping_item);
+            $shipping_method = RY_WT_WC_SmilePay_Shipping::instance()->get_order_support_shipping($shipping_items[array_key_first($shipping_items)]);
         }
 
         return $shipping_method;

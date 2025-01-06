@@ -75,7 +75,7 @@ abstract class RY_WT_ECPay_Api extends RY_WT_Api
         return strtoupper($check_value);
     }
 
-    protected function link_server($post_url, $args)
+    protected function link_server($url, $args)
     {
         wc_set_time_limit(40);
 
@@ -84,20 +84,20 @@ abstract class RY_WT_ECPay_Api extends RY_WT_Api
             $send_body[] = $key . '=' . $value;
         }
 
-        return wp_remote_post($post_url, [
+        return wp_remote_post($url, [
             'timeout' => 30,
             'body' => implode('&', $send_body),
         ]);
     }
 
-    protected function link_v2_server($post_url, $args, $HashKey, $HashIV)
+    protected function link_v2_server($url, $args, $HashKey, $HashIV)
     {
         wc_set_time_limit(40);
 
         $args['Data'] = $this->urlencode($args['Data']);
         $args['Data'] = openssl_encrypt($args['Data'], self::Encrypt_Method, $HashKey, 0, $HashIV);
 
-        return wp_remote_post($post_url, [
+        return wp_remote_post($url, [
             'timeout' => 30,
             'headers' => [
                 'Content-Type' => 'application/json',

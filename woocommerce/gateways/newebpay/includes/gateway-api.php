@@ -150,14 +150,16 @@ class RY_WT_WC_NewebPay_Gateway_Api extends RY_WT_NewebPay_Api
             }
         }
 
-        $items_shipping = $order->get_items('shipping');
-        $items_shipping = array_shift($items_shipping);
-        if ($items_shipping) {
-            if ($items_shipping->get_method_id() == 'ry_newebpay_shipping_cvs') {
-                if ('cod' === $gateway->id) {
-                    $args['CVSCOM'] = 2;
-                } else {
-                    $args['CVSCOM'] = 1;
+        if (class_exists('RY_WT_WC_NewebPay_Shipping')) {
+            foreach ($order->get_items('shipping') as $shipping_item) {
+                $shipping_method = RY_WT_WC_NewebPay_Shipping::instance()->get_order_support_shipping($shipping_item);
+                if ($shipping_method) {
+                    if ('cod' === $gateway->id) {
+                        $args['CVSCOM'] = 2;
+                    } else {
+                        $args['CVSCOM'] = 1;
+                    }
+                    break;
                 }
             }
         }

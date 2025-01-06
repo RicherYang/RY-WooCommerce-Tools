@@ -7,8 +7,9 @@ class RY_ECPay_Shipping_Meta_Box extends RY_WT_Meta_Box
         if ('shop_order' === $post_type || 'woocommerce_page_wc-orders' === $post_type) {
             $order = self::get_order_object($data_object);
 
-            foreach ($order->get_items('shipping') as $item) {
-                if (false !== RY_WT_WC_ECPay_Shipping::instance()->get_order_support_shipping($item)) {
+            foreach ($order->get_items('shipping') as $shipping_item) {
+                $shipping_method = RY_WT_WC_ECPay_Shipping::instance()->get_order_support_shipping($shipping_item);
+                if ($shipping_method) {
                     add_meta_box('ry-ecpay-shipping-info', __('ECPay shipping info', 'ry-woocommerce-tools'), [__CLASS__, 'output'], $post_type, 'normal', 'default');
                     break;
                 }

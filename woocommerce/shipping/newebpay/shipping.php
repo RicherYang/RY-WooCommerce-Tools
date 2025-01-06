@@ -102,12 +102,12 @@ final class RY_WT_WC_NewebPay_Shipping extends RY_WT_Shipping_Model
 
     public function change_cod_order_status($status, $order)
     {
-        $items_shipping = $order->get_items('shipping');
-        $items_shipping = array_shift($items_shipping);
-        if ($items_shipping) {
-            if (isset(self::$support_methods[$items_shipping->get_method_id()])) {
+        foreach ($order->get_items('shipping') as $shipping_item) {
+            $shipping_method = $this->get_order_support_shipping($shipping_item);
+            if ($shipping_method) {
                 $status = 'pending';
                 add_filter('woocommerce_payment_successful_result', [$this, 'change_cod_redirect'], 10, 2);
+                break;
             }
         }
 
@@ -125,11 +125,11 @@ final class RY_WT_WC_NewebPay_Shipping extends RY_WT_Shipping_Model
     public function cod_receipt_page($order_ID)
     {
         if ($order = wc_get_order($order_ID)) {
-            $items_shipping = $order->get_items('shipping');
-            $items_shipping = array_shift($items_shipping);
-            if ($items_shipping) {
-                if (isset(self::$support_methods[$items_shipping->get_method_id()])) {
+            foreach ($order->get_items('shipping') as $shipping_item) {
+                $shipping_method = $this->get_order_support_shipping($shipping_item);
+                if ($shipping_method) {
                     RY_WT_WC_NewebPay_Gateway_Api::instance()->checkout_form($order, wc_get_payment_gateway_by_order($order));
+                    break;
                 }
             }
         }
@@ -148,10 +148,9 @@ final class RY_WT_WC_NewebPay_Shipping extends RY_WT_Shipping_Model
     {
         $chosen_shipping = wc_get_chosen_shipping_method_ids();
         $chosen_shipping = array_intersect($chosen_shipping, array_keys(self::$support_methods));
-        $chosen_shipping = array_shift($chosen_shipping);
         $this->js_data = [];
 
-        if ($chosen_shipping) {
+        if (count($chosen_shipping)) {
             $this->js_data['newebpay_cvs'] = true;
         }
     }

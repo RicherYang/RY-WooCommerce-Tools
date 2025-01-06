@@ -95,6 +95,8 @@ $(function () {
             }).done(function (data) {
                 if (data.substr(0, 8) == 'https://' || data.substr(0, 7) == 'http://') {
                     window.location = data;
+                } else {
+                    location.reload();
                 }
             }).always(function () {
                 $metainfo.unblock();

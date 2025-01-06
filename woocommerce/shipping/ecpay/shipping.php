@@ -157,12 +157,18 @@ final class RY_WT_WC_ECPay_Shipping extends RY_WT_Shipping_Model
 
     public function get_code($order_ID, $order)
     {
-        $shipping_list = $order->get_meta('_ecpay_shipping_info', true);
-        if (!is_array($shipping_list)) {
-            $shipping_list = [];
-        }
-        if (0 === count($shipping_list)) {
-            RY_WT_WC_ECPay_Shipping_Api::instance()->get_code($order_ID);
+        foreach ($order->get_items('shipping') as $shipping_item) {
+            $shipping_method = $this->get_order_support_shipping($shipping_item);
+            if ($shipping_method) {
+                $shipping_list = $order->get_meta('_ecpay_shipping_info', true);
+                if (!is_array($shipping_list)) {
+                    $shipping_list = [];
+                }
+                if (0 === count($shipping_list)) {
+                    RY_WT_WC_ECPay_Shipping_Api::instance()->get_code($order_ID);
+                }
+                break;
+            }
         }
     }
 
@@ -172,8 +178,9 @@ final class RY_WT_WC_ECPay_Shipping extends RY_WT_Shipping_Model
         $chosen_shipping = array_intersect($chosen_shipping, array_keys(self::$support_methods));
         $this->js_data = [];
 
-        if (isset($chosen_shipping[0])) {
-            if (str_contains($chosen_shipping[0], '_cvs')) {
+        if (count($chosen_shipping)) {
+            $chosen_shipping = array_shift($chosen_shipping);
+            if (str_contains($chosen_shipping, '_cvs')) {
                 $this->js_data['ecpay_cvs'] = true;
 
                 wc_get_template('cart/cart-choose-cvs.php', [
@@ -181,7 +188,7 @@ final class RY_WT_WC_ECPay_Shipping extends RY_WT_Shipping_Model
                 ], '', RY_WT_PLUGIN_DIR . 'templates/');
 
                 list($MerchantID, $HashKey, $HashIV, $cvs_type) = $this->get_api_info();
-                $method_class = self::$support_methods[$chosen_shipping[0]];
+                $method_class = self::$support_methods[$chosen_shipping];
 
                 $subtype = $method_class::Shipping_Sub_Type;
                 if ('C2C' === $cvs_type) {
@@ -239,25 +246,21 @@ final class RY_WT_WC_ECPay_Shipping extends RY_WT_Shipping_Model
 
     public function check_choose_cvs($data, $errors)
     {
-        if (WC()->cart->needs_shipping()) {
-            $chosen_method = WC()->session->get('chosen_shipping_methods', []);
+        if (WC()->cart && WC()->cart->needs_shipping()) {
             $cvs_method = false;
-            if (count($chosen_method)) {
-                foreach ($chosen_method as $method) {
-                    $method_ID = strstr($method, ':', true);
-                    if ($method_ID && isset(self::$support_methods[$method_ID])) {
-                        if (str_contains($method_ID, '_cvs')) {
-                            $cvs_method = $method_ID;
-                        }
-                    }
+            $chosen_shipping = wc_get_chosen_shipping_method_ids();
+            $chosen_shipping = array_intersect($chosen_shipping, array_keys(self::$support_methods));
+            if (count($chosen_shipping)) {
+                $chosen_shipping = array_shift($chosen_shipping);
+                if (str_contains($chosen_shipping, '_cvs')) {
+                    $cvs_method = true;
                 }
             }
 
             if ($cvs_method) {
                 $csv_info = WC()->session->get('ry-ecpay-cvs-info', []);
-                $cvs_type = RY_WT::get_option('ecpay_shipping_cvs_type');
 
-                if (!isset($csv_info['LogisticsSubType']) || !str_starts_with($csv_info['LogisticsSubType'], $cvs_method::Shipping_Sub_Type)) {
+                if (!isset($csv_info['LogisticsSubType']) || !str_starts_with($csv_info['LogisticsSubType'], $chosen_shipping::Shipping_Sub_Type)) {
                     // 傳統結帳
                     if (is_array($data)) {
                         $errors->add('shipping', __('No convenience store has been chosen.', 'ry-woocommerce-tools'));
@@ -301,9 +304,9 @@ final class RY_WT_WC_ECPay_Shipping extends RY_WT_Shipping_Model
         return [$MerchantID, $HashKey, $HashIV, $cvs_type];
     }
 
-    public function get_order_support_shipping($item)
+    public function get_order_support_shipping($shipping_item)
     {
-        $method_ID = $item->get_method_id();
+        $method_ID = $shipping_item->get_method_id();
         if (isset(self::$support_methods[$method_ID])) {
             return $method_ID;
         }

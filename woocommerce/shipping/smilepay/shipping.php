@@ -5,6 +5,7 @@ final class RY_WT_WC_SmilePay_Shipping extends RY_WT_Shipping_Model
     public static $support_methods = [
         'ry_smilepay_shipping_cvs_711' => 'RY_SmilePay_Shipping_CVS_711',
         'ry_smilepay_shipping_cvs_fami' => 'RY_SmilePay_Shipping_CVS_Fami',
+        'ry_smilepay_shipping_home_tcat' => 'RY_SmilePay_Shipping_Home_Tcat',
     ];
 
     protected static $_instance = null;
@@ -33,6 +34,7 @@ final class RY_WT_WC_SmilePay_Shipping extends RY_WT_Shipping_Model
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/shipping/smilepay/includes/shipping-method.php';
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/shipping/smilepay/shipping-cvs-711.php';
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/shipping/smilepay/shipping-cvs-fami.php';
+        include_once RY_WT_PLUGIN_DIR . 'woocommerce/shipping/smilepay/shipping-home-tcat.php';
 
         RY_WT_WC_Shipping::instance();
         RY_WT_WC_SmilePay_Shipping_Response::instance();
@@ -69,14 +71,16 @@ final class RY_WT_WC_SmilePay_Shipping extends RY_WT_Shipping_Model
             $chosen_shipping = wc_get_chosen_shipping_method_ids();
             $chosen_shipping = array_intersect($chosen_shipping, array_keys(self::$support_methods));
             if (count($chosen_shipping)) {
-                foreach ($_available_gateways as $key => $gateway) {
-                    if (str_starts_with($key, 'ry_smilepay_')) {
-                        continue;
+                if (str_contains($chosen_shipping[0], '_cvs')) {
+                    foreach ($_available_gateways as $key => $gateway) {
+                        if (str_starts_with($key, 'ry_smilepay_')) {
+                            continue;
+                        }
+                        if ('cod' === $key) {
+                            continue;
+                        }
+                        unset($_available_gateways[$key]);
                     }
-                    if ('cod' === $key) {
-                        continue;
-                    }
-                    unset($_available_gateways[$key]);
                 }
             }
         }
@@ -85,12 +89,14 @@ final class RY_WT_WC_SmilePay_Shipping extends RY_WT_Shipping_Model
 
     public function change_cod_order_status($status, $order)
     {
-        $items_shipping = $order->get_items('shipping');
-        $items_shipping = array_shift($items_shipping);
-        if ($items_shipping) {
-            if (isset(self::$support_methods[$items_shipping->get_method_id()])) {
-                $status = 'pending';
-                add_filter('woocommerce_payment_successful_result', [$this, 'change_cod_redirect'], 10, 2);
+        foreach ($order->get_items('shipping') as $shipping_item) {
+            $shipping_method = $this->get_order_support_shipping($shipping_item);
+            if ($shipping_method) {
+                if (str_contains($shipping_method, '_cvs')) {
+                    $status = 'pending';
+                    add_filter('woocommerce_payment_successful_result', [$this, 'change_cod_redirect'], 10, 2);
+                }
+                break;
             }
         }
 
@@ -108,11 +114,11 @@ final class RY_WT_WC_SmilePay_Shipping extends RY_WT_Shipping_Model
     public function cod_receipt_page($order_ID)
     {
         if ($order = wc_get_order($order_ID)) {
-            $items_shipping = $order->get_items('shipping');
-            $items_shipping = array_shift($items_shipping);
-            if ($items_shipping) {
-                if (isset(self::$support_methods[$items_shipping->get_method_id()])) {
+            foreach ($order->get_items('shipping') as $shipping_item) {
+                $shipping_method = $this->get_order_support_shipping($shipping_item);
+                if ($shipping_method) {
                     RY_WT_WC_SmilePay_Gateway_Api::instance()->checkout_form(wc_get_order($order_ID));
+                    break;
                 }
             }
         }
@@ -122,22 +128,41 @@ final class RY_WT_WC_SmilePay_Shipping extends RY_WT_Shipping_Model
     {
         $chosen_shipping = wc_get_chosen_shipping_method_ids();
         $chosen_shipping = array_intersect($chosen_shipping, array_keys(self::$support_methods));
-        $chosen_shipping = array_shift($chosen_shipping);
         $this->js_data = [];
 
-        if ($chosen_shipping) {
-            $this->js_data['smilepay_cvs'] = true;
+        if (count($chosen_shipping)) {
+            $chosen_shipping = array_shift($chosen_shipping);
+            if (str_contains($chosen_shipping, '_cvs')) {
+                $this->js_data['smilepay_cvs'] = true;
+            } else {
+                $this->js_data['smilepay_home'] = true;
+            }
         }
     }
 
     public function get_code($order_ID, $order)
     {
-        $shipping_list = $order->get_meta('_smilepay_shipping_info', true);
-        if (!is_array($shipping_list)) {
-            $shipping_list = [];
-        }
-        foreach ($shipping_list as $smse_ID => $info) {
-            RY_WT_WC_SmilePay_Shipping_Api::instance()->get_code_no($order_ID, $smse_ID);
+        foreach ($order->get_items('shipping') as $shipping_item) {
+            $shipping_method = $this->get_order_support_shipping($shipping_item);
+            if ($shipping_method) {
+                $shipping_list = $order->get_meta('_smilepay_shipping_info', true);
+                if (!is_array($shipping_list)) {
+                    $shipping_list = [];
+                }
+                if (0 === count($shipping_list)) {
+                    if (str_contains($shipping_method, '_home')) {
+                        RY_WT_WC_SmilePay_Shipping_Api::instance()->get_home_info($order_ID);
+                    }
+                } else {
+                    $list = array_filter(array_column($shipping_list, 'PaymentNo'));
+                    if (0 === count($list)) {
+                        foreach ($shipping_list as $smse_ID => $info) {
+                            RY_WT_WC_SmilePay_Shipping_Api::instance()->get_info_no($order_ID, $smse_ID);
+                        }
+                    }
+                }
+                break;
+            }
         }
     }
 
@@ -150,12 +175,11 @@ final class RY_WT_WC_SmilePay_Shipping extends RY_WT_Shipping_Model
         return $fragments;
     }
 
-    public function get_order_support_shipping($items)
+    public function get_order_support_shipping($shipping_item)
     {
-        foreach (self::$support_methods as $method => $method_class) {
-            if (str_starts_with($items->get_method_id(), $method)) {
-                return $method;
-            }
+        $method_ID = $shipping_item->get_method_id();
+        if (isset(self::$support_methods[$method_ID])) {
+            return $method_ID;
         }
 
         return false;

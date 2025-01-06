@@ -26,12 +26,12 @@ class RY_WT_WC_SmilePay_Gateway_Api extends RY_WT_SmilePay_Api
     public function checkout_form($order)
     {
         $get_shipping = false;
-        $items_shipping = $order->get_items('shipping');
-        $items_shipping = array_shift($items_shipping);
-        if ($items_shipping) {
-            if (class_exists('RY_WT_WC_SmilePay_Shipping')) {
-                if (false !== RY_WT_WC_SmilePay_Shipping::instance()->get_order_support_shipping($items_shipping)) {
-                    $get_shipping = true;
+        if (class_exists('RY_WT_WC_SmilePay_Shipping')) {
+            foreach ($order->get_items('shipping') as $shipping_item) {
+                $shipping_method = RY_WT_WC_SmilePay_Shipping::instance()->get_order_support_shipping($shipping_item);
+                if ($shipping_method) {
+                    $get_shipping = str_contains($shipping_method, '_cvs');
+                    break;
                 }
             }
         }
@@ -83,9 +83,6 @@ class RY_WT_WC_SmilePay_Gateway_Api extends RY_WT_SmilePay_Api
             'Roturl' => WC()->api_request_url('ry_smilepay_callback', true),
             'Roturl_status' => 'RY_SmilePay',
         ];
-        if ($gateway->get_code_mode) {
-            $args['Verify_key'] = $Verify_key;
-        }
 
         $args = $this->add_type_info($args, $order, $gateway);
         RY_WT_WC_SmilePay_Gateway::instance()->log('Generating payment by ' . $gateway->id . ' for #' . $order->get_id(), WC_Log_Levels::INFO, ['data' => $args]);
@@ -102,6 +99,7 @@ class RY_WT_WC_SmilePay_Gateway_Api extends RY_WT_SmilePay_Api
             return $url . '?' . http_build_query($args, '', '&');
         }
 
+        $args['Verify_key'] = $Verify_key;
         if (RY_WT_WC_SmilePay_Gateway::instance()->is_testmode()) {
             $url = $this->api_test_url['api_checkout'];
         } else {

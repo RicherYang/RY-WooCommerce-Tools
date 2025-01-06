@@ -10,11 +10,11 @@ abstract class RY_WT_SmilePay_Api extends RY_WT_Api
         return substr($trade_no, 0, 18);
     }
 
-    protected function link_server($post_url, $args)
+    protected function link_server($url, $args)
     {
         wc_set_time_limit(40);
 
-        return wp_remote_post($post_url . '?' . http_build_query($args, '', '&'), [
+        return wp_remote_post($url . '?' . http_build_query($args, '', '&'), [
             'timeout' => 30,
         ]);
     }

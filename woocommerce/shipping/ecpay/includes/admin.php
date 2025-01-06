@@ -182,8 +182,9 @@ final class RY_WT_WC_ECPay_Shipping_Admin
                 $temp = null;
             }
 
-            foreach ($order->get_items('shipping') as $item) {
-                if (false !== RY_WT_WC_ECPay_Shipping::instance()->get_order_support_shipping($item)) {
+            foreach ($order->get_items('shipping') as $shipping_item) {
+                $shipping_method = RY_WT_WC_ECPay_Shipping::instance()->get_order_support_shipping($shipping_item);
+                if ($shipping_method) {
                     RY_WT_WC_ECPay_Shipping_Api::instance()->get_code($order, $collection, $temp);
                     break;
                 }

@@ -14,7 +14,7 @@ class RY_SmilePay_Shipping_Info_List_Table extends RY_WT_Shipping_Info_List_Tabl
             if (!isset($this->items[$idx]['LogisticsType'])) {
                 $this->items[$idx]['LogisticsType'] = 'CVS';
             }
-            if (!isset($this->items[$idx]['store_ID'])) {
+            if (!isset($this->items[$idx]['store_ID']) && isset($item['storeID'])) {
                 $this->items[$idx]['store_ID'] = $item['storeID'];
             }
         }
@@ -34,18 +34,6 @@ class RY_SmilePay_Shipping_Info_List_Table extends RY_WT_Shipping_Info_List_Tabl
             'create_time' => __('Create time', 'ry-woocommerce-tools'),
             'action' => '',
         ];
-    }
-
-    public function column_type($item)
-    {
-        if ('CVS' == $item['LogisticsType']) {
-            echo esc_html_x('CVS', 'shipping type', 'ry-woocommerce-tools');
-        }
-        if ('HOME' == $item['LogisticsType']) {
-            echo esc_html_x('Home', 'shipping type', 'ry-woocommerce-tools');
-        }
-
-        echo ' (' . esc_html($item['type']) . ')';
     }
 
     public function column_status($item)
@@ -78,7 +66,9 @@ class RY_SmilePay_Shipping_Info_List_Table extends RY_WT_Shipping_Info_List_Tabl
 
     public function column_action($item)
     {
-        if (empty($item['PaymentNo'])) {
+        if ('CSV' === $item['LogisticsType'] && empty($item['PaymentNo'])) {
+            echo '<button type="button" class="button ry-smilepay-shipping-no" data-orderid="' . esc_attr($this->order->get_id()) . '" data-id="' . esc_attr($item['ID']) . '">' . esc_html__('Get no', 'ry-woocommerce-tools') . '</button>';
+        } elseif ('HOME' === $item['LogisticsType'] && empty($item['BookingNote'])) {
             echo '<button type="button" class="button ry-smilepay-shipping-no" data-orderid="' . esc_attr($this->order->get_id()) . '" data-id="' . esc_attr($item['ID']) . '">' . esc_html__('Get no', 'ry-woocommerce-tools') . '</button>';
         } else {
             $url = add_query_arg([

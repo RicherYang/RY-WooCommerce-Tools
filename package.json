@@ -1,7 +1,7 @@
 {
     "name": "ry-woocommerce-tools",
     "title": "RY Tools for WooCommerce",
-    "version": "3.4.23",
+    "version": "3.5.0",
     "author": "Richer Yang",
     "private": true,
     "devDependencies": {
