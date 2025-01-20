@@ -66,7 +66,7 @@ class RY_SmilePay_Shipping_Info_List_Table extends RY_WT_Shipping_Info_List_Tabl
 
     public function column_action($item)
     {
-        if ('CSV' === $item['LogisticsType'] && empty($item['PaymentNo'])) {
+        if ('CVS' === $item['LogisticsType'] && empty($item['PaymentNo'])) {
             echo '<button type="button" class="button ry-smilepay-shipping-no" data-orderid="' . esc_attr($this->order->get_id()) . '" data-id="' . esc_attr($item['ID']) . '">' . esc_html__('Get no', 'ry-woocommerce-tools') . '</button>';
         } elseif ('HOME' === $item['LogisticsType'] && empty($item['BookingNote'])) {
             echo '<button type="button" class="button ry-smilepay-shipping-no" data-orderid="' . esc_attr($this->order->get_id()) . '" data-id="' . esc_attr($item['ID']) . '">' . esc_html__('Get no', 'ry-woocommerce-tools') . '</button>';

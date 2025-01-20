@@ -14,3 +14,4 @@
 <?php } ?>
 
 <button name="ryt_check_time" class="button-primary" type="submit" value="ryt_check_time"><?php esc_html_e('Check server time', 'ry-woocommerce-tools'); ?></button>
+<p><?php esc_html_e('Current time get from Google Public NTP', 'ry-woocommerce-tools'); ?></p>
