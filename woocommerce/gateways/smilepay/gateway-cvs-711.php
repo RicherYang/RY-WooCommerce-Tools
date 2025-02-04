@@ -27,7 +27,7 @@ class RY_SmilePay_Gateway_Cvs_711 extends RY_WT_WC_SmilePay_Payment_Gateway
         $this->min_amount = (int) $this->get_option('min_amount', 0);
         $this->max_amount = (int) $this->get_option('max_amount', 0);
 
-        add_action('woocommerce_admin_order_data_after_billing_address', [$this, 'admin_payment_info']);
+        add_filter('ry_admin_payment_info-ry_smilepay_cvs_711', [$this, 'show_payment_info'], 10, 2);
 
         parent::__construct();
     }
@@ -47,29 +47,16 @@ class RY_SmilePay_Gateway_Cvs_711 extends RY_WT_WC_SmilePay_Payment_Gateway
         parent::process_admin_options();
     }
 
-    public function admin_payment_info($order)
+    public function show_payment_info($html, $order)
     {
-        if ($this->id !== $order->get_payment_method()) {
-            return;
-        }
-        ?>
-<h3 style="clear:both"><?php esc_html_e('Payment details', 'ry-woocommerce-tools'); ?>
-</h3>
-<table>
-    <tr>
-        <td><?php esc_html_e('CVS code', 'ry-woocommerce-tools'); ?>
-        </td>
-        <td><?php echo esc_html($order->get_meta('_smilepay_cvs_PaymentNo')); ?>
-        </td>
-    </tr>
-    <tr>
-        <td><?php esc_html_e('Payment deadline', 'ry-woocommerce-tools'); ?>
-        </td>
-        <td><?php echo esc_html($order->get_meta('_smilepay_cvs_ExpireDate')); ?>
-        </td>
-    </tr>
-</table>
-<?php
+        $html .= '<tr>
+            <td>' . esc_html__('CVS code', 'ry-woocommerce-tools') . '</td>
+            <td>' . esc_html($order->get_meta('_smilepay_cvs_PaymentNo')) . '</td>
+        </tr>';
+        $html .= '<tr>
+            <td>' . esc_html__('Payment deadline', 'ry-woocommerce-tools') . '</td>
+            <td>' . esc_html($order->get_meta('_smilepay_cvs_ExpireDate')) . '</td>
+        </tr>';
+        return $html;
     }
 }
-?>

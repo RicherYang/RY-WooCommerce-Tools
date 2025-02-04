@@ -5,7 +5,7 @@ Tags: woocommerce, payment, gateway, shipping
 Requires at least: 6.5
 Requires PHP: 8.0
 Tested up to: 6.7
-Stable tag: 3.5.1
+Stable tag: 3.5.2
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.txt
 
@@ -40,7 +40,11 @@ Please visit the [plugin forum page](https://ry-plugin.com/ry-woocommerce-tools/
 
 == Changelog ==
 
-= 3.5.1 - 2025-01-020 =
+= 3.5.2 - 2025-02-03 =
+* 調整 - 後台訂單的付款詳細資訊的顯示作法。
+* 調整 - 移除無用的程式碼。
+
+= 3.5.1 - 2025-01-20 =
 * 修正 - 修正速買配超商取貨手動取得編號碼顯示錯誤。
 
 = 3.5.0 - 2025-01-06 =

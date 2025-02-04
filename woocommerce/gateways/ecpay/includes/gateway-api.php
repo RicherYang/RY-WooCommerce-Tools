@@ -7,13 +7,11 @@ class RY_WT_WC_ECPay_Gateway_Api extends RY_WT_ECPay_Api
     protected $api_test_url = [
         'checkout' => 'https://payment-stage.ecpay.com.tw/Cashier/AioCheckOut/V5',
         'query' => 'https://payment-stage.ecpay.com.tw/Cashier/QueryTradeInfo/V5',
-        'sptoken' => 'https://payment-stage.ecpay.com.tw/SP/CreateTrade',
     ];
 
     protected $api_url = [
         'checkout' => 'https://payment.ecpay.com.tw/Cashier/AioCheckOut/V5',
         'query' => 'https://payment.ecpay.com.tw/Cashier/QueryTradeInfo/V5',
-        'sptoken' => 'https://payment.ecpay.com.tw/SP/CreateTrade',
     ];
 
     public static function instance(): RY_WT_WC_ECPay_Gateway_Api
@@ -99,6 +97,54 @@ class RY_WT_WC_ECPay_Gateway_Api extends RY_WT_ECPay_Api
         $this->submit_sctipt('document.getElementById("ry-ecpay-form").submit();');
 
         do_action('ry_ecpay_gateway_checkout', $args, $order, $gateway);
+    }
+
+    public function get_info($order)
+    {
+        list($MerchantID, $HashKey, $HashIV) = RY_WT_WC_ECPay_Gateway::instance()->get_api_info();
+
+        $args = [
+            'MerchantID' => $MerchantID,
+            'MerchantTradeNo' => $order->get_meta('_ecpay_MerchantTradeNo', true),
+            'TimeStamp' => new DateTime('', new DateTimeZone('Asia/Taipei')),
+        ];
+
+        $args['TimeStamp'] = $args['TimeStamp']->format('U');
+
+        if (RY_WT_WC_ECPay_Gateway::instance()->is_testmode()) {
+            $url = $this->api_test_url['query'];
+        } else {
+            $url = $this->api_url['query'];
+        }
+        $args = $this->add_check_value($args, $HashKey, $HashIV, 'sha256');
+
+        $response = $this->link_server($url, $args);
+        if (is_wp_error($response)) {
+            RY_WT_WC_ECPay_Gateway::instance()->log('Query failed', WC_Log_Levels::ERROR, ['data' => $args, 'info' => $response->get_error_messages()]);
+            return;
+        }
+
+        if (wp_remote_retrieve_response_code($response) != '200') {
+            RY_WT_WC_ECPay_Gateway::instance()->log('Query HTTP status error', WC_Log_Levels::ERROR, ['data' => $args, 'code' => wp_remote_retrieve_response_code($response)]);
+            return;
+        }
+
+        $body = wp_remote_retrieve_body($response);
+        parse_str($body, $result);
+        if (!is_array($result)) {
+            RY_WT_WC_ECPay_Gateway::instance()->log('Query result parse failed', WC_Log_Levels::WARNING, ['data' => $args, 'result' => wp_remote_retrieve_body($response)]);
+            return;
+        }
+
+        $check_value = $this->generate_check_value($result, $HashKey, $HashIV, 'sha256');
+        if ($check_value !== $result['CheckMacValue']) {
+            RY_WT_WC_ECPay_Gateway::instance()->log('Query request check failed', WC_Log_Levels::WARNING, ['data' => $args, 'result' => $result['CheckMacValue'], 'check_value' => $check_value]);
+            return;
+        }
+
+        RY_WT_WC_ECPay_Gateway::instance()->log('Query data', WC_Log_Levels::INFO, ['data' => $args]);
+
+        return $result;
     }
 
     protected function add_type_info($args, $order, $gateway)

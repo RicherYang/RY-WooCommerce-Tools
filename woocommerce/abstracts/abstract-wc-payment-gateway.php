@@ -10,6 +10,37 @@ abstract class RY_WT_WC_Payment_Gateway extends WC_Payment_Gateway
 
     protected $check_max_amount = 0;
 
+    public function __construct()
+    {
+        add_action('woocommerce_admin_order_data_after_billing_address', [$this, 'admin_payment_info']);
+    }
+
+    public function admin_payment_info($order)
+    {
+        if ($order->get_payment_method() != $this->id) {
+            return;
+        }
+
+        $payment_info = apply_filters('ry_admin_payment_info-' . $order->get_payment_method(), '', $order);
+        $payment_info = apply_filters('ry_admin_payment_info', $payment_info, $order);
+
+        if (!empty($payment_info)) {
+            echo '<h3 style="clear:both">' . esc_html__('Payment details', 'ry-woocommerce-tools') . '</h3><table>';
+            echo wp_kses($payment_info, [
+                'table' => [],
+                'tr' => [],
+                'td' => [],
+                'button' => [
+                    'id' => true,
+                    'type' => true,
+                    'class' => true,
+                    'data-orderid' => true,
+                ],
+            ]);
+            echo '</table>';
+        }
+    }
+
     public function is_available()
     {
         $is_available = ('yes' === $this->enabled);

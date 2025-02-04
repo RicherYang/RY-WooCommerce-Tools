@@ -139,7 +139,6 @@ class RY_WT_WC_ECPay_Gateway_Response extends RY_WT_ECPay_Api
             case 'ry_ecpay_bnpl':
                 $order->update_meta_data('_ecpay_bnpl_TradeNo', $ipn_info['BNPLTradeNo']);
                 $order->update_meta_data('_ecpay_bnpl_Installment', $ipn_info['BNPLInstallment']);
-                $order->payment_complete();
                 break;
         }
     }
