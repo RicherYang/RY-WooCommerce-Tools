@@ -109,12 +109,12 @@ final class RY_WT
         return get_option(self::OPTION_PREFIX . $option, $default);
     }
 
-    public static function update_option($option, $value, $autoload = null): bool
+    public static function update_option($option, $value, $autoload = null)
     {
         return update_option(self::OPTION_PREFIX . $option, $value, $autoload);
     }
 
-    public static function delete_option($option): bool
+    public static function delete_option($option)
     {
         return delete_option(self::OPTION_PREFIX . $option);
     }
