@@ -109,7 +109,7 @@ class RY_WT_WC_ECPay_Gateway_Api extends RY_WT_ECPay_Api
             'TimeStamp' => new DateTime('', new DateTimeZone('Asia/Taipei')),
         ];
 
-        $args['TimeStamp'] = $args['TimeStamp']->format('U');
+        $args['TimeStamp'] = $args['TimeStamp']->getTimestamp();
 
         if (RY_WT_WC_ECPay_Gateway::instance()->is_testmode()) {
             $url = $this->api_test_url['query'];

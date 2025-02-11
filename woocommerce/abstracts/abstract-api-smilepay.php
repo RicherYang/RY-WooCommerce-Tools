@@ -16,6 +16,7 @@ abstract class RY_WT_SmilePay_Api extends RY_WT_Api
 
         return wp_remote_post($url . '?' . http_build_query($args, '', '&'), [
             'timeout' => 30,
+            'user-agent' => apply_filters('http_headers_useragent', 'WordPress/' . get_bloginfo('version')),
         ]);
     }
 

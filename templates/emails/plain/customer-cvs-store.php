@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This template can be overridden by copying it to yourtheme/woocommerce/emails/plain/customer-cvs-store.php
  *

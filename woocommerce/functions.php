@@ -146,3 +146,32 @@ function rywt_ecpay_info_to_name($info)
 
     return $info_name[$info] ?? $info;
 }
+
+function rywt_newebpay_info_to_name($info)
+{
+    static $info_name = [];
+    if (empty($info_name)) {
+        $info_name = [
+            'CREDIT' => _x('CREDIT', 'newebpay info', 'ry-woocommerce-tools'), // 信用卡付款
+            'VACC' => _x('VACC', 'newebpay info', 'ry-woocommerce-tools'), // 銀行 ATM 轉帳付款
+            'WEBATM' => _x('WEBATM', 'newebpay info', 'ry-woocommerce-tools'), // 網路銀行轉帳付款
+            'BARCODE' => _x('BARCODE', 'newebpay info', 'ry-woocommerce-tools'), // 超商條碼繳費
+            'CVS' => _x('CVS', 'newebpay info', 'ry-woocommerce-tools'), // 超商代碼繳費
+            'LINEPAY' => _x('LINEPAY', 'newebpay info', 'ry-woocommerce-tools'), // LINE Pay 付款
+            'ESUNWALLET' => _x('ESUNWALLET', 'newebpay info', 'ry-woocommerce-tools'), // 玉山 Wallet
+            'TAIWANPAY' => _x('TAIWANPAY', 'newebpay info', 'ry-woocommerce-tools'), // 台灣 Pay
+            'CVSCOM' => _x('CVSCOM', 'newebpay info', 'ry-woocommerce-tools'), // 超商取貨付款
+            'FULA' => _x('FULA', 'newebpay info', 'ry-woocommerce-tools'), // Fula 付啦
+
+            'type-CREDIT' => _x('CREDIT', 'newebpay type info', 'ry-woocommerce-tools'), // 台灣發卡機構核發之信用卡
+            'type-FOREIGN' => _x('FOREIGN', 'newebpay type info', 'ry-woocommerce-tools'), // 國外發卡機構核發之卡
+            'type-NTCB' => _x('NTCB', 'newebpay type info', 'ry-woocommerce-tools'), // 國民旅遊卡
+            'type-UNIONPAY' => _x('UNIONPAY', 'newebpay type info', 'ry-woocommerce-tools'), // 銀聯卡
+            'type-APPLEPAY' => _x('APPLEPAY', 'newebpay type info', 'ry-woocommerce-tools'), // ApplePay
+            'type-GOOGLEPAY' => _x('GOOGLEPAY', 'newebpay type info', 'ry-woocommerce-tools'), // GooglePay
+            'type-SAMSUNGPAY' => _x('SAMSUNGPAY', 'newebpay type info', 'ry-woocommerce-tools'), // SamsungPay
+        ];
+    }
+
+    return $info_name[$info] ?? $info;
+}

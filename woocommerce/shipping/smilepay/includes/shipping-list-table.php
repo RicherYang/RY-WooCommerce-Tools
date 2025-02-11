@@ -72,9 +72,11 @@ class RY_SmilePay_Shipping_Info_List_Table extends RY_WT_Shipping_Info_List_Tabl
             echo '<button type="button" class="button ry-smilepay-shipping-no" data-orderid="' . esc_attr($this->order->get_id()) . '" data-id="' . esc_attr($item['ID']) . '">' . esc_html__('Get no', 'ry-woocommerce-tools') . '</button>';
         } else {
             $url = add_query_arg([
+                'action' => 'ry-print-smilepay-shipping',
                 'orderid' => $this->order->get_id(),
                 'id' => $item['ID'],
-            ], admin_url('admin-post.php?action=ry-print-smilepay-shipping'));
+                '_wpnonce' => wp_create_nonce('ry-print-shipping'),
+            ], admin_url('admin-post.php'));
 
             echo '<a class="button" href="' . esc_url($url) . '">' . esc_html__('Print', 'ry-woocommerce-tools') . '</a>';
         }

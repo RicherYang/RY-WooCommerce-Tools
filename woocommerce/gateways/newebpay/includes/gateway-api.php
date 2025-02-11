@@ -6,10 +6,12 @@ class RY_WT_WC_NewebPay_Gateway_Api extends RY_WT_NewebPay_Api
 
     protected $api_test_url = [
         'checkout' => 'https://ccore.newebpay.com/MPG/mpg_gateway',
+        'query' => 'https://ccore.newebpay.com/API/QueryTradeInfo',
     ];
 
     protected $api_url = [
         'checkout' => 'https://core.newebpay.com/MPG/mpg_gateway',
+        'query' => 'https://core.newebpay.com/API/QueryTradeInfo',
     ];
 
     public static function instance(): RY_WT_WC_NewebPay_Gateway_Api
@@ -35,7 +37,7 @@ class RY_WT_WC_NewebPay_Gateway_Api extends RY_WT_NewebPay_Api
             'MerchantID' => $MerchantID,
             'RespondType' => 'JSON',
             'TimeStamp' => new DateTime('now', new DateTimeZone('Asia/Taipei')),
-            'Version' => '2.0',
+            'Version' => '2.2',
             'MerchantOrderNo' => $this->generate_trade_no($order->get_id(), RY_WT::get_option('newebpay_gateway_order_prefix')),
             'Amt' => (int) ceil($order->get_total()),
             'ItemDesc' => $item_name,
@@ -86,7 +88,7 @@ class RY_WT_WC_NewebPay_Gateway_Api extends RY_WT_NewebPay_Api
         $form_data = [
             'MerchantID' => $MerchantID,
             'TradeInfo' => $this->args_encrypt($args, $HashKey, $HashIV),
-            'Version' => '2.0',
+            'Version' => '2.2',
             'EncryptType' => 0,
         ];
         $form_data['TradeSha'] = $this->generate_hash_value($form_data['TradeInfo'], $HashKey, $HashIV);
@@ -109,6 +111,50 @@ class RY_WT_WC_NewebPay_Gateway_Api extends RY_WT_NewebPay_Api
         $this->submit_sctipt('document.getElementById("ry-newebpay-form").submit();');
 
         do_action('ry_newebpay_gateway_checkout', $args, $order, $gateway);
+    }
+
+    public function get_info($order)
+    {
+        list($MerchantID, $HashKey, $HashIV) = RY_WT_WC_NewebPay_Gateway::instance()->get_api_info();
+
+        $args = [
+            'MerchantID' => $MerchantID,
+            'Version' => '1.3',
+            'RespondType' => 'JSON',
+            'TimeStamp' => new DateTime('', new DateTimeZone('Asia/Taipei')),
+            'MerchantOrderNo' => $order->get_meta('_newebpay_MerchantOrderNo', true),
+            'Amt' => (int) ceil($order->get_total()),
+        ];
+        $args['TimeStamp'] = $args['TimeStamp']->getTimestamp();
+        $args['CheckValue'] = $this->generate_check_value($args, $HashKey, $HashIV);
+
+        if (RY_WT_WC_NewebPay_Gateway::instance()->is_testmode()) {
+            $url = $this->api_test_url['query'];
+        } else {
+            $url = $this->api_url['query'];
+        }
+
+        $response = $this->link_server($url, $args);
+        if (is_wp_error($response)) {
+            RY_WT_WC_NewebPay_Gateway::instance()->log('Query failed', WC_Log_Levels::ERROR, ['data' => $args, 'info' => $response->get_error_messages()]);
+            return;
+        }
+
+        if (wp_remote_retrieve_response_code($response) != '200') {
+            RY_WT_WC_NewebPay_Gateway::instance()->log('Query HTTP status error', WC_Log_Levels::ERROR, ['data' => $args, 'code' => wp_remote_retrieve_response_code($response)]);
+            return;
+        }
+
+        $body = wp_remote_retrieve_body($response);
+        $result = json_decode($body, true);
+        if (!is_array($result)) {
+            RY_WT_WC_NewebPay_Gateway::instance()->log('Query result parse failed', WC_Log_Levels::WARNING, ['data' => $args, 'result' => wp_remote_retrieve_body($response)]);
+            return;
+        }
+
+        RY_WT_WC_NewebPay_Gateway::instance()->log('Query data', WC_Log_Levels::INFO, ['data' => $args, 'result' => $result]);
+
+        return $result;
     }
 
     protected function add_type_info($args, $order, $gateway)

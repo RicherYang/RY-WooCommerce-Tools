@@ -50,6 +50,29 @@ abstract class RY_WT_NewebPay_Api extends RY_WT_Api
         return strtoupper($string);
     }
 
+    protected function generate_check_value($args, $HashKey, $HashIV)
+    {
+        $string = http_build_query([
+            'Amt' => $args['Amt'],
+            'MerchantID' => $args['MerchantID'],
+            'MerchantOrderNo' => $args['MerchantOrderNo'],
+        ]);
+        $string = 'IV=' . $HashIV . '&' . $string . '&Key=' . $HashKey;
+        $string = hash('sha256', $string);
+        return strtoupper($string);
+    }
+
+    protected function link_server($url, $args)
+    {
+        wc_set_time_limit(40);
+
+        return wp_remote_post($url, [
+            'timeout' => 30,
+            'body' => $args,
+            'user-agent' => apply_filters('http_headers_useragent', 'WordPress/' . get_bloginfo('version')),
+        ]);
+    }
+
     protected function get_tradeInfo_value($ipn_info)
     {
         if (isset($ipn_info['TradeInfo'])) {

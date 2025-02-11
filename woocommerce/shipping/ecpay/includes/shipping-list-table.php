@@ -37,9 +37,11 @@ class RY_ECPay_Shipping_Info_List_Table extends RY_WT_Shipping_Info_List_Table
     public function column_action($item)
     {
         $url = add_query_arg([
+            'action' => 'ry-print-ecpay-shipping',
             'orderid' => $this->order->get_id(),
             'id' => $item['ID'],
-        ], admin_url('admin-post.php?action=ry-print-ecpay-shipping'));
+            '_wpnonce' => wp_create_nonce('ry-print-shipping'),
+        ], admin_url('admin-post.php'));
 
         echo '<a class="button" href="' . esc_url($url) . '">' . esc_html__('Print', 'ry-woocommerce-tools') . '</a>';
 

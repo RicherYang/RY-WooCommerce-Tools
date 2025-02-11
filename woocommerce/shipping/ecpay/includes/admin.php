@@ -92,6 +92,11 @@ final class RY_WT_WC_ECPay_Shipping_Admin
 
     public function print_shipping()
     {
+        if (!wp_verify_nonce(wp_unslash($_GET['_wpnonce'] ?? ''), 'ry-print-shipping')) {
+            wp_safe_redirect(admin_url('edit.php?post_type=shop_order'));
+            exit();
+        }
+
         $order_ID = wp_unslash($_GET['orderid'] ?? '');
         $logistics_ID = (int) wp_unslash($_GET['id'] ?? 0);
         $print_list = [];
