@@ -8,12 +8,14 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_ECPay_Api
         'map' => 'https://logistics-stage.ecpay.com.tw/Express/map',
         'create' => 'https://logistics-stage.ecpay.com.tw/Express/Create',
         'print' => 'https://logistics-stage.ecpay.com.tw/Express/v2/PrintTradeDocument',
+        'query' => 'https://logistics-stage.ecpay.com.tw/Helper/QueryLogisticsTradeInfo/V5',
     ];
 
     protected $api_url = [
         'map' => 'https://logistics.ecpay.com.tw/Express/map',
         'create' => 'https://logistics.ecpay.com.tw/Express/Create',
         'print' => 'https://logistics.ecpay.com.tw/Express/v2/PrintTradeDocument',
+        'query' => 'https://logistics.ecpay.com.tw/Helper/QueryLogisticsTradeInfo/V5',
     ];
 
     public static function instance(): RY_WT_WC_ECPay_Shipping_Api
@@ -298,5 +300,50 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_ECPay_Api
         }
 
         echo wp_remote_retrieve_body($response);
+    }
+
+    public function get_info($info_ID)
+    {
+        list($MerchantID, $HashKey, $HashIV, $cvs_type) = RY_WT_WC_ECPay_Shipping::instance()->get_api_info();
+
+        $args = [
+            'MerchantID' => $MerchantID,
+            'AllPayLogisticsID' => $info_ID,
+            'TimeStamp' => new DateTime('', new DateTimeZone('Asia/Taipei')),
+        ];
+        $args['TimeStamp'] = $args['TimeStamp']->getTimestamp();
+
+        if (RY_WT_WC_ECPay_Shipping::instance()->is_testmode()) {
+            $url = $this->api_test_url['query'];
+        } else {
+            $url = $this->api_url['query'];
+        }
+        $args = $this->add_check_value($args, $HashKey, $HashIV, 'md5');
+
+        $response = $this->link_server($url, $args);
+        if (is_wp_error($response)) {
+            RY_WT_WC_ECPay_Shipping::instance()->log('Query failed', WC_Log_Levels::ERROR, ['data' => $args, 'info' => $response->get_error_messages()]);
+            return;
+        }
+
+        if (wp_remote_retrieve_response_code($response) != '200') {
+            RY_WT_WC_ECPay_Shipping::instance()->log('Query HTTP status error', WC_Log_Levels::ERROR, ['data' => $args, 'code' => wp_remote_retrieve_response_code($response)]);
+            return;
+        }
+
+        $body = wp_remote_retrieve_body($response);
+        parse_str($body, $result);
+        if (!is_array($result)) {
+            RY_WT_WC_ECPay_Shipping::instance()->log('Query result parse failed', WC_Log_Levels::WARNING, ['data' => $args, 'result' => wp_remote_retrieve_body($response)]);
+            return;
+        }
+
+        $check_value = $this->generate_check_value($result, $HashKey, $HashIV, 'md5');
+        if ($check_value !== $result['CheckMacValue']) {
+            RY_WT_WC_ECPay_Shipping::instance()->log('Query request check failed', WC_Log_Levels::WARNING, ['data' => $args, 'result' => $result['CheckMacValue'], 'check_value' => $check_value]);
+            return;
+        }
+
+        return $result;
     }
 }

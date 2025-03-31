@@ -136,5 +136,6 @@ class RY_WT_Shipping_Info_List_Table extends WP_List_Table
     public function column_action($item)
     {
         echo '<button type="button" class="button ry-delete-shipping-info" data-orderid="' . esc_attr($this->order->get_id()) . '" data-id="' . esc_attr($item['ID']) . '">' . esc_html__('Delete', 'ry-woocommerce-tools') . '</button>';
+        do_action('ry_shipping_info_list-column_action', $this->order, $item);
     }
 }

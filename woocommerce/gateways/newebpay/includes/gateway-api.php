@@ -152,8 +152,6 @@ class RY_WT_WC_NewebPay_Gateway_Api extends RY_WT_NewebPay_Api
             return;
         }
 
-        RY_WT_WC_NewebPay_Gateway::instance()->log('Query data', WC_Log_Levels::INFO, ['data' => $args, 'result' => $result]);
-
         return $result;
     }
 
