@@ -39,9 +39,9 @@ class RY_NewebPay_Gateway_Credit_Installment extends RY_WT_WC_NewebPay_Payment_G
 
     public function process_payment($order_ID)
     {
-        if (isset($_POST['newebpay_number_of_periods'])) {
+        if (isset($_POST['newebpay_number_of_periods'])) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
             $order = wc_get_order($order_ID);
-            $order->update_meta_data('_newebpay_payment_number_of_periods', (int) $_POST['newebpay_number_of_periods']);
+            $order->update_meta_data('_newebpay_payment_number_of_periods', (int) $_POST['newebpay_number_of_periods']); // phpcs:ignore WordPress.Security.NonceVerification.Missing
             $order->save();
         }
 

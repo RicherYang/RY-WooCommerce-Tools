@@ -80,7 +80,7 @@ if (!class_exists('RY_Shipping_Email_Customer_CVS_Store', false)) {
 
         public function get_default_additional_content()
         {
-            return __('We look forward to fulfilling your order soon.', 'woocommerce');
+            return __('We look forward to fulfilling your order soon.', 'ry-woocommerce-tools');
         }
     }
 }

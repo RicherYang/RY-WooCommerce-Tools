@@ -2,9 +2,9 @@
 Contributors: fantasyworld
 Donate link: https://www.paypal.me/RicherYang
 Tags: woocommerce, payment, gateway, shipping
-Requires at least: 6.5
+Requires at least: 6.6
 Requires PHP: 8.0
-Tested up to: 6.7
+Tested up to: 6.8
 Stable tag: 3.5.5
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.txt
@@ -25,7 +25,7 @@ You can contribute to this plugin to [GitHub repository](https://github.com/Rich
 = Minimum Requirements =
 
 * PHP 8.0+
-* WordPress 6.5+
+* WordPress 6.6+
 * WooCommerce 8.0+
 
 == Frequently Asked Questions ==

@@ -51,7 +51,7 @@ abstract class RY_WT_Shipping_Model extends RY_WT_Model
         if (did_action('woocommerce_checkout_process')) {
             $used = false;
             $used_cvs = false;
-            $shipping_method = isset($_POST['shipping_method']) ? wc_clean($_POST['shipping_method']) : [];
+            $shipping_method = wp_unslash($_POST['shipping_method'] ?? []); // phpcs:ignore WordPress.Security.NonceVerification.Missing , WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
             foreach ($shipping_method as $method) {
                 $method_ID = strstr($method, ':', true);
                 if ($method_ID && isset(static::$support_methods[$method_ID])) {

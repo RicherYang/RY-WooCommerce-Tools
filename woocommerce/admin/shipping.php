@@ -50,17 +50,17 @@ final class RY_WT_WC_Admin_Shipping
 
     public function save_order_update($order_ID)
     {
-        if (isset($_POST['_shipping_cvs_store_ID'])) {
+        if (isset($_POST['_shipping_cvs_store_ID'])) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
             $order = wc_get_order($order_ID);
             $shipping_method = $this->get_ry_shipping_method($order);
             if ($shipping_method && str_contains($shipping_method, '_cvs')) {
                 remove_action('woocommerce_update_order', [$this, 'save_order_update']);
 
-                $order->update_meta_data('_shipping_cvs_store_ID', wc_clean(wp_unslash($_POST['_shipping_cvs_store_ID'] ?? '')));
-                $order->update_meta_data('_shipping_cvs_store_name', wc_clean(wp_unslash($_POST['_shipping_cvs_store_name'] ?? '')));
-                $order->update_meta_data('_shipping_cvs_store_address', wc_clean(wp_unslash($_POST['_shipping_cvs_store_address'] ?? '')));
-                $order->update_meta_data('_shipping_cvs_store_telephone', wc_clean(wp_unslash($_POST['_shipping_cvs_store_telephone'] ?? '')));
-                $order->set_shipping_address_1(wc_clean(wp_unslash($_POST['_shipping_cvs_store_address'] ?? '')));
+                $order->update_meta_data('_shipping_cvs_store_ID', wp_unslash($_POST['_shipping_cvs_store_ID'] ?? '')); // phpcs:ignore WordPress.Security.NonceVerification.Missing , WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+                $order->update_meta_data('_shipping_cvs_store_name', wp_unslash($_POST['_shipping_cvs_store_name'] ?? '')); // phpcs:ignore WordPress.Security.NonceVerification.Missing , WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+                $order->update_meta_data('_shipping_cvs_store_address', wp_unslash($_POST['_shipping_cvs_store_address'] ?? '')); // phpcs:ignore WordPress.Security.NonceVerification.Missing , WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+                $order->update_meta_data('_shipping_cvs_store_telephone', wp_unslash($_POST['_shipping_cvs_store_telephone'] ?? '')); // phpcs:ignore WordPress.Security.NonceVerification.Missing , WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+                $order->set_shipping_address_1(wp_unslash($_POST['_shipping_cvs_store_address'] ?? '')); // phpcs:ignore WordPress.Security.NonceVerification.Missing , WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
                 $order->save();
 
                 add_action('woocommerce_update_order', [$this, 'save_order_update']);
@@ -114,7 +114,7 @@ final class RY_WT_WC_Admin_Shipping
         if ($object->has_status(['ry-at-cvs'])) {
             $actions['complete'] = [
                 'url' => wp_nonce_url(admin_url('admin-ajax.php?action=woocommerce_mark_order_status&status=completed&order_id=' . $object->get_id()), 'woocommerce-mark-order-status'),
-                'name' => __('Complete', 'woocommerce'),
+                'name' => __('Complete', 'ry-woocommerce-tools'),
                 'action' => 'complete',
             ];
         }
@@ -144,8 +144,8 @@ final class RY_WT_WC_Admin_Shipping
     {
         check_ajax_referer('delete-shipping-info');
 
-        $order_ID = (int) wp_unslash($_POST['orderid'] ?? 0);
-        $logistics_ID = wp_unslash($_POST['id'] ?? '');
+        $order_ID = (int) wp_unslash($_POST['orderid'] ?? ''); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+        $logistics_ID = wp_unslash($_POST['id'] ?? ''); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 
         $order = wc_get_order($order_ID);
         if (!empty($order)) {

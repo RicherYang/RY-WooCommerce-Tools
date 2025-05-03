@@ -50,11 +50,12 @@ final class RY_WT
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/abstracts/abstract-wc-payment-gateway.php';
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/abstracts/abstract-wc-shipping-method.php';
 
+        include_once RY_WT_PLUGIN_DIR . 'woocommerce/functions.php';
+
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/account.php';
         RY_WT_WC_Account::instance();
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/countries.php';
         RY_WT_WC_Countries::instance();
-        include_once RY_WT_PLUGIN_DIR . 'woocommerce/functions.php';
 
         if (is_admin()) {
             include_once RY_WT_PLUGIN_DIR . 'woocommerce/admin/admin.php';

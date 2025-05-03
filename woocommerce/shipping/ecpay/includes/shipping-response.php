@@ -16,7 +16,7 @@ class RY_WT_WC_ECPay_Shipping_Response extends RY_WT_ECPay_Api
 
     protected function do_init(): void
     {
-        if ('ry-ecpay-map-redirect' === wp_unslash($_GET['ry-ecpay-map-redirect'] ?? '')) {
+        if ('ry-ecpay-map-redirect' === wp_unslash($_GET['ry-ecpay-map-redirect'] ?? '')) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended , WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
             do_action('woocommerce_api_ry_ecpay_map_callback');
             $this->map_redirect();
         }
@@ -51,10 +51,10 @@ class RY_WT_WC_ECPay_Shipping_Response extends RY_WT_ECPay_Api
     public function map_redirect()
     {
         $cvs_info = [];
-        if (!empty($_POST)) {
+        if (!empty($_POST)) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
             foreach (['LogisticsSubType', 'CVSStoreID', 'CVSStoreName', 'CVSAddress', 'CVSTelephone', 'CVSOutSide'] as $key) {
-                if (isset($_POST[$key])) {
-                    $cvs_info[$key] = wp_unslash($_POST[$key]);
+                if (isset($_POST[$key])) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
+                    $cvs_info[$key] = wp_unslash($_POST[$key]); // phpcs:ignore WordPress.Security.NonceVerification.Missing , WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
                 }
             }
         }
@@ -64,7 +64,7 @@ class RY_WT_WC_ECPay_Shipping_Response extends RY_WT_ECPay_Api
             exit();
         }
 
-        $extra_data = wp_unslash($_POST['ExtraData'] ?? '');
+        $extra_data = wp_unslash($_POST['ExtraData'] ?? ''); // phpcs:ignore WordPress.Security.NonceVerification.Missing , WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
         if (str_starts_with($extra_data, 'ry')) {
             if (!did_action('woocommerce_after_register_post_type')) {
                 return;
@@ -85,20 +85,18 @@ class RY_WT_WC_ECPay_Shipping_Response extends RY_WT_ECPay_Api
         add_filter('woocommerce_set_cookie_enabled', '__return_false');
         remove_all_actions('shutdown');
 
-        echo '<!doctype html><html ' . get_language_attributes() . '><head charset="' . get_bloginfo('charset', 'display') . '"><title>AutoSubmitForm</title></head><body>';
-        echo '<p style="margin-top:100px;text-align:center">' . esc_html__('Transaction data processing… DO NOT refresh or close the webpage.', 'ry-woocommerce-tools') . '</p>';
-        echo '<form method="post" id="ry-ecpay-map-redirect" action="' . esc_url(wc_get_checkout_url()) . '">';
-        echo '<input type="hidden" name="ry-ecpay-cvsmap-info" value="' . esc_attr(rtrim(base64_encode(wp_json_encode($cvs_info)), '=')) . '">';
-        echo '</form>';
-        echo '<script type="text/javascript">document.getElementById("ry-ecpay-map-redirect").submit();</script>';
-        echo '</body></html>';
+        $redirect_url = wc_get_checkout_url();
+        $redirect_data = [
+            'ry-ecpay-cvsmap-info' => rtrim(base64_encode(wp_json_encode($cvs_info)), '='),
+        ];
+        include RY_WT_PLUGIN_DIR . 'templates/auto-redirect.php';
         exit();
     }
 
     public function check_shipping_callback()
     {
-        if (!empty($_POST)) {
-            $ipn_info = wp_unslash($_POST);
+        if (!empty($_POST)) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
+            $ipn_info = wp_unslash($_POST); // phpcs:ignore WordPress.Security.NonceVerification.Missing
             if ($this->ipn_request_is_valid($ipn_info)) {
                 do_action('valid_ecpay_shipping_request', $ipn_info);
             } else {

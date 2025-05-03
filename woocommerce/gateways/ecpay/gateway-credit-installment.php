@@ -43,9 +43,9 @@ class RY_ECPay_Gateway_Credit_Installment extends RY_WT_WC_ECPay_Payment_Gateway
 
     public function process_payment($order_ID)
     {
-        if (isset($_POST['ecpay_number_of_periods'])) {
+        if (isset($_POST['ecpay_number_of_periods'])) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
             $order = wc_get_order($order_ID);
-            $order->update_meta_data('_ecpay_payment_number_of_periods', (int) $_POST['ecpay_number_of_periods']);
+            $order->update_meta_data('_ecpay_payment_number_of_periods', (int) $_POST['ecpay_number_of_periods']); // phpcs:ignore WordPress.Security.NonceVerification.Missing
             $order->save();
         }
 

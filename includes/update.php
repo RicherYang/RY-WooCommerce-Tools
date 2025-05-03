@@ -17,14 +17,20 @@ final class RY_WT_Update
         }
 
         if (version_compare($now_version, '1.1.2', '<')) {
-            @set_time_limit(300);
+            @set_time_limit(300); // phpcs:ignore Squiz.PHP.DiscouragedFunctions.Discouraged
 
             if (!empty($now_version)) {
                 include_once RY_WT_PLUGIN_DIR . 'woocommerce/shipping/ecpay/shipping.php';
 
-                $wpdb->update($wpdb->postmeta, ['meta_key' => '_ecpay_shipping_info'], ['meta_key' => '_shipping_cvs_info']);
+                // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery , WordPress.DB.DirectDatabaseQuery.NoCaching
+                $wpdb->update($wpdb->postmeta, [
+                    'meta_key' => '_ecpay_shipping_info', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+                ], [
+                    'meta_key' => '_shipping_cvs_info', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+                ]);
 
                 $cvs_type = RY_WT::get_option('ecpay_shipping_cvs_type');
+                // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery , WordPress.DB.DirectDatabaseQuery.NoCaching
                 $meta_rows = $wpdb->get_results("SELECT post_id FROM {$wpdb->postmeta} WHERE meta_key = '_ecpay_shipping_info'");
                 foreach ($meta_rows as $meta_row) {
                     if ($order = wc_get_order($meta_row->post_id)) {

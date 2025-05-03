@@ -188,8 +188,8 @@ final class RY_WT_WC_Shipping
             if (isset($fields['shipping_phone']) && false === $fields['shipping_phone']['required']) {
                 wp_localize_script('ry-checkout', 'RyCheckoutParams', [
                     'i18n' => [
-                        'required' => '<abbr class="required" title="' . esc_attr__('required', 'woocommerce') . '">*</abbr>',
-                        'optional' => '<span class="optional">(' . esc_html__('optional', 'woocommerce') . ')</span>',
+                        'required' => '<abbr class="required" title="' . esc_attr__('required', 'ry-woocommerce-tools') . '">*</abbr>',
+                        'optional' => '<span class="optional">(' . esc_html__('optional', 'ry-woocommerce-tools') . ')</span>',
                     ],
                 ]);
             }

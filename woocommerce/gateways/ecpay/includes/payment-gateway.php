@@ -48,7 +48,7 @@ abstract class RY_WT_WC_ECPay_Payment_Gateway extends RY_WT_WC_Payment_Gateway
 
     public function get_icon()
     {
-        $icon_html = '<img src="' . esc_attr($this->get_icon_url()) . '" alt="' . esc_attr__('ECPay', 'ry-woocommerce-tools') . '">';
+        $icon_html = '<img src="' . esc_attr($this->get_icon_url()) . '" alt="' . esc_attr__('ECPay', 'ry-woocommerce-tools') . '">'; // phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage
 
         return apply_filters('woocommerce_gateway_icon', $icon_html, $this->id);
     }

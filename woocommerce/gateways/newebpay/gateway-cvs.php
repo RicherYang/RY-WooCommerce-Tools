@@ -33,14 +33,16 @@ class RY_NewebPay_Gateway_Cvs extends RY_WT_WC_NewebPay_Payment_Gateway
 
     public function process_admin_options()
     {
-        if (isset($_POST['woocommerce_ry_newebpay_cvs_expire_date'])) {
-            $_POST['woocommerce_ry_newebpay_cvs_expire_date'] = (int) $_POST['woocommerce_ry_newebpay_cvs_expire_date'];
-            if ($_POST['woocommerce_ry_newebpay_cvs_expire_date'] < 1 || $_POST['woocommerce_ry_newebpay_cvs_expire_date'] > 180) {
-                $_POST['woocommerce_ry_newebpay_cvs_expire_date'] = 7;
+        $this->set_post_data(wp_unslash($_POST)); // phpcs:ignore WordPress.Security.NonceVerification.Missing
+
+        if (isset($this->data['woocommerce_ry_newebpay_cvs_expire_date'])) {
+            $this->data['woocommerce_ry_newebpay_cvs_expire_date'] = (int) $this->data['woocommerce_ry_newebpay_cvs_expire_date'];
+            if ($this->data['woocommerce_ry_newebpay_cvs_expire_date'] < 1 || $this->data['woocommerce_ry_newebpay_cvs_expire_date'] > 180) {
+                $this->data['woocommerce_ry_newebpay_cvs_expire_date'] = 7;
                 WC_Admin_Settings::add_error(__('Payment expire date out of range. Set as default value.', 'ry-woocommerce-tools'));
             }
         } else {
-            $_POST['woocommerce_ry_newebpay_cvs_expire_date'] = 7;
+            $this->data['woocommerce_ry_newebpay_cvs_expire_date'] = 7;
         }
 
         parent::process_admin_options();

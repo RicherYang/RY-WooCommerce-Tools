@@ -31,8 +31,8 @@ class RY_WT_WC_NewebPay_Gateway_Response extends RY_WT_WC_NewebPay_Gateway_Api
 
     public function check_callback()
     {
-        if (!empty($_POST)) {
-            $ipn_info = wp_unslash($_POST);
+        if (!empty($_POST)) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
+            $ipn_info = wp_unslash($_POST); // phpcs:ignore WordPress.Security.NonceVerification.Missing
             if ($this->ipn_request_is_valid($ipn_info)) {
                 do_action('valid_newebpay_gateway_request', $ipn_info);
             } else {

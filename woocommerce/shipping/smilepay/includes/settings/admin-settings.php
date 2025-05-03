@@ -7,11 +7,11 @@ return [
         'type' => 'title',
     ],
     [
-        'title' => __('Debug log', 'woocommerce'),
+        'title' => __('Debug log', 'ry-woocommerce-tools'),
         'id' => RY_WT::OPTION_PREFIX . 'smilepay_shipping_log',
         'type' => 'checkbox',
         'default' => 'no',
-        'desc' => __('Enable logging', 'woocommerce') . '<br>'
+        'desc' => __('Enable logging', 'ry-woocommerce-tools') . '<br>'
             . sprintf(
                 /* translators: %s: Path of log file */
                 __('Log API / IPN information, inside %s', 'ry-woocommerce-tools'),

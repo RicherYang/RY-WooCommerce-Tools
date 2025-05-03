@@ -2,7 +2,7 @@
 
 return [
     'enabled' => [
-        'title' => __('Enable/Disable', 'woocommerce'),
+        'title' => __('Enable/Disable', 'ry-woocommerce-tools'),
         'label' => sprintf(
             /* translators: %s: Gateway method title */
             __('Enable %s', 'ry-woocommerce-tools'),
@@ -12,20 +12,20 @@ return [
         'default' => 'no',
     ],
     'title' => [
-        'title' => __('Title', 'woocommerce'),
+        'title' => __('Title', 'ry-woocommerce-tools'),
         'type' => 'text',
         'default' => $this->method_title,
         'placeholder' => $this->method_title,
-        'description' => __('This controls the title which the user sees during checkout.', 'woocommerce'),
+        'description' => __('This controls the title which the user sees during checkout.', 'ry-woocommerce-tools'),
         'desc_tip' => true,
     ],
     'description' => [
-        'title' => __('Description', 'woocommerce'),
+        'title' => __('Description', 'ry-woocommerce-tools'),
         'type' => 'text',
         'default' => $this->order_button_text,
         'placeholder' => $this->order_button_text,
         'desc_tip' => true,
-        'description' => __('This controls the description which the user sees during checkout.', 'woocommerce'),
+        'description' => __('This controls the description which the user sees during checkout.', 'ry-woocommerce-tools'),
     ],
     'min_amount' => [
         'title' => __('Minimum order amount', 'ry-woocommerce-tools'),

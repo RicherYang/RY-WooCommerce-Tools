@@ -24,7 +24,7 @@ abstract class RY_WT_SmilePay_Api extends RY_WT_Api
     {
         if ($change_convert) {
             if (function_exists('mb_convert_encoding')) {
-                foreach ($_POST as $key => $value) {
+                foreach ($_POST as $key => $value) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
                     if (!is_array($value)) {
                         $_POST[$key] = mb_convert_encoding($value, 'UTF-8', 'BIG-5');
                     } else {
@@ -35,7 +35,7 @@ abstract class RY_WT_SmilePay_Api extends RY_WT_Api
         }
 
         $ipn_info = [];
-        foreach ($_POST as $key => $value) {
+        foreach ($_POST as $key => $value) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
             if (!is_array($value)) {
                 $ipn_info[$key] = wp_unslash($value);
             }

@@ -20,9 +20,9 @@ final class RY_WT_Cron
         $ntp_server_url = apply_filters('ry_ntp_server_url', 'udp://time.google.com:123');
         $socket = stream_socket_client($ntp_server_url, $errno, $errstr);
         if ($socket) {
-            fwrite($socket, chr(0x1B) . str_repeat(chr(0x00), 47));
-            $response = fread($socket, 48);
-            fclose($socket);
+            fwrite($socket, chr(0x1B) . str_repeat(chr(0x00), 47)); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fwrite
+            $response = fread($socket, 48); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fread
+            fclose($socket); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose
             if (!empty($response)) {
                 $data = @unpack('N12', $response);
                 if (is_array($data) && isset($data[9])) {
@@ -45,7 +45,7 @@ final class RY_WT_Cron
         $args = [
             'type' => 'shop_order',
             'return' => 'ids',
-            'meta_query' => [[
+            'meta_query' => [[ // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
                 'key' => ['_ecpay_shipping_info', '_newebpay_shipping_info', '_smilepay_shipping_info'],
                 'compare_key' => 'IN',
                 'value' => 'LogisticsType',

@@ -45,7 +45,7 @@ final class RY_WT_WC_Admin
 
         $hide_save_button = true;
 
-        if (isset($_POST['ryt_check_time']) && 'ryt_check_time' === $_POST['ryt_check_time']) {
+        if (isset($_POST['ryt_check_time']) && 'ryt_check_time' === $_POST['ryt_check_time']) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
             RY_WT_Cron::check_ntp_time();
             printf(
                 '<div class="notice notice-success is-dismissible"><p><strong>%s</strong></p></div>',
