@@ -16,7 +16,7 @@ class RY_WT_WC_ECPay_Shipping_Response extends RY_WT_ECPay_Api
 
     protected function do_init(): void
     {
-        if ('ry-ecpay-map-redirect' === wp_unslash($_GET['ry-ecpay-map-redirect'] ?? '')) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended , WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+        if ('ry-ecpay-map-redirect' === ($_GET['ry-ecpay-map-redirect'] ?? '')) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended , WordPress.Security.ValidatedSanitizedInput.MissingUnslash , WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
             do_action('woocommerce_api_ry_ecpay_map_callback');
             $this->map_redirect();
         }
@@ -54,7 +54,7 @@ class RY_WT_WC_ECPay_Shipping_Response extends RY_WT_ECPay_Api
         if (!empty($_POST)) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
             foreach (['LogisticsSubType', 'CVSStoreID', 'CVSStoreName', 'CVSAddress', 'CVSTelephone', 'CVSOutSide'] as $key) {
                 if (isset($_POST[$key])) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
-                    $cvs_info[$key] = wp_unslash($_POST[$key]); // phpcs:ignore WordPress.Security.NonceVerification.Missing , WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+                    $cvs_info[$key] = sanitize_text_field(wp_unslash($_POST[$key])); // phpcs:ignore WordPress.Security.NonceVerification.Missing
                 }
             }
         }
@@ -64,7 +64,7 @@ class RY_WT_WC_ECPay_Shipping_Response extends RY_WT_ECPay_Api
             exit();
         }
 
-        $extra_data = wp_unslash($_POST['ExtraData'] ?? ''); // phpcs:ignore WordPress.Security.NonceVerification.Missing , WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+        $extra_data = sanitize_text_field(wp_unslash($_POST['ExtraData'] ?? '')); // phpcs:ignore WordPress.Security.NonceVerification.Missing
         if (str_starts_with($extra_data, 'ry')) {
             if (!did_action('woocommerce_after_register_post_type')) {
                 return;

@@ -34,16 +34,14 @@ class RY_SmilePay_Gateway_Cvs_711 extends RY_WT_WC_SmilePay_Payment_Gateway
 
     public function process_admin_options()
     {
-        $this->set_post_data(wp_unslash($_POST)); // phpcs:ignore WordPress.Security.NonceVerification.Missing
-
-        if (isset($this->data['woocommerce_ry_smilepay_cvs_711_expire_date'])) {
-            $this->data['woocommerce_ry_smilepay_cvs_711_expire_date'] = (int) $this->data['woocommerce_ry_smilepay_cvs_711_expire_date'];
-            if ($this->data['woocommerce_ry_smilepay_cvs_711_expire_date'] < 120 || $this->data['woocommerce_ry_smilepay_cvs_711_expire_date'] > 10080) {
-                $this->data['woocommerce_ry_smilepay_cvs_711_expire_date'] = 4320;
+        if (isset($_POST['woocommerce_ry_smilepay_cvs_711_expire_date'])) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
+            $_POST['woocommerce_ry_smilepay_cvs_711_expire_date'] = intval($_POST['woocommerce_ry_smilepay_cvs_711_expire_date']); // phpcs:ignore WordPress.Security.NonceVerification.Missing
+            if ($_POST['woocommerce_ry_smilepay_cvs_711_expire_date'] < 120 || $_POST['woocommerce_ry_smilepay_cvs_711_expire_date'] > 10080) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
+                $_POST['woocommerce_ry_smilepay_cvs_711_expire_date'] = 4320; // phpcs:ignore WordPress.Security.NonceVerification.Missing
                 WC_Admin_Settings::add_error(__('Payment expire date out of range. Set as default value.', 'ry-woocommerce-tools'));
             }
         } else {
-            $this->data['woocommerce_ry_smilepay_cvs_711_expire_date'] = 4320;
+            $_POST['woocommerce_ry_smilepay_cvs_711_expire_date'] = 4320; // phpcs:ignore WordPress.Security.NonceVerification.Missing
         }
 
         parent::process_admin_options();

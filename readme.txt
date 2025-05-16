@@ -5,7 +5,7 @@ Tags: woocommerce, payment, gateway, shipping
 Requires at least: 6.6
 Requires PHP: 8.0
 Tested up to: 6.8
-Stable tag: 3.5.5
+Stable tag: 3.5.6
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.txt
 
@@ -39,6 +39,9 @@ Please visit the [plugin forum page](https://ry-plugin.com/ry-woocommerce-tools/
 3. SmilePay gateway global settings.
 
 == Changelog ==
+
+= 3.5.6 - 2025-05-15 =
+* 調整 - 配合 Plugin check 檢查結果調整與修正。
 
 = 3.5.5 - 2025-03-31 =
 * 調整 - 調整綠界資訊內容。

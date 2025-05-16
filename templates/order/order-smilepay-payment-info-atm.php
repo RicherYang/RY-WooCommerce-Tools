@@ -47,8 +47,7 @@ if ('2' !== $order->get_meta('_smilepay_payment_type')) {
                     <?php esc_html_e('ATM Bank account', 'ry-woocommerce-tools'); ?>
                 </td>
                 <td class="ry-atm-account">
-                    <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped?>
-                    <span><?php echo wordwrap(esc_html($order->get_meta('_smilepay_atm_vAccount')), 4, '</span><span>', true); ?></span>
+                    <?php echo wp_kses('<span>' . wordwrap($order->get_meta('_smilepay_atm_vAccount'), 4, '</span><span>', true) . '</span>', ['span' => []]); ?>
                 </td>
             </tr>
             <tr>

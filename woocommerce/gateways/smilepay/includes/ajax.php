@@ -28,7 +28,7 @@ final class RY_WT_WC_SmilePay_Gateway_Ajax
     {
         check_ajax_referer('smilepay-getcode');
 
-        $order_ID = (int) wp_unslash($_GET['id'] ?? ''); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+        $order_ID = intval($_GET['id'] ?? '');
         $order = wc_get_order($order_ID);
         $url = false;
         if ($order) {
@@ -37,7 +37,7 @@ final class RY_WT_WC_SmilePay_Gateway_Ajax
         if (!$url) {
             $url = $order->get_checkout_order_received_url();
         }
-        echo $url; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+        echo esc_url_raw($url);
 
         wp_die();
     }
@@ -46,7 +46,7 @@ final class RY_WT_WC_SmilePay_Gateway_Ajax
     {
         check_ajax_referer('smilepay-getcode');
 
-        $order_ID = (int) wp_unslash($_GET['id'] ?? ''); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+        $order_ID = intval($_GET['id'] ?? '');
         $order = wc_get_order($order_ID);
         $url = false;
         if ($order) {
@@ -55,7 +55,7 @@ final class RY_WT_WC_SmilePay_Gateway_Ajax
         if (!$url) {
             $url = $order->get_checkout_order_received_url();
         }
-        echo $url; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+        echo esc_url_raw($url);
 
         wp_die();
     }

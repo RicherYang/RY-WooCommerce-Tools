@@ -30,8 +30,8 @@ abstract class RY_WT_Api
 
     public function gateway_return()
     {
-        $order_key = wp_unslash($_GET['key'] ?? ''); // phpcs:ignore WordPress.Security.NonceVerification.Recommended , WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-        $order_ID = (int) wp_unslash($_GET['id'] ?? ''); // phpcs:ignore WordPress.Security.NonceVerification.Recommended , WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+        $order_key = sanitize_locale_name($_GET['key'] ?? ''); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+        $order_ID = intval($_GET['id'] ?? ''); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
         $order = wc_get_order($order_ID);
         if ($order && hash_equals($order->get_order_key(), $order_key)) {
             $return_url = $order->get_checkout_order_received_url();

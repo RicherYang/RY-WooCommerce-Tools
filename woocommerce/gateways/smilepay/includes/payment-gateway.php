@@ -17,11 +17,6 @@ abstract class RY_WT_WC_SmilePay_Payment_Gateway extends RY_WT_WC_Payment_Gatewa
         parent::__construct();
     }
 
-    public function process_admin_options()
-    {
-        parent::process_admin_options();
-    }
-
     public function receipt_page($order_ID)
     {
         if ($order = wc_get_order($order_ID)) {
