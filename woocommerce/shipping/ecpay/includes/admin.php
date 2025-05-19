@@ -97,7 +97,7 @@ final class RY_WT_WC_ECPay_Shipping_Admin
             exit();
         }
 
-        $order_ID = intval($_GET['orderid'] ?? '');
+        $order_ID = sanitize_text_field(wp_unslash($_GET['orderid'] ?? ''));
         $logistics_ID = sanitize_locale_name($_GET['id'] ?? '');
         $print_list = [];
 
