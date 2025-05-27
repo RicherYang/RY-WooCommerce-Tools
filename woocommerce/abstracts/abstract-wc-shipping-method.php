@@ -92,7 +92,7 @@ abstract class RY_WT_WC_Shipping_Method extends WC_Shipping_Method
         $rate = $this->add_rate_meta_data($rate);
 
         if ($this->cost_offisland > 0) {
-            $cvs_info = (array) WC()->session->get('ry-ecpay-cvs-info', []);
+            $cvs_info = (array) WC()->session->get('ry_ecpay_cvs_info', []);
             if (isset($cvs_info['CVSOutSide']) && $cvs_info['CVSOutSide']) {
                 $rate['cost'] += $this->cost_offisland;
             }

@@ -16,15 +16,14 @@ class RY_WT_WC_ECPay_Shipping_Response extends RY_WT_ECPay_Api
 
     protected function do_init(): void
     {
-        if ('ry-ecpay-map-redirect' === ($_GET['ry-ecpay-map-redirect'] ?? '')) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended , WordPress.Security.ValidatedSanitizedInput.MissingUnslash , WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-            do_action('woocommerce_api_ry_ecpay_map_callback');
-            $this->map_redirect();
-        }
-
         add_action('woocommerce_api_request', [$this, 'set_do_die']);
         add_action('woocommerce_api_ry_ecpay_map_callback', [$this, 'map_redirect']);
         add_action('woocommerce_api_ry_ecpay_shipping_callback', [$this, 'check_shipping_callback']);
         add_action('valid_ecpay_shipping_request', [$this, 'shipping_callback']);
+
+        if ('ry-ecpay-map-redirect' === ($_GET['ry-ecpay-map-redirect'] ?? '')) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended , WordPress.Security.ValidatedSanitizedInput.MissingUnslash , WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+            do_action('woocommerce_api_ry_ecpay_map_callback');
+        }
 
         if ('yes' === RY_WT::get_option('ecpay_shipping_auto_order_status', 'yes')) {
             add_action('ry_ecpay_shipping_response_status_2063', [$this, 'shipping_at_cvs'], 10, 2);

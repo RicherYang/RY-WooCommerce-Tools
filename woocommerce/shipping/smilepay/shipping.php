@@ -71,7 +71,8 @@ final class RY_WT_WC_SmilePay_Shipping extends RY_WT_Shipping_Model
             $chosen_shipping = wc_get_chosen_shipping_method_ids();
             $chosen_shipping = array_intersect($chosen_shipping, array_keys(self::$support_methods));
             if (count($chosen_shipping)) {
-                if (str_contains($chosen_shipping[0], '_cvs')) {
+                $chosen_shipping = array_shift($chosen_shipping);
+                if (str_contains($chosen_shipping, '_cvs')) {
                     foreach ($_available_gateways as $key => $gateway) {
                         if (str_starts_with($key, 'ry_smilepay_')) {
                             continue;

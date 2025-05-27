@@ -136,6 +136,7 @@ final class RY_WT_WC_ECPay_Shipping extends RY_WT_Shipping_Model
             $item->delete_meta_data('LogisticsSubType');
             $item->delete_meta_data('LogisticsInfo');
         }
+        WC()->session->set('ry_ecpay_cvs_info', []);
     }
 
     public function save_order_cvs_info($order, $data)
@@ -181,6 +182,11 @@ final class RY_WT_WC_ECPay_Shipping extends RY_WT_Shipping_Model
         if (count($chosen_shipping)) {
             $chosen_shipping = array_shift($chosen_shipping);
             if (str_contains($chosen_shipping, '_cvs')) {
+                $cvs_info = (array) WC()->session->get('ry_ecpay_cvs_info', []);
+                if (($cvs_info['shipping_methods'] ?? '') !== WC()->session->get('chosen_shipping_methods')) {
+                    WC()->session->set('ry_ecpay_cvs_info', []);
+                }
+
                 $this->js_data['ecpay_cvs'] = true;
 
                 wc_get_template('cart/cart-choose-cvs.php', [
@@ -223,8 +229,11 @@ final class RY_WT_WC_ECPay_Shipping extends RY_WT_Shipping_Model
                     ], WC()->api_request_url('ry_ecpay_map_callback'))),
                 ];
             } else {
+                WC()->session->set('ry_ecpay_cvs_info', []);
                 $this->js_data['ecpay_home'] = true;
             }
+        } else {
+            WC()->session->set('ry_ecpay_cvs_info', []);
         }
     }
 
@@ -237,9 +246,9 @@ final class RY_WT_WC_ECPay_Shipping extends RY_WT_Shipping_Model
                 foreach ($cvs_info['shipping_methods'] as $package_key => $t) {
                     WC()->session->set('shipping_for_package_' . $package_key, '');
                 }
-                WC()->session->set('ry-ecpay-cvs-info', $cvs_info);
+                WC()->session->set('ry_ecpay_cvs_info', $cvs_info);
             } else {
-                WC()->session->set('ry-ecpay-cvs-info', []);
+                WC()->session->set('ry_ecpay_cvs_info', []);
             }
         }
     }
@@ -247,25 +256,20 @@ final class RY_WT_WC_ECPay_Shipping extends RY_WT_Shipping_Model
     public function check_choose_cvs($data, $errors)
     {
         if (WC()->cart && WC()->cart->needs_shipping()) {
-            $cvs_method = false;
             $chosen_shipping = wc_get_chosen_shipping_method_ids();
             $chosen_shipping = array_intersect($chosen_shipping, array_keys(self::$support_methods));
             if (count($chosen_shipping)) {
                 $chosen_shipping = array_shift($chosen_shipping);
                 if (str_contains($chosen_shipping, '_cvs')) {
-                    $cvs_method = true;
-                }
-            }
+                    $csv_info = (array) WC()->session->get('ry_ecpay_cvs_info', []);
 
-            if ($cvs_method) {
-                $csv_info = WC()->session->get('ry-ecpay-cvs-info', []);
-
-                if (!isset($csv_info['LogisticsSubType']) || !str_starts_with($csv_info['LogisticsSubType'], $chosen_shipping::Shipping_Sub_Type)) {
-                    // 傳統結帳
-                    if (is_array($data)) {
-                        $errors->add('shipping', __('No convenience store has been chosen.', 'ry-woocommerce-tools'));
-                    } else {
-                        throw new RouteException('woocommerce_rest_checkout_missing_required_field', esc_html__('No convenience store has been chosen.', 'ry-woocommerce-tools'), 400);
+                    if (!str_starts_with(($csv_info['LogisticsSubType'] ?? ''), $chosen_shipping::Shipping_Sub_Type)) {
+                        // 傳統結帳
+                        if (is_array($data)) {
+                            $errors->add('shipping', __('No convenience store has been chosen.', 'ry-woocommerce-tools'));
+                        } else {
+                            throw new RouteException('woocommerce_rest_checkout_missing_required_field', esc_html__('No convenience store has been chosen.', 'ry-woocommerce-tools'), 400);
+                        }
                     }
                 }
             }
@@ -274,8 +278,8 @@ final class RY_WT_WC_ECPay_Shipping extends RY_WT_Shipping_Model
 
     public function get_cvs_info($value, $input)
     {
-        $cvs_info = (array) WC()->session->get('ry-ecpay-cvs-info', []);
-        if (isset($cvs_info['shipping_methods']) && $cvs_info['shipping_methods'] === WC()->session->get('chosen_shipping_methods')) {
+        $cvs_info = (array) WC()->session->get('ry_ecpay_cvs_info', []);
+        if (($cvs_info['shipping_methods'] ?? '') === WC()->session->get('chosen_shipping_methods')) {
             return $cvs_info[substr($input, 3)] ?? '';
         }
 
