@@ -189,7 +189,7 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_ECPay_Api
                 $args['GoodsAmount'] = (int) $package_info['price'];
                 if ('Y' === $args['IsCollection']) {
                     $args['CollectionAmount'] = (int) $package_info['fee'];
-                    if ('UNIMARTC2C' === $args['LogisticsSubType']) {
+                    if (str_starts_with($args['LogisticsSubType'], 'UNIMART')) {
                         $args['GoodsAmount'] = $args['CollectionAmount'];
                     }
                 }
