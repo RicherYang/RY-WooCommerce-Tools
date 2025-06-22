@@ -77,7 +77,6 @@ final class RY_WT_Update
         }
 
         if (version_compare($now_version, '1.10.3', '<')) {
-            RY_WT::update_option('ecpay_shipping_pickup_time', 4);
             RY_WT::update_option('ecpay_shipping_box_size', 1);
 
             RY_WT::update_option('version', '1.10.3');
@@ -111,8 +110,10 @@ final class RY_WT_Update
             RY_WT::update_option('version', '3.4.20', true);
         }
 
-        if (version_compare($now_version, '3.5.9', '<')) {
-            RY_WT::update_option('version', '3.5.9', true);
+        if (version_compare($now_version, '3.5.10', '<')) {
+            RY_WT::update_option('ecpay_shipping_declare_mode', 'payment');
+
+            RY_WT::update_option('version', '3.5.10', true);
         }
     }
 }

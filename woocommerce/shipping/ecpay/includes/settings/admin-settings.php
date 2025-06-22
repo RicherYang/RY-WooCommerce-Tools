@@ -115,6 +115,18 @@ return [
         'type' => 'text',
     ],
     [
+        'title' => __('Shipping declare amount mode', 'ry-woocommerce-tools'),
+        'id' => RY_WT::OPTION_PREFIX . 'ecpay_shipping_declare_mode',
+        'type' => 'select',
+        'default' => 'product',
+        'options' => [
+            'product' => __('product regular', 'ry-woocommerce-tools'),
+            'payment' => __('payment amount', 'ry-woocommerce-tools'),
+        ],
+        'desc' => __('Only work with cash on delivery and can set different amount.', 'ry-woocommerce-tools'),
+        'desc_tip' => true,
+    ],
+    [
         'title' => __('Shipping declare amount over 20000', 'ry-woocommerce-tools'),
         'id' => RY_WT::OPTION_PREFIX . 'ecpay_shipping_declare_over',
         'type' => 'select',
@@ -123,8 +135,6 @@ return [
             'keep' => __('keep amount', 'ry-woocommerce-tools'),
             'limit' => __('limit 2000', 'ry-woocommerce-tools'),
         ],
-        'desc' => __('Use product regular price as declare amount.', 'ry-woocommerce-tools'),
-        'desc_tip' => true,
     ],
     [
         'title' => __('Shipping box size ( Home delivery )', 'ry-woocommerce-tools'),
@@ -151,19 +161,6 @@ return [
         'default' => '0',
         'type' => 'text',
     ],
-    /* 綠界取消支援
-    [
-        'title' => __('Pickup time ( Home delivery )', 'ry-woocommerce-tools'),
-        'id' => RY_WT::OPTION_PREFIX . 'ecpay_shipping_pickup_time',
-        'type' => 'select',
-        'default' => '4',
-        'options' => [
-            '1' => _x('morning', 'Pickup time', 'ry-woocommerce-tools'),
-            '2' => _x('afternoon', 'Pickup time', 'ry-woocommerce-tools'),
-            '4' => _x('unlimited', 'Pickup time', 'ry-woocommerce-tools'),
-        ],
-    ],
-    */
     [
         'id' => 'note_options',
         'type' => 'sectionend',
