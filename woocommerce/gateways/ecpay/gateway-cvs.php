@@ -4,7 +4,7 @@ class RY_ECPay_Gateway_Cvs extends RY_WT_WC_ECPay_Payment_Gateway
 {
     public const Payment_Type = 'CVS';
 
-    protected $check_min_amount = 33;
+    protected $check_min_amount = 31;
 
     protected $check_max_amount = 6000;
 
@@ -18,17 +18,12 @@ class RY_ECPay_Gateway_Cvs extends RY_WT_WC_ECPay_Payment_Gateway
         $this->process_payment_note = __('Pay via ECPay CVS', 'ry-woocommerce-tools');
 
         $this->form_fields = include RY_WT_PLUGIN_DIR . 'woocommerce/gateways/ecpay/includes/settings/cvs.php';
-        $this->init_settings();
-
-        $this->title = $this->get_option('title') ?: $this->method_title;
-        $this->description = $this->get_option('description');
-        $this->expire_date = (int) $this->get_option('expire_date', 10080);
-        $this->min_amount = (int) $this->get_option('min_amount', 0);
-        $this->max_amount = (int) $this->get_option('max_amount', 0);
-
-        add_filter('ry_admin_payment_info-ry_ecpay_cvs', [$this, 'show_payment_info'], 10, 2);
 
         parent::__construct();
+
+        $this->expire_date = (int) ($this->settings['expire_date'] ?: 10080);
+
+        add_filter('ry_admin_payment_info-ry_ecpay_cvs', [$this, 'show_payment_info'], 10, 2);
     }
 
     public function process_admin_options()

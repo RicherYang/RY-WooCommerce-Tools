@@ -7,11 +7,15 @@ class RY_WT_WC_ECPay_Gateway_Api extends RY_WT_ECPay_Api
     protected $api_test_url = [
         'checkout' => 'https://payment-stage.ecpay.com.tw/Cashier/AioCheckOut/V5',
         'query' => 'https://payment-stage.ecpay.com.tw/Cashier/QueryTradeInfo/V5',
+        'credit-query' => 'https://ecpayment-stage.ecpay.com.tw/1.0.0/CreditDetail/QueryTrade',
+        'credit-action' => 'https://payment-stage.ecpay.com.tw/CreditDetail/DoAction',
     ];
 
     protected $api_url = [
         'checkout' => 'https://payment.ecpay.com.tw/Cashier/AioCheckOut/V5',
         'query' => 'https://payment.ecpay.com.tw/Cashier/QueryTradeInfo/V5',
+        'credit-query' => 'https://ecpayment.ecpay.com.tw/1.0.0/CreditDetail/QueryTrade',
+        'credit-action' => 'https://payment.ecpay.com.tw/CreditDetail/DoAction',
     ];
 
     public static function instance(): RY_WT_WC_ECPay_Gateway_Api
@@ -145,10 +149,115 @@ class RY_WT_WC_ECPay_Gateway_Api extends RY_WT_ECPay_Api
         return $result;
     }
 
+    public function get_credit_info($order)
+    {
+        list($MerchantID, $HashKey, $HashIV) = RY_WT_WC_ECPay_Gateway::instance()->get_api_info();
+
+        $args = [
+            'MerchantID' => $MerchantID,
+            'RqHeader' => [
+                'Timestamp' => new DateTime('', new DateTimeZone('Asia/Taipei')),
+            ],
+            'Data' => wp_json_encode([
+                'MerchantID' => $MerchantID,
+                'MerchantTradeNo' => $order->get_meta('_ecpay_MerchantTradeNo', true),
+            ]),
+        ];
+        $args['RqHeader']['Timestamp'] = $args['RqHeader']['Timestamp']->getTimestamp();
+
+        if (RY_WT_WC_ECPay_Gateway::instance()->is_testmode()) {
+            $url = $this->api_test_url['credit-query'];
+        } else {
+            $url = $this->api_url['credit-query'];
+        }
+
+        $response = $this->link_v2_server($url, $args, $HashKey, $HashIV);
+        if (is_wp_error($response)) {
+            RY_WT_WC_ECPay_Gateway::instance()->log('Credit query failed', WC_Log_Levels::ERROR, ['data' => $args, 'info' => $response->get_error_messages()]);
+            return;
+        }
+
+        if (wp_remote_retrieve_response_code($response) != '200') {
+            RY_WT_WC_ECPay_Gateway::instance()->log('Credit query HTTP status error', WC_Log_Levels::ERROR, ['data' => $args, 'code' => wp_remote_retrieve_response_code($response)]);
+            return;
+        }
+
+        $body = wp_remote_retrieve_body($response);
+        $result = json_decode($body);
+        if (!is_object($result)) {
+            RY_WT_WC_ECPay_Gateway::instance()->log('Credit query result parse failed', WC_Log_Levels::WARNING, ['data' => $args, 'result' => wp_remote_retrieve_body($response)]);
+            return;
+        }
+
+        if (!(isset($result->TransCode) && 1 == $result->TransCode)) {
+            RY_WT_WC_ECPay_Gateway::instance()->log('Credit query result error', WC_Log_Levels::ERROR, ['code' => $result->TransCode, 'msg' => $result->TransMsg]);
+            return;
+        }
+
+        $result->Data = openssl_decrypt($result->Data, self::Encrypt_Method, $HashKey, 0, $HashIV);
+        $result->Data = json_decode(urldecode($result->Data), true);
+
+        if (!is_array($result->Data)) {
+            RY_WT_WC_ECPay_Gateway::instance()->log('Credit query data decrypt failed', WC_Log_Levels::ERROR, ['data' => $result->Data]);
+            return;
+        }
+
+        RY_WT_WC_ECPay_Gateway::instance()->log('Credit query data', WC_Log_Levels::INFO, ['data' => $result->Data]);
+
+        return $result->Data;
+    }
+
+    public function credit_action($order, $action, $amount)
+    {
+        $amount = (int) $amount;
+
+        list($MerchantID, $HashKey, $HashIV) = RY_WT_WC_ECPay_Gateway::instance()->get_api_info();
+
+        $args = [
+            'MerchantID' => $MerchantID,
+            'MerchantTradeNo' => $order->get_meta('_ecpay_MerchantTradeNo', true),
+            'TradeNo' => $order->get_transaction_id(),
+            'Action' => $action,
+            'TotalAmount' => $amount,
+        ];
+
+        if (RY_WT_WC_ECPay_Gateway::instance()->is_testmode()) {
+            $url = $this->api_test_url['credit-action'];
+        } else {
+            $url = $this->api_url['credit-action'];
+        }
+        $args = $this->add_check_value($args, $HashKey, $HashIV, 'sha256');
+
+        $response = $this->link_server($url, $args);
+        if (is_wp_error($response)) {
+            RY_WT_WC_ECPay_Gateway::instance()->log('Credit action failed', WC_Log_Levels::ERROR, ['data' => $args, 'info' => $response->get_error_messages()]);
+            return;
+        }
+
+        if (wp_remote_retrieve_response_code($response) != '200') {
+            RY_WT_WC_ECPay_Gateway::instance()->log('Credit action HTTP status error', WC_Log_Levels::ERROR, ['data' => $args, 'code' => wp_remote_retrieve_response_code($response)]);
+            return;
+        }
+
+        $body = wp_remote_retrieve_body($response);
+        parse_str($body, $result);
+        if (!is_array($result)) {
+            RY_WT_WC_ECPay_Gateway::instance()->log('Credit action result parse failed', WC_Log_Levels::WARNING, ['data' => $args, 'result' => wp_remote_retrieve_body($response)]);
+            return;
+        }
+
+        RY_WT_WC_ECPay_Gateway::instance()->log('Credit action data', WC_Log_Levels::INFO, ['data' => $result]);
+
+        return $result;
+    }
+
     protected function add_type_info($args, $order, $gateway)
     {
         switch ($gateway::Payment_Type) {
             case 'Credit':
+                if (isset($gateway->support_applepay) && $gateway->support_applepay === 'no') {
+                    $args['IgnorePayment'] = 'ApplePay';
+                }
                 if (isset($gateway->number_of_periods) && !empty($gateway->number_of_periods)) {
                     if (is_array($gateway->number_of_periods)) {
                         $number_of_periods = (int) $order->get_meta('_ecpay_payment_number_of_periods', true);

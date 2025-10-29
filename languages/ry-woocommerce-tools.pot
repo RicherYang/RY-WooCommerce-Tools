@@ -2,16 +2,16 @@
 # This file is distributed under the GPLv3.
 msgid ""
 msgstr ""
-"Project-Id-Version: RY Tools for WooCommerce 3.5.8\n"
+"Project-Id-Version: RY Tools for WooCommerce 3.5.11\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/ry-woocommerce-tools\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-05-27T20:37:21+08:00\n"
+"POT-Creation-Date: 2025-10-29T14:29:44+08:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.11.0\n"
+"X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: ry-woocommerce-tools\n"
 
 #. Plugin Name of the plugin
@@ -43,6 +43,7 @@ msgstr ""
 
 #. translators: %1$s: Name of this plugin %2$s: min require version
 #: includes/admin.php:30
+#, php-format
 msgid "<strong>%1$s</strong> is inactive. It require WooCommerce version %2$s or newer."
 msgstr ""
 
@@ -95,16 +96,16 @@ msgstr ""
 #: templates/order/order-smilepay-payment-info-barcode.php:25
 #: templates/order/order-smilepay-payment-info-cvs-711.php:25
 #: templates/order/order-smilepay-payment-info-cvs-fami.php:25
-#: woocommerce/abstracts/abstract-wc-payment-gateway.php:28
+#: woocommerce/abstracts/abstract-wc-payment-gateway.php:35
 msgid "Payment details"
 msgstr ""
 
 #: templates/order/order-ecpay-payment-info-atm.php:31
 #: templates/order/order-newebpay-payment-info-atm.php:31
 #: templates/order/order-smilepay-payment-info-atm.php:31
-#: woocommerce/gateways/ecpay/gateway-atm.php:52
-#: woocommerce/gateways/newebpay/gateway-atm.php:48
-#: woocommerce/gateways/smilepay/gateway-atm.php:53
+#: woocommerce/gateways/ecpay/gateway-atm.php:47
+#: woocommerce/gateways/newebpay/gateway-atm.php:43
+#: woocommerce/gateways/smilepay/gateway-atm.php:48
 msgid "Bank"
 msgstr ""
 
@@ -117,9 +118,9 @@ msgstr ""
 #: templates/order/order-ecpay-payment-info-atm.php:47
 #: templates/order/order-newebpay-payment-info-atm.php:47
 #: templates/order/order-smilepay-payment-info-atm.php:47
-#: woocommerce/gateways/ecpay/gateway-atm.php:56
-#: woocommerce/gateways/newebpay/gateway-atm.php:52
-#: woocommerce/gateways/smilepay/gateway-atm.php:57
+#: woocommerce/gateways/ecpay/gateway-atm.php:51
+#: woocommerce/gateways/newebpay/gateway-atm.php:47
+#: woocommerce/gateways/smilepay/gateway-atm.php:52
 msgid "ATM Bank account"
 msgstr ""
 
@@ -133,21 +134,21 @@ msgstr ""
 #: templates/order/order-smilepay-payment-info-barcode.php:55
 #: templates/order/order-smilepay-payment-info-cvs-711.php:39
 #: templates/order/order-smilepay-payment-info-cvs-fami.php:39
-#: woocommerce/gateways/ecpay/gateway-atm.php:60
-#: woocommerce/gateways/ecpay/gateway-barcode.php:64
-#: woocommerce/gateways/ecpay/gateway-cvs.php:56
+#: woocommerce/gateways/ecpay/gateway-atm.php:55
+#: woocommerce/gateways/ecpay/gateway-barcode.php:59
+#: woocommerce/gateways/ecpay/gateway-cvs.php:51
 #: woocommerce/gateways/ecpay/includes/settings/atm.php:6
 #: woocommerce/gateways/ecpay/includes/settings/barcode.php:6
-#: woocommerce/gateways/newebpay/gateway-atm.php:56
-#: woocommerce/gateways/newebpay/gateway-barcode.php:64
-#: woocommerce/gateways/newebpay/gateway-cvs.php:56
+#: woocommerce/gateways/newebpay/gateway-atm.php:51
+#: woocommerce/gateways/newebpay/gateway-barcode.php:59
+#: woocommerce/gateways/newebpay/gateway-cvs.php:51
 #: woocommerce/gateways/newebpay/includes/settings/atm.php:6
 #: woocommerce/gateways/newebpay/includes/settings/barcode.php:6
 #: woocommerce/gateways/newebpay/includes/settings/cvs.php:6
-#: woocommerce/gateways/smilepay/gateway-atm.php:61
-#: woocommerce/gateways/smilepay/gateway-barcode.php:65
-#: woocommerce/gateways/smilepay/gateway-cvs-711.php:57
-#: woocommerce/gateways/smilepay/gateway-cvs-fami.php:57
+#: woocommerce/gateways/smilepay/gateway-atm.php:56
+#: woocommerce/gateways/smilepay/gateway-barcode.php:60
+#: woocommerce/gateways/smilepay/gateway-cvs-711.php:52
+#: woocommerce/gateways/smilepay/gateway-cvs-fami.php:52
 #: woocommerce/gateways/smilepay/includes/settings/atm.php:6
 #: woocommerce/gateways/smilepay/includes/settings/barcode.php:6
 msgid "Payment deadline"
@@ -156,27 +157,27 @@ msgstr ""
 #: templates/order/order-ecpay-payment-info-barcode.php:31
 #: templates/order/order-newebpay-payment-info-barcode.php:31
 #: templates/order/order-smilepay-payment-info-barcode.php:31
-#: woocommerce/gateways/ecpay/gateway-barcode.php:52
-#: woocommerce/gateways/newebpay/gateway-barcode.php:52
-#: woocommerce/gateways/smilepay/gateway-barcode.php:53
+#: woocommerce/gateways/ecpay/gateway-barcode.php:47
+#: woocommerce/gateways/newebpay/gateway-barcode.php:47
+#: woocommerce/gateways/smilepay/gateway-barcode.php:48
 msgid "Barcode 1"
 msgstr ""
 
 #: templates/order/order-ecpay-payment-info-barcode.php:39
 #: templates/order/order-newebpay-payment-info-barcode.php:39
 #: templates/order/order-smilepay-payment-info-barcode.php:39
-#: woocommerce/gateways/ecpay/gateway-barcode.php:56
-#: woocommerce/gateways/newebpay/gateway-barcode.php:56
-#: woocommerce/gateways/smilepay/gateway-barcode.php:57
+#: woocommerce/gateways/ecpay/gateway-barcode.php:51
+#: woocommerce/gateways/newebpay/gateway-barcode.php:51
+#: woocommerce/gateways/smilepay/gateway-barcode.php:52
 msgid "Barcode 2"
 msgstr ""
 
 #: templates/order/order-ecpay-payment-info-barcode.php:47
 #: templates/order/order-newebpay-payment-info-barcode.php:47
 #: templates/order/order-smilepay-payment-info-barcode.php:47
-#: woocommerce/gateways/ecpay/gateway-barcode.php:60
-#: woocommerce/gateways/newebpay/gateway-barcode.php:60
-#: woocommerce/gateways/smilepay/gateway-barcode.php:61
+#: woocommerce/gateways/ecpay/gateway-barcode.php:55
+#: woocommerce/gateways/newebpay/gateway-barcode.php:55
+#: woocommerce/gateways/smilepay/gateway-barcode.php:56
 msgid "Barcode 3"
 msgstr ""
 
@@ -187,6 +188,7 @@ msgstr ""
 #: templates/order/order-smilepay-payment-info-cvs-fami.php:45
 #: woocommerce/shipping/info-list-table.php:120
 #: woocommerce/shipping/info-list-table.php:130
+#, php-format
 msgctxt "Datetime"
 msgid "%1$s %2$s"
 msgstr ""
@@ -199,10 +201,10 @@ msgstr ""
 #: templates/order/order-newebpay-payment-info-cvs.php:31
 #: templates/order/order-smilepay-payment-info-cvs-711.php:31
 #: templates/order/order-smilepay-payment-info-cvs-fami.php:31
-#: woocommerce/gateways/ecpay/gateway-cvs.php:52
-#: woocommerce/gateways/newebpay/gateway-cvs.php:52
-#: woocommerce/gateways/smilepay/gateway-cvs-711.php:53
-#: woocommerce/gateways/smilepay/gateway-cvs-fami.php:53
+#: woocommerce/gateways/ecpay/gateway-cvs.php:47
+#: woocommerce/gateways/newebpay/gateway-cvs.php:47
+#: woocommerce/gateways/smilepay/gateway-cvs-711.php:48
+#: woocommerce/gateways/smilepay/gateway-cvs-fami.php:48
 msgid "CVS code"
 msgstr ""
 
@@ -216,12 +218,14 @@ msgid "Phone"
 msgstr ""
 
 #. translators: %1$s: Gateway method title, %2$d normal minimum
-#: woocommerce/abstracts/abstract-wc-payment-gateway.php:72
+#: woocommerce/abstracts/abstract-wc-payment-gateway.php:79
+#, php-format
 msgid "%1$s minimum amount less then normal minimum (%2$d)."
 msgstr ""
 
 #. translators: %1$s: Gateway method title, %2$d normal maximum
-#: woocommerce/abstracts/abstract-wc-payment-gateway.php:87
+#: woocommerce/abstracts/abstract-wc-payment-gateway.php:94
+#, php-format
 msgid "%1$s maximum amount more then normal maximum (%2$d)."
 msgstr ""
 
@@ -244,6 +248,7 @@ msgstr ""
 
 #. translators: %1$s server time, %2$d: differ time (second)
 #: woocommerce/admin/settings/html/tools.php:9
+#, php-format
 msgid "Server time (%1$s) and Google Public NTP differ is %2$d second"
 msgid_plural "Server time (%1$s) and Google Public NTP differ is %2$d seconds"
 msgstr[0] ""
@@ -313,6 +318,7 @@ msgstr ""
 #: woocommerce/gateways/ecpay/includes/admin.php:50
 #: woocommerce/gateways/newebpay/includes/admin.php:41
 #: woocommerce/gateways/smilepay/includes/admin.php:40
+#, php-format
 msgid "Need %s to support block checkout."
 msgstr ""
 
@@ -931,16 +937,16 @@ msgstr ""
 msgid "Pay via ECPay ATM"
 msgstr ""
 
-#: woocommerce/gateways/ecpay/gateway-atm.php:40
-#: woocommerce/gateways/ecpay/gateway-barcode.php:40
-#: woocommerce/gateways/ecpay/gateway-cvs.php:40
-#: woocommerce/gateways/newebpay/gateway-atm.php:36
-#: woocommerce/gateways/newebpay/gateway-barcode.php:40
-#: woocommerce/gateways/newebpay/gateway-cvs.php:40
-#: woocommerce/gateways/smilepay/gateway-atm.php:41
-#: woocommerce/gateways/smilepay/gateway-barcode.php:41
-#: woocommerce/gateways/smilepay/gateway-cvs-711.php:41
-#: woocommerce/gateways/smilepay/gateway-cvs-fami.php:41
+#: woocommerce/gateways/ecpay/gateway-atm.php:35
+#: woocommerce/gateways/ecpay/gateway-barcode.php:35
+#: woocommerce/gateways/ecpay/gateway-cvs.php:35
+#: woocommerce/gateways/newebpay/gateway-atm.php:31
+#: woocommerce/gateways/newebpay/gateway-barcode.php:35
+#: woocommerce/gateways/newebpay/gateway-cvs.php:35
+#: woocommerce/gateways/smilepay/gateway-atm.php:36
+#: woocommerce/gateways/smilepay/gateway-barcode.php:36
+#: woocommerce/gateways/smilepay/gateway-cvs-711.php:36
+#: woocommerce/gateways/smilepay/gateway-cvs-fami.php:36
 msgid "Payment expire date out of range. Set as default value."
 msgstr ""
 
@@ -971,23 +977,23 @@ msgstr ""
 msgid "Pay via ECPay Credit(installment)"
 msgstr ""
 
-#: woocommerce/gateways/ecpay/gateway-credit-installment.php:60
-#: woocommerce/gateways/newebpay/gateway-credit-installment.php:55
+#: woocommerce/gateways/ecpay/gateway-credit-installment.php:55
+#: woocommerce/gateways/newebpay/gateway-credit-installment.php:50
 msgctxt "Checkout info"
 msgid "Number of periods"
 msgstr ""
 
-#: woocommerce/gateways/ecpay/gateway-credit.php:15
+#: woocommerce/gateways/ecpay/gateway-credit.php:17
 #: woocommerce/gateways/newebpay/gateway-credit.php:11
 #: woocommerce/gateways/smilepay/gateway-credit.php:11
 msgid "Pay via Credit"
 msgstr ""
 
-#: woocommerce/gateways/ecpay/gateway-credit.php:16
-msgid "ECPay Credit"
+#: woocommerce/gateways/ecpay/gateway-credit.php:18
+msgid "ECPay Credit ( include \"Apple Pay\" )"
 msgstr ""
 
-#: woocommerce/gateways/ecpay/gateway-credit.php:18
+#: woocommerce/gateways/ecpay/gateway-credit.php:20
 msgid "Pay via ECPay Credit"
 msgstr ""
 
@@ -1037,11 +1043,13 @@ msgstr ""
 #. translators: %s: MerchantID
 #: woocommerce/gateways/ecpay/includes/admin.php:42
 #: woocommerce/shipping/ecpay/includes/admin.php:52
+#, php-format
 msgid "Used MerchantID \"%s\""
 msgstr ""
 
 #. translators: %s: link to RY ECPay Invoice for WooCommerce
 #: woocommerce/gateways/ecpay/includes/admin.php:58
+#, php-format
 msgid "If you need ECPay Invoice support, you can try %s"
 msgstr ""
 
@@ -1053,8 +1061,9 @@ msgid "Order no prefix only letters and numbers allowed"
 msgstr ""
 
 #. translators: %d number of periods
-#: woocommerce/gateways/ecpay/includes/gateway-api.php:165
+#: woocommerce/gateways/ecpay/includes/gateway-api.php:274
 #: woocommerce/gateways/newebpay/includes/gateway-api.php:187
+#, php-format
 msgid "Credit installment to %d"
 msgstr ""
 
@@ -1072,11 +1081,13 @@ msgstr ""
 
 #. translators: %1$s: status message, %2$d status code
 #: woocommerce/gateways/ecpay/includes/gateway-response.php:184
+#, php-format
 msgid "Payment failed: %1$s (%2$d)"
 msgstr ""
 
 #. translators: %1$s: status message, %2$d status code
 #: woocommerce/gateways/ecpay/includes/gateway-response.php:195
+#, php-format
 msgid "Payment unkonw status: %1$s (%2$d)"
 msgstr ""
 
@@ -1106,6 +1117,7 @@ msgstr ""
 #: woocommerce/gateways/smilepay/includes/settings/admin-settings.php:18
 #: woocommerce/shipping/ecpay/includes/settings/admin-settings.php:19
 #: woocommerce/shipping/smilepay/includes/settings/admin-settings.php:17
+#, php-format
 msgid "Log API / IPN information, inside %s"
 msgstr ""
 
@@ -1148,7 +1160,7 @@ msgstr ""
 #: woocommerce/gateways/ecpay/includes/settings/admin-settings.php:43
 #: woocommerce/gateways/newebpay/includes/settings/admin-settings.php:43
 #: woocommerce/gateways/smilepay/includes/settings/admin-settings.php:43
-#: woocommerce/shipping/ecpay/includes/settings/admin-settings.php:172
+#: woocommerce/shipping/ecpay/includes/settings/admin-settings.php:169
 msgid "API credentials"
 msgstr ""
 
@@ -1163,24 +1175,24 @@ msgstr ""
 #: woocommerce/gateways/ecpay/includes/settings/admin-settings.php:53
 #: woocommerce/gateways/newebpay/includes/settings/admin-settings.php:53
 #: woocommerce/gateways/smilepay/includes/settings/admin-settings.php:53
-#: woocommerce/shipping/ecpay/includes/settings/admin-settings.php:182
+#: woocommerce/shipping/ecpay/includes/settings/admin-settings.php:179
 msgid "Note: Recommend using this for development purposes only."
 msgstr ""
 
 #: woocommerce/gateways/ecpay/includes/settings/admin-settings.php:56
-#: woocommerce/shipping/ecpay/includes/settings/admin-settings.php:185
+#: woocommerce/shipping/ecpay/includes/settings/admin-settings.php:182
 msgctxt "ECPay"
 msgid "MerchantID"
 msgstr ""
 
 #: woocommerce/gateways/ecpay/includes/settings/admin-settings.php:62
-#: woocommerce/shipping/ecpay/includes/settings/admin-settings.php:191
+#: woocommerce/shipping/ecpay/includes/settings/admin-settings.php:188
 msgctxt "ECPay"
 msgid "HashKey"
 msgstr ""
 
 #: woocommerce/gateways/ecpay/includes/settings/admin-settings.php:68
-#: woocommerce/shipping/ecpay/includes/settings/admin-settings.php:197
+#: woocommerce/shipping/ecpay/includes/settings/admin-settings.php:194
 msgctxt "ECPay"
 msgid "HashIV"
 msgstr ""
@@ -1212,6 +1224,7 @@ msgstr ""
 #: woocommerce/gateways/newebpay/includes/settings/credit-installment.php:20
 #: woocommerce/gateways/newebpay/includes/settings/credit-installment.php:22
 #: woocommerce/gateways/newebpay/includes/settings/credit-installment.php:24
+#, php-format
 msgid "%d periods"
 msgstr ""
 
@@ -1219,6 +1232,14 @@ msgstr ""
 #: woocommerce/gateways/newebpay/includes/settings/credit-installment.php:28
 msgctxt "Gateway setting"
 msgid "Number of periods"
+msgstr ""
+
+#: woocommerce/gateways/ecpay/includes/settings/credit.php:6
+msgid "Apple Pay"
+msgstr ""
+
+#: woocommerce/gateways/ecpay/includes/settings/credit.php:7
+msgid "Support Apple Pay"
 msgstr ""
 
 #: woocommerce/gateways/ecpay/includes/settings/cvs.php:6
@@ -1236,6 +1257,7 @@ msgstr ""
 
 #. translators: %s: Gateway method title
 #: woocommerce/gateways/global-setting.php:8
+#, php-format
 msgid "Enable %s"
 msgstr ""
 
@@ -1328,11 +1350,13 @@ msgstr ""
 
 #. translators: 1: Store name 2: Store ID
 #: woocommerce/gateways/newebpay/includes/gateway-response.php:116
+#, php-format
 msgid "CVS store %1$s (%2$s)"
 msgstr ""
 
 #. translators: 1: Error status code 2: Error status message
 #: woocommerce/gateways/newebpay/includes/gateway-response.php:203
+#, php-format
 msgid "Payment failed: %1$s (%2$s)"
 msgstr ""
 
@@ -1437,16 +1461,19 @@ msgstr ""
 
 #. translators: %s: link to RY SmilePay Invoice for WooCommerce
 #: woocommerce/gateways/smilepay/includes/admin.php:48
+#, php-format
 msgid "If you need SmilePay Invoice support, you can try %s"
 msgstr ""
 
 #. translators: %1$s Error messade, %2$d Error messade ID
 #: woocommerce/gateways/smilepay/includes/gateway-api.php:131
+#, php-format
 msgid "Get Smilepay code error: %1$s (%2$d)"
 msgstr ""
 
 #. translators: Error status message
 #: woocommerce/gateways/smilepay/includes/gateway-response.php:119
+#, php-format
 msgid "Payment failed (%s)"
 msgstr ""
 
@@ -1506,6 +1533,7 @@ msgstr ""
 
 #. translators: %s: number of orders
 #: woocommerce/shipping.php:77
+#, php-format
 msgid "Wait pickup (cvs) <span class=\"count\">(%s)</span>"
 msgid_plural "Wait pickup (cvs) <span class=\"count\">(%s)</span>"
 msgstr[0] ""
@@ -1513,6 +1541,7 @@ msgstr[1] ""
 
 #. translators: %s: number of orders
 #: woocommerce/shipping.php:87
+#, php-format
 msgid "Overdue return (cvs) <span class=\"count\">(%s)</span>"
 msgid_plural "Overdue return (cvs) <span class=\"count\">(%s)</span>"
 msgstr[0] ""
@@ -1520,6 +1549,7 @@ msgstr[1] ""
 
 #. translators: %s: number of orders
 #: woocommerce/shipping.php:97
+#, php-format
 msgid "Transporting <span class=\"count\">(%s)</span>"
 msgid_plural "Transporting <span class=\"count\">(%s)</span>"
 msgstr[0] ""
@@ -1633,76 +1663,90 @@ msgid "Sender address ( Home delivery )"
 msgstr ""
 
 #: woocommerce/shipping/ecpay/includes/settings/admin-settings.php:118
-msgid "Shipping declare amount over 20000"
+msgid "Shipping declare amount mode"
 msgstr ""
 
 #: woocommerce/shipping/ecpay/includes/settings/admin-settings.php:123
-msgid "keep amount"
+msgid "product regular"
 msgstr ""
 
 #: woocommerce/shipping/ecpay/includes/settings/admin-settings.php:124
-msgid "limit 2000"
+msgid "payment amount"
 msgstr ""
 
 #: woocommerce/shipping/ecpay/includes/settings/admin-settings.php:126
-msgid "Use product regular price as declare amount."
+msgid "Only work with cash on delivery and can set different amount."
 msgstr ""
 
 #: woocommerce/shipping/ecpay/includes/settings/admin-settings.php:130
+msgid "Shipping declare amount over 20000"
+msgstr ""
+
+#: woocommerce/shipping/ecpay/includes/settings/admin-settings.php:135
+msgid "keep amount"
+msgstr ""
+
+#: woocommerce/shipping/ecpay/includes/settings/admin-settings.php:136
+msgid "limit 2000"
+msgstr ""
+
+#: woocommerce/shipping/ecpay/includes/settings/admin-settings.php:140
 #: woocommerce/shipping/smilepay/includes/settings/admin-settings.php:70
 msgid "Shipping box size ( Home delivery )"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/includes/settings/admin-settings.php:135
+#: woocommerce/shipping/ecpay/includes/settings/admin-settings.php:145
 #: woocommerce/shipping/smilepay/includes/settings/admin-settings.php:75
 msgctxt "box size"
 msgid "By product"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/includes/settings/admin-settings.php:136
+#: woocommerce/shipping/ecpay/includes/settings/admin-settings.php:146
 #: woocommerce/shipping/smilepay/includes/settings/admin-settings.php:76
 msgctxt "box size"
 msgid "60 cm"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/includes/settings/admin-settings.php:137
+#: woocommerce/shipping/ecpay/includes/settings/admin-settings.php:147
 #: woocommerce/shipping/smilepay/includes/settings/admin-settings.php:77
 msgctxt "box size"
 msgid "90 cm"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/includes/settings/admin-settings.php:138
+#: woocommerce/shipping/ecpay/includes/settings/admin-settings.php:148
 #: woocommerce/shipping/smilepay/includes/settings/admin-settings.php:78
 msgctxt "box size"
 msgid "120 cm"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/includes/settings/admin-settings.php:139
+#: woocommerce/shipping/ecpay/includes/settings/admin-settings.php:149
 #: woocommerce/shipping/smilepay/includes/settings/admin-settings.php:79
 msgctxt "box size"
 msgid "150 cm"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/includes/settings/admin-settings.php:141
+#: woocommerce/shipping/ecpay/includes/settings/admin-settings.php:151
 #: woocommerce/shipping/smilepay/includes/settings/admin-settings.php:81
 msgid "By product is set box size to the biggest product size."
 msgstr ""
 
 #. translators: %s: Weight unit
-#: woocommerce/shipping/ecpay/includes/settings/admin-settings.php:147
+#: woocommerce/shipping/ecpay/includes/settings/admin-settings.php:157
+#, php-format
 msgid "Product default weight (%s) ( Home delivery )"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/includes/settings/admin-settings.php:177
+#: woocommerce/shipping/ecpay/includes/settings/admin-settings.php:174
 msgid "ECPay shipping sandbox"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/includes/settings/admin-settings.php:181
+#: woocommerce/shipping/ecpay/includes/settings/admin-settings.php:178
 msgid "Enable ECPay shipping sandbox"
 msgstr ""
 
 #. translators: %s Error messade
-#: woocommerce/shipping/ecpay/includes/shipping-api.php:220
+#: woocommerce/shipping/ecpay/includes/shipping-api.php:222
+#, php-format
 msgid "Get shipping code error: %s"
 msgstr ""
 
@@ -1769,6 +1813,7 @@ msgstr ""
 
 #. translators: 1: ECPay ID 2: Old status mag 3: Old status no 4: New status mag 5: New status no
 #: woocommerce/shipping/ecpay/includes/shipping-response.php:150
+#, php-format
 msgid "%1$s shipping status from %2$s(%3$d) to %4$s(%5$d)"
 msgstr ""
 
@@ -1796,8 +1841,8 @@ msgstr ""
 msgid "ECPay shipping home Tcat"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/shipping.php:268
-#: woocommerce/shipping/ecpay/shipping.php:270
+#: woocommerce/shipping/ecpay/shipping.php:269
+#: woocommerce/shipping/ecpay/shipping.php:271
 msgid "No convenience store has been chosen."
 msgstr ""
 
@@ -1848,6 +1893,7 @@ msgstr ""
 
 #. translators: %s WooCommerce weight unit
 #: woocommerce/shipping/global-setting.php:55
+#, php-format
 msgid "Every weight (%s) to plus times of cost"
 msgstr ""
 
@@ -1861,11 +1907,13 @@ msgstr ""
 
 #. translators: %s: shipping class setting url
 #: woocommerce/shipping/global-setting.php:75
+#, php-format
 msgid "These shipping available based on the <a href=\"%s\">product shipping class</a>."
 msgstr ""
 
 #. translators: %s: shipping class name
 #: woocommerce/shipping/global-setting.php:86
+#, php-format
 msgid "\"%s\" available"
 msgstr ""
 
@@ -2020,11 +2068,13 @@ msgstr ""
 
 #. translators: %1$s Error messade, %2$d Error messade ID
 #: woocommerce/shipping/smilepay/includes/shipping-api.php:254
+#, php-format
 msgid "Get Smilepay no error: %1$s (%2$d)"
 msgstr ""
 
 #. translators: %1$s Error messade, %2$d Error messade ID
 #: woocommerce/shipping/smilepay/includes/shipping-api.php:400
+#, php-format
 msgid "Get Smilepay info no error: %1$s (%2$d)"
 msgstr ""
 
@@ -2039,6 +2089,7 @@ msgstr ""
 
 #. translators: 1: ECPay ID 2: Old status no 3: New status no
 #: woocommerce/shipping/smilepay/includes/shipping-response.php:169
+#, php-format
 msgid "%1$s shipping status from %2$s to %3$s"
 msgstr ""
 

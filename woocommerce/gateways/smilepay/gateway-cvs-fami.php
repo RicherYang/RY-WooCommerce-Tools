@@ -19,17 +19,12 @@ class RY_SmilePay_Gateway_Cvs_Fami extends RY_WT_WC_SmilePay_Payment_Gateway
         $this->get_code_mode = true;
 
         $this->form_fields = include RY_WT_PLUGIN_DIR . 'woocommerce/gateways/smilepay/includes/settings/cvs.php';
-        $this->init_settings();
-
-        $this->title = $this->get_option('title');
-        $this->description = $this->get_option('description');
-        $this->expire_date = (int) $this->get_option('expire_date', 4320);
-        $this->min_amount = (int) $this->get_option('min_amount', 0);
-        $this->max_amount = (int) $this->get_option('max_amount', 0);
-
-        add_filter('ry_admin_payment_info-ry_smilepay_cvs_fami', [$this, 'show_payment_info'], 10, 2);
 
         parent::__construct();
+
+        $this->expire_date = (int) ($this->settings['expire_date'] ?: 4320);
+
+        add_filter('ry_admin_payment_info-ry_smilepay_cvs_fami', [$this, 'show_payment_info'], 10, 2);
     }
 
     public function process_admin_options()

@@ -2,7 +2,7 @@
 
 final class RY_WT_Cron
 {
-    public static function add_action()
+    public static function add_action(): void
     {
         add_action('ry_check_ntp_time', [__CLASS__, 'check_ntp_time']);
 
@@ -38,7 +38,7 @@ final class RY_WT_Cron
         }
     }
 
-    public static function update_3_2_0()
+    public static function update_3_2_0(): void
     {
         $start_time = microtime(true);
 

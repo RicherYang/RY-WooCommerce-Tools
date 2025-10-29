@@ -1,13 +1,14 @@
 {
     "name": "ry-woocommerce-tools",
     "title": "RY Tools for WooCommerce",
-    "version": "3.5.8",
+    "version": "3.5.11",
     "author": "Richer Yang",
     "private": true,
     "devDependencies": {
         "react": "^18.0.0",
-        "@wordpress/i18n": "^5.22.0",
-        "@wordpress/scripts": "^30.15.0"
+        "clean-webpack-plugin": "^4.0.0",
+        "@wordpress/i18n": "^6.4.0",
+        "@wordpress/scripts": "^30.24.0"
     },
     "scripts": {
         "start": "wp-scripts start",

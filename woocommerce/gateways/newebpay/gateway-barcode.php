@@ -18,17 +18,12 @@ class RY_NewebPay_Gateway_Barcode extends RY_WT_WC_NewebPay_Payment_Gateway
         $this->process_payment_note = __('Pay via NewebPay BARCODE', 'ry-woocommerce-tools');
 
         $this->form_fields = include RY_WT_PLUGIN_DIR . 'woocommerce/gateways/newebpay/includes/settings/barcode.php';
-        $this->init_settings();
-
-        $this->title = $this->get_option('title');
-        $this->description = $this->get_option('description');
-        $this->expire_date = (int) $this->get_option('expire_date', 7);
-        $this->min_amount = (int) $this->get_option('min_amount', 0);
-        $this->max_amount = (int) $this->get_option('max_amount', 0);
-
-        add_filter('ry_admin_payment_info-ry_newebpay_barcode', [$this, 'show_payment_info'], 10, 2);
 
         parent::__construct();
+
+        $this->expire_date = (int) ($this->settings['expire_date'] ?: 7);
+
+        add_filter('ry_admin_payment_info-ry_newebpay_barcode', [$this, 'show_payment_info'], 10, 2);
     }
 
     public function process_admin_options()

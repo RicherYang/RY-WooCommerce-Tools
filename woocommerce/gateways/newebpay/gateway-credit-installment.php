@@ -16,15 +16,10 @@ class RY_NewebPay_Gateway_Credit_Installment extends RY_WT_WC_NewebPay_Payment_G
         $this->process_payment_note = __('Pay via NewebPay Credit(installment)', 'ry-woocommerce-tools');
 
         $this->form_fields = include RY_WT_PLUGIN_DIR . 'woocommerce/gateways/newebpay/includes/settings/credit-installment.php';
-        $this->init_settings();
-
-        $this->title = $this->get_option('title');
-        $this->description = $this->get_option('description');
-        $this->min_amount = (int) $this->get_option('min_amount', 0);
-        $this->max_amount = (int) $this->get_option('max_amount', 0);
-        $this->number_of_periods = $this->get_option('number_of_periods', []);
 
         parent::__construct();
+
+        $this->number_of_periods = $this->settings['number_of_periods'] ?: [];
     }
 
     public function is_available()
