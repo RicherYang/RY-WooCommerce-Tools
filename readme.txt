@@ -5,7 +5,7 @@ Tags: woocommerce, payment, gateway, shipping
 Requires at least: 6.6
 Requires PHP: 8.0
 Tested up to: 6.8
-Stable tag: 3.5.10
+Stable tag: 3.5.12
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.txt
 
@@ -39,6 +39,9 @@ Please visit the [plugin forum page](https://ry-plugin.com/ry-woocommerce-tools/
 3. SmilePay gateway global settings.
 
 == Changelog ==
+
+= 3.5.12 - 2025-0-29 =
+* 新增 - 綠界信用卡可設定是否支援 Apple Pay。
 
 = 3.5.10 -2025-06-22 =
 * 新增 - 綠界物流可以設定申報價格的計算模式(針對綠界 API 運作與手冊不符的臨時解決方案)。
