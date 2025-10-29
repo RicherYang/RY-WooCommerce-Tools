@@ -18,12 +18,12 @@ abstract class RY_WT_WC_Shipping_Method extends WC_Shipping_Method
     {
         $this->init_settings();
 
-        $this->title = $this->settings['title'] ?: $this->method_title;
-        $this->tax_status = $this->settings['tax_status'];
-        $this->cost = $this->settings['cost'];
-        $this->cost_requires = $this->settings['cost_requires'];
-        $this->min_amount = $this->settings['min_amount'];
-        $this->weight_plus_cost = $this->settings['weight_plus_cost'] ?: 0;
+        $this->title = $this->get_option('title');
+        $this->tax_status = $this->get_option('tax_status');
+        $this->cost = $this->get_option('cost');
+        $this->cost_requires = $this->get_option('cost_requires');
+        $this->min_amount = $this->get_option('min_amount', 0);
+        $this->weight_plus_cost = $this->get_option('weight_plus_cost', 0);
 
         if (!wc_tax_enabled()) {
             unset($this->instance_form_fields['tax_status']);
