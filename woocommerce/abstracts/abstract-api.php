@@ -108,11 +108,14 @@ abstract class RY_WT_Api
                     }
                 }
                 $shipping_amount = NumberUtil::round($shipping_amount, wc_get_price_decimals());
-                if (0 >= $shipping_amount) {
-                    $shipping_amount = $product->get_regular_price();
+                if ($shipping_amount <= 0) {
+                    $shipping_amount = NumberUtil::round($product->get_regular_price(), wc_get_price_decimals());
                 }
-                $shipping_amount = NumberUtil::round($shipping_amount, wc_get_price_decimals());
-                $item_price = $shipping_amount * $item->get_quantity();
+                if ($shipping_amount > 0) {
+                    $item_price = $shipping_amount * $item->get_quantity();
+                } else {
+                    $item_price = $item->get_subtotal();
+                }
             } else {
                 $temp = 1;
                 $weight = '';
