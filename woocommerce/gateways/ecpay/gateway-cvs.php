@@ -21,7 +21,7 @@ class RY_ECPay_Gateway_Cvs extends RY_WT_WC_ECPay_Payment_Gateway
 
         parent::__construct();
 
-        $this->expire_date = (int) ($this->settings['expire_date'] ?: 10080);
+        $this->expire_date = (int) ($this->settings['expire_date'] ?? 10080);
 
         add_filter('ry_admin_payment_info-ry_ecpay_cvs', [$this, 'show_payment_info'], 10, 2);
     }

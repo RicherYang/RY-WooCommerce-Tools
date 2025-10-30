@@ -4,7 +4,7 @@ class RY_NewebPay_Gateway_Credit_Installment extends RY_WT_WC_NewebPay_Payment_G
 {
     public const Payment_Type = 'InstFlag';
 
-    public $number_of_periods = '';
+    public $number_of_periods = [];
 
     public function __construct()
     {
@@ -19,7 +19,8 @@ class RY_NewebPay_Gateway_Credit_Installment extends RY_WT_WC_NewebPay_Payment_G
 
         parent::__construct();
 
-        $this->number_of_periods = $this->settings['number_of_periods'] ?: [];
+        $this->number_of_periods = (array) ($this->settings['number_of_periods'] ?? []);
+        $this->number_of_periods = array_filter(array_map('intval', $this->number_of_periods));
     }
 
     public function is_available()

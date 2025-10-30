@@ -5,7 +5,7 @@ Tags: woocommerce, payment, gateway, shipping
 Requires at least: 6.6
 Requires PHP: 8.0
 Tested up to: 6.8
-Stable tag: 3.5.13
+Stable tag: 3.5.15
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.txt
 
@@ -40,7 +40,10 @@ Please visit the [plugin forum page](https://ry-plugin.com/ry-woocommerce-tools/
 
 == Changelog ==
 
-= 3.5.13 - 2025-0-29 =
+= 3.5.15 - 2025-10-29 =
+* 修正 - 在部份情況下可能金流設定可能出現 PHP 錯誤。
+
+= 3.5.13 - 2025-10-29 =
 * 新增 - 綠界信用卡可設定是否支援 Apple Pay。
 
 = 3.5.10 -2025-06-22 =

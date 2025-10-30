@@ -21,7 +21,7 @@ class RY_ECPay_Gateway_Atm extends RY_WT_WC_ECPay_Payment_Gateway
 
         parent::__construct();
 
-        $this->expire_date = (int) ($this->settings['expire_date'] ?: 3);
+        $this->expire_date = (int) ($this->settings['expire_date'] ?? 3);
 
         add_filter('ry_admin_payment_info-ry_ecpay_atm', [$this, 'show_payment_info'], 10, 2);
     }

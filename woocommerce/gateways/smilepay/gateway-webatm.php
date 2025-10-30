@@ -21,6 +21,6 @@ class RY_SmilePay_Gateway_Webatm extends RY_WT_WC_SmilePay_Payment_Gateway
 
         parent::__construct();
 
-        $this->expire_date = (int) ($this->settings['expire_date'] ?: 7);
+        $this->expire_date = (int) ($this->settings['expire_date'] ?? 7);
     }
 }

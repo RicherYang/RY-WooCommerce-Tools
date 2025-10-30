@@ -22,7 +22,7 @@ class RY_SmilePay_Gateway_Cvs_Fami extends RY_WT_WC_SmilePay_Payment_Gateway
 
         parent::__construct();
 
-        $this->expire_date = (int) ($this->settings['expire_date'] ?: 4320);
+        $this->expire_date = (int) ($this->settings['expire_date'] ?? 4320);
 
         add_filter('ry_admin_payment_info-ry_smilepay_cvs_fami', [$this, 'show_payment_info'], 10, 2);
     }

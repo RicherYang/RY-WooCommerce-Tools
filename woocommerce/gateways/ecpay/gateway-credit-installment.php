@@ -23,7 +23,8 @@ class RY_ECPay_Gateway_Credit_Installment extends RY_WT_WC_ECPay_Payment_Gateway
 
         parent::__construct();
 
-        $this->number_of_periods = $this->settings['number_of_periods'] ?: [];
+        $this->number_of_periods = (array) ($this->settings['number_of_periods'] ?? []);
+        $this->number_of_periods = array_filter(array_map('intval', $this->number_of_periods));
     }
 
     public function is_available()

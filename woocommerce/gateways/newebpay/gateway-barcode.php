@@ -21,7 +21,7 @@ class RY_NewebPay_Gateway_Barcode extends RY_WT_WC_NewebPay_Payment_Gateway
 
         parent::__construct();
 
-        $this->expire_date = (int) ($this->settings['expire_date'] ?: 7);
+        $this->expire_date = (int) ($this->settings['expire_date'] ?? 7);
 
         add_filter('ry_admin_payment_info-ry_newebpay_barcode', [$this, 'show_payment_info'], 10, 2);
     }

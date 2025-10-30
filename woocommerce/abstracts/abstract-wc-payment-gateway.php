@@ -14,10 +14,13 @@ abstract class RY_WT_WC_Payment_Gateway extends WC_Payment_Gateway
     {
         $this->init_settings();
 
-        $this->title = $this->settings['title'] ?: $this->method_title;
-        $this->description = $this->settings['description'];
-        $this->min_amount = (int) $this->settings['min_amount'];
-        $this->max_amount = (int) $this->settings['max_amount'];
+        $this->title = $this->settings['title'] ?? '';
+        if (empty($this->title)) {
+            $this->title = $this->method_title;
+        }
+        $this->description = $this->settings['description'] ?? '';
+        $this->min_amount = (int) ($this->settings['min_amount'] ?? 0);
+        $this->max_amount = (int) ($this->settings['max_amount'] ?? 0);
 
         add_action('woocommerce_admin_order_data_after_billing_address', [$this, 'admin_payment_info']);
     }
