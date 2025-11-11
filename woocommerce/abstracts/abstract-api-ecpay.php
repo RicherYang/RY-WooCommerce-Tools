@@ -68,10 +68,8 @@ abstract class RY_WT_ECPay_Api extends RY_WT_Api
         }
         $args_string[] = 'HashIV=' . $HashIV;
 
-        $args_string = implode('&', $args_string);
-        $args_string = $this->urlencode($args_string);
-        $args_string = strtolower($args_string);
-        $check_value = hash($hash_algo, $args_string);
+        $args_string = $this->urlencode(implode('&', $args_string));
+        $check_value = hash($hash_algo, strtolower($args_string));
         return strtoupper($check_value);
     }
 

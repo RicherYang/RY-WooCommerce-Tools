@@ -52,7 +52,7 @@ final class RY_WT_WC_ECPay_Gateway_Admin
                 ) . '</p>';
             }
 
-            if (!defined('RY_WEI_VERSION') && !defined('RY_WSI_VERSION')) {
+            if (!defined('RY_WEI_VERSION') && !defined('RY_WSI_VERSION') && !defined('RY_WEZI_VERSION')) {
                 $settings[0]['desc'] .= '<p>' . sprintf(
                     /* translators: %s: link to RY ECPay Invoice for WooCommerce */
                     __('If you need ECPay Invoice support, you can try %s', 'ry-woocommerce-tools'),

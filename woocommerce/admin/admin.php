@@ -18,6 +18,8 @@ final class RY_WT_WC_Admin
     {
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/abstracts/abstract-meta-box.php';
 
+        include_once RY_WT_PLUGIN_DIR . 'woocommerce/admin/product.php';
+
         add_filter('woocommerce_get_settings_pages', [$this, 'get_settings_page']);
         add_filter('woocommerce_get_sections_rytools', [$this, 'add_sections'], 11);
         add_filter('ry_setting_section_tools', '__return_false');
