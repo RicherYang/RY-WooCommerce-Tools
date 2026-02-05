@@ -3,7 +3,9 @@
 use Automattic\WooCommerce\Blocks\Utils\CartCheckoutUtils;
 
 if (class_exists('RY_WT_WC_Admin_Settings', false)) {
-    return new RY_WT_WC_Admin_Settings();
+    if (!has_action('woocommerce_sections_rytools')) {
+        return new RY_WT_WC_Admin_Settings();
+    }
 }
 
 class RY_WT_WC_Admin_Settings extends WC_Settings_Page
@@ -252,4 +254,6 @@ class RY_WT_WC_Admin_Settings extends WC_Settings_Page
     }
 }
 
-return new RY_WT_WC_Admin_Settings();
+if (!has_action('woocommerce_sections_rytools')) {
+    return new RY_WT_WC_Admin_Settings();
+}
