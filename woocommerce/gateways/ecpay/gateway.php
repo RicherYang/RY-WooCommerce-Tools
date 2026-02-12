@@ -19,6 +19,7 @@ final class RY_WT_WC_ECPay_Gateway extends RY_WT_Model
     protected function do_init(): void
     {
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/abstracts/abstract-api-ecpay.php';
+        include_once RY_WT_PLUGIN_DIR . 'woocommerce/gateways.php';
 
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/gateways/ecpay/includes/gateway-api.php';
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/gateways/ecpay/includes/gateway-response.php';
@@ -31,6 +32,7 @@ final class RY_WT_WC_ECPay_Gateway extends RY_WT_Model
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/gateways/ecpay/gateway-twqr.php';
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/gateways/ecpay/gateway-webatm.php';
 
+        RY_WT_WC_Gateways::instance();
         RY_WT_WC_ECPay_Gateway_Response::instance();
 
         add_filter('woocommerce_payment_gateways', [$this, 'add_method']);

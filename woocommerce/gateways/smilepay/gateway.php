@@ -19,6 +19,7 @@ final class RY_WT_WC_SmilePay_Gateway extends RY_WT_Model
     protected function do_init(): void
     {
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/abstracts/abstract-api-smilepay.php';
+        include_once RY_WT_PLUGIN_DIR . 'woocommerce/gateways.php';
 
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/gateways/smilepay/includes/ajax.php';
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/gateways/smilepay/includes/gateway-api.php';
@@ -31,6 +32,7 @@ final class RY_WT_WC_SmilePay_Gateway extends RY_WT_Model
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/gateways/smilepay/gateway-cvs-fami.php';
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/gateways/smilepay/gateway-webatm.php';
 
+        RY_WT_WC_Gateways::instance();
         RY_WT_WC_SmilePay_Gateway_Ajax::instance();
         RY_WT_WC_SmilePay_Gateway_Response::instance();
 

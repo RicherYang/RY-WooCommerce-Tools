@@ -102,7 +102,7 @@ class RY_WT_WC_SmilePay_Gateway_Response extends RY_WT_WC_SmilePay_Gateway_Api
             if (!$order->is_paid()) {
                 if ($ipn_info['Amount'] == ceil($order->get_total())) {
                     $order = $this->set_transaction_info($order, $ipn_info, $payment_type);
-                    $order->add_order_note(__('Payment completed', 'ry-woocommerce-tools'));
+                    $order->add_order_note(__('SmilePay payment completed', 'ry-woocommerce-tools'));
                     $order->payment_complete();
                 }
             }

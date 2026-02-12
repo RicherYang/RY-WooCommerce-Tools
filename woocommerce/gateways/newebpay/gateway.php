@@ -19,6 +19,7 @@ final class RY_WT_WC_NewebPay_Gateway extends RY_WT_Model
     protected function do_init(): void
     {
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/abstracts/abstract-api-newebpay.php';
+        include_once RY_WT_PLUGIN_DIR . 'woocommerce/gateways.php';
 
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/gateways/newebpay/includes/gateway-api.php';
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/gateways/newebpay/includes/gateway-response.php';
@@ -30,6 +31,7 @@ final class RY_WT_WC_NewebPay_Gateway extends RY_WT_Model
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/gateways/newebpay/gateway-cvs.php';
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/gateways/newebpay/gateway-webatm.php';
 
+        RY_WT_WC_Gateways::instance();
         RY_WT_WC_NewebPay_Gateway_Response::instance();
 
         add_filter('woocommerce_payment_gateways', [$this, 'add_method']);

@@ -116,7 +116,7 @@ class RY_WT_WC_ECPay_Gateway_Response extends RY_WT_ECPay_Api
         }
 
         $order = $this->set_transaction_info($order, $ipn_info);
-        $order->add_order_note(__('Payment completed', 'ry-woocommerce-tools'));
+        $order->add_order_note(__('ECPay payment completed', 'ry-woocommerce-tools'));
         $order->payment_complete();
     }
 
