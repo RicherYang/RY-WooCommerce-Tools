@@ -285,6 +285,9 @@ class RY_WT_WC_ECPay_Gateway_Api extends RY_WT_ECPay_Api
             case 'CVS':
                 $args['StoreExpireDate'] = $gateway->expire_date;
                 break;
+            case 'DigitalPayment':
+                $args['ChooseSubPayment'] = $gateway::Sub_Payment_Type;
+                break;
         }
         return $args;
     }

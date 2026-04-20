@@ -47,23 +47,28 @@ abstract class RY_WT_Api
 
     protected function submit_sctipt($action_script)
     {
+        $overlaycss = apply_filters('ry_payment_blockui_overlaycss', [
+            'background' => '#000',
+            'opacity' => 0.4,
+        ]);
+        $css = apply_filters('ry_payment_blockui_css', [
+            'font-size' => '1.5em',
+            'padding' => '1.5em',
+            'text-align' => 'center',
+            'border' => '3px solid #aaa',
+            'background-color' => '#fff',
+        ]);
         $blockUI = '$.blockUI({
             message: "' . __('Please wait.<br>Getting checkout info.', 'ry-woocommerce-tools') . '",
             baseZ: 99999,
-            overlayCSS: {
-                background: "#000",
-                opacity: 0.4
-            },
-            css: {
-                "font-size": "1.5em",
-                padding: "1.5em",
-                textAlign: "center",
-                border: "3px solid #aaa",
-                backgroundColor: "#fff",
-            }
+            overlayCSS: ' . wp_json_encode($overlaycss) . ',
+            css: ' . wp_json_encode($css) . '
         });';
 
-        wc_enqueue_js($blockUI . ' setTimeout(function() { ' . $action_script . ' }, 150);');
+        wp_register_script('ry-payment', '', [], RY_WT_VERSION);
+        wp_enqueue_script('wc-jquery-blockui');
+        wp_enqueue_script('ry-payment');
+        wp_add_inline_script('ry-payment', 'jQuery(function($) {' . $blockUI . ' setTimeout(function() { ' . $action_script . ' }, 150);' . '});');
     }
 
     public function set_do_die()
