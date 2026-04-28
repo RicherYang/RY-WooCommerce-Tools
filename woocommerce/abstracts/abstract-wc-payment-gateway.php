@@ -2,13 +2,13 @@
 
 abstract class RY_WT_WC_Payment_Gateway extends WC_Payment_Gateway
 {
-    public $min_amount = 0;
+    public int $min_amount = 0;
 
-    public $expire_date = 0;
+    public int $expire_date = 0;
 
-    protected $check_min_amount = 0;
+    protected int $check_min_amount = 0;
 
-    protected $check_max_amount = 0;
+    protected int $check_max_amount = 0;
 
     public function __construct()
     {

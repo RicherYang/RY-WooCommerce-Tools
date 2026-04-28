@@ -2,17 +2,17 @@
 
 final class RY_WT_WC_NewebPay_Shipping extends RY_WT_Shipping_Model
 {
-    public static $support_methods = [
+    public static array $support_methods = [
         'ry_newebpay_shipping_cvs' => 'RY_NewebPay_Shipping_CVS',
     ];
 
     protected static $_instance = null;
 
-    protected $js_data;
+    protected array $js_data;
 
-    protected $model_type = 'newebpay_shipping';
+    protected string $model_type = 'newebpay_shipping';
 
-    protected $cvs_hide_fields = ['shipping_first_name', 'shipping_last_name', 'shipping_phone'];
+    protected array $cvs_hide_fields = ['shipping_first_name', 'shipping_last_name', 'shipping_phone'];
 
     public static function instance(): RY_WT_WC_NewebPay_Shipping
     {

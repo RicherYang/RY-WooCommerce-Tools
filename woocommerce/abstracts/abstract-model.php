@@ -2,9 +2,9 @@
 
 abstract class RY_WT_Model
 {
-    protected $model_type = 'woocommerce_tools';
+    protected string $model_type = 'woocommerce_tools';
 
-    protected $log_enabled = null;
+    protected ?bool $log_enabled = null;
 
     private $log;
 

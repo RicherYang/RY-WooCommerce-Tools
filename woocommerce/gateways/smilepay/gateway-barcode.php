@@ -4,9 +4,9 @@ class RY_SmilePay_Gateway_Barcode extends RY_WT_WC_SmilePay_Payment_Gateway
 {
     public const Payment_Type = 3;
 
-    protected $check_min_amount = 25;
+    protected int $check_min_amount = 25;
 
-    protected $check_max_amount = 20000;
+    protected int $check_max_amount = 20000;
 
     public function __construct()
     {

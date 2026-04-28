@@ -4,15 +4,14 @@ abstract class RY_WT_WC_Shipping_Method extends WC_Shipping_Method
 {
     public $cost = 0;
 
-    public $cost_requires = '';
-
-    public $min_amount = 0;
+    public string $cost_requires = '';
 
     public $weight_plus_cost = 0;
 
     public $cost_offisland = 0;
 
     public $cost_cool = 0;
+    public int $min_amount = 0;
 
     public function init()
     {

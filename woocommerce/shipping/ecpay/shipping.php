@@ -4,7 +4,7 @@ use Automattic\WooCommerce\StoreApi\Exceptions\RouteException;
 
 final class RY_WT_WC_ECPay_Shipping extends RY_WT_Shipping_Model
 {
-    public static $support_methods = [
+    public static array $support_methods = [
         'ry_ecpay_shipping_cvs_711' => 'RY_ECPay_Shipping_CVS_711',
         'ry_ecpay_shipping_cvs_family' => 'RY_ECPay_Shipping_CVS_Family',
         'ry_ecpay_shipping_cvs_hilife' => 'RY_ECPay_Shipping_CVS_Hilife',
@@ -15,9 +15,9 @@ final class RY_WT_WC_ECPay_Shipping extends RY_WT_Shipping_Model
 
     protected static $_instance = null;
 
-    protected $js_data;
+    protected array $js_data;
 
-    protected $model_type = 'ecpay_shipping';
+    protected string $model_type = 'ecpay_shipping';
 
     public static function instance(): RY_WT_WC_ECPay_Shipping
     {

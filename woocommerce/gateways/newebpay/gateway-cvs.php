@@ -4,9 +4,9 @@ class RY_NewebPay_Gateway_Cvs extends RY_WT_WC_NewebPay_Payment_Gateway
 {
     public const Payment_Type = 'CVS';
 
-    protected $check_min_amount = 30;
+    protected int $check_min_amount = 30;
 
-    protected $check_max_amount = 20000;
+    protected int $check_max_amount = 20000;
 
     public function __construct()
     {

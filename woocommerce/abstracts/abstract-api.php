@@ -4,7 +4,7 @@ use Automattic\WooCommerce\Utilities\NumberUtil;
 
 abstract class RY_WT_Api
 {
-    protected $do_die = false;
+    protected bool $do_die = false;
 
     protected function pre_generate_trade_no($order_ID, $order_prefix = '')
     {

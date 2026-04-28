@@ -4,7 +4,7 @@ final class RY_WT_WC_ECPay_Gateway extends RY_WT_Model
 {
     protected static $_instance = null;
 
-    protected $model_type = 'ecpay_gateway';
+    protected string $model_type = 'ecpay_gateway';
 
     public static function instance(): RY_WT_WC_ECPay_Gateway
     {

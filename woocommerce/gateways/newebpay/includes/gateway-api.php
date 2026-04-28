@@ -4,12 +4,12 @@ class RY_WT_WC_NewebPay_Gateway_Api extends RY_WT_NewebPay_Api
 {
     protected static $_instance = null;
 
-    protected $api_test_url = [
+    protected array $api_test_url = [
         'checkout' => 'https://ccore.newebpay.com/MPG/mpg_gateway',
         'query' => 'https://ccore.newebpay.com/API/QueryTradeInfo',
     ];
 
-    protected $api_url = [
+    protected array $api_url = [
         'checkout' => 'https://core.newebpay.com/MPG/mpg_gateway',
         'query' => 'https://core.newebpay.com/API/QueryTradeInfo',
     ];

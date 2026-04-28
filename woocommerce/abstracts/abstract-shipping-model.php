@@ -2,7 +2,7 @@
 
 abstract class RY_WT_Shipping_Model extends RY_WT_Model
 {
-    protected $cvs_hide_fields = [];
+    protected array $cvs_hide_fields = [];
 
     public function add_cvs_info($fields)
     {

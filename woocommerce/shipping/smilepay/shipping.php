@@ -2,7 +2,7 @@
 
 final class RY_WT_WC_SmilePay_Shipping extends RY_WT_Shipping_Model
 {
-    public static $support_methods = [
+    public static array $support_methods = [
         'ry_smilepay_shipping_cvs_711' => 'RY_SmilePay_Shipping_CVS_711',
         'ry_smilepay_shipping_cvs_fami' => 'RY_SmilePay_Shipping_CVS_Fami',
         'ry_smilepay_shipping_home_tcat' => 'RY_SmilePay_Shipping_Home_Tcat',
@@ -10,9 +10,9 @@ final class RY_WT_WC_SmilePay_Shipping extends RY_WT_Shipping_Model
 
     protected static $_instance = null;
 
-    protected $js_data;
+    protected array $js_data;
 
-    protected $model_type = 'smilepay_shipping';
+    protected string $model_type = 'smilepay_shipping';
 
     public static function instance(): RY_WT_WC_SmilePay_Shipping
     {

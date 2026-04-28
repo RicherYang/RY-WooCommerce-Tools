@@ -4,14 +4,14 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_ECPay_Api
 {
     protected static $_instance = null;
 
-    protected $api_test_url = [
+    protected array $api_test_url = [
         'map' => 'https://logistics-stage.ecpay.com.tw/Express/map',
         'create' => 'https://logistics-stage.ecpay.com.tw/Express/Create',
         'print' => 'https://logistics-stage.ecpay.com.tw/Express/v2/PrintTradeDocument',
         'query' => 'https://logistics-stage.ecpay.com.tw/Helper/QueryLogisticsTradeInfo/V5',
     ];
 
-    protected $api_url = [
+    protected array $api_url = [
         'map' => 'https://logistics.ecpay.com.tw/Express/map',
         'create' => 'https://logistics.ecpay.com.tw/Express/Create',
         'print' => 'https://logistics.ecpay.com.tw/Express/v2/PrintTradeDocument',

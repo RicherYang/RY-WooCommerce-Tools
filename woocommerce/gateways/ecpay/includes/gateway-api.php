@@ -4,14 +4,14 @@ class RY_WT_WC_ECPay_Gateway_Api extends RY_WT_ECPay_Api
 {
     protected static $_instance = null;
 
-    protected $api_test_url = [
+    protected array $api_test_url = [
         'checkout' => 'https://payment-stage.ecpay.com.tw/Cashier/AioCheckOut/V5',
         'query' => 'https://payment-stage.ecpay.com.tw/Cashier/QueryTradeInfo/V5',
         'credit-query' => 'https://ecpayment-stage.ecpay.com.tw/1.0.0/CreditDetail/QueryTrade',
         'credit-action' => 'https://payment-stage.ecpay.com.tw/CreditDetail/DoAction',
     ];
 
-    protected $api_url = [
+    protected array $api_url = [
         'checkout' => 'https://payment.ecpay.com.tw/Cashier/AioCheckOut/V5',
         'query' => 'https://payment.ecpay.com.tw/Cashier/QueryTradeInfo/V5',
         'credit-query' => 'https://ecpayment.ecpay.com.tw/1.0.0/CreditDetail/QueryTrade',

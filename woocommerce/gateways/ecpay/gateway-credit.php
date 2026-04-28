@@ -6,9 +6,9 @@ class RY_ECPay_Gateway_Credit extends RY_WT_WC_ECPay_Payment_Gateway
 
     public $support_applepay = 'yes';
 
-    protected $check_min_amount = 6;
+    protected int $check_min_amount = 6;
 
-    protected $check_max_amount = 199999;
+    protected int $check_max_amount = 199999;
 
     public function __construct()
     {

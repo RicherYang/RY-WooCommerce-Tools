@@ -4,7 +4,7 @@ class RY_WT_WC_SmilePay_Shipping_Api extends RY_WT_SmilePay_Api
 {
     protected static $_instance = null;
 
-    protected $api_test_url = [
+    protected array $api_test_url = [
         'checkout' => 'https://ssl.smse.com.tw/ezpos/mtmk_utf.asp',
         'code' => 'https://ssl.smse.com.tw/api/SPPayment.asp',
         'pay' => 'https://ssl.smse.com.tw/api/C2CPayment.asp',
@@ -14,7 +14,7 @@ class RY_WT_WC_SmilePay_Shipping_Api extends RY_WT_SmilePay_Api
         'cat_print' => 'https://ssl.smse.com.tw/api/ezcatPrintDelivery.asp',
     ];
 
-    protected $api_url = [
+    protected array $api_url = [
         'checkout' => 'https://ssl.smse.com.tw/ezpos/mtmk_utf.asp',
         'code' => 'https://ssl.smse.com.tw/api/SPPayment.asp',
         'pay' => 'https://ssl.smse.com.tw/api/C2CPayment.asp',

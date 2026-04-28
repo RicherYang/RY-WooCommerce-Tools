@@ -4,9 +4,9 @@ class RY_ECPay_Gateway_Atm extends RY_WT_WC_ECPay_Payment_Gateway
 {
     public const Payment_Type = 'ATM';
 
-    protected $check_min_amount = 16;
+    protected int $check_min_amount = 16;
 
-    protected $check_max_amount = 49999;
+    protected int $check_max_amount = 49999;
 
     public function __construct()
     {

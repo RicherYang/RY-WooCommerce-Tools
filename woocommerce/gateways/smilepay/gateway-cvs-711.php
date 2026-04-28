@@ -4,9 +4,9 @@ class RY_SmilePay_Gateway_Cvs_711 extends RY_WT_WC_SmilePay_Payment_Gateway
 {
     public const Payment_Type = 4;
 
-    protected $check_min_amount = 35;
+    protected int $check_min_amount = 35;
 
-    protected $check_max_amount = 20000;
+    protected int $check_max_amount = 20000;
 
     public function __construct()
     {

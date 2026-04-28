@@ -4,12 +4,12 @@ class RY_WT_WC_SmilePay_Gateway_Api extends RY_WT_SmilePay_Api
 {
     protected static $_instance = null;
 
-    protected $api_test_url = [
+    protected array $api_test_url = [
         'checkout' => 'https://ssl.smse.com.tw/ezpos_test/mtmk_utf.asp',
         'api_checkout' => 'https://ssl.smse.com.tw/api/SPPayment.asp',
     ];
 
-    protected $api_url = [
+    protected array $api_url = [
         'checkout' => 'https://ssl.smse.com.tw/ezpos/mtmk_utf.asp',
         'api_checkout' => 'https://ssl.smse.com.tw/api/SPPayment.asp',
     ];

@@ -4,9 +4,9 @@ class RY_ECPay_Gateway_Twqr extends RY_WT_WC_ECPay_Payment_Gateway
 {
     public const Payment_Type = 'TWQR';
 
-    protected $check_min_amount = 6;
+    protected int $check_min_amount = 6;
 
-    protected $check_max_amount = 49999;
+    protected int $check_max_amount = 49999;
 
     public function __construct()
     {

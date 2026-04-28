@@ -4,7 +4,7 @@ final class RY_WT_WC_NewebPay_Gateway extends RY_WT_Model
 {
     protected static $_instance = null;
 
-    protected $model_type = 'newebpay_gateway';
+    protected string $model_type = 'newebpay_gateway';
 
     public static function instance(): RY_WT_WC_NewebPay_Gateway
     {
