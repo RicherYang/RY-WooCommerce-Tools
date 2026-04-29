@@ -262,7 +262,7 @@ abstract class RY_WT_WC_Shipping_Method extends WC_Shipping_Method
 
         $sum = preg_replace('/\s+/', '', $sum);
         $sum = rtrim(ltrim($sum, "\t\n\r\0\x0B+*/"), "\t\n\r\0\x0B+-*/");
-        return $sum ? WC_Eval_Math::evaluate($sum) : 0;
+        return round($sum ? WC_Eval_Math::evaluate($sum) : 0, wc_get_price_decimals());
     }
 
     public function sanitize_cost($value)

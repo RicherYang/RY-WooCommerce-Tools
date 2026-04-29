@@ -22,8 +22,6 @@ final class RY_WT
 
     protected function do_init(): void
     {
-        load_plugin_textdomain('ry-woocommerce-tools', false, plugin_basename(dirname(__DIR__)) . '/languages');
-
         if (is_admin()) {
             include_once RY_WT_PLUGIN_DIR . 'includes/update.php';
             RY_WT_Update::update();
@@ -105,17 +103,17 @@ final class RY_WT
         }
     }
 
-    public static function get_option($option, $default = false)
+    public static function get_option(string $option, mixed $default = false): mixed
     {
         return get_option(self::OPTION_PREFIX . $option, $default);
     }
 
-    public static function update_option($option, $value, $autoload = null)
+    public static function update_option(string $option, mixed $value, ?bool $autoload = null)
     {
         return update_option(self::OPTION_PREFIX . $option, $value, $autoload);
     }
 
-    public static function delete_option($option)
+    public static function delete_option(string $option)
     {
         return delete_option(self::OPTION_PREFIX . $option);
     }
