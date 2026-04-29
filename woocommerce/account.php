@@ -16,9 +16,7 @@ final class RY_WT_WC_Account
 
     protected function do_init(): void
     {
-        if ('no' === RY_WT::get_option('repay_action', 'yes')) {
-            add_filter('woocommerce_my_account_my_orders_actions', [$this, 'remove_pay_action']);
-        }
+        add_filter('woocommerce_my_account_my_orders_actions', [$this, 'remove_pay_action']);
 
         if ('no' === RY_WT::get_option('strength_password', 'yes')) {
             if ((!is_admin() || defined('DOING_AJAX')) && !defined('DOING_CRON')) {
@@ -29,7 +27,9 @@ final class RY_WT_WC_Account
 
     public function remove_pay_action($actions)
     {
-        unset($actions['pay']);
+        if ('no' === RY_WT::get_option('repay_action', 'yes')) {
+            unset($actions['pay']);
+        }
 
         return $actions;
     }

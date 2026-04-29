@@ -119,5 +119,39 @@ final class RY_WT_Update
         if (version_compare($now_version, '3.6.1', '<')) {
             RY_WT::update_option('version', '3.6.1', true);
         }
+
+        if (version_compare($now_version, '3.6.2', '<')) {
+            RY_WT::update_option('shipping_product_weight', RY_WT::get_option('ecpay_shipping_product_weight'));
+            RY_WT::delete_option('ecpay_shipping_product_weight');
+
+            add_action('init', function () {
+                $shipping_zones = WC_Shipping_Zones::get_zones();
+                foreach ($shipping_zones as $zone) {
+                    foreach ($zone['shipping_methods'] as $method) {
+                        if (str_starts_with($method->id, 'ry_ecpay')) {
+                            $method->init_instance_settings();
+
+                            $settings = $method->instance_settings;
+                            if (is_numeric($settings['cost'])) {
+                                $shortcode = '';
+                                if (isset($settings['cost_offisland']) && !empty($settings['cost_offisland'])) {
+                                    $shortcode .= ' offisland="' . $settings['cost_offisland'] . '"';
+                                    unset($settings['cost_offisland']);
+                                }
+                                if (isset($settings['cost_cool']) && !empty($settings['cost_cool'])) {
+                                    $shortcode .= ' cool="' . $settings['cost_cool'] . '"';
+                                    unset($settings['cost_cool']);
+                                }
+                                if ($shortcode !== '') {
+                                    $settings['cost'] .= ' + [addfee' . $shortcode . ']';
+                                    update_option($method->get_instance_option_key(), apply_filters('woocommerce_shipping_' . $method->id . '_instance_settings_values', $settings, $method), 'yes');
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+            RY_WT::update_option('version', '3.6.2', true);
+        }
     }
 }

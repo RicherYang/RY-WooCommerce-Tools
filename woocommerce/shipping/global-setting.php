@@ -22,10 +22,16 @@ $settings = [
     ],
     'cost' => [
         'title' => __('Shipping cost', 'ry-woocommerce-tools'),
-        'type' => 'number',
-        'default' => 0,
-        'min' => 0,
-        'step' => 1,
+        'type' => 'text',
+        'default' => '0',
+        'placeholder' => '',
+        'description' => sprintf(
+            /* translators: %s: advanced costs setting url */
+            __('Support cost formula. Learn more about %s', 'ry-woocommerce-tools'),
+            ' <a href="https://ry-plugin.com/blog/setting-shipping-cost" target="_blank">' . __('advanced costs', 'ry-woocommerce-tools') . '</a>'
+        ),
+        'class' => 'wc-shipping-modal-price',
+        'sanitize_callback' => [$this, 'sanitize_cost'],
     ],
     'cost_requires' => [
         'title' => __('Free shipping requires...', 'ry-woocommerce-tools'),
@@ -47,19 +53,7 @@ $settings = [
         'placeholder' => wc_format_localized_price(0),
         'description' => __('Users will need to spend this amount to get free shipping (if enabled above).', 'ry-woocommerce-tools'),
         'desc_tip' => true,
-        'class' => 'ry-shipping-min_amount',
-    ],
-    'weight_plus_cost' => [
-        'title' => sprintf(
-            /* translators: %s WooCommerce weight unit */
-            __('Every weight (%s) to plus times of cost', 'ry-woocommerce-tools'),
-            I18nUtil::get_weight_unit_label(get_option('woocommerce_weight_unit')),
-        ),
-        'type' => 'number',
-        'default' => 0,
-        'placeholder' => 0,
-        'description' => __('Calculate free shipping first. 0 to disable plus cost by weight.', 'ry-woocommerce-tools'),
-        'desc_tip' => true,
+        'class' => 'wc-shipping-modal-price ry-shipping-min_amount',
     ],
 ];
 

@@ -2,15 +2,10 @@
 
 abstract class RY_WT_WC_Shipping_Method extends WC_Shipping_Method
 {
-    public $cost = 0;
+    public string $cost;
 
     public string $cost_requires = '';
 
-    public $weight_plus_cost = 0;
-
-    public $cost_offisland = 0;
-
-    public $cost_cool = 0;
     public int $min_amount = 0;
 
     public function init()
@@ -19,10 +14,9 @@ abstract class RY_WT_WC_Shipping_Method extends WC_Shipping_Method
 
         $this->title = $this->get_option('title');
         $this->tax_status = $this->get_option('tax_status');
-        $this->cost = $this->get_option('cost');
-        $this->cost_requires = $this->get_option('cost_requires');
-        $this->min_amount = $this->get_option('min_amount', 0);
-        $this->weight_plus_cost = $this->get_option('weight_plus_cost', 0);
+        $this->cost = $this->get_option('cost', '');
+        $this->cost_requires = $this->get_option('cost_requires', '');
+        $this->min_amount = (int) $this->get_option('min_amount', 0);
 
         if (!wc_tax_enabled()) {
             unset($this->instance_form_fields['tax_status']);
@@ -36,17 +30,12 @@ abstract class RY_WT_WC_Shipping_Method extends WC_Shipping_Method
         return ['1'];
     }
 
-    public function get_instance_form_fields()
-    {
-        return parent::get_instance_form_fields();
-    }
-
     public function is_available($package)
     {
         $available = $this->is_enabled();
 
         if ($available) {
-            $temps = $this->get_package_temp($package['contents']);
+            $temps = $this->get_package_temp($package);
             $available = 0 === count(array_diff($temps, $this->get_support_temp()));
         }
 
@@ -84,71 +73,38 @@ abstract class RY_WT_WC_Shipping_Method extends WC_Shipping_Method
         $rate = [
             'id' => $this->get_rate_id(),
             'label' => $this->title,
-            'cost' => $this->cost,
+            'cost' => 0,
             'package' => $package,
             'meta_data' => [],
         ];
         $rate = $this->add_rate_meta_data($rate);
 
-        if ($this->cost_offisland > 0) {
-            $cvs_info = (array) WC()->session->get('ry_ecpay_cvs_info', []);
-            if (isset($cvs_info['CVSOutSide']) && $cvs_info['CVSOutSide']) {
-                $rate['cost'] += $this->cost_offisland;
-            }
-        }
-
-        if ($this->cost_cool > 0) {
-            $temps = $this->get_package_temp($package['contents']);
-            if (in_array('2', $temps)) {
-                $rate['cost'] += $this->cost_cool;
-            } elseif (in_array('3', $temps)) {
-                $rate['cost'] += $this->cost_cool;
-            }
-        }
+        $temps = $this->get_package_temp($package);
+        $temps = array_diff($temps, $this->get_support_temp());
+        $rate['cost'] = $this->evaluate_cost($this->cost, apply_filters('ry_shipping_evaluate_cost_args', [
+            'temps' => implode(',', $temps),
+            'qty' => $this->get_package_qty($package),
+            'weight' => ceil($this->get_package_weight($package)),
+        ], $package, $rate));
 
         if ($rate['cost'] > 0) {
             $has_coupon = $this->check_has_coupon($this->cost_requires, ['coupon', 'min_amount_or_coupon', 'min_amount_and_coupon', 'min_amount_except_discount_or_coupon', 'min_amount_except_discount_and_coupon']);
             $has_min_amount = $this->check_has_min_amount($this->cost_requires, ['min_amount', 'min_amount_or_coupon', 'min_amount_and_coupon']);
             $has_min_amount_original = $this->check_has_min_amount($this->cost_requires, ['min_amount_except_discount', 'min_amount_except_discount_or_coupon', 'min_amount_except_discount_and_coupon'], true);
 
-            switch ($this->cost_requires) {
-                case 'coupon':
-                    $set_cost_zero = $has_coupon;
-                    break;
-                case 'min_amount':
-                    $set_cost_zero = $has_min_amount;
-                    break;
-                case 'min_amount_or_coupon':
-                    $set_cost_zero = $has_min_amount || $has_coupon;
-                    break;
-                case 'min_amount_and_coupon':
-                    $set_cost_zero = $has_min_amount && $has_coupon;
-                    break;
-                case 'min_amount_except_discount':
-                    $set_cost_zero = $has_min_amount_original;
-                    break;
-                case 'min_amount_except_discount_or_coupon':
-                    $set_cost_zero = $has_min_amount_original || $has_coupon;
-                    break;
-                case 'min_amount_except_discount_and_coupon':
-                    $set_cost_zero = $has_min_amount_original && $has_coupon;
-                    break;
-                default:
-                    $set_cost_zero = false;
-                    break;
-            }
+            $set_cost_zero = match ($this->cost_requires) {
+                'coupon' => $has_coupon,
+                'min_amount' => $has_min_amount,
+                'min_amount_or_coupon' => $has_min_amount || $has_coupon,
+                'min_amount_and_coupon' => $has_min_amount && $has_coupon,
+                'min_amount_except_discount' => $has_min_amount_original,
+                'min_amount_except_discount_or_coupon' => $has_min_amount_original || $has_coupon,
+                'min_amount_except_discount_and_coupon' => $has_min_amount_original && $has_coupon,
+                default => false,
+            };
 
             if ($set_cost_zero) {
                 $rate['cost'] = 0;
-            }
-
-            if ($rate['cost'] > 0) {
-                if ($this->weight_plus_cost > 0) {
-                    $total_weight = WC()->cart->get_cart_contents_weight();
-                    if ($total_weight > 0) {
-                        $rate['cost'] *= (int) ceil($total_weight / $this->weight_plus_cost);
-                    }
-                }
             }
         }
 
@@ -156,18 +112,47 @@ abstract class RY_WT_WC_Shipping_Method extends WC_Shipping_Method
         do_action('woocommerce_' . $this->id . '_shipping_add_rate', $this, $rate);
     }
 
-    protected function get_package_temp($package_contents)
+    protected function get_package_temp($package)
     {
         $temps = [];
-        foreach ($package_contents as $values) {
-            $temp = $values['data']->get_meta('_ry_shipping_temp', true);
-            if (empty($temp) && 'variation' === $values['data']->get_type()) {
-                $parent_product = wc_get_product($values['data']->get_parent_id());
-                $temp = $parent_product->get_meta('_ry_shipping_temp', true);
+        foreach ($package['contents'] as $values) {
+            if ($values['quantity'] > 0 && $values['data']->needs_shipping()) {
+                $temp = $values['data']->get_meta('_ry_shipping_temp', true);
+                if (empty($temp) && 'variation' === $values['data']->get_type()) {
+                    $parent_product = wc_get_product($values['data']->get_parent_id());
+                    $temp = $parent_product->get_meta('_ry_shipping_temp', true);
+                }
+                $temps[] = empty($temp) ? '1' : $temp;
             }
-            $temps[] = empty($temp) ? '1' : $temp;
         }
         return array_unique($temps);
+    }
+
+    public function get_package_qty($package)
+    {
+        $total_quantity = 0;
+        foreach ($package['contents'] as $values) {
+            if ($values['quantity'] > 0 && $values['data']->needs_shipping()) {
+                $total_quantity += $values['quantity'];
+            }
+        }
+        return $total_quantity;
+    }
+
+    protected function get_package_weight($package)
+    {
+        WC()->cart->get_cart_contents_weight();
+        $total_weight = 0;
+        foreach ($package['contents'] as $values) {
+            if ($values['quantity'] > 0 && $values['data']->needs_shipping()) {
+                if ($values['data']->has_weight()) {
+                    $total_weight += $values['data']->get_weight() * $values['quantity'];
+                } else {
+                    $total_weight += 0.1 * $values['quantity'];
+                }
+            }
+        }
+        return $total_weight;
     }
 
     protected function add_rate_meta_data($rate)
@@ -208,5 +193,92 @@ abstract class RY_WT_WC_Shipping_Method extends WC_Shipping_Method
         }
 
         return false;
+    }
+
+    public function shortcode_addfee($atts)
+    {
+        $atts = shortcode_atts([
+            'offisland' => '',
+            'cool' => '',
+            'cool_2' => '',
+            'cool_3' => '',
+        ], $atts, 'addfee');
+        $add_fee = 0;
+
+        if (isset($atts['ry-offisland'])) {
+            if ($atts['ry-offisland'] == '1' && $atts['offisland']) {
+                $add_fee += $atts['offisland'];
+            }
+        }
+
+        if (isset($atts['ry-temps'])) {
+            $temps = explode(',', $atts['ry-temps']);
+            if ((in_array('2', $temps) || in_array('3', $temps)) && $atts['cool']) {
+                $add_fee += $atts['cool'];
+            }
+            if (in_array('2', $temps) && $atts['cool_2']) {
+                $add_fee += $atts['cool_2'];
+            }
+            if (in_array('3', $temps) && $atts['cool_3']) {
+                $add_fee += $atts['cool_3'];
+            }
+        }
+
+        return (string) $add_fee;
+    }
+
+    protected function evaluate_cost(string $sum, array $args)
+    {
+        global $shortcode_tags;
+
+        if (empty($sum)) {
+            return 0;
+        }
+
+        include_once WC()->plugin_path() . '/includes/libraries/class-wc-eval-math.php';
+
+        $tmp_shortcode_tags = $shortcode_tags;
+        remove_all_shortcodes();
+
+        $args = array_merge([
+            'qty' => 1,
+            'weight' => 0,
+        ], $args);
+
+        add_filter('shortcode_atts_addfee', function ($out) use ($args) {
+            foreach ($args as $key => $value) {
+                $out['ry-' . $key] = $value;
+            }
+            return $out;
+        });
+        add_shortcode('addfee', [$this, 'shortcode_addfee']);
+
+        $sum = do_shortcode(str_replace(
+            ['[weight]', '[qty]'],
+            [$args['weight'], $args['qty']],
+            $sum
+        ));
+        $shortcode_tags = $tmp_shortcode_tags;
+
+        $sum = preg_replace('/\s+/', '', $sum);
+        $sum = rtrim(ltrim($sum, "\t\n\r\0\x0B+*/"), "\t\n\r\0\x0B+-*/");
+        return $sum ? WC_Eval_Math::evaluate($sum) : 0;
+    }
+
+    public function sanitize_cost($value)
+    {
+        $value = is_null($value) ? '' : $value;
+        $value = wp_kses_post(trim(wp_unslash($value)));
+
+        $dummy_cost = $this->evaluate_cost($value, [
+            'offisland' => '0',
+            'temps' => '1',
+            'qty' => 1,
+            'weight' => 1,
+        ]);
+        if (false === $dummy_cost) {
+            throw new Exception(WC_Eval_Math::$last_error);
+        }
+        return $value;
     }
 }

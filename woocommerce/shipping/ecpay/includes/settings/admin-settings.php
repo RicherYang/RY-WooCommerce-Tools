@@ -1,7 +1,5 @@
 <?php
 
-use Automattic\WooCommerce\Utilities\I18nUtil;
-
 return [
     [
         'title' => __('Base options', 'ry-woocommerce-tools'),
@@ -150,16 +148,6 @@ return [
         ],
         'desc' => __('By product is set box size to the biggest product size.', 'ry-woocommerce-tools'),
         'desc_tip' => true,
-    ],
-    [
-        'title' => sprintf(
-            /* translators: %s: Weight unit */
-            __('Product default weight (%s) ( Home delivery )', 'ry-woocommerce-tools'),
-            I18nUtil::get_weight_unit_label(get_option('woocommerce_weight_unit')),
-        ),
-        'id' => RY_WT::OPTION_PREFIX . 'ecpay_shipping_product_weight',
-        'default' => '0',
-        'type' => 'text',
     ],
     [
         'id' => 'note_options',

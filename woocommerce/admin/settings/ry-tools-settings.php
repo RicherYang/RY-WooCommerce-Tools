@@ -1,6 +1,7 @@
 <?php
 
 use Automattic\WooCommerce\Blocks\Utils\CartCheckoutUtils;
+use Automattic\WooCommerce\Utilities\I18nUtil;
 
 if (class_exists('RY_WT_WC_Admin_Settings', false)) {
     if (!has_action('woocommerce_sections_rytools')) {
@@ -187,6 +188,7 @@ class RY_WT_WC_Admin_Settings extends WC_Settings_Page
                     'id' => RY_WT::OPTION_PREFIX . 'repay_action',
                     'type' => 'checkbox',
                     'default' => 'yes',
+                    'autoload' => false,
                 ],
                 [
                     'title' => __('Strength password', 'ry-woocommerce-tools'),
@@ -201,6 +203,18 @@ class RY_WT_WC_Admin_Settings extends WC_Settings_Page
                     'id' => RY_WT::OPTION_PREFIX . 'show_unpay_title',
                     'type' => 'checkbox',
                     'default' => 'yes',
+                    'autoload' => false,
+                ],
+                [
+                    'title' => sprintf(
+                        /* translators: %s: Weight unit */
+                        __('Product default weight (%s)', 'ry-woocommerce-tools'),
+                        I18nUtil::get_weight_unit_label(get_option('woocommerce_weight_unit')),
+                    ),
+                    'id' => RY_WT::OPTION_PREFIX . 'shipping_product_weight',
+                    'type' => 'text',
+                    'default' => '0',
+                    'autoload' => false,
                 ],
                 [
                     'type' => 'sectionend',

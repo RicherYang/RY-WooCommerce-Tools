@@ -19,7 +19,7 @@ final class RY_WT_WC_ECPay_Shipping_Admin
 
         add_filter('woocommerce_get_sections_rytools', [$this, 'add_sections']);
         add_filter('woocommerce_get_settings_rytools', [$this, 'add_setting'], 10, 2);
-        add_filter('woocommerce_admin_settings_sanitize_option_' . RY_WT::OPTION_PREFIX . 'ecpay_shipping_product_weight', [$this, 'only_number']);
+        add_filter('woocommerce_admin_settings_sanitize_option_' . RY_WT::OPTION_PREFIX . 'shipping_product_weight', [$this, 'only_number']);
         add_action('woocommerce_update_options_rytools_ecpay_shipping', [$this, 'check_option']);
 
         add_action('admin_post_ry-print-ecpay-shipping', [$this, 'print_shipping']);
