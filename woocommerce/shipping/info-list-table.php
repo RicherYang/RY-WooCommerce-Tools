@@ -2,7 +2,7 @@
 
 defined('ABSPATH') or exit;
 
-final class RY_WT_Shipping_Info_List_Table extends WP_List_Table
+class RY_WT_Shipping_Info_List_Table extends WP_List_Table
 {
     public $order;
 

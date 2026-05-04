@@ -47,6 +47,20 @@ class RY_ECPay_Shipping_Info_List_Table extends RY_WT_Shipping_Info_List_Table
 
         echo '<a class="button" href="' . esc_url($url) . '">' . esc_html__('Print', 'ry-woocommerce-tools') . '</a>';
 
+        $support_a6 = false;
+        if ($item['LogisticsType'] === 'CVS') {
+            $support_a6 = $item['LogisticsSubType'] === 'UNIMARTC2C';
+        }
+        if ($item['LogisticsType'] === 'HOME') {
+            $support_a6 = $item['LogisticsSubType'] === 'POST';
+        }
+        if ($support_a6) {
+            $url = add_query_arg([
+                'mode' => 'a6',
+            ], $url);
+            echo '<a class="button" href="' . esc_url($url) . '">' . esc_html__('Print (A6)', 'ry-woocommerce-tools') . '</a>';
+        }
+
         parent::column_action($item);
     }
 }

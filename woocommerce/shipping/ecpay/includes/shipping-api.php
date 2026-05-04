@@ -268,7 +268,7 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_ECPay_Api
         }
     }
 
-    public function get_print_form($info = null)
+    public function get_print_form(array $info, string $mode = 'a4')
     {
         list($MerchantID, $HashKey, $HashIV, $cvs_type) = RY_WT_WC_ECPay_Shipping::instance()->get_api_info();
 
@@ -276,6 +276,7 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_ECPay_Api
             'MerchantID' => $MerchantID,
             'LogisticsID' => [],
             'LogisticsSubType' => $info[0]['LogisticsSubType'],
+            'PrintMode' => $mode === 'a6' ? 2 : 1,
         ];
 
         foreach ($info as $item) {

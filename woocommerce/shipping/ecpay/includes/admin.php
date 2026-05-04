@@ -101,6 +101,7 @@ final class RY_WT_WC_ECPay_Shipping_Admin
 
         $order_ID = sanitize_text_field(wp_unslash($_GET['orderid'] ?? ''));
         $logistics_ID = sanitize_locale_name($_GET['id'] ?? '');
+        $mode = sanitize_key($_GET['mode'] ?? '');
         $print_list = [];
 
         if (empty($logistics_ID)) {
@@ -170,7 +171,7 @@ final class RY_WT_WC_ECPay_Shipping_Admin
         if (empty($print_list)) {
             wp_safe_redirect(admin_url('edit.php?post_type=shop_order'));
         } else {
-            RY_WT_WC_ECPay_Shipping_Api::instance()->get_print_form($print_list);
+            RY_WT_WC_ECPay_Shipping_Api::instance()->get_print_form($print_list, $mode);
         }
         exit();
     }
