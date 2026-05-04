@@ -1,5 +1,7 @@
 <?php
 
+defined('ABSPATH') or exit;
+
 class RY_NewebPay_Shipping_CVS extends RY_WT_WC_NewebPay_Shipping_Method
 {
     public function __construct($instance_ID = 0)

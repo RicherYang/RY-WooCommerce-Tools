@@ -1,8 +1,10 @@
 <?php
 
+defined('ABSPATH') or exit;
+
 class RY_WT_WC_ECPay_Gateway_Response extends RY_WT_ECPay_Api
 {
-    protected static $_instance = null;
+    protected static ?self $_instance = null;
 
     public static function instance(): RY_WT_WC_ECPay_Gateway_Response
     {

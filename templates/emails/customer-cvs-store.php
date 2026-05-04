@@ -1,3 +1,5 @@
+<?php defined('ABSPATH') or exit; ?>
+
 <?php
 /**
  * This template can be overridden by copying it to yourtheme/woocommerce/emails/customer-cvs-store.php
@@ -10,7 +12,6 @@
  *
  * @version 1.2.9
  */
-defined('ABSPATH') || exit;
 
 /**
  * @hooked WC_Emails::email_header() Output the email header

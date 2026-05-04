@@ -1,5 +1,7 @@
 <?php
 
+defined('ABSPATH') or exit;
+
 abstract class RY_WT_Meta_Box
 {
     protected static function get_order_object($data_object)

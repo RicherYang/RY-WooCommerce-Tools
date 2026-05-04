@@ -1,5 +1,7 @@
 <?php
 
+defined('ABSPATH') or exit;
+
 abstract class RY_WT_WC_SmilePay_Shipping_Method extends RY_WT_WC_Shipping_Method
 {
     public function is_available($package)

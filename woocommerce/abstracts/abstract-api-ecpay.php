@@ -1,5 +1,7 @@
 <?php
 
+defined('ABSPATH') or exit;
+
 abstract class RY_WT_ECPay_Api extends RY_WT_Api
 {
     protected const Encrypt_Method = 'aes-128-cbc';

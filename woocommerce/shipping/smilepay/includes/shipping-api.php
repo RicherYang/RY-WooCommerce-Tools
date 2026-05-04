@@ -1,8 +1,10 @@
 <?php
 
+defined('ABSPATH') or exit;
+
 class RY_WT_WC_SmilePay_Shipping_Api extends RY_WT_SmilePay_Api
 {
-    protected static $_instance = null;
+    protected static ?self $_instance = null;
 
     protected array $api_test_url = [
         'checkout' => 'https://ssl.smse.com.tw/ezpos/mtmk_utf.asp',

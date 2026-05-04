@@ -1,5 +1,7 @@
 <?php
 
+defined('ABSPATH') or exit;
+
 use Automattic\WooCommerce\Utilities\NumberUtil;
 
 abstract class RY_WT_Api
@@ -40,7 +42,7 @@ abstract class RY_WT_Api
         }
 
         $return_url = apply_filters('woocommerce_get_return_url', $return_url, $order);
-        wp_redirect($return_url);
+        wp_safe_redirect($return_url);
 
         exit();
     }

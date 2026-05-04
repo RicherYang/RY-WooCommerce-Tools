@@ -1,5 +1,7 @@
 <?php
 
+defined('ABSPATH') or exit;
+
 abstract class RY_WT_WC_Shipping_Method extends WC_Shipping_Method
 {
     public string $cost;

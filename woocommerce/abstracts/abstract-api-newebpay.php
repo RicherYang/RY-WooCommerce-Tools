@@ -1,5 +1,7 @@
 <?php
 
+defined('ABSPATH') or exit;
+
 abstract class RY_WT_NewebPay_Api extends RY_WT_Api
 {
     protected function get_3rd_return_url($order = null)

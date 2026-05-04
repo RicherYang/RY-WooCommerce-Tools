@@ -1,5 +1,7 @@
 <?php
 
+defined('ABSPATH') or exit;
+
 class RY_NewebPay_Gateway_Credit_Installment extends RY_WT_WC_NewebPay_Payment_Gateway
 {
     public const Payment_Type = 'InstFlag';

@@ -1,8 +1,10 @@
 <?php
 
+defined('ABSPATH') or exit;
+
 class RY_WT_WC_ECPay_Shipping_Response extends RY_WT_ECPay_Api
 {
-    protected static $_instance = null;
+    protected static ?self $_instance = null;
 
     public static function instance(): RY_WT_WC_ECPay_Shipping_Response
     {
@@ -59,7 +61,7 @@ class RY_WT_WC_ECPay_Shipping_Response extends RY_WT_ECPay_Api
         }
 
         if (6 !== count($cvs_info) || '' === $cvs_info['CVSStoreID']) {
-            wp_redirect(wc_get_checkout_url());
+            wp_safe_redirect(wc_get_checkout_url());
             exit();
         }
 

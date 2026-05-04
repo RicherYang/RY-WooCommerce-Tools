@@ -1,5 +1,7 @@
 <?php
 
+defined('ABSPATH') or exit;
+
 class RY_ECPay_Shipping_CVS_Family extends RY_WT_WC_ECPay_Shipping_Method
 {
     public const Shipping_Type = 'CVS';

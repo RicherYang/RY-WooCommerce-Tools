@@ -1,6 +1,8 @@
 <?php
 
-class RY_SmilePay_Shipping_Meta_Box extends RY_WT_Meta_Box
+defined('ABSPATH') or exit;
+
+final class RY_SmilePay_Shipping_Meta_Box extends RY_WT_Meta_Box
 {
     public static function add_meta_box($post_type, $data_object): void
     {

@@ -1,8 +1,10 @@
 <?php
 
+defined('ABSPATH') or exit;
+
 class RY_WT_WC_SmilePay_Shipping_Response extends RY_WT_SmilePay_Api
 {
-    protected static $_instance = null;
+    protected static ?self $_instance = null;
 
     public static function instance(): RY_WT_WC_SmilePay_Shipping_Response
     {
@@ -140,7 +142,7 @@ class RY_WT_WC_SmilePay_Shipping_Response extends RY_WT_SmilePay_Api
             }
         }
 
-        wp_redirect($url);
+        wp_safe_redirect($url);
     }
 
     public function doing_callback($ipn_info)

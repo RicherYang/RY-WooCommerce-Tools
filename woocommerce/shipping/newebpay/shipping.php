@@ -1,12 +1,14 @@
 <?php
 
+defined('ABSPATH') or exit;
+
 final class RY_WT_WC_NewebPay_Shipping extends RY_WT_Shipping_Model
 {
     public static array $support_methods = [
         'ry_newebpay_shipping_cvs' => 'RY_NewebPay_Shipping_CVS',
     ];
 
-    protected static $_instance = null;
+    protected static ?self $_instance = null;
 
     protected array $js_data;
 

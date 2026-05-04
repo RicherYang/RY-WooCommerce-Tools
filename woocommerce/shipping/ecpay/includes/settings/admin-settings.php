@@ -1,5 +1,7 @@
 <?php
 
+defined('ABSPATH') or exit;
+
 return [
     [
         'title' => __('Base options', 'ry-woocommerce-tools'),

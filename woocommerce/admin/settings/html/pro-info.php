@@ -1,3 +1,5 @@
+<?php defined('ABSPATH') or exit; ?>
+
 <h2>專業版資訊</h2>
 <p>專業版將提供更多方便店家管理賣場的功能。</p>
 <p>更完整的說明請至 <a href="https://ry-plugin.com/ry-woocommerce-tools-pro/" target="_blank">RY Tools (Pro) for WooCommerce</a> 觀看。</p>

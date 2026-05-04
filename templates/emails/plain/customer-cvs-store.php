@@ -1,3 +1,5 @@
+<?php defined('ABSPATH') or exit; ?>
+
 <?php
 
 /**
@@ -11,7 +13,6 @@
  *
  * @version 1.2.9
  */
-defined('ABSPATH') || exit;
 
 echo "=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n";
 echo esc_html(wp_strip_all_tags($email_heading));

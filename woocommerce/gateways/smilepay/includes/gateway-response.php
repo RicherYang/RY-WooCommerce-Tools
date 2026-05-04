@@ -1,8 +1,10 @@
 <?php
 
+defined('ABSPATH') or exit;
+
 class RY_WT_WC_SmilePay_Gateway_Response extends RY_WT_WC_SmilePay_Gateway_Api
 {
-    protected static $_instance = null;
+    protected static ?self $_instance = null;
 
     public static function instance(): RY_WT_WC_SmilePay_Gateway_Response
     {
@@ -129,7 +131,7 @@ class RY_WT_WC_SmilePay_Gateway_Response extends RY_WT_WC_SmilePay_Gateway_Api
             $payment_gateway = wc_get_payment_gateway_by_order($order);
             if (property_exists($payment_gateway, 'get_code_mode')) {
                 if (!$payment_gateway->get_code_mode) {
-                    wp_redirect($order->get_checkout_order_received_url());
+                    wp_safe_redirect($order->get_checkout_order_received_url());
                     return;
                 }
             }

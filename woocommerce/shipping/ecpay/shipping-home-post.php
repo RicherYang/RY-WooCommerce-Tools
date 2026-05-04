@@ -1,5 +1,7 @@
 <?php
 
+defined('ABSPATH') or exit;
+
 class RY_ECPay_Shipping_Home_Post extends RY_WT_WC_ECPay_Shipping_Method
 {
     public const Shipping_Type = 'Home';

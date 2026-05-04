@@ -1,5 +1,7 @@
 <?php
 
+defined('ABSPATH') or exit;
+
 use Automattic\WooCommerce\Blocks\Utils\CartCheckoutUtils;
 use Automattic\WooCommerce\Utilities\I18nUtil;
 
@@ -9,7 +11,7 @@ if (class_exists('RY_WT_WC_Admin_Settings', false)) {
     }
 }
 
-class RY_WT_WC_Admin_Settings extends WC_Settings_Page
+final class RY_WT_WC_Admin_Settings extends WC_Settings_Page
 {
     public function __construct()
     {

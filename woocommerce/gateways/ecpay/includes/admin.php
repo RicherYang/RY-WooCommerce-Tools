@@ -1,10 +1,12 @@
 <?php
 
+defined('ABSPATH') or exit;
+
 use Automattic\WooCommerce\Blocks\Utils\CartCheckoutUtils;
 
 final class RY_WT_WC_ECPay_Gateway_Admin
 {
-    protected static $_instance = null;
+    protected static ?self $_instance = null;
 
     public static function instance(): RY_WT_WC_ECPay_Gateway_Admin
     {

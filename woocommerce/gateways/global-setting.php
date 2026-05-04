@@ -1,5 +1,7 @@
 <?php
 
+defined('ABSPATH') or exit;
+
 return [
     'enabled' => [
         'title' => __('Enable/Disable', 'ry-woocommerce-tools'),

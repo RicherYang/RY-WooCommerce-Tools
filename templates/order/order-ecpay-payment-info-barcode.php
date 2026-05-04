@@ -1,3 +1,5 @@
+<?php defined('ABSPATH') or exit; ?>
+
 <?php
 /**
  * This template can be overridden by copying it to yourtheme/woocommerce/order/order-ecpay-payment-info-barcode.php
@@ -10,7 +12,6 @@
  *
  * @version 3.0.6
  */
-defined('ABSPATH') || exit;
 
 if ('ry_ecpay_barcode' !== $order->get_payment_method()) {
     return;

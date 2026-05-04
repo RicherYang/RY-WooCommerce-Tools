@@ -1,5 +1,7 @@
 <?php
 
+defined('ABSPATH') or exit;
+
 if (!class_exists('RY_Shipping_Email_Customer_CVS_Store', false)) {
     class RY_Shipping_Email_Customer_CVS_Store extends WC_Email
     {

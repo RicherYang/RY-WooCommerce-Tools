@@ -1,5 +1,7 @@
 <?php
 
+defined('ABSPATH') or exit;
+
 abstract class RY_WT_Shipping_Model extends RY_WT_Model
 {
     protected array $cvs_hide_fields = [];

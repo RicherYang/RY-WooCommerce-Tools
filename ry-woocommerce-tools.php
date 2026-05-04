@@ -17,7 +17,7 @@
  * Domain Path: /languages
  */
 
-function_exists('plugin_dir_url') or exit('No direct script access allowed');
+defined('ABSPATH') or exit;
 
 define('RY_WT_VERSION', '3.6.2');
 define('RY_WT_PLUGIN_URL', plugin_dir_url(__FILE__));

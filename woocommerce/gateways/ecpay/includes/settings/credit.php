@@ -1,5 +1,7 @@
 <?php
 
+defined('ABSPATH') or exit;
+
 $setting = include RY_WT_PLUGIN_DIR . 'woocommerce/gateways/global-setting.php';
 
 $setting['applepay'] = [

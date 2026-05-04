@@ -1,5 +1,7 @@
 <?php
 
+defined('ABSPATH') or exit;
+
 include_once RY_WT_PLUGIN_DIR . 'woocommerce/shipping/info-list-table.php';
 
 class RY_ECPay_Shipping_Info_List_Table extends RY_WT_Shipping_Info_List_Table

@@ -1,5 +1,7 @@
 <?php
 
+defined('ABSPATH') or exit;
+
 final class RY_WT_WC_SmilePay_Shipping extends RY_WT_Shipping_Model
 {
     public static array $support_methods = [
@@ -8,7 +10,7 @@ final class RY_WT_WC_SmilePay_Shipping extends RY_WT_Shipping_Model
         'ry_smilepay_shipping_home_tcat' => 'RY_SmilePay_Shipping_Home_Tcat',
     ];
 
-    protected static $_instance = null;
+    protected static ?self $_instance = null;
 
     protected array $js_data;
 

@@ -1,5 +1,7 @@
 <?php
 
+defined('ABSPATH') or exit;
+
 abstract class RY_WT_SmilePay_Api extends RY_WT_Api
 {
     protected function generate_trade_no($order_ID, $order_prefix = '')

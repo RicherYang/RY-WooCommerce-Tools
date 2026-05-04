@@ -1,5 +1,7 @@
 <?php
 
+defined('ABSPATH') or exit;
+
 class RY_SmilePay_Shipping_CVS_711 extends RY_WT_WC_SmilePay_Shipping_Method
 {
     public const Shipping_Type = '7NET';

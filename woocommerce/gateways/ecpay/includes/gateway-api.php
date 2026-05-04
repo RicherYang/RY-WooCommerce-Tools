@@ -1,8 +1,10 @@
 <?php
 
+defined('ABSPATH') or exit;
+
 class RY_WT_WC_ECPay_Gateway_Api extends RY_WT_ECPay_Api
 {
-    protected static $_instance = null;
+    protected static ?self $_instance = null;
 
     protected array $api_test_url = [
         'checkout' => 'https://payment-stage.ecpay.com.tw/Cashier/AioCheckOut/V5',

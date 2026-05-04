@@ -1,10 +1,10 @@
 <?php
 
-use WordPress\Plugin_Check\Checker\AJAX_Runner;
+defined('ABSPATH') or exit;
 
 final class RY_WT_WC_SmilePay_Gateway_Ajax
 {
-    protected static $_instance = null;
+    protected static ?self $_instance = null;
 
     public static function instance(): RY_WT_WC_SmilePay_Gateway_Ajax
     {

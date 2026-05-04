@@ -1,5 +1,7 @@
 <?php
 
+defined('ABSPATH') or exit;
+
 abstract class RY_WT_WC_SmilePay_Payment_Gateway extends RY_WT_WC_Payment_Gateway
 {
     public $get_code_mode = false;

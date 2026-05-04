@@ -1,6 +1,6 @@
 <?php
 
-use Automattic\WooCommerce\Utilities\I18nUtil;
+defined('ABSPATH') or exit;
 
 $settings = [
     'title' => [

@@ -1,8 +1,10 @@
 <?php
 
+defined('ABSPATH') or exit;
+
 final class RY_WT_WC_ECPay_Gateway extends RY_WT_Model
 {
-    protected static $_instance = null;
+    protected static ?self $_instance = null;
 
     protected string $model_type = 'ecpay_gateway';
 

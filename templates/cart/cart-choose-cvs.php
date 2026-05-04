@@ -1,3 +1,5 @@
+<?php defined('ABSPATH') or exit; ?>
+
 <?php
 /**
  * This template can be overridden by copying it to yourtheme/woocommerce/cart/cart-choose-cvs.php
@@ -10,7 +12,6 @@
  *
  * @version 3.0.4
  */
-defined('ABSPATH') || exit;
 
 $checkout = WC()->checkout();
 ?>
