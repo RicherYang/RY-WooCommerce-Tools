@@ -57,7 +57,7 @@ abstract class RY_WT_WC_Payment_Gateway extends WC_Payment_Gateway
     {
         $is_available = ('yes' === $this->enabled);
 
-        if (WC()->cart) {
+        if ($is_available && WC()->cart) {
             $total = $this->get_order_total();
             if (0 < $total) {
                 if ($this->min_amount > 0 && $total <= $this->min_amount) {

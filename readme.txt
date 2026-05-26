@@ -4,8 +4,8 @@ Donate link: https://www.paypal.me/RicherYang
 Tags: woocommerce, payment, gateway, shipping
 Requires at least: 6.8
 Requires PHP: 8.2
-Tested up to: 6.9
-Stable tag: 3.6.4
+Tested up to: 7.0
+Stable tag: 3.6.6
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.txt
 
@@ -40,7 +40,10 @@ Please visit the [plugin forum page](https://ry-plugin.com/ry-woocommerce-tools/
 
 == Changelog ==
 
-* 3.6.4 - 2026-05-05 =
+= 3.6.6 - 2026-05-21 =
+* 修正 - PHP 8.2 藍新金流的相容性錯誤問題。
+
+= 3.6.4 - 2026-05-05 =
 * 修正 - 在部份情況下綠界超商門市資訊可能丟失。
 
 = 3.6.3 - 2026-05-04 =

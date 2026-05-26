@@ -6,13 +6,13 @@ abstract class RY_WT_WC_ECPay_Payment_Gateway extends RY_WT_WC_Payment_Gateway
 
     public function __construct()
     {
+        parent::__construct();
+
         add_action('woocommerce_update_options_payment_gateways_' . $this->id, [$this, 'process_admin_options']);
 
-        if ($this->enabled) {
+        if ('yes' === $this->enabled) {
             add_action('woocommerce_receipt_' . $this->id, [$this, 'receipt_page']);
         }
-
-        parent::__construct();
     }
 
     public function receipt_page($order_ID)

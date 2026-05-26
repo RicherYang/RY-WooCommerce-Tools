@@ -185,16 +185,4 @@ class RY_WT_WC_SmilePay_Gateway_Api extends RY_WT_SmilePay_Api
         }
         return $args;
     }
-
-    protected function set_transaction_info($order, $result, $payment_type)
-    {
-        $transaction_ID = (string) $order->get_transaction_id();
-        if ($transaction_ID == '' || !$order->is_paid() || $transaction_ID != $this->get_transaction_id($result)) {
-            $order->set_transaction_id($this->get_transaction_id($result));
-            $order->update_meta_data('_smilepay_payment_type', $payment_type);
-            $order->save();
-            $order = wc_get_order($order->get_id());
-        }
-        return $order;
-    }
 }

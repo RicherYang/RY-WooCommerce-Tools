@@ -2,7 +2,7 @@
 
 defined('ABSPATH') or exit;
 
-class RY_WT_WC_SmilePay_Gateway_Response extends RY_WT_WC_SmilePay_Gateway_Api
+class RY_WT_WC_SmilePay_Gateway_Response extends RY_WT_SmilePay_Api
 {
     protected static ?self $_instance = null;
 

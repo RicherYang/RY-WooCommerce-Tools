@@ -238,7 +238,7 @@ class RY_WT_WC_SmilePay_Shipping_Api extends RY_WT_SmilePay_Api
                 }
 
                 if (wp_remote_retrieve_response_code($response) != '200') {
-                    RY_WT_WC_SmilePay_Shipping::instance()->log('Home POST HTTP status error', WC_Log_Levels::ERROR, ['code' => $response['response']['code']]);
+                    RY_WT_WC_SmilePay_Shipping::instance()->log('Home POST HTTP status error', WC_Log_Levels::ERROR, ['code' => wp_remote_retrieve_response_code($response)]);
                     return false;
                 }
 
@@ -384,7 +384,7 @@ class RY_WT_WC_SmilePay_Shipping_Api extends RY_WT_SmilePay_Api
             }
 
             if (wp_remote_retrieve_response_code($response) != '200') {
-                RY_WT_WC_SmilePay_Shipping::instance()->log('No POST HTTP status error', WC_Log_Levels::ERROR, ['code' => $response['response']['code']]);
+                RY_WT_WC_SmilePay_Shipping::instance()->log('No POST HTTP status error', WC_Log_Levels::ERROR, ['code' => wp_remote_retrieve_response_code($response)]);
                 return false;
             }
 

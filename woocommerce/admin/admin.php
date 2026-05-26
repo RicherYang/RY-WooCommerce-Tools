@@ -50,11 +50,22 @@ final class RY_WT_WC_Admin
         $hide_save_button = true;
 
         if (isset($_POST['ryt_check_time']) && 'ryt_check_time' === $_POST['ryt_check_time']) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
-            RY_WT_Cron::check_ntp_time();
-            printf(
-                '<div class="notice notice-success is-dismissible"><p><strong>%s</strong></p></div>',
-                esc_html__('Check server time success.', 'ry-woocommerce-tools'),
-            );
+            $difftime = RY_WT_Cron::check_ntp_time();
+            if ($difftime === -1) {
+                printf(
+                    '<div class="notice notice-error is-dismissible"><p><strong>%s</strong></p></div>',
+                    esc_html__('Check server time failed.', 'ry-woocommerce-tools')
+                );
+            } else {
+                printf(
+                    '<div class="notice notice-' . ($difftime > MINUTE_IN_SECONDS ? 'info' : 'success') . ' is-dismissible"><p><strong>%s</strong></p></div>',
+                    esc_html(sprintf(
+                        /* translators: %d: differ time (second) */
+                        _n('Check server time success. Difference: %d second', 'Check server time success. Difference: %d seconds', $difftime, 'ry-woocommerce-tools'),
+                        $difftime
+                    ))
+                );
+            }
         }
 
         include RY_WT_PLUGIN_DIR . 'woocommerce/admin/settings/html/tools.php';

@@ -15,12 +15,12 @@ final class RY_WT_Cron
     {
         if (!function_exists('stream_socket_client')) {
             wp_unschedule_hook('ry_check_ntp_time');
-            return;
+            return -1;
         }
 
         $ntp_time = 0;
         $ntp_server_url = apply_filters('ry_ntp_server_url', 'udp://time.google.com:123');
-        $socket = stream_socket_client($ntp_server_url, $errno, $errstr);
+        $socket = stream_socket_client($ntp_server_url, $errno, $errstr, 5);
         if ($socket) {
             fwrite($socket, chr(0x1B) . str_repeat(chr(0x00), 47)); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fwrite
             $response = fread($socket, 48); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fread
@@ -34,10 +34,11 @@ final class RY_WT_Cron
         }
 
         if ($ntp_time > 0) {
-            $time_diff = current_time('timestamp', true) - $ntp_time;
-            RY_WT::update_option('ntp_time_error', abs($time_diff) > MINUTE_IN_SECONDS);
+            $time_diff = abs(current_time('timestamp', true) - $ntp_time);
+            RY_WT::update_option('ntp_time_error', $time_diff > MINUTE_IN_SECONDS);
             return $time_diff;
         }
+        return -1;
     }
 
     public static function update_3_2_0(): void

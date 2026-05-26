@@ -2,7 +2,7 @@
 
 defined('ABSPATH') or exit;
 
-class RY_WT_WC_NewebPay_Gateway_Response extends RY_WT_WC_NewebPay_Gateway_Api
+class RY_WT_WC_NewebPay_Gateway_Response extends RY_WT_NewebPay_Api
 {
     protected static ?self $_instance = null;
 
@@ -87,7 +87,7 @@ class RY_WT_WC_NewebPay_Gateway_Response extends RY_WT_WC_NewebPay_Gateway_Api
             if (method_exists($this, 'payment_status_' . $payment_status)) {
                 call_user_func([$this, 'payment_status_' . $payment_status], $order, $ipn_info->Result);
             } else {
-                $this->payment_status_unknow($order, $ipn_info->Result, $payment_status);
+                $this->payment_status_unknow($order, $ipn_info->Result);
             }
 
             do_action('ry_newebpay_gateway_response_status_' . $payment_status, $ipn_info->Result, $order);
@@ -193,7 +193,7 @@ class RY_WT_WC_NewebPay_Gateway_Response extends RY_WT_WC_NewebPay_Gateway_Api
         }
     }
 
-    protected function payment_status_unknow($order, $ipn_info, $payment_status)
+    protected function payment_status_unknow($order, $ipn_info)
     {
         RY_WT_WC_NewebPay_Gateway::instance()->log('Unknow status', WC_Log_Levels::INFO, ['status' => $this->get_status($ipn_info), 'status_msg' => $this->get_status_msg($ipn_info)]);
         if ($order->is_paid()) {

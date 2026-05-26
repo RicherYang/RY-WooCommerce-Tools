@@ -64,12 +64,12 @@ abstract class RY_WT_NewebPay_Api extends RY_WT_Api
         return strtoupper($string);
     }
 
-    protected function link_server($url, $args)
+    protected function link_server(string $url, array $args, int $timeout = 30)
     {
         wc_set_time_limit(40);
 
         return wp_remote_post($url, [
-            'timeout' => 30,
+            'timeout' => $timeout,
             'body' => $args,
             'user-agent' => apply_filters('http_headers_useragent', 'WordPress/' . get_bloginfo('version')),
         ]);
