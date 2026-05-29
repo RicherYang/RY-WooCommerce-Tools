@@ -1,5 +1,5 @@
-const path = require('path', true);
-const glob = require('glob', true);
+const path = require('path');
+const glob = require('glob');
 const CopyWebpackPlugin = require('copy-webpack-plugin', true);
 const { CleanWebpackPlugin } = require('clean-webpack-plugin', true);
 
