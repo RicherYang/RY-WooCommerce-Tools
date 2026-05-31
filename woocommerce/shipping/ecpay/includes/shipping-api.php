@@ -296,7 +296,7 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_ECPay_Api
         $response = $this->link_v2_server($url, $args, $HashKey, $HashIV);
         if (is_wp_error($response)) {
             RY_WT_WC_ECPay_Shipping::instance()->log('Print POST failed', WC_Log_Levels::ERROR, ['info' => $response->get_error_messages()]);
-            exit();
+            exit;
         }
 
         if (wp_remote_retrieve_response_code($response) != '200') {

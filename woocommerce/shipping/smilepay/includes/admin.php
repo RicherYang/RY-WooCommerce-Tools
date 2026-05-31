@@ -58,7 +58,7 @@ final class RY_WT_WC_SmilePay_Shipping_Admin
     {
         if (!wp_verify_nonce(($_GET['_wpnonce'] ?? ''), 'ry-print-shipping')) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash , WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
             wp_safe_redirect(admin_url('edit.php?post_type=shop_order'));
-            exit();
+            exit;
         }
 
         $order_ID = intval($_GET['orderid'] ?? '');
@@ -130,7 +130,7 @@ final class RY_WT_WC_SmilePay_Shipping_Admin
         } else {
             RY_WT_WC_SmilePay_Shipping_Api::instance()->get_print_url($print_list, $print_type);
         }
-        exit();
+        exit;
     }
 
     public function get_shipping_info()
