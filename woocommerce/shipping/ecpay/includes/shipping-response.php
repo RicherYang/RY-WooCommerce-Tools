@@ -62,7 +62,7 @@ class RY_WT_WC_ECPay_Shipping_Response extends RY_WT_ECPay_Api
 
         if (6 !== count($cvs_info) || '' === $cvs_info['CVSStoreID']) {
             wp_safe_redirect(wc_get_checkout_url());
-            exit();
+            exit;
         }
 
         $extra_data = sanitize_text_field(wp_unslash($_POST['ExtraData'] ?? '')); // phpcs:ignore WordPress.Security.NonceVerification.Missing
@@ -80,7 +80,7 @@ class RY_WT_WC_ECPay_Shipping_Response extends RY_WT_ECPay_Api
             } else {
                 wp_safe_redirect(admin_url());
             }
-            exit();
+            exit;
         }
 
         add_filter('woocommerce_set_cookie_enabled', '__return_false');
@@ -91,7 +91,7 @@ class RY_WT_WC_ECPay_Shipping_Response extends RY_WT_ECPay_Api
             'ry-ecpay-cvsmap-info' => rtrim(base64_encode(wp_json_encode($cvs_info)), '='),
         ];
         include RY_WT_PLUGIN_DIR . 'templates/auto-redirect.php';
-        exit();
+        exit;
     }
 
     public function check_shipping_callback()
