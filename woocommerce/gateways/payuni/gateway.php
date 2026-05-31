@@ -26,12 +26,10 @@ final class RY_WT_WC_PAYUNi_Gateway extends RY_WT_Model
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/gateways/payuni/includes/gateway-api.php';
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/gateways/payuni/includes/gateway-response.php';
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/gateways/payuni/includes/payment-gateway.php';
-        // include_once RY_WT_PLUGIN_DIR . 'woocommerce/gateways/payuni/gateway-atm.php';
-        // include_once RY_WT_PLUGIN_DIR . 'woocommerce/gateways/payuni/gateway-barcode.php';
-        // include_once RY_WT_PLUGIN_DIR . 'woocommerce/gateways/payuni/gateway-credit-installment.php';
+        include_once RY_WT_PLUGIN_DIR . 'woocommerce/gateways/payuni/gateway-atm.php';
+        include_once RY_WT_PLUGIN_DIR . 'woocommerce/gateways/payuni/gateway-credit-installment.php';
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/gateways/payuni/gateway-credit.php';
-        // include_once RY_WT_PLUGIN_DIR . 'woocommerce/gateways/payuni/gateway-cvs.php';
-        // include_once RY_WT_PLUGIN_DIR . 'woocommerce/gateways/payuni/gateway-webatm.php';
+        include_once RY_WT_PLUGIN_DIR . 'woocommerce/gateways/payuni/gateway-cvs.php';
 
         RY_WT_WC_Gateways::instance();
         RY_WT_WC_PAYUNi_Gateway_Response::instance();
@@ -49,12 +47,10 @@ final class RY_WT_WC_PAYUNi_Gateway extends RY_WT_Model
 
     public function add_method($methods)
     {
-        // $methods[] = 'RY_PAYUNi_Gateway_Atm';
-        // $methods[] = 'RY_PAYUNi_Gateway_Barcode';
-        // $methods[] = 'RY_PAYUNi_Gateway_Credit_Installment';
+        $methods[] = 'RY_PAYUNi_Gateway_Atm';
+        $methods[] = 'RY_PAYUNi_Gateway_Credit_Installment';
         $methods[] = 'RY_PAYUNi_Gateway_Credit';
-        // $methods[] = 'RY_PAYUNi_Gateway_Cvs';
-        // $methods[] = 'RY_PAYUNi_Gateway_Webatm';
+        $methods[] = 'RY_PAYUNi_Gateway_Cvs';
 
         return $methods;
     }
@@ -68,19 +64,14 @@ final class RY_WT_WC_PAYUNi_Gateway extends RY_WT_Model
             return;
         }
 
-        /*
         switch ($order->get_payment_method()) {
             case 'ry_payuni_atm':
                 $template_file = 'order/order-payuni-payment-info-atm.php';
-                break;
-            case 'ry_payuni_barcode':
-                $template_file = 'order/order-payuni-payment-info-barcode.php';
                 break;
             case 'ry_payuni_cvs':
                 $template_file = 'order/order-payuni-payment-info-cvs.php';
                 break;
         }
-        */
 
         if (isset($template_file)) {
             $args = [

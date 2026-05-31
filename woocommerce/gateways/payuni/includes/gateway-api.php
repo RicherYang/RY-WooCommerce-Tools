@@ -135,7 +135,6 @@ class RY_WT_WC_PAYUNi_Gateway_Api extends RY_WT_PAYUNi_Api
     {
         if (defined(get_class($gateway) . '::Payment_Type')) {
             $args[$gateway::Payment_Type] = 1;
-            /*
             switch ($gateway::Payment_Type) {
                 case 'VACC':
                 case 'CVS':
@@ -144,7 +143,7 @@ class RY_WT_WC_PAYUNi_Gateway_Api extends RY_WT_PAYUNi_Api
                     $now->add(new DateInterval('P' . $gateway->expire_date . 'D'));
                     $args['ExpireDate'] = $now->format('Ymd');
                     break;
-                case 'InstFlag':
+                case 'CreditInst':
                     if (isset($gateway->number_of_periods) && !empty($gateway->number_of_periods)) {
                         if (is_array($gateway->number_of_periods)) {
                             $number_of_periods = (int) $order->get_meta('_payuni_payment_number_of_periods', true);
@@ -154,11 +153,11 @@ class RY_WT_WC_PAYUNi_Gateway_Api extends RY_WT_PAYUNi_Api
                         } else {
                             $number_of_periods = (int) $gateway->number_of_periods;
                         }
-                        if (in_array($number_of_periods, [3, 6, 12, 18, 24, 30])) {
-                            $args['InstFlag'] = $number_of_periods;
+                        if (in_array($number_of_periods, [3, 6, 9, 12, 18, 24, 30])) {
+                            $args[$gateway::Payment_Type] = $number_of_periods;
 
                             $order->add_order_note(sprintf(
-                                /* translators: %d number of periods
+                                /* translators: %d number of periods */
                                 __('Credit installment to %d', 'ry-woocommerce-tools'),
                                 $number_of_periods,
                             ));
@@ -167,7 +166,6 @@ class RY_WT_WC_PAYUNi_Gateway_Api extends RY_WT_PAYUNi_Api
                     }
                     break;
             }
-            */
         }
 
         /*

@@ -79,7 +79,7 @@ abstract class RY_WT_WC_Payment_Gateway extends WC_Payment_Gateway
             if (isset($_POST[$filed_name])) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
                 $_POST[$filed_name] = intval($_POST[$filed_name]); // phpcs:ignore WordPress.Security.NonceVerification.Missing
                 if ($_POST[$filed_name] < $this->check_min_amount) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
-                    WC_Admin_Settings::add_error(sprintf(
+                    WC_Admin_Settings::add_message(sprintf(
                         /* translators: %1$s: Gateway method title, %2$d normal minimum */
                         __('%1$s minimum amount less then normal minimum (%2$d).', 'ry-woocommerce-tools'),
                         $this->method_title,
@@ -94,7 +94,7 @@ abstract class RY_WT_WC_Payment_Gateway extends WC_Payment_Gateway
             if (isset($_POST[$filed_name])) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
                 $_POST[$filed_name] = intval($_POST[$filed_name]); // phpcs:ignore WordPress.Security.NonceVerification.Missing
                 if ($_POST[$filed_name] > $this->check_max_amount) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
-                    WC_Admin_Settings::add_error(sprintf(
+                    WC_Admin_Settings::add_message(sprintf(
                         /* translators: %1$s: Gateway method title, %2$d normal maximum */
                         __('%1$s maximum amount more then normal maximum (%2$d).', 'ry-woocommerce-tools'),
                         $this->method_title,
