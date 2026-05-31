@@ -91,6 +91,11 @@ final class RY_WT
             RY_WT_WC_SmilePay_Shipping::instance();
         }
 
+        if ('yes' === self::get_option('enabled_payuni_gateway', 'no')) {
+            include_once RY_WT_PLUGIN_DIR . 'woocommerce/gateways/payuni/gateway.php';
+            RY_WT_WC_PAYUNi_Gateway::instance();
+        }
+
         do_action('ry_woo_tools_loaded');
     }
 

@@ -96,15 +96,13 @@ final class RY_WT_WC_Admin_Settings extends WC_Settings_Page
             $settings = [
                 [
                     'title' => __('Service provider', 'ry-woocommerce-tools'),
-                    'desc' => wc_checkout_is_https() ? '' : __('For correct link to service provider API, need enable secure checkout.', 'ry-woocommerce-tools'),
+                    'desc' => (wc_checkout_is_https() ? '' : __('For correct link to service provider API, need enable secure checkout.', 'ry-woocommerce-tools')),
                     'type' => 'title',
                     'id' => 'service_provider',
                 ],
                 [
                     'title' => __('ECPay support', 'ry-woocommerce-tools'),
-                    'desc' => __('Enable ECPay gateway method', 'ry-woocommerce-tools')
-                        /* translators: %s: link to RY Tools (Pro) for WooCommerce */
-                        . ($checkout_with_block || defined('RY_WTP_VERSION') ? '' : '<br>' . sprintf(__('Need %s to support block checkout.', 'ry-woocommerce-tools'), '<a href="https://ry-plugin.com/ry-woocommerce-tools-pro">RY Tools (Pro) for WooCommerce</a>')),
+                    'desc' => __('Enable ECPay gateway method', 'ry-woocommerce-tools'),
                     'id' => RY_WT::OPTION_PREFIX . 'enabled_ecpay_gateway',
                     'type' => 'checkbox',
                     'default' => 'no',
@@ -119,9 +117,7 @@ final class RY_WT_WC_Admin_Settings extends WC_Settings_Page
                 ],
                 [
                     'title' => __('NewebPay support', 'ry-woocommerce-tools'),
-                    'desc' => __('Enable NewebPay gateway method', 'ry-woocommerce-tools')
-                        /* translators: %s: link to RY Tools (Pro) for WooCommerce */
-                        . ($checkout_with_block || defined('RY_WTP_VERSION') ? '' : '<br>' . sprintf(__('Need %s to support block checkout.', 'ry-woocommerce-tools'), '<a href="https://ry-plugin.com/ry-woocommerce-tools-pro">RY Tools (Pro) for WooCommerce</a>')),
+                    'desc' => __('Enable NewebPay gateway method', 'ry-woocommerce-tools'),
                     'id' => RY_WT::OPTION_PREFIX . 'enabled_newebpay_gateway',
                     'type' => 'checkbox',
                     'default' => 'no',
@@ -136,9 +132,7 @@ final class RY_WT_WC_Admin_Settings extends WC_Settings_Page
                 ],
                 [
                     'title' => __('SmilePay support', 'ry-woocommerce-tools'),
-                    'desc' => __('Enable SmilePay gateway method', 'ry-woocommerce-tools')
-                        /* translators: %s: link to RY Tools (Pro) for WooCommerce */
-                        . ($checkout_with_block || defined('RY_WTP_VERSION') ? '' : '<br>' . sprintf(__('Need %s to support block checkout.', 'ry-woocommerce-tools'), '<a href="https://ry-plugin.com/ry-woocommerce-tools-pro">RY Tools (Pro) for WooCommerce</a>')),
+                    'desc' => __('Enable SmilePay gateway method', 'ry-woocommerce-tools'),
                     'id' => RY_WT::OPTION_PREFIX . 'enabled_smilepay_gateway',
                     'type' => 'checkbox',
                     'default' => 'no',
@@ -152,8 +146,11 @@ final class RY_WT_WC_Admin_Settings extends WC_Settings_Page
                     'checkboxgroup' => 'end',
                 ],
                 [
-                    'type' => 'sectionend',
-                    'id' => 'smilepay_support',
+                    'title' => __('PAYUNi support', 'ry-woocommerce-tools'),
+                    'desc' => __('Enable PAYUNi gateway method', 'ry-woocommerce-tools'),
+                    'id' => RY_WT::OPTION_PREFIX . 'enabled_payuni_gateway',
+                    'type' => 'checkbox',
+                    'default' => 'no',
                 ],
                 [
                     'type' => 'sectionend',
