@@ -8,12 +8,12 @@ class RY_WT_WC_PAYUNi_Gateway_Api extends RY_WT_PAYUNi_Api
 
     protected array $api_test_url = [
         'checkout' => 'https://sandbox-api.payuni.com.tw/api/upp',
-        // 'query' => 'https://ccore.payuni.com/API/QueryTradeInfo',
+        'query' => 'https://sandbox-api.payuni.com.tw/api/trade/query',
     ];
 
     protected array $api_url = [
         'checkout' => 'https://api.payuni.com.tw/api/upp',
-        // 'query' => 'https://core.payuni.com/API/QueryTradeInfo',
+        'query' => 'https://api.payuni.com.tw/api/trade/query',
     ];
 
     public static function instance(): RY_WT_WC_PAYUNi_Gateway_Api
@@ -95,14 +95,16 @@ class RY_WT_WC_PAYUNi_Gateway_Api extends RY_WT_PAYUNi_Api
 
         $args = [
             'MerID' => $MerID,
-            'Version' => '1.3',
-            'RespondType' => 'JSON',
-            'TimeStamp' => new DateTime('', new DateTimeZone('Asia/Taipei')),
             'MerTradeNo' => $order->get_meta('_payuni_MerTradeNo', true),
-            'Amt' => (int) ceil($order->get_total()),
+            'Timestamp' => new DateTime('now', new DateTimeZone('Asia/Taipei')),
         ];
-        $args['TimeStamp'] = $args['TimeStamp']->getTimestamp();
-        $args['CheckValue'] = $this->generate_check_value($args, $HashKey, $HashIV);
+        $args['Timestamp'] = $args['Timestamp']->getTimestamp();
+        $form_data = [
+            'MerID' => $MerID,
+            'EncryptInfo' => $this->args_encrypt($args, $HashKey, $HashIV),
+            'Version' => '2.0',
+        ];
+        $form_data['HashInfo'] = $this->generate_hash_value($form_data['EncryptInfo'], $HashKey, $HashIV);
 
         if (RY_WT_WC_PAYUNi_Gateway::instance()->is_testmode()) {
             $url = $this->api_test_url['query'];
@@ -110,7 +112,7 @@ class RY_WT_WC_PAYUNi_Gateway_Api extends RY_WT_PAYUNi_Api
             $url = $this->api_url['query'];
         }
 
-        $response = $this->link_server($url, $args);
+        $response = $this->link_server($url, $form_data);
         if (is_wp_error($response)) {
             RY_WT_WC_PAYUNi_Gateway::instance()->log('Query failed', WC_Log_Levels::ERROR, ['data' => $args, 'info' => $response->get_error_messages()]);
             return;
@@ -128,6 +130,16 @@ class RY_WT_WC_PAYUNi_Gateway_Api extends RY_WT_PAYUNi_Api
             return;
         }
 
+        $ipn_info = $this->get_info_value($result);
+        $self_hash_value = $this->generate_hash_value($ipn_info, $HashKey, $HashIV);
+        if ($this->get_hash_value($result) !== $self_hash_value) {
+            RY_WT_WC_PAYUNi_Gateway::instance()->log('Query result check failed', WC_Log_Levels::WARNING, ['data' => $result, 'self' => $self_hash_value]);
+            return;
+        }
+
+        $ipn_info = $this->args_decrypt($ipn_info, $HashKey, $HashIV);
+        parse_str($ipn_info, $result);
+
         return $result;
     }
 
@@ -138,7 +150,6 @@ class RY_WT_WC_PAYUNi_Gateway_Api extends RY_WT_PAYUNi_Api
             switch ($gateway::Payment_Type) {
                 case 'VACC':
                 case 'CVS':
-                case 'BARCODE':
                     $now = new DateTime('', new DateTimeZone('Asia/Taipei'));
                     $now->add(new DateInterval('P' . $gateway->expire_date . 'D'));
                     $args['ExpireDate'] = $now->format('Ymd');
@@ -167,22 +178,6 @@ class RY_WT_WC_PAYUNi_Gateway_Api extends RY_WT_PAYUNi_Api
                     break;
             }
         }
-
-        /*
-        if (class_exists('RY_WT_WC_PAYUNi_Shipping')) {
-            foreach ($order->get_items('shipping') as $shipping_item) {
-                $shipping_method = RY_WT_WC_PAYUNi_Shipping::instance()->get_order_support_shipping($shipping_item);
-                if ($shipping_method) {
-                    if ('cod' === $gateway->id) {
-                        $args['CVSCOM'] = 2;
-                    } else {
-                        $args['CVSCOM'] = 1;
-                    }
-                    break;
-                }
-            }
-        }
-        */
 
         return $args;
     }
