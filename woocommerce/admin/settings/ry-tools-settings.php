@@ -131,6 +131,13 @@ final class RY_WT_WC_Admin_Settings extends WC_Settings_Page
                     'checkboxgroup' => 'end',
                 ],
                 [
+                    'title' => __('PAYUNi support', 'ry-woocommerce-tools'),
+                    'desc' => __('Enable PAYUNi gateway method', 'ry-woocommerce-tools'),
+                    'id' => RY_WT::OPTION_PREFIX . 'enabled_payuni_gateway',
+                    'type' => 'checkbox',
+                    'default' => 'no',
+                ],
+                [
                     'title' => __('SmilePay support', 'ry-woocommerce-tools'),
                     'desc' => __('Enable SmilePay gateway method', 'ry-woocommerce-tools'),
                     'id' => RY_WT::OPTION_PREFIX . 'enabled_smilepay_gateway',
@@ -145,13 +152,7 @@ final class RY_WT_WC_Admin_Settings extends WC_Settings_Page
                     'default' => 'no',
                     'checkboxgroup' => 'end',
                 ],
-                [
-                    'title' => __('PAYUNi support', 'ry-woocommerce-tools'),
-                    'desc' => __('Enable PAYUNi gateway method', 'ry-woocommerce-tools'),
-                    'id' => RY_WT::OPTION_PREFIX . 'enabled_payuni_gateway',
-                    'type' => 'checkbox',
-                    'default' => 'no',
-                ],
+
                 [
                     'type' => 'sectionend',
                     'id' => 'service_provider',
