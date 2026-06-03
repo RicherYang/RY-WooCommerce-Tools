@@ -8,10 +8,6 @@ class RY_ECPay_Gateway_Credit_Installment extends RY_WT_WC_ECPay_Payment_Gateway
 
     public $number_of_periods = [];
 
-    protected int $check_min_amount = 6;
-
-    protected int $check_max_amount = 199999;
-
     public function __construct()
     {
         $this->id = 'ry_ecpay_credit_installment';
