@@ -150,7 +150,7 @@ final class RY_WT_WC_Admin_Shipping
         $logistics_ID = sanitize_locale_name($_POST['id'] ?? '');
 
         $order = wc_get_order($order_ID);
-        if (!empty($order)) {
+        if ($order) {
             foreach (['_ecpay_shipping_info', '_newebpay_shipping_info', '_smilepay_shipping_info'] as $meta_key) {
                 $shipping_list = $order->get_meta($meta_key, true);
                 if (is_array($shipping_list)) {

@@ -9,11 +9,15 @@ class RY_WT_WC_PAYUNi_Gateway_Api extends RY_WT_PAYUNi_Api
     protected array $api_test_url = [
         'checkout' => 'https://sandbox-api.payuni.com.tw/api/upp',
         'query' => 'https://sandbox-api.payuni.com.tw/api/trade/query',
+        'credit-close' => 'https://sandbox-api.payuni.com.tw/api/trade/close',
+        'credit-cancel' => 'https://sandbox-api.payuni.com.tw/api/trade/cancel',
     ];
 
     protected array $api_url = [
         'checkout' => 'https://api.payuni.com.tw/api/upp',
         'query' => 'https://api.payuni.com.tw/api/trade/query',
+        'credit-close' => 'https://api.payuni.com.tw/api/trade/close',
+        'credit-cancel' => 'https://api.payuni.com.tw/api/trade/cancel',
     ];
 
     public static function instance(): RY_WT_WC_PAYUNi_Gateway_Api
@@ -134,6 +138,116 @@ class RY_WT_WC_PAYUNi_Gateway_Api extends RY_WT_PAYUNi_Api
         $self_hash_value = $this->generate_hash_value($ipn_info, $HashKey, $HashIV);
         if ($this->get_hash_value($result) !== $self_hash_value) {
             RY_WT_WC_PAYUNi_Gateway::instance()->log('Query result check failed', WC_Log_Levels::WARNING, ['data' => $result, 'self' => $self_hash_value]);
+            return;
+        }
+
+        $ipn_info = $this->args_decrypt($ipn_info, $HashKey, $HashIV);
+        parse_str($ipn_info, $result);
+
+        return $result;
+    }
+
+    public function credit_close($order, $action, $amount)
+    {
+        $amount = (int) $amount;
+
+        list($MerID, $HashKey, $HashIV) = RY_WT_WC_PAYUNi_Gateway::instance()->get_api_info();
+
+        $args = [
+            'MerID' => $MerID,
+            'TradeNo' => $order->get_transaction_id(),
+            'Timestamp' => new DateTime('now', new DateTimeZone('Asia/Taipei')),
+            'CloseType' => $action === 'C' ? '1' : '2',
+            'TradeAmt' => $amount,
+        ];
+        $args['Timestamp'] = $args['Timestamp']->getTimestamp();
+        $form_data = [
+            'MerID' => $MerID,
+            'EncryptInfo' => $this->args_encrypt($args, $HashKey, $HashIV),
+            'Version' => '1.0',
+        ];
+        $form_data['HashInfo'] = $this->generate_hash_value($form_data['EncryptInfo'], $HashKey, $HashIV);
+
+        if (RY_WT_WC_PAYUNi_Gateway::instance()->is_testmode()) {
+            $url = $this->api_test_url['credit-close'];
+        } else {
+            $url = $this->api_url['credit-close'];
+        }
+        $response = $this->link_server($url, $form_data);
+        if (is_wp_error($response)) {
+            RY_WT_WC_PAYUNi_Gateway::instance()->log('Close failed', WC_Log_Levels::ERROR, ['data' => $args, 'info' => $response->get_error_messages()]);
+            return;
+        }
+
+        if (wp_remote_retrieve_response_code($response) != '200') {
+            RY_WT_WC_PAYUNi_Gateway::instance()->log('Close HTTP status error', WC_Log_Levels::ERROR, ['data' => $args, 'code' => wp_remote_retrieve_response_code($response)]);
+            return;
+        }
+
+        $body = wp_remote_retrieve_body($response);
+        $result = json_decode($body, true);
+        if (!is_array($result)) {
+            RY_WT_WC_PAYUNi_Gateway::instance()->log('Close result parse failed', WC_Log_Levels::WARNING, ['data' => $args, 'result' => wp_remote_retrieve_body($response)]);
+            return;
+        }
+
+        $ipn_info = $this->get_info_value($result);
+        $self_hash_value = $this->generate_hash_value($ipn_info, $HashKey, $HashIV);
+        if ($this->get_hash_value($result) !== $self_hash_value) {
+            RY_WT_WC_PAYUNi_Gateway::instance()->log('Close result check failed', WC_Log_Levels::WARNING, ['data' => $result, 'self' => $self_hash_value]);
+            return;
+        }
+
+        $ipn_info = $this->args_decrypt($ipn_info, $HashKey, $HashIV);
+        parse_str($ipn_info, $result);
+
+        return $result;
+    }
+
+    public function credit_cancel($order)
+    {
+        list($MerID, $HashKey, $HashIV) = RY_WT_WC_PAYUNi_Gateway::instance()->get_api_info();
+
+        $args = [
+            'MerID' => $MerID,
+            'TradeNo' => $order->get_transaction_id(),
+            'Timestamp' => new DateTime('now', new DateTimeZone('Asia/Taipei')),
+        ];
+        $args['Timestamp'] = $args['Timestamp']->getTimestamp();
+        $form_data = [
+            'MerID' => $MerID,
+            'EncryptInfo' => $this->args_encrypt($args, $HashKey, $HashIV),
+            'Version' => '1.0',
+        ];
+        $form_data['HashInfo'] = $this->generate_hash_value($form_data['EncryptInfo'], $HashKey, $HashIV);
+
+        if (RY_WT_WC_PAYUNi_Gateway::instance()->is_testmode()) {
+            $url = $this->api_test_url['credit-cancel'];
+        } else {
+            $url = $this->api_url['credit-cancel'];
+        }
+        $response = $this->link_server($url, $form_data);
+        if (is_wp_error($response)) {
+            RY_WT_WC_PAYUNi_Gateway::instance()->log('Close failed', WC_Log_Levels::ERROR, ['data' => $args, 'info' => $response->get_error_messages()]);
+            return;
+        }
+
+        if (wp_remote_retrieve_response_code($response) != '200') {
+            RY_WT_WC_PAYUNi_Gateway::instance()->log('Close HTTP status error', WC_Log_Levels::ERROR, ['data' => $args, 'code' => wp_remote_retrieve_response_code($response)]);
+            return;
+        }
+
+        $body = wp_remote_retrieve_body($response);
+        $result = json_decode($body, true);
+        if (!is_array($result)) {
+            RY_WT_WC_PAYUNi_Gateway::instance()->log('Close result parse failed', WC_Log_Levels::WARNING, ['data' => $args, 'result' => wp_remote_retrieve_body($response)]);
+            return;
+        }
+
+        $ipn_info = $this->get_info_value($result);
+        $self_hash_value = $this->generate_hash_value($ipn_info, $HashKey, $HashIV);
+        if ($this->get_hash_value($result) !== $self_hash_value) {
+            RY_WT_WC_PAYUNi_Gateway::instance()->log('Close result check failed', WC_Log_Levels::WARNING, ['data' => $result, 'self' => $self_hash_value]);
             return;
         }
 

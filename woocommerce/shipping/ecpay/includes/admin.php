@@ -156,7 +156,7 @@ final class RY_WT_WC_ECPay_Shipping_Admin
             }
         } else {
             $order = wc_get_order($order_ID);
-            if (!empty($order)) {
+            if ($order) {
                 $shipping_list = $order->get_meta('_ecpay_shipping_info', true);
                 if (is_array($shipping_list)) {
                     foreach ($shipping_list as $info) {
@@ -183,7 +183,7 @@ final class RY_WT_WC_ECPay_Shipping_Admin
         $order_ID = intval($_POST['orderid'] ?? '');
 
         $order = wc_get_order($order_ID);
-        if (!empty($order)) {
+        if ($order) {
             $collection = 'Y' === wp_unslash($_POST['collection'] ?? ''); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
             $temp = substr(wp_unslash($_POST['temp'] ?? ''), 0, 1); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
             if (empty($temp)) {
