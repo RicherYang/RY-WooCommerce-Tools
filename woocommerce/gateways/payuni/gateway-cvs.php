@@ -4,7 +4,7 @@ defined('ABSPATH') or exit;
 
 class RY_PAYUNi_Gateway_Cvs extends RY_WT_WC_PAYUNi_Payment_Gateway
 {
-    public const Payment_Type = 'CVS';
+    public const PAYMENT_TYPE = 'CVS';
 
     protected int $check_min_amount = 29;
 

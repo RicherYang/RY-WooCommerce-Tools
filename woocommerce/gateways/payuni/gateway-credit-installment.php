@@ -4,7 +4,9 @@ defined('ABSPATH') or exit;
 
 class RY_PAYUNi_Gateway_Credit_Installment extends RY_WT_WC_PAYUNi_Payment_Gateway
 {
-    public const Payment_Type = 'CreditInst';
+    public const PAYMENT_TYPE = 'CreditInst';
+
+    public const bool SUPPORT_REFUNOD = true;
 
     public $number_of_periods = [];
 

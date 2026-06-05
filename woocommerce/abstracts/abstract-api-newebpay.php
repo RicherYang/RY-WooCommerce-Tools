@@ -4,6 +4,8 @@ defined('ABSPATH') or exit;
 
 abstract class RY_WT_NewebPay_Api extends RY_WT_Api
 {
+    protected const ENCRYPT_METHOD = 'aes-256-cbc';
+
     protected function get_3rd_return_url($order = null)
     {
         $return_url = WC()->api_request_url('ry_newebpay_gateway_return');
@@ -26,7 +28,7 @@ abstract class RY_WT_NewebPay_Api extends RY_WT_Api
     {
         ksort($args);
         $args_string = http_build_query($args);
-        $encrypt_string = openssl_encrypt($args_string, 'aes-256-cbc', $HashKey, OPENSSL_RAW_DATA, $HashIV);
+        $encrypt_string = openssl_encrypt($args_string, self::ENCRYPT_METHOD, $HashKey, OPENSSL_RAW_DATA, $HashIV);
 
         return bin2hex($encrypt_string);
     }
@@ -34,7 +36,7 @@ abstract class RY_WT_NewebPay_Api extends RY_WT_Api
     protected function args_decrypt($string, $HashKey, $HashIV)
     {
         $string = hex2bin($string);
-        $decrypt_string = openssl_decrypt($string, 'aes-256-cbc', $HashKey, OPENSSL_RAW_DATA | OPENSSL_ZERO_PADDING, $HashIV);
+        $decrypt_string = openssl_decrypt($string, self::ENCRYPT_METHOD, $HashKey, OPENSSL_RAW_DATA | OPENSSL_ZERO_PADDING, $HashIV);
 
         $slast = ord(substr($decrypt_string, -1));
         $slastc = chr($slast);

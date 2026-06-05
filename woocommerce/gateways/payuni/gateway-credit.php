@@ -4,7 +4,9 @@ defined('ABSPATH') or exit;
 
 class RY_PAYUNi_Gateway_Credit extends RY_WT_WC_PAYUNi_Payment_Gateway
 {
-    public const Payment_Type = 'Credit';
+    public const PAYMENT_TYPE = 'Credit';
+
+    public const bool SUPPORT_REFUNOD = true;
 
     public function __construct()
     {

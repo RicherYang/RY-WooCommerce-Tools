@@ -4,7 +4,7 @@ defined('ABSPATH') or exit;
 
 class RY_NewebPay_Gateway_Webatm extends RY_WT_WC_NewebPay_Payment_Gateway
 {
-    public const Payment_Type = 'WEBATM';
+    public const PAYMENT_TYPE = 'WEBATM';
 
     public function __construct()
     {

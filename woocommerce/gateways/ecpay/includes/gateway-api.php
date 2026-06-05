@@ -48,7 +48,7 @@ class RY_WT_WC_ECPay_Gateway_Api extends RY_WT_ECPay_Api
             'TradeDesc' => get_bloginfo('name'),
             'ItemName' => $item_name,
             'ReturnURL' => $notify_url,
-            'ChoosePayment' => $gateway::Payment_Type,
+            'ChoosePayment' => $gateway::PAYMENT_TYPE,
             'ClientBackURL' => $return_url,
             'OrderResultURL' => $return_url,
             'NeedExtraPaidInfo' => 'Y',
@@ -196,7 +196,7 @@ class RY_WT_WC_ECPay_Gateway_Api extends RY_WT_ECPay_Api
             return;
         }
 
-        $result->Data = openssl_decrypt($result->Data, self::Encrypt_Method, $HashKey, 0, $HashIV);
+        $result->Data = openssl_decrypt($result->Data, self::ENCRYPT_METHOD, $HashKey, 0, $HashIV);
         $result->Data = json_decode(urldecode($result->Data), true);
 
         if (!is_array($result->Data)) {
@@ -255,7 +255,7 @@ class RY_WT_WC_ECPay_Gateway_Api extends RY_WT_ECPay_Api
 
     protected function add_type_info($args, $order, $gateway)
     {
-        switch ($gateway::Payment_Type) {
+        switch ($gateway::PAYMENT_TYPE) {
             case 'Credit':
                 if (isset($gateway->support_applepay) && $gateway->support_applepay === 'no') {
                     $args['IgnorePayment'] = 'ApplePay';
@@ -288,7 +288,7 @@ class RY_WT_WC_ECPay_Gateway_Api extends RY_WT_ECPay_Api
                 $args['StoreExpireDate'] = $gateway->expire_date;
                 break;
             case 'DigitalPayment':
-                $args['ChooseSubPayment'] = $gateway::Sub_Payment_Type;
+                $args['ChooseSubPayment'] = $gateway::SUB_PAYMENT_TYPE;
                 break;
         }
         return $args;

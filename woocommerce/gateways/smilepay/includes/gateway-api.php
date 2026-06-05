@@ -62,8 +62,7 @@ class RY_WT_WC_SmilePay_Gateway_Api extends RY_WT_SmilePay_Api
             return false;
         }
 
-        $gateways = WC_Payment_Gateways::instance();
-        $payment_gateways = $gateways->payment_gateways();
+        $payment_gateways = WC()->payment_gateways()->payment_gateways();
         $payment_method = $order->get_payment_method();
         if (!isset($payment_gateways[$payment_method])) {
             return false;
@@ -79,7 +78,7 @@ class RY_WT_WC_SmilePay_Gateway_Api extends RY_WT_SmilePay_Api
             'Dcvc' => $Dcvc,
             'Rvg2c' => $Rvg2c,
             'Od_sob' => $item_name,
-            'Pay_zg' => $gateway::Payment_Type,
+            'Pay_zg' => $gateway::PAYMENT_TYPE,
             'Data_id' => $this->generate_trade_no($order->get_id(), RY_WT::get_option('smilepay_gateway_order_prefix')),
             'Amount' => (int) ceil($order->get_total()),
             'Roturl' => WC()->api_request_url('ry_smilepay_callback', true),
@@ -137,9 +136,9 @@ class RY_WT_WC_SmilePay_Gateway_Api extends RY_WT_SmilePay_Api
             return false;
         }
 
-        $order = $this->set_transaction_info($order, $result, $gateway::Payment_Type);
+        $order = $this->set_transaction_info($order, $result, $gateway::PAYMENT_TYPE);
 
-        switch ($gateway::Payment_Type) {
+        switch ($gateway::PAYMENT_TYPE) {
             case 2:
                 $order->update_meta_data('_smilepay_atm_BankCode', (string) $result->AtmBankNo);
                 $order->update_meta_data('_smilepay_atm_vAccount', (string) $result->AtmNo);

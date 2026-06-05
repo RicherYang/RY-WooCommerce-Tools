@@ -4,7 +4,7 @@ defined('ABSPATH') or exit;
 
 class RY_SmilePay_Gateway_Credit extends RY_WT_WC_SmilePay_Payment_Gateway
 {
-    public const Payment_Type = 1;
+    public const PAYMENT_TYPE = '1';
 
     public function __construct()
     {

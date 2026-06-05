@@ -159,11 +159,11 @@ class RY_WT_WC_NewebPay_Gateway_Api extends RY_WT_NewebPay_Api
 
     protected function add_type_info($args, $order, $gateway)
     {
-        if (defined(get_class($gateway) . '::Payment_Type')) {
-            if (isset($args[$gateway::Payment_Type])) {
-                $args[$gateway::Payment_Type] = 1;
+        if (defined(get_class($gateway) . '::PAYMENT_TYPE')) {
+            if (isset($args[$gateway::PAYMENT_TYPE])) {
+                $args[$gateway::PAYMENT_TYPE] = 1;
             }
-            switch ($gateway::Payment_Type) {
+            switch ($gateway::PAYMENT_TYPE) {
                 case 'VACC':
                 case 'CVS':
                 case 'BARCODE':

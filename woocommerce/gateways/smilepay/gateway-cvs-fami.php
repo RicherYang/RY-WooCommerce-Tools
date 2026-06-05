@@ -4,7 +4,7 @@ defined('ABSPATH') or exit;
 
 class RY_SmilePay_Gateway_Cvs_Fami extends RY_WT_WC_SmilePay_Payment_Gateway
 {
-    public const Payment_Type = 6;
+    public const PAYMENT_TYPE = '6';
 
     protected int $check_min_amount = 35;
 

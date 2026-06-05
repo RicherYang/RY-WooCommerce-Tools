@@ -4,7 +4,7 @@ defined('ABSPATH') or exit;
 
 abstract class RY_WT_ECPay_Api extends RY_WT_Api
 {
-    protected const Encrypt_Method = 'aes-128-cbc';
+    protected const ENCRYPT_METHOD = 'aes-128-cbc';
 
     protected function get_3rd_return_url($order = null)
     {
@@ -96,7 +96,7 @@ abstract class RY_WT_ECPay_Api extends RY_WT_Api
         wc_set_time_limit(40);
 
         $args['Data'] = $this->urlencode($args['Data']);
-        $args['Data'] = openssl_encrypt($args['Data'], self::Encrypt_Method, $HashKey, 0, $HashIV);
+        $args['Data'] = openssl_encrypt($args['Data'], self::ENCRYPT_METHOD, $HashKey, 0, $HashIV);
 
         return wp_remote_post($url, [
             'timeout' => $timeout,

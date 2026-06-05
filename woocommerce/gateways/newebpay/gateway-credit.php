@@ -4,7 +4,7 @@ defined('ABSPATH') or exit;
 
 class RY_NewebPay_Gateway_Credit extends RY_WT_WC_NewebPay_Payment_Gateway
 {
-    public const Payment_Type = 'CREDIT';
+    public const PAYMENT_TYPE = 'CREDIT';
 
     public function __construct()
     {

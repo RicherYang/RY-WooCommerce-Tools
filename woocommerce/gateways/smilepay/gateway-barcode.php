@@ -4,7 +4,7 @@ defined('ABSPATH') or exit;
 
 class RY_SmilePay_Gateway_Barcode extends RY_WT_WC_SmilePay_Payment_Gateway
 {
-    public const Payment_Type = 3;
+    public const PAYMENT_TYPE = '3';
 
     protected int $check_min_amount = 25;
 

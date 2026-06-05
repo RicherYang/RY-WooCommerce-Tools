@@ -4,7 +4,7 @@ defined('ABSPATH') or exit;
 
 class RY_SmilePay_Gateway_Atm extends RY_WT_WC_SmilePay_Payment_Gateway
 {
-    public const Payment_Type = 2;
+    public const PAYMENT_TYPE = '2';
 
     protected int $check_min_amount = 13;
 

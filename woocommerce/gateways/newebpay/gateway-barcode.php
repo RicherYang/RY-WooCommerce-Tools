@@ -4,7 +4,7 @@ defined('ABSPATH') or exit;
 
 class RY_NewebPay_Gateway_Barcode extends RY_WT_WC_NewebPay_Payment_Gateway
 {
-    public const Payment_Type = 'BARCODE';
+    public const PAYMENT_TYPE = 'BARCODE';
 
     protected int $check_min_amount = 20;
 

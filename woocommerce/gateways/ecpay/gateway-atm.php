@@ -4,7 +4,7 @@ defined('ABSPATH') or exit;
 
 class RY_ECPay_Gateway_Atm extends RY_WT_WC_ECPay_Payment_Gateway
 {
-    public const Payment_Type = 'ATM';
+    public const PAYMENT_TYPE = 'ATM';
 
     protected int $check_min_amount = 16;
 

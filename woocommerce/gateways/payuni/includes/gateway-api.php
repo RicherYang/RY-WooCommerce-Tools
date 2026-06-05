@@ -11,6 +11,10 @@ class RY_WT_WC_PAYUNi_Gateway_Api extends RY_WT_PAYUNi_Api
         'query' => 'https://sandbox-api.payuni.com.tw/api/trade/query',
         'credit-close' => 'https://sandbox-api.payuni.com.tw/api/trade/close',
         'credit-cancel' => 'https://sandbox-api.payuni.com.tw/api/trade/cancel',
+        'aftee-refund' => 'https://sandbox-api.payuni.com.tw/api/trade/common/refund/aftee',
+        'icash-refund' => 'https://sandbox-api.payuni.com.tw/api/trade/common/refund/icash',
+        'jkopay-refund' => 'https://sandbox-api.payuni.com.tw/api/trade/common/refund/jkopay',
+        'linepay-refund' => 'https://sandbox-api.payuni.com.tw/api/trade/common/refund/linepay',
     ];
 
     protected array $api_url = [
@@ -18,6 +22,10 @@ class RY_WT_WC_PAYUNi_Gateway_Api extends RY_WT_PAYUNi_Api
         'query' => 'https://api.payuni.com.tw/api/trade/query',
         'credit-close' => 'https://api.payuni.com.tw/api/trade/close',
         'credit-cancel' => 'https://api.payuni.com.tw/api/trade/cancel',
+        'aftee-refund' => 'https://api.payuni.com.tw/api/trade/common/refund/aftee',
+        'icash-refund' => 'https://api.payuni.com.tw/api/trade/common/refund/icash',
+        'jkopay-refund' => 'https://api.payuni.com.tw/api/trade/common/refund/jkopay',
+        'linepay-refund' => 'https://api.payuni.com.tw/api/trade/common/refund/linepay',
     ];
 
     public static function instance(): RY_WT_WC_PAYUNi_Gateway_Api
@@ -103,12 +111,6 @@ class RY_WT_WC_PAYUNi_Gateway_Api extends RY_WT_PAYUNi_Api
             'Timestamp' => new DateTime('now', new DateTimeZone('Asia/Taipei')),
         ];
         $args['Timestamp'] = $args['Timestamp']->getTimestamp();
-        $form_data = [
-            'MerID' => $MerID,
-            'EncryptInfo' => $this->args_encrypt($args, $HashKey, $HashIV),
-            'Version' => '2.0',
-        ];
-        $form_data['HashInfo'] = $this->generate_hash_value($form_data['EncryptInfo'], $HashKey, $HashIV);
 
         if (RY_WT_WC_PAYUNi_Gateway::instance()->is_testmode()) {
             $url = $this->api_test_url['query'];
@@ -116,35 +118,8 @@ class RY_WT_WC_PAYUNi_Gateway_Api extends RY_WT_PAYUNi_Api
             $url = $this->api_url['query'];
         }
 
-        $response = $this->link_server($url, $form_data);
-        if (is_wp_error($response)) {
-            RY_WT_WC_PAYUNi_Gateway::instance()->log('Query failed', WC_Log_Levels::ERROR, ['data' => $args, 'info' => $response->get_error_messages()]);
-            return;
-        }
-
-        if (wp_remote_retrieve_response_code($response) != '200') {
-            RY_WT_WC_PAYUNi_Gateway::instance()->log('Query HTTP status error', WC_Log_Levels::ERROR, ['data' => $args, 'code' => wp_remote_retrieve_response_code($response)]);
-            return;
-        }
-
-        $body = wp_remote_retrieve_body($response);
-        $result = json_decode($body, true);
-        if (!is_array($result)) {
-            RY_WT_WC_PAYUNi_Gateway::instance()->log('Query result parse failed', WC_Log_Levels::WARNING, ['data' => $args, 'result' => wp_remote_retrieve_body($response)]);
-            return;
-        }
-
-        $ipn_info = $this->get_info_value($result);
-        $self_hash_value = $this->generate_hash_value($ipn_info, $HashKey, $HashIV);
-        if ($this->get_hash_value($result) !== $self_hash_value) {
-            RY_WT_WC_PAYUNi_Gateway::instance()->log('Query result check failed', WC_Log_Levels::WARNING, ['data' => $result, 'self' => $self_hash_value]);
-            return;
-        }
-
-        $ipn_info = $this->args_decrypt($ipn_info, $HashKey, $HashIV);
-        parse_str($ipn_info, $result);
-
-        return $result;
+        $response = $this->link_server($url, $args, '2.0');
+        return $this->get_decrypt_result($response, $args, 'Query');
     }
 
     public function credit_close($order, $action, $amount)
@@ -161,47 +136,15 @@ class RY_WT_WC_PAYUNi_Gateway_Api extends RY_WT_PAYUNi_Api
             'TradeAmt' => $amount,
         ];
         $args['Timestamp'] = $args['Timestamp']->getTimestamp();
-        $form_data = [
-            'MerID' => $MerID,
-            'EncryptInfo' => $this->args_encrypt($args, $HashKey, $HashIV),
-            'Version' => '1.0',
-        ];
-        $form_data['HashInfo'] = $this->generate_hash_value($form_data['EncryptInfo'], $HashKey, $HashIV);
 
         if (RY_WT_WC_PAYUNi_Gateway::instance()->is_testmode()) {
             $url = $this->api_test_url['credit-close'];
         } else {
             $url = $this->api_url['credit-close'];
         }
-        $response = $this->link_server($url, $form_data);
-        if (is_wp_error($response)) {
-            RY_WT_WC_PAYUNi_Gateway::instance()->log('Close failed', WC_Log_Levels::ERROR, ['data' => $args, 'info' => $response->get_error_messages()]);
-            return;
-        }
 
-        if (wp_remote_retrieve_response_code($response) != '200') {
-            RY_WT_WC_PAYUNi_Gateway::instance()->log('Close HTTP status error', WC_Log_Levels::ERROR, ['data' => $args, 'code' => wp_remote_retrieve_response_code($response)]);
-            return;
-        }
-
-        $body = wp_remote_retrieve_body($response);
-        $result = json_decode($body, true);
-        if (!is_array($result)) {
-            RY_WT_WC_PAYUNi_Gateway::instance()->log('Close result parse failed', WC_Log_Levels::WARNING, ['data' => $args, 'result' => wp_remote_retrieve_body($response)]);
-            return;
-        }
-
-        $ipn_info = $this->get_info_value($result);
-        $self_hash_value = $this->generate_hash_value($ipn_info, $HashKey, $HashIV);
-        if ($this->get_hash_value($result) !== $self_hash_value) {
-            RY_WT_WC_PAYUNi_Gateway::instance()->log('Close result check failed', WC_Log_Levels::WARNING, ['data' => $result, 'self' => $self_hash_value]);
-            return;
-        }
-
-        $ipn_info = $this->args_decrypt($ipn_info, $HashKey, $HashIV);
-        parse_str($ipn_info, $result);
-
-        return $result;
+        $response = $this->link_server($url, $args, '1.0');
+        return $this->get_decrypt_result($response, $args, 'CreditClose');
     }
 
     public function credit_cancel($order)
@@ -214,54 +157,118 @@ class RY_WT_WC_PAYUNi_Gateway_Api extends RY_WT_PAYUNi_Api
             'Timestamp' => new DateTime('now', new DateTimeZone('Asia/Taipei')),
         ];
         $args['Timestamp'] = $args['Timestamp']->getTimestamp();
-        $form_data = [
-            'MerID' => $MerID,
-            'EncryptInfo' => $this->args_encrypt($args, $HashKey, $HashIV),
-            'Version' => '1.0',
-        ];
-        $form_data['HashInfo'] = $this->generate_hash_value($form_data['EncryptInfo'], $HashKey, $HashIV);
 
         if (RY_WT_WC_PAYUNi_Gateway::instance()->is_testmode()) {
             $url = $this->api_test_url['credit-cancel'];
         } else {
             $url = $this->api_url['credit-cancel'];
         }
-        $response = $this->link_server($url, $form_data);
-        if (is_wp_error($response)) {
-            RY_WT_WC_PAYUNi_Gateway::instance()->log('Close failed', WC_Log_Levels::ERROR, ['data' => $args, 'info' => $response->get_error_messages()]);
-            return;
+
+        $response = $this->link_server($url, $args, '1.0');
+        return $this->get_decrypt_result($response, $args, 'CreditCancel');
+    }
+
+    public function aftee_refound($order, $amount)
+    {
+        $amount = (int) $amount;
+
+        list($MerID, $HashKey, $HashIV) = RY_WT_WC_PAYUNi_Gateway::instance()->get_api_info();
+
+        $args = [
+            'MerID' => $MerID,
+            'TradeNo' => $order->get_transaction_id(),
+            'Timestamp' => new DateTime('now', new DateTimeZone('Asia/Taipei')),
+            'TradeAmt' => $amount,
+        ];
+        $args['Timestamp'] = $args['Timestamp']->getTimestamp();
+
+        if (RY_WT_WC_PAYUNi_Gateway::instance()->is_testmode()) {
+            $url = $this->api_test_url['aftee-refund'];
+        } else {
+            $url = $this->api_url['aftee-refund'];
         }
 
-        if (wp_remote_retrieve_response_code($response) != '200') {
-            RY_WT_WC_PAYUNi_Gateway::instance()->log('Close HTTP status error', WC_Log_Levels::ERROR, ['data' => $args, 'code' => wp_remote_retrieve_response_code($response)]);
-            return;
+        $response = $this->link_server($url, $args, '1.0');
+        return $this->get_decrypt_result($response, $args, 'AfteeRefund');
+    }
+
+    public function icash_refound($order, $amount)
+    {
+        $amount = (int) $amount;
+
+        list($MerID, $HashKey, $HashIV) = RY_WT_WC_PAYUNi_Gateway::instance()->get_api_info();
+
+        $args = [
+            'MerID' => $MerID,
+            'TradeNo' => $order->get_transaction_id(),
+            'Timestamp' => new DateTime('now', new DateTimeZone('Asia/Taipei')),
+            'TradeAmt' => $amount,
+        ];
+        $args['Timestamp'] = $args['Timestamp']->getTimestamp();
+
+        if (RY_WT_WC_PAYUNi_Gateway::instance()->is_testmode()) {
+            $url = $this->api_test_url['icash-refund'];
+        } else {
+            $url = $this->api_url['icash-refund'];
         }
 
-        $body = wp_remote_retrieve_body($response);
-        $result = json_decode($body, true);
-        if (!is_array($result)) {
-            RY_WT_WC_PAYUNi_Gateway::instance()->log('Close result parse failed', WC_Log_Levels::WARNING, ['data' => $args, 'result' => wp_remote_retrieve_body($response)]);
-            return;
+        $response = $this->link_server($url, $args, '1.0');
+        return $this->get_decrypt_result($response, $args, 'IcashRefund');
+    }
+
+    public function jkopay_refound($order, $amount)
+    {
+        $amount = (int) $amount;
+
+        list($MerID, $HashKey, $HashIV) = RY_WT_WC_PAYUNi_Gateway::instance()->get_api_info();
+
+        $args = [
+            'MerID' => $MerID,
+            'TradeNo' => $order->get_transaction_id(),
+            'Timestamp' => new DateTime('now', new DateTimeZone('Asia/Taipei')),
+            'TradeAmt' => $amount,
+        ];
+        $args['Timestamp'] = $args['Timestamp']->getTimestamp();
+
+        if (RY_WT_WC_PAYUNi_Gateway::instance()->is_testmode()) {
+            $url = $this->api_test_url['jkopay-refund'];
+        } else {
+            $url = $this->api_url['jkopay-refund'];
         }
 
-        $ipn_info = $this->get_info_value($result);
-        $self_hash_value = $this->generate_hash_value($ipn_info, $HashKey, $HashIV);
-        if ($this->get_hash_value($result) !== $self_hash_value) {
-            RY_WT_WC_PAYUNi_Gateway::instance()->log('Close result check failed', WC_Log_Levels::WARNING, ['data' => $result, 'self' => $self_hash_value]);
-            return;
+        $response = $this->link_server($url, $args, '1.0');
+        return $this->get_decrypt_result($response, $args, 'JkopayRefund');
+    }
+
+    public function linepay_refound($order, $amount)
+    {
+        $amount = (int) $amount;
+
+        list($MerID, $HashKey, $HashIV) = RY_WT_WC_PAYUNi_Gateway::instance()->get_api_info();
+
+        $args = [
+            'MerID' => $MerID,
+            'TradeNo' => $order->get_transaction_id(),
+            'Timestamp' => new DateTime('now', new DateTimeZone('Asia/Taipei')),
+            'TradeAmt' => $amount,
+        ];
+        $args['Timestamp'] = $args['Timestamp']->getTimestamp();
+
+        if (RY_WT_WC_PAYUNi_Gateway::instance()->is_testmode()) {
+            $url = $this->api_test_url['linepay-refund'];
+        } else {
+            $url = $this->api_url['linepay-refund'];
         }
 
-        $ipn_info = $this->args_decrypt($ipn_info, $HashKey, $HashIV);
-        parse_str($ipn_info, $result);
-
-        return $result;
+        $response = $this->link_server($url, $args, '1.0');
+        return $this->get_decrypt_result($response, $args, 'LinepayRefund');
     }
 
     protected function add_type_info($args, $order, $gateway)
     {
-        if (defined(get_class($gateway) . '::Payment_Type')) {
-            $args[$gateway::Payment_Type] = 1;
-            switch ($gateway::Payment_Type) {
+        if (defined(get_class($gateway) . '::PAYMENT_TYPE')) {
+            $args[$gateway::PAYMENT_TYPE] = 1;
+            switch ($gateway::PAYMENT_TYPE) {
                 case 'VACC':
                 case 'CVS':
                     $now = new DateTime('', new DateTimeZone('Asia/Taipei'));
@@ -279,7 +286,7 @@ class RY_WT_WC_PAYUNi_Gateway_Api extends RY_WT_PAYUNi_Api
                             $number_of_periods = (int) $gateway->number_of_periods;
                         }
                         if (in_array($number_of_periods, [3, 6, 9, 12, 18, 24, 30])) {
-                            $args[$gateway::Payment_Type] = $number_of_periods;
+                            $args[$gateway::PAYMENT_TYPE] = $number_of_periods;
 
                             $order->add_order_note(sprintf(
                                 /* translators: %d number of periods */
