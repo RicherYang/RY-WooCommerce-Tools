@@ -71,6 +71,13 @@ final class RY_WT_WC_Admin_Settings extends WC_Settings_Page
                 }
             }
 
+            if ('yes' === RY_WT::get_option('enabled_payuni_gateway', 'no')) {
+                if (!function_exists('openssl_encrypt') || !function_exists('openssl_decrypt')) {
+                    WC_Admin_Settings::add_error(__('PAYUNi gateway required PHP function `openssl_encrypt` and `openssl_decrypt`.', 'ry-woocommerce-tools'));
+                    RY_WT::update_option('enabled_payuni_gateway', 'no');
+                }
+            }
+
             if ('yes' === RY_WT::get_option('enabled_smilepay_gateway', 'no')) {
                 if (!function_exists('simplexml_load_string')) {
                     WC_Admin_Settings::add_error(__('SmilePay gateway method need PHP function `simplexml_load_string`.', 'ry-woocommerce-tools'));

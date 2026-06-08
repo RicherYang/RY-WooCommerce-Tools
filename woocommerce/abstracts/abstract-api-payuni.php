@@ -58,8 +58,12 @@ abstract class RY_WT_PAYUNi_Api extends RY_WT_Api
         return strtoupper($string);
     }
 
-    protected function link_server(string $url, array $args, $version, int $timeout = 30)
+    protected function link_server(string $url, array $args, string $version, int $timeout = 30)
     {
+        if ($version === '') {
+            return new WP_Error('invalid_version', 'Version is required.');
+        }
+
         list($MerID, $HashKey, $HashIV) = RY_WT_WC_PAYUNi_Gateway::instance()->get_api_info();
 
         $post_data = [
@@ -76,40 +80,6 @@ abstract class RY_WT_PAYUNi_Api extends RY_WT_Api
             'body' => $post_data,
             'user-agent' => apply_filters('http_headers_useragent', 'WordPress/' . get_bloginfo('version')),
         ]);
-    }
-
-    protected function get_decrypt_result($response, $args, $log_prefix = '')
-    {
-        if (is_wp_error($response)) {
-            RY_WT_WC_PAYUNi_Gateway::instance()->log($log_prefix . ' failed', WC_Log_Levels::ERROR, ['data' => $args, 'info' => $response->get_error_messages()]);
-            return;
-        }
-
-        if (wp_remote_retrieve_response_code($response) != '200') {
-            RY_WT_WC_PAYUNi_Gateway::instance()->log($log_prefix . ' HTTP status error', WC_Log_Levels::ERROR, ['data' => $args, 'code' => wp_remote_retrieve_response_code($response)]);
-            return;
-        }
-
-        $body = wp_remote_retrieve_body($response);
-        $result = json_decode($body, true);
-        if (!is_array($result)) {
-            RY_WT_WC_PAYUNi_Gateway::instance()->log($log_prefix . ' result parse failed', WC_Log_Levels::WARNING, ['data' => $args, 'result' => wp_remote_retrieve_body($response)]);
-            return;
-        }
-
-        list($MerID, $HashKey, $HashIV) = RY_WT_WC_PAYUNi_Gateway::instance()->get_api_info();
-
-        $ipn_info = $this->get_info_value($result);
-        $self_hash_value = $this->generate_hash_value($ipn_info, $HashKey, $HashIV);
-        if ($this->get_hash_value($result) !== $self_hash_value) {
-            RY_WT_WC_PAYUNi_Gateway::instance()->log($log_prefix . ' result check failed', WC_Log_Levels::WARNING, ['data' => $result, 'self' => $self_hash_value]);
-            return;
-        }
-
-        $ipn_info = $this->args_decrypt($ipn_info, $HashKey, $HashIV);
-        parse_str($ipn_info, $result);
-
-        return $result;
     }
 
     protected function get_hash_value($ipn_info)

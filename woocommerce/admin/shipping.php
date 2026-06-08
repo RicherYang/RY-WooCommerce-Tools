@@ -147,7 +147,7 @@ final class RY_WT_WC_Admin_Shipping
         check_ajax_referer('delete-shipping-info');
 
         $order_ID = intval($_POST['orderid'] ?? '');
-        $logistics_ID = sanitize_locale_name($_POST['id'] ?? '');
+        $shipping_ID = sanitize_locale_name($_POST['id'] ?? '');
 
         $order = wc_get_order($order_ID);
         if ($order) {
@@ -155,7 +155,7 @@ final class RY_WT_WC_Admin_Shipping
                 $shipping_list = $order->get_meta($meta_key, true);
                 if (is_array($shipping_list)) {
                     foreach ($shipping_list as $idx => $info) {
-                        if ($info['ID'] === $logistics_ID) {
+                        if ($info['ID'] === $shipping_ID) {
                             unset($shipping_list[$idx]);
                             $order->update_meta_data($meta_key, $shipping_list);
                             $order->save();

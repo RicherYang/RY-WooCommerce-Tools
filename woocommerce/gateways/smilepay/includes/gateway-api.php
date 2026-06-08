@@ -170,13 +170,13 @@ class RY_WT_WC_SmilePay_Gateway_Api extends RY_WT_SmilePay_Api
         switch ($args['Pay_zg']) {
             case '2':
             case '3':
-                $date = new DateTime('', new DateTimeZone('Asia/Taipei'));
+                $date = new DateTime('now', new DateTimeZone('Asia/Taipei'));
                 $date->add(new DateInterval('P' . $gateway->expire_date . 'D'));
                 $args['Deadline_date'] = $date->format('Y/m/d');
                 break;
             case '4':
             case '6':
-                $date = new DateTime('', new DateTimeZone('Asia/Taipei'));
+                $date = new DateTime('now', new DateTimeZone('Asia/Taipei'));
                 $date->add(new DateInterval('PT' . $gateway->expire_date . 'M'));
                 $args['Deadline_date'] = $date->format('Y/m/d');
                 $args['Deadline_time'] = $date->format('H:i:s');

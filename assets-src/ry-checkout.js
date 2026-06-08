@@ -1,6 +1,6 @@
 import $ from 'jquery';
 
-let ecpayShippingInfo;
+let postShippingInfo;
 
 $(function () {
     const setShippingPhone = function (required) {
@@ -20,15 +20,16 @@ $(function () {
 
     $(document.body).on('updated_checkout', function (e, data) {
         if (data !== undefined) {
-            ecpayShippingInfo = undefined;
+            postShippingInfo = undefined;
             $('.woocommerce-checkout .ry-cvs-hide').show();
             $('.woocommerce-checkout .ry-ecpay-cvs-hide').show();
             $('.woocommerce-checkout .ry-newebpay-cvs-hide').show();
+            $('.woocommerce-checkout .ry-payuni-cvs-hide').show();
             $('.woocommerce-checkout .ry-smilepay-cvs-hide').show();
             if (data.fragments.ry_shipping_info !== undefined) {
                 if (data.fragments.ry_shipping_info.ecpay_cvs === true) {
                     setShippingPhone(true);
-                    ecpayShippingInfo = data.fragments.ry_shipping_info.postData;
+                    postShippingInfo = data.fragments.ry_shipping_info.postData;
                     $('.woocommerce-checkout .ry-cvs-hide').hide();
                     $('.woocommerce-checkout .ry-ecpay-cvs-hide').hide();
 
@@ -58,6 +59,28 @@ $(function () {
                     setShippingPhone(false);
                     $('.woocommerce-checkout .ry-cvs-hide').hide();
                     $('.woocommerce-checkout .ry-newebpay-cvs-hide').hide();
+                }
+
+                if (data.fragments.ry_shipping_info.payuni_cvs === true) {
+                    setShippingPhone(true);
+                    postShippingInfo = data.fragments.ry_shipping_info.postData;
+
+                    $('.woocommerce-checkout .ry-cvs-hide').hide();
+                    $('.woocommerce-checkout .ry-payuni-cvs-hide').hide();
+
+                    $('.ry-cvs-store-info').hide();
+                    if ($('input#RY_StoreID').val() != '') {
+                        $('.ry-cvs-store-info').show();
+                        $('.ry-cvs-store-info > span').hide();
+                        if ($('input#RY_StoreName').val() != '') {
+                            $('.ry-cvs-store-info .store-name').text($('input#RY_StoreName').val())
+                                .parent().show();
+                        }
+                        if ($('input#RY_Address').val() != '') {
+                            $('.ry-cvs-store-info .store-address').text($('input#RY_Address').val())
+                                .parent().show();
+                        }
+                    }
                 }
 
                 if (data.fragments.ry_shipping_info.smilepay_cvs === true) {
@@ -120,15 +143,12 @@ $(function () {
             return ['terms'].indexOf(d.name) === -1;
         });
         window.sessionStorage.setItem('RyTempCheckout', JSON.stringify(formData));
-        let html = '<form id="RyECPayChooseCvs" action="' + $(this).data('ry-url') + '" method="post">';
-        for (const key in ecpayShippingInfo) {
-            html += '<input type="hidden" name="' + key + '" value="' + ecpayShippingInfo[key] + '">';
-        }
-        if (window.innerWidth < 1024) {
-            html += '<input type="hidden" name="Device" value="1">';
+        let html = '<form id="RyChooseCvs" action="' + $(this).data('ry-url') + '" method="post">';
+        for (const key in postShippingInfo) {
+            html += '<input type="hidden" name="' + key + '" value="' + postShippingInfo[key] + '">';
         }
         html += '</form>';
         document.body.innerHTML += html;
-        document.getElementById('RyECPayChooseCvs').submit();
+        document.getElementById('RyChooseCvs').submit();
     });
 });

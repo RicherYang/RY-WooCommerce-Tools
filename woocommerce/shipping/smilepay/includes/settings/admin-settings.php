@@ -36,11 +36,11 @@ return [
         'desc' => __('Auto change order status when get shipping status change.', 'ry-woocommerce-tools'),
     ],
     [
-        'title' => __('Auto get shipping payment no', 'ry-woocommerce-tools'),
+        'title' => __('Auto get shipping note', 'ry-woocommerce-tools'),
         'id' => RY_WT::OPTION_PREFIX . 'smilepay_shipping_auto_get_no',
         'type' => 'checkbox',
         'default' => 'yes',
-        'desc' => __('Auto get shipping payment no when order status is change to processing.', 'ry-woocommerce-tools'),
+        'desc' => __('Auto get shipping note when order status is change to processing.', 'ry-woocommerce-tools'),
     ],
     [
         'id' => 'base_options',

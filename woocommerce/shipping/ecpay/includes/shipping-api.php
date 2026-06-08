@@ -50,6 +50,7 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_ECPay_Api
         $declare_over_type = RY_WT::get_option('ecpay_shipping_declare_over', 'keep');
         $default_weight = RY_WT::get_option('shipping_product_weight', 0);
 
+        list($MerchantID, $HashKey, $HashIV, $cvs_type) = RY_WT_WC_ECPay_Shipping::instance()->get_api_info();
         foreach ($order->get_items('shipping') as $shipping_item) {
             $shipping_method = RY_WT_WC_ECPay_Shipping::instance()->get_order_support_shipping($shipping_item);
             if (false === $shipping_method) {
@@ -57,7 +58,6 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_ECPay_Api
             }
 
             $method_class = RY_WT_WC_ECPay_Shipping::$support_methods[$shipping_method];
-            list($MerchantID, $HashKey, $HashIV, $cvs_type) = RY_WT_WC_ECPay_Shipping::instance()->get_api_info();
 
             $package_list = $this->get_shipping_package($order, $method_class, $declare_over_type, $for_temp, $default_weight);
             if (0 === count($package_list)) {
@@ -144,7 +144,7 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_ECPay_Api
             }
 
             foreach ($package_list as $package_info) {
-                $create_datetime = new DateTime('', new DateTimeZone('Asia/Taipei'));
+                $create_datetime = new DateTime('now', new DateTimeZone('Asia/Taipei'));
                 $args['MerchantTradeDate'] = $create_datetime->format('Y/m/d H:i:s');
                 $args['MerchantTradeNo'] = $this->generate_trade_no($order->get_id(), RY_WT::get_option('ecpay_shipping_order_prefix')) . 'T' . $package_info['temp'];
 
@@ -314,7 +314,7 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_ECPay_Api
         $args = [
             'MerchantID' => $MerchantID,
             'AllPayLogisticsID' => $info_ID,
-            'TimeStamp' => new DateTime('', new DateTimeZone('Asia/Taipei')),
+            'TimeStamp' => new DateTime('now', new DateTimeZone('Asia/Taipei')),
         ];
         $args['TimeStamp'] = $args['TimeStamp']->getTimestamp();
 

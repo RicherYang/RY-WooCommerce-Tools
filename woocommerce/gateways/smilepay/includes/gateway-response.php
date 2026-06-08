@@ -25,7 +25,7 @@ class RY_WT_WC_SmilePay_Gateway_Response extends RY_WT_SmilePay_Api
 
     public function check_callback()
     {
-        if (!empty($_POST)) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
+        if (is_array($_POST) && !empty($_POST)) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
             $ipn_info = $this->clean_post_data(true);
             if ($this->ipn_request_is_valid($ipn_info)) {
                 do_action('valid_smilepay_gateway_request', $ipn_info);
@@ -35,7 +35,7 @@ class RY_WT_WC_SmilePay_Gateway_Response extends RY_WT_SmilePay_Api
         $this->die_error();
     }
 
-    protected function ipn_request_is_valid($ipn_info)
+    protected function ipn_request_is_valid(array $ipn_info): bool
     {
         $check_value = $this->get_check_value($ipn_info);
         if ($check_value) {

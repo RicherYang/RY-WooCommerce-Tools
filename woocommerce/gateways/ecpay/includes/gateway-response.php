@@ -34,7 +34,7 @@ class RY_WT_WC_ECPay_Gateway_Response extends RY_WT_ECPay_Api
 
     public function check_callback(): void
     {
-        if (!empty($_POST)) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
+        if (is_array($_POST) && !empty($_POST)) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
             $ipn_info = wp_unslash($_POST); // phpcs:ignore WordPress.Security.NonceVerification.Missing
             if ($this->ipn_request_is_valid($ipn_info)) {
                 do_action('valid_ecpay_gateway_request', $ipn_info);
@@ -44,7 +44,7 @@ class RY_WT_WC_ECPay_Gateway_Response extends RY_WT_ECPay_Api
         }
     }
 
-    protected function ipn_request_is_valid($ipn_info): bool
+    protected function ipn_request_is_valid(array $ipn_info): bool
     {
         $check_value = $this->get_check_value($ipn_info);
         if ($check_value) {

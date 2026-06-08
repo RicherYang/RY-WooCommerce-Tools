@@ -86,4 +86,14 @@ abstract class RY_WT_Shipping_Model extends RY_WT_Model
 
         return $fields;
     }
+
+    public function get_order_support_shipping($shipping_item)
+    {
+        $method_ID = $shipping_item->get_method_id();
+        if (isset(static::$support_methods[$method_ID])) {
+            return $method_ID;
+        }
+
+        return false;
+    }
 }

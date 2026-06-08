@@ -26,7 +26,7 @@ class RY_WT_WC_PAYUNi_Gateway_Response extends RY_WT_PAYUNi_Api
 
     public function check_callback()
     {
-        if (!empty($_POST)) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
+        if (is_array($_POST) && !empty($_POST)) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
             $ipn_info = wp_unslash($_POST); // phpcs:ignore WordPress.Security.NonceVerification.Missing
             if ($this->ipn_request_is_valid($ipn_info)) {
                 do_action('valid_payuni_gateway_request', $ipn_info);
@@ -36,7 +36,7 @@ class RY_WT_WC_PAYUNi_Gateway_Response extends RY_WT_PAYUNi_Api
         }
     }
 
-    protected function ipn_request_is_valid($ipn_info)
+    protected function ipn_request_is_valid(array $ipn_info): bool
     {
         $check_value = $this->get_hash_value($ipn_info);
         if ($check_value) {

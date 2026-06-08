@@ -123,7 +123,7 @@ class RY_WT_WC_NewebPay_Gateway_Api extends RY_WT_NewebPay_Api
             'MerchantID' => $MerchantID,
             'Version' => '1.3',
             'RespondType' => 'JSON',
-            'TimeStamp' => new DateTime('', new DateTimeZone('Asia/Taipei')),
+            'TimeStamp' => new DateTime('now', new DateTimeZone('Asia/Taipei')),
             'MerchantOrderNo' => $order->get_meta('_newebpay_MerchantOrderNo', true),
             'Amt' => (int) ceil($order->get_total()),
         ];
@@ -167,7 +167,7 @@ class RY_WT_WC_NewebPay_Gateway_Api extends RY_WT_NewebPay_Api
                 case 'VACC':
                 case 'CVS':
                 case 'BARCODE':
-                    $now = new DateTime('', new DateTimeZone('Asia/Taipei'));
+                    $now = new DateTime('now', new DateTimeZone('Asia/Taipei'));
                     $now->add(new DateInterval('P' . $gateway->expire_date . 'D'));
                     $args['ExpireDate'] = $now->format('Ymd');
                     break;

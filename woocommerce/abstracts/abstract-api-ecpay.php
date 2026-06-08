@@ -35,7 +35,7 @@ abstract class RY_WT_ECPay_Api extends RY_WT_Api
         $args = [
             'MerchantID' => $MerchantID,
             'RqHeader' => [
-                'Timestamp' => new DateTime('', new DateTimeZone('Asia/Taipei')),
+                'Timestamp' => new DateTime('now', new DateTimeZone('Asia/Taipei')),
                 'Revision' => '1.0.0',
             ],
             'Data' => wp_json_encode($data),

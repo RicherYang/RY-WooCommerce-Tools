@@ -271,7 +271,7 @@ class RY_WT_WC_PAYUNi_Gateway_Api extends RY_WT_PAYUNi_Api
             switch ($gateway::PAYMENT_TYPE) {
                 case 'VACC':
                 case 'CVS':
-                    $now = new DateTime('', new DateTimeZone('Asia/Taipei'));
+                    $now = new DateTime('now', new DateTimeZone('Asia/Taipei'));
                     $now->add(new DateInterval('P' . $gateway->expire_date . 'D'));
                     $args['ExpireDate'] = $now->format('Ymd');
                     break;
@@ -301,5 +301,39 @@ class RY_WT_WC_PAYUNi_Gateway_Api extends RY_WT_PAYUNi_Api
         }
 
         return $args;
+    }
+
+    protected function get_decrypt_result($response, $args, $log_prefix = '')
+    {
+        if (is_wp_error($response)) {
+            RY_WT_WC_PAYUNi_Gateway::instance()->log($log_prefix . ' failed', WC_Log_Levels::ERROR, ['data' => $args, 'info' => $response->get_error_messages()]);
+            return;
+        }
+
+        if (wp_remote_retrieve_response_code($response) != '200') {
+            RY_WT_WC_PAYUNi_Gateway::instance()->log($log_prefix . ' HTTP status error', WC_Log_Levels::ERROR, ['data' => $args, 'code' => wp_remote_retrieve_response_code($response)]);
+            return;
+        }
+
+        $body = wp_remote_retrieve_body($response);
+        $result = json_decode($body, true);
+        if (!is_array($result)) {
+            RY_WT_WC_PAYUNi_Gateway::instance()->log($log_prefix . ' result parse failed', WC_Log_Levels::WARNING, ['data' => $args, 'result' => wp_remote_retrieve_body($response)]);
+            return;
+        }
+
+        list($MerID, $HashKey, $HashIV) = RY_WT_WC_PAYUNi_Gateway::instance()->get_api_info();
+
+        $ipn_info = $this->get_info_value($result);
+        $self_hash_value = $this->generate_hash_value($ipn_info, $HashKey, $HashIV);
+        if ($this->get_hash_value($result) !== $self_hash_value) {
+            RY_WT_WC_PAYUNi_Gateway::instance()->log($log_prefix . ' result check failed', WC_Log_Levels::WARNING, ['data' => $result, 'self' => $self_hash_value]);
+            return;
+        }
+
+        $ipn_info = $this->args_decrypt($ipn_info, $HashKey, $HashIV);
+        parse_str($ipn_info, $result);
+
+        return $result;
     }
 }

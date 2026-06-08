@@ -132,11 +132,11 @@ final class RY_WT_WC_ECPay_Shipping extends RY_WT_Shipping_Model
     {
         if (isset(self::$support_methods[$item->get_method_id()])) {
             if ('CVS' === $item->get_meta('LogisticsType')) {
-                $this->save_order_cvs_info($order, $item->get_meta('LogisticsInfo'));
+                $this->save_order_cvs_info($order, $item->get_meta('RYCvsInfo'));
             }
             $item->delete_meta_data('LogisticsType');
             $item->delete_meta_data('LogisticsSubType');
-            $item->delete_meta_data('LogisticsInfo');
+            $item->delete_meta_data('RYCvsInfo');
         }
         WC()->session->set('ry_ecpay_cvs_info', []);
     }
@@ -225,6 +225,7 @@ final class RY_WT_WC_ECPay_Shipping extends RY_WT_Shipping_Model
                     'LogisticsType' => $method_class::Shipping_Type,
                     'LogisticsSubType' => $subtype,
                     'IsCollection' => 'Y',
+                    'Device' => wp_is_mobile() ? '1' : '0',
                     'ServerReplyURL' => esc_url(add_query_arg([
                         'ry-ecpay-map-redirect' => 'ry-ecpay-map-redirect',
                         'lang' => get_locale(),
@@ -308,15 +309,5 @@ final class RY_WT_WC_ECPay_Shipping extends RY_WT_Shipping_Model
         }
 
         return [$MerchantID, $HashKey, $HashIV, $cvs_type];
-    }
-
-    public function get_order_support_shipping($shipping_item)
-    {
-        $method_ID = $shipping_item->get_method_id();
-        if (isset(self::$support_methods[$method_ID])) {
-            return $method_ID;
-        }
-
-        return false;
     }
 }

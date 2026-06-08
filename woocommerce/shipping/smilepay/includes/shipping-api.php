@@ -344,7 +344,7 @@ class RY_WT_WC_SmilePay_Shipping_Api extends RY_WT_SmilePay_Api
             if ('HOME' === $info['LogisticsType']) {
                 $args['package_size'] = $info['spec'];
                 $args['temperature'] = '000' . $info['temp'];
-                $date = new DateTime('', new DateTimeZone('Asia/Taipei'));
+                $date = new DateTime('now', new DateTimeZone('Asia/Taipei'));
                 $date->add(new DateInterval('P' . RY_WT::get_option('smilepay_shipping_tcat_delivery_date', '1') . 'D'));
                 if (7 == $date->format('N')) { // 星期日
                     $date->add(new DateInterval('P1D'));

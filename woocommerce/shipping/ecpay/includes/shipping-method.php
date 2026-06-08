@@ -35,7 +35,7 @@ abstract class RY_WT_WC_ECPay_Shipping_Method extends RY_WT_WC_Shipping_Method
 
         $cvs_info = (array) WC()->session->get('ry_ecpay_cvs_info', []);
         if (isset($cvs_info['LogisticsSubType']) && str_starts_with($cvs_info['LogisticsSubType'], $rate['meta_data']['LogisticsSubType'])) {
-            $rate['meta_data']['LogisticsInfo'] = $cvs_info;
+            $rate['meta_data']['RYCvsInfo'] = $cvs_info;
         }
 
         return $rate;

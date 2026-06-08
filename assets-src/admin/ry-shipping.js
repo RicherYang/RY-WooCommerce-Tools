@@ -60,32 +60,14 @@ $(function () {
             }
         });
 
-        $metabox.on('click', '.ry-ecpay-shipping-info', function () {
+        $metabox.on('click', '.ry-get-shipping-note', function () {
             const $btn = $(this);
             blockinfo();
             $.ajax({
                 url: ajaxurl,
                 method: 'POST',
                 data: {
-                    action: 'RY_ecpay_shipping_info',
-                    orderid: $btn.data('orderid'),
-                    temp: $btn.data('temp'),
-                    collection: $btn.data('collection'),
-                    _ajax_nonce: RyAdminShippingParams._nonce.get
-                }
-            }).always(function () {
-                location.reload();
-            });
-        });
-
-        $metabox.on('click', '.ry-smilepay-shipping-info', function () {
-            const $btn = $(this);
-            blockinfo();
-            $.ajax({
-                url: ajaxurl,
-                method: 'POST',
-                data: {
-                    action: 'RY_smilepay_shipping_info',
+                    action: 'RY_' + $btn.data('type') + '_shipping_info',
                     orderid: $btn.data('orderid'),
                     temp: $btn.data('temp'),
                     collection: $btn.data('collection'),

@@ -42,11 +42,11 @@ class RY_WT_Shipping_Info_List_Table extends WP_List_Table
 
     public function display_action($type)
     {
-        echo '<button type="button" class="button ry-' . esc_attr($type) . '-shipping-info" data-orderid="' . esc_attr($this->order->get_id()) . '">' . esc_html__('Get shipping no', 'ry-woocommerce-tools') . '</button>';
+        echo '<button type="button" class="button ry-get-shipping-note" data-type="' . esc_attr($type) . '" data-orderid="' . esc_attr($this->order->get_id()) . '">' . esc_html__('Get shipping no', 'ry-woocommerce-tools') . '</button>';
 
         if ($this->has_items()) {
             if ('cod' === $this->order->get_payment_method()) {
-                echo '<button type="button" class="button ry-' . esc_attr($type) . '-shipping-info" data-orderid="' . esc_attr($this->order->get_id()) . '" data-collection="Y">' . esc_html__('Get shipping no (cod)', 'ry-woocommerce-tools') . '</button>';
+                echo '<button type="button" class="button ry-get-shipping-note" data-type="' . esc_attr($type) . '" data-orderid="' . esc_attr($this->order->get_id()) . '" data-collection="Y">' . esc_html__('Get shipping no (cod)', 'ry-woocommerce-tools') . '</button>';
             }
 
             do_action('ry_shipping_info-action', $this->order, $type);

@@ -177,14 +177,4 @@ final class RY_WT_WC_SmilePay_Shipping extends RY_WT_Shipping_Model
 
         return $fragments;
     }
-
-    public function get_order_support_shipping($shipping_item)
-    {
-        $method_ID = $shipping_item->get_method_id();
-        if (isset(self::$support_methods[$method_ID])) {
-            return $method_ID;
-        }
-
-        return false;
-    }
 }

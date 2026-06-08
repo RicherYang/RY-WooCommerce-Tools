@@ -96,7 +96,7 @@ class RY_WT_WC_ECPay_Shipping_Response extends RY_WT_ECPay_Api
 
     public function check_shipping_callback()
     {
-        if (!empty($_POST)) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
+        if (is_array($_POST) && !empty($_POST)) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
             $ipn_info = wp_unslash($_POST); // phpcs:ignore WordPress.Security.NonceVerification.Missing
             if ($this->ipn_request_is_valid($ipn_info)) {
                 do_action('valid_ecpay_shipping_request', $ipn_info);
@@ -106,7 +106,7 @@ class RY_WT_WC_ECPay_Shipping_Response extends RY_WT_ECPay_Api
         }
     }
 
-    protected function ipn_request_is_valid($ipn_info)
+    protected function ipn_request_is_valid(array $ipn_info): bool
     {
         $check_value = $this->get_check_value($ipn_info);
         if ($check_value) {
@@ -119,6 +119,8 @@ class RY_WT_WC_ECPay_Shipping_Response extends RY_WT_ECPay_Api
             }
             RY_WT_WC_ECPay_Shipping::instance()->log('IPN request check failed', WC_Log_Levels::ERROR, ['response' => $check_value, 'self' => $ipn_info_check_value]);
         }
+
+        return false;
     }
 
     public function shipping_callback($ipn_info)
@@ -148,7 +150,7 @@ class RY_WT_WC_ECPay_Shipping_Response extends RY_WT_ECPay_Api
                 if (isset($old_info['status'])) {
                     if ($old_info['status'] != $shipping_list[$ipn_info['AllPayLogisticsID']]['status']) {
                         $order->add_order_note(sprintf(
-                            /* translators: 1: ECPay ID 2: Old status mag 3: Old status no 4: New status mag 5: New status no */
+                            /* translators: 1: Shipping ID 2: Old status mag 3: Old status no 4: New status mag 5: New status no */
                             __('%1$s shipping status from %2$s(%3$d) to %4$s(%5$d)', 'ry-woocommerce-tools'),
                             $ipn_info['AllPayLogisticsID'],
                             $old_info['status_msg'],

@@ -42,7 +42,7 @@ class RY_WT_WC_ECPay_Gateway_Api extends RY_WT_ECPay_Api
         $args = [
             'MerchantID' => $MerchantID,
             'MerchantTradeNo' => $this->generate_trade_no($order->get_id(), RY_WT::get_option('ecpay_gateway_order_prefix')),
-            'MerchantTradeDate' => new DateTime('', new DateTimeZone('Asia/Taipei')),
+            'MerchantTradeDate' => new DateTime('now', new DateTimeZone('Asia/Taipei')),
             'PaymentType' => 'aio',
             'TotalAmount' => (int) ceil($order->get_total()),
             'TradeDesc' => get_bloginfo('name'),
@@ -112,7 +112,7 @@ class RY_WT_WC_ECPay_Gateway_Api extends RY_WT_ECPay_Api
         $args = [
             'MerchantID' => $MerchantID,
             'MerchantTradeNo' => $order->get_meta('_ecpay_MerchantTradeNo', true),
-            'TimeStamp' => new DateTime('', new DateTimeZone('Asia/Taipei')),
+            'TimeStamp' => new DateTime('now', new DateTimeZone('Asia/Taipei')),
         ];
 
         $args['TimeStamp'] = $args['TimeStamp']->getTimestamp();
@@ -158,7 +158,7 @@ class RY_WT_WC_ECPay_Gateway_Api extends RY_WT_ECPay_Api
         $args = [
             'MerchantID' => $MerchantID,
             'RqHeader' => [
-                'Timestamp' => new DateTime('', new DateTimeZone('Asia/Taipei')),
+                'Timestamp' => new DateTime('now', new DateTimeZone('Asia/Taipei')),
             ],
             'Data' => wp_json_encode([
                 'MerchantID' => $MerchantID,
