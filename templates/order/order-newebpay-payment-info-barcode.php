@@ -13,11 +13,11 @@
  * @version 3.0.6
  */
 
-if ('ry_newebpay_barcode' !== $order->get_payment_method()) {
+if ($order->get_payment_method() !== 'ry_newebpay_barcode') {
     return;
 }
 
-if ('BARCODE' !== $order->get_meta('_newebpay_payment_type')) {
+if ($order->get_meta('_newebpay_payment_type') !== 'BARCODE') {
     return;
 }
 ?>

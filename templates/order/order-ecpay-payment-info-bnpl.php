@@ -13,11 +13,11 @@
  * @version 3.0.6
  */
 
-if ('ry_ecpay_bnpl' !== $order->get_payment_method()) {
+if ($order->get_payment_method() !== 'ry_ecpay_bnpl') {
     return;
 }
 
-if ('BNPL' !== $order->get_meta('_ecpay_payment_type')) {
+if ($order->get_meta('_ecpay_payment_type') !== 'BNPL') {
     return;
 }
 ?>

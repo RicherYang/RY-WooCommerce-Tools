@@ -4,15 +4,19 @@ defined('ABSPATH') or exit;
 
 class RY_NewebPay_Gateway_Barcode extends RY_WT_WC_NewebPay_Payment_Gateway
 {
+    public const ID = 'ry_newebpay_barcode';
+
     public const PAYMENT_TYPE = 'BARCODE';
 
     protected int $check_min_amount = 20;
 
     protected int $check_max_amount = 40000;
 
+    protected array $check_expire_date = [1, 180];
+
     public function __construct()
     {
-        $this->id = 'ry_newebpay_barcode';
+        $this->id = self::ID;
         $this->has_fields = false;
         $this->order_button_text = __('Pay via BARCODE', 'ry-woocommerce-tools');
         $this->method_title = __('NewebPay BARCODE', 'ry-woocommerce-tools');
@@ -25,22 +29,7 @@ class RY_NewebPay_Gateway_Barcode extends RY_WT_WC_NewebPay_Payment_Gateway
 
         $this->expire_date = (int) ($this->settings['expire_date'] ?? 7);
 
-        add_filter('ry_admin_payment_info-ry_newebpay_barcode', [$this, 'show_payment_info'], 10, 2);
-    }
-
-    public function process_admin_options()
-    {
-        if (isset($_POST['woocommerce_ry_newebpay_barcode_expire_date'])) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
-            $_POST['woocommerce_ry_newebpay_barcode_expire_date'] = intval($_POST['woocommerce_ry_newebpay_barcode_expire_date']); // phpcs:ignore WordPress.Security.NonceVerification.Missing
-            if ($_POST['woocommerce_ry_newebpay_barcode_expire_date'] < 1 || $_POST['woocommerce_ry_newebpay_barcode_expire_date'] > 180) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
-                $_POST['woocommerce_ry_newebpay_barcode_expire_date'] = 7; // phpcs:ignore WordPress.Security.NonceVerification.Missing
-                WC_Admin_Settings::add_error(__('Payment expire date out of range. Set as default value.', 'ry-woocommerce-tools'));
-            }
-        } else {
-            $_POST['woocommerce_ry_newebpay_barcode_expire_date'] = 7; // phpcs:ignore WordPress.Security.NonceVerification.Missing
-        }
-
-        parent::process_admin_options();
+        add_filter('ry_admin_payment_info-' . $this->id, [$this, 'show_payment_info'], 10, 2);
     }
 
     public function show_payment_info($html, $order)

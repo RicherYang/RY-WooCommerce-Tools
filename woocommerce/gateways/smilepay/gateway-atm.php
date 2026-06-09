@@ -4,15 +4,19 @@ defined('ABSPATH') or exit;
 
 class RY_SmilePay_Gateway_Atm extends RY_WT_WC_SmilePay_Payment_Gateway
 {
+    public const ID = 'ry_smilepay_atm';
+
     public const PAYMENT_TYPE = '2';
 
     protected int $check_min_amount = 13;
 
     protected int $check_max_amount = 20000;
 
+    protected array $check_expire_date = [1, 60];
+
     public function __construct()
     {
-        $this->id = 'ry_smilepay_atm';
+        $this->id = self::ID;
         $this->has_fields = false;
         $this->order_button_text = __('Pay via ATM', 'ry-woocommerce-tools');
         $this->method_title = __('SmilePay ATM', 'ry-woocommerce-tools');
@@ -26,22 +30,7 @@ class RY_SmilePay_Gateway_Atm extends RY_WT_WC_SmilePay_Payment_Gateway
 
         $this->expire_date = (int) ($this->settings['expire_date'] ?? 3);
 
-        add_filter('ry_admin_payment_info-ry_smilepay_atm', [$this, 'show_payment_info'], 10, 2);
-    }
-
-    public function process_admin_options()
-    {
-        if (isset($_POST['woocommerce_ry_smilepay_atm_expire_date'])) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
-            $_POST['woocommerce_ry_smilepay_atm_expire_date'] = intval($_POST['woocommerce_ry_smilepay_atm_expire_date']); // phpcs:ignore WordPress.Security.NonceVerification.Missing
-            if ($_POST['woocommerce_ry_smilepay_atm_expire_date'] < 1 || $_POST['woocommerce_ry_smilepay_atm_expire_date'] > 60) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
-                $_POST['woocommerce_ry_smilepay_atm_expire_date'] = 3; // phpcs:ignore WordPress.Security.NonceVerification.Missing
-                WC_Admin_Settings::add_error(__('Payment expire date out of range. Set as default value.', 'ry-woocommerce-tools'));
-            }
-        } else {
-            $_POST['woocommerce_ry_smilepay_atm_expire_date'] = 3; // phpcs:ignore WordPress.Security.NonceVerification.Missing
-        }
-
-        parent::process_admin_options();
+        add_filter('ry_admin_payment_info-' . $this->id, [$this, 'show_payment_info'], 10, 2);
     }
 
     public function show_payment_info($html, $order)

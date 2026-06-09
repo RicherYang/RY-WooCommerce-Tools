@@ -4,9 +4,11 @@ defined('ABSPATH') or exit;
 
 class RY_NewebPay_Shipping_CVS extends RY_WT_WC_NewebPay_Shipping_Method
 {
+    public const ID = 'ry_newebpay_shipping_cvs';
+
     public function __construct($instance_ID = 0)
     {
-        $this->id = 'ry_newebpay_shipping_cvs';
+        $this->id = self::ID;
         $this->instance_id = absint($instance_ID);
         $this->method_title = __('NewebPay shipping CVS', 'ry-woocommerce-tools');
         $this->method_description = '';

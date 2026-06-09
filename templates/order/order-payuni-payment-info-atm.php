@@ -13,11 +13,11 @@
  * @version 3.6.6
  */
 
-if ('ry_payuni_atm' !== $order->get_payment_method()) {
+if ($order->get_payment_method() !== 'ry_payuni_atm') {
     return;
 }
 
-if ('2' !== $order->get_meta('_payuni_payment_type')) {
+if ($order->get_meta('_payuni_payment_type') !== '2') {
     return;
 }
 ?>

@@ -4,11 +4,13 @@ defined('ABSPATH') or exit;
 
 class RY_SmilePay_Gateway_Credit extends RY_WT_WC_SmilePay_Payment_Gateway
 {
+    public const ID = 'ry_smilepay_credit';
+
     public const PAYMENT_TYPE = '1';
 
     public function __construct()
     {
-        $this->id = 'ry_smilepay_credit';
+        $this->id = self::ID;
         $this->has_fields = false;
         $this->order_button_text = __('Pay via Credit', 'ry-woocommerce-tools');
         $this->method_title = __('SmilePay Credit', 'ry-woocommerce-tools');

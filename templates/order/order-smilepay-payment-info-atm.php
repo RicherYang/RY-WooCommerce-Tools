@@ -13,11 +13,11 @@
  * @version 3.0.6
  */
 
-if ('ry_smilepay_atm' !== $order->get_payment_method()) {
+if ($order->get_payment_method() !== 'ry_smilepay_atm') {
     return;
 }
 
-if ('2' !== $order->get_meta('_smilepay_payment_type')) {
+if ($order->get_meta('_smilepay_payment_type') !== '2') {
     return;
 }
 ?>

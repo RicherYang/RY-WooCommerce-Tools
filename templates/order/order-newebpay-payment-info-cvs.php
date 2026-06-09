@@ -13,11 +13,11 @@
  * @version 3.0.6
  */
 
-if ('ry_newebpay_cvs' !== $order->get_payment_method()) {
+if ($order->get_payment_method() !== 'ry_newebpay_cvs') {
     return;
 }
 
-if ('CVS' !== $order->get_meta('_newebpay_payment_type')) {
+if ($order->get_meta('_newebpay_payment_type') !== 'CVS') {
     return;
 }
 ?>

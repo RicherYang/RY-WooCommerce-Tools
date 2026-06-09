@@ -13,11 +13,11 @@
  * @version 3.0.6
  */
 
-if ('ry_ecpay_atm' !== $order->get_payment_method()) {
+if ($order->get_payment_method() !== 'ry_ecpay_atm') {
     return;
 }
 
-if ('ATM' !== $order->get_meta('_ecpay_payment_type')) {
+if ($order->get_meta('_ecpay_payment_type') !== 'ATM') {
     return;
 }
 ?>

@@ -4,13 +4,15 @@ defined('ABSPATH') or exit;
 
 class RY_ECPay_Shipping_CVS_Family extends RY_WT_WC_ECPay_Shipping_Method
 {
+    public const ID = 'ry_ecpay_shipping_cvs_family';
+
     public const Shipping_Type = 'CVS';
 
     public const Shipping_Sub_Type = 'FAMI';
 
     public function __construct($instance_ID = 0)
     {
-        $this->id = 'ry_ecpay_shipping_cvs_family';
+        $this->id = self::ID;
         $this->instance_id = absint($instance_ID);
         $this->method_title = __('ECPay shipping CVS Family', 'ry-woocommerce-tools');
         $this->method_description = '';

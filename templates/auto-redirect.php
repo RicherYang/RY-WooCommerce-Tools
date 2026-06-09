@@ -1,3 +1,5 @@
+<?php defined('ABSPATH') or exit; ?>
+
 <!doctype html>
 <html <?php language_attributes(); ?>>
 

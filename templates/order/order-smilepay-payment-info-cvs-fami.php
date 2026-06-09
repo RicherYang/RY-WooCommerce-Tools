@@ -13,11 +13,11 @@
  * @version 3.0.6
  */
 
-if ('ry_smilepay_cvs_fami' !== $order->get_payment_method()) {
+if ($order->get_payment_method() !== 'ry_smilepay_cvs_fami') {
     return;
 }
 
-if ('6' !== $order->get_meta('_smilepay_payment_type')) {
+if ($order->get_meta('_smilepay_payment_type') !== '6') {
     return;
 }
 ?>

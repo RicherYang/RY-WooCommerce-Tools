@@ -4,6 +4,8 @@ defined('ABSPATH') or exit;
 
 class RY_SmilePay_Gateway_Webatm extends RY_WT_WC_SmilePay_Payment_Gateway
 {
+    public const ID = 'ry_smilepay_webatm';
+
     public const PAYMENT_TYPE = '21';
 
     protected int $check_min_amount = 13;
@@ -12,7 +14,7 @@ class RY_SmilePay_Gateway_Webatm extends RY_WT_WC_SmilePay_Payment_Gateway
 
     public function __construct()
     {
-        $this->id = 'ry_smilepay_webatm';
+        $this->id = self::ID;
         $this->has_fields = false;
         $this->order_button_text = __('Pay via WebATM', 'ry-woocommerce-tools');
         $this->method_title = __('SmilePay WebATM', 'ry-woocommerce-tools');

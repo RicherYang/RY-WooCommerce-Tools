@@ -4,6 +4,8 @@ defined('ABSPATH') or exit;
 
 class RY_ECPay_Gateway_Credit_Installment extends RY_WT_WC_ECPay_Payment_Gateway
 {
+    public const ID = 'ry_ecpay_credit_installment';
+
     public const PAYMENT_TYPE = 'Credit';
 
     public const bool SUPPORT_REFUND = true;
@@ -12,12 +14,12 @@ class RY_ECPay_Gateway_Credit_Installment extends RY_WT_WC_ECPay_Payment_Gateway
 
     public function __construct()
     {
-        $this->id = 'ry_ecpay_credit_installment';
+        $this->id = self::ID;
         $this->has_fields = true;
-        $this->order_button_text = __('Pay via Credit(installment)', 'ry-woocommerce-tools');
-        $this->method_title = __('ECPay Credit(installment)', 'ry-woocommerce-tools');
+        $this->order_button_text = __('Pay via Credit (installment)', 'ry-woocommerce-tools');
+        $this->method_title = __('ECPay Credit (installment)', 'ry-woocommerce-tools');
         $this->method_description = '';
-        $this->process_payment_note = __('Pay via ECPay Credit(installment)', 'ry-woocommerce-tools');
+        $this->process_payment_note = __('Pay via ECPay Credit (installment)', 'ry-woocommerce-tools');
 
         $this->form_fields = include RY_WT_PLUGIN_DIR . 'woocommerce/gateways/ecpay/includes/settings/credit-installment.php';
 

@@ -13,11 +13,11 @@
  * @version 3.0.6
  */
 
-if ('ry_smilepay_barcode' !== $order->get_payment_method()) {
+if ($order->get_payment_method() !== 'ry_smilepay_barcode') {
     return;
 }
 
-if ('3' !== $order->get_meta('_smilepay_payment_type')) {
+if ($order->get_meta('_smilepay_payment_type') !== '3') {
     return;
 }
 ?>

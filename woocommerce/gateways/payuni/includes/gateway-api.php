@@ -168,7 +168,7 @@ class RY_WT_WC_PAYUNi_Gateway_Api extends RY_WT_PAYUNi_Api
         return $this->get_decrypt_result($response, $args, 'CreditCancel');
     }
 
-    public function aftee_refound($order, $amount)
+    public function aftee_refund($order, $amount)
     {
         $amount = (int) $amount;
 
@@ -192,7 +192,7 @@ class RY_WT_WC_PAYUNi_Gateway_Api extends RY_WT_PAYUNi_Api
         return $this->get_decrypt_result($response, $args, 'AfteeRefund');
     }
 
-    public function icash_refound($order, $amount)
+    public function icash_refund($order, $amount)
     {
         $amount = (int) $amount;
 
@@ -216,7 +216,7 @@ class RY_WT_WC_PAYUNi_Gateway_Api extends RY_WT_PAYUNi_Api
         return $this->get_decrypt_result($response, $args, 'IcashRefund');
     }
 
-    public function jkopay_refound($order, $amount)
+    public function jkopay_refund($order, $amount)
     {
         $amount = (int) $amount;
 
@@ -240,7 +240,7 @@ class RY_WT_WC_PAYUNi_Gateway_Api extends RY_WT_PAYUNi_Api
         return $this->get_decrypt_result($response, $args, 'JkopayRefund');
     }
 
-    public function linepay_refound($order, $amount)
+    public function linepay_refund($order, $amount)
     {
         $amount = (int) $amount;
 

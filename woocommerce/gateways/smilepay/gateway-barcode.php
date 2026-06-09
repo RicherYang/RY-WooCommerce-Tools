@@ -4,6 +4,8 @@ defined('ABSPATH') or exit;
 
 class RY_SmilePay_Gateway_Barcode extends RY_WT_WC_SmilePay_Payment_Gateway
 {
+    public const ID = 'ry_smilepay_barcode';
+
     public const PAYMENT_TYPE = '3';
 
     protected int $check_min_amount = 25;
@@ -12,7 +14,7 @@ class RY_SmilePay_Gateway_Barcode extends RY_WT_WC_SmilePay_Payment_Gateway
 
     public function __construct()
     {
-        $this->id = 'ry_smilepay_barcode';
+        $this->id = self::ID;
         $this->has_fields = false;
         $this->order_button_text = __('Pay via BARCODE', 'ry-woocommerce-tools');
         $this->method_title = __('SmilePay BARCODE', 'ry-woocommerce-tools');
@@ -26,20 +28,25 @@ class RY_SmilePay_Gateway_Barcode extends RY_WT_WC_SmilePay_Payment_Gateway
 
         $this->expire_date = (int) ($this->settings['expire_date'] ?? 7);
 
-        add_filter('ry_admin_payment_info-ry_smilepay_barcode', [$this, 'show_payment_info'], 10, 2);
+        add_filter('ry_admin_payment_info-' . $this->id, [$this, 'show_payment_info'], 10, 2);
     }
 
     public function process_admin_options()
     {
-        if (isset($_POST['woocommerce_ry_smilepay_barcode_expire_date'])) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
-            $_POST['woocommerce_ry_smilepay_barcode_expire_date'] = intval($_POST['woocommerce_ry_smilepay_barcode_expire_date']); // phpcs:ignore WordPress.Security.NonceVerification.Missing
-            if ($_POST['woocommerce_ry_smilepay_barcode_expire_date'] < 1 || $_POST['woocommerce_ry_smilepay_barcode_expire_date'] > 30) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
-                $_POST['woocommerce_ry_smilepay_barcode_expire_date'] = 7; // phpcs:ignore WordPress.Security.NonceVerification.Missing
+        $post_data = $this->get_post_data();
+
+        $filed_name = 'woocommerce_' . $this->id . '_expire_date';
+        if (isset($post_data[$filed_name])) {
+            $post_data[$filed_name] = intval($post_data[$filed_name]);
+            if ($post_data[$filed_name] < 1 || $post_data[$filed_name] > 30) {
+                $post_data[$filed_name] = 7;
                 WC_Admin_Settings::add_error(__('Payment expire date out of range. Set as default value.', 'ry-woocommerce-tools'));
             }
         } else {
-            $_POST['woocommerce_ry_smilepay_barcode_expire_date'] = 7; // phpcs:ignore WordPress.Security.NonceVerification.Missing
+            $post_data[$filed_name] = 7;
         }
+
+        $this->set_post_data($post_data);
 
         parent::process_admin_options();
     }
