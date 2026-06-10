@@ -24,7 +24,7 @@ abstract class RY_WT_WC_PAYUNi_Payment_Gateway extends RY_WT_WC_Payment_Gateway
 
     public function get_icon()
     {
-        $icon_html = '<img src="' . esc_attr($this->get_icon_url()) . '" alt="' . esc_attr__('PAYUNi', 'ry-woocommerce-tools') . '">'; // phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage
+        $icon_html = '<img src="' . esc_attr($this->get_icon_url()) . '" alt="' . esc_attr__('PAYUNi', 'ry-woocommerce-tools') . '">';
 
         return apply_filters('woocommerce_gateway_icon', $icon_html, $this->id);
     }

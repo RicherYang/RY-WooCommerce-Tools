@@ -242,8 +242,8 @@ final class RY_WT_WC_ECPay_Shipping extends RY_WT_Shipping_Model
 
     public function save_cvs_info()
     {
-        if (isset($_POST['ry-ecpay-cvsmap-info'])) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
-            $cvs_info = (array) json_decode(base64_decode(wp_unslash($_POST['ry-ecpay-cvsmap-info']), true), true); // phpcs:ignore WordPress.Security.NonceVerification.Missing , WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+        if (isset($_POST['ry-ecpay-cvsmap-info'])) {
+            $cvs_info = (array) json_decode(base64_decode(wp_unslash($_POST['ry-ecpay-cvsmap-info']), true), true);
             if (is_array($cvs_info) && 6 === count($cvs_info)) {
                 $cvs_info['shipping_methods'] = WC()->session->get('chosen_shipping_methods', []);
                 foreach ($cvs_info['shipping_methods'] as $package_key => $t) {

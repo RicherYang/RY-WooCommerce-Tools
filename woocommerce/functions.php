@@ -1,5 +1,7 @@
 <?php
 
+defined('ABSPATH') or exit;
+
 function rywt_bank_code_to_name($bank_code)
 {
     static $bank_name = [];

@@ -10,7 +10,7 @@
  * happen. When this occurs the version of the template file will be bumped and
  * the readme will list any important changes.
  *
- * @version 3.0.6
+ * @version 4.0.0
  */
 
 if ($order->get_payment_method() !== 'ry_smilepay_cvs_711') {
@@ -20,6 +20,11 @@ if ($order->get_payment_method() !== 'ry_smilepay_cvs_711') {
 if ($order->get_meta('_smilepay_payment_type') !== '4') {
     return;
 }
+
+$order_info = [
+    'paymentNo' => $order->get_meta('_smilepay_cvs_PaymentNo'),
+    'expireDate' => wc_string_to_datetime($order->get_meta('_smilepay_cvs_ExpireDate')),
+];
 ?>
 <section class="woocommerce-order-details">
     <h2 class="woocommerce-order-details__title">
@@ -32,7 +37,7 @@ if ($order->get_meta('_smilepay_payment_type') !== '4') {
                     <?php esc_html_e('CVS code', 'ry-woocommerce-tools'); ?>
                 </td>
                 <td>
-                    <?php echo esc_html($order->get_meta('_smilepay_cvs_PaymentNo')); ?>
+                    <?php echo esc_html($order_info['paymentNo']); ?>
                 </td>
             </tr>
             <tr>
@@ -40,12 +45,11 @@ if ($order->get_meta('_smilepay_payment_type') !== '4') {
                     <?php esc_html_e('Payment deadline', 'ry-woocommerce-tools'); ?>
                 </td>
                 <td>
-                    <?php $expireDate = wc_string_to_datetime($order->get_meta('_smilepay_cvs_ExpireDate')); ?>
                     <?php echo esc_html(sprintf(
                         /* translators: %1$s: date %2$s: time */
                         _x('%1$s %2$s', 'Datetime', 'ry-woocommerce-tools'),
-                        $expireDate->date_i18n(wc_date_format()),
-                        $expireDate->date_i18n(wc_time_format()),
+                        $order_info['expireDate']->date_i18n(wc_date_format()),
+                        $order_info['expireDate']->date_i18n(wc_time_format()),
                     )); ?>
                 </td>
             </tr>

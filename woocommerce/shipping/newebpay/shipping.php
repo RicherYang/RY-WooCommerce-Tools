@@ -63,7 +63,7 @@ final class RY_WT_WC_NewebPay_Shipping extends RY_WT_Shipping_Model
         if (did_action('woocommerce_checkout_process')) {
             $used = false;
             $used_cvs = false;
-            $shipping_method = wp_unslash($_POST['shipping_method'] ?? []); // phpcs:ignore WordPress.Security.NonceVerification.Missing , WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+            $shipping_method = wp_unslash($_POST['shipping_method'] ?? []);
             foreach ($shipping_method as $method) {
                 $method = strstr($method, ':', true);
                 if ($method && isset(self::$support_methods[$method])) {

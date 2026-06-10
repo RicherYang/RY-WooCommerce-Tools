@@ -34,7 +34,7 @@ class RY_WT_WC_SmilePay_Shipping_Response extends RY_WT_SmilePay_Api
 
     public function check_map_callback()
     {
-        if (!empty($_POST)) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
+        if (!empty($_POST)) {
             $ipn_info = $this->clean_post_data();
             RY_WT_WC_SmilePay_Shipping::instance()->log('IPN request', WC_Log_Levels::INFO, ['data' => $ipn_info]);
             if (1 == $this->get_status($ipn_info)) {
@@ -48,7 +48,7 @@ class RY_WT_WC_SmilePay_Shipping_Response extends RY_WT_SmilePay_Api
 
     public function check_admin_callback()
     {
-        if (!empty($_POST)) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
+        if (!empty($_POST)) {
             $ipn_info = $this->clean_post_data();
             RY_WT_WC_SmilePay_Shipping::instance()->log('IPN request', WC_Log_Levels::INFO, ['data' => $ipn_info]);
             if (1 == $this->get_status($ipn_info)) {
@@ -62,7 +62,7 @@ class RY_WT_WC_SmilePay_Shipping_Response extends RY_WT_SmilePay_Api
 
     public function shipping_callback()
     {
-        if (!empty($_POST)) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
+        if (!empty($_POST)) {
             $ipn_info = $this->clean_post_data(true);
             RY_WT_WC_SmilePay_Shipping::instance()->log('IPN request', WC_Log_Levels::INFO, ['data' => $ipn_info]);
             do_action('valid_smilepay_shipping_request', $ipn_info);

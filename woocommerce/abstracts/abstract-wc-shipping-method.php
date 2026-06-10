@@ -279,7 +279,7 @@ abstract class RY_WT_WC_Shipping_Method extends WC_Shipping_Method
             'weight' => 1,
         ]);
         if (false === $dummy_cost) {
-            throw new Exception(WC_Eval_Math::$last_error);
+            throw new Exception(WC_Eval_Math::$last_error); // phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped
         }
         return $value;
     }

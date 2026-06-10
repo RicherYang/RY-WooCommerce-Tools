@@ -49,7 +49,7 @@ final class RY_WT_WC_Admin
 
         $hide_save_button = true;
 
-        if (isset($_POST['ryt_check_time']) && 'ryt_check_time' === $_POST['ryt_check_time']) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
+        if (isset($_POST['ryt_check_time']) && 'ryt_check_time' === $_POST['ryt_check_time']) {
             $difftime = RY_WT_Cron::check_ntp_time();
             if ($difftime === -1) {
                 printf(

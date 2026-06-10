@@ -10,7 +10,7 @@
  * happen. When this occurs the version of the template file will be bumped and
  * the readme will list any important changes.
  *
- * @version 3.0.6
+ * @version 4.0.0
  */
 
 if ($order->get_payment_method() !== 'ry_smilepay_atm') {
@@ -20,6 +20,12 @@ if ($order->get_payment_method() !== 'ry_smilepay_atm') {
 if ($order->get_meta('_smilepay_payment_type') !== '2') {
     return;
 }
+
+$order_info = [
+    'bank_code' => $order->get_meta('_smilepay_atm_BankCode'),
+    'vAccount' => $order->get_meta('_smilepay_atm_vAccount'),
+    'expireDate' => wc_string_to_datetime($order->get_meta('_smilepay_atm_ExpireDate')),
+];
 ?>
 <section class="woocommerce-order-details">
     <h2 class="woocommerce-order-details__title">
@@ -32,7 +38,7 @@ if ($order->get_meta('_smilepay_payment_type') !== '2') {
                     <?php esc_html_e('Bank', 'ry-woocommerce-tools'); ?>
                 </td>
                 <td>
-                    <?php echo esc_html(rywt_bank_code_to_name($order->get_meta('_smilepay_atm_BankCode'))); ?>
+                    <?php echo esc_html(rywt_bank_code_to_name($order_info['bank_code'])); ?>
                 </td>
             </tr>
             <tr>
@@ -40,7 +46,7 @@ if ($order->get_meta('_smilepay_payment_type') !== '2') {
                     <?php esc_html_e('Bank code', 'ry-woocommerce-tools'); ?>
                 </td>
                 <td>
-                    <?php echo esc_html($order->get_meta('_smilepay_atm_BankCode')); ?>
+                    <?php echo esc_html($order_info['bank_code']); ?>
                 </td>
             </tr>
             <tr>
@@ -48,7 +54,7 @@ if ($order->get_meta('_smilepay_payment_type') !== '2') {
                     <?php esc_html_e('ATM Bank account', 'ry-woocommerce-tools'); ?>
                 </td>
                 <td class="ry-atm-account">
-                    <?php echo wp_kses('<span>' . wordwrap($order->get_meta('_smilepay_atm_vAccount'), 4, '</span><span>', true) . '</span>', ['span' => []]); ?>
+                    <?php echo wp_kses('<span>' . wordwrap($order_info['vAccount'], 4, '</span><span>', true) . '</span>', ['span' => []]); ?>
                 </td>
             </tr>
             <tr>
@@ -56,8 +62,7 @@ if ($order->get_meta('_smilepay_payment_type') !== '2') {
                     <?php esc_html_e('Payment deadline', 'ry-woocommerce-tools'); ?>
                 </td>
                 <td>
-                    <?php $expireDate = wc_string_to_datetime($order->get_meta('_smilepay_atm_ExpireDate')); ?>
-                    <?php echo esc_html($expireDate->date_i18n(wc_date_format())); ?>
+                    <?php echo esc_html($order_info['expireDate']->date_i18n(wc_date_format())); ?>
                 </td>
             </tr>
         </tbody>

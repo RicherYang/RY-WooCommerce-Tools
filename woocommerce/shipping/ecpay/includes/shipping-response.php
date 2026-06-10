@@ -23,7 +23,7 @@ class RY_WT_WC_ECPay_Shipping_Response extends RY_WT_ECPay_Api
         add_action('woocommerce_api_ry_ecpay_shipping_callback', [$this, 'check_shipping_callback']);
         add_action('valid_ecpay_shipping_request', [$this, 'shipping_callback']);
 
-        if ('ry-ecpay-map-redirect' === ($_GET['ry-ecpay-map-redirect'] ?? '')) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended , WordPress.Security.ValidatedSanitizedInput.MissingUnslash , WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+        if ('ry-ecpay-map-redirect' === ($_GET['ry-ecpay-map-redirect'] ?? '')) {
             do_action('woocommerce_api_ry_ecpay_map_callback');
         }
 
@@ -52,10 +52,10 @@ class RY_WT_WC_ECPay_Shipping_Response extends RY_WT_ECPay_Api
     public function map_redirect()
     {
         $cvs_info = [];
-        if (!empty($_POST)) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
+        if (!empty($_POST)) {
             foreach (['LogisticsSubType', 'CVSStoreID', 'CVSStoreName', 'CVSAddress', 'CVSTelephone', 'CVSOutSide'] as $key) {
-                if (isset($_POST[$key])) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
-                    $cvs_info[$key] = sanitize_text_field(wp_unslash($_POST[$key])); // phpcs:ignore WordPress.Security.NonceVerification.Missing
+                if (isset($_POST[$key])) {
+                    $cvs_info[$key] = sanitize_text_field(wp_unslash($_POST[$key]));
                 }
             }
         }
@@ -65,7 +65,7 @@ class RY_WT_WC_ECPay_Shipping_Response extends RY_WT_ECPay_Api
             exit;
         }
 
-        $extra_data = sanitize_text_field(wp_unslash($_POST['ExtraData'] ?? '')); // phpcs:ignore WordPress.Security.NonceVerification.Missing
+        $extra_data = sanitize_text_field(wp_unslash($_POST['ExtraData'] ?? ''));
         if (str_starts_with($extra_data, 'ry')) {
             if (!did_action('woocommerce_after_register_post_type')) {
                 return;
@@ -96,8 +96,8 @@ class RY_WT_WC_ECPay_Shipping_Response extends RY_WT_ECPay_Api
 
     public function check_shipping_callback()
     {
-        if (is_array($_POST) && !empty($_POST)) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
-            $ipn_info = wp_unslash($_POST); // phpcs:ignore WordPress.Security.NonceVerification.Missing
+        if (is_array($_POST) && !empty($_POST)) {
+            $ipn_info = wp_unslash($_POST);
             if ($this->ipn_request_is_valid($ipn_info)) {
                 do_action('valid_ecpay_shipping_request', $ipn_info);
             } else {

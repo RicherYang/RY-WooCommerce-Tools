@@ -305,6 +305,7 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_ECPay_Api
         }
 
         echo wp_remote_retrieve_body($response); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+        exit;
     }
 
     public function get_info($info_ID)

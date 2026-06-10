@@ -48,7 +48,7 @@ final class RY_WT_Cron
         $args = [
             'type' => 'shop_order',
             'return' => 'ids',
-            'meta_query' => [[ // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
+            'meta_query' => [[
                 'key' => ['_ecpay_shipping_info', '_newebpay_shipping_info', '_smilepay_shipping_info'],
                 'compare_key' => 'IN',
                 'value' => 'LogisticsType',

@@ -10,7 +10,7 @@
  * happen. When this occurs the version of the template file will be bumped and
  * the readme will list any important changes.
  *
- * @version 3.0.6
+ * @version 4.0.0
  */
 
 if ($order->get_payment_method() !== 'ry_newebpay_barcode') {
@@ -20,6 +20,13 @@ if ($order->get_payment_method() !== 'ry_newebpay_barcode') {
 if ($order->get_meta('_newebpay_payment_type') !== 'BARCODE') {
     return;
 }
+
+$order_info = [
+    'barcode1' => $order->get_meta('_newebpay_barcode_Barcode1'),
+    'barcode2' => $order->get_meta('_newebpay_barcode_Barcode2'),
+    'barcode3' => $order->get_meta('_newebpay_barcode_Barcode3'),
+    'expireDate' => wc_string_to_datetime($order->get_meta('_newebpay_barcode_ExpireDate')),
+];
 ?>
 <section class="woocommerce-order-details">
     <h2 class="woocommerce-order-details__title">
@@ -32,7 +39,7 @@ if ($order->get_meta('_newebpay_payment_type') !== 'BARCODE') {
                     <?php esc_html_e('Barcode 1', 'ry-woocommerce-tools'); ?>
                 </td>
                 <td>
-                    <span class="free3of9">*<?php echo esc_html($order->get_meta('_newebpay_barcode_Barcode1')); ?>*</span>
+                    <span class="free3of9">*<?php echo esc_html($order_info['barcode1']); ?>*</span>
                 </td>
             </tr>
             <tr>
@@ -40,7 +47,7 @@ if ($order->get_meta('_newebpay_payment_type') !== 'BARCODE') {
                     <?php esc_html_e('Barcode 2', 'ry-woocommerce-tools'); ?>
                 </td>
                 <td>
-                    <span class="free3of9">*<?php echo esc_html($order->get_meta('_newebpay_barcode_Barcode2')); ?>*</span>
+                    <span class="free3of9">*<?php echo esc_html($order_info['barcode2']); ?>*</span>
                 </td>
             </tr>
             <tr>
@@ -48,7 +55,7 @@ if ($order->get_meta('_newebpay_payment_type') !== 'BARCODE') {
                     <?php esc_html_e('Barcode 3', 'ry-woocommerce-tools'); ?>
                 </td>
                 <td>
-                    <span class="free3of9">*<?php echo esc_html($order->get_meta('_newebpay_barcode_Barcode3')); ?>*</span>
+                    <span class="free3of9">*<?php echo esc_html($order_info['barcode3']); ?>*</span>
                 </td>
             </tr>
             <tr>
@@ -56,8 +63,7 @@ if ($order->get_meta('_newebpay_payment_type') !== 'BARCODE') {
                     <?php esc_html_e('Payment deadline', 'ry-woocommerce-tools'); ?>
                 </td>
                 <td>
-                    <?php $expireDate = wc_string_to_datetime($order->get_meta('_newebpay_barcode_ExpireDate')); ?>
-                    <?php echo esc_html($expireDate->date_i18n(wc_date_format())); ?>
+                    <?php echo esc_html($order_info['expireDate']->date_i18n(wc_date_format())); ?>
                 </td>
             </tr>
         </tbody>

@@ -94,7 +94,7 @@ final class RY_WT_WC_ECPay_Shipping_Admin
 
     public function print_shipping()
     {
-        if (!wp_verify_nonce(($_GET['_wpnonce'] ?? ''), 'ry-print-shipping')) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash , WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+        if (!wp_verify_nonce(($_GET['_wpnonce'] ?? ''), 'ry-print-shipping')) {
             wp_safe_redirect(admin_url('edit.php?post_type=shop_order'));
             exit;
         }
@@ -184,8 +184,8 @@ final class RY_WT_WC_ECPay_Shipping_Admin
 
         $order = wc_get_order($order_ID);
         if ($order) {
-            $collection = 'Y' === wp_unslash($_POST['collection'] ?? ''); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-            $temp = substr(wp_unslash($_POST['temp'] ?? ''), 0, 1); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+            $collection = 'Y' === wp_unslash($_POST['collection'] ?? '');
+            $temp = substr(wp_unslash($_POST['temp'] ?? ''), 0, 1);
             if (empty($temp)) {
                 $temp = null;
             }
