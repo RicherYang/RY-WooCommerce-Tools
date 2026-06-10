@@ -67,7 +67,7 @@ abstract class RY_WT_Api
             css: ' . wp_json_encode($css) . '
         });';
 
-        wp_register_script('ry-payment', '', [], RY_WT_VERSION);
+        wp_register_script('ry-payment', '', [], RY_WT_VERSION, true);
         wp_enqueue_script('wc-jquery-blockui');
         wp_enqueue_script('ry-payment');
         wp_add_inline_script('ry-payment', 'jQuery(function($) {' . $blockUI . ' setTimeout(function() { ' . $action_script . ' }, 150);' . '});');

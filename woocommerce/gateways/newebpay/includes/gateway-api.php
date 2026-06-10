@@ -39,7 +39,7 @@ class RY_WT_WC_NewebPay_Gateway_Api extends RY_WT_NewebPay_Api
             'MerchantID' => $MerchantID,
             'RespondType' => 'JSON',
             'TimeStamp' => new DateTime('now', new DateTimeZone('Asia/Taipei')),
-            'Version' => '2.2',
+            'Version' => '2.3',
             'MerchantOrderNo' => $this->generate_trade_no($order->get_id(), RY_WT::get_option('newebpay_gateway_order_prefix')),
             'Amt' => (int) ceil($order->get_total()),
             'ItemDesc' => $item_name,
@@ -53,6 +53,7 @@ class RY_WT_WC_NewebPay_Gateway_Api extends RY_WT_NewebPay_Api
             'ANDROIDPAY' => 0,
             'SAMSUNGPAY' => 0,
             'LINEPAY' => 0,
+            'AFTEE' => 0,
             'InstFlag' => 0,
             'CreditRed' => 0,
             'UNIONPAY' => 0,
@@ -64,7 +65,7 @@ class RY_WT_WC_NewebPay_Gateway_Api extends RY_WT_NewebPay_Api
             'ESUNWALLET' => 0,
             'TAIWANPAY' => 0,
             'BITOPAY' => 0,
-            'EZPAY' => 0,
+            'TWQR' => 0,
             'EZPWECHAT' => 0,
             'EZPALIPAY' => 0,
             'CVSCOM' => 0,
@@ -75,7 +76,7 @@ class RY_WT_WC_NewebPay_Gateway_Api extends RY_WT_NewebPay_Api
             case 'zh_TW':
                 break;
             case 'ja':
-                $args['Language'] = 'jp';
+                $args['LangType'] = 'jp';
                 break;
             case 'en_US':
             case 'en_AU':
@@ -90,7 +91,7 @@ class RY_WT_WC_NewebPay_Gateway_Api extends RY_WT_NewebPay_Api
         $form_data = [
             'MerchantID' => $MerchantID,
             'TradeInfo' => $this->args_encrypt($args, $HashKey, $HashIV),
-            'Version' => '2.2',
+            'Version' => '2.3',
             'EncryptType' => 0,
         ];
         $form_data['TradeSha'] = $this->generate_hash_value($form_data['TradeInfo'], $HashKey, $HashIV);
@@ -164,6 +165,9 @@ class RY_WT_WC_NewebPay_Gateway_Api extends RY_WT_NewebPay_Api
                 $args[$gateway::PAYMENT_TYPE] = 1;
             }
             switch ($gateway::PAYMENT_TYPE) {
+                case 'CREDIT':
+                    $args['CREDITAE'] = 1;
+                    break;
                 case 'VACC':
                 case 'CVS':
                 case 'BARCODE':
