@@ -63,7 +63,12 @@ $order_info = [
                     <?php esc_html_e('Payment deadline', 'ry-woocommerce-tools'); ?>
                 </td>
                 <td>
-                    <?php echo esc_html($order_info['expireDate']->date_i18n(wc_date_format())); ?>
+                    <?php echo esc_html(sprintf(
+                        /* translators: %1$s: date %2$s: time */
+                        _x('%1$s %2$s', 'Datetime', 'ry-woocommerce-tools'),
+                        $order_info['expireDate']->date_i18n(wc_date_format()),
+                        $order_info['expireDate']->date_i18n(wc_time_format()),
+                    )); ?>
                 </td>
             </tr>
         </tbody>
