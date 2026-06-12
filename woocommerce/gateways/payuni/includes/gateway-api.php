@@ -277,24 +277,7 @@ class RY_WT_WC_PAYUNi_Gateway_Api extends RY_WT_PAYUNi_Api
                     break;
                 case 'CreditInst':
                     if (isset($gateway->number_of_periods) && !empty($gateway->number_of_periods)) {
-                        if (is_array($gateway->number_of_periods)) {
-                            $number_of_periods = (int) $order->get_meta('_payuni_payment_number_of_periods', true);
-                            if (!in_array($number_of_periods, $gateway->number_of_periods)) {
-                                $number_of_periods = 0;
-                            }
-                        } else {
-                            $number_of_periods = (int) $gateway->number_of_periods;
-                        }
-                        if (in_array($number_of_periods, [3, 6, 9, 12, 18, 24, 30])) {
-                            $args[$gateway::PAYMENT_TYPE] = $number_of_periods;
-
-                            $order->add_order_note(sprintf(
-                                /* translators: %d number of periods */
-                                __('Credit installment to %d', 'ry-woocommerce-tools'),
-                                $number_of_periods,
-                            ));
-                            $order->save();
-                        }
+                        $args[$gateway::PAYMENT_TYPE] = implode(',', $gateway->number_of_periods);
                     }
                     break;
             }

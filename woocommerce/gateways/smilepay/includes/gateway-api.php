@@ -84,6 +84,18 @@ class RY_WT_WC_SmilePay_Gateway_Api extends RY_WT_SmilePay_Api
             'Roturl' => WC()->api_request_url('ry_smilepay_callback', true),
             'Roturl_status' => 'RY_SmilePay',
         ];
+        switch (get_locale()) {
+            case 'zh_HK':
+            case 'zh_TW':
+                break;
+            case 'en_US':
+            case 'en_AU':
+            case 'en_CA':
+            case 'en_GB':
+            default:
+                $args['Language'] = 'EN';
+                break;
+        }
 
         $args = $this->add_type_info($args, $order, $gateway);
         RY_WT_WC_SmilePay_Gateway::instance()->log('Generating payment by ' . $gateway->id . ' for #' . $order->get_id(), WC_Log_Levels::INFO, ['data' => $args]);

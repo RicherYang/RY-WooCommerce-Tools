@@ -10,7 +10,7 @@ class RY_ECPay_Gateway_Credit_Installment extends RY_WT_WC_ECPay_Payment_Gateway
 
     public const bool SUPPORT_REFUND = true;
 
-    public $number_of_periods = [];
+    public array $number_of_periods = [];
 
     public function __construct()
     {
@@ -37,30 +37,5 @@ class RY_ECPay_Gateway_Credit_Installment extends RY_WT_WC_ECPay_Payment_Gateway
         }
 
         return $is_available;
-    }
-
-    public function process_payment($order_ID)
-    {
-        if (isset($_POST['ecpay_number_of_periods'])) {
-            $order = wc_get_order($order_ID);
-            $order->update_meta_data('_ecpay_payment_number_of_periods', intval($_POST['ecpay_number_of_periods']));
-            $order->save();
-        }
-
-        return parent::process_payment($order_ID);
-    }
-
-    public function payment_fields()
-    {
-        parent::payment_fields();
-
-        if (is_array($this->number_of_periods)) {
-            echo '<p>' . esc_html_x('Number of periods', 'Checkout info', 'ry-woocommerce-tools');
-            echo ' <select name="ecpay_number_of_periods">';
-            foreach ($this->number_of_periods as $number_of_periods) {
-                echo '<option value="' . esc_attr($number_of_periods) . '">' . esc_html($number_of_periods) . '</option>';
-            }
-            echo '</select></p>';
-        }
     }
 }

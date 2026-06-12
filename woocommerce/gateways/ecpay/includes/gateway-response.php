@@ -22,14 +22,6 @@ class RY_WT_WC_ECPay_Gateway_Response extends RY_WT_ECPay_Api
         add_action('woocommerce_api_ry_ecpay_gateway_return', [$this, 'gateway_return']);
         add_action('woocommerce_api_ry_ecpay_callback', [$this, 'check_callback']);
         add_action('valid_ecpay_gateway_request', [$this, 'doing_callback']);
-
-        add_action('ry_ecpay_gateway_response_status_1', [$this, 'payment_complete'], 10, 2);
-        add_action('ry_ecpay_gateway_response_status_2', [$this, 'payment_wait_atm'], 10, 2);
-        add_action('ry_ecpay_gateway_response_status_10100073', [$this, 'payment_wait_cvs'], 10, 2);
-        add_action('ry_ecpay_gateway_response_status_10100058', [$this, 'payment_failed'], 10, 2); // Pay Fail
-        add_action('ry_ecpay_gateway_response_status_10100248', [$this, 'payment_failed'], 10, 2); // 拒絕交易
-        add_action('ry_ecpay_gateway_response_status_10100282', [$this, 'payment_failed'], 10, 2); // 3D授權未完成
-        add_action('ry_ecpay_gateway_response', [$this, 'add_noaction_note'], 10, 2);
     }
 
     public function check_callback(): void
@@ -70,7 +62,12 @@ class RY_WT_WC_ECPay_Gateway_Response extends RY_WT_ECPay_Api
 
             $order = $this->set_transaction_info($order, $ipn_info);
 
-            do_action('ry_ecpay_gateway_response_status_' . $payment_status, $ipn_info, $order);
+            if (method_exists($this, 'payment_status_' . $payment_status)) {
+                call_user_func([$this, 'payment_status_' . $payment_status], $order, $ipn_info);
+            } else {
+                $this->payment_status_unknow($order, $ipn_info);
+            }
+
             do_action('ry_ecpay_gateway_response', $ipn_info, $order);
 
             $this->die_success();
@@ -109,23 +106,25 @@ class RY_WT_WC_ECPay_Gateway_Response extends RY_WT_ECPay_Api
         return false;
     }
 
-    public function payment_complete($ipn_info, $order): void
+    protected function payment_status_1($order, $ipn_info): void
     {
-        remove_action('ry_ecpay_gateway_response', [$this, 'add_noaction_note'], 10, 2);
-
         if ($order->is_paid()) {
             return;
         }
 
-        $order = $this->set_transaction_info($order, $ipn_info);
         $order->add_order_note(__('ECPay payment completed', 'ry-woocommerce-tools'));
+        if (isset($ipn_info['stage']) && !empty($ipn_info['stage'])) {
+            $order->add_order_note(sprintf(
+                /* translators: %d number of periods */
+                __('Credit installment to %d', 'ry-woocommerce-tools'),
+                $ipn_info['stage'],
+            ));
+        }
         $order->payment_complete();
     }
 
-    public function payment_wait_atm($ipn_info, $order): void
+    protected function payment_status_2($order, $ipn_info): void
     {
-        remove_action('ry_ecpay_gateway_response', [$this, 'add_noaction_note'], 10, 2);
-
         if ($order->is_paid()) {
             return;
         }
@@ -141,14 +140,13 @@ class RY_WT_WC_ECPay_Gateway_Response extends RY_WT_ECPay_Api
             case 'ry_ecpay_bnpl':
                 $order->update_meta_data('_ecpay_bnpl_TradeNo', $ipn_info['BNPLTradeNo']);
                 $order->update_meta_data('_ecpay_bnpl_Installment', $ipn_info['BNPLInstallment']);
+                $order->update_status('on-hold');
                 break;
         }
     }
 
-    public function payment_wait_cvs($ipn_info, $order): void
+    protected function payment_status_10100073($order, $ipn_info): void
     {
-        remove_action('ry_ecpay_gateway_response', [$this, 'add_noaction_note'], 10, 2);
-
         if ($order->is_paid()) {
             return;
         }
@@ -189,14 +187,19 @@ class RY_WT_WC_ECPay_Gateway_Response extends RY_WT_ECPay_Api
         ));
     }
 
-    public function add_noaction_note($ipn_info, $order): void
+    protected function payment_status_unknow($order, $ipn_info)
     {
         RY_WT_WC_ECPay_Gateway::instance()->log('Unknow status', WC_Log_Levels::INFO, ['status' => $this->get_status($ipn_info), 'status_msg' => $this->get_status_msg($ipn_info)]);
-        $order->add_order_note(sprintf(
-            /* translators: %1$s: status message, %2$d status code */
-            __('Payment unkonw status: %1$s (%2$d)', 'ry-woocommerce-tools'),
-            $this->get_status_msg($ipn_info),
-            $this->get_status($ipn_info),
-        ));
+        if ($order->is_paid()) {
+            $order->add_order_note(__('Payment failed within paid order', 'ry-woocommerce-tools'));
+            $order->save();
+        } else {
+            $order->update_status('failed', sprintf(
+                /* translators: %1$s: status message, %2$d status code */
+                __('Payment unkonw status: %1$s (%2$d)', 'ry-woocommerce-tools'),
+                $this->get_status_msg($ipn_info),
+                $this->get_status($ipn_info),
+            ));
+        }
     }
 }

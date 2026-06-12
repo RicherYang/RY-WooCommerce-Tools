@@ -83,7 +83,6 @@ class RY_WT_WC_PAYUNi_Gateway_Response extends RY_WT_PAYUNi_Api
                 $this->payment_status_unknow($order, $ipn_info);
             }
 
-            do_action('ry_payuni_gateway_response_status_' . $payment_status, $ipn_info, $order);
             do_action('ry_payuni_gateway_response', $ipn_info, $order);
 
             $this->die_success();
@@ -95,34 +94,42 @@ class RY_WT_WC_PAYUNi_Gateway_Response extends RY_WT_PAYUNi_Api
 
     protected function payment_status_SUCCESS($order, $ipn_info)
     {
-        $order = wc_get_order($order);
-        if (!$order->is_paid()) {
-            if ($ipn_info['TradeStatus'] == 1) {
-                $order->add_order_note(__('PAYUNi payment completed', 'ry-woocommerce-tools'));
-                $order->payment_complete();
-            } elseif ($ipn_info['TradeStatus'] == 0) {
-                switch ($this->get_payment_type($ipn_info)) {
-                    case '2':
-                        $expireDate = new DateTime($ipn_info['ExpireDate'], new DateTimeZone('Asia/Taipei'));
+        if ($order->is_paid()) {
+            return;
+        }
 
-                        $order->update_meta_data('_payuni_atm_BankType', $ipn_info['BankType']);
-                        $order->update_meta_data('_payuni_atm_PayNo', $ipn_info['PayNo']);
-                        $order->update_meta_data('_payuni_atm_ExpireDate', $expireDate->format(DATE_ATOM));
-                        $order->save();
+        if ($ipn_info['TradeStatus'] == 1) {
+            $order->add_order_note(__('PAYUNi payment completed', 'ry-woocommerce-tools'));
+            if (isset($ipn_info['CardInst']) && !empty($ipn_info['CardInst'])) {
+                $order->add_order_note(sprintf(
+                    /* translators: %d number of periods */
+                    __('Credit installment to %d', 'ry-woocommerce-tools'),
+                    $ipn_info['CardInst'],
+                ));
+            }
+            $order->payment_complete();
+        } elseif ($ipn_info['TradeStatus'] == 0) {
+            switch ($this->get_payment_type($ipn_info)) {
+                case '2':
+                    $expireDate = new DateTime($ipn_info['ExpireDate'], new DateTimeZone('Asia/Taipei'));
 
-                        $order->update_status('on-hold');
-                        break;
-                    case '3':
-                        $expireDate = new DateTime($ipn_info['ExpireDate'], new DateTimeZone('Asia/Taipei'));
+                    $order->update_meta_data('_payuni_atm_BankType', $ipn_info['BankType']);
+                    $order->update_meta_data('_payuni_atm_PayNo', $ipn_info['PayNo']);
+                    $order->update_meta_data('_payuni_atm_ExpireDate', $expireDate->format(DATE_ATOM));
+                    $order->save();
 
-                        $order->update_meta_data('_payuni_cvs_Store', $ipn_info['Store']);
-                        $order->update_meta_data('_payuni_cvs_PayNo', $ipn_info['PayNo']);
-                        $order->update_meta_data('_payuni_cvs_ExpireDate', $expireDate->format(DATE_ATOM));
-                        $order->save();
+                    $order->update_status('on-hold');
+                    break;
+                case '3':
+                    $expireDate = new DateTime($ipn_info['ExpireDate'], new DateTimeZone('Asia/Taipei'));
 
-                        $order->update_status('on-hold');
-                        break;
-                }
+                    $order->update_meta_data('_payuni_cvs_Store', $ipn_info['Store']);
+                    $order->update_meta_data('_payuni_cvs_PayNo', $ipn_info['PayNo']);
+                    $order->update_meta_data('_payuni_cvs_ExpireDate', $expireDate->format(DATE_ATOM));
+                    $order->save();
+
+                    $order->update_status('on-hold');
+                    break;
             }
         }
     }
