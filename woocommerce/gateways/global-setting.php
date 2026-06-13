@@ -31,24 +31,16 @@ return [
     ],
     'min_amount' => [
         'title' => __('Minimum order amount', 'ry-woocommerce-tools'),
-        'type' => 'number',
+        'type' => 'price',
         'default' => 0,
         'placeholder' => 0,
         'description' => __('0 to disable minimum amount limit.', 'ry-woocommerce-tools'),
-        'custom_attributes' => [
-            'min' => 0,
-            'step' => 1,
-        ],
     ],
     'max_amount' => [
         'title' => __('Maximum order amount', 'ry-woocommerce-tools'),
-        'type' => 'number',
+        'type' => 'price',
         'default' => 0,
         'placeholder' => 0,
         'description' => __('0 to disable maximum amount limit.', 'ry-woocommerce-tools'),
-        'custom_attributes' => [
-            'min' => 0,
-            'step' => 1,
-        ],
     ],
 ];

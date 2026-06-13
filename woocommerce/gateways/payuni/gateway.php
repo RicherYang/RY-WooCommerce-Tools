@@ -83,9 +83,9 @@ final class RY_WT_WC_PAYUNi_Gateway extends RY_WT_Model
 
     public function get_api_info()
     {
-        $MerID = RY_WT::get_option('payuni_gateway_MerID');
-        $HashKey = RY_WT::get_option('payuni_gateway_HashKey');
-        $HashIV = RY_WT::get_option('payuni_gateway_HashIV');
+        $MerID = (string) RY_WT::get_option('payuni_gateway_MerID');
+        $HashKey = (string) RY_WT::get_option('payuni_gateway_HashKey');
+        $HashIV = (string) RY_WT::get_option('payuni_gateway_HashIV');
 
         return [$MerID, $HashKey, $HashIV];
     }

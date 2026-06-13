@@ -24,6 +24,22 @@ abstract class RY_WT_NewebPay_Api extends RY_WT_Api
         return substr($trade_no, 0, 18);
     }
 
+    protected function generate_hash_value(string|array $args, string $HashKey, string $HashIV)
+    {
+        if (is_array($args)) {
+            $string = http_build_query([
+                'Amt' => $args['Amt'],
+                'MerchantID' => $args['MerchantID'],
+                'MerchantOrderNo' => $args['MerchantOrderNo'],
+            ]);
+            $string = 'IV=' . $HashIV . '&' . $string . '&Key=' . $HashKey;
+        } else {
+            $string = 'HashKey=' . $HashKey . '&' . $args . '&HashIV=' . $HashIV;
+        }
+        $string = hash('sha256', $string);
+        return strtoupper($string);
+    }
+
     protected function args_encrypt($args, $HashKey, $HashIV)
     {
         ksort($args);
@@ -47,25 +63,6 @@ abstract class RY_WT_NewebPay_Api extends RY_WT_Api
         }
     }
 
-    protected function generate_hash_value($string, $HashKey, $HashIV)
-    {
-        $string = 'HashKey=' . $HashKey . '&' . $string . '&HashIV=' . $HashIV;
-        $string = hash('sha256', $string);
-        return strtoupper($string);
-    }
-
-    protected function generate_check_value($args, $HashKey, $HashIV)
-    {
-        $string = http_build_query([
-            'Amt' => $args['Amt'],
-            'MerchantID' => $args['MerchantID'],
-            'MerchantOrderNo' => $args['MerchantOrderNo'],
-        ]);
-        $string = 'IV=' . $HashIV . '&' . $string . '&Key=' . $HashKey;
-        $string = hash('sha256', $string);
-        return strtoupper($string);
-    }
-
     protected function link_server(string $url, array $args, int $timeout = 30)
     {
         wc_set_time_limit(40);
@@ -77,59 +74,41 @@ abstract class RY_WT_NewebPay_Api extends RY_WT_Api
         ]);
     }
 
-    protected function get_tradeInfo_value($ipn_info)
+    protected function get_info_value($ipn_info)
     {
-        if (isset($ipn_info['TradeInfo'])) {
-            return $ipn_info['TradeInfo'];
-        }
-        return false;
+        return $ipn_info['TradeInfo'] ?? false;
     }
 
-    protected function get_tradeSha_value($ipn_info)
+    protected function get_hash_value($ipn_info)
     {
-        if (isset($ipn_info['TradeSha'])) {
-            return $ipn_info['TradeSha'];
-        }
-        return false;
+        return $ipn_info['TradeSha'] ?? false;
     }
 
     protected function get_status($ipn_info)
     {
-        if (isset($ipn_info->Status)) {
-            return $ipn_info->Status;
-        }
-        return false;
+        return $ipn_info->Status ?? false;
     }
 
     protected function get_status_msg($ipn_info)
     {
-        if (isset($ipn_info->Message)) {
-            return $ipn_info->Message;
-        }
-        return false;
+        return $ipn_info->Message ?? false;
     }
 
     protected function get_transaction_id($ipn_info)
     {
-        if (isset($ipn_info->Result->TradeNo)) {
-            return $ipn_info->Result->TradeNo;
-        }
-        return false;
+        return $ipn_info->Result->TradeNo ?? false;
     }
 
     protected function get_payment_type($ipn_info)
     {
-        if (isset($ipn_info->Result->PaymentType)) {
-            return $ipn_info->Result->PaymentType;
-        }
-        return false;
+        return $ipn_info->Result->PaymentType ?? false;
     }
 
     protected function get_order_id($ipn_info, $order_prefix = '')
     {
         if (isset($ipn_info->Result->MerchantOrderNo)) {
             $order_ID = $this->trade_no_to_order_no($ipn_info->Result->MerchantOrderNo, $order_prefix);
-            $order_ID = apply_filters('ry_newebpay_trade_no_to_order_id', $order_ID, $ipn_info->Result->MerchantOrderNo);
+            $order_ID = (int) apply_filters('ry_newebpay_trade_no_to_order_id', $order_ID, $ipn_info->Result->MerchantOrderNo);
             if ($order_ID > 0) {
                 return $order_ID;
             }

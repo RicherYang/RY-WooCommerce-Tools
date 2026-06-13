@@ -47,11 +47,11 @@ return [
         'type' => 'title',
     ],
     [
-        'title' => __('PAYUNi gateway sandbox', 'ry-woocommerce-tools'),
+        'title' => __('Sandbox', 'ry-woocommerce-tools'),
         'id' => RY_WT::OPTION_PREFIX . 'payuni_gateway_testmode',
         'type' => 'checkbox',
         'default' => 'no',
-        'desc' => __('Enable PAYUNi gateway sandbox', 'ry-woocommerce-tools')
+        'desc' => __('Enable sandbox', 'ry-woocommerce-tools')
             . '<p class="description">' . __('Note: Recommend using this for development purposes only.', 'ry-woocommerce-tools') . '<p>',
     ],
     [

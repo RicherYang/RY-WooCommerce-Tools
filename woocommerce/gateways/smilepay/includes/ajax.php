@@ -28,10 +28,11 @@ final class RY_WT_WC_SmilePay_Gateway_Ajax
     {
         check_ajax_referer('smilepay-getcode');
 
+        $url = false;
+        $order_key = sanitize_locale_name($_GET['key'] ?? '');
         $order_ID = intval($_GET['id'] ?? '');
         $order = wc_get_order($order_ID);
-        $url = false;
-        if ($order) {
+        if ($order && hash_equals($order->get_order_key(), $order_key)) {
             $url = RY_WT_WC_SmilePay_Gateway_Api::instance()->get_code($order);
         }
         if (!$url) {
@@ -46,10 +47,11 @@ final class RY_WT_WC_SmilePay_Gateway_Ajax
     {
         check_ajax_referer('smilepay-getcode');
 
+        $url = false;
+        $order_key = sanitize_locale_name($_GET['key'] ?? '');
         $order_ID = intval($_GET['id'] ?? '');
         $order = wc_get_order($order_ID);
-        $url = false;
-        if ($order) {
+        if ($order && hash_equals($order->get_order_key(), $order_key)) {
             $url = RY_WT_WC_SmilePay_Shipping_Api::instance()->get_csv_info($order);
         }
         if (!$url) {

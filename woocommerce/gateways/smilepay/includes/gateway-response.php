@@ -19,25 +19,25 @@ class RY_WT_WC_SmilePay_Gateway_Response extends RY_WT_SmilePay_Api
     protected function do_init(): void
     {
         add_action('woocommerce_api_ry_smilepay_callback', [$this, 'check_callback']);
-
         add_action('valid_smilepay_gateway_request', [$this, 'doing_callback']);
     }
 
     public function check_callback()
     {
         if (is_array($_POST) && !empty($_POST)) {
-            $ipn_info = $this->clean_post_data(true);
+            $ipn_info = wp_unslash($_POST);
+            $ipn_info = $this->convert_encoding($ipn_info);
             if ($this->ipn_request_is_valid($ipn_info)) {
                 do_action('valid_smilepay_gateway_request', $ipn_info);
-                return;
+            } else {
+                $this->die_error();
             }
         }
-        $this->die_error();
     }
 
     protected function ipn_request_is_valid(array $ipn_info): bool
     {
-        $check_value = $this->get_check_value($ipn_info);
+        $check_value = $this->get_hash_value($ipn_info);
         if ($check_value) {
             RY_WT_WC_SmilePay_Gateway::instance()->log('IPN request', WC_Log_Levels::INFO, ['data' => $ipn_info]);
             list($Dcvc, $Rvg2c, $Verify_key, $Rot_check) = RY_WT_WC_SmilePay_Gateway::instance()->get_api_info();
@@ -69,21 +69,22 @@ class RY_WT_WC_SmilePay_Gateway_Response extends RY_WT_SmilePay_Api
                 if ($check_value === $ipn_info_check_value) {
                     return true;
                 }
+
+                RY_WT_WC_SmilePay_Gateway::instance()->log('IPN request check failed', WC_Log_Levels::ERROR, ['response' => $check_value, 'self' => $ipn_info_check_value]);
             }
         }
-        RY_WT_WC_SmilePay_Gateway::instance()->log('IPN request check failed', WC_Log_Levels::ERROR, ['response' => $check_value, 'self' => $ipn_info_check_value]);
 
         return false;
     }
 
-    public function doing_callback($ipn_info)
+    public function doing_callback($info_value)
     {
-        $order_ID = $this->get_order_id($ipn_info, RY_WT::get_option('smilepay_gateway_order_prefix'));
+        $order_ID = $this->get_order_id($info_value, RY_WT::get_option('smilepay_gateway_order_prefix'));
         if ($order = wc_get_order($order_ID)) {
             RY_WT_WC_SmilePay_Gateway::instance()->log('Found #' . $order->get_id(), WC_Log_Levels::INFO);
 
             $payment_type = '';
-            switch ($ipn_info['Classif']) {
+            switch ($info_value['Classif']) {
                 case 'A':
                     $payment_type = 1;
                     break;
@@ -102,8 +103,8 @@ class RY_WT_WC_SmilePay_Gateway_Response extends RY_WT_SmilePay_Api
             }
 
             if (!$order->is_paid()) {
-                if ($ipn_info['Amount'] == ceil($order->get_total())) {
-                    $order = $this->set_transaction_info($order, $ipn_info, $payment_type);
+                if ($info_value['Amount'] == ceil($order->get_total())) {
+                    $order = $this->set_transaction_info($order, $info_value, $payment_type);
                     $order->add_order_note(__('SmilePay payment completed', 'ry-woocommerce-tools'));
                     $order->payment_complete();
                 }
@@ -111,7 +112,7 @@ class RY_WT_WC_SmilePay_Gateway_Response extends RY_WT_SmilePay_Api
 
             switch ($payment_type) {
                 case 1:
-                    if (0 == $ipn_info['Response_id']) {
+                    if (0 == $info_value['Response_id']) {
                         if ($order->is_paid()) {
                             $order->add_order_note(__('Payment failed within paid order', 'ry-woocommerce-tools'));
                             $order->save();
@@ -119,14 +120,14 @@ class RY_WT_WC_SmilePay_Gateway_Response extends RY_WT_SmilePay_Api
                             $order->update_status('failed', sprintf(
                                 /* translators: Error status message */
                                 __('Payment failed (%s)', 'ry-woocommerce-tools'),
-                                $ipn_info['Errdesc'],
+                                $info_value['Errdesc'],
                             ));
                         }
                     }
                     break;
             }
 
-            do_action('ry_smilepay_gateway_response', $ipn_info, $order);
+            do_action('ry_smilepay_gateway_response', $info_value, $order);
 
             $payment_gateway = wc_get_payment_gateway_by_order($order);
             if (property_exists($payment_gateway, 'get_code_mode')) {

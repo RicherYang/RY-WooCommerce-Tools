@@ -81,7 +81,7 @@ class RY_WT_WC_ECPay_Gateway_Api extends RY_WT_ECPay_Api
         }
 
         $args = $this->add_type_info($args, $order, $gateway);
-        $args = $this->add_check_value($args, $HashKey, $HashIV, 'sha256');
+        $args['CheckMacValue'] = $this->generate_hash_value($args, $HashKey, $HashIV, 'sha256');
         RY_WT_WC_ECPay_Gateway::instance()->log('Generating payment by ' . $gateway->id . ' for #' . $order->get_id(), WC_Log_Levels::INFO, ['data' => $args]);
 
         $order->update_meta_data('_ecpay_MerchantTradeNo', $args['MerchantTradeNo']);
@@ -113,13 +113,13 @@ class RY_WT_WC_ECPay_Gateway_Api extends RY_WT_ECPay_Api
         ];
 
         $args['TimeStamp'] = $args['TimeStamp']->getTimestamp();
+        $args['CheckMacValue'] = $this->generate_hash_value($args, $HashKey, $HashIV, 'sha256');
 
         if (RY_WT_WC_ECPay_Gateway::instance()->is_testmode()) {
             $url = $this->api_test_url['query'];
         } else {
             $url = $this->api_url['query'];
         }
-        $args = $this->add_check_value($args, $HashKey, $HashIV, 'sha256');
 
         $response = $this->link_server($url, $args);
         if (is_wp_error($response)) {
@@ -139,7 +139,7 @@ class RY_WT_WC_ECPay_Gateway_Api extends RY_WT_ECPay_Api
             return;
         }
 
-        $check_value = $this->generate_check_value($result, $HashKey, $HashIV, 'sha256');
+        $check_value = $this->generate_hash_value($result, $HashKey, $HashIV, 'sha256');
         if ($check_value !== $result['CheckMacValue']) {
             RY_WT_WC_ECPay_Gateway::instance()->log('Query request check failed', WC_Log_Levels::WARNING, ['data' => $args, 'result' => $result['CheckMacValue'], 'check_value' => $check_value]);
             return;
@@ -219,13 +219,13 @@ class RY_WT_WC_ECPay_Gateway_Api extends RY_WT_ECPay_Api
             'Action' => $action,
             'TotalAmount' => $amount,
         ];
+        $args['CheckMacValue'] = $this->generate_hash_value($args, $HashKey, $HashIV, 'sha256');
 
         if (RY_WT_WC_ECPay_Gateway::instance()->is_testmode()) {
             $url = $this->api_test_url['credit-action'];
         } else {
             $url = $this->api_url['credit-action'];
         }
-        $args = $this->add_check_value($args, $HashKey, $HashIV, 'sha256');
 
         $response = $this->link_server($url, $args);
         if (is_wp_error($response)) {

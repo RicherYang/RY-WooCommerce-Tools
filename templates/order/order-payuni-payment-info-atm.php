@@ -22,9 +22,9 @@ if ($order->get_meta('_payuni_payment_type') !== '2') {
 }
 
 $order_info = [
-    'bankCode' => $order->get_meta('_payuni_atm_BankCode'),
-    'vAccount' => $order->get_meta('_payuni_atm_vAccount'),
-    'expireDate' => $order->get_meta('_payuni_atm_ExpireDate'),
+    'bankCode' => $order->get_meta('_payuni_atm_BankType'),
+    'vAccount' => $order->get_meta('_payuni_atm_PayNo'),
+    'expireDate' => wc_string_to_datetime($order->get_meta('_payuni_atm_ExpireDate')),
 ];
 ?>
 <section class="woocommerce-order-details">

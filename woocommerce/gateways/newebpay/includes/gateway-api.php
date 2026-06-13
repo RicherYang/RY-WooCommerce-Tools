@@ -129,7 +129,7 @@ class RY_WT_WC_NewebPay_Gateway_Api extends RY_WT_NewebPay_Api
             'Amt' => (int) ceil($order->get_total()),
         ];
         $args['TimeStamp'] = $args['TimeStamp']->getTimestamp();
-        $args['CheckValue'] = $this->generate_check_value($args, $HashKey, $HashIV);
+        $args['CheckValue'] = $this->generate_hash_value($args, $HashKey, $HashIV);
 
         if (RY_WT_WC_NewebPay_Gateway::instance()->is_testmode()) {
             $url = $this->api_test_url['query'];

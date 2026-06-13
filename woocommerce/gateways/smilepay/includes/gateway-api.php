@@ -7,7 +7,7 @@ class RY_WT_WC_SmilePay_Gateway_Api extends RY_WT_SmilePay_Api
     protected static ?self $_instance = null;
 
     protected array $api_test_url = [
-        'checkout' => 'https://ssl.smse.com.tw/ezpos_test/mtmk_utf.asp',
+        'checkout' => 'https://ssl.smse.com.tw/ezpos/mtmk_utf.asp',
         'api_checkout' => 'https://ssl.smse.com.tw/api/SPPayment.asp',
     ];
 
@@ -44,6 +44,7 @@ class RY_WT_WC_SmilePay_Gateway_Api extends RY_WT_SmilePay_Api
             data: {
                 action: "' . ($get_shipping ? 'RY_SmilePay_shipping_getcode' : 'RY_SmilePay_getcode') . '",
                 id: ' . $order->get_id() . ',
+                key: ' . $order->get_order_key() . ',
                 _ajax_nonce: "' . wp_create_nonce('smilepay-getcode') . '"
             },
             dataType: "text",

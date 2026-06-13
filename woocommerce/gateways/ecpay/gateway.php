@@ -70,22 +70,15 @@ final class RY_WT_WC_ECPay_Gateway extends RY_WT_Model
             return;
         }
 
-        switch ($order->get_payment_method()) {
-            case 'ry_ecpay_atm':
-                $template_file = 'order/order-ecpay-payment-info-atm.php';
-                break;
-            case 'ry_ecpay_barcode':
-                $template_file = 'order/order-ecpay-payment-info-barcode.php';
-                break;
-            case 'ry_ecpay_bnpl':
-                $template_file = 'order/order-ecpay-payment-info-bnpl.php';
-                break;
-            case 'ry_ecpay_cvs':
-                $template_file = 'order/order-ecpay-payment-info-cvs.php';
-                break;
-        }
+        $template_file = match ($order->get_payment_method()) {
+            'ry_ecpay_atm' => 'order/order-ecpay-payment-info-atm.php',
+            'ry_ecpay_barcode' => 'order/order-ecpay-payment-info-barcode.php',
+            'ry_ecpay_bnpl' => 'order/order-ecpay-payment-info-bnpl.php',
+            'ry_ecpay_cvs' => 'order/order-ecpay-payment-info-cvs.php',
+            default => '',
+        };
 
-        if (isset($template_file)) {
+        if ($template_file !== '') {
             $args = [
                 'order' => $order,
             ];
@@ -101,8 +94,8 @@ final class RY_WT_WC_ECPay_Gateway extends RY_WT_Model
             $HashKey = 'pwFHCqoQZGmho4w6';
             $HashIV = 'EkRm7iFT261dpevs';
         } else {
-            $HashKey = RY_WT::get_option('ecpay_gateway_HashKey');
-            $HashIV = RY_WT::get_option('ecpay_gateway_HashIV');
+            $HashKey = (string) RY_WT::get_option('ecpay_gateway_HashKey');
+            $HashIV = (string) RY_WT::get_option('ecpay_gateway_HashIV');
         }
 
         return [$MerchantID, $HashKey, $HashIV];

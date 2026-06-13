@@ -303,9 +303,9 @@ final class RY_WT_WC_ECPay_Shipping extends RY_WT_Shipping_Model
                 $HashIV = 'v77hoKGq4kWxNNIS';
             }
         } else {
-            $MerchantID = RY_WT::get_option('ecpay_shipping_MerchantID');
-            $HashKey = RY_WT::get_option('ecpay_shipping_HashKey');
-            $HashIV = RY_WT::get_option('ecpay_shipping_HashIV');
+            $MerchantID = (string) RY_WT::get_option('ecpay_shipping_MerchantID');
+            $HashKey = (string) RY_WT::get_option('ecpay_shipping_HashKey');
+            $HashIV = (string) RY_WT::get_option('ecpay_shipping_HashIV');
         }
 
         return [$MerchantID, $HashKey, $HashIV, $cvs_type];

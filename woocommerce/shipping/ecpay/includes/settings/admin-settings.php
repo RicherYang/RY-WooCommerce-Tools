@@ -161,11 +161,11 @@ return [
         'type' => 'title',
     ],
     [
-        'title' => __('ECPay shipping sandbox', 'ry-woocommerce-tools'),
+        'title' => __('Sandbox', 'ry-woocommerce-tools'),
         'id' => RY_WT::OPTION_PREFIX . 'ecpay_shipping_testmode',
         'type' => 'checkbox',
         'default' => 'no',
-        'desc' => __('Enable ECPay shipping sandbox', 'ry-woocommerce-tools')
+        'desc' => __('Enable sandbox', 'ry-woocommerce-tools')
             . '<p class="description">' . __('Note: Recommend using this for development purposes only.', 'ry-woocommerce-tools') . '<p>',
     ],
     [

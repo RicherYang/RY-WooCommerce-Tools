@@ -6,14 +6,14 @@ use Automattic\WooCommerce\Utilities\NumberUtil;
 
 abstract class RY_WT_Api
 {
-    protected bool $do_die = false;
+    private bool $do_die = false;
 
-    protected function pre_generate_trade_no($order_ID, $order_prefix = '')
+    protected function pre_generate_trade_no($order_ID, string $order_prefix = ''): string
     {
         return $order_prefix . $order_ID . 'TS' . random_int(0, 9) . strrev((string) time());
     }
 
-    protected function trade_no_to_order_no($trade_no, $order_prefix = '')
+    protected function trade_no_to_order_no(string $trade_no, string $order_prefix = ''): int
     {
         return (int) substr($trade_no, strlen($order_prefix), strrpos($trade_no, 'TS'));
     }
@@ -35,15 +35,23 @@ abstract class RY_WT_Api
         $order_key = sanitize_locale_name($_GET['key'] ?? '');
         $order_ID = intval($_GET['id'] ?? '');
         $order = wc_get_order($order_ID);
+
         if ($order && hash_equals($order->get_order_key(), $order_key)) {
-            $return_url = $order->get_checkout_order_received_url();
+            $return_url = wc_get_endpoint_url('order-received', $order->get_id(), wc_get_checkout_url());
+            $redirect_data = [
+                'key' => $order->get_order_key(),
+            ];
         } else {
             $return_url = wc_get_endpoint_url('order-received', '', wc_get_checkout_url());
+            $redirect_data = [];
         }
 
-        $return_url = apply_filters('woocommerce_get_return_url', $return_url, $order);
-        wp_safe_redirect($return_url);
-
+        $args = [
+            'method' => 'get',
+            'redirect_url' => apply_filters('woocommerce_get_return_url', $return_url, $order),
+            'redirect_data' => $redirect_data,
+        ];
+        wc_get_template('auto-redirect.php', $args, '', RY_WT_PLUGIN_DIR . 'templates/');
         exit;
     }
 

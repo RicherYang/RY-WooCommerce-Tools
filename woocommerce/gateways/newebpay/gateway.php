@@ -68,19 +68,14 @@ final class RY_WT_WC_NewebPay_Gateway extends RY_WT_Model
             return;
         }
 
-        switch ($order->get_payment_method()) {
-            case 'ry_newebpay_atm':
-                $template_file = 'order/order-newebpay-payment-info-atm.php';
-                break;
-            case 'ry_newebpay_barcode':
-                $template_file = 'order/order-newebpay-payment-info-barcode.php';
-                break;
-            case 'ry_newebpay_cvs':
-                $template_file = 'order/order-newebpay-payment-info-cvs.php';
-                break;
-        }
+        $template_file = match ($order->get_payment_method()) {
+            'ry_newebpay_atm' => 'order/order-newebpay-payment-info-atm.php',
+            'ry_newebpay_barcode' => 'order/order-newebpay-payment-info-barcode.php',
+            'ry_newebpay_cvs' => 'order/order-newebpay-payment-info-cvs.php',
+            default => '',
+        };
 
-        if (isset($template_file)) {
+        if ($template_file !== '') {
             $args = [
                 'order' => $order,
             ];
@@ -90,9 +85,9 @@ final class RY_WT_WC_NewebPay_Gateway extends RY_WT_Model
 
     public function get_api_info()
     {
-        $MerchantID = RY_WT::get_option('newebpay_gateway_MerchantID');
-        $HashKey = RY_WT::get_option('newebpay_gateway_HashKey');
-        $HashIV = RY_WT::get_option('newebpay_gateway_HashIV');
+        $MerchantID = (string) RY_WT::get_option('newebpay_gateway_MerchantID');
+        $HashKey = (string) RY_WT::get_option('newebpay_gateway_HashKey');
+        $HashIV = (string) RY_WT::get_option('newebpay_gateway_HashIV');
 
         return [$MerchantID, $HashKey, $HashIV];
     }

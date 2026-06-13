@@ -6,6 +6,8 @@ class RY_WT_WC_NewebPay_Gateway_Response extends RY_WT_NewebPay_Api
 {
     protected static ?self $_instance = null;
 
+    private bool $only_success = false;
+
     public static function instance(): RY_WT_WC_NewebPay_Gateway_Response
     {
         if (null === self::$_instance) {
@@ -26,6 +28,7 @@ class RY_WT_WC_NewebPay_Gateway_Response extends RY_WT_NewebPay_Api
 
     public function callback_gateway_return()
     {
+        $this->only_success = true;
         $this->set_not_do_die();
         $this->check_callback();
         $this->gateway_return();
@@ -45,12 +48,12 @@ class RY_WT_WC_NewebPay_Gateway_Response extends RY_WT_NewebPay_Api
 
     protected function ipn_request_is_valid(array $ipn_info): bool
     {
-        $check_value = $this->get_tradeSha_value($ipn_info);
+        $check_value = $this->get_hash_value($ipn_info);
         if ($check_value) {
             RY_WT_WC_NewebPay_Gateway::instance()->log('IPN request', WC_Log_Levels::INFO, ['data' => $ipn_info]);
             list($MerchantID, $HashKey, $HashIV) = RY_WT_WC_NewebPay_Gateway::instance()->get_api_info();
 
-            $info_value = $this->get_tradeInfo_value($ipn_info);
+            $info_value = $this->get_info_value($ipn_info);
             $ipn_info_check_value = $this->generate_hash_value($info_value, $HashKey, $HashIV);
             if ($check_value === $ipn_info_check_value) {
                 return true;
@@ -65,33 +68,40 @@ class RY_WT_WC_NewebPay_Gateway_Response extends RY_WT_NewebPay_Api
     {
         list($MerchantID, $HashKey, $HashIV) = RY_WT_WC_NewebPay_Gateway::instance()->get_api_info();
 
-        $ipn_info = $this->get_tradeInfo_value($ipn_info);
-        $ipn_info = $this->args_decrypt($ipn_info, $HashKey, $HashIV);
-        $ipn_info = json_decode($ipn_info);
-        RY_WT_WC_NewebPay_Gateway::instance()->log('IPN request decrypt', WC_Log_Levels::INFO, ['data' => $ipn_info]);
+        $info_value = $this->get_info_value($ipn_info);
+        $info_value = $this->args_decrypt($info_value, $HashKey, $HashIV);
+        $info_value = json_decode($info_value);
+        RY_WT_WC_NewebPay_Gateway::instance()->log('IPN request decrypt', WC_Log_Levels::INFO, ['data' => $info_value]);
 
-        $order_ID = $this->get_order_id($ipn_info, RY_WT::get_option('newebpay_gateway_order_prefix'));
+        $order_ID = $this->get_order_id($info_value, RY_WT::get_option('newebpay_gateway_order_prefix'));
         if ($order = wc_get_order($order_ID)) {
-            $payment_status = $this->get_status($ipn_info);
-            RY_WT_WC_NewebPay_Gateway::instance()->log('Found #' . $order->get_id() . ' Payment status: ' . $payment_status, WC_Log_Levels::INFO);
-
             $transaction_ID = (string) $order->get_transaction_id();
-            if ($transaction_ID === '' || $transaction_ID != $this->get_transaction_id($ipn_info)) {
-                $payment_type = $this->get_payment_type($ipn_info);
-                $order->set_transaction_id($this->get_transaction_id($ipn_info));
+            if ($transaction_ID === '' || $transaction_ID != $this->get_transaction_id($info_value)) {
+                $payment_type = $this->get_payment_type($info_value);
+                $order->set_transaction_id($this->get_transaction_id($info_value));
                 $order->update_meta_data('_newebpay_payment_type', $payment_type);
                 $order->save();
                 $order = wc_get_order($order_ID);
             }
 
-            if (method_exists($this, 'payment_status_' . $payment_status)) {
-                call_user_func([$this, 'payment_status_' . $payment_status], $order, $ipn_info->Result);
-            } else {
-                $this->payment_status_unknow($order, $ipn_info->Result);
+            $payment_status = $this->get_status($info_value);
+            RY_WT_WC_NewebPay_Gateway::instance()->log('Found #' . $order->get_id() . ' Payment status: ' . $payment_status, WC_Log_Levels::INFO);
+
+            if ($this->only_success) {
+                if (method_exists($this, 'payment_status_' . $payment_status)) {
+                    call_user_func([$this, 'payment_status_' . $payment_status], $order, $info_value);
+                }
+                return;
             }
 
-            do_action('ry_newebpay_gateway_response_status_' . $payment_status, $ipn_info->Result, $order);
-            do_action('ry_newebpay_gateway_response', $ipn_info->Result, $order);
+            if (method_exists($this, 'payment_status_' . $payment_status)) {
+                call_user_func([$this, 'payment_status_' . $payment_status], $order, $info_value->Result);
+            } else {
+                $this->payment_status_unknow($order, $info_value->Result);
+            }
+
+            do_action('ry_newebpay_gateway_response_status_' . $payment_status, $info_value->Result, $order);
+            do_action('ry_newebpay_gateway_response', $info_value->Result, $order);
 
             $this->die_success();
         } else {
@@ -100,13 +110,13 @@ class RY_WT_WC_NewebPay_Gateway_Response extends RY_WT_NewebPay_Api
         }
     }
 
-    protected function payment_status_SUCCESS($order, $ipn_info)
+    protected function payment_status_SUCCESS($order, $info_value)
     {
         if ($order->is_paid()) {
             return;
         }
 
-        if (isset($ipn_info->StoreCode)) {
+        if (isset($info_value->StoreCode)) {
             if ($order->get_meta('_shipping_cvs_store_ID') == '') {
                 $order->set_shipping_company('');
                 $order->set_shipping_address_2('');
@@ -115,44 +125,44 @@ class RY_WT_WC_NewebPay_Gateway_Response extends RY_WT_NewebPay_Api
                 $order->set_shipping_postcode('');
 
                 $order->set_shipping_last_name('');
-                $order->set_shipping_first_name($ipn_info->CVSCOMName);
+                $order->set_shipping_first_name($info_value->CVSCOMName);
                 $order->add_order_note(sprintf(
                     /* translators: 1: Store name 2: Store ID */
                     __('CVS store %1$s (%2$s)', 'ry-woocommerce-tools'),
-                    $ipn_info->StoreName,
-                    $ipn_info->StoreCode,
+                    $info_value->StoreName,
+                    $info_value->StoreCode,
                 ));
 
-                $order->update_meta_data('_shipping_cvs_store_ID', $ipn_info->StoreCode);
-                $order->update_meta_data('_shipping_cvs_store_name', $ipn_info->StoreName);
-                $order->update_meta_data('_shipping_cvs_store_address', $ipn_info->StoreAddr);
-                $order->update_meta_data('_shipping_cvs_store_type', $ipn_info->StoreType);
-                $order->set_shipping_phone($ipn_info->CVSCOMPhone);
+                $order->update_meta_data('_shipping_cvs_store_ID', $info_value->StoreCode);
+                $order->update_meta_data('_shipping_cvs_store_name', $info_value->StoreName);
+                $order->update_meta_data('_shipping_cvs_store_address', $info_value->StoreAddr);
+                $order->update_meta_data('_shipping_cvs_store_type', $info_value->StoreType);
+                $order->set_shipping_phone($info_value->CVSCOMPhone);
 
-                $order->set_shipping_address_1($ipn_info->StoreAddr);
+                $order->set_shipping_address_1($info_value->StoreAddr);
                 $order->save();
 
                 $shipping_list = $order->get_meta('_newebpay_shipping_info', true);
                 if (!is_array($shipping_list)) {
                     $shipping_list = [];
                 }
-                if (!isset($shipping_list[$ipn_info->TradeNo])) {
-                    $shipping_list[$ipn_info->TradeNo] = [];
+                if (!isset($shipping_list[$info_value->TradeNo])) {
+                    $shipping_list[$info_value->TradeNo] = [];
                 }
-                $shipping_list[$ipn_info->TradeNo]['ID'] = $ipn_info->TradeNo;
-                $shipping_list[$ipn_info->TradeNo]['LogisticsType'] = 'CVS';
-                $shipping_list[$ipn_info->TradeNo]['Type'] = $ipn_info->StoreType;
-                $shipping_list[$ipn_info->TradeNo]['PaymentNo'] = $ipn_info->LgsNo;
-                $shipping_list[$ipn_info->TradeNo]['store_ID'] = $ipn_info->StoreCode;
-                $shipping_list[$ipn_info->TradeNo]['create'] = (string) new WC_DateTime();
-                $shipping_list[$ipn_info->TradeNo]['edit'] = (string) new WC_DateTime();
-                $shipping_list[$ipn_info->TradeNo]['amount'] = $ipn_info->Amt;
-                $shipping_list[$ipn_info->TradeNo]['IsCollection'] = $ipn_info->TradeType;
+                $shipping_list[$info_value->TradeNo]['ID'] = $info_value->TradeNo;
+                $shipping_list[$info_value->TradeNo]['LogisticsType'] = 'CVS';
+                $shipping_list[$info_value->TradeNo]['Type'] = $info_value->StoreType;
+                $shipping_list[$info_value->TradeNo]['PaymentNo'] = $info_value->LgsNo;
+                $shipping_list[$info_value->TradeNo]['store_ID'] = $info_value->StoreCode;
+                $shipping_list[$info_value->TradeNo]['create'] = (string) new WC_DateTime();
+                $shipping_list[$info_value->TradeNo]['edit'] = (string) new WC_DateTime();
+                $shipping_list[$info_value->TradeNo]['amount'] = $info_value->Amt;
+                $shipping_list[$info_value->TradeNo]['IsCollection'] = $info_value->TradeType;
 
                 $order->update_meta_data('_newebpay_shipping_info', $shipping_list);
                 $order->save();
 
-                if ($ipn_info->TradeType == '1') {
+                if ($info_value->TradeType == '1') {
                     if ($order->get_status() == 'pending') {
                         $order->update_status('processing');
                     }
@@ -161,13 +171,13 @@ class RY_WT_WC_NewebPay_Gateway_Response extends RY_WT_NewebPay_Api
             }
         }
 
-        if (isset($ipn_info->PayTime) && !empty($ipn_info->PayTime)) {
+        if (isset($info_value->PayTime) && !empty($info_value->PayTime)) {
             $order->add_order_note(__('NewebPay payment completed', 'ry-woocommerce-tools'));
-            if (isset($ipn_info->Inst) && !empty($ipn_info->Inst)) {
+            if (isset($info_value->Inst) && !empty($info_value->Inst)) {
                 $order->add_order_note(sprintf(
                     /* translators: %d number of periods */
                     __('Credit installment to %d', 'ry-woocommerce-tools'),
-                    $ipn_info->Inst,
+                    $info_value->Inst,
                 ));
             }
 
@@ -175,42 +185,33 @@ class RY_WT_WC_NewebPay_Gateway_Response extends RY_WT_NewebPay_Api
         } else {
             switch ($order->get_payment_method()) {
                 case 'ry_newebpay_atm':
-                    $expireDate = new DateTime($ipn_info->ExpireDate . ' ' . $ipn_info->ExpireTime, new DateTimeZone('Asia/Taipei'));
-
-                    $order->update_meta_data('_newebpay_atm_BankCode', $ipn_info->BankCode);
-                    $order->update_meta_data('_newebpay_atm_vAccount', $ipn_info->CodeNo);
+                    $expireDate = new DateTime($info_value->ExpireDate . ' ' . $info_value->ExpireTime, new DateTimeZone('Asia/Taipei'));
+                    $order->update_meta_data('_newebpay_atm_BankCode', $info_value->BankCode);
+                    $order->update_meta_data('_newebpay_atm_vAccount', $info_value->CodeNo);
                     $order->update_meta_data('_newebpay_atm_ExpireDate', $expireDate->format(DATE_ATOM));
-                    $order->save();
-
                     $order->update_status('on-hold');
                     break;
                 case 'ry_newebpay_cvs':
-                    $expireDate = new DateTime($ipn_info->ExpireDate . ' ' . $ipn_info->ExpireTime, new DateTimeZone('Asia/Taipei'));
-
-                    $order->update_meta_data('_newebpay_cvs_PaymentNo', $ipn_info->CodeNo);
+                    $expireDate = new DateTime($info_value->ExpireDate . ' ' . $info_value->ExpireTime, new DateTimeZone('Asia/Taipei'));
+                    $order->update_meta_data('_newebpay_cvs_PaymentNo', $info_value->CodeNo);
                     $order->update_meta_data('_newebpay_cvs_ExpireDate', $expireDate->format(DATE_ATOM));
-                    $order->save();
-
                     $order->update_status('on-hold');
                     break;
                 case 'ry_newebpay_barcode':
-                    $expireDate = new DateTime($ipn_info->ExpireDate . ' ' . $ipn_info->ExpireTime, new DateTimeZone('Asia/Taipei'));
-
-                    $order->update_meta_data('_newebpay_barcode_Barcode1', $ipn_info->Barcode_1);
-                    $order->update_meta_data('_newebpay_barcode_Barcode2', $ipn_info->Barcode_2);
-                    $order->update_meta_data('_newebpay_barcode_Barcode3', $ipn_info->Barcode_3);
+                    $expireDate = new DateTime($info_value->ExpireDate . ' ' . $info_value->ExpireTime, new DateTimeZone('Asia/Taipei'));
+                    $order->update_meta_data('_newebpay_barcode_Barcode1', $info_value->Barcode_1);
+                    $order->update_meta_data('_newebpay_barcode_Barcode2', $info_value->Barcode_2);
+                    $order->update_meta_data('_newebpay_barcode_Barcode3', $info_value->Barcode_3);
                     $order->update_meta_data('_newebpay_barcode_ExpireDate', $expireDate->format(DATE_ATOM));
-                    $order->save();
-
                     $order->update_status('on-hold');
                     break;
             }
         }
     }
 
-    protected function payment_status_unknow($order, $ipn_info)
+    protected function payment_status_unknow($order, $info_value)
     {
-        RY_WT_WC_NewebPay_Gateway::instance()->log('Unknow status', WC_Log_Levels::INFO, ['status' => $this->get_status($ipn_info), 'status_msg' => $this->get_status_msg($ipn_info)]);
+        RY_WT_WC_NewebPay_Gateway::instance()->log('Unknow status', WC_Log_Levels::INFO, ['status' => $this->get_status($info_value), 'status_msg' => $this->get_status_msg($info_value)]);
         if ($order->is_paid()) {
             $order->add_order_note(__('Payment failed within paid order', 'ry-woocommerce-tools'));
             $order->save();
@@ -218,8 +219,8 @@ class RY_WT_WC_NewebPay_Gateway_Response extends RY_WT_NewebPay_Api
             $order->update_status('failed', sprintf(
                 /* translators: 1: Error status code 2: Error status message */
                 __('Payment failed: %1$s (%2$s)', 'ry-woocommerce-tools'),
-                $this->get_status($ipn_info),
-                $this->get_status_msg($ipn_info),
+                $this->get_status($info_value),
+                $this->get_status_msg($info_value),
             ));
         }
     }

@@ -35,7 +35,7 @@ class RY_WT_WC_SmilePay_Shipping_Response extends RY_WT_SmilePay_Api
     public function check_map_callback()
     {
         if (!empty($_POST)) {
-            $ipn_info = $this->clean_post_data();
+            $ipn_info = wp_unslash($_POST);
             RY_WT_WC_SmilePay_Shipping::instance()->log('IPN request', WC_Log_Levels::INFO, ['data' => $ipn_info]);
             if (1 == $this->get_status($ipn_info)) {
                 do_action('valid_smilepay_shipping_map_request', $ipn_info, false);
@@ -49,7 +49,7 @@ class RY_WT_WC_SmilePay_Shipping_Response extends RY_WT_SmilePay_Api
     public function check_admin_callback()
     {
         if (!empty($_POST)) {
-            $ipn_info = $this->clean_post_data();
+            $ipn_info = wp_unslash($_POST);
             RY_WT_WC_SmilePay_Shipping::instance()->log('IPN request', WC_Log_Levels::INFO, ['data' => $ipn_info]);
             if (1 == $this->get_status($ipn_info)) {
                 do_action('valid_smilepay_shipping_map_request', $ipn_info, true);
@@ -63,7 +63,8 @@ class RY_WT_WC_SmilePay_Shipping_Response extends RY_WT_SmilePay_Api
     public function shipping_callback()
     {
         if (!empty($_POST)) {
-            $ipn_info = $this->clean_post_data(true);
+            $ipn_info = wp_unslash($_POST);
+            $ipn_info = $this->convert_encoding($ipn_info);
             RY_WT_WC_SmilePay_Shipping::instance()->log('IPN request', WC_Log_Levels::INFO, ['data' => $ipn_info]);
             do_action('valid_smilepay_shipping_request', $ipn_info);
             return;
@@ -145,9 +146,9 @@ class RY_WT_WC_SmilePay_Shipping_Response extends RY_WT_SmilePay_Api
         wp_safe_redirect($url);
     }
 
-    public function doing_callback($ipn_info)
+    public function doing_callback($info_value)
     {
-        $order_ID = $this->get_order_id($ipn_info, RY_WT::get_option('smilepay_gateway_order_prefix'));
+        $order_ID = $this->get_order_id($info_value, RY_WT::get_option('smilepay_gateway_order_prefix'));
         if ($order = wc_get_order($order_ID)) {
             RY_WT_WC_SmilePay_Shipping::instance()->log('Found order #' . $order->get_id(), WC_Log_Levels::INFO);
 
@@ -155,12 +156,12 @@ class RY_WT_WC_SmilePay_Shipping_Response extends RY_WT_SmilePay_Api
             if (!is_array($shipping_list)) {
                 $shipping_list = [];
             }
-            $transaction_ID = $this->get_transaction_id($ipn_info);
+            $transaction_ID = $this->get_transaction_id($info_value);
             if (!isset($shipping_list[$transaction_ID])) {
                 $shipping_list[$transaction_ID] = [];
             }
             $old_info = $shipping_list[$transaction_ID];
-            $shipping_list[$transaction_ID]['status'] = $this->get_status($ipn_info);
+            $shipping_list[$transaction_ID]['status'] = $this->get_status($info_value);
             $shipping_list[$transaction_ID]['edit'] = (string) new WC_DateTime();
 
             if ('yes' === RY_WT::get_option('smilepay_shipping_log_status_change', 'no')) {
@@ -169,7 +170,7 @@ class RY_WT_WC_SmilePay_Shipping_Response extends RY_WT_SmilePay_Api
                         $order->add_order_note(sprintf(
                             /* translators: 1: ECPay ID 2: Old status no 3: New status no */
                             __('%1$s shipping status from %2$s to %3$s', 'ry-woocommerce-tools'),
-                            $ipn_info['AllPayLogisticsID'],
+                            $info_value['AllPayLogisticsID'],
                             $old_info['status'],
                             $shipping_list[$transaction_ID]['status'],
                         ));
@@ -180,8 +181,8 @@ class RY_WT_WC_SmilePay_Shipping_Response extends RY_WT_SmilePay_Api
             $order->update_meta_data('_smilepay_shipping_info', $shipping_list);
             $order->save();
 
-            do_action('ry_smilepay_shipping_response_status_' . $shipping_list[$transaction_ID]['status'], $ipn_info, $order);
-            do_action('ry_smilepay_shipping_response', $ipn_info, $order);
+            do_action('ry_smilepay_shipping_response_status_' . $shipping_list[$transaction_ID]['status'], $info_value, $order);
+            do_action('ry_smilepay_shipping_response', $info_value, $order);
 
             $this->die_success();
         } else {
@@ -190,21 +191,21 @@ class RY_WT_WC_SmilePay_Shipping_Response extends RY_WT_SmilePay_Api
         }
     }
 
-    public function shipping_at_cvs($ipn_info, $order)
+    public function shipping_at_cvs($info_value, $order)
     {
-        if ($order->has_status(apply_filters('ry_smilepay_shipping_at_cvs_prev_status', ['processing', 'ry-transporting'], $ipn_info, $order))) {
+        if ($order->has_status(apply_filters('ry_smilepay_shipping_at_cvs_prev_status', ['processing', 'ry-transporting'], $info_value, $order))) {
             $order->update_status('ry-at-cvs');
         }
     }
 
-    public function shipping_out_cvs($ipn_info, $order)
+    public function shipping_out_cvs($info_value, $order)
     {
-        if ($order->has_status(apply_filters('ry_smilepay_shipping_out_cvs_prev_status', ['ry-at-cvs'], $ipn_info, $order))) {
+        if ($order->has_status(apply_filters('ry_smilepay_shipping_out_cvs_prev_status', ['ry-at-cvs'], $info_value, $order))) {
             $order->update_status('ry-out-cvs');
         }
     }
 
-    public function shipping_completed($ipn_info, $order)
+    public function shipping_completed($info_value, $order)
     {
         $order->update_status('completed');
     }

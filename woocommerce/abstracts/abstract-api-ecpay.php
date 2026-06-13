@@ -24,10 +24,21 @@ abstract class RY_WT_ECPay_Api extends RY_WT_Api
         return substr($trade_no, 0, 18);
     }
 
-    protected function add_check_value($args, $HashKey, $HashIV, $hash_algo, $skip_args = [])
+    protected function generate_hash_value(array $args, string $HashKey, string $HashIV, string $hash_algo)
     {
-        $args['CheckMacValue'] = $this->generate_check_value($args, $HashKey, $HashIV, $hash_algo, $skip_args);
-        return $args;
+        unset($args['CheckMacValue']);
+        ksort($args, SORT_STRING | SORT_FLAG_CASE);
+
+        $args_string = [];
+        $args_string[] = 'HashKey=' . $HashKey;
+        foreach ($args as $key => $value) {
+            $args_string[] = $key . '=' . $value;
+        }
+        $args_string[] = 'HashIV=' . $HashIV;
+
+        $args_string = $this->urlencode(implode('&', $args_string));
+        $check_value = hash($hash_algo, strtolower($args_string));
+        return strtoupper($check_value);
     }
 
     protected function build_args($data, $MerchantID)
@@ -52,27 +63,6 @@ abstract class RY_WT_ECPay_Api extends RY_WT_Api
             ['-', '-', '_', '_', '.', '.', '*', '*', '!', '(', ')'],
             urlencode($string),
         );
-    }
-
-    protected function generate_check_value($args, $HashKey, $HashIV, $hash_algo, $skip_args = [])
-    {
-        $skip_args[] = 'CheckMacValue';
-        foreach ($skip_args as $key) {
-            unset($args[$key]);
-        }
-
-        ksort($args, SORT_STRING | SORT_FLAG_CASE);
-
-        $args_string = [];
-        $args_string[] = 'HashKey=' . $HashKey;
-        foreach ($args as $key => $value) {
-            $args_string[] = $key . '=' . $value;
-        }
-        $args_string[] = 'HashIV=' . $HashIV;
-
-        $args_string = $this->urlencode(implode('&', $args_string));
-        $check_value = hash($hash_algo, strtolower($args_string));
-        return strtoupper($check_value);
     }
 
     protected function link_server(string $url, array $args, int $timeout = 30)
@@ -108,43 +98,31 @@ abstract class RY_WT_ECPay_Api extends RY_WT_Api
         ]);
     }
 
-    protected function get_check_value($ipn_info)
+    protected function get_hash_value($ipn_info)
     {
-        if (isset($ipn_info['CheckMacValue'])) {
-            return $ipn_info['CheckMacValue'];
-        }
-        return false;
+        return $ipn_info['CheckMacValue'] ?? false;
     }
 
     protected function get_status($ipn_info)
     {
-        if (isset($ipn_info['RtnCode'])) {
-            return (int) $ipn_info['RtnCode'];
-        }
-        return false;
+        return (int) ($ipn_info['RtnCode'] ?? false);
     }
 
     protected function get_status_msg($ipn_info)
     {
-        if (isset($ipn_info['RtnMsg'])) {
-            return $ipn_info['RtnMsg'];
-        }
-        return false;
+        return $ipn_info['RtnMsg'] ?? false;
     }
 
     protected function get_transaction_id($ipn_info)
     {
-        if (isset($ipn_info['TradeNo'])) {
-            return $ipn_info['TradeNo'];
-        }
-        return false;
+        return $ipn_info['TradeNo'] ?? false;
     }
 
     protected function get_order_id($ipn_info, $order_prefix = '')
     {
         if (isset($ipn_info['MerchantTradeNo'])) {
             $order_ID = $this->trade_no_to_order_no($ipn_info['MerchantTradeNo'], $order_prefix);
-            $order_ID = apply_filters('ry_ecpay_trade_no_to_order_id', $order_ID, $ipn_info['MerchantTradeNo']);
+            $order_ID = (int) apply_filters('ry_ecpay_trade_no_to_order_id', $order_ID, $ipn_info['MerchantTradeNo']);
             if ($order_ID > 0) {
                 return $order_ID;
             }

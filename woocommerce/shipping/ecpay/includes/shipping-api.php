@@ -197,8 +197,7 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_ECPay_Api
                         $args['GoodsAmount'] = $args['CollectionAmount'];
                     }
                 }
-
-                $args = $this->add_check_value($args, $HashKey, $HashIV, 'md5');
+                $args['CheckMacValue'] = $this->generate_hash_value($args, $HashKey, $HashIV, 'md5');
                 RY_WT_WC_ECPay_Shipping::instance()->log('Shipping POST data', WC_Log_Levels::INFO, ['data' => $args]);
 
                 $response = $this->link_server($url, $args);
@@ -285,8 +284,8 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_ECPay_Api
             }
         }
 
-        $args = $this->build_args($data, $MerchantID);
         RY_WT_WC_ECPay_Shipping::instance()->log('Print POST data', WC_Log_Levels::INFO, ['data' => $args]);
+        $args = $this->build_args($data, $MerchantID);
 
         if (RY_WT_WC_ECPay_Shipping::instance()->is_testmode()) {
             $url = $this->api_test_url['print'];
@@ -324,7 +323,7 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_ECPay_Api
         } else {
             $url = $this->api_url['query'];
         }
-        $args = $this->add_check_value($args, $HashKey, $HashIV, 'md5');
+        $args['CheckMacValue'] = $this->generate_hash_value($args, $HashKey, $HashIV, 'md5');
 
         $response = $this->link_server($url, $args);
         if (is_wp_error($response)) {
@@ -344,7 +343,7 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_ECPay_Api
             return;
         }
 
-        $check_value = $this->generate_check_value($result, $HashKey, $HashIV, 'md5');
+        $check_value = $this->generate_hash_value($result, $HashKey, $HashIV, 'md5');
         if ($check_value !== $result['CheckMacValue']) {
             RY_WT_WC_ECPay_Shipping::instance()->log('Query request check failed', WC_Log_Levels::WARNING, ['data' => $args, 'result' => $result['CheckMacValue'], 'check_value' => $check_value]);
             return;

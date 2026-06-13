@@ -22,24 +22,15 @@ abstract class RY_WT_SmilePay_Api extends RY_WT_Api
         ]);
     }
 
-    protected function clean_post_data($change_convert = false)
+    protected function convert_encoding($ipn_info)
     {
-        if ($change_convert) {
-            if (function_exists('mb_convert_encoding')) {
-                foreach ($_POST as $key => $value) {
-                    if (!is_array($value)) {
-                        $_POST[$key] = mb_convert_encoding($value, 'UTF-8', 'BIG-5');
-                    } else {
-                        unset($_POST[$key]);
-                    }
+        if (function_exists('mb_convert_encoding')) {
+            foreach ($ipn_info as $key => $value) {
+                if (!is_array($value)) {
+                    $ipn_info[$key] = mb_convert_encoding($value, 'UTF-8', 'BIG-5');
+                } else {
+                    $ipn_info[$key] = $this->convert_encoding($value);
                 }
-            }
-        }
-
-        $ipn_info = [];
-        foreach ($_POST as $key => $value) {
-            if (!is_array($value)) {
-                $ipn_info[$key] = wp_unslash($value);
             }
         }
 
@@ -70,20 +61,16 @@ abstract class RY_WT_SmilePay_Api extends RY_WT_Api
         return false;
     }
 
-    protected function get_check_value($ipn_info)
+    protected function get_hash_value($ipn_info)
     {
-        if (isset($ipn_info['Mid_smilepay'])) {
-            return $ipn_info['Mid_smilepay'];
-        }
-
-        return false;
+        return $ipn_info['Mid_smilepay'] ?? false;
     }
 
     protected function get_order_id($ipn_info, $order_prefix = '')
     {
         if (isset($ipn_info['Data_id'])) {
             $order_ID = $this->trade_no_to_order_no($ipn_info['Data_id'], $order_prefix);
-            $order_ID = apply_filters('ry_smilepay_trade_no_to_order_id', $order_ID, $ipn_info['Data_id']);
+            $order_ID = (int) apply_filters('ry_smilepay_trade_no_to_order_id', $order_ID, $ipn_info['Data_id']);
             if ($order_ID > 0) {
                 return $order_ID;
             }
