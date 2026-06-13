@@ -72,10 +72,10 @@ final class RY_WT_WC_SmilePay_Gateway extends RY_WT_Model
         }
 
         $template_file = match ($order->get_payment_method()) {
-            'ry_smilepay_atm' => 'order/order-smilepay-payment-info-atm.php',
-            'ry_smilepay_barcode' => 'order/order-smilepay-payment-info-barcode.php',
-            'ry_smilepay_cvs_711' => 'order/order-smilepay-payment-info-cvs-711.php',
-            'ry_smilepay_cvs_fami' => 'order/order-smilepay-payment-info-cvs-fami.php',
+            RY_SmilePay_Gateway_Atm::ID => 'order/order-smilepay-payment-info-atm.php',
+            RY_SmilePay_Gateway_Barcode::ID => 'order/order-smilepay-payment-info-barcode.php',
+            RY_SmilePay_Gateway_Cvs_711::ID => 'order/order-smilepay-payment-info-cvs-711.php',
+            RY_SmilePay_Gateway_Cvs_Fami::ID => 'order/order-smilepay-payment-info-cvs-fami.php',
             default => '',
         };
 

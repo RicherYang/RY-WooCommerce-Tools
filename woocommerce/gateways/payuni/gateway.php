@@ -64,16 +64,13 @@ final class RY_WT_WC_PAYUNi_Gateway extends RY_WT_Model
             return;
         }
 
-        switch ($order->get_payment_method()) {
-            case 'ry_payuni_atm':
-                $template_file = 'order/order-payuni-payment-info-atm.php';
-                break;
-            case 'ry_payuni_cvs':
-                $template_file = 'order/order-payuni-payment-info-cvs.php';
-                break;
-        }
+        $template_file = match ($order->get_payment_method()) {
+            RY_PAYUNi_Gateway_Atm::ID => 'order/order-payuni-payment-info-atm.php',
+            RY_PAYUNi_Gateway_Cvs::ID => 'order/order-payuni-payment-info-cvs.php',
+            default => '',
+        };
 
-        if (isset($template_file)) {
+        if ($template_file !== '') {
             $args = [
                 'order' => $order,
             ];

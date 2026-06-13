@@ -71,10 +71,10 @@ final class RY_WT_WC_ECPay_Gateway extends RY_WT_Model
         }
 
         $template_file = match ($order->get_payment_method()) {
-            'ry_ecpay_atm' => 'order/order-ecpay-payment-info-atm.php',
-            'ry_ecpay_barcode' => 'order/order-ecpay-payment-info-barcode.php',
-            'ry_ecpay_bnpl' => 'order/order-ecpay-payment-info-bnpl.php',
-            'ry_ecpay_cvs' => 'order/order-ecpay-payment-info-cvs.php',
+            RY_ECPay_Gateway_Atm::ID => 'order/order-ecpay-payment-info-atm.php',
+            RY_ECPay_Gateway_Barcode::ID => 'order/order-ecpay-payment-info-barcode.php',
+            RY_ECPay_Gateway_Bnpl::ID => 'order/order-ecpay-payment-info-bnpl.php',
+            RY_ECPay_Gateway_Cvs::ID => 'order/order-ecpay-payment-info-cvs.php',
             default => '',
         };
 

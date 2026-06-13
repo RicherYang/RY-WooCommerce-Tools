@@ -69,9 +69,9 @@ final class RY_WT_WC_NewebPay_Gateway extends RY_WT_Model
         }
 
         $template_file = match ($order->get_payment_method()) {
-            'ry_newebpay_atm' => 'order/order-newebpay-payment-info-atm.php',
-            'ry_newebpay_barcode' => 'order/order-newebpay-payment-info-barcode.php',
-            'ry_newebpay_cvs' => 'order/order-newebpay-payment-info-cvs.php',
+            RY_NewebPay_Gateway_Atm::ID => 'order/order-newebpay-payment-info-atm.php',
+            RY_NewebPay_Gateway_Barcode::ID => 'order/order-newebpay-payment-info-barcode.php',
+            RY_NewebPay_Gateway_Cvs::ID => 'order/order-newebpay-payment-info-cvs.php',
             default => '',
         };
 
