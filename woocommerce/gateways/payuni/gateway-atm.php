@@ -36,11 +36,11 @@ class RY_PAYUNi_Gateway_Atm extends RY_WT_WC_PAYUNi_Payment_Gateway
     {
         $html .= '<tr>
             <td>' . esc_html__('Bank', 'ry-woocommerce-tools') . '</td>
-            <td>' . esc_html(rywt_bank_code_to_name($order->get_meta('_payuni_atm_BankType'))) . ' (' . esc_html($order->get_meta('_payuni_atm_BankType')) . ')</td>
+            <td>' . esc_html(rywt_bank_code_to_name($order->get_meta('_payuni_atm_BankCode'))) . ' (' . esc_html($order->get_meta('_payuni_atm_BankCode')) . ')</td>
         </tr>';
         $html .= '<tr>
             <td>' . esc_html__('ATM Bank account', 'ry-woocommerce-tools') . '</td>
-            <td>' . esc_html($order->get_meta('_payuni_atm_PayNo')) . '</td>
+            <td>' . esc_html($order->get_meta('_payuni_atm_vAccount')) . '</td>
         </tr>';
         $html .= '<tr>
             <td>' . esc_html__('Payment deadline', 'ry-woocommerce-tools') . '</td>

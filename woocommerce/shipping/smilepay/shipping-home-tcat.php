@@ -6,7 +6,7 @@ class RY_SmilePay_Shipping_Home_Tcat extends RY_WT_WC_SmilePay_Shipping_Method
 {
     public const ID = 'ry_smilepay_shipping_home_tcat';
 
-    public const Shipping_Type = 'TCAT';
+    public const SHIPPING_TYPE = 'TCAT';
 
     public function __construct($instance_ID = 0)
     {

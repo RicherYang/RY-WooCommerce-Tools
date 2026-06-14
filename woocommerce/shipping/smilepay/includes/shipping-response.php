@@ -19,7 +19,7 @@ class RY_WT_WC_SmilePay_Shipping_Response extends RY_WT_SmilePay_Api
     protected function do_init(): void
     {
         add_action('woocommerce_api_ry_smilepay_shipping_map_callback', [$this, 'check_map_callback']);
-        add_action('woocommerce_api_ry_smilepay_shipping_admin_callback', [$this, 'check_admin_callback']);
+        add_action('woocommerce_api_ry_smilepay_shipping_map_admin_callback', [$this, 'check_map_admin_callback']);
         add_action('woocommerce_api_ry_smilepay_shipping_callback', [$this, 'shipping_callback']);
 
         add_action('valid_smilepay_shipping_map_request', [$this, 'doing_map_callback'], 10, 2);
@@ -46,7 +46,7 @@ class RY_WT_WC_SmilePay_Shipping_Response extends RY_WT_SmilePay_Api
         $this->die_error();
     }
 
-    public function check_admin_callback()
+    public function check_map_admin_callback()
     {
         if (!empty($_POST)) {
             $ipn_info = wp_unslash($_POST);
@@ -137,7 +137,8 @@ class RY_WT_WC_SmilePay_Shipping_Response extends RY_WT_SmilePay_Api
                         }
                         $url = $order->get_checkout_order_received_url();
                     } else {
-                        $url = RY_WT_WC_SmilePay_Gateway_Api::instance()->get_code($order);
+                        $url = $order->get_checkout_payment_url(true);
+                        $url = add_query_arg('get_cvs', 'true', $url);
                     }
                 }
             }

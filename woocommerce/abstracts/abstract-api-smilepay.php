@@ -16,8 +16,9 @@ abstract class RY_WT_SmilePay_Api extends RY_WT_Api
     {
         wc_set_time_limit(40);
 
-        return wp_remote_post($url . '?' . http_build_query($args, '', '&'), [
+        return wp_remote_post($url, [
             'timeout' => $timeout,
+            'body' => $args,
             'user-agent' => apply_filters('http_headers_useragent', 'WordPress/' . get_bloginfo('version')),
         ]);
     }
@@ -77,18 +78,6 @@ abstract class RY_WT_SmilePay_Api extends RY_WT_Api
         }
 
         return false;
-    }
-
-    protected function set_transaction_info($order, $result, $payment_type)
-    {
-        $transaction_ID = (string) $order->get_transaction_id();
-        if ($transaction_ID == '' || !$order->is_paid() || $transaction_ID != $this->get_transaction_id($result)) {
-            $order->set_transaction_id($this->get_transaction_id($result));
-            $order->update_meta_data('_smilepay_payment_type', $payment_type);
-            $order->save();
-            $order = wc_get_order($order->get_id());
-        }
-        return $order;
     }
 
     protected function die_success()

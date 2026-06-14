@@ -45,7 +45,7 @@ final class RY_WT_Update
                             if ($shipping_method) {
                                 $method_class = RY_WT_WC_ECPay_Shipping::$support_methods[$shipping_method];
                                 foreach ($shipping_list as &$info) {
-                                    $info['LogisticsType'] = $method_class::Shipping_Type;
+                                    $info['LogisticsType'] = $method_class::SHIPPING_TYPE;
                                     $info['LogisticsSubType'] = $method_class::Shipping_Sub_Type . (('C2C' === $cvs_type) ? 'C2C' : '');
                                 }
                             }

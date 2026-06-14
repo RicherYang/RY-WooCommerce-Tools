@@ -26,8 +26,8 @@ final class RY_WT_WC_SmilePay_Shipping_Admin
         add_action('add_meta_boxes', ['RY_SmilePay_Shipping_Meta_Box', 'add_meta_box'], 40, 2);
 
         add_action('admin_post_ry-print-smilepay-shipping', [$this, 'print_shipping']);
-        add_action('wp_ajax_RY_smilepay_shipping_info', [$this, 'get_shipping_info']);
-        add_action('wp_ajax_RY_smilepay_shipping_no', [$this, 'get_shipping_no']);
+        add_action('wp_ajax_RY_smilepay_get_shipping_note', [$this, 'get_shipping_note']);
+        add_action('wp_ajax_RY_smilepay_get_shipping_no', [$this, 'get_shipping_no']);
     }
 
     public function add_meta_box($post_type, $data_object)
@@ -133,9 +133,9 @@ final class RY_WT_WC_SmilePay_Shipping_Admin
         exit;
     }
 
-    public function get_shipping_info()
+    public function get_shipping_note()
     {
-        check_ajax_referer('get-shipping-info');
+        check_ajax_referer('get-shipping-note');
 
         $order_ID = intval($_POST['orderid'] ?? '');
 
@@ -151,7 +151,8 @@ final class RY_WT_WC_SmilePay_Shipping_Admin
                 $shipping_method = RY_WT_WC_SmilePay_Shipping::instance()->get_order_support_shipping($shipping_item);
                 if ($shipping_method) {
                     if (str_contains($shipping_method, '_cvs')) {
-                        $url = RY_WT_WC_SmilePay_Shipping_Api::instance()->get_admin_csv_info($order, $collection);
+                        list($url, $args) = RY_WT_WC_SmilePay_Shipping_Api::instance()->get_code_info($order, $collection, true);
+                        $url = add_query_arg($args, $url);
                         echo esc_url_raw($url);
                     } else {
                         RY_WT_WC_SmilePay_Shipping_Api::instance()->get_home_info($order, $collection);

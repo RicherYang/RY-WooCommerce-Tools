@@ -75,7 +75,7 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_ECPay_Api
 
             $args = [
                 'MerchantID' => $MerchantID,
-                'LogisticsType' => $method_class::Shipping_Type,
+                'LogisticsType' => $method_class::SHIPPING_TYPE,
                 'GoodsName' => $item_name,
                 'IsCollection' => 'N',
                 'CollectionAmount' => 0,

@@ -6,7 +6,7 @@ class RY_SmilePay_Shipping_CVS_711 extends RY_WT_WC_SmilePay_Shipping_Method
 {
     public const ID = 'ry_smilepay_shipping_cvs_711';
 
-    public const Shipping_Type = '7NET';
+    public const SHIPPING_TYPE = '7NET';
 
     public function __construct($instance_ID = 0)
     {

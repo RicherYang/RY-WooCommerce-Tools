@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-06-13T12:26:25+08:00\n"
+"POT-Creation-Date: 2026-06-14T17:58:34+08:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: ry-woocommerce-tools\n"
@@ -55,7 +55,7 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
-#: templates/auto-redirect.php:14
+#: templates/auto-redirect.php:21
 msgid "Transaction data processing… DO NOT refresh or close the webpage."
 msgstr ""
 
@@ -231,7 +231,7 @@ msgstr ""
 msgid "CVS code"
 msgstr ""
 
-#: woocommerce/abstracts/abstract-api.php:64
+#: woocommerce/abstracts/abstract-api.php:72
 msgid "Please wait.<br>Getting checkout info."
 msgstr ""
 
@@ -1307,27 +1307,27 @@ msgstr ""
 msgid "Order no prefix only letters and numbers allowed"
 msgstr ""
 
-#: woocommerce/gateways/ecpay/includes/gateway-response.php:108
+#: woocommerce/gateways/ecpay/includes/gateway-response.php:125
 msgid "ECPay payment completed"
 msgstr ""
 
 #. translators: %d number of periods
-#: woocommerce/gateways/ecpay/includes/gateway-response.php:112
-#: woocommerce/gateways/newebpay/includes/gateway-response.php:169
-#: woocommerce/gateways/payuni/includes/gateway-response.php:106
+#: woocommerce/gateways/ecpay/includes/gateway-response.php:129
+#: woocommerce/gateways/newebpay/includes/gateway-response.php:179
+#: woocommerce/gateways/payuni/includes/gateway-response.php:123
 #, php-format
 msgid "Credit installment to %d"
 msgstr ""
 
-#: woocommerce/gateways/ecpay/includes/gateway-response.php:169
-#: woocommerce/gateways/newebpay/includes/gateway-response.php:215
-#: woocommerce/gateways/payuni/includes/gateway-response.php:141
-#: woocommerce/gateways/smilepay/includes/gateway-response.php:116
+#: woocommerce/gateways/ecpay/includes/gateway-response.php:186
+#: woocommerce/gateways/newebpay/includes/gateway-response.php:216
+#: woocommerce/gateways/payuni/includes/gateway-response.php:153
+#: woocommerce/gateways/smilepay/includes/gateway-response.php:117
 msgid "Payment failed within paid order"
 msgstr ""
 
 #. translators: %1$s: status message, %2$d status code
-#: woocommerce/gateways/ecpay/includes/gateway-response.php:174
+#: woocommerce/gateways/ecpay/includes/gateway-response.php:191
 #, php-format
 msgid "Payment unkonw status: %1$s (%2$d)"
 msgstr ""
@@ -1632,18 +1632,18 @@ msgid "If you need ezPay Invoice support, you can try %s"
 msgstr ""
 
 #. translators: 1: Store name 2: Store ID
-#: woocommerce/gateways/newebpay/includes/gateway-response.php:121
+#: woocommerce/gateways/newebpay/includes/gateway-response.php:131
 #, php-format
 msgid "CVS store %1$s (%2$s)"
 msgstr ""
 
-#: woocommerce/gateways/newebpay/includes/gateway-response.php:165
+#: woocommerce/gateways/newebpay/includes/gateway-response.php:175
 msgid "NewebPay payment completed"
 msgstr ""
 
 #. translators: 1: Error status code 2: Error status message
-#: woocommerce/gateways/newebpay/includes/gateway-response.php:220
-#: woocommerce/gateways/payuni/includes/gateway-response.php:146
+#: woocommerce/gateways/newebpay/includes/gateway-response.php:221
+#: woocommerce/gateways/payuni/includes/gateway-response.php:158
 #, php-format
 msgid "Payment failed: %1$s (%2$s)"
 msgstr ""
@@ -1716,7 +1716,7 @@ msgstr ""
 msgid "PAYUNi gateway options"
 msgstr ""
 
-#: woocommerce/gateways/payuni/includes/gateway-response.php:102
+#: woocommerce/gateways/payuni/includes/gateway-response.php:119
 msgid "PAYUNi payment completed"
 msgstr ""
 
@@ -1810,17 +1810,17 @@ msgid "If you need SmilePay Invoice support, you can try %s"
 msgstr ""
 
 #. translators: %1$s Error messade, %2$d Error messade ID
-#: woocommerce/gateways/smilepay/includes/gateway-api.php:144
+#: woocommerce/gateways/smilepay/includes/gateway-api.php:119
 #, php-format
 msgid "Get Smilepay code error: %1$s (%2$d)"
 msgstr ""
 
-#: woocommerce/gateways/smilepay/includes/gateway-response.php:107
+#: woocommerce/gateways/smilepay/includes/gateway-response.php:108
 msgid "SmilePay payment completed"
 msgstr ""
 
 #. translators: Error status message
-#: woocommerce/gateways/smilepay/includes/gateway-response.php:121
+#: woocommerce/gateways/smilepay/includes/gateway-response.php:122
 #, php-format
 msgid "Payment failed (%s)"
 msgstr ""
@@ -2142,7 +2142,7 @@ msgid "Print (A6)"
 msgstr ""
 
 #. translators: 1: Shipping ID 2: Old status mag 3: Old status no 4: New status mag 5: New status no
-#: woocommerce/shipping/ecpay/includes/shipping-response.php:154
+#: woocommerce/shipping/ecpay/includes/shipping-response.php:157
 #, php-format
 msgid "%1$s shipping status from %2$s(%3$d) to %4$s(%5$d)"
 msgstr ""
@@ -2397,13 +2397,13 @@ msgid "The delivery date is sunday, change to monday."
 msgstr ""
 
 #. translators: %1$s Error messade, %2$d Error messade ID
-#: woocommerce/shipping/smilepay/includes/shipping-api.php:256
+#: woocommerce/shipping/smilepay/includes/shipping-api.php:215
 #, php-format
 msgid "Get Smilepay no error: %1$s (%2$d)"
 msgstr ""
 
 #. translators: %1$s Error messade, %2$d Error messade ID
-#: woocommerce/shipping/smilepay/includes/shipping-api.php:402
+#: woocommerce/shipping/smilepay/includes/shipping-api.php:358
 #, php-format
 msgid "Get Smilepay info no error: %1$s (%2$d)"
 msgstr ""
@@ -2418,7 +2418,7 @@ msgid "Get no"
 msgstr ""
 
 #. translators: 1: ECPay ID 2: Old status no 3: New status no
-#: woocommerce/shipping/smilepay/includes/shipping-response.php:172
+#: woocommerce/shipping/smilepay/includes/shipping-response.php:173
 #, php-format
 msgid "%1$s shipping status from %2$s to %3$s"
 msgstr ""

@@ -6,7 +6,7 @@ class RY_SmilePay_Shipping_CVS_Fami extends RY_WT_WC_SmilePay_Shipping_Method
 {
     public const ID = 'ry_smilepay_shipping_cvs_fami';
 
-    public const Shipping_Type = 'FAMI';
+    public const SHIPPING_TYPE = 'FAMI';
 
     public function __construct($instance_ID = 0)
     {

@@ -36,7 +36,7 @@ class RY_PAYUNi_Gateway_Cvs extends RY_WT_WC_PAYUNi_Payment_Gateway
     {
         $html .= '<tr>
             <td>' . esc_html__('CVS code', 'ry-woocommerce-tools') . '</td>
-            <td>' . esc_html($order->get_meta('_payuni_cvs_PayNo')) . '</td>
+            <td>' . esc_html($order->get_meta('_payuni_cvs_PaymentNo')) . '</td>
         </tr>';
         $html .= '<tr>
             <td>' . esc_html__('Payment deadline', 'ry-woocommerce-tools') . '</td>

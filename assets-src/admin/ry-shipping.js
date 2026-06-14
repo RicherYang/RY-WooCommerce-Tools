@@ -67,7 +67,7 @@ $(function () {
                 url: ajaxurl,
                 method: 'POST',
                 data: {
-                    action: 'RY_' + $btn.data('type') + '_shipping_info',
+                    action: 'RY_' + $btn.data('type') + '_get_shipping_note',
                     orderid: $btn.data('orderid'),
                     temp: $btn.data('temp'),
                     collection: $btn.data('collection'),
@@ -92,7 +92,7 @@ $(function () {
                 url: ajaxurl,
                 method: 'POST',
                 data: {
-                    action: 'RY_smilepay_shipping_no',
+                    action: 'RY_smilepay_get_shipping_no',
                     id: $btn.data('id'),
                     orderid: $btn.data('orderid'),
                     _ajax_nonce: RyAdminShippingParams._nonce.smilepay

@@ -14,7 +14,7 @@ abstract class RY_WT_WC_SmilePay_Payment_Gateway extends RY_WT_WC_Payment_Gatewa
     public function receipt_page($order_ID)
     {
         if ($order = wc_get_order($order_ID)) {
-            RY_WT_WC_SmilePay_Gateway_Api::instance()->checkout_form($order);
+            RY_WT_WC_SmilePay_Gateway_Api::instance()->checkout_form($order, $this);
             WC()->cart->empty_cart();
         }
     }

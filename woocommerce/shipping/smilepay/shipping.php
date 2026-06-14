@@ -120,7 +120,7 @@ final class RY_WT_WC_SmilePay_Shipping extends RY_WT_Shipping_Model
             foreach ($order->get_items('shipping') as $shipping_item) {
                 $shipping_method = $this->get_order_support_shipping($shipping_item);
                 if ($shipping_method) {
-                    RY_WT_WC_SmilePay_Gateway_Api::instance()->checkout_form(wc_get_order($order_ID));
+                    RY_WT_WC_SmilePay_Shipping_Api::instance()->csv_checkout_form($order);
                     break;
                 }
             }

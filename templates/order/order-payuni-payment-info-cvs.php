@@ -22,7 +22,7 @@ if ($order->get_meta('_payuni_payment_type') !== '3') {
 }
 
 $order_info = [
-    'paymentNo' => $order->get_meta('_payuni_cvs_PayNo'),
+    'paymentNo' => $order->get_meta('_payuni_cvs_PaymentNo'),
     'expireDate' => wc_string_to_datetime($order->get_meta('_payuni_cvs_ExpireDate')),
 ];
 ?>

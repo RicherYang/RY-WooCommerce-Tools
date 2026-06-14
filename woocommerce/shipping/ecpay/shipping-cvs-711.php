@@ -6,7 +6,7 @@ class RY_ECPay_Shipping_CVS_711 extends RY_WT_WC_ECPay_Shipping_Method
 {
     public const ID = 'ry_ecpay_shipping_cvs_711';
 
-    public const Shipping_Type = 'CVS';
+    public const SHIPPING_TYPE = 'CVS';
 
     public const Shipping_Sub_Type = 'UNIMART';
 

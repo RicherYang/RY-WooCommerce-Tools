@@ -25,7 +25,7 @@ final class RY_WT_WC_ECPay_Shipping_Admin
         add_action('woocommerce_update_options_rytools_ecpay_shipping', [$this, 'check_option']);
 
         add_action('admin_post_ry-print-ecpay-shipping', [$this, 'print_shipping']);
-        add_action('wp_ajax_RY_ecpay_shipping_info', [$this, 'get_shipping_info']);
+        add_action('wp_ajax_RY_ecpay_get_shipping_note', [$this, 'get_shipping_note']);
     }
 
     public function add_meta_box($post_type, $data_object)
@@ -176,9 +176,9 @@ final class RY_WT_WC_ECPay_Shipping_Admin
         exit;
     }
 
-    public function get_shipping_info()
+    public function get_shipping_note()
     {
-        check_ajax_referer('get-shipping-info');
+        check_ajax_referer('get-shipping-note');
 
         $order_ID = intval($_POST['orderid'] ?? '');
 

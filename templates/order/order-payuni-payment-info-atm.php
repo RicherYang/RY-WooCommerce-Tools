@@ -22,8 +22,8 @@ if ($order->get_meta('_payuni_payment_type') !== '2') {
 }
 
 $order_info = [
-    'bankCode' => $order->get_meta('_payuni_atm_BankType'),
-    'vAccount' => $order->get_meta('_payuni_atm_PayNo'),
+    'bankCode' => $order->get_meta('_payuni_atm_BankCode'),
+    'vAccount' => $order->get_meta('_payuni_atm_vAccount'),
     'expireDate' => wc_string_to_datetime($order->get_meta('_payuni_atm_ExpireDate')),
 ];
 ?>

@@ -48,7 +48,6 @@ class RY_WT_WC_ECPay_Gateway_Api extends RY_WT_ECPay_Api
             'TradeDesc' => get_bloginfo('name'),
             'ItemName' => $item_name,
             'ReturnURL' => $notify_url,
-            'ChoosePayment' => $gateway::PAYMENT_TYPE,
             'ClientBackURL' => $return_url,
             'OrderResultURL' => $return_url,
             'NeedExtraPaidInfo' => 'Y',
@@ -252,26 +251,30 @@ class RY_WT_WC_ECPay_Gateway_Api extends RY_WT_ECPay_Api
 
     protected function add_type_info($args, $order, $gateway)
     {
-        switch ($gateway::PAYMENT_TYPE) {
-            case 'Credit':
-                if (isset($gateway->support_applepay) && $gateway->support_applepay === 'no') {
-                    $args['IgnorePayment'] = 'ApplePay';
-                }
-                if (isset($gateway->number_of_periods) && !empty($gateway->number_of_periods)) {
-                    $args['CreditInstallment'] = implode(',', $gateway->number_of_periods);
-                }
-                break;
-            case 'ATM':
-                $args['ExpireDate'] = $gateway->expire_date;
-                break;
-            case 'BARCODE':
-            case 'CVS':
-                $args['StoreExpireDate'] = $gateway->expire_date;
-                break;
-            case 'DigitalPayment':
-                $args['ChooseSubPayment'] = $gateway::SUB_PAYMENT_TYPE;
-                break;
+        if (defined(get_class($gateway) . '::PAYMENT_TYPE')) {
+            $args['ChoosePayment'] = $gateway::PAYMENT_TYPE;
+            switch ($gateway::PAYMENT_TYPE) {
+                case 'Credit':
+                    if (isset($gateway->support_applepay) && $gateway->support_applepay === 'no') {
+                        $args['IgnorePayment'] = 'ApplePay';
+                    }
+                    if (isset($gateway->number_of_periods) && !empty($gateway->number_of_periods)) {
+                        $args['CreditInstallment'] = implode(',', $gateway->number_of_periods);
+                    }
+                    break;
+                case 'ATM':
+                    $args['ExpireDate'] = $gateway->expire_date;
+                    break;
+                case 'BARCODE':
+                case 'CVS':
+                    $args['StoreExpireDate'] = $gateway->expire_date;
+                    break;
+                case 'DigitalPayment':
+                    $args['ChooseSubPayment'] = $gateway::SUB_PAYMENT_TYPE;
+                    break;
+            }
         }
+
         return $args;
     }
 }

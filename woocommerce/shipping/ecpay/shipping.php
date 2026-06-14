@@ -222,7 +222,7 @@ final class RY_WT_WC_ECPay_Shipping extends RY_WT_Shipping_Model
                 }
                 $this->js_data['postData'] = [
                     'MerchantID' => $MerchantID,
-                    'LogisticsType' => $method_class::Shipping_Type,
+                    'LogisticsType' => $method_class::SHIPPING_TYPE,
                     'LogisticsSubType' => $subtype,
                     'IsCollection' => 'Y',
                     'Device' => wp_is_mobile() ? '1' : '0',

@@ -38,7 +38,7 @@ final class RY_WT_WC_Admin_Shipping
         wp_enqueue_script('ry-admin-shipping', RY_WT_PLUGIN_URL . 'assets/admin/ry-shipping.js', $asset_info['dependencies'], $asset_info['version'], true);
         wp_localize_script('ry-admin-shipping', 'RyAdminShippingParams', [
             '_nonce' => [
-                'get' => wp_create_nonce('get-shipping-info'),
+                'get' => wp_create_nonce('get-shipping-note'),
                 'delete' => wp_create_nonce('delete-shipping-info'),
                 'smilepay' => wp_create_nonce('smilepay-shipping-no'),
             ],

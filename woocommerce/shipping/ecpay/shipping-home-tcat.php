@@ -6,7 +6,7 @@ class RY_ECPay_Shipping_Home_Tcat extends RY_WT_WC_ECPay_Shipping_Method
 {
     public const ID = 'ry_ecpay_shipping_home_tcat';
 
-    public const Shipping_Type = 'Home';
+    public const SHIPPING_TYPE = 'Home';
 
     public const Shipping_Sub_Type = 'TCAT';
 
