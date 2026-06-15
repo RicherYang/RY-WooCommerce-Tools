@@ -67,12 +67,7 @@ class RY_WT_WC_SmilePay_Gateway_Api extends RY_WT_SmilePay_Api
         list($url, $args) = $this->get_code_info($order, $gateway);
         RY_WT_WC_SmilePay_Gateway::instance()->log('Generating payment by ' . $gateway->id . ' for #' . $order->get_id(), WC_Log_Levels::INFO, ['data' => $args]);
 
-        echo '<form method="post" id="ry-smilepay-form" action="' . esc_url($url) . '">';
-        foreach ($args as $key => $value) {
-            echo '<input type="hidden" name="' . esc_attr($key) . '" value="' . esc_attr($value) . '">';
-        }
-        echo '</form>';
-        $this->submit_sctipt('document.getElementById("ry-smilepay-form").submit();');
+        $this->auto_submit_data($url, $args);
 
         do_action('ry_smilepay_gateway_checkout', $args, $order, $gateway);
     }

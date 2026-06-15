@@ -106,12 +106,7 @@ class RY_WT_WC_NewebPay_Gateway_Api extends RY_WT_NewebPay_Api
             $url = $this->api_url['checkout'];
         }
 
-        echo '<form method="post" id="ry-newebpay-form" action="' . esc_url($url) . '">';
-        foreach ($form_data as $key => $value) {
-            echo '<input type="hidden" name="' . esc_attr($key) . '" value="' . esc_attr($value) . '">';
-        }
-        echo '</form>';
-        $this->submit_sctipt('document.getElementById("ry-newebpay-form").submit();');
+        $this->auto_submit_data($url, $form_data);
 
         do_action('ry_newebpay_gateway_checkout', $args, $order, $gateway);
     }

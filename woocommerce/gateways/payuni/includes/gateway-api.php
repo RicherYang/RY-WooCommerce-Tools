@@ -86,12 +86,7 @@ class RY_WT_WC_PAYUNi_Gateway_Api extends RY_WT_PAYUNi_Api
             $url = $this->api_url['checkout'];
         }
 
-        echo '<form method="post" id="ry-payuni-form" action="' . esc_url($url) . '">';
-        foreach ($args as $key => $value) {
-            echo '<input type="hidden" name="' . esc_attr($key) . '" value="' . esc_attr($value) . '">';
-        }
-        echo '</form>';
-        $this->submit_sctipt('document.getElementById("ry-payuni-form").submit();');
+        $this->auto_submit_data($url, $args);
 
         do_action('ry_payuni_gateway_checkout', $data, $order, $gateway);
     }

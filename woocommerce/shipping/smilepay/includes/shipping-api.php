@@ -39,12 +39,7 @@ class RY_WT_WC_SmilePay_Shipping_Api extends RY_WT_SmilePay_Api
     {
         list($url, $args) = $this->get_code_info($order, $collection, false);
 
-        echo '<form method="post" id="ry-smilepay-form" action="' . esc_url($url) . '">';
-        foreach ($args as $key => $value) {
-            echo '<input type="hidden" name="' . esc_attr($key) . '" value="' . esc_attr($value) . '">';
-        }
-        echo '</form>';
-        $this->submit_sctipt('document.getElementById("ry-smilepay-form").submit();');
+        $this->auto_submit_data($url, $args);
     }
 
     public function get_code_info($order, $collection = false, $is_admin = false)
