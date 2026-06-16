@@ -8,7 +8,7 @@ final class RY_WT_Update
     {
         global $wpdb;
 
-        $now_version = RY_WT::get_option('version', '');
+        $now_version = RY_WT::get_option('version', '0.0.0');
 
         if (RY_WT_VERSION === $now_version) {
             return;
@@ -56,31 +56,31 @@ final class RY_WT_Update
                 }
             }
 
-            RY_WT::update_option('version', '1.1.2');
+            RY_WT::update_option('version', '1.1.2', true);
         }
 
         if (version_compare($now_version, '1.4.0', '<')) {
             RY_WT::update_option('ecpay_shipping', RY_WT::get_option('ecpay_shipping_cvs', 'no'));
 
-            RY_WT::update_option('version', '1.4.0');
+            RY_WT::update_option('version', '1.4.0', true);
         }
 
         if (version_compare($now_version, '1.8.11', '<')) {
             RY_WT::update_option('ecpay_shipping_auto_order_status', RY_WT::get_option('ecpay_shipping_auto_completed', 'yes'));
 
-            RY_WT::update_option('version', '1.8.11');
+            RY_WT::update_option('version', '1.8.11', true);
         }
 
         if (version_compare($now_version, '1.10.0', '<')) {
             RY_WT::update_option('smilepay_shipping_auto_order_status', RY_WT::get_option('smilepay_shipping_auto_completed', 'yes'));
 
-            RY_WT::update_option('version', '1.10.0');
+            RY_WT::update_option('version', '1.10.0', true);
         }
 
         if (version_compare($now_version, '1.10.3', '<')) {
             RY_WT::update_option('ecpay_shipping_box_size', 1);
 
-            RY_WT::update_option('version', '1.10.3');
+            RY_WT::update_option('version', '1.10.3', true);
         }
 
         if (version_compare($now_version, '3.0.0', '<')) {
@@ -94,14 +94,14 @@ final class RY_WT_Update
             RY_WT::delete_option('ecpay_keep_shipping_phone');
             RY_WT::delete_option('keep_shipping_phone');
 
-            RY_WT::update_option('version', '3.0.0');
+            RY_WT::update_option('version', '3.0.0', true);
         }
 
         if (version_compare($now_version, '3.2.1', '<')) {
             add_action('init', function () {
                 WC()->queue()->schedule_single(time() + 10, 'ry_wt_update_3_2_0');
 
-                RY_WT::update_option('version', '3.2.1');
+                RY_WT::update_option('version', '3.2.1', true);
             });
         }
 
@@ -156,6 +156,63 @@ final class RY_WT_Update
         }
 
         if (version_compare($now_version, '3.6.6', '<')) {
+            if (RY_WT::get_option('ecpay_gateway_MerchantID') !== false) {
+                RY_WT::update_option('ecpay_gateway_apikey', [
+                    'MerchantID' => RY_WT::get_option('ecpay_gateway_MerchantID'),
+                    'HashKey' => RY_WT::get_option('ecpay_gateway_HashKey'),
+                    'HashIV' => RY_WT::get_option('ecpay_gateway_HashIV'),
+                ], false);
+                RY_WT::delete_option('ecpay_gateway_MerchantID');
+                RY_WT::delete_option('ecpay_gateway_HashKey');
+                RY_WT::delete_option('ecpay_gateway_HashIV');
+            }
+
+            if (RY_WT::get_option('newebpay_gateway_MerchantID') !== false) {
+                RY_WT::update_option('newebpay_gateway_apikey', [
+                    'MerchantID' => RY_WT::get_option('newebpay_gateway_MerchantID'),
+                    'HashKey' => RY_WT::get_option('newebpay_gateway_HashKey'),
+                    'HashIV' => RY_WT::get_option('newebpay_gateway_HashIV'),
+                ], false);
+                RY_WT::delete_option('newebpay_gateway_MerchantID');
+                RY_WT::delete_option('newebpay_gateway_HashKey');
+                RY_WT::delete_option('newebpay_gateway_HashIV');
+            }
+
+            if (RY_WT::get_option('payuni_gateway_MerID') !== false) {
+                RY_WT::update_option('payuni_gateway_apikey', [
+                    'MerID' => RY_WT::get_option('payuni_gateway_MerID'),
+                    'HashKey' => RY_WT::get_option('payuni_gateway_HashKey'),
+                    'HashIV' => RY_WT::get_option('payuni_gateway_HashIV'),
+                ], false);
+                RY_WT::delete_option('payuni_gateway_MerID');
+                RY_WT::delete_option('payuni_gateway_HashKey');
+                RY_WT::delete_option('payuni_gateway_HashIV');
+            }
+
+            if (RY_WT::get_option('smilepay_gateway_MerID') !== false) {
+                RY_WT::update_option('smilepay_gateway_apikey', [
+                    'Dcvc' => RY_WT::get_option('smilepay_gateway_Dcvc'),
+                    'Rvg2c' => RY_WT::get_option('smilepay_gateway_Rvg2c'),
+                    'Verify_key' => RY_WT::get_option('smilepay_gateway_Verify_key'),
+                    'Rot_check' => RY_WT::get_option('smilepay_gateway_Rot_check'),
+                ], false);
+                RY_WT::delete_option('smilepay_gateway_Dcvc');
+                RY_WT::delete_option('smilepay_gateway_Rvg2c');
+                RY_WT::delete_option('smilepay_gateway_Verify_key');
+                RY_WT::delete_option('smilepay_gateway_Rot_check');
+            }
+
+            if (RY_WT::get_option('ecpay_shipping_MerchantID') !== false) {
+                RY_WT::update_option('ecpay_shipping_apikey', [
+                    'MerchantID' => RY_WT::get_option('ecpay_shipping_MerchantID'),
+                    'HashKey' => RY_WT::get_option('ecpay_shipping_HashKey'),
+                    'HashIV' => RY_WT::get_option('ecpay_shipping_HashIV'),
+                ], false);
+                RY_WT::delete_option('ecpay_shipping_MerchantID');
+                RY_WT::delete_option('ecpay_shipping_HashKey');
+                RY_WT::delete_option('ecpay_shipping_HashIV');
+            }
+
             RY_WT::update_option('version', '3.6.6', true);
         }
     }

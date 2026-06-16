@@ -34,13 +34,13 @@ class RY_WT_WC_ECPay_Gateway_Api extends RY_WT_ECPay_Api
         $notify_url = WC()->api_request_url('ry_ecpay_callback', true);
         $return_url = $this->get_3rd_return_url($order);
 
-        list($MerchantID, $HashKey, $HashIV) = RY_WT_WC_ECPay_Gateway::instance()->get_api_info();
+        $api_info = RY_WT_WC_ECPay_Gateway::instance()->get_api_info();
 
         $item_name = $this->get_item_name(RY_WT::get_option('payment_item_name', ''), $order);
         $item_name = mb_substr($item_name, 0, 195);
 
         $args = [
-            'MerchantID' => $MerchantID,
+            'MerchantID' => $api_info['MerchantID'],
             'MerchantTradeNo' => $this->generate_trade_no($order->get_id(), RY_WT::get_option('ecpay_gateway_order_prefix')),
             'MerchantTradeDate' => new DateTime('now', new DateTimeZone('Asia/Taipei')),
             'PaymentType' => 'aio',
@@ -80,7 +80,7 @@ class RY_WT_WC_ECPay_Gateway_Api extends RY_WT_ECPay_Api
         }
 
         $args = $this->add_type_info($args, $order, $gateway);
-        $args['CheckMacValue'] = $this->generate_hash_value($args, $HashKey, $HashIV, 'sha256');
+        $args['CheckMacValue'] = $this->generate_hash_value($args, $api_info['HashKey'], $api_info['HashIV'], 'sha256');
         RY_WT_WC_ECPay_Gateway::instance()->log('Generating payment by ' . $gateway->id . ' for #' . $order->get_id(), WC_Log_Levels::INFO, ['data' => $args]);
 
         $order->update_meta_data('_ecpay_MerchantTradeNo', $args['MerchantTradeNo']);
@@ -99,16 +99,16 @@ class RY_WT_WC_ECPay_Gateway_Api extends RY_WT_ECPay_Api
 
     public function get_info($order)
     {
-        list($MerchantID, $HashKey, $HashIV) = RY_WT_WC_ECPay_Gateway::instance()->get_api_info();
+        $api_info = RY_WT_WC_ECPay_Gateway::instance()->get_api_info();
 
         $args = [
-            'MerchantID' => $MerchantID,
+            'MerchantID' => $api_info['MerchantID'],
             'MerchantTradeNo' => $order->get_meta('_ecpay_MerchantTradeNo', true),
             'TimeStamp' => new DateTime('now', new DateTimeZone('Asia/Taipei')),
         ];
 
         $args['TimeStamp'] = $args['TimeStamp']->getTimestamp();
-        $args['CheckMacValue'] = $this->generate_hash_value($args, $HashKey, $HashIV, 'sha256');
+        $args['CheckMacValue'] = $this->generate_hash_value($args, $api_info['HashKey'], $api_info['HashIV'], 'sha256');
 
         if (RY_WT_WC_ECPay_Gateway::instance()->is_testmode()) {
             $url = $this->api_test_url['query'];
@@ -134,7 +134,7 @@ class RY_WT_WC_ECPay_Gateway_Api extends RY_WT_ECPay_Api
             return;
         }
 
-        $check_value = $this->generate_hash_value($result, $HashKey, $HashIV, 'sha256');
+        $check_value = $this->generate_hash_value($result, $api_info['HashKey'], $api_info['HashIV'], 'sha256');
         if ($check_value !== $result['CheckMacValue']) {
             RY_WT_WC_ECPay_Gateway::instance()->log('Query request check failed', WC_Log_Levels::WARNING, ['data' => $args, 'result' => $result['CheckMacValue'], 'check_value' => $check_value]);
             return;
@@ -145,15 +145,15 @@ class RY_WT_WC_ECPay_Gateway_Api extends RY_WT_ECPay_Api
 
     public function get_credit_info($order)
     {
-        list($MerchantID, $HashKey, $HashIV) = RY_WT_WC_ECPay_Gateway::instance()->get_api_info();
+        $api_info = RY_WT_WC_ECPay_Gateway::instance()->get_api_info();
 
         $args = [
-            'MerchantID' => $MerchantID,
+            'MerchantID' => $api_info['MerchantID'],
             'RqHeader' => [
                 'Timestamp' => new DateTime('now', new DateTimeZone('Asia/Taipei')),
             ],
             'Data' => wp_json_encode([
-                'MerchantID' => $MerchantID,
+                'MerchantID' => $api_info['MerchantID'],
                 'MerchantTradeNo' => $order->get_meta('_ecpay_MerchantTradeNo', true),
             ]),
         ];
@@ -165,7 +165,7 @@ class RY_WT_WC_ECPay_Gateway_Api extends RY_WT_ECPay_Api
             $url = $this->api_url['credit-query'];
         }
 
-        $response = $this->link_v2_server($url, $args, $HashKey, $HashIV);
+        $response = $this->link_v2_server($url, $args, $api_info['HashKey'], $api_info['HashIV']);
         if (is_wp_error($response)) {
             RY_WT_WC_ECPay_Gateway::instance()->log('Credit query failed', WC_Log_Levels::ERROR, ['data' => $args, 'info' => $response->get_error_messages()]);
             return;
@@ -188,7 +188,7 @@ class RY_WT_WC_ECPay_Gateway_Api extends RY_WT_ECPay_Api
             return;
         }
 
-        $result->Data = openssl_decrypt($result->Data, self::ENCRYPT_METHOD, $HashKey, 0, $HashIV);
+        $result->Data = openssl_decrypt($result->Data, self::ENCRYPT_METHOD, $api_info['HashKey'], 0, $api_info['HashIV']);
         $result->Data = json_decode(urldecode($result->Data), true);
 
         if (!is_array($result->Data)) {
@@ -205,16 +205,16 @@ class RY_WT_WC_ECPay_Gateway_Api extends RY_WT_ECPay_Api
     {
         $amount = (int) $amount;
 
-        list($MerchantID, $HashKey, $HashIV) = RY_WT_WC_ECPay_Gateway::instance()->get_api_info();
+        $api_info = RY_WT_WC_ECPay_Gateway::instance()->get_api_info();
 
         $args = [
-            'MerchantID' => $MerchantID,
+            'MerchantID' => $api_info['MerchantID'],
             'MerchantTradeNo' => $order->get_meta('_ecpay_MerchantTradeNo', true),
             'TradeNo' => $order->get_transaction_id(),
             'Action' => $action,
             'TotalAmount' => $amount,
         ];
-        $args['CheckMacValue'] = $this->generate_hash_value($args, $HashKey, $HashIV, 'sha256');
+        $args['CheckMacValue'] = $this->generate_hash_value($args, $api_info['HashKey'], $api_info['HashIV'], 'sha256');
 
         if (RY_WT_WC_ECPay_Gateway::instance()->is_testmode()) {
             $url = $this->api_test_url['credit-action'];

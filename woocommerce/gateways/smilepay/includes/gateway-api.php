@@ -74,10 +74,10 @@ class RY_WT_WC_SmilePay_Gateway_Api extends RY_WT_SmilePay_Api
 
     public function get_code($order, $gateway)
     {
-        list($Dcvc, $Rvg2c, $Verify_key, $Rot_check) = RY_WT_WC_SmilePay_Gateway::instance()->get_api_info();
+        $api_info = RY_WT_WC_SmilePay_Gateway::instance()->get_api_info();
         list($url, $args) = $this->get_code_info($order, $gateway);
 
-        $args['Verify_key'] = $Verify_key;
+        $args['Verify_key'] = $api_info['Verify_key'];
         RY_WT_WC_SmilePay_Gateway::instance()->log('Generating payment by ' . $gateway->id . ' for #' . $order->get_id(), WC_Log_Levels::INFO, ['data' => $args]);
 
         do_action('ry_smilepay_gateway_checkout', $args, $order, $gateway);
@@ -157,14 +157,14 @@ class RY_WT_WC_SmilePay_Gateway_Api extends RY_WT_SmilePay_Api
     {
         $notify_url = WC()->api_request_url('ry_smilepay_callback', true);
 
-        list($Dcvc, $Rvg2c, $Verify_key, $Rot_check) = RY_WT_WC_SmilePay_Gateway::instance()->get_api_info();
+        $api_info = RY_WT_WC_SmilePay_Gateway::instance()->get_api_info();
 
         $item_name = $this->get_item_name(RY_WT::get_option('payment_item_name', ''), $order);
         $item_name = mb_substr($item_name, 0, 40);
 
         $args = [
-            'Dcvc' => $Dcvc,
-            'Rvg2c' => $Rvg2c,
+            'Dcvc' => $api_info['Dcvc'],
+            'Rvg2c' => $api_info['Rvg2c'],
             'Od_sob' => $item_name,
             'Data_id' => $this->generate_trade_no($order->get_id(), RY_WT::get_option('smilepay_gateway_order_prefix')),
             'Amount' => (int) ceil($order->get_total()),

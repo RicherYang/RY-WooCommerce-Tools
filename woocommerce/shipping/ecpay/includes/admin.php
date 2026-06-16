@@ -47,12 +47,11 @@ final class RY_WT_WC_ECPay_Shipping_Admin
             $settings = include RY_WT_PLUGIN_DIR . 'woocommerce/shipping/ecpay/includes/settings/admin-settings.php';
 
             if (RY_WT_WC_ECPay_Shipping::instance()->is_testmode()) {
-                list($MerchantID, $HashKey, $HashIV, $cvs_type) = RY_WT_WC_ECPay_Shipping::instance()->get_api_info();
-                $setting_idx = array_search(RY_WT::OPTION_PREFIX . 'ecpay_shipping_MerchantID', array_column($settings, 'id'));
+                $setting_idx = array_search(RY_WT::OPTION_PREFIX . 'ecpay_shipping_apikey[MerchantID]', array_column($settings, 'id'));
                 $settings[$setting_idx]['desc'] = '<p class="description">' . sprintf(
                     /* translators: %s: MerchantID */
                     __('Used MerchantID "%s"', 'ry-woocommerce-tools'),
-                    $MerchantID,
+                    RY_WT_WC_ECPay_Shipping::instance()->get_api_info()['MerchantID'],
                 ) . '</p>';
             }
         }
@@ -74,21 +73,21 @@ final class RY_WT_WC_ECPay_Shipping_Admin
         $name = RY_WT::get_option('ecpay_shipping_sender_name');
         if (mb_strwidth($name) < 1 || mb_strwidth($name) > 10) {
             WC_Admin_Settings::add_error(__('Verification failed!', 'ry-woocommerce-tools') . ' ' . __('Name length between 1 to 10 letter (5 if chinese)', 'ry-woocommerce-tools'));
-            RY_WT::update_option('ecpay_shipping_sender_name', '');
+            RY_WT::update_option('ecpay_shipping_sender_name', '', false);
         }
         if (!empty(RY_WT::get_option('ecpay_shipping_sender_phone'))) {
             if (1 !== preg_match('@^\(0\d{1,2}\)\d{6,8}(#\d+)?$@', RY_WT::get_option('ecpay_shipping_sender_phone'))) {
                 WC_Admin_Settings::add_error(__('Verification failed!', 'ry-woocommerce-tools') . ' ' . __('Phone format (0x)xxxxxxx#xx', 'ry-woocommerce-tools'));
-                RY_WT::update_option('ecpay_shipping_sender_phone', '');
+                RY_WT::update_option('ecpay_shipping_sender_phone', '', false);
             }
         }
         if (1 !== preg_match('@^09\d{8}?$@', RY_WT::get_option('ecpay_shipping_sender_cellphone'))) {
             WC_Admin_Settings::add_error(__('Verification failed!', 'ry-woocommerce-tools') . ' ' . __('Cellphone format 09xxxxxxxx', 'ry-woocommerce-tools'));
-            RY_WT::update_option('ecpay_shipping_sender_cellphone', '');
+            RY_WT::update_option('ecpay_shipping_sender_cellphone', '', false);
         }
         if (!preg_match('/^[a-z0-9]*$/i', RY_WT::get_option('ecpay_shipping_order_prefix'))) {
             WC_Admin_Settings::add_error(__('Order no prefix only letters and numbers allowed', 'ry-woocommerce-tools'));
-            RY_WT::update_option('ecpay_shipping_order_prefix', '');
+            RY_WT::update_option('ecpay_shipping_order_prefix', '', false);
         }
     }
 

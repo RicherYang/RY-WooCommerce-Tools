@@ -45,7 +45,7 @@ class RY_WT_WC_SmilePay_Shipping_Api extends RY_WT_SmilePay_Api
     public function get_code_info($order, $collection = false, $is_admin = false)
     {
         RY_WT_WC_SmilePay_Shipping::instance()->log('Generating csv for #' . $order->get_id(), WC_Log_Levels::INFO);
-        list($Dcvc, $Rvg2c, $Verify_key, $Rot_check) = RY_WT_WC_SmilePay_Gateway::instance()->get_api_info();
+        $api_info = RY_WT_WC_SmilePay_Gateway::instance()->get_api_info();
 
         $item_name = $this->get_item_name(RY_WT::get_option('shipping_item_name', ''), $order);
         $item_name = mb_substr($item_name, 0, 20);
@@ -61,8 +61,8 @@ class RY_WT_WC_SmilePay_Shipping_Api extends RY_WT_SmilePay_Api
             $method_class = RY_WT_WC_SmilePay_Shipping::$support_methods[$shipping_method];
 
             $args = [
-                'Dcvc' => $Dcvc,
-                'Rvg2c' => $Rvg2c,
+                'Dcvc' => $api_info['Dcvc'],
+                'Rvg2c' => $api_info['Rvg2c'],
                 'Od_sob' => $item_name,
                 'Pay_zg' => 52,
                 'Pay_subzg' => $method_class::SHIPPING_TYPE,
@@ -115,7 +115,7 @@ class RY_WT_WC_SmilePay_Shipping_Api extends RY_WT_SmilePay_Api
             }
 
             $method_class = RY_WT_WC_SmilePay_Shipping::$support_methods[$shipping_method];
-            list($Dcvc, $Rvg2c, $Verify_key, $Rot_check) = RY_WT_WC_SmilePay_Gateway::instance()->get_api_info();
+            $api_info = RY_WT_WC_SmilePay_Gateway::instance()->get_api_info();
 
             $package_list = $this->get_shipping_package($order, $method_class, 'keep', null, 0);
             if (0 === count($package_list)) {
@@ -138,9 +138,9 @@ class RY_WT_WC_SmilePay_Shipping_Api extends RY_WT_SmilePay_Api
             $full_state = ($state && isset($states[$state])) ? $states[$state] : $state;
 
             $args = [
-                'Dcvc' => $Dcvc,
-                'Rvg2c' => $Rvg2c,
-                'Verify_key' => $Verify_key,
+                'Dcvc' => $api_info['Dcvc'],
+                'Rvg2c' => $api_info['Rvg2c'],
+                'Verify_key' => $api_info['Verify_key'],
                 'Od_sob' => $item_name,
                 'Pay_zg' => 82,
                 'Pay_subzg' => $method_class::SHIPPING_TYPE,
@@ -275,7 +275,7 @@ class RY_WT_WC_SmilePay_Shipping_Api extends RY_WT_SmilePay_Api
 
         RY_WT_WC_SmilePay_Shipping::instance()->log('Generating no for #' . $order->get_id(), WC_Log_Levels::INFO);
 
-        list($Dcvc, $Rvg2c, $Verify_key, $Rot_check) = RY_WT_WC_SmilePay_Gateway::instance()->get_api_info();
+        $api_info = RY_WT_WC_SmilePay_Gateway::instance()->get_api_info();
 
         $shipping_list = $order->get_meta('_smilepay_shipping_info', true);
         if (!is_array($shipping_list)) {
@@ -286,8 +286,8 @@ class RY_WT_WC_SmilePay_Shipping_Api extends RY_WT_SmilePay_Api
         }
 
         $args = [
-            'Dcvc' => $Dcvc,
-            'Verify_key' => $Verify_key,
+            'Dcvc' => $api_info['Dcvc'],
+            'Verify_key' => $api_info['Verify_key'],
             'smseid' => $shipping_list[$get_smse_ID]['ID'],
         ];
         switch ($shipping_list[$get_smse_ID]['LogisticsType']) {
@@ -369,12 +369,12 @@ class RY_WT_WC_SmilePay_Shipping_Api extends RY_WT_SmilePay_Api
 
     public function get_print_url($info_list, $print_type)
     {
-        list($Dcvc, $Rvg2c, $Verify_key, $Rot_check) = RY_WT_WC_SmilePay_Gateway::instance()->get_api_info();
+        $api_info = RY_WT_WC_SmilePay_Gateway::instance()->get_api_info();
 
         $args = [
-            'Dcvc' => $Dcvc,
-            'Rvg2c' => $Rvg2c,
-            'Verify_key' => $Verify_key,
+            'Dcvc' => $api_info['Dcvc'],
+            'Rvg2c' => $api_info['Rvg2c'],
+            'Verify_key' => $api_info['Verify_key'],
         ];
 
         $info_list = array_filter($info_list);

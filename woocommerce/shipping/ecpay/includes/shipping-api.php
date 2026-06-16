@@ -50,7 +50,7 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_ECPay_Api
         $declare_over_type = RY_WT::get_option('ecpay_shipping_declare_over', 'keep');
         $default_weight = RY_WT::get_option('shipping_product_weight', 0);
 
-        list($MerchantID, $HashKey, $HashIV, $cvs_type) = RY_WT_WC_ECPay_Shipping::instance()->get_api_info();
+        $api_info = RY_WT_WC_ECPay_Shipping::instance()->get_api_info();
         foreach ($order->get_items('shipping') as $shipping_item) {
             $shipping_method = RY_WT_WC_ECPay_Shipping::instance()->get_order_support_shipping($shipping_item);
             if (false === $shipping_method) {
@@ -74,7 +74,7 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_ECPay_Api
             RY_WT_WC_ECPay_Shipping::instance()->log('Generating no for #' . $order->get_id(), WC_Log_Levels::INFO);
 
             $args = [
-                'MerchantID' => $MerchantID,
+                'MerchantID' => $api_info['MerchantID'],
                 'LogisticsType' => $method_class::SHIPPING_TYPE,
                 'GoodsName' => $item_name,
                 'IsCollection' => 'N',
@@ -150,7 +150,7 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_ECPay_Api
 
                 if ('CVS' === $args['LogisticsType']) {
                     $args['LogisticsSubType'] = $method_class::Shipping_Sub_Type;
-                    if ('C2C' === $cvs_type) {
+                    if ('C2C' === RY_WT::get_option('ecpay_shipping_cvs_type', 'C2C')) {
                         $args['LogisticsSubType'] .= 'C2C';
                     }
                     if ('UNIMART' === $args['LogisticsSubType']) {
@@ -197,7 +197,7 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_ECPay_Api
                         $args['GoodsAmount'] = $args['CollectionAmount'];
                     }
                 }
-                $args['CheckMacValue'] = $this->generate_hash_value($args, $HashKey, $HashIV, 'md5');
+                $args['CheckMacValue'] = $this->generate_hash_value($args, $api_info['HashKey'], $api_info['HashIV'], 'md5');
                 RY_WT_WC_ECPay_Shipping::instance()->log('Shipping POST data', WC_Log_Levels::INFO, ['data' => $args]);
 
                 $response = $this->link_server($url, $args);
@@ -269,10 +269,10 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_ECPay_Api
 
     public function get_print_form(array $info, string $mode = 'a4')
     {
-        list($MerchantID, $HashKey, $HashIV, $cvs_type) = RY_WT_WC_ECPay_Shipping::instance()->get_api_info();
+        $api_info = RY_WT_WC_ECPay_Shipping::instance()->get_api_info();
 
         $data = [
-            'MerchantID' => $MerchantID,
+            'MerchantID' => $api_info['MerchantID'],
             'LogisticsID' => [],
             'LogisticsSubType' => $info[0]['LogisticsSubType'],
             'PrintMode' => $mode === 'a6' ? 2 : 1,
@@ -285,14 +285,14 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_ECPay_Api
         }
 
         RY_WT_WC_ECPay_Shipping::instance()->log('Print POST data', WC_Log_Levels::INFO, ['data' => $args]);
-        $args = $this->build_args($data, $MerchantID);
+        $args = $this->build_args($data, $api_info['MerchantID']);
 
         if (RY_WT_WC_ECPay_Shipping::instance()->is_testmode()) {
             $url = $this->api_test_url['print'];
         } else {
             $url = $this->api_url['print'];
         }
-        $response = $this->link_v2_server($url, $args, $HashKey, $HashIV);
+        $response = $this->link_v2_server($url, $args, $api_info['HashKey'], $api_info['HashIV']);
         if (is_wp_error($response)) {
             RY_WT_WC_ECPay_Shipping::instance()->log('Print POST failed', WC_Log_Levels::ERROR, ['info' => $response->get_error_messages()]);
             exit;
@@ -309,10 +309,10 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_ECPay_Api
 
     public function get_info($info_ID)
     {
-        list($MerchantID, $HashKey, $HashIV, $cvs_type) = RY_WT_WC_ECPay_Shipping::instance()->get_api_info();
+        $api_info = RY_WT_WC_ECPay_Shipping::instance()->get_api_info();
 
         $args = [
-            'MerchantID' => $MerchantID,
+            'MerchantID' => $api_info['MerchantID'],
             'AllPayLogisticsID' => $info_ID,
             'TimeStamp' => new DateTime('now', new DateTimeZone('Asia/Taipei')),
         ];
@@ -323,7 +323,7 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_ECPay_Api
         } else {
             $url = $this->api_url['query'];
         }
-        $args['CheckMacValue'] = $this->generate_hash_value($args, $HashKey, $HashIV, 'md5');
+        $args['CheckMacValue'] = $this->generate_hash_value($args, $api_info['HashKey'], $api_info['HashIV'], 'md5');
 
         $response = $this->link_server($url, $args);
         if (is_wp_error($response)) {
@@ -343,7 +343,7 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_ECPay_Api
             return;
         }
 
-        $check_value = $this->generate_hash_value($result, $HashKey, $HashIV, 'md5');
+        $check_value = $this->generate_hash_value($result, $api_info['HashKey'], $api_info['HashIV'], 'md5');
         if ($check_value !== $result['CheckMacValue']) {
             RY_WT_WC_ECPay_Shipping::instance()->log('Query request check failed', WC_Log_Levels::WARNING, ['data' => $args, 'result' => $result['CheckMacValue'], 'check_value' => $check_value]);
             return;

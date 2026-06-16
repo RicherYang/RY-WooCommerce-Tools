@@ -52,7 +52,7 @@ final class RY_WT_WC_PAYUNi_Gateway_Admin
     {
         if (!preg_match('/^[a-z0-9]*$/i', RY_WT::get_option('payuni_gateway_order_prefix'))) {
             WC_Admin_Settings::add_error(__('Order no prefix only letters and numbers allowed', 'ry-woocommerce-tools'));
-            RY_WT::update_option('payuni_gateway_order_prefix', '');
+            RY_WT::update_option('payuni_gateway_order_prefix', '', false);
         }
     }
 }

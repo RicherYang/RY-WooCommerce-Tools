@@ -85,10 +85,10 @@ final class RY_WT_WC_NewebPay_Gateway extends RY_WT_Model
 
     public function get_api_info()
     {
-        $MerchantID = (string) RY_WT::get_option('newebpay_gateway_MerchantID');
-        $HashKey = (string) RY_WT::get_option('newebpay_gateway_HashKey');
-        $HashIV = (string) RY_WT::get_option('newebpay_gateway_HashIV');
-
-        return [$MerchantID, $HashKey, $HashIV];
+        return RY_WT::get_option('newebpay_gateway_apikey', [
+            'MerchantID' => '',
+            'HashKey' => '',
+            'HashIV' => '',
+        ]);
     }
 }

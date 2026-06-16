@@ -31,14 +31,14 @@ abstract class RY_WT_PAYUNi_Api extends RY_WT_Api
 
     protected function build_args($data, $version)
     {
-        list($MerID, $HashKey, $HashIV) = RY_WT_WC_PAYUNi_Gateway::instance()->get_api_info();
+        $api_info = RY_WT_WC_PAYUNi_Gateway::instance()->get_api_info();
 
         $args = [
-            'MerID' => $MerID,
-            'EncryptInfo' => $this->data_encrypt($data, $HashKey, $HashIV),
+            'MerID' => $api_info['MerID'],
+            'EncryptInfo' => $this->data_encrypt($data, $api_info['HashKey'], $api_info['HashIV']),
             'Version' => $version,
         ];
-        $args['HashInfo'] = $this->generate_hash_value($args['EncryptInfo'], $HashKey, $HashIV);
+        $args['HashInfo'] = $this->generate_hash_value($args['EncryptInfo'], $api_info['HashKey'], $api_info['HashIV']);
 
         return $args;
     }

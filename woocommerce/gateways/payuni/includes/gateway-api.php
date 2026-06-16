@@ -42,13 +42,13 @@ class RY_WT_WC_PAYUNi_Gateway_Api extends RY_WT_PAYUNi_Api
         $notify_url = WC()->api_request_url('ry_payuni_callback', true);
         $return_url = $this->get_3rd_return_url($order);
 
-        list($MerID, $HashKey, $HashIV) = RY_WT_WC_PAYUNi_Gateway::instance()->get_api_info();
+        $api_info = RY_WT_WC_PAYUNi_Gateway::instance()->get_api_info();
 
         $item_name = $this->get_item_name(RY_WT::get_option('payment_item_name', ''), $order);
         $item_name = mb_substr($item_name, 0, 195);
 
         $data = [
-            'MerID' => $MerID,
+            'MerID' => $api_info['MerID'],
             'MerTradeNo' => $this->generate_trade_no($order->get_id(), RY_WT::get_option('payuni_gateway_order_prefix')),
             'TradeAmt' => (int) ceil($order->get_total()),
             'Timestamp' => new DateTime('now', new DateTimeZone('Asia/Taipei')),
@@ -93,10 +93,10 @@ class RY_WT_WC_PAYUNi_Gateway_Api extends RY_WT_PAYUNi_Api
 
     public function get_info($order)
     {
-        list($MerID, $HashKey, $HashIV) = RY_WT_WC_PAYUNi_Gateway::instance()->get_api_info();
+        $api_info = RY_WT_WC_PAYUNi_Gateway::instance()->get_api_info();
 
         $data = [
-            'MerID' => $MerID,
+            'MerID' => $api_info['MerID'],
             'MerTradeNo' => $order->get_meta('_payuni_MerTradeNo', true),
             'Timestamp' => new DateTime('now', new DateTimeZone('Asia/Taipei')),
         ];
@@ -117,10 +117,10 @@ class RY_WT_WC_PAYUNi_Gateway_Api extends RY_WT_PAYUNi_Api
     {
         $amount = (int) $amount;
 
-        list($MerID, $HashKey, $HashIV) = RY_WT_WC_PAYUNi_Gateway::instance()->get_api_info();
+        $api_info = RY_WT_WC_PAYUNi_Gateway::instance()->get_api_info();
 
         $data = [
-            'MerID' => $MerID,
+            'MerID' => $api_info['MerID'],
             'TradeNo' => $order->get_transaction_id(),
             'Timestamp' => new DateTime('now', new DateTimeZone('Asia/Taipei')),
             'CloseType' => $action === 'C' ? '1' : '2',
@@ -141,10 +141,10 @@ class RY_WT_WC_PAYUNi_Gateway_Api extends RY_WT_PAYUNi_Api
 
     public function credit_cancel($order)
     {
-        list($MerID, $HashKey, $HashIV) = RY_WT_WC_PAYUNi_Gateway::instance()->get_api_info();
+        $api_info = RY_WT_WC_PAYUNi_Gateway::instance()->get_api_info();
 
         $data = [
-            'MerID' => $MerID,
+            'MerID' => $api_info['MerID'],
             'TradeNo' => $order->get_transaction_id(),
             'Timestamp' => new DateTime('now', new DateTimeZone('Asia/Taipei')),
         ];
@@ -165,10 +165,10 @@ class RY_WT_WC_PAYUNi_Gateway_Api extends RY_WT_PAYUNi_Api
     {
         $amount = (int) $amount;
 
-        list($MerID, $HashKey, $HashIV) = RY_WT_WC_PAYUNi_Gateway::instance()->get_api_info();
+        $api_info = RY_WT_WC_PAYUNi_Gateway::instance()->get_api_info();
 
         $data = [
-            'MerID' => $MerID,
+            'MerID' => $api_info['MerID'],
             'TradeNo' => $order->get_transaction_id(),
             'Timestamp' => new DateTime('now', new DateTimeZone('Asia/Taipei')),
             'TradeAmt' => $amount,
@@ -190,10 +190,10 @@ class RY_WT_WC_PAYUNi_Gateway_Api extends RY_WT_PAYUNi_Api
     {
         $amount = (int) $amount;
 
-        list($MerID, $HashKey, $HashIV) = RY_WT_WC_PAYUNi_Gateway::instance()->get_api_info();
+        $api_info = RY_WT_WC_PAYUNi_Gateway::instance()->get_api_info();
 
         $data = [
-            'MerID' => $MerID,
+            'MerID' => $api_info['MerID'],
             'TradeNo' => $order->get_transaction_id(),
             'Timestamp' => new DateTime('now', new DateTimeZone('Asia/Taipei')),
             'TradeAmt' => $amount,
@@ -215,10 +215,10 @@ class RY_WT_WC_PAYUNi_Gateway_Api extends RY_WT_PAYUNi_Api
     {
         $amount = (int) $amount;
 
-        list($MerID, $HashKey, $HashIV) = RY_WT_WC_PAYUNi_Gateway::instance()->get_api_info();
+        $api_info = RY_WT_WC_PAYUNi_Gateway::instance()->get_api_info();
 
         $data = [
-            'MerID' => $MerID,
+            'MerID' => $api_info['MerID'],
             'TradeNo' => $order->get_transaction_id(),
             'Timestamp' => new DateTime('now', new DateTimeZone('Asia/Taipei')),
             'TradeAmt' => $amount,
@@ -240,10 +240,10 @@ class RY_WT_WC_PAYUNi_Gateway_Api extends RY_WT_PAYUNi_Api
     {
         $amount = (int) $amount;
 
-        list($MerID, $HashKey, $HashIV) = RY_WT_WC_PAYUNi_Gateway::instance()->get_api_info();
+        $api_info = RY_WT_WC_PAYUNi_Gateway::instance()->get_api_info();
 
         $data = [
-            'MerID' => $MerID,
+            'MerID' => $api_info['MerID'],
             'TradeNo' => $order->get_transaction_id(),
             'Timestamp' => new DateTime('now', new DateTimeZone('Asia/Taipei')),
             'TradeAmt' => $amount,
@@ -302,7 +302,7 @@ class RY_WT_WC_PAYUNi_Gateway_Api extends RY_WT_PAYUNi_Api
             return;
         }
 
-        list($MerID, $HashKey, $HashIV) = RY_WT_WC_PAYUNi_Gateway::instance()->get_api_info();
+        $api_info = RY_WT_WC_PAYUNi_Gateway::instance()->get_api_info();
 
         $check_value = $this->get_hash_value($ipn_info);
         if (empty($check_value)) {
@@ -311,13 +311,13 @@ class RY_WT_WC_PAYUNi_Gateway_Api extends RY_WT_PAYUNi_Api
         }
 
         $info_value = $this->get_info_value($ipn_info);
-        $ipn_info_check_value = $this->generate_hash_value($info_value, $HashKey, $HashIV);
+        $ipn_info_check_value = $this->generate_hash_value($info_value, $api_info['HashKey'], $api_info['HashIV']);
         if ($check_value !== $ipn_info_check_value) {
             RY_WT_WC_PAYUNi_Gateway::instance()->log($log_prefix . ' result check failed', WC_Log_Levels::WARNING, ['data' => $ipn_info, 'self' => $ipn_info_check_value]);
             return;
         }
 
-        $info_value = $this->data_decrypt($info_value, $HashKey, $HashIV);
+        $info_value = $this->data_decrypt($info_value, $api_info['HashKey'], $api_info['HashIV']);
         parse_str($info_value, $info_value);
 
         return $info_value;

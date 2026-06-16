@@ -28,6 +28,7 @@ return [
         'type' => 'text',
         'desc' => __('The prefix string of order no. Only letters and numbers allowed.', 'ry-woocommerce-tools'),
         'desc_tip' => true,
+        'autoload' => false,
     ],
     [
         'title' => __('payment item name', 'ry-woocommerce-tools'),
@@ -36,6 +37,7 @@ return [
         'default' => '',
         'desc' => __('If empty use the first product name.', 'ry-woocommerce-tools'),
         'desc_tip' => true,
+        'autoload' => false,
     ],
     [
         'id' => 'base_options',
@@ -56,21 +58,24 @@ return [
     ],
     [
         'title' => _x('MerchantID', 'NewebPay', 'ry-woocommerce-tools'),
-        'id' => RY_WT::OPTION_PREFIX . 'newebpay_gateway_MerchantID',
+        'id' => RY_WT::OPTION_PREFIX . 'newebpay_gateway_apikey[MerchantID]',
         'type' => 'text',
         'default' => '',
+        'autoload' => false,
     ],
     [
         'title' => _x('HashKey', 'NewebPay', 'ry-woocommerce-tools'),
-        'id' => RY_WT::OPTION_PREFIX . 'newebpay_gateway_HashKey',
+        'id' => RY_WT::OPTION_PREFIX . 'newebpay_gateway_apikey[HashKey]',
         'type' => 'text',
         'default' => '',
+        'autoload' => false,
     ],
     [
         'title' => _x('HashIV', 'NewebPay', 'ry-woocommerce-tools'),
-        'id' => RY_WT::OPTION_PREFIX . 'newebpay_gateway_HashIV',
+        'id' => RY_WT::OPTION_PREFIX . 'newebpay_gateway_apikey[HashIV]',
         'type' => 'text',
         'default' => '',
+        'autoload' => false,
     ],
     [
         'id' => 'api_options',

@@ -51,9 +51,9 @@ class RY_WT_WC_ECPay_Gateway_Response extends RY_WT_ECPay_Api
         $check_value = $this->get_hash_value($ipn_info);
         if ($check_value) {
             RY_WT_WC_ECPay_Gateway::instance()->log('IPN request', WC_Log_Levels::INFO, ['data' => $ipn_info]);
-            list($MerchantID, $HashKey, $HashIV) = RY_WT_WC_ECPay_Gateway::instance()->get_api_info();
+            $api_info = RY_WT_WC_ECPay_Gateway::instance()->get_api_info();
 
-            $ipn_info_check_value = $this->generate_hash_value($ipn_info, $HashKey, $HashIV, 'sha256');
+            $ipn_info_check_value = $this->generate_hash_value($ipn_info, $api_info['HashKey'], $api_info['HashIV'], 'sha256');
             if ($check_value === $ipn_info_check_value) {
                 return true;
             }

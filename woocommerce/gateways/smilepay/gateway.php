@@ -90,17 +90,19 @@ final class RY_WT_WC_SmilePay_Gateway extends RY_WT_Model
     public function get_api_info()
     {
         if ($this->is_testmode()) {
-            $Dcvc = '107';
-            $Rvg2c = '1';
-            $Verify_key = '174A02F97A95F72CE301137B3F98D128';
-            $Rot_check = '1111';
-        } else {
-            $Dcvc = (string) RY_WT::get_option('smilepay_gateway_Dcvc');
-            $Rvg2c = (string) RY_WT::get_option('smilepay_gateway_Rvg2c');
-            $Verify_key = (string) RY_WT::get_option('smilepay_gateway_Verify_key');
-            $Rot_check = (string) RY_WT::get_option('smilepay_gateway_Rot_check');
+            return [
+                'Dcvc' => '107',
+                'Rvg2c' => '1',
+                'Verify_key' => '174A02F97A95F72CE301137B3F98D128',
+                'Rot_check' => '1111',
+            ];
         }
 
-        return [$Dcvc, $Rvg2c, $Verify_key, $Rot_check];
+        return RY_WT::get_option('smilepay_gateway_apikey', [
+            'Dcvc' => '',
+            'Rvg2c' => '',
+            'Verify_key' => '',
+            'Rot_check' => '',
+        ]);
     }
 }

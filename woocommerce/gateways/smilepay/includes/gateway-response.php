@@ -40,12 +40,12 @@ class RY_WT_WC_SmilePay_Gateway_Response extends RY_WT_SmilePay_Api
         $check_value = $this->get_hash_value($ipn_info);
         if ($check_value) {
             RY_WT_WC_SmilePay_Gateway::instance()->log('IPN request', WC_Log_Levels::INFO, ['data' => $ipn_info]);
-            list($Dcvc, $Rvg2c, $Verify_key, $Rot_check) = RY_WT_WC_SmilePay_Gateway::instance()->get_api_info();
+            $api_info = RY_WT_WC_SmilePay_Gateway::instance()->get_api_info();
 
             $order_ID = $this->get_order_id($ipn_info, RY_WT::get_option('smilepay_gateway_order_prefix'));
             if ($order = wc_get_order($order_ID)) {
                 $ipn_info_check_value = [];
-                $ipn_info_check_value[0] = str_pad(substr($Rot_check, -4), 4, '0', STR_PAD_LEFT);
+                $ipn_info_check_value[0] = str_pad(substr($api_info['Rot_check'], -4), 4, '0', STR_PAD_LEFT);
                 $ipn_info_check_value[1] = (int) ceil($order->get_total());
                 $ipn_info_check_value[1] = str_pad($ipn_info_check_value[1], 8, '0', STR_PAD_LEFT);
                 $ipn_info_check_value[2] = $this->get_transaction_id($ipn_info);

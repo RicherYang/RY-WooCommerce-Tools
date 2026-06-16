@@ -30,13 +30,13 @@ class RY_WT_WC_NewebPay_Gateway_Api extends RY_WT_NewebPay_Api
         $notify_url = WC()->api_request_url('ry_newebpay_callback', true);
         $return_url = $this->get_3rd_return_url($order);
 
-        list($MerchantID, $HashKey, $HashIV) = RY_WT_WC_NewebPay_Gateway::instance()->get_api_info();
+        $api_info = RY_WT_WC_NewebPay_Gateway::instance()->get_api_info();
 
         $item_name = $this->get_item_name(RY_WT::get_option('payment_item_name', ''), $order);
         $item_name = mb_substr($item_name, 0, 40);
 
         $args = [
-            'MerchantID' => $MerchantID,
+            'MerchantID' => $api_info['MerchantID'],
             'RespondType' => 'JSON',
             'TimeStamp' => new DateTime('now', new DateTimeZone('Asia/Taipei')),
             'Version' => '2.3',
@@ -89,12 +89,12 @@ class RY_WT_WC_NewebPay_Gateway_Api extends RY_WT_NewebPay_Api
 
         $args = $this->add_type_info($args, $order, $gateway);
         $form_data = [
-            'MerchantID' => $MerchantID,
-            'TradeInfo' => $this->args_encrypt($args, $HashKey, $HashIV),
+            'MerchantID' => $api_info['MerchantID'],
+            'TradeInfo' => $this->args_encrypt($args, $api_info['HashKey'], $api_info['HashIV']),
             'Version' => '2.3',
             'EncryptType' => 0,
         ];
-        $form_data['TradeSha'] = $this->generate_hash_value($form_data['TradeInfo'], $HashKey, $HashIV);
+        $form_data['TradeSha'] = $this->generate_hash_value($form_data['TradeInfo'], $api_info['HashKey'], $api_info['HashIV']);
         RY_WT_WC_NewebPay_Gateway::instance()->log('Generating payment by ' . $gateway->id . ' for #' . $order->get_id(), WC_Log_Levels::INFO, ['form' => $form_data, 'data' => $args]);
 
         $order->update_meta_data('_newebpay_MerchantOrderNo', $args['MerchantOrderNo']);
@@ -113,10 +113,10 @@ class RY_WT_WC_NewebPay_Gateway_Api extends RY_WT_NewebPay_Api
 
     public function get_info($order)
     {
-        list($MerchantID, $HashKey, $HashIV) = RY_WT_WC_NewebPay_Gateway::instance()->get_api_info();
+        $api_info = RY_WT_WC_NewebPay_Gateway::instance()->get_api_info();
 
         $args = [
-            'MerchantID' => $MerchantID,
+            'MerchantID' => $api_info['MerchantID'],
             'Version' => '1.3',
             'RespondType' => 'JSON',
             'TimeStamp' => new DateTime('now', new DateTimeZone('Asia/Taipei')),
@@ -124,7 +124,7 @@ class RY_WT_WC_NewebPay_Gateway_Api extends RY_WT_NewebPay_Api
             'Amt' => (int) ceil($order->get_total()),
         ];
         $args['TimeStamp'] = $args['TimeStamp']->getTimestamp();
-        $args['CheckValue'] = $this->generate_hash_value($args, $HashKey, $HashIV);
+        $args['CheckValue'] = $this->generate_hash_value($args, $api_info['HashKey'], $api_info['HashIV']);
 
         if (RY_WT_WC_NewebPay_Gateway::instance()->is_testmode()) {
             $url = $this->api_test_url['query'];

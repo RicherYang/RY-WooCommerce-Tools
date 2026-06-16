@@ -88,16 +88,18 @@ final class RY_WT_WC_ECPay_Gateway extends RY_WT_Model
 
     public function get_api_info()
     {
-        $MerchantID = RY_WT::get_option('ecpay_gateway_MerchantID');
         if ($this->is_testmode()) {
-            $MerchantID = '3002607';
-            $HashKey = 'pwFHCqoQZGmho4w6';
-            $HashIV = 'EkRm7iFT261dpevs';
-        } else {
-            $HashKey = (string) RY_WT::get_option('ecpay_gateway_HashKey');
-            $HashIV = (string) RY_WT::get_option('ecpay_gateway_HashIV');
+            return [
+                'MerchantID' => '3002607',
+                'HashKey' => 'pwFHCqoQZGmho4w6',
+                'HashIV' => 'EkRm7iFT261dpevs',
+            ];
         }
 
-        return [$MerchantID, $HashKey, $HashIV];
+        return RY_WT::get_option('ecpay_gateway_apikey', [
+            'MerchantID' => '',
+            'HashKey' => '',
+            'HashIV' => '',
+        ]);
     }
 }

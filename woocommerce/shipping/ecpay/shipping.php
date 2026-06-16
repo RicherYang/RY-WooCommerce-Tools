@@ -80,7 +80,7 @@ final class RY_WT_WC_ECPay_Shipping extends RY_WT_Shipping_Model
     public function add_method($shipping_methods)
     {
         $shipping_methods = array_merge($shipping_methods, self::$support_methods);
-        if ('B2C' === RY_WT::get_option('ecpay_shipping_cvs_type')) {
+        if ('B2C' === RY_WT::get_option('ecpay_shipping_cvs_type', 'C2C')) {
             unset($shipping_methods['ry_ecpay_shipping_cvs_ok']);
         }
 
@@ -291,23 +291,27 @@ final class RY_WT_WC_ECPay_Shipping extends RY_WT_Shipping_Model
 
     public function get_api_info()
     {
-        $cvs_type = RY_WT::get_option('ecpay_shipping_cvs_type');
+        $cvs_type = RY_WT::get_option('ecpay_shipping_cvs_type', 'C2C');
         if ($this->is_testmode()) {
             if ('C2C' === $cvs_type) {
-                $MerchantID = '2000933';
-                $HashKey = 'XBERn1YOvpM9nfZc';
-                $HashIV = 'h1ONHk4P4yqbl5LK';
+                return [
+                    'MerchantID' => '2000933',
+                    'HashKey' => 'XBERn1YOvpM9nfZc',
+                    'HashIV' => 'h1ONHk4P4yqbl5LK',
+                ];
             } else {
-                $MerchantID = '2000132';
-                $HashKey = '5294y06JbISpM5x9';
-                $HashIV = 'v77hoKGq4kWxNNIS';
+                return [
+                    'MerchantID' => '2000132',
+                    'HashKey' => '5294y06JbISpM5x9',
+                    'HashIV' => 'v77hoKGq4kWxNNIS',
+                ];
             }
-        } else {
-            $MerchantID = (string) RY_WT::get_option('ecpay_shipping_MerchantID');
-            $HashKey = (string) RY_WT::get_option('ecpay_shipping_HashKey');
-            $HashIV = (string) RY_WT::get_option('ecpay_shipping_HashIV');
         }
 
-        return [$MerchantID, $HashKey, $HashIV, $cvs_type];
+        return RY_WT::get_option('ecpay_shipping_apikey', [
+            'MerchantID' => '',
+            'HashKey' => '',
+            'HashIV' => '',
+        ]);
     }
 }

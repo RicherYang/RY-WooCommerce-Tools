@@ -28,6 +28,7 @@ return [
         'type' => 'text',
         'desc' => __('The prefix string of order no. Only letters and numbers allowed.', 'ry-woocommerce-tools'),
         'desc_tip' => true,
+        'autoload' => false,
     ],
     [
         'title' => __('payment item name', 'ry-woocommerce-tools'),
@@ -36,6 +37,7 @@ return [
         'default' => '',
         'desc' => __('If empty use the first product name.', 'ry-woocommerce-tools'),
         'desc_tip' => true,
+        'autoload' => false,
     ],
     [
         'id' => 'base_options',
@@ -56,27 +58,31 @@ return [
     ],
     [
         'title' => _x('Dcvc', 'SmilePay', 'ry-woocommerce-tools'),
-        'id' => RY_WT::OPTION_PREFIX . 'smilepay_gateway_Dcvc',
+        'id' => RY_WT::OPTION_PREFIX . 'smilepay_gateway_apikey[Dcvc]',
         'type' => 'text',
         'default' => '',
+        'autoload' => false,
     ],
     [
         'title' => _x('Rvg2c', 'SmilePay', 'ry-woocommerce-tools'),
-        'id' => RY_WT::OPTION_PREFIX . 'smilepay_gateway_Rvg2c',
+        'id' => RY_WT::OPTION_PREFIX . 'smilepay_gateway_apikey[Rvg2c]',
         'type' => 'text',
         'default' => '',
+        'autoload' => false,
     ],
     [
         'title' => _x('Verify_key', 'SmilePay', 'ry-woocommerce-tools'),
-        'id' => RY_WT::OPTION_PREFIX . 'smilepay_gateway_Verify_key',
+        'id' => RY_WT::OPTION_PREFIX . 'smilepay_gateway_apikey[Verify_key]',
         'type' => 'text',
         'default' => '',
+        'autoload' => false,
     ],
     [
         'title' => _x('Rot_check', 'SmilePay', 'ry-woocommerce-tools'),
-        'id' => RY_WT::OPTION_PREFIX . 'smilepay_gateway_Rot_check',
+        'id' => RY_WT::OPTION_PREFIX . 'smilepay_gateway_apikey[Rot_check]',
         'type' => 'text',
         'default' => '',
+        'autoload' => false,
     ],
     [
         'id' => 'api_options',

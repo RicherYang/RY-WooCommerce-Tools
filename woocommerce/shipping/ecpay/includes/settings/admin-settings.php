@@ -57,6 +57,7 @@ return [
         'type' => 'text',
         'desc' => __('The prefix string of order no. Only letters and numbers allowed.', 'ry-woocommerce-tools'),
         'desc_tip' => true,
+        'autoload' => false,
     ],
     [
         'title' => __('shipping item name', 'ry-woocommerce-tools'),
@@ -65,6 +66,7 @@ return [
         'default' => '',
         'desc' => __('If empty use the first product name.', 'ry-woocommerce-tools'),
         'desc_tip' => true,
+        'autoload' => false,
     ],
     [
         'title' => __('Cvs shipping type', 'ry-woocommerce-tools'),
@@ -81,6 +83,7 @@ return [
         'type' => 'text',
         'desc' => __('Name length between 1 to 10 letter', 'ry-woocommerce-tools'),
         'desc_tip' => true,
+        'autoload' => false,
     ],
     [
         'title' => __('Sender phone', 'ry-woocommerce-tools'),
@@ -92,6 +95,7 @@ return [
         'custom_attributes' => [
             'pattern' => '\(0\d{1,2}\)\d{6,8}(#\d+)?',
         ],
+        'autoload' => false,
     ],
     [
         'title' => __('Sender cellphone', 'ry-woocommerce-tools'),
@@ -103,16 +107,19 @@ return [
         'custom_attributes' => [
             'pattern' => '09\d{8}',
         ],
+        'autoload' => false,
     ],
     [
         'title' => __('Sender zipcode ( Home delivery )', 'ry-woocommerce-tools'),
         'id' => RY_WT::OPTION_PREFIX . 'ecpay_shipping_sender_zipcode',
         'type' => 'text',
+        'autoload' => false,
     ],
     [
         'title' => __('Sender address ( Home delivery )', 'ry-woocommerce-tools'),
         'id' => RY_WT::OPTION_PREFIX . 'ecpay_shipping_sender_address',
         'type' => 'text',
+        'autoload' => false,
     ],
     [
         'title' => __('Shipping declare amount mode', 'ry-woocommerce-tools'),
@@ -170,21 +177,24 @@ return [
     ],
     [
         'title' => _x('MerchantID', 'ECPay', 'ry-woocommerce-tools'),
-        'id' => RY_WT::OPTION_PREFIX . 'ecpay_shipping_MerchantID',
+        'id' => RY_WT::OPTION_PREFIX . 'ecpay_shipping_apikey[MerchantID]',
         'type' => 'text',
         'default' => '',
+        'autoload' => false,
     ],
     [
         'title' => _x('HashKey', 'ECPay', 'ry-woocommerce-tools'),
-        'id' => RY_WT::OPTION_PREFIX . 'ecpay_shipping_HashKey',
+        'id' => RY_WT::OPTION_PREFIX . 'ecpay_shipping_apikey[HashKey]',
         'type' => 'text',
         'default' => '',
+        'autoload' => false,
     ],
     [
         'title' => _x('HashIV', 'ECPay', 'ry-woocommerce-tools'),
-        'id' => RY_WT::OPTION_PREFIX . 'ecpay_shipping_HashIV',
+        'id' => RY_WT::OPTION_PREFIX . 'ecpay_shipping_apikey[HashIV]',
         'type' => 'text',
         'default' => '',
+        'autoload' => false,
     ],
     [
         'id' => 'api_options',

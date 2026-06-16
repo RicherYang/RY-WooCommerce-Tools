@@ -51,10 +51,10 @@ class RY_WT_WC_NewebPay_Gateway_Response extends RY_WT_NewebPay_Api
         $check_value = $this->get_hash_value($ipn_info);
         if ($check_value) {
             RY_WT_WC_NewebPay_Gateway::instance()->log('IPN request', WC_Log_Levels::INFO, ['data' => $ipn_info]);
-            list($MerchantID, $HashKey, $HashIV) = RY_WT_WC_NewebPay_Gateway::instance()->get_api_info();
+            $api_info = RY_WT_WC_NewebPay_Gateway::instance()->get_api_info();
 
             $info_value = $this->get_info_value($ipn_info);
-            $ipn_info_check_value = $this->generate_hash_value($info_value, $HashKey, $HashIV);
+            $ipn_info_check_value = $this->generate_hash_value($info_value, $api_info['HashKey'], $api_info['HashIV']);
             if ($check_value === $ipn_info_check_value) {
                 return true;
             }
@@ -66,10 +66,10 @@ class RY_WT_WC_NewebPay_Gateway_Response extends RY_WT_NewebPay_Api
 
     public function doing_callback($ipn_info)
     {
-        list($MerchantID, $HashKey, $HashIV) = RY_WT_WC_NewebPay_Gateway::instance()->get_api_info();
+        $api_info = RY_WT_WC_NewebPay_Gateway::instance()->get_api_info();
 
         $info_value = $this->get_info_value($ipn_info);
-        $info_value = $this->args_decrypt($info_value, $HashKey, $HashIV);
+        $info_value = $this->args_decrypt($info_value, $api_info['HashKey'], $api_info['HashIV']);
         $info_value = json_decode($info_value);
         RY_WT_WC_NewebPay_Gateway::instance()->log('IPN request decrypt', WC_Log_Levels::INFO, ['data' => $info_value]);
 

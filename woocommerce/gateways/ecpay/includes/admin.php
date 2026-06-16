@@ -37,12 +37,11 @@ final class RY_WT_WC_ECPay_Gateway_Admin
             $settings = include RY_WT_PLUGIN_DIR . 'woocommerce/gateways/ecpay/includes/settings/admin-settings.php';
 
             if (RY_WT_WC_ECPay_Gateway::instance()->is_testmode()) {
-                list($MerchantID, $HashKey, $HashIV) = RY_WT_WC_ECPay_Gateway::instance()->get_api_info();
-                $setting_idx = array_search(RY_WT::OPTION_PREFIX . 'ecpay_gateway_MerchantID', array_column($settings, 'id'));
+                $setting_idx = array_search(RY_WT::OPTION_PREFIX . 'ecpay_gateway_apikey[MerchantID]', array_column($settings, 'id'));
                 $settings[$setting_idx]['desc'] = '<p class="description">' . sprintf(
                     /* translators: %s: MerchantID */
                     __('Used MerchantID "%s"', 'ry-woocommerce-tools'),
-                    $MerchantID,
+                    RY_WT_WC_ECPay_Gateway::instance()->get_api_info()['MerchantID'],
                 ) . '</p>';
             }
 
@@ -70,7 +69,7 @@ final class RY_WT_WC_ECPay_Gateway_Admin
     {
         if (!preg_match('/^[a-z0-9]*$/i', RY_WT::get_option('ecpay_gateway_order_prefix'))) {
             WC_Admin_Settings::add_error(__('Order no prefix only letters and numbers allowed', 'ry-woocommerce-tools'));
-            RY_WT::update_option('ecpay_gateway_order_prefix', '');
+            RY_WT::update_option('ecpay_gateway_order_prefix', '', false);
         }
     }
 }

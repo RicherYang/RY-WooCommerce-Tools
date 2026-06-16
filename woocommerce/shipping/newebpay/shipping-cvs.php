@@ -31,8 +31,8 @@ class RY_NewebPay_Shipping_CVS extends RY_WT_WC_NewebPay_Shipping_Method
     {
         $is_available = false;
 
-        list($MerchantID, $HashKey, $HashIV) = RY_WT_WC_NewebPay_Gateway::instance()->get_api_info();
-        if (!empty($MerchantID) && !empty($HashKey) && !empty($HashIV)) {
+        $api_info = RY_WT_WC_NewebPay_Gateway::instance()->get_api_info();
+        if (!empty($api_info['MerchantID']) && !empty($api_info['HashKey']) && !empty($api_info['HashIV'])) {
             $is_available = true;
         }
 

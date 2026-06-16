@@ -9,8 +9,8 @@ abstract class RY_WT_WC_SmilePay_Shipping_Method extends RY_WT_WC_Shipping_Metho
         $available = $this->is_enabled();
 
         if ($available) {
-            list($MerchantID, $HashKey, $HashIV) = RY_WT_WC_SmilePay_Gateway::instance()->get_api_info();
-            if (!empty($MerchantID) && !empty($HashKey) && !empty($HashIV)) {
+            $api_info = RY_WT_WC_SmilePay_Gateway::instance()->get_api_info();
+            if (!empty($api_info['MerchantID']) && !empty($api_info['HashKey']) && !empty($api_info['HashIV'])) {
                 $available = true;
             }
         }
