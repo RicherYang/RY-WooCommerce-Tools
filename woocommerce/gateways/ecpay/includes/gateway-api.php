@@ -249,6 +249,11 @@ class RY_WT_WC_ECPay_Gateway_Api extends RY_WT_ECPay_Api
     {
         if (defined(get_class($gateway) . '::PAYMENT_TYPE')) {
             $args['ChoosePayment'] = $gateway::PAYMENT_TYPE;
+
+            if (defined(get_class($gateway) . '::SUB_PAYMENT_TYPE')) {
+                $args['ChooseSubPayment'] = $gateway::SUB_PAYMENT_TYPE;
+            }
+
             switch ($gateway::PAYMENT_TYPE) {
                 case 'Credit':
                     if (isset($gateway->support_applepay) && $gateway->support_applepay === 'no') {
@@ -264,9 +269,6 @@ class RY_WT_WC_ECPay_Gateway_Api extends RY_WT_ECPay_Api
                 case 'BARCODE':
                 case 'CVS':
                     $args['StoreExpireDate'] = $gateway->expire_date;
-                    break;
-                case 'DigitalPayment':
-                    $args['ChooseSubPayment'] = $gateway::SUB_PAYMENT_TYPE;
                     break;
             }
         }
