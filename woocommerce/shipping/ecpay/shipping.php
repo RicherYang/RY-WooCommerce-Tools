@@ -10,7 +10,6 @@ final class RY_WT_WC_ECPay_Shipping extends RY_WT_Shipping_Model
         'ry_ecpay_shipping_cvs_711' => 'RY_ECPay_Shipping_CVS_711',
         'ry_ecpay_shipping_cvs_family' => 'RY_ECPay_Shipping_CVS_Family',
         'ry_ecpay_shipping_cvs_hilife' => 'RY_ECPay_Shipping_CVS_Hilife',
-        'ry_ecpay_shipping_cvs_ok' => 'RY_ECPay_Shipping_CVS_Ok',
         'ry_ecpay_shipping_home_post' => 'RY_ECPay_Shipping_Home_Post',
         'ry_ecpay_shipping_home_tcat' => 'RY_ECPay_Shipping_Home_Tcat',
     ];
@@ -42,7 +41,6 @@ final class RY_WT_WC_ECPay_Shipping extends RY_WT_Shipping_Model
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/shipping/ecpay/shipping-cvs-711.php';
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/shipping/ecpay/shipping-cvs-family.php';
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/shipping/ecpay/shipping-cvs-hilife.php';
-        include_once RY_WT_PLUGIN_DIR . 'woocommerce/shipping/ecpay/shipping-cvs-ok.php';
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/shipping/ecpay/shipping-home-post.php';
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/shipping/ecpay/shipping-home-tcat.php';
 
@@ -79,12 +77,7 @@ final class RY_WT_WC_ECPay_Shipping extends RY_WT_Shipping_Model
 
     public function add_method($shipping_methods)
     {
-        $shipping_methods = array_merge($shipping_methods, self::$support_methods);
-        if ('B2C' === RY_WT::get_option('ecpay_shipping_cvs_type', 'C2C')) {
-            unset($shipping_methods['ry_ecpay_shipping_cvs_ok']);
-        }
-
-        return $shipping_methods;
+        return array_merge($shipping_methods, self::$support_methods);
     }
 
     public function add_cvs_info($fields)

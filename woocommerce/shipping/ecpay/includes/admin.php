@@ -134,11 +134,6 @@ final class RY_WT_WC_ECPay_Shipping_Admin
                                     $print_list[] = $info;
                                 }
                                 break;
-                            case 'OKMARTC2C':
-                                if ($get_type == 'cvs_ok') {
-                                    $print_list[] = $info;
-                                }
-                                break;
                             case 'TCAT':
                                 if ($get_type == 'home_tcat') {
                                     $print_list[] = $info;

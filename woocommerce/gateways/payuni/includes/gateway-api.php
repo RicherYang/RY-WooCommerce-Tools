@@ -75,7 +75,7 @@ class RY_WT_WC_PAYUNi_Gateway_Api extends RY_WT_PAYUNi_Api
 
         $data = $this->add_type_info($data, $order, $gateway);
         $args = $this->build_args($data, '2.0');
-        RY_WT_WC_PAYUNi_Gateway::instance()->log('Generating payment by ' . $gateway->id . ' for #' . $order->get_id(), WC_Log_Levels::INFO, ['form' => $form_data, 'data' => $data]);
+        RY_WT_WC_PAYUNi_Gateway::instance()->log('Generating payment by ' . $gateway->id . ' for #' . $order->get_id(), WC_Log_Levels::INFO, ['data' => $data]);
 
         $order->update_meta_data('_payuni_MerTradeNo', $data['MerTradeNo']);
         $order->save();
@@ -276,6 +276,12 @@ class RY_WT_WC_PAYUNi_Gateway_Api extends RY_WT_PAYUNi_Api
                     if (isset($gateway->number_of_periods) && !empty($gateway->number_of_periods)) {
                         $data[$gateway::PAYMENT_TYPE] = implode(',', $gateway->number_of_periods);
                     }
+                    break;
+                case 'Digital':
+                    unset($data[$gateway::PAYMENT_TYPE]);
+                    $data['ICash'] = 1;
+                    $data['JKoPay'] = 1;
+                    $data['LinePay'] = 1;
                     break;
             }
         }

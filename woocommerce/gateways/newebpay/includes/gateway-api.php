@@ -95,7 +95,7 @@ class RY_WT_WC_NewebPay_Gateway_Api extends RY_WT_NewebPay_Api
             'EncryptType' => 0,
         ];
         $form_data['TradeSha'] = $this->generate_hash_value($form_data['TradeInfo'], $api_info['HashKey'], $api_info['HashIV']);
-        RY_WT_WC_NewebPay_Gateway::instance()->log('Generating payment by ' . $gateway->id . ' for #' . $order->get_id(), WC_Log_Levels::INFO, ['form' => $form_data, 'data' => $args]);
+        RY_WT_WC_NewebPay_Gateway::instance()->log('Generating payment by ' . $gateway->id . ' for #' . $order->get_id(), WC_Log_Levels::INFO, ['data' => $args]);
 
         $order->update_meta_data('_newebpay_MerchantOrderNo', $args['MerchantOrderNo']);
         $order->save();
