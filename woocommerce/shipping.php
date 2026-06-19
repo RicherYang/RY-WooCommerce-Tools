@@ -197,4 +197,23 @@ final class RY_WT_WC_Shipping
             }
         }
     }
+
+    public function get_api_info()
+    {
+        $api_info = RY_WT::get_option('shipping_apiinfo', []);
+        if (!is_array($api_info)) {
+            $api_info = [];
+        }
+        $api_info = array_merge([
+            'weight' => 0,
+            'boxsize' => '1',
+        ], $api_info);
+
+        $api_info['weight'] = (float) $api_info['weight'];
+        if ($api_info['weight'] < 0) {
+            $api_info['weight'] = 0;
+        }
+
+        return $api_info;
+    }
 }

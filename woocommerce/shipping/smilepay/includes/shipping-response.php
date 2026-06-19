@@ -77,7 +77,8 @@ class RY_WT_WC_SmilePay_Shipping_Response extends RY_WT_SmilePay_Api
     {
         $url = $is_admin ? admin_url('edit.php?post_type=shop_order') : wc_get_checkout_url();
 
-        $order_ID = $this->get_order_id($ipn_info, RY_WT::get_option('smilepay_gateway_order_prefix'));
+        $api_info = RY_WT_WC_SmilePay_Gateway::instance()->get_api_info();
+        $order_ID = $this->get_order_id($ipn_info, $api_info['prefix']);
         if ($order = wc_get_order($order_ID)) {
             RY_WT_WC_SmilePay_Shipping::instance()->log('Found order #' . $order->get_id(), WC_Log_Levels::INFO);
 
@@ -149,7 +150,8 @@ class RY_WT_WC_SmilePay_Shipping_Response extends RY_WT_SmilePay_Api
 
     public function doing_callback($info_value)
     {
-        $order_ID = $this->get_order_id($info_value, RY_WT::get_option('smilepay_gateway_order_prefix'));
+        $api_info = RY_WT_WC_SmilePay_Gateway::instance()->get_api_info();
+        $order_ID = $this->get_order_id($info_value, $api_info['prefix']);
         if ($order = wc_get_order($order_ID)) {
             RY_WT_WC_SmilePay_Shipping::instance()->log('Found order #' . $order->get_id(), WC_Log_Levels::INFO);
 

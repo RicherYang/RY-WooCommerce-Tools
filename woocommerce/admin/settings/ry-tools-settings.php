@@ -100,6 +100,7 @@ final class RY_WT_WC_Admin_Settings extends WC_Settings_Page
         $checkout_with_block = CartCheckoutUtils::is_checkout_block_default();
         $settings = [];
         if ($current_section == '') {
+            wp_enqueue_script('ry-admin-options');
             $settings = [
                 [
                     'title' => __('Service provider', 'ry-woocommerce-tools'),
@@ -193,17 +194,6 @@ final class RY_WT_WC_Admin_Settings extends WC_Settings_Page
                     'autoload' => false,
                 ],
                 [
-                    'title' => sprintf(
-                        /* translators: %s: Weight unit */
-                        __('Product default weight (%s)', 'ry-woocommerce-tools'),
-                        I18nUtil::get_weight_unit_label(get_option('woocommerce_weight_unit')),
-                    ),
-                    'id' => RY_WT::OPTION_PREFIX . 'shipping_product_weight',
-                    'type' => 'text',
-                    'default' => '0',
-                    'autoload' => false,
-                ],
-                [
                     'type' => 'sectionend',
                     'id' => 'general_options',
                 ],
@@ -236,6 +226,43 @@ final class RY_WT_WC_Admin_Settings extends WC_Settings_Page
                 [
                     'type' => 'sectionend',
                     'id' => 'checkout_page_options',
+                ],
+                [
+                    'title' => __('Shipping options', 'ry-woocommerce-tools'),
+                    'type' => 'title',
+                    'id' => 'shipping_options',
+                ],
+                [
+                    'title' => sprintf(
+                        /* translators: %s: Weight unit */
+                        __('Product default weight (%s)', 'ry-woocommerce-tools'),
+                        I18nUtil::get_weight_unit_label(get_option('woocommerce_weight_unit')),
+                    ),
+                    'id' => RY_WT::OPTION_PREFIX . 'shipping_apiinfo[weight]',
+                    'type' => 'number',
+                    'default' => '0',
+                    'step' => '0.001',
+                    'autoload' => false,
+                ],
+                [
+                    'title' => __('Shipping box size', 'ry-woocommerce-tools'),
+                    'id' => RY_WT::OPTION_PREFIX . 'shipping_apiinfo[boxsize]',
+                    'type' => 'select',
+                    'default' => '1',
+                    'options' => [
+                        '0' => _x('By product', 'box size', 'ry-woocommerce-tools'),
+                        '1' => _x('60 cm', 'box size', 'ry-woocommerce-tools'),
+                        '2' => _x('90 cm', 'box size', 'ry-woocommerce-tools'),
+                        '3' => _x('120 cm', 'box size', 'ry-woocommerce-tools'),
+                        '4' => _x('150 cm', 'box size', 'ry-woocommerce-tools'),
+                    ],
+                    'desc' => __('By product is set box size to the biggest product size.', 'ry-woocommerce-tools'),
+                    'desc_tip' => true,
+                    'autoload' => false,
+                ],
+                [
+                    'type' => 'sectionend',
+                    'id' => 'shipping_options',
                 ],
             ];
 

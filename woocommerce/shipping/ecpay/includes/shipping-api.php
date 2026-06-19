@@ -31,7 +31,8 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_ECPay_Api
 
     public function get_map_post_url()
     {
-        if (RY_WT_WC_ECPay_Shipping::instance()->is_testmode()) {
+        $api_info = RY_WT_WC_ECPay_Shipping::instance()->get_api_info();
+        if ($api_info['testmode']) {
             return $this->api_test_url['map'];
         } else {
             return $this->api_url['map'];
@@ -45,12 +46,14 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_ECPay_Api
             return false;
         }
 
-        $item_name = $this->get_item_name(RY_WT::get_option('shipping_item_name', ''), $order);
-        $item_name = mb_substr($item_name, 0, 20);
-        $declare_over_type = RY_WT::get_option('ecpay_shipping_declare_over', 'keep');
-        $default_weight = RY_WT::get_option('shipping_product_weight', 0);
-
         $api_info = RY_WT_WC_ECPay_Shipping::instance()->get_api_info();
+        $global_api_info = RY_WT_WC_ECPay_Shipping::instance()->get_api_info();
+
+        $item_name = $this->get_item_name($api_info['itemname'], $order);
+        $item_name = mb_substr($item_name, 0, 20);
+        $declare_over_type = $api_info['declare_over'];
+        $default_weight = $global_api_info['weight'];
+
         foreach ($order->get_items('shipping') as $shipping_item) {
             $shipping_method = RY_WT_WC_ECPay_Shipping::instance()->get_order_support_shipping($shipping_item);
             if (false === $shipping_method) {
@@ -79,16 +82,16 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_ECPay_Api
                 'GoodsName' => $item_name,
                 'IsCollection' => 'N',
                 'CollectionAmount' => 0,
-                'SenderName' => RY_WT::get_option('ecpay_shipping_sender_name'),
-                'SenderPhone' => RY_WT::get_option('ecpay_shipping_sender_phone'),
-                'SenderCellPhone' => RY_WT::get_option('ecpay_shipping_sender_cellphone'),
+                'SenderName' => $api_info['name'],
+                'SenderPhone' => $api_info['phone'],
+                'SenderCellPhone' => $api_info['cellphone'],
                 'ReceiverName' => $order->get_shipping_last_name() . $order->get_shipping_first_name(),
                 'ReceiverCellPhone' => str_replace(['-', ' '], ' ', $order->get_shipping_phone()),
                 'ReceiverStoreID' => '',
                 'ServerReplyURL' => $notify_url,
             ];
 
-            if ('yes' === RY_WT::get_option('ecpay_shipping_cleanup_receiver_name', 'no')) {
+            if ('yes' === $api_info['cleanup_name']) {
                 $args['ReceiverName'] = preg_replace('/[^a-zA-Z\x{4e00}-\x{9fff}\x{3400}-\x{4dbf}]/u', '', $args['ReceiverName']);
                 if (preg_match('/^[a-zA-z]+$/', $args['ReceiverName'])) {
                     $args['ReceiverName'] = mb_substr($args['ReceiverName'], 0, 10);
@@ -126,18 +129,18 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_ECPay_Api
                 $states = WC()->countries->get_states($country);
                 $full_state = ($state && isset($states[$state])) ? $states[$state] : $state;
 
-                $args['SenderZipCode'] = RY_WT::get_option('ecpay_shipping_sender_zipcode');
-                $args['SenderAddress'] = RY_WT::get_option('ecpay_shipping_sender_address');
+                $args['SenderZipCode'] = $api_info['zipcode'];
+                $args['SenderAddress'] = $api_info['address'];
                 $args['ReceiverZipCode'] = $order->get_shipping_postcode();
                 $args['ReceiverAddress'] = $full_state . $order->get_shipping_city() . $order->get_shipping_address_1() . $order->get_shipping_address_2();
-                $args['Specification'] = '000' . RY_WT::get_option('ecpay_shipping_box_size', '0');
+                $args['Specification'] = '000' . $global_api_info['boxsize'];
                 $args['Distance'] = '00';
 
                 $args['ScheduledPickupTime'] = '4';
                 $args['ScheduledDeliveryTime'] = '4';
             }
 
-            if (RY_WT_WC_ECPay_Shipping::instance()->is_testmode()) {
+            if ($api_info['testmode']) {
                 $url = $this->api_test_url['create'];
             } else {
                 $url = $this->api_url['create'];
@@ -146,7 +149,7 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_ECPay_Api
             foreach ($package_list as $package_info) {
                 $create_datetime = new DateTime('now', new DateTimeZone('Asia/Taipei'));
                 $args['MerchantTradeDate'] = $create_datetime->format('Y/m/d H:i:s');
-                $args['MerchantTradeNo'] = $this->generate_trade_no($order->get_id(), RY_WT::get_option('ecpay_shipping_order_prefix')) . 'T' . $package_info['temp'];
+                $args['MerchantTradeNo'] = $this->generate_trade_no($order->get_id(), $api_info['prefix']) . 'T' . $package_info['temp'];
 
                 if ('CVS' === $args['LogisticsType']) {
                     $args['LogisticsSubType'] = $method_class::Shipping_Sub_Type;
@@ -191,7 +194,7 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_ECPay_Api
                 $args['GoodsAmount'] = (int) $package_info['price'];
                 if ('Y' === $args['IsCollection']) {
                     $args['CollectionAmount'] = (int) $package_info['fee'];
-                    if (RY_WT::get_option('ecpay_shipping_declare_mode') === 'payment') {
+                    if ($api_info['declare_mode'] === 'payment') {
                         $args['GoodsAmount'] = $args['CollectionAmount'];
                     } elseif (str_starts_with($args['LogisticsSubType'], 'UNIMART')) {
                         $args['GoodsAmount'] = $args['CollectionAmount'];
@@ -267,7 +270,7 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_ECPay_Api
         }
     }
 
-    public function get_print_form(array $info, string $mode = 'a4')
+    public function get_print_form(array $info)
     {
         $api_info = RY_WT_WC_ECPay_Shipping::instance()->get_api_info();
 
@@ -275,7 +278,7 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_ECPay_Api
             'MerchantID' => $api_info['MerchantID'],
             'LogisticsID' => [],
             'LogisticsSubType' => $info[0]['LogisticsSubType'],
-            'PrintMode' => $mode === 'a6' ? 2 : 1,
+            'PrintMode' => $api_info['print'],
         ];
 
         foreach ($info as $item) {
@@ -284,10 +287,10 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_ECPay_Api
             }
         }
 
-        RY_WT_WC_ECPay_Shipping::instance()->log('Print POST data', WC_Log_Levels::INFO, ['data' => $args]);
+        RY_WT_WC_ECPay_Shipping::instance()->log('Print POST data', WC_Log_Levels::INFO, ['data' => $data]);
         $args = $this->build_args($data, $api_info['MerchantID']);
 
-        if (RY_WT_WC_ECPay_Shipping::instance()->is_testmode()) {
+        if ($api_info['testmode']) {
             $url = $this->api_test_url['print'];
         } else {
             $url = $this->api_url['print'];
@@ -318,7 +321,7 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_ECPay_Api
         ];
         $args['TimeStamp'] = $args['TimeStamp']->getTimestamp();
 
-        if (RY_WT_WC_ECPay_Shipping::instance()->is_testmode()) {
+        if ($api_info['testmode']) {
             $url = $this->api_test_url['query'];
         } else {
             $url = $this->api_url['query'];

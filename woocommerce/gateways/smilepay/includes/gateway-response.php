@@ -42,7 +42,7 @@ class RY_WT_WC_SmilePay_Gateway_Response extends RY_WT_SmilePay_Api
             RY_WT_WC_SmilePay_Gateway::instance()->log('IPN request', WC_Log_Levels::INFO, ['data' => $ipn_info]);
             $api_info = RY_WT_WC_SmilePay_Gateway::instance()->get_api_info();
 
-            $order_ID = $this->get_order_id($ipn_info, RY_WT::get_option('smilepay_gateway_order_prefix'));
+            $order_ID = $this->get_order_id($ipn_info, $api_info['prefix']);
             if ($order = wc_get_order($order_ID)) {
                 $ipn_info_check_value = [];
                 $ipn_info_check_value[0] = str_pad(substr($api_info['Rot_check'], -4), 4, '0', STR_PAD_LEFT);
@@ -79,7 +79,8 @@ class RY_WT_WC_SmilePay_Gateway_Response extends RY_WT_SmilePay_Api
 
     public function doing_callback($info_value)
     {
-        $order_ID = $this->get_order_id($info_value, RY_WT::get_option('smilepay_gateway_order_prefix'));
+        $api_info = RY_WT_WC_SmilePay_Gateway::instance()->get_api_info();
+        $order_ID = $this->get_order_id($info_value, $api_info['prefix']);
         if ($order = wc_get_order($order_ID)) {
             RY_WT_WC_SmilePay_Gateway::instance()->log('Found #' . $order->get_id(), WC_Log_Levels::INFO);
 
@@ -104,7 +105,13 @@ class RY_WT_WC_SmilePay_Gateway_Response extends RY_WT_SmilePay_Api
 
             if (!$order->is_paid()) {
                 if ($info_value['Amount'] == ceil($order->get_total())) {
-                    $order = $this->set_transaction_info($order, $info_value, $payment_type);
+                    $transaction_ID = (string) $order->get_transaction_id();
+                    if ($transaction_ID === '' || $transaction_ID != $this->get_transaction_id($info_value)) {
+                        $order->set_transaction_id($this->get_transaction_id($info_value));
+                        $order->update_meta_data('_smilepay_payment_type', $payment_type);
+                        $order->save();
+                        $order = wc_get_order($order->get_id());
+                    }
                     $order->add_order_note(__('SmilePay payment completed', 'ry-woocommerce-tools'));
                     $order->payment_complete();
                 }

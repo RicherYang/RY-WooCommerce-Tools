@@ -32,7 +32,7 @@ class RY_WT_WC_NewebPay_Gateway_Api extends RY_WT_NewebPay_Api
 
         $api_info = RY_WT_WC_NewebPay_Gateway::instance()->get_api_info();
 
-        $item_name = $this->get_item_name(RY_WT::get_option('payment_item_name', ''), $order);
+        $item_name = $this->get_item_name($api_info['itemname'], $order);
         $item_name = mb_substr($item_name, 0, 40);
 
         $args = [
@@ -40,7 +40,7 @@ class RY_WT_WC_NewebPay_Gateway_Api extends RY_WT_NewebPay_Api
             'RespondType' => 'JSON',
             'TimeStamp' => new DateTime('now', new DateTimeZone('Asia/Taipei')),
             'Version' => '2.3',
-            'MerchantOrderNo' => $this->generate_trade_no($order->get_id(), RY_WT::get_option('newebpay_gateway_order_prefix')),
+            'MerchantOrderNo' => $this->generate_trade_no($order->get_id(), $api_info['prefix']),
             'Amt' => (int) ceil($order->get_total()),
             'ItemDesc' => $item_name,
             'ReturnURL' => $return_url,
@@ -100,7 +100,7 @@ class RY_WT_WC_NewebPay_Gateway_Api extends RY_WT_NewebPay_Api
         $order->update_meta_data('_newebpay_MerchantOrderNo', $args['MerchantOrderNo']);
         $order->save();
 
-        if (RY_WT_WC_NewebPay_Gateway::instance()->is_testmode()) {
+        if ($api_info['testmode']) {
             $url = $this->api_test_url['checkout'];
         } else {
             $url = $this->api_url['checkout'];
@@ -126,7 +126,7 @@ class RY_WT_WC_NewebPay_Gateway_Api extends RY_WT_NewebPay_Api
         $args['TimeStamp'] = $args['TimeStamp']->getTimestamp();
         $args['CheckValue'] = $this->generate_hash_value($args, $api_info['HashKey'], $api_info['HashIV']);
 
-        if (RY_WT_WC_NewebPay_Gateway::instance()->is_testmode()) {
+        if ($api_info['testmode']) {
             $url = $this->api_test_url['query'];
         } else {
             $url = $this->api_url['query'];

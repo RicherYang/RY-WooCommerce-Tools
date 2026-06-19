@@ -53,11 +53,12 @@ return [
     ],
     [
         'title' => __('shipping item name', 'ry-woocommerce-tools'),
-        'id' => RY_WT::OPTION_PREFIX . 'shipping_item_name',
+        'id' => RY_WT::OPTION_PREFIX . 'smilepay_shipping_apiinfo[itemname]',
         'type' => 'text',
         'default' => '',
         'desc' => __('If empty use the first product name.', 'ry-woocommerce-tools'),
         'desc_tip' => true,
+        'autoload' => false,
     ],
     [
         'title' => __('Cvs shipping type', 'ry-woocommerce-tools'),
@@ -69,33 +70,19 @@ return [
         ],
     ],
     [
-        'title' => __('Shipping box size ( Home delivery )', 'ry-woocommerce-tools'),
-        'id' => RY_WT::OPTION_PREFIX . 'smilepay_shipping_box_size',
-        'type' => 'select',
-        'default' => '1',
-        'options' => [
-            '0' => _x('By product', 'box size', 'ry-woocommerce-tools'),
-            '1' => _x('60 cm', 'box size', 'ry-woocommerce-tools'),
-            '2' => _x('90 cm', 'box size', 'ry-woocommerce-tools'),
-            '3' => _x('120 cm', 'box size', 'ry-woocommerce-tools'),
-            '4' => _x('150 cm', 'box size', 'ry-woocommerce-tools'),
-        ],
-        'desc' => __('By product is set box size to the biggest product size.', 'ry-woocommerce-tools'),
-        'desc_tip' => true,
-    ],
-    [
         'title' => __('Shipping booking note print format ( TCAT )', 'ry-woocommerce-tools'),
-        'id' => RY_WT::OPTION_PREFIX . 'smilepay_shipping_tcat_print_format',
+        'id' => RY_WT::OPTION_PREFIX . 'smilepay_shipping_apiinfo[print]',
         'type' => 'select',
         'default' => '2',
         'options' => [
             '2' => _x('two format', 'tcat print format', 'ry-woocommerce-tools'),
             '3' => _x('three format', 'tcat print format', 'ry-woocommerce-tools'),
         ],
+        'autoload' => false,
     ],
     [
         'title' => __('Shipping delivery date ( TCAT )', 'ry-woocommerce-tools'),
-        'id' => RY_WT::OPTION_PREFIX . 'smilepay_shipping_tcat_delivery_date',
+        'id' => RY_WT::OPTION_PREFIX . 'smilepay_shipping_apiinfo[delivery_date]',
         'type' => 'select',
         'default' => '1',
         'options' => [
@@ -114,6 +101,7 @@ return [
         ],
         'desc' => __('The delivery date is sunday, change to monday.', 'ry-woocommerce-tools'),
         'desc_tip' => true,
+        'autoload' => false,
     ],
     [
         'id' => 'note_options',

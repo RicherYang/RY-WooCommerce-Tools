@@ -58,9 +58,13 @@ final class RY_WT_WC_SmilePay_Gateway_Admin
 
     public function check_option()
     {
-        if (!preg_match('/^[a-z0-9]*$/i', RY_WT::get_option('newebpay_gateway_order_prefix'))) {
-            WC_Admin_Settings::add_error(__('Order no prefix only letters and numbers allowed', 'ry-woocommerce-tools'));
-            RY_WT::update_option('newebpay_gateway_order_prefix', '', false);
+        $api_info = RY_WT::get_option('smilepay_gateway_apiinfo', []);
+        if (is_array($api_info) && isset($api_info['prefix'])) {
+            if (!preg_match('/^[a-z0-9]{0,3}$/i', $api_info['prefix'])) {
+                WC_Admin_Settings::add_error(__('Order no prefix only letters and numbers allowed, and maximum length is 3 characters.', 'ry-woocommerce-tools'));
+                $api_info['prefix'] = '';
+                RY_WT::update_option('smilepay_gateway_apiinfo', $api_info, false);
+            }
         }
     }
 }

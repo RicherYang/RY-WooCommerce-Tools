@@ -128,7 +128,8 @@ class RY_WT_WC_ECPay_Shipping_Response extends RY_WT_ECPay_Api
 
     public function shipping_callback($info_value)
     {
-        $order_ID = $this->get_order_id($info_value, RY_WT::get_option('ecpay_shipping_order_prefix'));
+        $api_info = RY_WT_WC_ECPay_Shipping::instance()->get_api_info();
+        $order_ID = $this->get_order_id($info_value, $api_info['prefix']);
         if ($order = wc_get_order($order_ID)) {
             RY_WT_WC_ECPay_Shipping::instance()->log('Found order #' . $order->get_id(), WC_Log_Levels::INFO);
 

@@ -44,12 +44,12 @@ class RY_WT_WC_PAYUNi_Gateway_Api extends RY_WT_PAYUNi_Api
 
         $api_info = RY_WT_WC_PAYUNi_Gateway::instance()->get_api_info();
 
-        $item_name = $this->get_item_name(RY_WT::get_option('payment_item_name', ''), $order);
+        $item_name = $this->get_item_name($api_info['itemname'], $order);
         $item_name = mb_substr($item_name, 0, 195);
 
         $data = [
             'MerID' => $api_info['MerID'],
-            'MerTradeNo' => $this->generate_trade_no($order->get_id(), RY_WT::get_option('payuni_gateway_order_prefix')),
+            'MerTradeNo' => $this->generate_trade_no($order->get_id(), $api_info['prefix']),
             'TradeAmt' => (int) ceil($order->get_total()),
             'Timestamp' => new DateTime('now', new DateTimeZone('Asia/Taipei')),
             'ReturnURL' => $return_url,
@@ -80,7 +80,7 @@ class RY_WT_WC_PAYUNi_Gateway_Api extends RY_WT_PAYUNi_Api
         $order->update_meta_data('_payuni_MerTradeNo', $data['MerTradeNo']);
         $order->save();
 
-        if (RY_WT_WC_PAYUNi_Gateway::instance()->is_testmode()) {
+        if ($api_info['testmode']) {
             $url = $this->api_test_url['checkout'];
         } else {
             $url = $this->api_url['checkout'];
@@ -102,7 +102,7 @@ class RY_WT_WC_PAYUNi_Gateway_Api extends RY_WT_PAYUNi_Api
         ];
         $data['Timestamp'] = $data['Timestamp']->getTimestamp();
 
-        if (RY_WT_WC_PAYUNi_Gateway::instance()->is_testmode()) {
+        if ($api_info['testmode']) {
             $url = $this->api_test_url['query'];
         } else {
             $url = $this->api_url['query'];
@@ -128,7 +128,7 @@ class RY_WT_WC_PAYUNi_Gateway_Api extends RY_WT_PAYUNi_Api
         ];
         $data['Timestamp'] = $data['Timestamp']->getTimestamp();
 
-        if (RY_WT_WC_PAYUNi_Gateway::instance()->is_testmode()) {
+        if ($api_info['testmode']) {
             $url = $this->api_test_url['credit-close'];
         } else {
             $url = $this->api_url['credit-close'];
@@ -150,7 +150,7 @@ class RY_WT_WC_PAYUNi_Gateway_Api extends RY_WT_PAYUNi_Api
         ];
         $data['Timestamp'] = $data['Timestamp']->getTimestamp();
 
-        if (RY_WT_WC_PAYUNi_Gateway::instance()->is_testmode()) {
+        if ($api_info['testmode']) {
             $url = $this->api_test_url['credit-cancel'];
         } else {
             $url = $this->api_url['credit-cancel'];
@@ -175,7 +175,7 @@ class RY_WT_WC_PAYUNi_Gateway_Api extends RY_WT_PAYUNi_Api
         ];
         $data['Timestamp'] = $data['Timestamp']->getTimestamp();
 
-        if (RY_WT_WC_PAYUNi_Gateway::instance()->is_testmode()) {
+        if ($api_info['testmode']) {
             $url = $this->api_test_url['aftee-refund'];
         } else {
             $url = $this->api_url['aftee-refund'];
@@ -200,7 +200,7 @@ class RY_WT_WC_PAYUNi_Gateway_Api extends RY_WT_PAYUNi_Api
         ];
         $data['Timestamp'] = $data['Timestamp']->getTimestamp();
 
-        if (RY_WT_WC_PAYUNi_Gateway::instance()->is_testmode()) {
+        if ($api_info['testmode']) {
             $url = $this->api_test_url['icash-refund'];
         } else {
             $url = $this->api_url['icash-refund'];
@@ -225,7 +225,7 @@ class RY_WT_WC_PAYUNi_Gateway_Api extends RY_WT_PAYUNi_Api
         ];
         $data['Timestamp'] = $data['Timestamp']->getTimestamp();
 
-        if (RY_WT_WC_PAYUNi_Gateway::instance()->is_testmode()) {
+        if ($api_info['testmode']) {
             $url = $this->api_test_url['jkopay-refund'];
         } else {
             $url = $this->api_url['jkopay-refund'];
@@ -250,7 +250,7 @@ class RY_WT_WC_PAYUNi_Gateway_Api extends RY_WT_PAYUNi_Api
         ];
         $data['Timestamp'] = $data['Timestamp']->getTimestamp();
 
-        if (RY_WT_WC_PAYUNi_Gateway::instance()->is_testmode()) {
+        if ($api_info['testmode']) {
             $url = $this->api_test_url['linepay-refund'];
         } else {
             $url = $this->api_url['linepay-refund'];

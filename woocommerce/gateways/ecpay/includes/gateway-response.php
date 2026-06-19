@@ -65,7 +65,8 @@ class RY_WT_WC_ECPay_Gateway_Response extends RY_WT_ECPay_Api
 
     public function doing_callback($info_value): void
     {
-        $order_ID = $this->get_order_id($info_value, RY_WT::get_option('ecpay_gateway_order_prefix'));
+        $api_info = RY_WT_WC_ECPay_Gateway::instance()->get_api_info();
+        $order_ID = $this->get_order_id($info_value, $api_info['prefix']);
         if ($order = wc_get_order($order_ID)) {
             $transaction_ID = (string) $order->get_transaction_id();
             if ('' === $transaction_ID || !$order->is_paid() || $transaction_ID != $this->get_transaction_id($info_value)) {

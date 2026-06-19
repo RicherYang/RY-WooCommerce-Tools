@@ -177,4 +177,16 @@ final class RY_WT_WC_SmilePay_Shipping extends RY_WT_Shipping_Model
 
         return $fragments;
     }
+
+    public function get_api_info()
+    {
+        $api_info = RY_WT::get_option('smilepay_shipping_apiinfo', []);
+        if (!is_array($api_info)) {
+            $api_info = [];
+        }
+        return array_merge([
+            'itemname' => '',
+            'print' => '2',
+        ], $api_info);
+    }
 }

@@ -47,7 +47,7 @@ class RY_WT_WC_SmilePay_Shipping_Api extends RY_WT_SmilePay_Api
         RY_WT_WC_SmilePay_Shipping::instance()->log('Generating csv for #' . $order->get_id(), WC_Log_Levels::INFO);
         $api_info = RY_WT_WC_SmilePay_Gateway::instance()->get_api_info();
 
-        $item_name = $this->get_item_name(RY_WT::get_option('shipping_item_name', ''), $order);
+        $item_name = $this->get_item_name($api_info['itemname'], $order);
         $item_name = mb_substr($item_name, 0, 20);
 
         $notify_url = WC()->api_request_url('ry_smilepay_callback', true);
@@ -66,7 +66,7 @@ class RY_WT_WC_SmilePay_Shipping_Api extends RY_WT_SmilePay_Api
                 'Od_sob' => $item_name,
                 'Pay_zg' => 52,
                 'Pay_subzg' => $method_class::SHIPPING_TYPE,
-                'Data_id' => $this->generate_trade_no($order->get_id(), RY_WT::get_option('smilepay_gateway_order_prefix')),
+                'Data_id' => $this->generate_trade_no($order->get_id(), $api_info['prefix']),
                 'Amount' => (int) ceil($order->get_total()),
                 'Pur_name' => $order->get_shipping_last_name() . $order->get_shipping_first_name(),
                 'Mobile_number' => str_replace(['-', ' '], ' ', $order->get_shipping_phone()),
@@ -91,7 +91,7 @@ class RY_WT_WC_SmilePay_Shipping_Api extends RY_WT_SmilePay_Api
 
         RY_WT_WC_SmilePay_Shipping::instance()->log('Shipping POST data', WC_Log_Levels::INFO, ['data' => $args]);
 
-        if (RY_WT_WC_SmilePay_Gateway::instance()->is_testmode()) {
+        if ($api_info['testmode']) {
             $url = $this->api_test_url['checkout'];
         } else {
             $url = $this->api_url['checkout'];
@@ -107,6 +107,9 @@ class RY_WT_WC_SmilePay_Shipping_Api extends RY_WT_SmilePay_Api
             return false;
         }
 
+        $api_info = RY_WT_WC_SmilePay_Gateway::instance()->get_api_info();
+        $global_api_info = RY_WT_WC_Shipping::instance()->get_api_info();
+
         $get_no_ID = [];
         foreach ($order->get_items('shipping') as $shipping_item) {
             $shipping_method = RY_WT_WC_SmilePay_Shipping::instance()->get_order_support_shipping($shipping_item);
@@ -115,7 +118,6 @@ class RY_WT_WC_SmilePay_Shipping_Api extends RY_WT_SmilePay_Api
             }
 
             $method_class = RY_WT_WC_SmilePay_Shipping::$support_methods[$shipping_method];
-            $api_info = RY_WT_WC_SmilePay_Gateway::instance()->get_api_info();
 
             $package_list = $this->get_shipping_package($order, $method_class, 'keep', null, 0);
             if (0 === count($package_list)) {
@@ -129,7 +131,7 @@ class RY_WT_WC_SmilePay_Shipping_Api extends RY_WT_SmilePay_Api
 
             RY_WT_WC_SmilePay_Shipping::instance()->log('Generating home for #' . $order->get_id(), WC_Log_Levels::INFO);
 
-            $item_name = $this->get_item_name(RY_WT::get_option('shipping_item_name', ''), $order);
+            $item_name = $this->get_item_name($api_info['itemname'], $order);
             $item_name = mb_substr($item_name, 0, 20);
 
             $country = $order->get_shipping_country();
@@ -172,14 +174,14 @@ class RY_WT_WC_SmilePay_Shipping_Api extends RY_WT_SmilePay_Api
 
             RY_WT_WC_SmilePay_Shipping::instance()->log('Home POST data', WC_Log_Levels::INFO, ['data' => $args]);
 
-            if (RY_WT_WC_SmilePay_Gateway::instance()->is_testmode()) {
+            if ($api_info['testmode']) {
                 $url = $this->api_test_url['code'];
             } else {
                 $url = $this->api_url['code'];
             }
 
             foreach ($package_list as $package_info) {
-                $args['Data_id'] = $this->generate_trade_no($order->get_id(), RY_WT::get_option('smilepay_gateway_order_prefix')) . 'T' . $package_info['temp'];
+                $args['Data_id'] = $this->generate_trade_no($order->get_id(), $api_info['prefix']) . 'T' . $package_info['temp'];
                 $args['Amount'] = (int) $package_info['price'];
                 if (81 === $args['Pay_zg']) {
                     $args['Amount'] = (int) $package_info['fee'];
@@ -222,7 +224,7 @@ class RY_WT_WC_SmilePay_Shipping_Api extends RY_WT_SmilePay_Api
                 if ($transaction_ID) {
                     $get_no_ID[] = $transaction_ID;
                     if (!isset($shipping_list[$transaction_ID])) {
-                        if (RY_WT::get_option('smilepay_shipping_box_size', '0') == '0') {
+                        if ($global_api_info['boxsize'] == '0') {
                             if ($package_info['size'] > 0) {
                                 $package_info['size'] = wc_get_dimension($package_info['size'], 'cm');
                                 if ($package_info['size'] <= 60) {
@@ -238,7 +240,7 @@ class RY_WT_WC_SmilePay_Shipping_Api extends RY_WT_SmilePay_Api
                                 $spec = '0001';
                             }
                         } else {
-                            $spec = '000' . RY_WT::get_option('smilepay_shipping_box_size', '0');
+                            $spec = '000' . $global_api_info['boxsize'];
                         }
                         $shipping_list[$transaction_ID] = [
                             'spec' => $spec,
@@ -295,13 +297,13 @@ class RY_WT_WC_SmilePay_Shipping_Api extends RY_WT_SmilePay_Api
                 $args['Pay_subzg'] = $shipping_list[$get_smse_ID]['type'];
                 $args['types'] = 'Xml';
                 if ($shipping_list[$get_smse_ID]['IsCollection']) {
-                    if (RY_WT_WC_SmilePay_Gateway::instance()->is_testmode()) {
+                    if ($api_info['testmode']) {
                         $url = $this->api_test_url['pay'];
                     } else {
                         $url = $this->api_url['pay'];
                     }
                 } else {
-                    if (RY_WT_WC_SmilePay_Gateway::instance()->is_testmode()) {
+                    if ($api_info['testmode']) {
                         $url = $this->api_test_url['unpay'];
                     } else {
                         $url = $this->api_url['unpay'];
@@ -312,13 +314,13 @@ class RY_WT_WC_SmilePay_Shipping_Api extends RY_WT_SmilePay_Api
                 $args['package_size'] = $shipping_list[$get_smse_ID]['spec'];
                 $args['temperature'] = '000' . $shipping_list[$get_smse_ID]['temp'];
                 $date = new DateTime('now', new DateTimeZone('Asia/Taipei'));
-                $date->add(new DateInterval('P' . RY_WT::get_option('smilepay_shipping_tcat_delivery_date', '1') . 'D'));
+                $date->add(new DateInterval('P' . $api_info['delivery_date'] . 'D'));
                 if (7 == $date->format('N')) { // 星期日
                     $date->add(new DateInterval('P1D'));
                 }
                 $args['delivery_date'] = $date->format('Y-m-d');
                 $args['delivery_timezone'] = '4';
-                if (RY_WT_WC_SmilePay_Gateway::instance()->is_testmode()) {
+                if ($api_info['testmode']) {
                     $url = $this->api_test_url['cat'];
                 } else {
                     $url = $this->api_url['cat'];
@@ -380,8 +382,8 @@ class RY_WT_WC_SmilePay_Shipping_Api extends RY_WT_SmilePay_Api
         $info_list = array_filter($info_list);
         if ('TCAT' === $print_type) {
             $args['Smseid'] = implode(',', $info_list);
-            $args['print_format'] = RY_WT::get_option('smilepay_shipping_tcat_print_format', '2');
-            if (RY_WT_WC_SmilePay_Gateway::instance()->is_testmode()) {
+            $args['print_format'] = $api_info['print'];
+            if ($api_info['testmode']) {
                 $url = $this->api_test_url['cat_print'];
             } else {
                 $url = $this->api_url['cat_print'];
@@ -389,7 +391,7 @@ class RY_WT_WC_SmilePay_Shipping_Api extends RY_WT_SmilePay_Api
         } else {
             $args['Pay_subzg'] = $print_type;
             $args['PinCodes'] = implode(',', $info_list);
-            if (RY_WT_WC_SmilePay_Gateway::instance()->is_testmode()) {
+            if ($api_info['testmode']) {
                 $url = $this->api_test_url['print'];
             } else {
                 $url = $this->api_url['print'];

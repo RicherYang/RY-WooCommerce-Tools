@@ -82,7 +82,7 @@ class RY_WT_WC_SmilePay_Gateway_Api extends RY_WT_SmilePay_Api
 
         do_action('ry_smilepay_gateway_checkout', $args, $order, $gateway);
 
-        if (RY_WT_WC_SmilePay_Gateway::instance()->is_testmode()) {
+        if ($api_info['testmode']) {
             $url = $this->api_test_url['api_checkout'];
         } else {
             $url = $this->api_url['api_checkout'];
@@ -159,14 +159,14 @@ class RY_WT_WC_SmilePay_Gateway_Api extends RY_WT_SmilePay_Api
 
         $api_info = RY_WT_WC_SmilePay_Gateway::instance()->get_api_info();
 
-        $item_name = $this->get_item_name(RY_WT::get_option('payment_item_name', ''), $order);
+        $item_name = $this->get_item_name($api_info['itemname'], $order);
         $item_name = mb_substr($item_name, 0, 40);
 
         $args = [
             'Dcvc' => $api_info['Dcvc'],
             'Rvg2c' => $api_info['Rvg2c'],
             'Od_sob' => $item_name,
-            'Data_id' => $this->generate_trade_no($order->get_id(), RY_WT::get_option('smilepay_gateway_order_prefix')),
+            'Data_id' => $this->generate_trade_no($order->get_id(), $api_info['prefix']),
             'Amount' => (int) ceil($order->get_total()),
             'Roturl' => $notify_url,
             'Roturl_status' => 'RY_SmilePay',
@@ -190,7 +190,7 @@ class RY_WT_WC_SmilePay_Gateway_Api extends RY_WT_SmilePay_Api
         $order->update_meta_data('_smilepay_Data_id', $args['Data_id']);
         $order->save();
 
-        if (RY_WT_WC_SmilePay_Gateway::instance()->is_testmode()) {
+        if ($api_info['testmode']) {
             $url = $this->api_test_url['checkout'];
         } else {
             $url = $this->api_url['checkout'];

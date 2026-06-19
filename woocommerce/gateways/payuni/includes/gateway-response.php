@@ -73,7 +73,7 @@ class RY_WT_WC_PAYUNi_Gateway_Response extends RY_WT_PAYUNi_Api
         parse_str($info_value, $info_value);
         RY_WT_WC_PAYUNi_Gateway::instance()->log('IPN request decrypt', WC_Log_Levels::INFO, ['data' => $info_value]);
 
-        $order_ID = $this->get_order_id($info_value, RY_WT::get_option('payuni_gateway_order_prefix'));
+        $order_ID = $this->get_order_id($info_value, $api_info['prefix']);
         if ($order = wc_get_order($order_ID)) {
             $transaction_ID = (string) $order->get_transaction_id();
             if ($transaction_ID === '' || $transaction_ID != $this->get_transaction_id($info_value)) {

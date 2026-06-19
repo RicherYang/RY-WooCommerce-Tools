@@ -29,6 +29,7 @@ module.exports = {
         'ry-checkout': path.join(srcPath, 'ry-checkout.js'),
         'ry-payment': path.join(srcPath, 'ry-payment.scss'),
 
+        'admin/ry-options': path.join(srcPath, 'admin/ry-options.js'),
         'admin/ry-shipping': path.join(srcPath, 'admin/ry-shipping.js')
     },
     output: {
