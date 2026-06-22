@@ -4,7 +4,7 @@ defined('ABSPATH') or exit;
 
 abstract class RY_WT_WC_Payment_Gateway extends WC_Payment_Gateway
 {
-    public const bool SUPPORT_REFUND = false;
+    public const SUPPORT_REFUND = false;
 
     public int $min_amount = 0;
 

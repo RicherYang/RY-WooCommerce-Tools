@@ -8,7 +8,7 @@ class RY_PAYUNi_Gateway_Credit extends RY_WT_WC_PAYUNi_Payment_Gateway
 
     public const PAYMENT_TYPE = 'Credit';
 
-    public const bool SUPPORT_REFUND = true;
+    public const SUPPORT_REFUND = true;
 
     public function __construct()
     {
