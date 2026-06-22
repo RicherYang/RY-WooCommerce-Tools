@@ -172,6 +172,9 @@ class RY_WT_WC_NewebPay_Gateway_Api extends RY_WT_NewebPay_Api
                         $args['InstFlag'] = implode(',', $gateway->number_of_periods);
                     }
                     break;
+                case 'BNPL':
+                    $args['AFTEE'] = 1;
+                    break;
             }
         }
 
