@@ -277,6 +277,10 @@ class RY_WT_WC_PAYUNi_Gateway_Api extends RY_WT_PAYUNi_Api
                         $data[$gateway::PAYMENT_TYPE] = implode(',', $gateway->number_of_periods);
                     }
                     break;
+                case 'BNPL':
+                    unset($data[$gateway::PAYMENT_TYPE]);
+                    $data['Aftee'] = 1;
+                    break;
                 case 'Digital':
                     unset($data[$gateway::PAYMENT_TYPE]);
                     $data['ICash'] = 1;
