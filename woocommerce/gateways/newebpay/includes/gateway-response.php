@@ -89,7 +89,7 @@ class RY_WT_WC_NewebPay_Gateway_Response extends RY_WT_NewebPay_Api
 
             if ($this->only_success) {
                 if (method_exists($this, 'payment_status_' . $payment_status)) {
-                    call_user_func([$this, 'payment_status_' . $payment_status], $order, $info_value);
+                    call_user_func([$this, 'payment_status_' . $payment_status], $order, $info_value->Result);
                 }
                 return;
             }

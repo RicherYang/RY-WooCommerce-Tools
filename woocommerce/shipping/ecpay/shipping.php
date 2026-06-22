@@ -188,7 +188,7 @@ final class RY_WT_WC_ECPay_Shipping extends RY_WT_Shipping_Model
                     'post_url' => RY_WT_WC_ECPay_Shipping_Api::instance()->get_map_post_url(),
                 ], '', RY_WT_PLUGIN_DIR . 'templates/');
 
-                list($MerchantID, $HashKey, $HashIV, $cvs_type) = $this->get_api_info();
+                $cvs_type = RY_WT::get_option('ecpay_shipping_cvs_type', 'C2C');
                 $method_class = self::$support_methods[$chosen_shipping];
 
                 $subtype = $method_class::Shipping_Sub_Type;
@@ -213,8 +213,9 @@ final class RY_WT_WC_ECPay_Shipping extends RY_WT_Shipping_Model
                         }
                     }
                 }
+                $api_info = $this->get_api_info();
                 $this->js_data['postData'] = [
-                    'MerchantID' => $MerchantID,
+                    'MerchantID' => $api_info['MerchantID'],
                     'LogisticsType' => $method_class::SHIPPING_TYPE,
                     'LogisticsSubType' => $subtype,
                     'IsCollection' => 'Y',
@@ -312,7 +313,8 @@ final class RY_WT_WC_ECPay_Shipping extends RY_WT_Shipping_Model
                 $api_info['MerchantID'] = '2000933';
                 $api_info['HashKey'] = 'XBERn1YOvpM9nfZc';
                 $api_info['HashIV'] = 'h1ONHk4P4yqbl5LK';
-            } else {
+            }
+            if ('B2C' === $cvs_type) {
                 $api_info['MerchantID'] = '2000132';
                 $api_info['HashKey'] = '5294y06JbISpM5x9';
                 $api_info['HashIV'] = 'v77hoKGq4kWxNNIS';

@@ -47,7 +47,7 @@ class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_ECPay_Api
         }
 
         $api_info = RY_WT_WC_ECPay_Shipping::instance()->get_api_info();
-        $global_api_info = RY_WT_WC_ECPay_Shipping::instance()->get_api_info();
+        $global_api_info = RY_WT_WC_Shipping::instance()->get_api_info();
 
         $item_name = $this->get_item_name($api_info['itemname'], $order);
         $item_name = mb_substr($item_name, 0, 20);

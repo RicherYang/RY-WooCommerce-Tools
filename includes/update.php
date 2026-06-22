@@ -155,7 +155,7 @@ final class RY_WT_Update
             RY_WT::update_option('version', '3.6.2', true);
         }
 
-        if (version_compare($now_version, '3.6.6', '<')) {
+        if (version_compare($now_version, '3.8.0', '<')) {
             if (RY_WT::get_option('ecpay_gateway_MerchantID') !== false) {
                 RY_WT::update_option('ecpay_gateway_apiinfo', [
                     'prefix' => RY_WT::get_option('ecpay_gateway_order_prefix'),
@@ -273,7 +273,7 @@ final class RY_WT_Update
             ], false);
             RY_WT::delete_option('shipping_product_weight');
 
-            RY_WT::update_option('version', '3.6.6', true);
+            RY_WT::update_option('version', '3.8.0', true);
         }
     }
 }

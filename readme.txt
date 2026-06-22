@@ -5,7 +5,7 @@ Tags: woocommerce, payment, gateway, shipping
 Requires at least: 6.8
 Requires PHP: 8.2
 Tested up to: 7.0
-Stable tag: 3.6.6
+Stable tag: 3.8.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.txt
 
@@ -39,6 +39,11 @@ Please visit the [plugin forum page](https://ry-plugin.com/ry-woocommerce-tools/
 3. SmilePay gateway global settings.
 
 == Changelog ==
+
+= 3.8.0 - 2026-06-21 =
+* 新增 - 支援 PAYUNi 統一金流服務。
+* 刪除 – 移除綠界物流 OK 超商。
+* 調整 – 將 API 用的設定合併為一個設定值並且非自動載入。
 
 = 3.6.6 - 2026-05-21 =
 * 修正 - PHP 8.2 藍新金流的相容性錯誤問題。

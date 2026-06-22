@@ -74,16 +74,14 @@ final class RY_WT_WC_SmilePay_Shipping extends RY_WT_Shipping_Model
             $chosen_shipping = array_intersect($chosen_shipping, array_keys(self::$support_methods));
             if (count($chosen_shipping)) {
                 $chosen_shipping = array_shift($chosen_shipping);
-                if (str_contains($chosen_shipping, '_cvs')) {
-                    foreach ($_available_gateways as $key => $gateway) {
-                        if (str_starts_with($key, 'ry_smilepay_')) {
-                            continue;
-                        }
-                        if ('cod' === $key) {
-                            continue;
-                        }
-                        unset($_available_gateways[$key]);
+                foreach ($_available_gateways as $key => $gateway) {
+                    if (str_starts_with($key, 'ry_smilepay_')) {
+                        continue;
                     }
+                    if ('cod' === $key) {
+                        continue;
+                    }
+                    unset($_available_gateways[$key]);
                 }
             }
         }
@@ -120,8 +118,10 @@ final class RY_WT_WC_SmilePay_Shipping extends RY_WT_Shipping_Model
             foreach ($order->get_items('shipping') as $shipping_item) {
                 $shipping_method = $this->get_order_support_shipping($shipping_item);
                 if ($shipping_method) {
-                    RY_WT_WC_SmilePay_Shipping_Api::instance()->csv_checkout_form($order);
-                    break;
+                    if (str_contains($shipping_method, '_cvs')) {
+                        RY_WT_WC_SmilePay_Shipping_Api::instance()->csv_checkout_form($order);
+                        break;
+                    }
                 }
             }
         }
@@ -187,6 +187,7 @@ final class RY_WT_WC_SmilePay_Shipping extends RY_WT_Shipping_Model
         return array_merge([
             'itemname' => '',
             'print' => '2',
+            'delivery_date' => '1',
         ], $api_info);
     }
 }

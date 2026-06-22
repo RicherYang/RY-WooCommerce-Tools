@@ -2,14 +2,14 @@
 # This file is distributed under the GPLv3.
 msgid ""
 msgstr ""
-"Project-Id-Version: RY Tools for WooCommerce 3.6.6\n"
+"Project-Id-Version: RY Tools for WooCommerce 3.8.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/ry-woocommerce-tools\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-06-19T15:49:46+08:00\n"
+"POT-Creation-Date: 2026-06-21T16:17:03+08:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: ry-woocommerce-tools\n"
@@ -1341,7 +1341,7 @@ msgstr ""
 #: woocommerce/gateways/newebpay/includes/admin.php:65
 #: woocommerce/gateways/payuni/includes/admin.php:56
 #: woocommerce/gateways/smilepay/includes/admin.php:64
-#: woocommerce/shipping/ecpay/includes/admin.php:83
+#: woocommerce/shipping/ecpay/includes/admin.php:84
 msgid "Order no prefix only letters and numbers allowed, and maximum length is 3 characters."
 msgstr ""
 
@@ -1942,7 +1942,7 @@ msgid "ECPay shipping options"
 msgstr ""
 
 #: woocommerce/shipping/ecpay/includes/admin.php:68
-#: woocommerce/shipping/ecpay/includes/admin.php:75
+#: woocommerce/shipping/ecpay/includes/admin.php:76
 msgid "Verification failed!"
 msgstr ""
 
@@ -1950,7 +1950,7 @@ msgstr ""
 msgid "Phone format (0x)xxxxxxx#xx"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/includes/admin.php:75
+#: woocommerce/shipping/ecpay/includes/admin.php:76
 msgid "Cellphone format 09xxxxxxxx"
 msgstr ""
 
@@ -2164,8 +2164,8 @@ msgstr ""
 msgid "ECPay shipping home Tcat"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/shipping.php:265
-#: woocommerce/shipping/ecpay/shipping.php:267
+#: woocommerce/shipping/ecpay/shipping.php:266
+#: woocommerce/shipping/ecpay/shipping.php:268
 msgid "No convenience store has been chosen."
 msgstr ""
 
@@ -2390,13 +2390,13 @@ msgid "The delivery date is sunday, change to monday."
 msgstr ""
 
 #. translators: %1$s Error messade, %2$d Error messade ID
-#: woocommerce/shipping/smilepay/includes/shipping-api.php:212
+#: woocommerce/shipping/smilepay/includes/shipping-api.php:213
 #, php-format
 msgid "Get Smilepay no error: %1$s (%2$d)"
 msgstr ""
 
 #. translators: %1$s Error messade, %2$d Error messade ID
-#: woocommerce/shipping/smilepay/includes/shipping-api.php:355
+#: woocommerce/shipping/smilepay/includes/shipping-api.php:357
 #, php-format
 msgid "Get Smilepay info no error: %1$s (%2$d)"
 msgstr ""

@@ -64,14 +64,15 @@ final class RY_WT_WC_ECPay_Shipping_Admin
         $api_info = RY_WT::get_option('ecpay_shipping_apiinfo', []);
 
         if (is_array($api_info) && isset($api_info['phone']) && !empty($api_info['phone'])) {
-            if (1 !== preg_match('@^\(0\d{1,2}\)\d{6,8}(#\d+)?$@', RY_WT::get_option($api_info['phone']))) {
+            if (! preg_match('@^\(0\d{1,2}\)\d{6,8}(#\d+)?$@', $api_info['phone'])) {
                 WC_Admin_Settings::add_error(__('Verification failed!', 'ry-woocommerce-tools') . ' ' . __('Phone format (0x)xxxxxxx#xx', 'ry-woocommerce-tools'));
                 $api_info['phone'] = '';
                 RY_WT::update_option('ecpay_shipping_apiinfo', $api_info, false);
             }
         }
+
         if (is_array($api_info) && isset($api_info['cellphone']) && !empty($api_info['cellphone'])) {
-            if (1 !== preg_match('@^09\d{8}?$@', RY_WT::get_option($api_info['cellphone']))) {
+            if (!preg_match('@^09\d{8}?$@', $api_info['cellphone'])) {
                 WC_Admin_Settings::add_error(__('Verification failed!', 'ry-woocommerce-tools') . ' ' . __('Cellphone format 09xxxxxxxx', 'ry-woocommerce-tools'));
                 $api_info['cellphone'] = '';
                 RY_WT::update_option('ecpay_shipping_apiinfo', $api_info, false);

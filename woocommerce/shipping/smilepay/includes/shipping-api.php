@@ -46,8 +46,9 @@ class RY_WT_WC_SmilePay_Shipping_Api extends RY_WT_SmilePay_Api
     {
         RY_WT_WC_SmilePay_Shipping::instance()->log('Generating csv for #' . $order->get_id(), WC_Log_Levels::INFO);
         $api_info = RY_WT_WC_SmilePay_Gateway::instance()->get_api_info();
+        $shipping_api_info = RY_WT_WC_SmilePay_Shipping::instance()->get_api_info();
 
-        $item_name = $this->get_item_name($api_info['itemname'], $order);
+        $item_name = $this->get_item_name($shipping_api_info['itemname'], $order);
         $item_name = mb_substr($item_name, 0, 20);
 
         $notify_url = WC()->api_request_url('ry_smilepay_callback', true);
@@ -278,6 +279,7 @@ class RY_WT_WC_SmilePay_Shipping_Api extends RY_WT_SmilePay_Api
         RY_WT_WC_SmilePay_Shipping::instance()->log('Generating no for #' . $order->get_id(), WC_Log_Levels::INFO);
 
         $api_info = RY_WT_WC_SmilePay_Gateway::instance()->get_api_info();
+        $shipping_api_info = RY_WT_WC_SmilePay_Shipping::instance()->get_api_info();
 
         $shipping_list = $order->get_meta('_smilepay_shipping_info', true);
         if (!is_array($shipping_list)) {
@@ -314,7 +316,7 @@ class RY_WT_WC_SmilePay_Shipping_Api extends RY_WT_SmilePay_Api
                 $args['package_size'] = $shipping_list[$get_smse_ID]['spec'];
                 $args['temperature'] = '000' . $shipping_list[$get_smse_ID]['temp'];
                 $date = new DateTime('now', new DateTimeZone('Asia/Taipei'));
-                $date->add(new DateInterval('P' . $api_info['delivery_date'] . 'D'));
+                $date->add(new DateInterval('P' . $shipping_api_info['delivery_date'] . 'D'));
                 if (7 == $date->format('N')) { // 星期日
                     $date->add(new DateInterval('P1D'));
                 }
@@ -372,6 +374,7 @@ class RY_WT_WC_SmilePay_Shipping_Api extends RY_WT_SmilePay_Api
     public function get_print_url($info_list, $print_type)
     {
         $api_info = RY_WT_WC_SmilePay_Gateway::instance()->get_api_info();
+        $shipping_api_info = RY_WT_WC_SmilePay_Shipping::instance()->get_api_info();
 
         $args = [
             'Dcvc' => $api_info['Dcvc'],
@@ -382,7 +385,7 @@ class RY_WT_WC_SmilePay_Shipping_Api extends RY_WT_SmilePay_Api
         $info_list = array_filter($info_list);
         if ('TCAT' === $print_type) {
             $args['Smseid'] = implode(',', $info_list);
-            $args['print_format'] = $api_info['print'];
+            $args['print_format'] = $shipping_api_info['print'];
             if ($api_info['testmode']) {
                 $url = $this->api_test_url['cat_print'];
             } else {
