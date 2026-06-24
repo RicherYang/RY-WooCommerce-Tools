@@ -14,6 +14,11 @@ final class RY_WT_Update
             return;
         }
 
+        if ($now_version === '0.0.0') {
+            RY_WT::update_option('version', RY_WT_VERSION, true);
+            return;
+        }
+
         if (!wp_next_scheduled('ry_check_ntp_time')) {
             wp_schedule_event(time(), 'daily', 'ry_check_ntp_time');
         }
@@ -276,8 +281,8 @@ final class RY_WT_Update
             RY_WT::update_option('version', '3.8.0', true);
         }
 
-        if (version_compare($now_version, '3.8.2', '<')) {
-            RY_WT::update_option('version', '3.8.2', true);
+        if (version_compare($now_version, '3.8.3', '<')) {
+            RY_WT::update_option('version', '3.8.3', true);
         }
     }
 }
