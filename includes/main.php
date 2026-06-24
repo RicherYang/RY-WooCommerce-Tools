@@ -8,7 +8,7 @@ final class RY_WT
 
     public const MIN_WC_VERSION = '9.0.0';
 
-    public const MIN_PRO_TOOLS_VERSION = '3.8.2';
+    public const MIN_PRO_TOOLS_VERSION = '3.8.3';
 
     protected static ?self $_instance = null;
 
