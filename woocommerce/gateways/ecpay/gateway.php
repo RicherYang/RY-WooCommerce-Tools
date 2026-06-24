@@ -31,7 +31,6 @@ final class RY_WT_WC_ECPay_Gateway extends RY_WT_Model
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/gateways/ecpay/gateway-credit-installment.php';
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/gateways/ecpay/gateway-credit.php';
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/gateways/ecpay/gateway-cvs.php';
-        include_once RY_WT_PLUGIN_DIR . 'woocommerce/gateways/ecpay/gateway-twqr.php';
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/gateways/ecpay/gateway-webatm.php';
 
         RY_WT_WC_Gateways::instance();
@@ -55,7 +54,6 @@ final class RY_WT_WC_ECPay_Gateway extends RY_WT_Model
         $methods[] = 'RY_ECPay_Gateway_Credit_Installment';
         $methods[] = 'RY_ECPay_Gateway_Credit';
         $methods[] = 'RY_ECPay_Gateway_Cvs';
-        $methods[] = 'RY_ECPay_Gateway_Twqr';
         $methods[] = 'RY_ECPay_Gateway_Webatm';
 
         return $methods;

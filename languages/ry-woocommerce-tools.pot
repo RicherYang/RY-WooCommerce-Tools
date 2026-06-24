@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-06-24T14:57:22+08:00\n"
+"POT-Creation-Date: 2026-06-24T16:25:16+08:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: ry-woocommerce-tools\n"
@@ -1264,15 +1264,6 @@ msgstr ""
 msgid "ECPay CVS"
 msgstr ""
 
-#: woocommerce/gateways/ecpay/gateway-twqr.php:19
-#: woocommerce/gateways/newebpay/gateway-twqr.php:21
-msgid "Pay via TWQR"
-msgstr ""
-
-#: woocommerce/gateways/ecpay/gateway-twqr.php:20
-msgid "ECPay TWQR"
-msgstr ""
-
 #: woocommerce/gateways/ecpay/gateway-webatm.php:19
 #: woocommerce/gateways/newebpay/gateway-webatm.php:19
 #: woocommerce/gateways/smilepay/gateway-webatm.php:19
@@ -1593,10 +1584,6 @@ msgstr ""
 
 #: woocommerce/gateways/newebpay/gateway-cvs.php:22
 msgid "NewebPay CVS"
-msgstr ""
-
-#: woocommerce/gateways/newebpay/gateway-twqr.php:22
-msgid "NewebPay TWQR"
 msgstr ""
 
 #: woocommerce/gateways/newebpay/gateway-webatm.php:20

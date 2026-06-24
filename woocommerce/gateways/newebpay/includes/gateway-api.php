@@ -174,6 +174,17 @@ class RY_WT_WC_NewebPay_Gateway_Api extends RY_WT_NewebPay_Api
                     break;
                 case 'BNPL':
                     $args['AFTEE'] = 1;
+                    $args['OrderDetail'] = wp_json_encode([[
+                        'ItemName' => $args['ItemDesc'],
+                        'ItemAmt' => $args['Amt'],
+                        'ItemType' => 1,
+                        'ItemOrderNo' => 0,
+                    ]]);
+                    break;
+                case 'Digital':
+                    $args['ESUNWALLET'] = 1;
+                    $args['LINEPAY'] = 1;
+                    $args['TAIWANPAY'] = 1;
                     break;
             }
         }
