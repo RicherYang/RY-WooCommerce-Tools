@@ -44,7 +44,7 @@ abstract class RY_WT_NewebPay_Api extends RY_WT_Api
     {
         ksort($args);
         $args_string = http_build_query($args);
-        $encrypt_string = openssl_encrypt($args_string, self::ENCRYPT_METHOD, $HashKey, OPENSSL_RAW_DATA, $HashIV);
+        $encrypt_string = @openssl_encrypt($args_string, self::ENCRYPT_METHOD, $HashKey, OPENSSL_RAW_DATA, $HashIV);
 
         return bin2hex($encrypt_string);
     }

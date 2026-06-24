@@ -86,7 +86,7 @@ abstract class RY_WT_ECPay_Api extends RY_WT_Api
         wc_set_time_limit(40);
 
         $args['Data'] = $this->urlencode($args['Data']);
-        $args['Data'] = openssl_encrypt($args['Data'], self::ENCRYPT_METHOD, $HashKey, 0, $HashIV);
+        $args['Data'] = @openssl_encrypt($args['Data'], self::ENCRYPT_METHOD, $HashKey, 0, $HashIV);
 
         return wp_remote_post($url, [
             'timeout' => $timeout,

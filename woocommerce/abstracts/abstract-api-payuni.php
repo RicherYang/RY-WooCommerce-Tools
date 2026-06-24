@@ -46,7 +46,7 @@ abstract class RY_WT_PAYUNi_Api extends RY_WT_Api
     protected function data_encrypt($args, $HashKey, $HashIV)
     {
         $tag = '';
-        $encrypted = openssl_encrypt(http_build_query($args), self::ENCRYPT_METHOD, $HashKey, 0, $HashIV, $tag);
+        $encrypted = @openssl_encrypt(http_build_query($args), self::ENCRYPT_METHOD, $HashKey, 0, $HashIV, $tag);
         return trim(bin2hex($encrypted . ':::' . base64_encode($tag)));
     }
 
