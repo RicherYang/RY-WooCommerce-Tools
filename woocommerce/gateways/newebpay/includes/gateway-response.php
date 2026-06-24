@@ -173,12 +173,15 @@ class RY_WT_WC_NewebPay_Gateway_Response extends RY_WT_NewebPay_Api
 
         if (isset($info_value->PayTime) && !empty($info_value->PayTime)) {
             $order->add_order_note(__('NewebPay payment completed', 'ry-woocommerce-tools'));
-            if (isset($info_value->Inst) && !empty($info_value->Inst)) {
-                $order->add_order_note(sprintf(
-                    /* translators: %d number of periods */
-                    __('Credit installment to %d', 'ry-woocommerce-tools'),
-                    $info_value->Inst,
-                ));
+            if (isset($info_value->Inst)) {
+                $installment = (int) $info_value->Inst;
+                if ($installment > 1) {
+                    $order->add_order_note(sprintf(
+                        /* translators: %d number of periods */
+                        __('Credit installment to %d', 'ry-woocommerce-tools'),
+                        $installment,
+                    ));
+                }
             }
 
             $order->payment_complete();

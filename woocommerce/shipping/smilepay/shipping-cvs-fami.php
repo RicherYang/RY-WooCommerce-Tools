@@ -13,7 +13,7 @@ class RY_SmilePay_Shipping_CVS_Fami extends RY_WT_WC_SmilePay_Shipping_Method
         $this->id = self::ID;
         $this->instance_id = absint($instance_ID);
         $this->method_title = __('SmilePay shipping CVS Fami', 'ry-woocommerce-tools');
-        $this->method_description = '';
+
         $this->supports = [
             'shipping-zones',
             'instance-settings',

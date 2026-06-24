@@ -117,12 +117,15 @@ class RY_WT_WC_PAYUNi_Gateway_Response extends RY_WT_PAYUNi_Api
 
         if ($info_value['TradeStatus'] == 1) {
             $order->add_order_note(__('PAYUNi payment completed', 'ry-woocommerce-tools'));
-            if (isset($info_value['CardInst']) && !empty($info_value['CardInst'])) {
-                $order->add_order_note(sprintf(
-                    /* translators: %d number of periods */
-                    __('Credit installment to %d', 'ry-woocommerce-tools'),
-                    $info_value['CardInst'],
-                ));
+            if (isset($info_value['CardInst'])) {
+                $installment = (int) $info_value['CardInst'];
+                if ($installment > 1) {
+                    $order->add_order_note(sprintf(
+                        /* translators: %d number of periods */
+                        __('Credit installment to %d', 'ry-woocommerce-tools'),
+                        $installment,
+                    ));
+                }
             }
             $order->payment_complete();
         }

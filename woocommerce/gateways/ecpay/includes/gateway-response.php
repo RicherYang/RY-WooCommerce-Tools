@@ -124,12 +124,15 @@ class RY_WT_WC_ECPay_Gateway_Response extends RY_WT_ECPay_Api
         }
 
         $order->add_order_note(__('ECPay payment completed', 'ry-woocommerce-tools'));
-        if (isset($info_value['stage']) && !empty($info_value['stage'])) {
-            $order->add_order_note(sprintf(
-                /* translators: %d number of periods */
-                __('Credit installment to %d', 'ry-woocommerce-tools'),
-                $info_value['stage'],
-            ));
+        if (isset($info_value['stage'])) {
+            $installment = (int) $info_value['stage'];
+            if ($installment > 1) {
+                $order->add_order_note(sprintf(
+                    /* translators: %d number of periods */
+                    __('Credit installment to %d', 'ry-woocommerce-tools'),
+                    $installment,
+                ));
+            }
         }
         $order->payment_complete();
     }

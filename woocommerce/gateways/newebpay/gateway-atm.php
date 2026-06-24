@@ -20,8 +20,6 @@ class RY_NewebPay_Gateway_Atm extends RY_WT_WC_NewebPay_Payment_Gateway
         $this->has_fields = false;
         $this->order_button_text = __('Pay via ATM', 'ry-woocommerce-tools');
         $this->method_title = __('NewebPay ATM', 'ry-woocommerce-tools');
-        $this->method_description = '';
-        $this->process_payment_note = __('Pay via NewebPay ATM', 'ry-woocommerce-tools');
 
         $this->form_fields = include RY_WT_PLUGIN_DIR . 'woocommerce/gateways/newebpay/includes/settings/atm.php';
 

@@ -16,8 +16,6 @@ class RY_NewebPay_Gateway_Credit_Installment extends RY_WT_WC_NewebPay_Payment_G
         $this->has_fields = true;
         $this->order_button_text = __('Pay via Credit (installment)', 'ry-woocommerce-tools');
         $this->method_title = __('NewebPay Credit (installment)', 'ry-woocommerce-tools');
-        $this->method_description = '';
-        $this->process_payment_note = __('Pay via NewebPay Credit (installment)', 'ry-woocommerce-tools');
 
         $this->form_fields = include RY_WT_PLUGIN_DIR . 'woocommerce/gateways/newebpay/includes/settings/credit-installment.php';
 

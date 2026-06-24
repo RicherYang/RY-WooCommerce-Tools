@@ -11,7 +11,7 @@ class RY_NewebPay_Shipping_CVS extends RY_WT_WC_NewebPay_Shipping_Method
         $this->id = self::ID;
         $this->instance_id = absint($instance_ID);
         $this->method_title = __('NewebPay shipping CVS', 'ry-woocommerce-tools');
-        $this->method_description = '';
+
         $this->supports = [
             'shipping-zones',
             'instance-settings',

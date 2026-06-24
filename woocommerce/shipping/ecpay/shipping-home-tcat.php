@@ -15,7 +15,7 @@ class RY_ECPay_Shipping_Home_Tcat extends RY_WT_WC_ECPay_Shipping_Method
         $this->id = self::ID;
         $this->instance_id = absint($instance_ID);
         $this->method_title = __('ECPay shipping home Tcat', 'ry-woocommerce-tools');
-        $this->method_description = '';
+
         $this->supports = [
             'shipping-zones',
             'instance-settings',

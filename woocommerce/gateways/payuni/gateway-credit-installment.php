@@ -18,8 +18,6 @@ class RY_PAYUNi_Gateway_Credit_Installment extends RY_WT_WC_PAYUNi_Payment_Gatew
         $this->has_fields = true;
         $this->order_button_text = __('Pay via Credit (installment)', 'ry-woocommerce-tools');
         $this->method_title = __('PAYUNi Credit (installment)', 'ry-woocommerce-tools');
-        $this->method_description = '';
-        $this->process_payment_note = __('Pay via PAYUNi Credit (installment)', 'ry-woocommerce-tools');
 
         $this->form_fields = include RY_WT_PLUGIN_DIR . 'woocommerce/gateways/payuni/includes/settings/credit-installment.php';
 

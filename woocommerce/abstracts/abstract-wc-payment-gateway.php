@@ -10,8 +10,6 @@ abstract class RY_WT_WC_Payment_Gateway extends WC_Payment_Gateway
 
     public int $expire_date = 0;
 
-    protected string $process_payment_note = '';
-
     protected int $check_min_amount = 0;
 
     protected int $check_max_amount = 0;
@@ -142,7 +140,6 @@ abstract class RY_WT_WC_Payment_Gateway extends WC_Payment_Gateway
     public function process_payment($order_ID)
     {
         $order = wc_get_order($order_ID);
-        $order->add_order_note($this->process_payment_note);
 
         wc_maybe_reduce_stock_levels($order_ID);
         wc_release_stock_for_order($order);
