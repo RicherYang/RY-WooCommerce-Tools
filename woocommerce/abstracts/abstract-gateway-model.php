@@ -6,6 +6,11 @@ abstract class RY_WT_Gateway_Model extends RY_WT_Model
 {
     public function payment_info($order_ID)
     {
+        static $added = false;
+
+        if ($added) {
+            return;
+        }
         if (!$order_ID) {
             return;
         }
@@ -22,6 +27,7 @@ abstract class RY_WT_Gateway_Model extends RY_WT_Model
         $gateway = $payment_gateways[$payment_method];
         if (defined(get_class($gateway) . '::INFO_TEMPLATE') && $gateway::INFO_TEMPLATE) {
             if (file_exists(RY_WT_PLUGIN_DIR . 'templates/order/' . $gateway::INFO_TEMPLATE)) {
+                $added = true;
                 $args = [
                     'order' => $order,
                 ];
