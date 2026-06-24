@@ -8,6 +8,8 @@ class RY_SmilePay_Gateway_Atm extends RY_WT_WC_SmilePay_Payment_Gateway
 
     public const PAYMENT_TYPE = '2';
 
+    public const INFO_TEMPLATE = 'order-smilepay-payment-info-atm.php';
+
     protected int $check_min_amount = 13;
 
     protected int $check_max_amount = 20000;

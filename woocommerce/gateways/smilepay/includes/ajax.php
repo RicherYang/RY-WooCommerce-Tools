@@ -30,9 +30,8 @@ final class RY_WT_WC_SmilePay_Gateway_Ajax
         $order_ID = intval($_POST['id'] ?? '');
         $order = wc_get_order($order_ID);
         if ($order && hash_equals($order->get_order_key(), $order_key)) {
-            $gateways = WC_Payment_Gateways::instance();
-            $payment_gateways = $gateways->payment_gateways();
             $payment_method = $order->get_payment_method();
+            $payment_gateways = WC()->payment_gateways()->payment_gateways();
             if (isset($payment_gateways[$payment_method])) {
                 $gateway = $payment_gateways[$payment_method];
                 if (is_object($gateway) && $gateway instanceof RY_WT_WC_SmilePay_Payment_Gateway) {

@@ -2,7 +2,7 @@
 
 defined('ABSPATH') or exit;
 
-final class RY_WT_WC_SmilePay_Gateway extends RY_WT_Model
+final class RY_WT_WC_SmilePay_Gateway extends RY_WT_Gateway_Model
 {
     protected static ?self $_instance = null;
 
@@ -59,32 +59,6 @@ final class RY_WT_WC_SmilePay_Gateway extends RY_WT_Model
         $methods[] = 'RY_SmilePay_Gateway_Webatm';
 
         return $methods;
-    }
-
-    public function payment_info($order_ID)
-    {
-        if (!$order_ID) {
-            return;
-        }
-
-        if (!$order = wc_get_order($order_ID)) {
-            return;
-        }
-
-        $template_file = match ($order->get_payment_method()) {
-            RY_SmilePay_Gateway_Atm::ID => 'order/order-smilepay-payment-info-atm.php',
-            RY_SmilePay_Gateway_Barcode::ID => 'order/order-smilepay-payment-info-barcode.php',
-            RY_SmilePay_Gateway_Cvs_711::ID => 'order/order-smilepay-payment-info-cvs-711.php',
-            RY_SmilePay_Gateway_Cvs_Fami::ID => 'order/order-smilepay-payment-info-cvs-fami.php',
-            default => '',
-        };
-
-        if ($template_file !== '') {
-            $args = [
-                'order' => $order,
-            ];
-            wc_get_template($template_file, $args, '', RY_WT_PLUGIN_DIR . 'templates/');
-        }
     }
 
     public function get_api_info()

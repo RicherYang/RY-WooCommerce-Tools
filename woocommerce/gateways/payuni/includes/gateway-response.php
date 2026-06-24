@@ -130,15 +130,15 @@ class RY_WT_WC_PAYUNi_Gateway_Response extends RY_WT_PAYUNi_Api
             $order->payment_complete();
         }
         if ($info_value['TradeStatus'] == 0) {
-            switch ($this->get_payment_type($info_value)) {
-                case '2':
+            switch ($order->get_payment_method()) {
+                case 'ry_payuni_atm':
                     $expireDate = new DateTime($info_value['ExpireDate'], new DateTimeZone('Asia/Taipei'));
                     $order->update_meta_data('_payuni_atm_BankCode', $info_value['BankType']);
                     $order->update_meta_data('_payuni_atm_vAccount', $info_value['PayNo']);
                     $order->update_meta_data('_payuni_atm_ExpireDate', $expireDate->format(DATE_ATOM));
                     $order->update_status('on-hold');
                     break;
-                case '3':
+                case 'ry_payuni_cvs':
                     $expireDate = new DateTime($info_value['ExpireDate'], new DateTimeZone('Asia/Taipei'));
                     $order->update_meta_data('_payuni_cvs_Store', $info_value['Store']);
                     $order->update_meta_data('_payuni_cvs_PaymentNo', $info_value['PayNo']);

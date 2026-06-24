@@ -8,6 +8,8 @@ class RY_PAYUNi_Gateway_Atm extends RY_WT_WC_PAYUNi_Payment_Gateway
 
     public const PAYMENT_TYPE = 'ATM';
 
+    public const INFO_TEMPLATE = 'order-payuni-payment-info-atm.php';
+
     protected int $check_min_amount = 15;
 
     protected int $check_max_amount = 49999;

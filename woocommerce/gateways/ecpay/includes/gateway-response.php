@@ -144,14 +144,14 @@ class RY_WT_WC_ECPay_Gateway_Response extends RY_WT_ECPay_Api
         }
 
         switch ($order->get_payment_method()) {
-            case RY_ECPay_Gateway_Atm::ID:
+            case 'ry_ecpay_atm':
                 $expireDate = new DateTime($info_value['ExpireDate'], new DateTimeZone('Asia/Taipei'));
                 $order->update_meta_data('_ecpay_atm_BankCode', $info_value['BankCode']);
                 $order->update_meta_data('_ecpay_atm_vAccount', $info_value['vAccount']);
                 $order->update_meta_data('_ecpay_atm_ExpireDate', $expireDate->format(DATE_ATOM));
                 $order->update_status('on-hold');
                 break;
-            case RY_ECPay_Gateway_Bnpl::ID:
+            case 'ry_ecpay_bnpl':
                 $order->update_meta_data('_ecpay_bnpl_TradeNo', $info_value['BNPLTradeNo']);
                 $order->update_meta_data('_ecpay_bnpl_Installment', $info_value['BNPLInstallment']);
                 $order->update_status('on-hold');
@@ -166,7 +166,7 @@ class RY_WT_WC_ECPay_Gateway_Response extends RY_WT_ECPay_Api
         }
 
         switch ($order->get_payment_method()) {
-            case RY_ECPay_Gateway_Barcode::ID:
+            case 'ry_ecpay_barcode':
                 $expireDate = new DateTime($info_value['ExpireDate'], new DateTimeZone('Asia/Taipei'));
                 $order->update_meta_data('_ecpay_barcode_Barcode1', $info_value['Barcode1']);
                 $order->update_meta_data('_ecpay_barcode_Barcode2', $info_value['Barcode2']);
@@ -174,7 +174,7 @@ class RY_WT_WC_ECPay_Gateway_Response extends RY_WT_ECPay_Api
                 $order->update_meta_data('_ecpay_barcode_ExpireDate', $expireDate->format(DATE_ATOM));
                 $order->update_status('on-hold');
                 break;
-            case RY_ECPay_Gateway_Cvs::ID:
+            case 'ry_ecpay_cvs':
                 $expireDate = new DateTime($info_value['ExpireDate'], new DateTimeZone('Asia/Taipei'));
                 $order->update_meta_data('_ecpay_cvs_PaymentNo', $info_value['PaymentNo']);
                 $order->update_meta_data('_ecpay_cvs_ExpireDate', $expireDate->format(DATE_ATOM));

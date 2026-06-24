@@ -8,6 +8,8 @@ class RY_SmilePay_Gateway_Barcode extends RY_WT_WC_SmilePay_Payment_Gateway
 
     public const PAYMENT_TYPE = '3';
 
+    public const INFO_TEMPLATE = 'order-smilepay-payment-info-barcode.php';
+
     protected int $check_min_amount = 25;
 
     protected int $check_max_amount = 20000;

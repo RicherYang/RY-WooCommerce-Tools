@@ -8,6 +8,8 @@ class RY_NewebPay_Gateway_Atm extends RY_WT_WC_NewebPay_Payment_Gateway
 
     public const PAYMENT_TYPE = 'VACC';
 
+    public const INFO_TEMPLATE = 'order-newebpay-payment-info-atm.php';
+
     protected int $check_min_amount = 16;
 
     protected int $check_max_amount = 49999;

@@ -2,7 +2,7 @@
 
 defined('ABSPATH') or exit;
 
-final class RY_WT_WC_PAYUNi_Gateway extends RY_WT_Model
+final class RY_WT_WC_PAYUNi_Gateway extends RY_WT_Gateway_Model
 {
     protected static ?self $_instance = null;
 
@@ -53,29 +53,6 @@ final class RY_WT_WC_PAYUNi_Gateway extends RY_WT_Model
         $methods[] = 'RY_PAYUNi_Gateway_Cvs';
 
         return $methods;
-    }
-
-    public function payment_info($order_ID)
-    {
-        if (!$order_ID) {
-            return;
-        }
-        if (!$order = wc_get_order($order_ID)) {
-            return;
-        }
-
-        $template_file = match ($order->get_payment_method()) {
-            RY_PAYUNi_Gateway_Atm::ID => 'order/order-payuni-payment-info-atm.php',
-            RY_PAYUNi_Gateway_Cvs::ID => 'order/order-payuni-payment-info-cvs.php',
-            default => '',
-        };
-
-        if ($template_file !== '') {
-            $args = [
-                'order' => $order,
-            ];
-            wc_get_template($template_file, $args, '', RY_WT_PLUGIN_DIR . 'templates/');
-        }
     }
 
     public function get_api_info()

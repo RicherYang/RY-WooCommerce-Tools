@@ -8,6 +8,8 @@ class RY_SmilePay_Gateway_Cvs_Fami extends RY_WT_WC_SmilePay_Payment_Gateway
 
     public const PAYMENT_TYPE = '6';
 
+    public const INFO_TEMPLATE = 'order-smilepay-payment-info-cvs-fami.php';
+
     protected int $check_min_amount = 35;
 
     protected int $check_max_amount = 20000;

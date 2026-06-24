@@ -46,6 +46,7 @@ final class RY_WT
 
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/abstracts/abstract-api.php';
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/abstracts/abstract-model.php';
+        include_once RY_WT_PLUGIN_DIR . 'woocommerce/abstracts/abstract-gateway-model.php';
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/abstracts/abstract-shipping-model.php';
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/abstracts/abstract-wc-payment-gateway.php';
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/abstracts/abstract-wc-shipping-method.php';

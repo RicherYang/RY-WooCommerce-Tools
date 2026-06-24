@@ -8,6 +8,8 @@ class RY_PAYUNi_Gateway_Cvs extends RY_WT_WC_PAYUNi_Payment_Gateway
 
     public const PAYMENT_TYPE = 'CVS';
 
+    public const INFO_TEMPLATE = 'order-payuni-payment-info-cvs.php';
+
     protected int $check_min_amount = 30;
 
     protected int $check_max_amount = 20000;
