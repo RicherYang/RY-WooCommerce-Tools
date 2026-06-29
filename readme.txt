@@ -78,5 +78,8 @@ Please visit the [plugin forum page](https://ry-plugin.com/ry-woocommerce-tools/
 
 == Upgrade Notice ==
 
+= 3.8.4 - 2026-06-24 =
+* 移除 TWQR 付款方式。
+
 = 3.6.2 - 2026-04-29 =
 * 物流運費的計算方式有調整，請注意是否如何預期。
