@@ -5,16 +5,17 @@
     "author": "Richer Yang",
     "private": true,
     "devDependencies": {
-        "@wordpress/i18n": "^6.21.0",
-        "@wordpress/scripts": "^32.4.0"
+        "@wordpress/i18n": "^6.23.0",
+        "@wordpress/scripts": "^32.6.0"
     },
     "scripts": {
         "start": "wp-scripts start",
         "build": "npm run build:assets && npm run i18n:pot",
         "build:all": "npm run build:assets && npm run build:i18n",
         "build:assets": "wp-scripts build",
-        "build:i18n": "npm run i18n:pot",
+        "build:i18n": "npm run i18n:pot && npm run i18n:clearpot",
         "i18n:pot": "wp i18n make-pot \"\" \"languages/ry-woocommerce-tools.pot\" --slug=\"ry-woocommerce-tools\" --domain=\"ry-woocommerce-tools\" --exclude=\"node_modules,assets-src\"",
+        "i18n:clearpot": "node -e \"const fs=require('fs');const path=require('path');const dir='languages';for(const file of fs.readdirSync(dir)){if(!file.endsWith('.pot'))continue;const full=path.join(dir,file);const data=fs.readFileSync(full,'utf8').split('\\n');const newData=data.filter(line=>!line.startsWith('\\\"POT-Creation-Date:'));fs.writeFileSync(full,newData.join('\\n'));}\"",
         "update": "npm update"
     }
 }

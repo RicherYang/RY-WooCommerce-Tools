@@ -2,21 +2,20 @@
 # This file is distributed under the GPLv3.
 msgid ""
 msgstr ""
-"Project-Id-Version: RY Tools for WooCommerce 3.8.3\n"
+"Project-Id-Version: RY Tools for WooCommerce 3.8.4\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/ry-woocommerce-tools\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-06-24T16:25:16+08:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: ry-woocommerce-tools\n"
 
 #. Plugin Name of the plugin
 #: ry-woocommerce-tools.php
-#: includes/admin.php:33
+#: admin/admin.php:37
 #: woocommerce/admin/settings/html/tools.php:4
 msgid "RY Tools for WooCommerce"
 msgstr ""
@@ -42,17 +41,62 @@ msgid "https://richer.tw/"
 msgstr ""
 
 #. translators: %1$s: Name of this plugin %2$s: min require version
-#: includes/admin.php:32
+#: admin/admin.php:36
 #, php-format
 msgid "<strong>%1$s</strong> is inactive. It require WooCommerce version %2$s or newer."
 msgstr ""
 
-#: includes/admin.php:45
+#: admin/admin.php:49
 msgid "Please check your server time setting. Server time is differs from NTP more than one minute."
 msgstr ""
 
-#: includes/admin.php:53
+#: admin/admin.php:57
 msgid "Settings"
+msgstr ""
+
+#. translators: %1$s: Plugin name, %2$s: License URL
+#: includes/ry-general/abstract-admin.php:49
+#, php-format
+msgid "%1$s: Your <a href=\"%2$s\">license</a> is not activated yet!"
+msgstr ""
+
+#: includes/ry-general/admin-logs.php:25
+#: includes/ry-general/admin-logs.php:96
+msgid "Logs"
+msgstr ""
+
+#: includes/ry-general/admin-logs.php:141
+msgid "Delete successful."
+msgstr ""
+
+#: includes/ry-general/admin-logs.php:148
+msgid "Delete failed."
+msgstr ""
+
+#. translators: %s: Path of log file
+#: includes/ry-general/html/log-info.php:5
+#, php-format
+msgid "Viewing log file %s"
+msgstr ""
+
+#: includes/ry-general/html/log-info.php:36
+msgid "Details"
+msgstr ""
+
+#: includes/ry-general/html/log-info.php:63
+msgid "Download"
+msgstr ""
+
+#: includes/ry-general/html/log-info.php:71
+msgid "Delete Permanently"
+msgstr ""
+
+#: includes/ry-general/html/logs-select.php:3
+msgid "Log Categories"
+msgstr ""
+
+#: includes/ry-general/html/logs-select.php:19
+msgid "Log Files"
 msgstr ""
 
 #: templates/auto-redirect.php:21
@@ -85,101 +129,101 @@ msgstr ""
 msgid "Your order product has been sended to the convenience store."
 msgstr ""
 
-#: templates/order/order-ecpay-payment-info-atm.php:32
-#: templates/order/order-ecpay-payment-info-barcode.php:33
-#: templates/order/order-ecpay-payment-info-bnpl.php:30
-#: templates/order/order-ecpay-payment-info-cvs.php:31
-#: templates/order/order-newebpay-payment-info-atm.php:32
-#: templates/order/order-newebpay-payment-info-barcode.php:33
-#: templates/order/order-newebpay-payment-info-cvs.php:31
-#: templates/order/order-payuni-payment-info-atm.php:32
-#: templates/order/order-payuni-payment-info-cvs.php:31
-#: templates/order/order-smilepay-payment-info-atm.php:32
-#: templates/order/order-smilepay-payment-info-barcode.php:33
-#: templates/order/order-smilepay-payment-info-cvs-711.php:31
-#: templates/order/order-smilepay-payment-info-cvs-fami.php:31
+#: templates/order/order-ecpay-payment-info-atm.php:28
+#: templates/order/order-ecpay-payment-info-barcode.php:29
+#: templates/order/order-ecpay-payment-info-bnpl.php:26
+#: templates/order/order-ecpay-payment-info-cvs.php:27
+#: templates/order/order-newebpay-payment-info-atm.php:28
+#: templates/order/order-newebpay-payment-info-barcode.php:29
+#: templates/order/order-newebpay-payment-info-cvs.php:27
+#: templates/order/order-payuni-payment-info-atm.php:28
+#: templates/order/order-payuni-payment-info-cvs.php:27
+#: templates/order/order-smilepay-payment-info-atm.php:28
+#: templates/order/order-smilepay-payment-info-barcode.php:29
+#: templates/order/order-smilepay-payment-info-cvs-711.php:27
+#: templates/order/order-smilepay-payment-info-cvs-fami.php:27
 #: woocommerce/abstracts/abstract-wc-payment-gateway.php:49
 msgid "Payment details"
 msgstr ""
 
-#: templates/order/order-ecpay-payment-info-atm.php:38
-#: templates/order/order-newebpay-payment-info-atm.php:38
-#: templates/order/order-payuni-payment-info-atm.php:38
-#: templates/order/order-smilepay-payment-info-atm.php:38
-#: woocommerce/gateways/ecpay/gateway-atm.php:36
-#: woocommerce/gateways/newebpay/gateway-atm.php:36
-#: woocommerce/gateways/payuni/gateway-atm.php:36
-#: woocommerce/gateways/smilepay/gateway-atm.php:38
+#: templates/order/order-ecpay-payment-info-atm.php:34
+#: templates/order/order-newebpay-payment-info-atm.php:34
+#: templates/order/order-payuni-payment-info-atm.php:34
+#: templates/order/order-smilepay-payment-info-atm.php:34
+#: woocommerce/gateways/ecpay/gateway-atm.php:38
+#: woocommerce/gateways/newebpay/gateway-atm.php:38
+#: woocommerce/gateways/payuni/gateway-atm.php:38
+#: woocommerce/gateways/smilepay/gateway-atm.php:40
 msgid "Bank"
 msgstr ""
 
-#: templates/order/order-ecpay-payment-info-atm.php:46
-#: templates/order/order-newebpay-payment-info-atm.php:46
-#: templates/order/order-payuni-payment-info-atm.php:46
-#: templates/order/order-smilepay-payment-info-atm.php:46
+#: templates/order/order-ecpay-payment-info-atm.php:42
+#: templates/order/order-newebpay-payment-info-atm.php:42
+#: templates/order/order-payuni-payment-info-atm.php:42
+#: templates/order/order-smilepay-payment-info-atm.php:42
 msgid "Bank code"
 msgstr ""
 
-#: templates/order/order-ecpay-payment-info-atm.php:54
-#: templates/order/order-newebpay-payment-info-atm.php:54
-#: templates/order/order-payuni-payment-info-atm.php:54
-#: templates/order/order-smilepay-payment-info-atm.php:54
-#: woocommerce/gateways/ecpay/gateway-atm.php:40
-#: woocommerce/gateways/newebpay/gateway-atm.php:40
-#: woocommerce/gateways/payuni/gateway-atm.php:40
-#: woocommerce/gateways/smilepay/gateway-atm.php:42
+#: templates/order/order-ecpay-payment-info-atm.php:50
+#: templates/order/order-newebpay-payment-info-atm.php:50
+#: templates/order/order-payuni-payment-info-atm.php:50
+#: templates/order/order-smilepay-payment-info-atm.php:50
+#: woocommerce/gateways/ecpay/gateway-atm.php:42
+#: woocommerce/gateways/newebpay/gateway-atm.php:42
+#: woocommerce/gateways/payuni/gateway-atm.php:42
+#: woocommerce/gateways/smilepay/gateway-atm.php:44
 msgid "ATM Bank account"
 msgstr ""
 
-#: templates/order/order-ecpay-payment-info-atm.php:62
-#: templates/order/order-ecpay-payment-info-barcode.php:63
-#: templates/order/order-ecpay-payment-info-cvs.php:45
-#: templates/order/order-newebpay-payment-info-atm.php:62
-#: templates/order/order-newebpay-payment-info-barcode.php:63
-#: templates/order/order-newebpay-payment-info-cvs.php:45
-#: templates/order/order-payuni-payment-info-atm.php:62
-#: templates/order/order-payuni-payment-info-cvs.php:45
-#: templates/order/order-smilepay-payment-info-atm.php:62
-#: templates/order/order-smilepay-payment-info-barcode.php:63
-#: templates/order/order-smilepay-payment-info-cvs-711.php:45
-#: templates/order/order-smilepay-payment-info-cvs-fami.php:45
-#: woocommerce/gateways/ecpay/gateway-atm.php:44
-#: woocommerce/gateways/ecpay/gateway-barcode.php:48
-#: woocommerce/gateways/ecpay/gateway-cvs.php:40
+#: templates/order/order-ecpay-payment-info-atm.php:58
+#: templates/order/order-ecpay-payment-info-barcode.php:59
+#: templates/order/order-ecpay-payment-info-cvs.php:41
+#: templates/order/order-newebpay-payment-info-atm.php:58
+#: templates/order/order-newebpay-payment-info-barcode.php:59
+#: templates/order/order-newebpay-payment-info-cvs.php:41
+#: templates/order/order-payuni-payment-info-atm.php:58
+#: templates/order/order-payuni-payment-info-cvs.php:41
+#: templates/order/order-smilepay-payment-info-atm.php:58
+#: templates/order/order-smilepay-payment-info-barcode.php:59
+#: templates/order/order-smilepay-payment-info-cvs-711.php:41
+#: templates/order/order-smilepay-payment-info-cvs-fami.php:41
+#: woocommerce/gateways/ecpay/gateway-atm.php:46
+#: woocommerce/gateways/ecpay/gateway-barcode.php:50
+#: woocommerce/gateways/ecpay/gateway-cvs.php:42
 #: woocommerce/gateways/ecpay/includes/settings/atm.php:8
 #: woocommerce/gateways/ecpay/includes/settings/barcode.php:8
-#: woocommerce/gateways/newebpay/gateway-atm.php:44
-#: woocommerce/gateways/newebpay/gateway-barcode.php:48
-#: woocommerce/gateways/newebpay/gateway-cvs.php:40
+#: woocommerce/gateways/newebpay/gateway-atm.php:46
+#: woocommerce/gateways/newebpay/gateway-barcode.php:50
+#: woocommerce/gateways/newebpay/gateway-cvs.php:42
 #: woocommerce/gateways/newebpay/includes/settings/atm.php:8
 #: woocommerce/gateways/newebpay/includes/settings/barcode.php:8
 #: woocommerce/gateways/newebpay/includes/settings/cvs.php:8
-#: woocommerce/gateways/payuni/gateway-atm.php:44
-#: woocommerce/gateways/payuni/gateway-cvs.php:40
+#: woocommerce/gateways/payuni/gateway-atm.php:46
+#: woocommerce/gateways/payuni/gateway-cvs.php:42
 #: woocommerce/gateways/payuni/includes/settings/atm.php:8
 #: woocommerce/gateways/payuni/includes/settings/cvs.php:8
-#: woocommerce/gateways/smilepay/gateway-atm.php:46
-#: woocommerce/gateways/smilepay/gateway-barcode.php:68
-#: woocommerce/gateways/smilepay/gateway-cvs-711.php:42
-#: woocommerce/gateways/smilepay/gateway-cvs-fami.php:42
+#: woocommerce/gateways/smilepay/gateway-atm.php:48
+#: woocommerce/gateways/smilepay/gateway-barcode.php:70
+#: woocommerce/gateways/smilepay/gateway-cvs-711.php:44
+#: woocommerce/gateways/smilepay/gateway-cvs-fami.php:44
 #: woocommerce/gateways/smilepay/includes/settings/atm.php:8
 #: woocommerce/gateways/smilepay/includes/settings/barcode.php:8
 msgid "Payment deadline"
 msgstr ""
 
 #. translators: %1$s: date %2$s: time
-#: templates/order/order-ecpay-payment-info-atm.php:67
-#: templates/order/order-ecpay-payment-info-barcode.php:68
-#: templates/order/order-ecpay-payment-info-cvs.php:50
-#: templates/order/order-newebpay-payment-info-atm.php:67
-#: templates/order/order-newebpay-payment-info-barcode.php:68
-#: templates/order/order-newebpay-payment-info-cvs.php:50
-#: templates/order/order-payuni-payment-info-atm.php:67
-#: templates/order/order-payuni-payment-info-cvs.php:50
-#: templates/order/order-smilepay-payment-info-atm.php:67
-#: templates/order/order-smilepay-payment-info-barcode.php:68
-#: templates/order/order-smilepay-payment-info-cvs-711.php:50
-#: templates/order/order-smilepay-payment-info-cvs-fami.php:50
+#: templates/order/order-ecpay-payment-info-atm.php:63
+#: templates/order/order-ecpay-payment-info-barcode.php:64
+#: templates/order/order-ecpay-payment-info-cvs.php:46
+#: templates/order/order-newebpay-payment-info-atm.php:63
+#: templates/order/order-newebpay-payment-info-barcode.php:64
+#: templates/order/order-newebpay-payment-info-cvs.php:46
+#: templates/order/order-payuni-payment-info-atm.php:63
+#: templates/order/order-payuni-payment-info-cvs.php:46
+#: templates/order/order-smilepay-payment-info-atm.php:63
+#: templates/order/order-smilepay-payment-info-barcode.php:64
+#: templates/order/order-smilepay-payment-info-cvs-711.php:46
+#: templates/order/order-smilepay-payment-info-cvs-fami.php:46
 #: woocommerce/shipping/info-list-table.php:122
 #: woocommerce/shipping/info-list-table.php:132
 #, php-format
@@ -187,47 +231,47 @@ msgctxt "Datetime"
 msgid "%1$s %2$s"
 msgstr ""
 
-#: templates/order/order-ecpay-payment-info-barcode.php:39
-#: templates/order/order-newebpay-payment-info-barcode.php:39
-#: templates/order/order-smilepay-payment-info-barcode.php:39
-#: woocommerce/gateways/ecpay/gateway-barcode.php:36
-#: woocommerce/gateways/newebpay/gateway-barcode.php:36
-#: woocommerce/gateways/smilepay/gateway-barcode.php:56
+#: templates/order/order-ecpay-payment-info-barcode.php:35
+#: templates/order/order-newebpay-payment-info-barcode.php:35
+#: templates/order/order-smilepay-payment-info-barcode.php:35
+#: woocommerce/gateways/ecpay/gateway-barcode.php:38
+#: woocommerce/gateways/newebpay/gateway-barcode.php:38
+#: woocommerce/gateways/smilepay/gateway-barcode.php:58
 msgid "Barcode 1"
 msgstr ""
 
-#: templates/order/order-ecpay-payment-info-barcode.php:47
-#: templates/order/order-newebpay-payment-info-barcode.php:47
-#: templates/order/order-smilepay-payment-info-barcode.php:47
-#: woocommerce/gateways/ecpay/gateway-barcode.php:40
-#: woocommerce/gateways/newebpay/gateway-barcode.php:40
-#: woocommerce/gateways/smilepay/gateway-barcode.php:60
+#: templates/order/order-ecpay-payment-info-barcode.php:43
+#: templates/order/order-newebpay-payment-info-barcode.php:43
+#: templates/order/order-smilepay-payment-info-barcode.php:43
+#: woocommerce/gateways/ecpay/gateway-barcode.php:42
+#: woocommerce/gateways/newebpay/gateway-barcode.php:42
+#: woocommerce/gateways/smilepay/gateway-barcode.php:62
 msgid "Barcode 2"
 msgstr ""
 
-#: templates/order/order-ecpay-payment-info-barcode.php:55
-#: templates/order/order-newebpay-payment-info-barcode.php:55
-#: templates/order/order-smilepay-payment-info-barcode.php:55
-#: woocommerce/gateways/ecpay/gateway-barcode.php:44
-#: woocommerce/gateways/newebpay/gateway-barcode.php:44
-#: woocommerce/gateways/smilepay/gateway-barcode.php:64
+#: templates/order/order-ecpay-payment-info-barcode.php:51
+#: templates/order/order-newebpay-payment-info-barcode.php:51
+#: templates/order/order-smilepay-payment-info-barcode.php:51
+#: woocommerce/gateways/ecpay/gateway-barcode.php:46
+#: woocommerce/gateways/newebpay/gateway-barcode.php:46
+#: woocommerce/gateways/smilepay/gateway-barcode.php:66
 msgid "Barcode 3"
 msgstr ""
 
-#: templates/order/order-ecpay-payment-info-bnpl.php:36
+#: templates/order/order-ecpay-payment-info-bnpl.php:32
 msgid "Installment"
 msgstr ""
 
-#: templates/order/order-ecpay-payment-info-cvs.php:37
-#: templates/order/order-newebpay-payment-info-cvs.php:37
-#: templates/order/order-payuni-payment-info-cvs.php:37
-#: templates/order/order-smilepay-payment-info-cvs-711.php:37
-#: templates/order/order-smilepay-payment-info-cvs-fami.php:37
-#: woocommerce/gateways/ecpay/gateway-cvs.php:36
-#: woocommerce/gateways/newebpay/gateway-cvs.php:36
-#: woocommerce/gateways/payuni/gateway-cvs.php:36
-#: woocommerce/gateways/smilepay/gateway-cvs-711.php:38
-#: woocommerce/gateways/smilepay/gateway-cvs-fami.php:38
+#: templates/order/order-ecpay-payment-info-cvs.php:33
+#: templates/order/order-newebpay-payment-info-cvs.php:33
+#: templates/order/order-payuni-payment-info-cvs.php:33
+#: templates/order/order-smilepay-payment-info-cvs-711.php:33
+#: templates/order/order-smilepay-payment-info-cvs-fami.php:33
+#: woocommerce/gateways/ecpay/gateway-cvs.php:38
+#: woocommerce/gateways/newebpay/gateway-cvs.php:38
+#: woocommerce/gateways/payuni/gateway-cvs.php:38
+#: woocommerce/gateways/smilepay/gateway-cvs-711.php:40
+#: woocommerce/gateways/smilepay/gateway-cvs-fami.php:40
 msgid "CVS code"
 msgstr ""
 
@@ -1212,24 +1256,24 @@ msgstr ""
 msgid "(not paid)"
 msgstr ""
 
-#: woocommerce/gateways/ecpay/gateway-atm.php:21
-#: woocommerce/gateways/newebpay/gateway-atm.php:21
-#: woocommerce/gateways/payuni/gateway-atm.php:21
-#: woocommerce/gateways/smilepay/gateway-atm.php:21
+#: woocommerce/gateways/ecpay/gateway-atm.php:23
+#: woocommerce/gateways/newebpay/gateway-atm.php:23
+#: woocommerce/gateways/payuni/gateway-atm.php:23
+#: woocommerce/gateways/smilepay/gateway-atm.php:23
 msgid "Pay via ATM"
 msgstr ""
 
-#: woocommerce/gateways/ecpay/gateway-atm.php:22
+#: woocommerce/gateways/ecpay/gateway-atm.php:24
 msgid "ECPay ATM"
 msgstr ""
 
-#: woocommerce/gateways/ecpay/gateway-barcode.php:21
-#: woocommerce/gateways/newebpay/gateway-barcode.php:21
-#: woocommerce/gateways/smilepay/gateway-barcode.php:19
+#: woocommerce/gateways/ecpay/gateway-barcode.php:23
+#: woocommerce/gateways/newebpay/gateway-barcode.php:23
+#: woocommerce/gateways/smilepay/gateway-barcode.php:21
 msgid "Pay via BARCODE"
 msgstr ""
 
-#: woocommerce/gateways/ecpay/gateway-barcode.php:22
+#: woocommerce/gateways/ecpay/gateway-barcode.php:24
 msgid "ECPay BARCODE"
 msgstr ""
 
@@ -1254,13 +1298,13 @@ msgstr ""
 msgid "ECPay Credit ( include \"Apple Pay\" )"
 msgstr ""
 
-#: woocommerce/gateways/ecpay/gateway-cvs.php:21
-#: woocommerce/gateways/newebpay/gateway-cvs.php:21
-#: woocommerce/gateways/payuni/gateway-cvs.php:21
+#: woocommerce/gateways/ecpay/gateway-cvs.php:23
+#: woocommerce/gateways/newebpay/gateway-cvs.php:23
+#: woocommerce/gateways/payuni/gateway-cvs.php:23
 msgid "Pay via CVS"
 msgstr ""
 
-#: woocommerce/gateways/ecpay/gateway-cvs.php:22
+#: woocommerce/gateways/ecpay/gateway-cvs.php:24
 msgid "ECPay CVS"
 msgstr ""
 
@@ -1294,16 +1338,10 @@ msgstr ""
 msgid "Need %s to support block checkout."
 msgstr ""
 
-#. translators: %s: link to RY ECPay Invoice for WooCommerce
-#: woocommerce/gateways/ecpay/includes/admin.php:60
-#, php-format
-msgid "If you need ECPay Invoice support, you can try %s"
-msgstr ""
-
-#: woocommerce/gateways/ecpay/includes/admin.php:74
-#: woocommerce/gateways/newebpay/includes/admin.php:65
+#: woocommerce/gateways/ecpay/includes/admin.php:66
+#: woocommerce/gateways/newebpay/includes/admin.php:57
 #: woocommerce/gateways/payuni/includes/admin.php:56
-#: woocommerce/gateways/smilepay/includes/admin.php:64
+#: woocommerce/gateways/smilepay/includes/admin.php:56
 #: woocommerce/shipping/ecpay/includes/admin.php:84
 msgid "Order no prefix only letters and numbers allowed, and maximum length is 3 characters."
 msgstr ""
@@ -1566,11 +1604,11 @@ msgstr ""
 msgid "0 to disable maximum amount limit."
 msgstr ""
 
-#: woocommerce/gateways/newebpay/gateway-atm.php:22
+#: woocommerce/gateways/newebpay/gateway-atm.php:24
 msgid "NewebPay ATM"
 msgstr ""
 
-#: woocommerce/gateways/newebpay/gateway-barcode.php:22
+#: woocommerce/gateways/newebpay/gateway-barcode.php:24
 msgid "NewebPay BARCODE"
 msgstr ""
 
@@ -1582,7 +1620,7 @@ msgstr ""
 msgid "NewebPay Credit"
 msgstr ""
 
-#: woocommerce/gateways/newebpay/gateway-cvs.php:22
+#: woocommerce/gateways/newebpay/gateway-cvs.php:24
 msgid "NewebPay CVS"
 msgstr ""
 
@@ -1592,12 +1630,6 @@ msgstr ""
 
 #: woocommerce/gateways/newebpay/includes/admin.php:30
 msgid "NewebPay gateway options"
-msgstr ""
-
-#. translators: %s: link to RY ezPay Invoice for WooCommerce
-#: woocommerce/gateways/newebpay/includes/admin.php:51
-#, php-format
-msgid "If you need ezPay Invoice support, you can try %s"
 msgstr ""
 
 #. translators: 1: Store name 2: Store ID
@@ -1649,7 +1681,7 @@ msgstr ""
 msgid "CVS allowable payment deadline from 1 day to 180 days."
 msgstr ""
 
-#: woocommerce/gateways/payuni/gateway-atm.php:22
+#: woocommerce/gateways/payuni/gateway-atm.php:24
 msgid "PAYUNi ATM"
 msgstr ""
 
@@ -1661,7 +1693,7 @@ msgstr ""
 msgid "PAYUNi Credit"
 msgstr ""
 
-#: woocommerce/gateways/payuni/gateway-cvs.php:22
+#: woocommerce/gateways/payuni/gateway-cvs.php:24
 msgid "PAYUNi CVS"
 msgstr ""
 
@@ -1692,15 +1724,15 @@ msgctxt "PAYUNi"
 msgid "HashIV"
 msgstr ""
 
-#: woocommerce/gateways/smilepay/gateway-atm.php:22
+#: woocommerce/gateways/smilepay/gateway-atm.php:24
 msgid "SmilePay ATM"
 msgstr ""
 
-#: woocommerce/gateways/smilepay/gateway-barcode.php:20
+#: woocommerce/gateways/smilepay/gateway-barcode.php:22
 msgid "SmilePay BARCODE"
 msgstr ""
 
-#: woocommerce/gateways/smilepay/gateway-barcode.php:42
+#: woocommerce/gateways/smilepay/gateway-barcode.php:44
 msgid "Payment expire date out of range. Set as default value."
 msgstr ""
 
@@ -1708,19 +1740,19 @@ msgstr ""
 msgid "SmilePay Credit"
 msgstr ""
 
-#: woocommerce/gateways/smilepay/gateway-cvs-711.php:21
+#: woocommerce/gateways/smilepay/gateway-cvs-711.php:23
 msgid "Pay via CVS 7-11"
 msgstr ""
 
-#: woocommerce/gateways/smilepay/gateway-cvs-711.php:22
+#: woocommerce/gateways/smilepay/gateway-cvs-711.php:24
 msgid "SmilePay CVS 7-11"
 msgstr ""
 
-#: woocommerce/gateways/smilepay/gateway-cvs-fami.php:21
+#: woocommerce/gateways/smilepay/gateway-cvs-fami.php:23
 msgid "Pay via CVS FamilyMart"
 msgstr ""
 
-#: woocommerce/gateways/smilepay/gateway-cvs-fami.php:22
+#: woocommerce/gateways/smilepay/gateway-cvs-fami.php:24
 msgid "SmilePay CVS FamilyMart"
 msgstr ""
 
@@ -1730,12 +1762,6 @@ msgstr ""
 
 #: woocommerce/gateways/smilepay/includes/admin.php:29
 msgid "SmilePay gateway options"
-msgstr ""
-
-#. translators: %s: link to RY SmilePay Invoice for WooCommerce
-#: woocommerce/gateways/smilepay/includes/admin.php:50
-#, php-format
-msgid "If you need SmilePay Invoice support, you can try %s"
 msgstr ""
 
 #. translators: %1$s Error messade, %2$d Error messade ID

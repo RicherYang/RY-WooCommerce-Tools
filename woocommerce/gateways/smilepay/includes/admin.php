@@ -43,14 +43,6 @@ final class RY_WT_WC_SmilePay_Gateway_Admin
                     '<a href="https://ry-plugin.com/ry-woocommerce-tools-pro">RY Tools (Pro) for WooCommerce</a>',
                 ) . '</p>';
             }
-
-            if (!defined('RY_WEI_VERSION') && !defined('RY_WSI_VERSION') && !defined('RY_WEZI_VERSION')) {
-                $settings[0]['desc'] .= '<p>' . sprintf(
-                    /* translators: %s: link to RY SmilePay Invoice for WooCommerce */
-                    __('If you need SmilePay Invoice support, you can try %s', 'ry-woocommerce-tools'),
-                    '<a href="https://ry-plugin.com/ry-woocommerce-smilepay-invoice">RY SmilePay Invoice for WooCommerce</a>',
-                ) . '</p>';
-            }
         }
 
         return $settings;

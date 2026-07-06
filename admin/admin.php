@@ -2,7 +2,9 @@
 
 defined('ABSPATH') or exit;
 
-final class RY_WT_Admin
+include_once RY_WT_PLUGIN_DIR . 'includes/ry-general/abstract-admin.php';
+
+final class RY_WT_Admin extends RY_Abstract_Admin
 {
     protected static ?self $_instance = null;
 
@@ -18,6 +20,8 @@ final class RY_WT_Admin
 
     protected function do_init(): void
     {
+        parent::do_init();
+
         add_action('admin_notices', [$this, 'need_woocommerce']);
         add_action('admin_notices', [$this, 'show_time_error']);
 
