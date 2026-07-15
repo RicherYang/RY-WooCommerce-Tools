@@ -4,7 +4,7 @@ defined('ABSPATH') or exit;
 
 final class RY_WT_WC_PAYUNi_Gateway extends RY_WT_Gateway_Model
 {
-    protected static ?self $_instance = null;
+    private static ?self $_instance = null;
 
     protected string $model_type = 'payuni_gateway';
 

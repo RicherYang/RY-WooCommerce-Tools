@@ -6,7 +6,7 @@ use Automattic\WooCommerce\Blocks\Utils\CartCheckoutUtils;
 
 final class RY_WT_WC_SmilePay_Gateway_Admin
 {
-    protected static ?self $_instance = null;
+    private static ?self $_instance = null;
 
     public static function instance(): RY_WT_WC_SmilePay_Gateway_Admin
     {

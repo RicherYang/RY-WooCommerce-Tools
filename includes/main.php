@@ -14,7 +14,7 @@ final class RY_WT extends AbstractBasic
 
     public const MIN_PRO_TOOLS_VERSION = '3.8.3';
 
-    protected static ?self $_instance = null;
+    private static ?self $_instance = null;
 
     public static function instance(): RY_WT
     {

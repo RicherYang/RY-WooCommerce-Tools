@@ -14,7 +14,7 @@ final class RY_WT_WC_ECPay_Shipping extends RY_WT_Shipping_Model
         'ry_ecpay_shipping_home_tcat' => 'RY_ECPay_Shipping_Home_Tcat',
     ];
 
-    protected static ?self $_instance = null;
+    private static ?self $_instance = null;
 
     protected array $js_data;
 

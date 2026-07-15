@@ -8,7 +8,7 @@ final class RY_WT_WC_NewebPay_Shipping extends RY_WT_Shipping_Model
         'ry_newebpay_shipping_cvs' => 'RY_NewebPay_Shipping_CVS',
     ];
 
-    protected static ?self $_instance = null;
+    private static ?self $_instance = null;
 
     protected array $js_data;
 

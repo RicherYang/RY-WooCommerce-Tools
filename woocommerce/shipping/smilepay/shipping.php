@@ -10,7 +10,7 @@ final class RY_WT_WC_SmilePay_Shipping extends RY_WT_Shipping_Model
         'ry_smilepay_shipping_home_tcat' => 'RY_SmilePay_Shipping_Home_Tcat',
     ];
 
-    protected static ?self $_instance = null;
+    private static ?self $_instance = null;
 
     protected array $js_data;
 

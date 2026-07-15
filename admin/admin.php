@@ -6,7 +6,7 @@ use RY\General\AbstractAdmin;
 
 final class RY_WT_Admin extends AbstractAdmin
 {
-    protected static ?self $_instance = null;
+    private static ?self $_instance = null;
 
     public static function instance(): RY_WT_Admin
     {

@@ -2,9 +2,9 @@
 
 defined('ABSPATH') or exit;
 
-class RY_WT_WC_NewebPay_Gateway_Api extends RY_WT_NewebPay_Api
+final class RY_WT_WC_NewebPay_Gateway_Api extends RY_WT_NewebPay_Api
 {
-    protected static ?self $_instance = null;
+    private static ?self $_instance = null;
 
     protected array $api_test_url = [
         'checkout' => 'https://ccore.newebpay.com/MPG/mpg_gateway',

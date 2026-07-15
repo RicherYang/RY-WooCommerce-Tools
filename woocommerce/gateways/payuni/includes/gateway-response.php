@@ -2,9 +2,9 @@
 
 defined('ABSPATH') or exit;
 
-class RY_WT_WC_PAYUNi_Gateway_Response extends RY_WT_PAYUNi_Api
+final class RY_WT_WC_PAYUNi_Gateway_Response extends RY_WT_PAYUNi_Api
 {
-    protected static ?self $_instance = null;
+    private static ?self $_instance = null;
 
     private bool $only_success = false;
 

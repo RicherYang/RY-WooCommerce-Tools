@@ -2,9 +2,9 @@
 
 defined('ABSPATH') or exit;
 
-class RY_WT_WC_SmilePay_Shipping_Response extends RY_WT_SmilePay_Api
+final class RY_WT_WC_SmilePay_Shipping_Response extends RY_WT_SmilePay_Api
 {
-    protected static ?self $_instance = null;
+    private static ?self $_instance = null;
 
     public static function instance(): RY_WT_WC_SmilePay_Shipping_Response
     {
