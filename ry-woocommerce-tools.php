@@ -23,6 +23,7 @@ define('RY_WT_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('RY_WT_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('RY_WT_PLUGIN_BASENAME', plugin_basename(__FILE__));
 
+require_once RY_WT_PLUGIN_DIR . 'includes/vendor/autoload.php';
 require_once RY_WT_PLUGIN_DIR . 'includes/main.php';
 
 register_activation_hook(__FILE__, ['RY_WT', 'plugin_activation']);

@@ -23,15 +23,15 @@ return [
             . '<p class="description">' . __('Note: this may log personal information.', 'ry-woocommerce-tools') . '</p>',
     ],
     [
-        'title' => __('Order no prefix', 'ry-woocommerce-tools'),
+        'title' => __('Trade no prefix', 'ry-woocommerce-tools'),
         'id' => RY_WT::OPTION_PREFIX . 'newebpay_gateway_apiinfo[prefix]',
         'type' => 'text',
-        'desc' => __('The prefix string of order no. Only letters and numbers allowed.', 'ry-woocommerce-tools'),
+        'desc' => __('The prefix string of trade no. Only letters and numbers allowed.', 'ry-woocommerce-tools'),
         'desc_tip' => true,
         'autoload' => false,
     ],
     [
-        'title' => __('payment item name', 'ry-woocommerce-tools'),
+        'title' => __('Payment item name', 'ry-woocommerce-tools'),
         'id' => RY_WT::OPTION_PREFIX . 'newebpay_gateway_apiinfo[item_name]',
         'type' => 'text',
         'default' => '',

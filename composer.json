@@ -1,0 +1,12 @@
+{
+    "name": "ry/woocommerce-tools",
+    "autoload": {
+        "psr-4": {
+            "RY\\General\\": "includes/ry-general"
+        }
+    },
+    "config": {
+        "vendor-dir": "includes/vendor",
+        "optimize-autoloader": true
+    }
+}

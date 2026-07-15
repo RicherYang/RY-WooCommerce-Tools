@@ -52,10 +52,10 @@ return [
         'type' => 'title',
     ],
     [
-        'title' => __('Order no prefix', 'ry-woocommerce-tools'),
+        'title' => __('Trade no prefix', 'ry-woocommerce-tools'),
         'id' => RY_WT::OPTION_PREFIX . 'ecpay_shipping_apiinfo[prefix]',
         'type' => 'text',
-        'desc' => __('The prefix string of order no. Only letters and numbers allowed.', 'ry-woocommerce-tools'),
+        'desc' => __('The prefix string of trade no. Only letters and numbers allowed.', 'ry-woocommerce-tools'),
         'desc_tip' => true,
         'autoload' => false,
     ],

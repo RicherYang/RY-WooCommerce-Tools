@@ -2,9 +2,9 @@
 
 defined('ABSPATH') or exit;
 
-include_once RY_WT_PLUGIN_DIR . 'includes/ry-general/abstract-basic.php';
+use RY\General\AbstractBasic;
 
-final class RY_WT extends RY_Abstract_Basic
+final class RY_WT extends AbstractBasic
 {
     public const OPTION_PREFIX = 'RY_WT_';
 
@@ -28,13 +28,10 @@ final class RY_WT extends RY_Abstract_Basic
 
     protected function do_init(): void
     {
-        include_once RY_WT_PLUGIN_DIR . 'includes/ry-general/logs.php';
-
         if (is_admin()) {
             include_once RY_WT_PLUGIN_DIR . 'includes/update.php';
             RY_WT_Update::update();
 
-            include_once RY_WT_PLUGIN_DIR . 'includes/ry-general/admin-logs.php';
             include_once RY_WT_PLUGIN_DIR . 'admin/admin.php';
             RY_WT_Admin::instance();
         }

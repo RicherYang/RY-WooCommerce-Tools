@@ -1433,7 +1433,7 @@ msgstr ""
 #: woocommerce/gateways/newebpay/includes/settings/admin-settings.php:34
 #: woocommerce/gateways/payuni/includes/settings/admin-settings.php:34
 #: woocommerce/gateways/smilepay/includes/settings/admin-settings.php:34
-msgid "payment item name"
+msgid "Payment item name"
 msgstr ""
 
 #: woocommerce/gateways/ecpay/includes/settings/admin-settings.php:38
