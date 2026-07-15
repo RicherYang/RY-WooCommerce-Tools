@@ -10,8 +10,6 @@ abstract class AbstractAdmin
 {
     public string $main_slug;
 
-    protected \RY_Abstract_License $license;
-
     protected function do_init(): void
     {
         Logs::init_menu();

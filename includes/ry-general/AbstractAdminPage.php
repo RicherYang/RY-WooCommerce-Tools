@@ -6,7 +6,7 @@ defined('ABSPATH') or exit;
 
 abstract class AbstractAdminPage
 {
-    protected static $_instance = null;
+    private static array $_instance = [];
 
     abstract public function output_page(): void;
 
@@ -14,12 +14,12 @@ abstract class AbstractAdminPage
 
     public static function instance()
     {
-        if (null === static::$_instance) {
-            static::$_instance = new static();
-            static::$_instance->do_init();
+        if (!isset(static::$_instance[static::class])) {
+            static::$_instance[static::class] = new static();
+            static::$_instance[static::class]->do_init();
         }
 
-        return static::$_instance;
+        return static::$_instance[static::class];
     }
 
     public static function pre_show_page(): void

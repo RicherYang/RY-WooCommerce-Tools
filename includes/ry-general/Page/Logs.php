@@ -8,8 +8,6 @@ use RY\General\AbstractAdminPage;
 
 final class Logs extends AbstractAdminPage
 {
-    protected static $_instance = null;
-
     protected string $log_path = '';
 
     protected array $log_list = [];
