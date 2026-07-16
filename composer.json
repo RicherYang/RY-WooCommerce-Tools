@@ -1,5 +1,6 @@
 {
     "name": "ry/woocommerce-tools",
+    "version": "2026.7.16",
     "autoload": {
         "psr-4": {
             "RY\\General\\": "includes/ry-general"

@@ -12,7 +12,7 @@ final class RY_WT extends AbstractBasic
 
     public const MIN_WC_VERSION = '9.0.0';
 
-    public const MIN_PRO_TOOLS_VERSION = '3.8.3';
+    public const MIN_PRO_TOOLS_VERSION = '2026.7.16';
 
     private static ?self $_instance = null;
 
