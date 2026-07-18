@@ -6,8 +6,6 @@ final class RY_WT_WC_ECPay_Gateway_Response extends RY_WT_ECPay_Api
 {
     private static ?self $_instance = null;
 
-    private bool $only_success = false;
-
     public static function instance(): RY_WT_WC_ECPay_Gateway_Response
     {
         if (null === self::$_instance) {
@@ -21,17 +19,9 @@ final class RY_WT_WC_ECPay_Gateway_Response extends RY_WT_ECPay_Api
     protected function do_init(): void
     {
         add_action('woocommerce_api_request', [$this, 'set_do_die']);
-        add_action('woocommerce_api_ry_ecpay_gateway_return', [$this, 'callback_gateway_return']);
+        add_action('woocommerce_api_ry_ecpay_gateway_return', [$this, 'gateway_return']);
         add_action('woocommerce_api_ry_ecpay_callback', [$this, 'check_callback']);
         add_action('valid_ecpay_gateway_request', [$this, 'doing_callback']);
-    }
-
-    public function callback_gateway_return()
-    {
-        $this->only_success = true;
-        $this->set_not_do_die();
-        $this->check_callback();
-        $this->gateway_return();
     }
 
     public function check_callback(): void
@@ -81,13 +71,6 @@ final class RY_WT_WC_ECPay_Gateway_Response extends RY_WT_ECPay_Api
             $payment_status = $this->get_status($info_value);
             RY_WT_WC_ECPay_Gateway::instance()->log('Found #' . $order->get_id() . ' Payment status: ' . $payment_status, WC_Log_Levels::INFO);
 
-            if ($this->only_success) {
-                if (method_exists($this, 'payment_status_' . $payment_status)) {
-                    call_user_func([$this, 'payment_status_' . $payment_status], $order, $info_value);
-                }
-                return;
-            }
-
             if (method_exists($this, 'payment_status_' . $payment_status)) {
                 call_user_func([$this, 'payment_status_' . $payment_status], $order, $info_value);
             } else {
@@ -120,6 +103,7 @@ final class RY_WT_WC_ECPay_Gateway_Response extends RY_WT_ECPay_Api
     protected function payment_status_1($order, $info_value): void
     {
         if ($order->is_paid()) {
+            RY_WT_WC_ECPay_Gateway::instance()->log('Payment action with order #' . $order->get_id() . ' status: ' . $order->get_status(), WC_Log_Levels::INFO);
             return;
         }
 
@@ -140,6 +124,7 @@ final class RY_WT_WC_ECPay_Gateway_Response extends RY_WT_ECPay_Api
     protected function payment_status_2($order, $info_value): void
     {
         if ($order->is_paid()) {
+            RY_WT_WC_ECPay_Gateway::instance()->log('Payment action with order #' . $order->get_id() . ' status: ' . $order->get_status(), WC_Log_Levels::INFO);
             return;
         }
 
@@ -162,6 +147,7 @@ final class RY_WT_WC_ECPay_Gateway_Response extends RY_WT_ECPay_Api
     protected function payment_status_10100073($order, $info_value): void
     {
         if ($order->is_paid()) {
+            RY_WT_WC_ECPay_Gateway::instance()->log('Payment action with order #' . $order->get_id() . ' status: ' . $order->get_status(), WC_Log_Levels::INFO);
             return;
         }
 

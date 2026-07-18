@@ -254,10 +254,17 @@ final class RY_WT_WC_ECPay_Gateway_Api extends RY_WT_ECPay_Api
                 $args['ChooseSubPayment'] = $gateway::SUB_PAYMENT_TYPE;
             }
 
+            $args['IgnorePayment'] = ['WeiXin'];
             switch ($gateway::PAYMENT_TYPE) {
                 case 'Credit':
-                    if (isset($gateway->support_applepay) && $gateway->support_applepay === 'no') {
-                        $args['IgnorePayment'] = 'ApplePay';
+                    if (isset($gateway->support_union) && $gateway->support_union === true) {
+                        $args['UnionPay'] = 0;
+                    } else {
+                        $args['UnionPay'] = 2;
+                    }
+                    $args['IgnorePayment'][] = 'DigitalPayment';
+                    if (isset($gateway->support_applepay) && $gateway->support_applepay === false) {
+                        $args['IgnorePayment'][] = 'ApplePay';
                     }
                     if (isset($gateway->number_of_periods) && !empty($gateway->number_of_periods)) {
                         $args['CreditInstallment'] = implode(',', $gateway->number_of_periods);
@@ -271,6 +278,7 @@ final class RY_WT_WC_ECPay_Gateway_Api extends RY_WT_ECPay_Api
                     $args['StoreExpireDate'] = $gateway->expire_date;
                     break;
             }
+            $args['IgnorePayment'] = implode('#', $args['IgnorePayment']);
         }
 
         return $args;

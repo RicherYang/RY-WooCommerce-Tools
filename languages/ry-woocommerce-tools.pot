@@ -2,7 +2,7 @@
 # This file is distributed under the GPLv3.
 msgid ""
 msgstr ""
-"Project-Id-Version: RY Tools for WooCommerce 2026.7.16\n"
+"Project-Id-Version: RY Tools for WooCommerce 2026.7.18\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/ry-woocommerce-tools\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1291,15 +1291,15 @@ msgstr ""
 msgid "ECPay Credit (installment)"
 msgstr ""
 
-#: woocommerce/gateways/ecpay/gateway-credit.php:19
-#: woocommerce/gateways/newebpay/gateway-credit.php:15
-#: woocommerce/gateways/payuni/gateway-credit.php:17
+#: woocommerce/gateways/ecpay/gateway-credit.php:21
+#: woocommerce/gateways/newebpay/gateway-credit.php:25
+#: woocommerce/gateways/payuni/gateway-credit.php:23
 #: woocommerce/gateways/smilepay/gateway-credit.php:15
 msgid "Pay via Credit"
 msgstr ""
 
-#: woocommerce/gateways/ecpay/gateway-credit.php:20
-msgid "ECPay Credit ( include \"Apple Pay\" )"
+#: woocommerce/gateways/ecpay/gateway-credit.php:22
+msgid "ECPay Credit"
 msgstr ""
 
 #: woocommerce/gateways/ecpay/gateway-cvs.php:23
@@ -1350,27 +1350,27 @@ msgstr ""
 msgid "Order no prefix only letters and numbers allowed, and maximum length is 3 characters."
 msgstr ""
 
-#: woocommerce/gateways/ecpay/includes/gateway-response.php:126
+#: woocommerce/gateways/ecpay/includes/gateway-response.php:110
 msgid "ECPay payment completed"
 msgstr ""
 
 #. translators: %d number of periods
-#: woocommerce/gateways/ecpay/includes/gateway-response.php:132
-#: woocommerce/gateways/newebpay/includes/gateway-response.php:181
-#: woocommerce/gateways/payuni/includes/gateway-response.php:125
+#: woocommerce/gateways/ecpay/includes/gateway-response.php:116
+#: woocommerce/gateways/newebpay/includes/gateway-response.php:182
+#: woocommerce/gateways/payuni/includes/gateway-response.php:126
 #, php-format
 msgid "Credit installment to %d"
 msgstr ""
 
-#: woocommerce/gateways/ecpay/includes/gateway-response.php:190
-#: woocommerce/gateways/newebpay/includes/gateway-response.php:219
-#: woocommerce/gateways/payuni/includes/gateway-response.php:156
+#: woocommerce/gateways/ecpay/includes/gateway-response.php:176
+#: woocommerce/gateways/newebpay/includes/gateway-response.php:220
+#: woocommerce/gateways/payuni/includes/gateway-response.php:157
 #: woocommerce/gateways/smilepay/includes/gateway-response.php:124
 msgid "Payment failed within paid order"
 msgstr ""
 
 #. translators: %1$s: status message, %2$d status code
-#: woocommerce/gateways/ecpay/includes/gateway-response.php:195
+#: woocommerce/gateways/ecpay/includes/gateway-response.php:181
 #, php-format
 msgid "Payment unkonw status: %1$s (%2$d)"
 msgstr ""
@@ -1545,14 +1545,6 @@ msgctxt "Gateway setting"
 msgid "Number of periods"
 msgstr ""
 
-#: woocommerce/gateways/ecpay/includes/settings/credit.php:8
-msgid "Apple Pay"
-msgstr ""
-
-#: woocommerce/gateways/ecpay/includes/settings/credit.php:9
-msgid "Support Apple Pay"
-msgstr ""
-
 #: woocommerce/gateways/ecpay/includes/settings/cvs.php:8
 #: woocommerce/gateways/smilepay/includes/settings/cvs.php:8
 msgid "Payment deadline (minutes)"
@@ -1620,7 +1612,7 @@ msgstr ""
 msgid "NewebPay Credit (installment)"
 msgstr ""
 
-#: woocommerce/gateways/newebpay/gateway-credit.php:16
+#: woocommerce/gateways/newebpay/gateway-credit.php:26
 msgid "NewebPay Credit"
 msgstr ""
 
@@ -1637,18 +1629,18 @@ msgid "NewebPay gateway options"
 msgstr ""
 
 #. translators: 1: Store name 2: Store ID
-#: woocommerce/gateways/newebpay/includes/gateway-response.php:131
+#: woocommerce/gateways/newebpay/includes/gateway-response.php:132
 #, php-format
 msgid "CVS store %1$s (%2$s)"
 msgstr ""
 
-#: woocommerce/gateways/newebpay/includes/gateway-response.php:175
+#: woocommerce/gateways/newebpay/includes/gateway-response.php:176
 msgid "NewebPay payment completed"
 msgstr ""
 
 #. translators: 1: Error status code 2: Error status message
-#: woocommerce/gateways/newebpay/includes/gateway-response.php:224
-#: woocommerce/gateways/payuni/includes/gateway-response.php:161
+#: woocommerce/gateways/newebpay/includes/gateway-response.php:225
+#: woocommerce/gateways/payuni/includes/gateway-response.php:162
 #, php-format
 msgid "Payment failed: %1$s (%2$s)"
 msgstr ""
@@ -1693,7 +1685,7 @@ msgstr ""
 msgid "PAYUNi Credit (installment)"
 msgstr ""
 
-#: woocommerce/gateways/payuni/gateway-credit.php:18
+#: woocommerce/gateways/payuni/gateway-credit.php:24
 msgid "PAYUNi Credit"
 msgstr ""
 
@@ -1705,7 +1697,7 @@ msgstr ""
 msgid "PAYUNi gateway options"
 msgstr ""
 
-#: woocommerce/gateways/payuni/includes/gateway-response.php:119
+#: woocommerce/gateways/payuni/includes/gateway-response.php:120
 msgid "PAYUNi payment completed"
 msgstr ""
 

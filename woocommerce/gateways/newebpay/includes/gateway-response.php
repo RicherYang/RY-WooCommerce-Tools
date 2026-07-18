@@ -113,6 +113,7 @@ final class RY_WT_WC_NewebPay_Gateway_Response extends RY_WT_NewebPay_Api
     protected function payment_status_SUCCESS($order, $info_value)
     {
         if ($order->is_paid()) {
+            RY_WT_WC_NewebPay_Gateway::instance()->log('Payment action with order #' . $order->get_id() . ' status: ' . $order->get_status(), WC_Log_Levels::INFO);
             return;
         }
 

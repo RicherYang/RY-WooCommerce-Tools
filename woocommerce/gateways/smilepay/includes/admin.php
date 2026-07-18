@@ -21,7 +21,7 @@ final class RY_WT_WC_SmilePay_Gateway_Admin
     {
         add_filter('woocommerce_get_sections_rytools', [$this, 'add_sections']);
         add_filter('woocommerce_get_settings_rytools', [$this, 'add_setting'], 10, 2);
-        add_action('woocommerce_update_options_rytools_newebpay_gateway', [$this, 'check_option']);
+        add_action('woocommerce_update_options_rytools_smilepay_gateway', [$this, 'check_option']);
     }
 
     public function add_sections($sections)
@@ -36,7 +36,7 @@ final class RY_WT_WC_SmilePay_Gateway_Admin
         if ($current_section == 'smilepay_gateway') {
             $settings = include RY_WT_PLUGIN_DIR . 'woocommerce/gateways/smilepay/includes/settings/admin-settings.php';
 
-            if (!CartCheckoutUtils::is_checkout_block_default() && !defined('RY_WTP_VERSION')) {
+            if (CartCheckoutUtils::is_checkout_block_default() && !defined('RY_WTP_VERSION')) {
                 $settings[0]['desc'] .= '<p>' . sprintf(
                     /* translators: %s: link to RY Tools (Pro) for WooCommerce */
                     __('Need %s to support block checkout.', 'ry-woocommerce-tools'),

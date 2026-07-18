@@ -10,6 +10,12 @@ class RY_PAYUNi_Gateway_Credit extends RY_WT_WC_PAYUNi_Payment_Gateway
 
     public const SUPPORT_REFUND = true;
 
+    public bool $support_applepay = false;
+
+    public bool $support_googlepay = false;
+
+    public bool $support_samsungpay = false;
+
     public function __construct()
     {
         $this->id = self::ID;
@@ -20,5 +26,11 @@ class RY_PAYUNi_Gateway_Credit extends RY_WT_WC_PAYUNi_Payment_Gateway
         $this->form_fields = include RY_WT_PLUGIN_DIR . 'woocommerce/gateways/payuni/includes/settings/credit.php';
 
         parent::__construct();
+
+        if (defined('RY_WTP_VERSION')) {
+            $this->support_applepay = wc_string_to_bool($this->settings['applepay'] ?? 'no');
+            $this->support_googlepay = wc_string_to_bool($this->settings['googlepay'] ?? 'no');
+            $this->support_samsungpay = wc_string_to_bool($this->settings['samsungpay'] ?? 'no');
+        }
     }
 }

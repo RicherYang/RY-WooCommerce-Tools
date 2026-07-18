@@ -266,6 +266,17 @@ final class RY_WT_WC_PAYUNi_Gateway_Api extends RY_WT_PAYUNi_Api
         if (defined(get_class($gateway) . '::PAYMENT_TYPE')) {
             $data[$gateway::PAYMENT_TYPE] = 1;
             switch ($gateway::PAYMENT_TYPE) {
+                case 'Credit':
+                    if ($gateway->support_applepay === true) {
+                        $data['ApplePay'] = 1;
+                    }
+                    if ($gateway->support_googlepay === true) {
+                        $data['GooglePay'] = 1;
+                    }
+                    if ($gateway->support_samsungpay === true) {
+                        $data['SamsungPay'] = 1;
+                    }
+                    break;
                 case 'VACC':
                 case 'CVS':
                     $now = new DateTime('now', new DateTimeZone('Asia/Taipei'));

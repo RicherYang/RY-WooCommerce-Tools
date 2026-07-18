@@ -37,7 +37,7 @@ final class RY_WT_WC_NewebPay_Gateway_Admin
         if ($current_section == 'newebpay_gateway') {
             $settings = include RY_WT_PLUGIN_DIR . 'woocommerce/gateways/newebpay/includes/settings/admin-settings.php';
 
-            if (!CartCheckoutUtils::is_checkout_block_default() && !defined('RY_WTP_VERSION')) {
+            if (CartCheckoutUtils::is_checkout_block_default() && !defined('RY_WTP_VERSION')) {
                 $settings[0]['desc'] .= '<p>' . sprintf(
                     /* translators: %s: link to RY Tools (Pro) for WooCommerce */
                     __('Need %s to support block checkout.', 'ry-woocommerce-tools'),

@@ -160,6 +160,23 @@ final class RY_WT_WC_NewebPay_Gateway_Api extends RY_WT_NewebPay_Api
                 $args[$gateway::PAYMENT_TYPE] = 1;
             }
             switch ($gateway::PAYMENT_TYPE) {
+                case 'CREDIT':
+                    if ($gateway->support_applepay === true) {
+                        $args['APPLEPAY'] = 1;
+                    }
+                    if ($gateway->support_googlepay === true) {
+                        $args['ANDROIDPAY'] = 1;
+                    }
+                    if ($gateway->support_samsungpay === true) {
+                        $args['SAMSUNGPAY'] = 1;
+                    }
+                    if ($gateway->support_ae === true) {
+                        $args['CREDITAE'] = 1;
+                    }
+                    if ($gateway->support_union === true) {
+                        $args['UNIONPAY'] = 1;
+                    }
+                    break;
                 case 'VACC':
                 case 'CVS':
                 case 'BARCODE':
@@ -182,9 +199,15 @@ final class RY_WT_WC_NewebPay_Gateway_Api extends RY_WT_NewebPay_Api
                     ]]);
                     break;
                 case 'Digital':
-                    $args['ESUNWALLET'] = 1;
-                    $args['LINEPAY'] = 1;
-                    $args['TAIWANPAY'] = 1;
+                    if ($gateway->support_esun === true) {
+                        $args['ESUNWALLET'] = 1;
+                    }
+                    if ($gateway->support_line === true) {
+                        $args['LINEPAY'] = 1;
+                    }
+                    if ($gateway->support_taiwan === true) {
+                        $args['TAIWANPAY'] = 1;
+                    }
                     break;
             }
         }

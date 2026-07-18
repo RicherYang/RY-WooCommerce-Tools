@@ -17,8 +17,9 @@ class Logs
     {
         $log_path = WP_CONTENT_DIR . '/ry-logs';
         if (!is_dir($log_path)) {
-            @file_put_contents($log_path . '/.htaccess', 'deny from all');
-            @file_put_contents($log_path . '/index.html', '');
+            mkdir($log_path, 0755); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_mkdir
+            @file_put_contents($log_path . '/.htaccess', 'deny from all'); // phpcs:ignore PluginCheck.CodeAnalysis.WriteFile.PluginDirectoryWrite
+            @file_put_contents($log_path . '/index.html', ''); // phpcs:ignore PluginCheck.CodeAnalysis.WriteFile.PluginDirectoryWrite
         }
 
         $log_name = [$handle, current_time('Y-m-d'), wp_hash($handle)];
