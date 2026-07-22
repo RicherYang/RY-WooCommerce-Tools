@@ -281,8 +281,8 @@ final class RY_WT_Update
             RY_WT::update_option('version', '3.8.0', true);
         }
 
-        if (version_compare($now_version, '2026.7.18', '<')) {
-            RY_WT::update_option('version', '2026.7.18', true);
+        if (version_compare($now_version, '2026.7.19', '<')) {
+            RY_WT::update_option('version', '2026.7.19', true);
         }
     }
 }

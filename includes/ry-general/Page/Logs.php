@@ -31,6 +31,8 @@ final class Logs extends AbstractAdminPage
 
     protected function do_init(): void
     {
+        global $wp_filesystem;
+
         $this->log_path = WP_CONTENT_DIR . '/ry-logs';
         $this->log_list = [];
 
@@ -39,10 +41,18 @@ final class Logs extends AbstractAdminPage
         }
 
         if (!is_file($this->log_path . '/.htaccess')) {
-            @file_put_contents($this->log_path . '/.htaccess', 'deny from all');
+            if (!$wp_filesystem instanceof \WP_Filesystem_Base) {
+                include_once ABSPATH . 'wp-admin/includes/file.php';
+                WP_Filesystem();
+            }
+            $wp_filesystem->put_contents($this->log_path . '/.htaccess', 'deny from all');
         }
         if (!is_file($this->log_path . '/index.html')) {
-            @file_put_contents($this->log_path . '/index.html', '');
+            if (!$wp_filesystem instanceof \WP_Filesystem_Base) {
+                include_once ABSPATH . 'wp-admin/includes/file.php';
+                WP_Filesystem();
+            }
+            $wp_filesystem->put_contents($this->log_path . '/index.html', '');
         }
 
         $this->log_path = realpath($this->log_path) . DIRECTORY_SEPARATOR;

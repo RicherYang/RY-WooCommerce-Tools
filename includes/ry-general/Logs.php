@@ -15,18 +15,29 @@ class Logs
 
     public static function get_log_path(string $handle): string
     {
+        global $wp_filesystem;
+
         $log_path = WP_CONTENT_DIR . '/ry-logs';
         if (!is_dir($log_path)) {
-            mkdir($log_path, 0755); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_mkdir
-            @file_put_contents($log_path . '/.htaccess', 'deny from all'); // phpcs:ignore PluginCheck.CodeAnalysis.WriteFile.PluginDirectoryWrite
-            @file_put_contents($log_path . '/index.html', ''); // phpcs:ignore PluginCheck.CodeAnalysis.WriteFile.PluginDirectoryWrite
+            wp_mkdir_p($log_path);
+
+            if (!$wp_filesystem instanceof \WP_Filesystem_Base) {
+                include_once ABSPATH . 'wp-admin/includes/file.php';
+                WP_Filesystem();
+            }
+            $wp_filesystem->put_contents($log_path . '/.htaccess', 'deny from all');
+            $wp_filesystem->put_contents($log_path . '/index.html', '');
         }
 
         $log_name = [$handle, current_time('Y-m-d'), wp_hash($handle)];
         $log_path = trailingslashit($log_path) . sanitize_file_name(implode('-', $log_name) . '.log');
 
         if (!file_exists($log_path)) {
-            @file_put_contents($log_path, '');
+            if (!$wp_filesystem instanceof \WP_Filesystem_Base) {
+                include_once ABSPATH . 'wp-admin/includes/file.php';
+                WP_Filesystem();
+            }
+            $wp_filesystem->put_contents($log_path, '');
         }
 
         return realpath($log_path);
