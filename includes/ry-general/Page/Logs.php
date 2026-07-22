@@ -52,7 +52,7 @@ final class Logs extends AbstractAdminPage
                 include_once ABSPATH . 'wp-admin/includes/file.php';
                 WP_Filesystem();
             }
-            $wp_filesystem->put_contents($this->log_path . '/index.html', '');
+            $wp_filesystem->put_contents($log_path . '/index.html', '');
         }
 
         $this->log_path = realpath($this->log_path) . DIRECTORY_SEPARATOR;

@@ -3,6 +3,7 @@
 defined('ABSPATH') or exit;
 
 use RY\General\AbstractBasic;
+use RY\General\ActionScheduler;
 
 final class RY_WT extends AbstractBasic
 {
@@ -28,6 +29,8 @@ final class RY_WT extends AbstractBasic
 
     protected function do_init(): void
     {
+        ActionScheduler::instance();
+
         if (is_admin()) {
             include_once RY_WT_PLUGIN_DIR . 'includes/update.php';
             RY_WT_Update::update();

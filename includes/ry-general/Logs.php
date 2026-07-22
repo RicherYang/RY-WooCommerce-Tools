@@ -18,6 +18,13 @@ class Logs
         global $wp_filesystem;
 
         $log_path = WP_CONTENT_DIR . '/ry-logs';
+        if (str_contains($handle, '/')) {
+            $handle = explode('/', $handle);
+            if ($handle[0] === sanitize_locale_name($handle[0])) {
+                $log_path .= '/' . array_shift($handle);
+            }
+            $handle = implode('/', $handle);
+        }
         if (!is_dir($log_path)) {
             wp_mkdir_p($log_path);
 
