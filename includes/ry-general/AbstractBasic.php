@@ -1,14 +1,21 @@
 <?php
 
-namespace RY\General;
+namespace RY\General\V20260724;
 
 defined('ABSPATH') or exit;
+
+use RY\General\V20260724\Logs;
 
 abstract class AbstractBasic
 {
     public const OPTION_PREFIX = '';
 
     public const PLUGIN_NAME = '';
+
+    public function __construct()
+    {
+        Logs::add_action();
+    }
 
     public static function get_option(string $option, mixed $default = false): mixed
     {

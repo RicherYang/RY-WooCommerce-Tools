@@ -1,6 +1,6 @@
 <?php
 
-namespace RY\General\ActionScheduler;
+namespace RY\General\V20260724\ActionScheduler;
 
 defined('ABSPATH') or exit;
 

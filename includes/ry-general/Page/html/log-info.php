@@ -33,7 +33,7 @@ while (!feof($fp)) {
                 $log_text .= htmlspecialchars($message_info[0]);
                 try {
                     $context = json_decode($message_info[1], null, 512, JSON_THROW_ON_ERROR);
-                    $log_text .= '<details><summary>' . __('Details', 'ry-woocommerce-tools') . '</summary>'
+                    $log_text .= '<details><summary style="cursor:pointer;">' . __('Details', 'ry-woocommerce-tools') . '</summary>'
                         . htmlspecialchars(wp_json_encode($context, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE))
                         . '</details>';
                 } catch (\Throwable $th) {
@@ -69,3 +69,9 @@ while (!feof($fp)) {
     'log' => $current_log,
     '_wpnonce' => wp_create_nonce('ry-general-admin-logs'),
 ], admin_url('admin-post.php'))); ?>" class="button"><?php esc_html_e('Delete Permanently', 'ry-woocommerce-tools'); ?></a>
+&emsp;
+<?php echo esc_html(sprintf(
+    /* translators: %d: Number of days */
+    __('Log file will delete after %d days', 'ry-woocommerce-tools'),
+    intval(apply_filters('ry-plugin/delete_time_days', 30))
+)); ?>

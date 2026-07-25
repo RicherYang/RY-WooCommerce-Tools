@@ -1,20 +1,23 @@
 <?php
 
-namespace RY\General\Page;
+namespace RY\General\V20260724\Page;
 
 defined('ABSPATH') or exit;
 
-use RY\General\AbstractAdminPage;
+use RY\General\V20260724\AbstractAdminPage;
+use RY\General\V20260724\Logs as LogsUtil;
 
 final class Logs extends AbstractAdminPage
 {
-    protected string $log_path = '';
+    private string $log_path = '';
 
-    protected array $log_list = [];
+    private array $log_list = [];
+
+    private int $total_size = 0;
 
     public static function init_menu(): void
     {
-        add_filter('ry-plugin/menu_list', [__CLASS__, 'add_menu'], 9999);
+        add_filter('ry-plugin/menu_list', [__CLASS__, 'add_menu'], 99999);
         add_action('admin_post_ry-general-admin-logs', [__CLASS__, 'admin_action']);
     }
 
@@ -31,55 +34,30 @@ final class Logs extends AbstractAdminPage
 
     protected function do_init(): void
     {
-        global $wp_filesystem;
-
-        $this->log_path = WP_CONTENT_DIR . '/ry-logs';
         $this->log_list = [];
+        $this->log_path = LogsUtil::get_log_directory();
 
-        if (!is_dir($this->log_path)) {
-            wp_mkdir_p($this->log_path);
-        }
+        foreach (new \FilesystemIterator($this->log_path, \FilesystemIterator::SKIP_DOTS) as $file) {
+            if ($file->isFile() && $file->isReadable()) {
+                $this->total_size += $file->getSize();
 
-        if (!is_file($this->log_path . '/.htaccess')) {
-            if (!$wp_filesystem instanceof \WP_Filesystem_Base) {
-                include_once ABSPATH . 'wp-admin/includes/file.php';
-                WP_Filesystem();
-            }
-            $wp_filesystem->put_contents($this->log_path . '/.htaccess', 'deny from all');
-        }
-        if (!is_file($this->log_path . '/index.html')) {
-            if (!$wp_filesystem instanceof \WP_Filesystem_Base) {
-                include_once ABSPATH . 'wp-admin/includes/file.php';
-                WP_Filesystem();
-            }
-            $wp_filesystem->put_contents($log_path . '/index.html', '');
-        }
-
-        $this->log_path = realpath($this->log_path) . DIRECTORY_SEPARATOR;
-
-        $files = @scandir($this->log_path, SCANDIR_SORT_ASCENDING);
-        if (!empty($files)) {
-            foreach ($files as $value) {
-                if (!in_array($value, ['.', '..'], true)) {
-                    if (!is_dir($this->log_path . $value) && strstr($value, '.log')) {
-                        $file = str_replace('.log', '', $value);
-                        $file = explode('-', $file);
-                        array_pop($file);
-                        $group = sanitize_title(implode('-', array_slice($file, 0, -3)));
-                        $name = sanitize_title(implode('-', array_slice($file, -3, 3)));
-                        if (empty($group)) {
-                            $group = sanitize_title(implode('-', $file));
-                            $name = 'all';
-                        }
-
-                        if (!isset($this->log_list[$group])) {
-                            $this->log_list[$group] = [];
-                        }
-                        if (isset($this->log_list[$group][$name])) {
-                            $name .= '-' . count($this->log_list[$group]);
-                        }
-                        $this->log_list[$group][$name] = $value;
+                if ($file->getExtension() === 'log') {
+                    $filename_info = explode('-', $file->getBasename('.log'));
+                    array_pop($filename_info);
+                    $group = sanitize_title(implode('-', array_slice($filename_info, 0, -3)));
+                    $name = sanitize_title(implode('-', array_slice($filename_info, -3, 3)));
+                    if (empty($group)) {
+                        $group = sanitize_title(implode('-', $filename_info));
+                        $name = 'all';
                     }
+
+                    if (!isset($this->log_list[$group])) {
+                        $this->log_list[$group] = [];
+                    }
+                    if (isset($this->log_list[$group][$name])) {
+                        $name .= '-' . count($this->log_list[$group]);
+                    }
+                    $this->log_list[$group][$name] = $file->getFilename();
                 }
             }
         }
@@ -108,6 +86,7 @@ final class Logs extends AbstractAdminPage
 
         $group_list = array_keys($this->log_list);
         $log_list = array_keys($this->log_list[$current_group]);
+        $total_size = size_format($this->total_size, 2);
         echo '<div style="flex:0 0 auto;width:auto;">';
         include __DIR__ . '/html/logs-select.php';
         echo '</div>';
@@ -178,6 +157,6 @@ final class Logs extends AbstractAdminPage
         $nice_file_name = basename($file_path);
         $nice_file_name = explode('-', $nice_file_name);
         array_pop($nice_file_name);
-        return implode('-', $nice_file_name) . '.log';
+        return implode('-', $nice_file_name);
     }
 }

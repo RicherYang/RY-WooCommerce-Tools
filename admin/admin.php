@@ -2,7 +2,7 @@
 
 defined('ABSPATH') or exit;
 
-use RY\General\AbstractAdmin;
+use RY\General\V20260724\AbstractAdmin;
 
 final class RY_WT_Admin extends AbstractAdmin
 {

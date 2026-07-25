@@ -1,7 +1,6 @@
 <?php defined('ABSPATH') or exit; ?>
 
 <h2><?php esc_html_e('Log Categories', 'ry-woocommerce-tools'); ?></h2>
-
 <form action="<?php echo esc_url(admin_url('admin.php')); ?>" method="get">
     <input type="hidden" name="page" value="ry-logs">
     <select name="group" size="<?php echo esc_attr(min(10, count($group_list))); ?>" style="padding:0 6px;background: #fff;-webkit-appearance:none;" onchange="this.form.submit();" ondblclick="this.form.submit();">
@@ -31,3 +30,8 @@
         } ?>
     </select>
 </form>
+
+<p>
+    <?php esc_html_e('Dir size:', 'ry-woocommerce-tools'); ?>
+    <br><?php echo esc_html($total_size); ?>
+</p>

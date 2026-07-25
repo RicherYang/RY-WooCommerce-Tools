@@ -1,10 +1,10 @@
 <?php
 
-namespace RY\General\ActionScheduler;
+namespace RY\General\V20260724\ActionScheduler;
 
 defined('ABSPATH') or exit;
 
-use RY\General\ActionScheduler\ListTable;
+use RY\General\V20260724\ActionScheduler\ListTable;
 
 final class View extends \ActionScheduler_AdminView
 {

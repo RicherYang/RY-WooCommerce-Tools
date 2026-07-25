@@ -1,10 +1,10 @@
 <?php
 
-namespace RY\General;
+namespace RY\General\V20260724;
 
 defined('ABSPATH') or exit;
 
-use RY\General\ActionScheduler\View;
+use RY\General\V20260724\ActionScheduler\View;
 
 final class ActionScheduler
 {

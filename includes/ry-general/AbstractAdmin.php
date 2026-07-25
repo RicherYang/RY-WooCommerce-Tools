@@ -1,10 +1,10 @@
 <?php
 
-namespace RY\General;
+namespace RY\General\V20260724;
 
 defined('ABSPATH') or exit;
 
-use RY\General\Page\Logs;
+use RY\General\V20260724\Page\Logs;
 
 abstract class AbstractAdmin
 {
@@ -26,7 +26,6 @@ abstract class AbstractAdmin
         $menu_list = apply_filters('ry-plugin/menu_list', []);
         $this->main_slug = $menu_list[0]['slug'];
 
-        add_action('all_admin_notices', [$this, 'show_not_activated']);
         if (!isset($_parent_pages[$this->main_slug])) {
             add_menu_page('RY Plugin', 'RY Plugin', 'read', $this->main_slug, '', $icon);
             foreach ($menu_list as $menu_item) {
@@ -34,26 +33,6 @@ abstract class AbstractAdmin
             }
             add_action('all_admin_notices', [$this, 'show_notices']);
         }
-    }
-
-    public function show_not_activated(): void
-    {
-        if (!isset($this->license)) {
-            return;
-        }
-
-        if ($this->license->is_activated()) {
-            return;
-        }
-
-        echo '<div class="notice notice-info is-dismissible">';
-        echo '<p>' . wp_kses(sprintf(
-            /* translators: %1$s: Plugin name, %2$s: License URL */
-            __('%1$s: Your <a href="%2$s">license</a> is not activated yet!', 'ry-woocommerce-tools'),
-            '<strong>' . esc_html($this->license::$main_class::PLUGIN_NAME) . '</strong>',
-            esc_url(admin_url('admin.php?page=ry-license'))
-        ), ['strong' => [], 'a' => ['href' => []]]) . '</p>';
-        echo '</div>';
     }
 
     public function show_notices(): void

@@ -2,8 +2,8 @@
 
 defined('ABSPATH') or exit;
 
-use RY\General\AbstractBasic;
-use RY\General\ActionScheduler;
+use RY\General\V20260724\AbstractBasic;
+use RY\General\V20260724\ActionScheduler;
 
 final class RY_WT extends AbstractBasic
 {
