@@ -1,16 +1,18 @@
 <?php
 
-namespace RY\General\V20260724;
+namespace RY\General\V20260727;
 
 defined('ABSPATH') or exit;
 
-use RY\General\V20260724\Page\Logs;
+use RY\General\V20260727\Page\Logs as PageLogs;
+use RY\General\V20260727\Page\Option as PageOption;
 
 abstract class AbstractAdmin
 {
     protected function do_init(): void
     {
-        Logs::init_menu();
+        PageLogs::init_menu();
+        PageOption::init_menu();
 
         add_action('admin_menu', [$this, 'admin_menu']);
     }

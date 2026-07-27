@@ -1,11 +1,11 @@
 <?php
 
-namespace RY\General\V20260724\Page;
+namespace RY\General\V20260727\Page;
 
 defined('ABSPATH') or exit;
 
-use RY\General\V20260724\AbstractAdminPage;
-use RY\General\V20260724\Logs as LogsUtil;
+use RY\General\V20260727\AbstractAdminPage;
+use RY\General\V20260727\Logs as LogsUtil;
 
 final class Logs extends AbstractAdminPage
 {
@@ -26,6 +26,7 @@ final class Logs extends AbstractAdminPage
         $menu_list[] = [
             'name' => __('Logs', 'ry-woocommerce-tools'),
             'slug' => 'ry-logs',
+            'capability' => 'manage_options',
             'function' => [__CLASS__, 'pre_show_page'],
         ];
 
@@ -70,7 +71,8 @@ final class Logs extends AbstractAdminPage
             $current_group = count($this->log_list) ? array_key_first($this->log_list) : '';
         }
 
-        echo '<div class="wrap"><h1>' . esc_html__('Logs', 'ry-woocommerce-tools') . '</h1>';
+        echo '<div class="wrap">';
+        echo '<h1 class="wp-heading">' . esc_html__('Logs', 'ry-woocommerce-tools') . '</h1>';
         if ($current_group === '') {
             echo '<p>' . esc_html__('No logs found.', 'ry-woocommerce-tools') . '</p>';
             echo '</div>';

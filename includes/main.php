@@ -2,8 +2,8 @@
 
 defined('ABSPATH') or exit;
 
-use RY\General\V20260724\AbstractBasic;
-use RY\General\V20260724\ActionScheduler;
+use RY\General\V20260727\AbstractBasic;
+use RY\General\V20260727\ActionScheduler;
 
 final class RY_WT extends AbstractBasic
 {
@@ -50,6 +50,8 @@ final class RY_WT extends AbstractBasic
         if (version_compare(WC_VERSION, self::MIN_WC_VERSION, '<')) {
             return;
         }
+
+        include_once RY_WT_PLUGIN_DIR . 'includes/link-server.php';
 
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/abstracts/abstract-api.php';
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/abstracts/abstract-model.php';
@@ -116,6 +118,15 @@ final class RY_WT extends AbstractBasic
             $asset_info = include RY_WT_PLUGIN_DIR . 'assets/ry-payment.asset.php';
             wp_enqueue_style('ry-payment', RY_WT_PLUGIN_URL . 'assets/ry-payment.css', [], $asset_info['version']);
         }
+    }
+
+    public static function usage_tracking(): void
+    {
+        if (get_option('RY_General_tracking', 'yes') !== 'yes') {
+            return;
+        }
+
+        RY_WT_LinkServer::instance()->send_tracking();
     }
 
     public static function plugin_activation(): void

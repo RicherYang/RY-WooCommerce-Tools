@@ -2,7 +2,7 @@
 # This file is distributed under the GPLv3.
 msgid ""
 msgstr ""
-"Project-Id-Version: RY Tools for WooCommerce 2026.7.18\n"
+"Project-Id-Version: RY Tools for WooCommerce 2026.7.27\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/ry-woocommerce-tools\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -54,10 +54,20 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
-#. translators: %1$s: Plugin name, %2$s: License URL
-#: includes/ry-general/AbstractAdmin.php:52
+#: includes/ry-general/ActionScheduler/ListTable.php:30
+msgid "async"
+msgstr ""
+
+#. translators: %s: date interval
+#: includes/ry-general/ActionScheduler/ListTable.php:45
 #, php-format
-msgid "%1$s: Your <a href=\"%2$s\">license</a> is not activated yet!"
+msgid " (%s ago)"
+msgstr ""
+
+#. translators: %s: date interval
+#: includes/ry-general/ActionScheduler/ListTable.php:48
+#, php-format
+msgid " (%s)"
 msgstr ""
 
 #. translators: %s: Path of log file
@@ -78,29 +88,62 @@ msgstr ""
 msgid "Delete Permanently"
 msgstr ""
 
+#. translators: %d: Number of days
+#: includes/ry-general/Page/html/log-info.php:75
+#, php-format
+msgid "Log file will delete after %d days"
+msgstr ""
+
 #: includes/ry-general/Page/html/logs-select.php:3
 msgid "Log Categories"
 msgstr ""
 
-#: includes/ry-general/Page/html/logs-select.php:19
+#: includes/ry-general/Page/html/logs-select.php:18
 msgid "Log Files"
 msgstr ""
 
-#: includes/ry-general/Page/Logs.php:24
-#: includes/ry-general/Page/Logs.php:85
+#: includes/ry-general/Page/html/logs-select.php:35
+msgid "Dir size:"
+msgstr ""
+
+#: includes/ry-general/Page/html/options.php:10
+#: includes/ry-general/Page/html/options.php:13
+msgid "Enable tracking"
+msgstr ""
+
+#: includes/ry-general/Page/html/options.php:15
+msgid "Allow usage of RY Plugin to be tracked"
+msgstr ""
+
+#: includes/ry-general/Page/html/options.php:18
+#, php-format
+msgid "Read about what usage data is tracked at: %s ."
+msgstr ""
+
+#: includes/ry-general/Page/Logs.php:27
+#: includes/ry-general/Page/Logs.php:75
 msgid "Logs"
 msgstr ""
 
-#: includes/ry-general/Page/Logs.php:87
+#: includes/ry-general/Page/Logs.php:77
 msgid "No logs found."
 msgstr ""
 
-#: includes/ry-general/Page/Logs.php:145
+#: includes/ry-general/Page/Logs.php:136
 msgid "Delete successful."
 msgstr ""
 
-#: includes/ry-general/Page/Logs.php:152
+#: includes/ry-general/Page/Logs.php:143
 msgid "Delete failed."
+msgstr ""
+
+#: includes/ry-general/Page/Option.php:21
+#: includes/ry-general/Page/Option.php:35
+msgid "Options"
+msgstr ""
+
+#: includes/ry-general/Page/Option.php:64
+msgid "Settings saved."
 msgstr ""
 
 #: templates/auto-redirect.php:21
