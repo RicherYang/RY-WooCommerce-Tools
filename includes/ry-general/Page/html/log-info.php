@@ -1,5 +1,10 @@
 <?php defined('ABSPATH') or exit; ?>
 
+<?php
+use RY\General\V20260729\Utils;
+
+?>
+
 <h2><?php echo wp_kses(sprintf(
     /* translators: %s: Path of log file */
     __('Viewing log file %s', 'ry-woocommerce-tools'),
@@ -54,21 +59,15 @@ while (!feof($fp)) {
 ?>
 </div>
 
-<a href="<?php echo esc_url(add_query_arg([
-    'action' => 'ry-general-admin-logs',
-    'action2' => 'download',
+<a href="<?php echo esc_url(Utils::the_action_link('general-logs', 'dl-log', [
     'group' => $current_group,
     'log' => $current_log,
-    '_wpnonce' => wp_create_nonce('ry-general-admin-logs'),
-], admin_url('admin-post.php'))); ?>" class="button"><?php esc_html_e('Download', 'ry-woocommerce-tools'); ?></a>
+])); ?>" class="button"><?php esc_html_e('Download', 'ry-woocommerce-tools'); ?></a>
 &emsp;
-<a href="<?php echo esc_url(add_query_arg([
-    'action' => 'ry-general-admin-logs',
-    'action2' => 'delete',
+<a href="<?php echo esc_url(Utils::the_action_link('general-logs', 'delete-log', [
     'group' => $current_group,
     'log' => $current_log,
-    '_wpnonce' => wp_create_nonce('ry-general-admin-logs'),
-], admin_url('admin-post.php'))); ?>" class="button"><?php esc_html_e('Delete Permanently', 'ry-woocommerce-tools'); ?></a>
+])); ?>" class="button"><?php esc_html_e('Delete Permanently', 'ry-woocommerce-tools'); ?></a>
 &emsp;
 <?php echo esc_html(sprintf(
     /* translators: %d: Number of days */

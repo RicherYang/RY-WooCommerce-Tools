@@ -38,7 +38,7 @@ final class RY_WT_WC_ECPay_Gateway_Admin
 
             $api_info = RY_WT_WC_ECPay_Gateway::instance()->get_api_info();
             if ($api_info['testmode']) {
-                $setting_idx = array_search(RY_WT::OPTION_PREFIX . 'ecpay_gateway_apiinfo[MerchantID]', array_column($settings, 'id'));
+                $setting_idx = array_search(RY_WT::PREFIX . 'ecpay_gateway_apiinfo[MerchantID]', array_column($settings, 'id'));
                 $settings[$setting_idx]['desc'] = '<p class="description">' . sprintf(
                     /* translators: %s: MerchantID */
                     __('Used MerchantID "%s"', 'ry-woocommerce-tools'),

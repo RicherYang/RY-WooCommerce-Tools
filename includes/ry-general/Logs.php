@@ -1,6 +1,6 @@
 <?php
 
-namespace RY\General\V20260727;
+namespace RY\General\V20260729;
 
 defined('ABSPATH') or exit;
 
@@ -8,20 +8,12 @@ class Logs
 {
     protected static array $file_enabled = [];
 
-    public static function set_cron_job(): void
-    {
-        $cron_time = new \DateTime('now', wp_timezone());
-        $cron_time->setTime(3, 31, 0);
-        $cron_time->setTimezone(new \DateTimeZone('UTC'));
-        as_schedule_cron_action($cron_time->getTimestamp(), ltrim($cron_time->format('i G * * * *'), '0'), 'RY_log_action', [], '', true);
-    }
-
     public static function add_action(): void
     {
-        add_action('RY_log_action', [__CLASS__, 'log_action']);
+        add_action('RY_GENERAL_cleanup_logs', [__CLASS__, 'cleanup_logs']);
     }
 
-    public static function log_action(): void
+    public static function cleanup_logs(): void
     {
         $delete_time = current_datetime();
         $delete_time = $delete_time->sub(new \DateInterval('P' . intval(apply_filters('ry-plugin/delete_time_days', 30)) . 'D'));
@@ -41,7 +33,9 @@ class Logs
             }
         }
 
-        self::log('ry-logger', 'info', 'Deleted ' . count($delete_log) . ' log files', $delete_log);
+        if (count($delete_log)) {
+            self::log('ry-logger', 'info', 'Deleted ' . count($delete_log) . ' log files', $delete_log);
+        }
     }
 
     public static function set_log(bool $enabled, string $handle = ''): void

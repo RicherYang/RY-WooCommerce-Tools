@@ -10,7 +10,7 @@ return [
     ],
     [
         'title' => __('Debug log', 'ry-woocommerce-tools'),
-        'id' => RY_WT::OPTION_PREFIX . 'smilepay_shipping_log',
+        'id' => RY_WT::PREFIX . 'smilepay_shipping_log',
         'type' => 'checkbox',
         'default' => 'no',
         'desc' => __('Enable logging', 'ry-woocommerce-tools') . '<br>'
@@ -23,21 +23,21 @@ return [
     ],
     [
         'title' => __('Log status change', 'ry-woocommerce-tools'),
-        'id' => RY_WT::OPTION_PREFIX . 'smilepay_shipping_log_status_change',
+        'id' => RY_WT::PREFIX . 'smilepay_shipping_log_status_change',
         'type' => 'checkbox',
         'default' => 'no',
         'desc' => __('Log status change at order notes.', 'ry-woocommerce-tools'),
     ],
     [
         'title' => __('Auto change order status', 'ry-woocommerce-tools'),
-        'id' => RY_WT::OPTION_PREFIX . 'smilepay_shipping_auto_order_status',
+        'id' => RY_WT::PREFIX . 'smilepay_shipping_auto_order_status',
         'type' => 'checkbox',
         'default' => 'yes',
         'desc' => __('Auto change order status when get shipping status change.', 'ry-woocommerce-tools'),
     ],
     [
         'title' => __('Auto get shipping note', 'ry-woocommerce-tools'),
-        'id' => RY_WT::OPTION_PREFIX . 'smilepay_shipping_auto_get_no',
+        'id' => RY_WT::PREFIX . 'smilepay_shipping_auto_get_no',
         'type' => 'checkbox',
         'default' => 'yes',
         'desc' => __('Auto get shipping note when order status is change to processing.', 'ry-woocommerce-tools'),
@@ -53,7 +53,7 @@ return [
     ],
     [
         'title' => __('shipping item name', 'ry-woocommerce-tools'),
-        'id' => RY_WT::OPTION_PREFIX . 'smilepay_shipping_apiinfo[itemname]',
+        'id' => RY_WT::PREFIX . 'smilepay_shipping_apiinfo[itemname]',
         'type' => 'text',
         'default' => '',
         'desc' => __('If empty use the first product name.', 'ry-woocommerce-tools'),
@@ -62,7 +62,7 @@ return [
     ],
     [
         'title' => __('Cvs shipping type', 'ry-woocommerce-tools'),
-        'id' => RY_WT::OPTION_PREFIX . 'smilepay_shipping_cvs_type',
+        'id' => RY_WT::PREFIX . 'smilepay_shipping_cvs_type',
         'type' => 'select',
         'default' => 'C2C',
         'options' => [
@@ -71,7 +71,7 @@ return [
     ],
     [
         'title' => __('Shipping booking note print format ( TCAT )', 'ry-woocommerce-tools'),
-        'id' => RY_WT::OPTION_PREFIX . 'smilepay_shipping_apiinfo[print]',
+        'id' => RY_WT::PREFIX . 'smilepay_shipping_apiinfo[print]',
         'type' => 'select',
         'default' => '2',
         'options' => [
@@ -82,7 +82,7 @@ return [
     ],
     [
         'title' => __('Shipping delivery date ( TCAT )', 'ry-woocommerce-tools'),
-        'id' => RY_WT::OPTION_PREFIX . 'smilepay_shipping_apiinfo[delivery_date]',
+        'id' => RY_WT::PREFIX . 'smilepay_shipping_apiinfo[delivery_date]',
         'type' => 'select',
         'default' => '1',
         'options' => [

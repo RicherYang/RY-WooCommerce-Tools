@@ -2,12 +2,12 @@
 
 defined('ABSPATH') or exit;
 
-use RY\General\V20260727\AbstractBasic;
-use RY\General\V20260727\ActionScheduler;
+use RY\General\V20260729\AbstractBasic;
+use RY\General\V20260729\ActionScheduler;
 
 final class RY_WT extends AbstractBasic
 {
-    public const OPTION_PREFIX = 'RY_WT_';
+    public const PREFIX = 'RY_WT_';
 
     public const PLUGIN_NAME = 'RY Tools for WooCommerce';
 
@@ -29,8 +29,6 @@ final class RY_WT extends AbstractBasic
 
     protected function do_init(): void
     {
-        ActionScheduler::instance();
-
         if (is_admin()) {
             include_once RY_WT_PLUGIN_DIR . 'includes/update.php';
             RY_WT_Update::update();

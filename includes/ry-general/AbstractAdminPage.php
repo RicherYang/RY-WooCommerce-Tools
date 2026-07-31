@@ -1,6 +1,6 @@
 <?php
 
-namespace RY\General\V20260727;
+namespace RY\General\V20260729;
 
 defined('ABSPATH') or exit;
 
@@ -22,6 +22,16 @@ abstract class AbstractAdminPage
         return static::$_instance[static::class];
     }
 
+    public static function set_page_load($hook_suffix): void
+    {
+        add_action('load-' . $hook_suffix, [static::class, 'process_admin_ui']);
+    }
+
+    public static function process_admin_ui(): void
+    {
+        static::instance();
+    }
+
     public static function pre_show_page(): void
     {
         static::instance()->output_page();
@@ -29,11 +39,21 @@ abstract class AbstractAdminPage
 
     public static function admin_action(): void
     {
-        $action = sanitize_text_field(wp_unslash($_REQUEST['action'] ?? ''));
-        static::instance()->do_admin_action($action);
+        $action = wp_unslash($_REQUEST['action'] ?? '');
+        if ($action === sanitize_key($action)) {
+            check_ajax_referer($action, '_wpnonce');
+
+            $real_action = wp_unslash($_REQUEST['ry-action'] ?? '');
+            if ($real_action === sanitize_key($real_action)) {
+                $real_action = str_replace('-', '_', $real_action);
+            } else {
+                $real_action = '';
+            }
+            static::instance()->do_admin_action($action, $real_action);
+        }
     }
 
-    public function do_admin_action(string $action): void {}
+    protected function do_admin_action(string $action, string $real_action): void {}
 
     protected function add_notice(string $status, string $message): void
     {

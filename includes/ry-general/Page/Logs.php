@@ -1,11 +1,11 @@
 <?php
 
-namespace RY\General\V20260727\Page;
+namespace RY\General\V20260729\Page;
 
 defined('ABSPATH') or exit;
 
-use RY\General\V20260727\AbstractAdminPage;
-use RY\General\V20260727\Logs as LogsUtil;
+use RY\General\V20260729\AbstractAdminPage;
+use RY\General\V20260729\Logs as LogsUtil;
 
 final class Logs extends AbstractAdminPage
 {
@@ -17,8 +17,10 @@ final class Logs extends AbstractAdminPage
 
     public static function init_menu(): void
     {
-        add_filter('ry-plugin/menu_list', [__CLASS__, 'add_menu'], 99999);
-        add_action('admin_post_ry-general-admin-logs', [__CLASS__, 'admin_action']);
+        if (!has_action('admin_post_ry-general-logs')) {
+            add_filter('ry-plugin/menu_list', [__CLASS__, 'add_menu'], 99999);
+            add_action('admin_post_ry-general-logs', [__CLASS__, 'admin_action']);
+        }
     }
 
     public static function add_menu(array $menu_list): array
@@ -66,6 +68,7 @@ final class Logs extends AbstractAdminPage
 
     public function output_page(): void
     {
+        ksort($this->log_list);
         $current_group = sanitize_title(wp_unslash($_GET['group'] ?? ''));
         if (!isset($this->log_list[$current_group])) {
             $current_group = count($this->log_list) ? array_key_first($this->log_list) : '';
@@ -79,6 +82,7 @@ final class Logs extends AbstractAdminPage
             return;
         }
 
+        krsort($this->log_list[$current_group]);
         $current_log = sanitize_title(wp_unslash($_GET['log'] ?? ''));
         if (!isset($this->log_list[$current_group][$current_log])) {
             $current_log = array_key_first($this->log_list[$current_group]);
@@ -108,15 +112,23 @@ final class Logs extends AbstractAdminPage
         echo '</div>';
     }
 
-    public function do_admin_action(string $action): void
+    protected function do_admin_action(string $action, string $real_action): void
     {
-        if ('ry-general-admin-logs' !== $action) {
+        if ('ry-general-logs' !== $action) {
             return;
         }
 
-        if (!wp_verify_nonce($_GET['_wpnonce'] ?? '', 'ry-general-admin-logs')) {
-            wp_die('Invalid nonce');
+        if ($real_action !== '' && is_callable([$this, $real_action])) {
+            $this->$real_action();
         }
+
+        wp_safe_redirect(admin_url('admin.php?page=ry-logs'));
+        exit;
+    }
+
+    private function dl_log(): void
+    {
+        check_ajax_referer('dl-log', '_ajax_nonce');
 
         $current_group = sanitize_title(wp_unslash($_GET['group'] ?? ''));
         $current_log = sanitize_title(wp_unslash($_GET['log'] ?? ''));
@@ -124,34 +136,43 @@ final class Logs extends AbstractAdminPage
         if (isset($this->log_list[$current_group], $this->log_list[$current_group][$current_log])) {
             $current_file = realpath($this->log_path . $this->log_list[$current_group][$current_log]);
             if (str_starts_with($current_file, $this->log_path)) {
-                if (sanitize_key($_GET['action2'] ?? '') === 'download') {
-                    header('Content-Type: text/plain');
-                    header('Content-Disposition: attachment; filename="' . $this->get_nice_file_name($current_file) . '"');
-                    readfile($current_file); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_readfile
-                    exit;
-                }
-
-                if (sanitize_key($_GET['action2'] ?? '') === 'delete') {
-                    if (wp_delete_file($current_file)) {
-                        $this->add_notice('success', __('Delete successful.', 'ry-woocommerce-tools'));
-                        $current_log = '';
-
-                        if (count($this->log_list[$current_group]) === 0) {
-                            $current_group = '';
-                        }
-                    } else {
-                        $this->add_notice('error', __('Delete failed.', 'ry-woocommerce-tools'));
-                    }
-                }
+                header('Content-Type: text/plain');
+                header('Content-Disposition: attachment; filename="' . $this->get_nice_file_name($current_file) . '"');
+                readfile($current_file); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_readfile
+                exit;
             }
         }
+    }
 
-        wp_safe_redirect(add_query_arg([
-            'page' => 'ry-logs',
-            'group' => $current_group,
-            'log' => $current_log,
-        ], admin_url('admin.php')));
-        exit;
+    private function delete_log(): void
+    {
+        check_ajax_referer('delete-log', '_ajax_nonce');
+
+        $current_group = sanitize_title(wp_unslash($_GET['group'] ?? ''));
+        $current_log = sanitize_title(wp_unslash($_GET['log'] ?? ''));
+
+        if (isset($this->log_list[$current_group], $this->log_list[$current_group][$current_log])) {
+            $current_file = realpath($this->log_path . $this->log_list[$current_group][$current_log]);
+            if (str_starts_with($current_file, $this->log_path)) {
+                if (wp_delete_file($current_file)) {
+                    $this->add_notice('success', __('Delete successful.', 'ry-woocommerce-tools'));
+                    $current_log = '';
+
+                    if (count($this->log_list[$current_group]) === 0) {
+                        $current_group = '';
+                    }
+                } else {
+                    $this->add_notice('error', __('Delete failed.', 'ry-woocommerce-tools'));
+                }
+
+                wp_safe_redirect(add_query_arg([
+                    'page' => 'ry-logs',
+                    'group' => $current_group,
+                    'log' => $current_log,
+                ], admin_url('admin.php')));
+                exit;
+            }
+        }
     }
 
     protected function get_nice_file_name($file_path): string

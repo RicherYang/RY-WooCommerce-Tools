@@ -1,23 +1,23 @@
 <?php
 
-namespace RY\General\V20260727;
+namespace RY\General\V20260729;
 
 defined('ABSPATH') or exit;
 
-use RY\General\V20260727\Page\Logs as PageLogs;
-use RY\General\V20260727\Page\Option as PageOption;
+use RY\General\V20260729\Page\Logs as PageLogs;
+use RY\General\V20260729\Page\Option as PageOption;
 
 abstract class AbstractAdmin
 {
-    protected function do_init(): void
+    public function __construct()
     {
         PageLogs::init_menu();
         PageOption::init_menu();
 
-        add_action('admin_menu', [$this, 'admin_menu']);
+        add_action('admin_menu', [$this, 'general_menu']);
     }
 
-    public function admin_menu(): void
+    public function general_menu(): void
     {
         global $_parent_pages;
 
@@ -27,15 +27,9 @@ abstract class AbstractAdmin
         $main_slug = $menu_list[0]['slug'];
 
         if (!isset($_parent_pages[$main_slug])) {
-            $added_menu = [];
-            add_menu_page('RY Plugin', 'RY Plugin', 'read', $main_slug, '', $icon);
+            add_menu_page('RY Plugin', 'RY Plugin', 'read', $main_slug, '', $icon, 101);
             foreach ($menu_list as $menu_item) {
-                if (isset($added_menu[$menu_item['slug']])) {
-                    continue;
-                }
-
                 add_submenu_page($main_slug, $menu_item['name'], $menu_item['name'], 'manage_options', $menu_item['slug'], $menu_item['function']);
-                $added_menu[$menu_item['slug']] = true;
             }
             add_action('all_admin_notices', [$this, 'show_notices']);
         }

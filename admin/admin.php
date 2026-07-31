@@ -2,7 +2,7 @@
 
 defined('ABSPATH') or exit;
 
-use RY\General\V20260727\AbstractAdmin;
+use RY\General\V20260729\AbstractAdmin;
 
 final class RY_WT_Admin extends AbstractAdmin
 {
@@ -20,8 +20,6 @@ final class RY_WT_Admin extends AbstractAdmin
 
     protected function do_init(): void
     {
-        parent::do_init();
-
         add_action('admin_notices', [$this, 'need_woocommerce']);
         add_action('admin_notices', [$this, 'show_time_error']);
 
