@@ -1,11 +1,11 @@
 <?php
 
-namespace RY\General\V20260729\Page;
+namespace RY\General\V20260801\Page;
 
 defined('ABSPATH') or exit;
 
-use RY\General\V20260729\AbstractAdminPage;
-use RY\General\V20260729\Utils;
+use RY\General\V20260801\AbstractAdminPage;
+use RY\General\V20260801\Utils;
 
 final class Option extends AbstractAdminPage
 {

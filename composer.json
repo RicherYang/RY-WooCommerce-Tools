@@ -6,7 +6,7 @@
     },
     "autoload": {
         "psr-4": {
-            "RY\\General\\V20260729\\": "includes/ry-general"
+            "RY\\General\\V20260801\\": "includes/ry-general"
         }
     },
     "config": {

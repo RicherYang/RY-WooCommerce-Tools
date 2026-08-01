@@ -1,13 +1,11 @@
 <?php
 
-namespace RY\General\V20260729;
+namespace RY\General\V20260801;
 
 defined('ABSPATH') or exit;
 
 class Logs
 {
-    protected static array $file_enabled = [];
-
     public static function add_action(): void
     {
         add_action('RY_GENERAL_cleanup_logs', [__CLASS__, 'cleanup_logs']);
@@ -38,11 +36,6 @@ class Logs
         }
     }
 
-    public static function set_log(bool $enabled, string $handle = ''): void
-    {
-        self::$file_enabled[$handle] = $enabled;
-    }
-
     public static function get_log_directory(): string
     {
         $upload_dir = wp_upload_dir();
@@ -63,8 +56,10 @@ class Logs
 
     public static function get_log_path(string $handle): string
     {
-        $file_name = [$handle, current_time('Y-m-d'), wp_hash($handle)];
-        $file_path = self::get_log_directory() . sanitize_file_name(implode('-', $file_name) . '.log');
+        $date_suffix = current_time('Y-m-d');
+        $hash_suffix = wp_hash($handle . $date_suffix);
+        $file_name = implode('-', [$handle, $date_suffix, $hash_suffix]) . '.log';
+        $file_path = self::get_log_directory() . sanitize_file_name($file_name);
         if (!file_exists($file_path)) {
             @file_put_contents($file_path, '');
         }
@@ -74,8 +69,14 @@ class Logs
 
     public static function log(string $handle, string $level, string $message, mixed $context = []): void
     {
+        static $log_enabled = [];
+
+        if (!isset($log_enabled[$handle])) {
+            $log_enabled[$handle] = apply_filters('ry-plugin/log_enabled', true, $handle);
+        }
+
         $level = strtoupper($level);
-        if (isset(self::$file_enabled[$handle]) && self::$file_enabled[$handle] === false) {
+        if ($log_enabled[$handle] === false) {
             if ($level !== 'ERROR') {
                 return;
             }
