@@ -33,6 +33,16 @@ abstract class RY_WT_Api
         exit;
     }
 
+    public function enable_rate_limit()
+    {
+        add_filter('woocommerce_store_api_rate_limit_options', function ($options) {
+            $options['enabled'] = true;
+            $options['limit'] = 10;
+            $options['seconds'] = 600;
+            return $options;
+        }, 999);
+    }
+
     public function auto_submit_data(string $url, array $args): void
     {
         echo '<form method="post" id="ry-auto-submit-form" action="' . esc_url($url) . '">';

@@ -2,6 +2,8 @@
 
 defined('ABSPATH') or exit;
 
+use Automattic\WooCommerce\StoreApi\Utilities\RateLimits;
+
 final class RY_WT_WC_SmilePay_Gateway_Response extends RY_WT_SmilePay_Api
 {
     private static ?self $_instance = null;
@@ -44,6 +46,18 @@ final class RY_WT_WC_SmilePay_Gateway_Response extends RY_WT_SmilePay_Api
 
             $order_ID = $this->get_order_id($ipn_info, $api_info['prefix']);
             if ($order = wc_get_order($order_ID)) {
+                $this->enable_rate_limit();
+                $rate_option = RateLimits::get_options();
+                if ($rate_option->enabled) {
+                    $action_id = 'ry_smilepay_ipn_' . $order->get_id();
+                    $retry = RateLimits::is_exceeded_retry_after($action_id);
+                    if (false !== $retry) {
+                        RY_WT_WC_SmilePay_Gateway::instance()->log('IPN request rate limit exceeded', WC_Log_Levels::ERROR, ['data' => $ipn_info]);
+                        return false;
+                    }
+                    RateLimits::update_rate_limit($action_id);
+                }
+
                 $ipn_info_check_value = [];
                 $ipn_info_check_value[0] = str_pad(substr($api_info['Rot_check'], -4), 4, '0', STR_PAD_LEFT);
                 $ipn_info_check_value[1] = (int) ceil($order->get_total());
