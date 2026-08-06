@@ -44,16 +44,6 @@ final class RY_WT_WC_ECPay_Shipping_Admin
     {
         if ($current_section == 'ecpay_shipping') {
             $settings = include RY_WT_PLUGIN_DIR . 'woocommerce/shipping/ecpay/includes/settings/admin-settings.php';
-
-            $api_info = RY_WT_WC_ECPay_Shipping::instance()->get_api_info();
-            if ($api_info['testmode']) {
-                $setting_idx = array_search(RY_WT::PREFIX . 'ecpay_shipping_apiinfo[MerchantID]', array_column($settings, 'id'));
-                $settings[$setting_idx]['desc'] = '<p class="description">' . sprintf(
-                    /* translators: %s: MerchantID */
-                    __('Used MerchantID "%s"', 'ry-woocommerce-tools'),
-                    $api_info['MerchantID'],
-                ) . '</p>';
-            }
         }
 
         return $settings;
@@ -63,27 +53,31 @@ final class RY_WT_WC_ECPay_Shipping_Admin
     {
         $api_info = RY_WT::get_option('ecpay_shipping_apiinfo', []);
 
-        if (is_array($api_info) && isset($api_info['phone']) && !empty($api_info['phone'])) {
-            if (! preg_match('@^\(0\d{1,2}\)\d{6,8}(#\d+)?$@', $api_info['phone'])) {
-                WC_Admin_Settings::add_error(__('Verification failed!', 'ry-woocommerce-tools') . ' ' . __('Phone format (0x)xxxxxxx#xx', 'ry-woocommerce-tools'));
-                $api_info['phone'] = '';
-                RY_WT::update_option('ecpay_shipping_apiinfo', $api_info, false);
+        if (is_array($api_info)) {
+            if (isset($api_info['phone']) && !empty($api_info['phone'])) {
+                if (! preg_match('@^\(0\d{1,2}\)\d{6,8}(#\d+)?$@', $api_info['phone'])) {
+                    WC_Admin_Settings::add_error(__('Verification failed!', 'ry-woocommerce-tools') . ' ' . __('Phone format (0x)xxxxxxx#xx', 'ry-woocommerce-tools'));
+                    $api_info['phone'] = '';
+                    RY_WT::update_option('ecpay_shipping_apiinfo', $api_info, false);
+                }
             }
-        }
 
-        if (is_array($api_info) && isset($api_info['cellphone']) && !empty($api_info['cellphone'])) {
-            if (!preg_match('@^09\d{8}?$@', $api_info['cellphone'])) {
-                WC_Admin_Settings::add_error(__('Verification failed!', 'ry-woocommerce-tools') . ' ' . __('Cellphone format 09xxxxxxxx', 'ry-woocommerce-tools'));
-                $api_info['cellphone'] = '';
-                RY_WT::update_option('ecpay_shipping_apiinfo', $api_info, false);
+            if (isset($api_info['cellphone']) && !empty($api_info['cellphone'])) {
+                if (!preg_match('@^09\d{8}?$@', $api_info['cellphone'])) {
+                    WC_Admin_Settings::add_error(__('Verification failed!', 'ry-woocommerce-tools') . ' ' . __('Cellphone format 09xxxxxxxx', 'ry-woocommerce-tools'));
+                    $api_info['cellphone'] = '';
+                    RY_WT::update_option('ecpay_shipping_apiinfo', $api_info, false);
+                }
             }
-        }
 
-        if (is_array($api_info) && isset($api_info['prefix'])) {
-            if (!preg_match('/^[a-z0-9]{0,3}$/i', $api_info['prefix'])) {
+            if (isset($api_info['prefix']) && !preg_match('/^[a-z0-9]{0,3}$/i', $api_info['prefix'])) {
                 WC_Admin_Settings::add_error(__('Order no prefix only letters and numbers allowed, and maximum length is 3 characters.', 'ry-woocommerce-tools'));
                 $api_info['prefix'] = '';
                 RY_WT::update_option('ecpay_shipping_apiinfo', $api_info, false);
+            }
+
+            if (empty($api_info['MerchantID']) || empty($api_info['HashKey']) || empty($api_info['HashIV'])) {
+                WC_Admin_Settings::add_message(__('Need API key information for connect to provider server.', 'ry-woocommerce-tools'));
             }
         }
     }

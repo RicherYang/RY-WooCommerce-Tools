@@ -75,12 +75,6 @@ final class RY_WT_WC_ECPay_Gateway extends RY_WT_Gateway_Model
         ], $api_info);
         $api_info['testmode'] = wc_string_to_bool($api_info['testmode']);
 
-        if ($api_info['testmode'] === true) {
-            $api_info['MerchantID'] = '3002607';
-            $api_info['HashKey'] = 'pwFHCqoQZGmho4w6';
-            $api_info['HashIV'] = 'EkRm7iFT261dpevs';
-        }
-
         return $api_info;
     }
 }

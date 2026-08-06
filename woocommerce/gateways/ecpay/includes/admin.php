@@ -36,16 +36,6 @@ final class RY_WT_WC_ECPay_Gateway_Admin
         if ($current_section == 'ecpay_gateway') {
             $settings = include RY_WT_PLUGIN_DIR . 'woocommerce/gateways/ecpay/includes/settings/admin-settings.php';
 
-            $api_info = RY_WT_WC_ECPay_Gateway::instance()->get_api_info();
-            if ($api_info['testmode']) {
-                $setting_idx = array_search(RY_WT::PREFIX . 'ecpay_gateway_apiinfo[MerchantID]', array_column($settings, 'id'));
-                $settings[$setting_idx]['desc'] = '<p class="description">' . sprintf(
-                    /* translators: %s: MerchantID */
-                    __('Used MerchantID "%s"', 'ry-woocommerce-tools'),
-                    $api_info['MerchantID'],
-                ) . '</p>';
-            }
-
             if (CartCheckoutUtils::is_checkout_block_default() && !defined('RY_WTP_VERSION')) {
                 $settings[0]['desc'] .= '<p>' . sprintf(
                     /* translators: %s: link to RY Tools (Pro) for WooCommerce */
@@ -61,11 +51,15 @@ final class RY_WT_WC_ECPay_Gateway_Admin
     public function check_option()
     {
         $api_info = RY_WT::get_option('ecpay_gateway_apiinfo', []);
-        if (is_array($api_info) && isset($api_info['prefix'])) {
-            if (!preg_match('/^[a-z0-9]{0,3}$/i', $api_info['prefix'])) {
+        if (is_array($api_info)) {
+            if (isset($api_info['prefix']) && !preg_match('/^[a-z0-9]{0,3}$/i', $api_info['prefix'])) {
                 WC_Admin_Settings::add_error(__('Order no prefix only letters and numbers allowed, and maximum length is 3 characters.', 'ry-woocommerce-tools'));
                 $api_info['prefix'] = '';
                 RY_WT::update_option('ecpay_gateway_apiinfo', $api_info, false);
+            }
+
+            if (empty($api_info['MerchantID']) || empty($api_info['HashKey']) || empty($api_info['HashIV'])) {
+                WC_Admin_Settings::add_message(__('Need API key information for connect to provider server.', 'ry-woocommerce-tools'));
             }
         }
     }

@@ -55,7 +55,7 @@ final class RY_WT_WC_PAYUNi_Gateway_Response extends RY_WT_PAYUNi_Api
 
             $info_value = $this->get_info_value($ipn_info);
             $ipn_info_check_value = $this->generate_hash_value($info_value, $api_info['HashKey'], $api_info['HashIV']);
-            if ($check_value === $ipn_info_check_value) {
+            if (hash_equals($check_value, $ipn_info_check_value)) {
                 return true;
             }
             RY_WT_WC_PAYUNi_Gateway::instance()->log('IPN request check failed', WC_Log_Levels::ERROR, ['response' => $check_value, 'self' => $ipn_info_check_value]);

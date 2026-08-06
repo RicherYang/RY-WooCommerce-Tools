@@ -307,20 +307,6 @@ final class RY_WT_WC_ECPay_Shipping extends RY_WT_Shipping_Model
         ], $api_info);
         $api_info['testmode'] = wc_string_to_bool($api_info['testmode']);
 
-        if ($api_info['testmode'] === true) {
-            $cvs_type = RY_WT::get_option('ecpay_shipping_cvs_type', 'C2C');
-            if ('C2C' === $cvs_type) {
-                $api_info['MerchantID'] = '2000933';
-                $api_info['HashKey'] = 'XBERn1YOvpM9nfZc';
-                $api_info['HashIV'] = 'h1ONHk4P4yqbl5LK';
-            }
-            if ('B2C' === $cvs_type) {
-                $api_info['MerchantID'] = '2000132';
-                $api_info['HashKey'] = '5294y06JbISpM5x9';
-                $api_info['HashIV'] = 'v77hoKGq4kWxNNIS';
-            }
-        }
-
         return $api_info;
     }
 }

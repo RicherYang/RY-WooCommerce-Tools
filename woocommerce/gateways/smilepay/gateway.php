@@ -78,13 +78,6 @@ final class RY_WT_WC_SmilePay_Gateway extends RY_WT_Gateway_Model
         ], $api_info);
         $api_info['testmode'] = wc_string_to_bool($api_info['testmode']);
 
-        if ($api_info['testmode'] === true) {
-            $api_info['Dcvc'] = '107';
-            $api_info['Rvg2c'] = '1';
-            $api_info['Verify_key'] = '174A02F97A95F72CE301137B3F98D128';
-            $api_info['Rot_check'] = '1111';
-        }
-
         return $api_info;
     }
 }

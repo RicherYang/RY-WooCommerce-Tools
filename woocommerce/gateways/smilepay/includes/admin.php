@@ -51,11 +51,15 @@ final class RY_WT_WC_SmilePay_Gateway_Admin
     public function check_option()
     {
         $api_info = RY_WT::get_option('smilepay_gateway_apiinfo', []);
-        if (is_array($api_info) && isset($api_info['prefix'])) {
-            if (!preg_match('/^[a-z0-9]{0,3}$/i', $api_info['prefix'])) {
+        if (is_array($api_info)) {
+            if (isset($api_info['prefix']) && !preg_match('/^[a-z0-9]{0,3}$/i', $api_info['prefix'])) {
                 WC_Admin_Settings::add_error(__('Order no prefix only letters and numbers allowed, and maximum length is 3 characters.', 'ry-woocommerce-tools'));
                 $api_info['prefix'] = '';
                 RY_WT::update_option('smilepay_gateway_apiinfo', $api_info, false);
+            }
+
+            if (empty($api_info['Dcvc']) || empty($api_info['Rvg2c']) || empty($api_info['Verify_key']) || empty($api_info['Rot_check'])) {
+                WC_Admin_Settings::add_message(__('Need API key information for connect to provider server.', 'ry-woocommerce-tools'));
             }
         }
     }

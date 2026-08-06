@@ -62,6 +62,9 @@ Please visit the [plugin forum page](https://ry-plugin.com/ry-woocommerce-tools/
 
 == Upgrade Notice ==
 
+= 2026.8.6 =
+* 請確認服務商的 API 金鑰資訊正確填寫。
+
 = 3.8.4 - 2026-06-24 =
 * 移除 TWQR 付款方式。
 

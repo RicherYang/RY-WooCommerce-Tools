@@ -1373,15 +1373,8 @@ msgstr ""
 msgid "ECPay gateway options"
 msgstr ""
 
-#. translators: %s: MerchantID
-#: woocommerce/gateways/ecpay/includes/admin.php:44
-#: woocommerce/shipping/ecpay/includes/admin.php:53
-#, php-format
-msgid "Used MerchantID \"%s\""
-msgstr ""
-
 #. translators: %s: link to RY Tools (Pro) for WooCommerce
-#: woocommerce/gateways/ecpay/includes/admin.php:52
+#: woocommerce/gateways/ecpay/includes/admin.php:42
 #: woocommerce/gateways/newebpay/includes/admin.php:43
 #: woocommerce/gateways/payuni/includes/admin.php:42
 #: woocommerce/gateways/smilepay/includes/admin.php:42
@@ -1389,12 +1382,20 @@ msgstr ""
 msgid "Need %s to support block checkout."
 msgstr ""
 
-#: woocommerce/gateways/ecpay/includes/admin.php:66
+#: woocommerce/gateways/ecpay/includes/admin.php:56
 #: woocommerce/gateways/newebpay/includes/admin.php:57
 #: woocommerce/gateways/payuni/includes/admin.php:56
 #: woocommerce/gateways/smilepay/includes/admin.php:56
-#: woocommerce/shipping/ecpay/includes/admin.php:84
+#: woocommerce/shipping/ecpay/includes/admin.php:74
 msgid "Order no prefix only letters and numbers allowed, and maximum length is 3 characters."
+msgstr ""
+
+#: woocommerce/gateways/ecpay/includes/admin.php:62
+#: woocommerce/gateways/newebpay/includes/admin.php:63
+#: woocommerce/gateways/payuni/includes/admin.php:62
+#: woocommerce/gateways/smilepay/includes/admin.php:62
+#: woocommerce/shipping/ecpay/includes/admin.php:80
+msgid "Need API key information for connect to provider server."
 msgstr ""
 
 #: woocommerce/gateways/ecpay/includes/gateway-response.php:110
@@ -1901,16 +1902,16 @@ msgstr ""
 msgid "ECPay shipping options"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/includes/admin.php:68
-#: woocommerce/shipping/ecpay/includes/admin.php:76
+#: woocommerce/shipping/ecpay/includes/admin.php:59
+#: woocommerce/shipping/ecpay/includes/admin.php:67
 msgid "Verification failed!"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/includes/admin.php:68
+#: woocommerce/shipping/ecpay/includes/admin.php:59
 msgid "Phone format (0x)xxxxxxx#xx"
 msgstr ""
 
-#: woocommerce/shipping/ecpay/includes/admin.php:76
+#: woocommerce/shipping/ecpay/includes/admin.php:67
 msgid "Cellphone format 09xxxxxxxx"
 msgstr ""
 
