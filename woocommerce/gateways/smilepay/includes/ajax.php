@@ -26,10 +26,9 @@ final class RY_WT_WC_SmilePay_Gateway_Ajax
     {
         check_ajax_referer('smilepay-getcode');
 
-        $order_key = sanitize_locale_name($_POST['key'] ?? '');
         $order_ID = intval($_POST['id'] ?? '');
         $order = wc_get_order($order_ID);
-        if ($order && hash_equals($order->get_order_key(), $order_key)) {
+        if ($order && $order->key_is_valid(wc_clean(wp_unslash($_POST['key'] ?? '')))) {
             $payment_method = $order->get_payment_method();
             $payment_gateways = WC()->payment_gateways()->payment_gateways();
             if (isset($payment_gateways[$payment_method])) {

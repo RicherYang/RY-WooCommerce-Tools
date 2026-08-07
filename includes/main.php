@@ -3,7 +3,6 @@
 defined('ABSPATH') or exit;
 
 use RY\General\V20260801\AbstractBasic;
-use RY\General\V20260801\ActionScheduler;
 
 final class RY_WT extends AbstractBasic
 {
@@ -13,7 +12,7 @@ final class RY_WT extends AbstractBasic
 
     public const MIN_WC_VERSION = '9.0.0';
 
-    public const MIN_PRO_TOOLS_VERSION = '2026.7.18';
+    public const MIN_PRO_TOOLS_VERSION = '2026.8.7';
 
     private static ?self $_instance = null;
 

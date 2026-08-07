@@ -2,7 +2,7 @@
 # This file is distributed under the GPLv3.
 msgid ""
 msgstr ""
-"Project-Id-Version: RY Tools for WooCommerce 2026.8.5\n"
+"Project-Id-Version: RY Tools for WooCommerce 2026.8.7\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/ry-woocommerce-tools\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -326,7 +326,7 @@ msgstr ""
 msgid "CVS code"
 msgstr ""
 
-#: woocommerce/abstracts/abstract-api.php:85
+#: woocommerce/abstracts/abstract-api.php:94
 msgid "Please wait.<br>Getting checkout info."
 msgstr ""
 
@@ -1413,7 +1413,7 @@ msgstr ""
 #: woocommerce/gateways/ecpay/includes/gateway-response.php:176
 #: woocommerce/gateways/newebpay/includes/gateway-response.php:220
 #: woocommerce/gateways/payuni/includes/gateway-response.php:157
-#: woocommerce/gateways/smilepay/includes/gateway-response.php:124
+#: woocommerce/gateways/smilepay/includes/gateway-response.php:138
 msgid "Payment failed within paid order"
 msgstr ""
 
@@ -1814,12 +1814,12 @@ msgstr ""
 msgid "Get Smilepay code error: %1$s (%2$d)"
 msgstr ""
 
-#: woocommerce/gateways/smilepay/includes/gateway-response.php:115
+#: woocommerce/gateways/smilepay/includes/gateway-response.php:129
 msgid "SmilePay payment completed"
 msgstr ""
 
 #. translators: Error status message
-#: woocommerce/gateways/smilepay/includes/gateway-response.php:129
+#: woocommerce/gateways/smilepay/includes/gateway-response.php:143
 #, php-format
 msgid "Payment failed (%s)"
 msgstr ""
@@ -2100,7 +2100,7 @@ msgid "Print"
 msgstr ""
 
 #. translators: 1: Shipping ID 2: Old status mag 3: Old status no 4: New status mag 5: New status no
-#: woocommerce/shipping/ecpay/includes/shipping-response.php:158
+#: woocommerce/shipping/ecpay/includes/shipping-response.php:160
 #, php-format
 msgid "%1$s shipping status from %2$s(%3$d) to %4$s(%5$d)"
 msgstr ""

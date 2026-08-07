@@ -74,8 +74,10 @@ final class RY_WT_WC_ECPay_Shipping_Response extends RY_WT_ECPay_Api
             $order_ID = (int) substr($extra_data, 2);
             $order = wc_get_order($order_ID);
             if ($order) {
-                RY_WT_WC_ECPay_Shipping::instance()->save_order_cvs_info($order, $cvs_info);
-                $order->save();
+                if ($order->key_is_valid(wc_clean(wp_unslash($_GET['key'] ?? '')))) {
+                    RY_WT_WC_ECPay_Shipping::instance()->save_order_cvs_info($order, $cvs_info);
+                    $order->save();
+                }
                 wp_safe_redirect($order->get_edit_order_url());
             } else {
                 wp_safe_redirect(admin_url());

@@ -10,11 +10,10 @@ abstract class RY_WT_Api
 
     public function gateway_return()
     {
-        $order_key = sanitize_locale_name($_GET['key'] ?? '');
         $order_ID = intval($_GET['id'] ?? '');
         $order = wc_get_order($order_ID);
 
-        if ($order && hash_equals($order->get_order_key(), $order_key)) {
+        if ($order && $order->key_is_valid(wc_clean(wp_unslash($_GET['key'] ?? '')))) {
             $return_url = wc_get_endpoint_url('order-received', $order->get_id(), wc_get_checkout_url());
             $redirect_data = [
                 'key' => $order->get_order_key(),
