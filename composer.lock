@@ -1,0 +1,69 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "42d7cc0313973d6711c4afe32adde8e2",
+    "packages": [
+        {
+            "name": "woocommerce/action-scheduler",
+            "version": "4.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/woocommerce/action-scheduler.git",
+                "reference": "40a3df93a251590c58717b91b1049a13410e2ac4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/woocommerce/action-scheduler/zipball/40a3df93a251590c58717b91b1049a13410e2ac4",
+                "reference": "40a3df93a251590c58717b91b1049a13410e2ac4",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.2"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^8.5",
+                "sirbrillig/phpcs-changed": "^2.11",
+                "woocommerce/woocommerce-sniffs": "^1.0.1",
+                "wp-cli/wp-cli": "~2.5.0",
+                "yoast/phpunit-polyfills": "^2.0"
+            },
+            "type": "wordpress-plugin",
+            "extra": {
+                "scripts-description": {
+                    "lint": "Run phpcs against PHP files with unstaged changes",
+                    "test": "Run unit tests",
+                    "phpcs": "Analyze code against the WordPress coding standards with PHP_CodeSniffer",
+                    "phpcbf": "Fix coding standards warnings/errors automatically with PHP Code Beautifier",
+                    "lint-branch": "Run phpcs against PHP files changed on the current branch compared to its base branch",
+                    "lint-staged": "Run phpcs against PHP files with staged changes"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0-or-later"
+            ],
+            "description": "Action Scheduler for WordPress and WooCommerce",
+            "homepage": "https://actionscheduler.org/",
+            "support": {
+                "issues": "https://github.com/woocommerce/action-scheduler/issues",
+                "source": "https://github.com/woocommerce/action-scheduler/tree/4.1.0"
+            },
+            "time": "2026-08-05T21:19:48+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": {},
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": {},
+    "platform-dev": {},
+    "platform-overrides": {
+        "php": "8.2"
+    },
+    "plugin-api-version": "2.9.0"
+}
