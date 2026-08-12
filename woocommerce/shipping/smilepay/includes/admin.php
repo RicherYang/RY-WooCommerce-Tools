@@ -36,7 +36,7 @@ final class RY_WT_WC_SmilePay_Shipping_Admin
         RY_SmilePay_Shipping_Meta_Box::add_meta_box($post_type, $data_object);
     }
 
-    public function add_sections($sections)
+    public function add_sections($sections = [])
     {
         $sections['smilepay_shipping'] = __('SmilePay shipping options', 'ry-woocommerce-tools');
 

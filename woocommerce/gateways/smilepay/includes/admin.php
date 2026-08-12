@@ -24,7 +24,7 @@ final class RY_WT_WC_SmilePay_Gateway_Admin
         add_action('woocommerce_update_options_rytools_smilepay_gateway', [$this, 'check_option']);
     }
 
-    public function add_sections($sections)
+    public function add_sections($sections = [])
     {
         $sections['smilepay_gateway'] = __('SmilePay gateway options', 'ry-woocommerce-tools');
 

@@ -32,7 +32,7 @@ final class RY_WT_WC_NewebPay_Shipping_Admin
         RY_NewebPay_Shipping_Meta_Box::add_meta_box($post_type, $data_object);
     }
 
-    public function add_sections($sections)
+    public function add_sections($sections = [])
     {
         $sections['newebpay_shipping'] = __('NewebPay shipping options', 'ry-woocommerce-tools');
 

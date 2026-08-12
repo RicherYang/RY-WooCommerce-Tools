@@ -25,7 +25,7 @@ final class RY_WT_WC_NewebPay_Gateway_Admin
         add_action('woocommerce_update_options_rytools_newebpay_gateway', [$this, 'check_option']);
     }
 
-    public function add_sections($sections)
+    public function add_sections($sections = [])
     {
         $sections['newebpay_gateway'] = __('NewebPay gateway options', 'ry-woocommerce-tools');
 

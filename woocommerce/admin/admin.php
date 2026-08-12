@@ -42,14 +42,18 @@ final class RY_WT_WC_Admin
         ]);
     }
 
-    public function get_settings_page($settings)
+    public function get_settings_page($settings = [])
     {
-        $settings[] = include RY_WT_PLUGIN_DIR . 'woocommerce/admin/settings/ry-tools-settings.php';
+        include_once RY_WT_PLUGIN_DIR . 'woocommerce/admin/settings/ry-tools-settings.php';
+
+        if (!has_action('woocommerce_sections_rytools')) {
+            $settings[] = new RY_WT_WC_Admin_Settings();
+        }
 
         return $settings;
     }
 
-    public function add_sections($sections)
+    public function add_sections($sections = [])
     {
         $sections['tools'] = __('Tools', 'ry-woocommerce-tools');
         $sections['pro_info'] = __('Pro version', 'ry-woocommerce-tools');

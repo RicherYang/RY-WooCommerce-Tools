@@ -24,7 +24,7 @@ final class RY_WT_WC_ECPay_Gateway_Admin
         add_action('woocommerce_update_options_rytools_ecpay_gateway', [$this, 'check_option']);
     }
 
-    public function add_sections($sections)
+    public function add_sections($sections = [])
     {
         $sections['ecpay_gateway'] = __('ECPay gateway options', 'ry-woocommerce-tools');
 

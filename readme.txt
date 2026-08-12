@@ -5,7 +5,7 @@ Tags: woocommerce, payment, gateway, shipping
 Requires at least: 6.8
 Requires PHP: 8.2
 Tested up to: 7.0
-Stable tag: 2026.8.12
+Stable tag: 2026.8.12.1
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.txt
 
@@ -40,8 +40,11 @@ Please visit the [plugin forum page](https://ry-plugin.com/ry-woocommerce-tools/
 
 == Changelog ==
 
+= 2026.8.12.1 =
+* 修正 - WooCommerce 後台項目選單可能重複讀取的問題。
+
 = 2026.8.12 =
-* 修正特定情況下的 PHP 錯誤。
+* 修正 - 特定情況下的 PHP 錯誤。
 
 = 2026.8.7 =
 * 調整 - 不支援內建測試 API 金鑰資訊。( 感謝 Shriyash Beohar 與 Artus KG 建議 )

@@ -5,12 +5,6 @@ defined('ABSPATH') or exit;
 use Automattic\WooCommerce\Blocks\Utils\CartCheckoutUtils;
 use Automattic\WooCommerce\Utilities\I18nUtil;
 
-if (class_exists('RY_WT_WC_Admin_Settings', false)) {
-    if (!has_action('woocommerce_sections_rytools')) {
-        return new RY_WT_WC_Admin_Settings();
-    }
-}
-
 final class RY_WT_WC_Admin_Settings extends WC_Settings_Page
 {
     public function __construct()
@@ -280,8 +274,4 @@ final class RY_WT_WC_Admin_Settings extends WC_Settings_Page
     {
         include RY_WT_PLUGIN_DIR . 'woocommerce/admin/settings/html/pro-info.php';
     }
-}
-
-if (!has_action('woocommerce_sections_rytools')) {
-    return new RY_WT_WC_Admin_Settings();
 }

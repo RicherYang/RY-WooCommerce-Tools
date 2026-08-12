@@ -24,7 +24,7 @@ final class RY_WT_WC_PAYUNi_Gateway_Admin
         add_action('woocommerce_update_options_rytools_payuni_gateway', [$this, 'check_option']);
     }
 
-    public function add_sections($sections)
+    public function add_sections($sections = [])
     {
         $sections['payuni_gateway'] = __('PAYUNi gateway options', 'ry-woocommerce-tools');
 

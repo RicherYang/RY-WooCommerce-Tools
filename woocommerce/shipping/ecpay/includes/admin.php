@@ -33,7 +33,7 @@ final class RY_WT_WC_ECPay_Shipping_Admin
         RY_ECPay_Shipping_Meta_Box::add_meta_box($post_type, $data_object);
     }
 
-    public function add_sections($sections)
+    public function add_sections($sections = [])
     {
         $sections['ecpay_shipping'] = __('ECPay shipping options', 'ry-woocommerce-tools');
 
