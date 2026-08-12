@@ -2,7 +2,7 @@
 
 defined('ABSPATH') or exit;
 
-use RY\General\V20260801\Logs;
+use RY\General\V20260810\Logs;
 
 final class RY_WT_Update
 {

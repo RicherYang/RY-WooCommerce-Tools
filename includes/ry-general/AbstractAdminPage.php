@@ -1,6 +1,6 @@
 <?php
 
-namespace RY\General\V20260801;
+namespace RY\General\V20260810;
 
 defined('ABSPATH') or exit;
 
@@ -22,7 +22,7 @@ abstract class AbstractAdminPage
         return static::$_instance[static::class];
     }
 
-    public static function set_page_load($hook_suffix): void
+    public static function set_page_load(string $hook_suffix): void
     {
         add_action('load-' . $hook_suffix, [static::class, 'process_admin_ui']);
     }

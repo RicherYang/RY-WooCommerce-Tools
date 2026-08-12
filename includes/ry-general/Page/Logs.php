@@ -1,11 +1,11 @@
 <?php
 
-namespace RY\General\V20260801\Page;
+namespace RY\General\V20260810\Page;
 
 defined('ABSPATH') or exit;
 
-use RY\General\V20260801\AbstractAdminPage;
-use RY\General\V20260801\Logs as LogsUtil;
+use RY\General\V20260810\AbstractAdminPage;
+use RY\General\V20260810\Logs as LogsUtil;
 
 final class Logs extends AbstractAdminPage
 {
@@ -175,7 +175,7 @@ final class Logs extends AbstractAdminPage
         }
     }
 
-    protected function get_nice_file_name($file_path): string
+    protected function get_nice_file_name(string $file_path): string
     {
         $nice_file_name = basename($file_path);
         $nice_file_name = explode('-', $nice_file_name);

@@ -2,7 +2,7 @@
 
 defined('ABSPATH') or exit;
 
-use RY\General\V20260801\AbstractLinkServer;
+use RY\General\V20260810\AbstractLinkServer;
 
 final class RY_WT_LinkServer extends AbstractLinkServer
 {

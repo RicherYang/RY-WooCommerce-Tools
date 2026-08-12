@@ -1,12 +1,12 @@
 {
     "name": "ry/woocommerce-tools",
-    "version": "2026.8.1",
+    "version": "2026.8.10",
     "require": {
         "woocommerce/action-scheduler": "^4.0"
     },
     "autoload": {
         "psr-4": {
-            "RY\\General\\V20260801\\": "includes/ry-general"
+            "RY\\General\\V20260810\\": "includes/ry-general"
         }
     },
     "config": {

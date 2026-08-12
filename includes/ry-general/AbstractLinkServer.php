@@ -1,6 +1,6 @@
 <?php
 
-namespace RY\General\V20260801;
+namespace RY\General\V20260810;
 
 defined('ABSPATH') or exit;
 
@@ -41,6 +41,7 @@ abstract class AbstractLinkServer
         $info = [];
         $info['version'] = get_bloginfo('version');
         $info['locale'] = get_locale();
+        $info['timezone'] = wp_timezone_string();
         $info['debug'] = (defined('WP_DEBUG') && WP_DEBUG) ? 'Yes' : 'No';
 
         return $info;
@@ -52,6 +53,7 @@ abstract class AbstractLinkServer
 
         $info = [];
         $info['php_version'] = PHP_VERSION;
+        $info['php_timezone'] = date_default_timezone_get();
         $info['db_version'] = $wpdb->get_var('SELECT VERSION()');
 
         return $info;
@@ -59,12 +61,16 @@ abstract class AbstractLinkServer
 
     private function get_theme_info()
     {
-        $theme = wp_get_theme();
         $info = [];
-        $info['name'] = $theme->get('Name');
-        $info['version'] = $theme->get('Version');
-        $info['slug'] = $theme->get_stylesheet();
-        $info['parent'] = $theme->parent() ? $theme->parent()->get('Name') : '';
+        $theme = wp_get_theme();
+        do {
+            $info[] = [
+                'name' => $theme->get('Name'),
+                'version' => $theme->get('Version'),
+                'slug' => $theme->get_stylesheet(),
+                'parent' => $theme->parent() ? $theme->parent()->get('Name') : '',
+            ];
+        } while ($theme = $theme->parent());
 
         return $info;
     }
@@ -89,7 +95,7 @@ abstract class AbstractLinkServer
         return $info;
     }
 
-    protected function decode_response($response)
+    protected function decode_response($response = [])
     {
         if (is_wp_error($response)) {
             return false;
