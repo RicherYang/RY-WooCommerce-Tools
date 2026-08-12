@@ -5,7 +5,7 @@ Tags: woocommerce, payment, gateway, shipping
 Requires at least: 6.8
 Requires PHP: 8.2
 Tested up to: 7.0
-Stable tag: 2026.8.7
+Stable tag: 2026.8.12
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.txt
 
@@ -40,6 +40,9 @@ Please visit the [plugin forum page](https://ry-plugin.com/ry-woocommerce-tools/
 
 == Changelog ==
 
+= 2026.8.12 =
+* 修正特定情況下的 PHP 錯誤。
+
 = 2026.8.7 =
 * 調整 - 不支援內建測試 API 金鑰資訊。( 感謝 Shriyash Beohar 與 Artus KG 建議 )
 * 調整 - 強化接收供應商回傳訊息的安全性。( 感謝 Shriyash Beohar 與 Artus KG 建議 )
@@ -68,9 +71,3 @@ Please visit the [plugin forum page](https://ry-plugin.com/ry-woocommerce-tools/
 
 = 2026.8.6 =
 * 請確認服務商的 API 金鑰資訊正確填寫。
-
-= 3.8.4 - 2026-06-24 =
-* 移除 TWQR 付款方式。
-
-= 3.6.2 - 2026-04-29 =
-* 物流運費的計算方式有調整，請注意是否如何預期。
