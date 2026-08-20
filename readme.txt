@@ -4,7 +4,7 @@ Donate link: https://www.paypal.me/RicherYang
 Tags: woocommerce, payment, gateway, shipping
 Requires at least: 6.8
 Requires PHP: 8.2
-Tested up to: 7.0
+Tested up to: 7.1
 Stable tag: 2026.8.12.1
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.txt
