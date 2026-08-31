@@ -27,7 +27,7 @@ final class RY_WT_WC_NewebPay_Gateway_Api extends RY_WT_NewebPay_Api
 
     public function checkout_form($order, $gateway)
     {
-        $notify_url = WC()->api_request_url('ry_newebpay_callback', true);
+        $notify_url = $this->get_api_url('ry_newebpay_callback');
         $return_url = $this->get_3rd_return_url($order);
 
         $api_info = RY_WT_WC_NewebPay_Gateway::instance()->get_api_info();

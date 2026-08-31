@@ -31,7 +31,7 @@ final class RY_WT_WC_ECPay_Gateway_Api extends RY_WT_ECPay_Api
 
     public function checkout_form($order, $gateway)
     {
-        $notify_url = WC()->api_request_url('ry_ecpay_callback', true);
+        $notify_url = $this->get_api_url('ry_ecpay_callback');
         $return_url = $this->get_3rd_return_url($order);
 
         $api_info = RY_WT_WC_ECPay_Gateway::instance()->get_api_info();
@@ -135,7 +135,7 @@ final class RY_WT_WC_ECPay_Gateway_Api extends RY_WT_ECPay_Api
         }
 
         $check_value = $this->generate_hash_value($result, $api_info['HashKey'], $api_info['HashIV'], 'sha256');
-        if ($check_value !== $result['CheckMacValue']) {
+        if (!hash_equals($check_value, $result['CheckMacValue'])) {
             RY_WT_WC_ECPay_Gateway::instance()->log('Query request check failed', WC_Log_Levels::WARNING, ['data' => $args, 'result' => $result['CheckMacValue'], 'check_value' => $check_value]);
             return;
         }

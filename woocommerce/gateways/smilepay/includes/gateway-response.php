@@ -28,7 +28,6 @@ final class RY_WT_WC_SmilePay_Gateway_Response extends RY_WT_SmilePay_Api
     {
         if (is_array($_POST) && !empty($_POST)) {
             $ipn_info = wp_unslash($_POST);
-            $ipn_info = $this->convert_encoding($ipn_info);
             if ($this->ipn_request_is_valid($ipn_info)) {
                 do_action('valid_smilepay_gateway_request', $ipn_info);
             } else {
@@ -39,49 +38,54 @@ final class RY_WT_WC_SmilePay_Gateway_Response extends RY_WT_SmilePay_Api
 
     protected function ipn_request_is_valid(array $ipn_info): bool
     {
-        $check_value = $this->get_hash_value($ipn_info);
+        $check_value = wp_unslash($_GET['key']);
         if ($check_value) {
             RY_WT_WC_SmilePay_Gateway::instance()->log('IPN request', WC_Log_Levels::INFO, ['data' => $ipn_info]);
-            $api_info = RY_WT_WC_SmilePay_Gateway::instance()->get_api_info();
 
+            $api_info = RY_WT_WC_SmilePay_Gateway::instance()->get_api_info();
             $order_ID = $this->get_order_id($ipn_info, $api_info['prefix']);
             if ($order = wc_get_order($order_ID)) {
                 $this->enable_rate_limit();
                 $rate_option = RateLimits::get_options();
                 if ($rate_option->enabled) {
                     $action_id = 'ry_smilepay_ipn_' . $order->get_id();
-                    $retry = RateLimits::is_exceeded_retry_after($action_id);
-                    if (false !== $retry) {
+                    if (RateLimits::is_exceeded_retry_after($action_id) !== false) {
                         RY_WT_WC_SmilePay_Gateway::instance()->log('IPN request rate limit exceeded', WC_Log_Levels::ERROR, ['data' => $ipn_info]);
                         return false;
                     }
                     RateLimits::update_rate_limit($action_id);
                 }
 
-                $ipn_info_check_value = [];
-                $ipn_info_check_value[0] = str_pad(substr($api_info['Rot_check'], -4), 4, '0', STR_PAD_LEFT);
-                $ipn_info_check_value[1] = (int) ceil($order->get_total());
-                $ipn_info_check_value[1] = str_pad($ipn_info_check_value[1], 8, '0', STR_PAD_LEFT);
-                $ipn_info_check_value[2] = $this->get_transaction_id($ipn_info);
-                $ipn_info_check_value[2] = str_pad(substr($ipn_info_check_value[2], -4), 4, '9', STR_PAD_LEFT);
-                $ipn_info_check_value[2] = preg_replace('/[^\d]/s', '9', $ipn_info_check_value[2]);
+                $ipn_info_check_value = hash_hmac('md5', $order->get_id(), $order->get_order_key());
+                if (hash_equals($check_value, $ipn_info_check_value)) {
+                    $check_value = $this->get_hash_value($ipn_info);
+                    if ($check_value) {
+                        $ipn_info_check_value = [];
+                        $ipn_info_check_value[0] = str_pad(substr($api_info['Rot_check'], -4), 4, '0', STR_PAD_LEFT);
+                        $ipn_info_check_value[1] = (int) ceil($order->get_total());
+                        $ipn_info_check_value[1] = str_pad($ipn_info_check_value[1], 8, '0', STR_PAD_LEFT);
+                        $ipn_info_check_value[2] = $this->get_transaction_id($ipn_info);
+                        $ipn_info_check_value[2] = str_pad(substr($ipn_info_check_value[2], -4), 4, '9', STR_PAD_LEFT);
+                        $ipn_info_check_value[2] = preg_replace('/[^\d]/s', '9', $ipn_info_check_value[2]);
 
-                $ipn_info_check_value = implode('', $ipn_info_check_value);
-                $strlen = strlen($ipn_info_check_value);
-                $odd = $even = 0;
-                for ($i = 0; $i < $strlen; ++$i) {
-                    if (0 === $i % 2) {
-                        $even = $even + (int) $ipn_info_check_value[$i];
-                    }
-                    if (1 === $i % 2) {
-                        $odd = $odd + (int) $ipn_info_check_value[$i];
-                    }
-                }
-                $ipn_info_check_value = $even * 9 + $odd * 3;
+                        $ipn_info_check_value = implode('', $ipn_info_check_value);
+                        $strlen = strlen($ipn_info_check_value);
+                        $odd = $even = 0;
+                        for ($i = 0; $i < $strlen; ++$i) {
+                            if (0 === $i % 2) {
+                                $even = $even + (int) $ipn_info_check_value[$i];
+                            }
+                            if (1 === $i % 2) {
+                                $odd = $odd + (int) $ipn_info_check_value[$i];
+                            }
+                        }
+                        $ipn_info_check_value = $even * 9 + $odd * 3;
 
-                $check_value = (int) $check_value;
-                if ($check_value === $ipn_info_check_value) {
-                    return true;
+                        $check_value = (int) $check_value;
+                        if ($check_value === $ipn_info_check_value) {
+                            return true;
+                        }
+                    }
                 }
 
                 RY_WT_WC_SmilePay_Gateway::instance()->log('IPN request check failed', WC_Log_Levels::ERROR, ['response' => $check_value, 'self' => $ipn_info_check_value]);

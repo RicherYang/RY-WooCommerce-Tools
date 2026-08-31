@@ -8,6 +8,11 @@ abstract class RY_WT_Api
 {
     private bool $do_die = false;
 
+    public function get_api_url($request = '', $ssl = true): string
+    {
+        return WC()->api_request_url($request, $ssl);
+    }
+
     public function gateway_return()
     {
         $order_ID = intval($_GET['id'] ?? '');

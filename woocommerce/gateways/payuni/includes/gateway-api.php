@@ -39,7 +39,7 @@ final class RY_WT_WC_PAYUNi_Gateway_Api extends RY_WT_PAYUNi_Api
 
     public function checkout_form($order, $gateway)
     {
-        $notify_url = WC()->api_request_url('ry_payuni_callback', true);
+        $notify_url = $this->get_api_url('ry_payuni_callback');
         $return_url = $this->get_3rd_return_url($order);
 
         $api_info = RY_WT_WC_PAYUNi_Gateway::instance()->get_api_info();
@@ -333,7 +333,7 @@ final class RY_WT_WC_PAYUNi_Gateway_Api extends RY_WT_PAYUNi_Api
 
         $info_value = $this->get_info_value($ipn_info);
         $ipn_info_check_value = $this->generate_hash_value($info_value, $api_info['HashKey'], $api_info['HashIV']);
-        if ($check_value !== $ipn_info_check_value) {
+        if (!hash_equals($check_value, $ipn_info_check_value)) {
             RY_WT_WC_PAYUNi_Gateway::instance()->log($log_prefix . ' result check failed', WC_Log_Levels::WARNING, ['data' => $ipn_info, 'self' => $ipn_info_check_value]);
             return;
         }

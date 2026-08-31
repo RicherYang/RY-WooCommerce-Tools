@@ -4,6 +4,17 @@ defined('ABSPATH') or exit;
 
 abstract class RY_WT_SmilePay_Api extends RY_WT_Api
 {
+    public function get_api_safe_url($request = '', $order = null, $ssl = true): string
+    {
+        $url = $this->get_api_url($request, $ssl);
+        if ($order !== null) {
+            $order_key = hash_hmac('md5', $order->get_id(), $order->get_order_key());
+            $url = add_query_arg('key', $order_key, $url);
+        }
+
+        return $url;
+    }
+
     protected function generate_trade_no($order_ID, $order_prefix = '')
     {
         $trade_no = $this->pre_generate_trade_no($order_ID, $order_prefix);

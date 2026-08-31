@@ -155,7 +155,7 @@ final class RY_WT_WC_SmilePay_Gateway_Api extends RY_WT_SmilePay_Api
 
     protected function get_code_info($order, $gateway)
     {
-        $notify_url = WC()->api_request_url('ry_smilepay_callback', true);
+        $notify_url = $this->get_api_safe_url('ry_smilepay_callback', $order, null);
 
         $api_info = RY_WT_WC_SmilePay_Gateway::instance()->get_api_info();
 

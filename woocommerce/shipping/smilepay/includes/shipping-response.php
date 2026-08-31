@@ -2,6 +2,8 @@
 
 defined('ABSPATH') or exit;
 
+use Automattic\WooCommerce\StoreApi\Utilities\RateLimits;
+
 final class RY_WT_WC_SmilePay_Shipping_Response extends RY_WT_SmilePay_Api
 {
     private static ?self $_instance = null;
@@ -34,26 +36,28 @@ final class RY_WT_WC_SmilePay_Shipping_Response extends RY_WT_SmilePay_Api
 
     public function check_map_callback()
     {
-        if (!empty($_POST)) {
+        if (is_array($_POST) && !empty($_POST)) {
             $ipn_info = wp_unslash($_POST);
-            RY_WT_WC_SmilePay_Shipping::instance()->log('IPN request', WC_Log_Levels::INFO, ['data' => $ipn_info]);
-            if (1 == $this->get_status($ipn_info)) {
-                do_action('valid_smilepay_shipping_map_request', $ipn_info, false);
-                return;
+            if ($this->ipn_request_is_valid($ipn_info)) {
+                if (1 == $this->get_status($ipn_info)) {
+                    do_action('valid_smilepay_shipping_map_request', $ipn_info, false);
+                }
+            } else {
+                $this->die_error();
             }
         }
-
-        $this->die_error();
     }
 
     public function check_map_admin_callback()
     {
-        if (!empty($_POST)) {
+        if (is_array($_POST) && !empty($_POST)) {
             $ipn_info = wp_unslash($_POST);
-            RY_WT_WC_SmilePay_Shipping::instance()->log('IPN request', WC_Log_Levels::INFO, ['data' => $ipn_info]);
-            if (1 == $this->get_status($ipn_info)) {
-                do_action('valid_smilepay_shipping_map_request', $ipn_info, true);
-                return;
+            if ($this->ipn_request_is_valid($ipn_info)) {
+                if (1 == $this->get_status($ipn_info)) {
+                    do_action('valid_smilepay_shipping_map_request', $ipn_info, true);
+                }
+            } else {
+                $this->die_error();
             }
         }
 
@@ -62,15 +66,49 @@ final class RY_WT_WC_SmilePay_Shipping_Response extends RY_WT_SmilePay_Api
 
     public function shipping_callback()
     {
-        if (!empty($_POST)) {
+        if (is_array($_POST) && !empty($_POST)) {
             $ipn_info = wp_unslash($_POST);
             $ipn_info = $this->convert_encoding($ipn_info);
-            RY_WT_WC_SmilePay_Shipping::instance()->log('IPN request', WC_Log_Levels::INFO, ['data' => $ipn_info]);
-            do_action('valid_smilepay_shipping_request', $ipn_info);
-            return;
+            if ($this->ipn_request_is_valid($ipn_info)) {
+                do_action('valid_smilepay_shipping_request', $ipn_info);
+            } else {
+                $this->die_error();
+            }
         }
 
         $this->die_error();
+    }
+
+    protected function ipn_request_is_valid(array $ipn_info): bool
+    {
+        $check_value = wp_unslash($_GET['key']);
+        if ($check_value) {
+            RY_WT_WC_SmilePay_Shipping::instance()->log('IPN request', WC_Log_Levels::INFO, ['data' => $ipn_info]);
+
+            $api_info = RY_WT_WC_SmilePay_Gateway::instance()->get_api_info();
+            $order_ID = $this->get_order_id($ipn_info, $api_info['prefix']);
+            if ($order = wc_get_order($order_ID)) {
+                $this->enable_rate_limit();
+                $rate_option = RateLimits::get_options();
+                if ($rate_option->enabled) {
+                    $action_id = 'ry_smilepay_ipn_' . $order->get_id();
+                    if (RateLimits::is_exceeded_retry_after($action_id) !== false) {
+                        RY_WT_WC_SmilePay_Shipping::instance()->log('IPN request rate limit exceeded', WC_Log_Levels::ERROR, ['data' => $ipn_info]);
+                        return false;
+                    }
+                    RateLimits::update_rate_limit($action_id);
+                }
+
+                $ipn_info_check_value = hash_hmac('md5', $order->get_id(), $order->get_order_key());
+                if (hash_equals($check_value, $ipn_info_check_value)) {
+                    return true;
+                }
+
+                RY_WT_WC_SmilePay_Shipping::instance()->log('IPN request check failed', WC_Log_Levels::ERROR, ['response' => $check_value, 'self' => $ipn_info_check_value]);
+            }
+        }
+
+        return false;
     }
 
     public function doing_map_callback($ipn_info, $is_admin)
@@ -80,6 +118,10 @@ final class RY_WT_WC_SmilePay_Shipping_Response extends RY_WT_SmilePay_Api
         $api_info = RY_WT_WC_SmilePay_Gateway::instance()->get_api_info();
         $order_ID = $this->get_order_id($ipn_info, $api_info['prefix']);
         if ($order = wc_get_order($order_ID)) {
+            if ($is_admin) {
+                $url = $order->get_edit_order_url();
+            }
+
             RY_WT_WC_SmilePay_Shipping::instance()->log('Found order #' . $order->get_id(), WC_Log_Levels::INFO);
 
             $transaction_ID = $this->get_transaction_id($ipn_info);
@@ -129,9 +171,7 @@ final class RY_WT_WC_SmilePay_Shipping_Response extends RY_WT_SmilePay_Api
                 $order->save();
                 $order = wc_get_order($order_ID);
 
-                if ($is_admin) {
-                    $url = $order->get_edit_order_url();
-                } else {
+                if (!$is_admin) {
                     if ('T' === $ipn_info['Classif']) {
                         if (!$order->is_paid()) {
                             $order->update_status($order->has_downloadable_item() ? 'on-hold' : 'processing');

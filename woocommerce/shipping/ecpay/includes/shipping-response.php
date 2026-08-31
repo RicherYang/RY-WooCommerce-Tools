@@ -119,7 +119,7 @@ final class RY_WT_WC_ECPay_Shipping_Response extends RY_WT_ECPay_Api
             $api_info = RY_WT_WC_ECPay_Shipping::instance()->get_api_info();
 
             $ipn_info_check_value = $this->generate_hash_value($ipn_info, $api_info['HashKey'], $api_info['HashIV'], 'md5');
-            if ($check_value === $ipn_info_check_value) {
+            if (hash_equals($check_value, $ipn_info_check_value)) {
                 return true;
             }
             RY_WT_WC_ECPay_Shipping::instance()->log('IPN request check failed', WC_Log_Levels::ERROR, ['response' => $check_value, 'self' => $ipn_info_check_value]);

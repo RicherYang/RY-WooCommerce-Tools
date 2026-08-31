@@ -51,7 +51,9 @@ final class RY_WT_WC_SmilePay_Shipping_Api extends RY_WT_SmilePay_Api
         $item_name = $this->get_item_name($shipping_api_info['itemname'], $order);
         $item_name = mb_substr($item_name, 0, 20);
 
-        $notify_url = WC()->api_request_url('ry_smilepay_callback', true);
+        $notify_url = $this->get_api_safe_url('ry_smilepay_callback', $order, null);
+        $notify_status_url = $this->get_api_safe_url('ry_smilepay_shipping_callback', $order);
+        $return_url = $is_admin ? $this->get_api_safe_url('ry_smilepay_shipping_map_admin_callback', $order, null) : $this->get_api_safe_url('ry_smilepay_shipping_map_callback', $order, null);
 
         foreach ($order->get_items('shipping') as $shipping_item) {
             $shipping_method = RY_WT_WC_SmilePay_Shipping::instance()->get_order_support_shipping($shipping_item);
@@ -73,8 +75,8 @@ final class RY_WT_WC_SmilePay_Shipping_Api extends RY_WT_SmilePay_Api
                 'Mobile_number' => str_replace(['-', ' '], ' ', $order->get_shipping_phone()),
                 'Roturl' => $notify_url,
                 'Roturl_status' => 'RY_SmilePay',
-                'MapRoturl' => $is_admin ? WC()->api_request_url('ry_smilepay_shipping_map_admin_callback') : WC()->api_request_url('ry_smilepay_shipping_map_callback'),
-                'Logistics_Roturl' => WC()->api_request_url('ry_smilepay_shipping_callback', true),
+                'MapRoturl' => $return_url,
+                'Logistics_Roturl' => $notify_status_url,
             ];
 
             if ('cod' === $order->get_payment_method()) {
@@ -110,6 +112,9 @@ final class RY_WT_WC_SmilePay_Shipping_Api extends RY_WT_SmilePay_Api
 
         $api_info = RY_WT_WC_SmilePay_Gateway::instance()->get_api_info();
         $global_api_info = RY_WT_WC_Shipping::instance()->get_api_info();
+
+        $notify_url = $this->get_api_safe_url('ry_smilepay_callback', $order, null);
+        $notify_status_url = $this->get_api_safe_url('ry_smilepay_shipping_callback', $order);
 
         $get_no_ID = [];
         foreach ($order->get_items('shipping') as $shipping_item) {
@@ -150,9 +155,9 @@ final class RY_WT_WC_SmilePay_Shipping_Api extends RY_WT_SmilePay_Api
                 'Pur_name' => $order->get_shipping_last_name() . $order->get_shipping_first_name(),
                 'Mobile_number' => str_replace(['-', ' '], ' ', $order->get_shipping_phone()),
                 'Address' => $full_state . $order->get_shipping_city() . $order->get_shipping_address_1() . $order->get_shipping_address_2(),
-                'Roturl' => WC()->api_request_url('ry_smilepay_callback', true),
+                'Roturl' => $notify_url,
                 'Roturl_status' => 'RY_SmilePay',
-                'Logistics_Roturl' => WC()->api_request_url('ry_smilepay_shipping_callback', true),
+                'Logistics_Roturl' => $notify_status_url,
             ];
 
             if (0 === count($shipping_list)) {

@@ -8,7 +8,7 @@ abstract class RY_WT_PAYUNi_Api extends RY_WT_Api
 
     protected function get_3rd_return_url($order = null)
     {
-        $return_url = WC()->api_request_url('ry_payuni_gateway_return');
+        $return_url = $this->get_api_url('ry_payuni_gateway_return', null);
         if ($order) {
             $return_url = add_query_arg('id', $order->get_id(), $return_url);
             $return_url = add_query_arg('key', $order->get_order_key(), $return_url);

@@ -72,7 +72,7 @@ final class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_ECPay_Api
                 $shipping_list = [];
             }
 
-            $notify_url = WC()->api_request_url('ry_ecpay_shipping_callback', true);
+            $notify_url = $this->get_api_url('ry_ecpay_shipping_callback');
 
             RY_WT_WC_ECPay_Shipping::instance()->log('Generating no for #' . $order->get_id(), WC_Log_Levels::INFO);
 
@@ -347,7 +347,7 @@ final class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_ECPay_Api
         }
 
         $check_value = $this->generate_hash_value($result, $api_info['HashKey'], $api_info['HashIV'], 'md5');
-        if ($check_value !== $result['CheckMacValue']) {
+        if (!hash_equals($check_value, $result['CheckMacValue'])) {
             RY_WT_WC_ECPay_Shipping::instance()->log('Query request check failed', WC_Log_Levels::WARNING, ['data' => $args, 'result' => $result['CheckMacValue'], 'check_value' => $check_value]);
             return;
         }

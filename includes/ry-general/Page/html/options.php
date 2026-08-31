@@ -15,6 +15,7 @@ use RY\General\V20260810\Utils;
                     <?php esc_html_e('Allow usage of RY Plugin to be tracked', 'ry-woocommerce-tools'); ?></label>
                 <p class="description">
                     <?php echo wp_kses(sprintf(
+                        /* translators: %s: link to usage tracking information */
                         __('Read about what usage data is tracked at: %s .', 'ry-woocommerce-tools'),
                         '<a href="https://ry-plugin.com/usage-tracking" target="_blank">https://ry-plugin.com/usage-tracking</a>'
                     ),
