@@ -5,7 +5,7 @@ Tags: woocommerce, payment, gateway, shipping
 Requires at least: 6.8
 Requires PHP: 8.2
 Tested up to: 7.1
-Stable tag: 2026.8.12.1
+Stable tag: 2026.8.30
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.txt
 
@@ -40,6 +40,9 @@ Please visit the [plugin forum page](https://ry-plugin.com/ry-woocommerce-tools/
 
 == Changelog ==
 
+= 2026.8.30 =
+* 調整 - 強化接收 SmilePay 物流狀態更新的安全性。 ( 感謝 EQSTLab 建議 )
+
 = 2026.8.12.1 =
 * 修正 - WooCommerce 後台項目選單可能重複讀取的問題。
 
@@ -71,6 +74,9 @@ Please visit the [plugin forum page](https://ry-plugin.com/ry-woocommerce-tools/
 * 調整 - RY 共用程式架構。
 
 == Upgrade Notice ==
+
+= 2026.8.30 =
+* 更新前使用 SmilePay 的物流訂單狀態更新會失效。
 
 = 2026.8.6 =
 * 請確認服務商的 API 金鑰資訊正確填寫。
