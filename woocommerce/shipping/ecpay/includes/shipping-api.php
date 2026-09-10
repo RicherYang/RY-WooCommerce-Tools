@@ -125,6 +125,9 @@ final class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_ECPay_Api
 
             if ('Home' === $args['LogisticsType']) {
                 $country = $order->get_shipping_country();
+                $countries = WC()->countries->get_countries();
+                $full_country = ($country && isset($countries[$country])) ? $countries[$country] : $country;
+
                 $state = $order->get_shipping_state();
                 $states = WC()->countries->get_states($country);
                 $full_state = ($state && isset($states[$state])) ? $states[$state] : $state;
@@ -132,7 +135,7 @@ final class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_ECPay_Api
                 $args['SenderZipCode'] = $api_info['zipcode'];
                 $args['SenderAddress'] = $api_info['address'];
                 $args['ReceiverZipCode'] = $order->get_shipping_postcode();
-                $args['ReceiverAddress'] = $full_state . $order->get_shipping_city() . $order->get_shipping_address_1() . $order->get_shipping_address_2();
+                $args['ReceiverAddress'] = $full_country . $full_state . $order->get_shipping_city() . $order->get_shipping_address_1() . $order->get_shipping_address_2();
                 $args['Specification'] = '000' . $global_api_info['boxsize'];
                 $args['Distance'] = '00';
 

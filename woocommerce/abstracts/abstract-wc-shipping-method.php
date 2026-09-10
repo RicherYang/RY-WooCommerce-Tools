@@ -82,7 +82,7 @@ abstract class RY_WT_WC_Shipping_Method extends WC_Shipping_Method
         $rate = $this->add_rate_meta_data($rate);
 
         $temps = $this->get_package_temp($package);
-        $temps = array_diff($temps, $this->get_support_temp());
+        $temps = array_intersect($temps, $this->get_support_temp());
         $rate['cost'] = $this->evaluate_cost($this->cost, apply_filters('ry_shipping_evaluate_cost_args', [
             'temps' => implode(',', $temps),
             'qty' => $this->get_package_qty($package),
