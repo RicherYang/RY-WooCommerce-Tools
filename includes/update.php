@@ -331,8 +331,8 @@ final class RY_WT_Update
             });
         }
 
-        if (version_compare($now_version, '2026.9.10', '<')) {
-            RY_WT::update_option('version', '2026.9.10', true);
+        if (version_compare($now_version, '2026.9.16', '<')) {
+            RY_WT::update_option('version', '2026.9.16', true);
         }
     }
 }
