@@ -2,6 +2,8 @@
 
 defined('ABSPATH') or exit;
 
+use RY\WooCommerce\Main;
+
 abstract class RY_WT_Model
 {
     protected string $model_type = 'woocommerce_tools';
@@ -13,7 +15,7 @@ abstract class RY_WT_Model
     public function log($message, $level = WC_Log_Levels::INFO, $context = [])
     {
         if ($this->log_enabled === null) {
-            $this->log_enabled = 'yes' === RY_WT::get_option($this->model_type . '_log', 'no');
+            $this->log_enabled = 'yes' === Main::get_option($this->model_type . '_log', 'no');
         }
 
         if ($this->log_enabled || 'error' === $level) {

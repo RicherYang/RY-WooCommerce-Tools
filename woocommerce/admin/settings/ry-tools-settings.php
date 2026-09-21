@@ -4,6 +4,7 @@ defined('ABSPATH') or exit;
 
 use Automattic\WooCommerce\Blocks\Utils\CartCheckoutUtils;
 use Automattic\WooCommerce\Utilities\I18nUtil;
+use RY\WooCommerce\Main;
 
 final class RY_WT_WC_Admin_Settings extends WC_Settings_Page
 {
@@ -51,37 +52,37 @@ final class RY_WT_WC_Admin_Settings extends WC_Settings_Page
         }
 
         if ($current_section == '') {
-            if ('yes' === RY_WT::get_option('enabled_newebpay_gateway', 'no')) {
+            if ('yes' === Main::get_option('enabled_newebpay_gateway', 'no')) {
                 if (!function_exists('openssl_encrypt') || !function_exists('openssl_decrypt')) {
                     WC_Admin_Settings::add_error(__('NewebPay gateway required PHP function `openssl_encrypt` and `openssl_decrypt`.', 'ry-woocommerce-tools'));
-                    RY_WT::update_option('enabled_newebpay_gateway', 'no');
+                    Main::update_option('enabled_newebpay_gateway', 'no');
                 }
             }
 
-            if ('yes' === RY_WT::get_option('enabled_newebpay_shipping', 'no')) {
-                if ('no' === RY_WT::get_option('enabled_newebpay_gateway', 'no')) {
+            if ('yes' === Main::get_option('enabled_newebpay_shipping', 'no')) {
+                if ('no' === Main::get_option('enabled_newebpay_gateway', 'no')) {
                     WC_Admin_Settings::add_error(__('NewebPay shipping method need enable NewebPay gateway.', 'ry-woocommerce-tools'));
-                    RY_WT::update_option('enabled_newebpay_shipping', 'no');
+                    Main::update_option('enabled_newebpay_shipping', 'no');
                 }
             }
 
-            if ('yes' === RY_WT::get_option('enabled_payuni_gateway', 'no')) {
+            if ('yes' === Main::get_option('enabled_payuni_gateway', 'no')) {
                 if (!function_exists('openssl_encrypt') || !function_exists('openssl_decrypt')) {
                     WC_Admin_Settings::add_error(__('PAYUNi gateway required PHP function `openssl_encrypt` and `openssl_decrypt`.', 'ry-woocommerce-tools'));
-                    RY_WT::update_option('enabled_payuni_gateway', 'no');
+                    Main::update_option('enabled_payuni_gateway', 'no');
                 }
             }
 
-            if ('yes' === RY_WT::get_option('enabled_smilepay_gateway', 'no')) {
+            if ('yes' === Main::get_option('enabled_smilepay_gateway', 'no')) {
                 if (!function_exists('simplexml_load_string')) {
                     WC_Admin_Settings::add_error(__('SmilePay gateway method need PHP function `simplexml_load_string`.', 'ry-woocommerce-tools'));
-                    RY_WT::update_option('enabled_smilepay_gateway', 'no');
+                    Main::update_option('enabled_smilepay_gateway', 'no');
                 }
             }
-            if ('yes' === RY_WT::get_option('enabled_smilepay_shipping', 'no')) {
-                if ('no' === RY_WT::get_option('enabled_smilepay_gateway', 'no')) {
+            if ('yes' === Main::get_option('enabled_smilepay_shipping', 'no')) {
+                if ('no' === Main::get_option('enabled_smilepay_gateway', 'no')) {
                     WC_Admin_Settings::add_error(__('SmilePay shipping method need enable SmilePay gateway.', 'ry-woocommerce-tools'));
-                    RY_WT::update_option('enabled_smilepay_shipping', 'no');
+                    Main::update_option('enabled_smilepay_shipping', 'no');
                 }
             }
         } else {
@@ -105,14 +106,14 @@ final class RY_WT_WC_Admin_Settings extends WC_Settings_Page
                 [
                     'title' => __('ECPay support', 'ry-woocommerce-tools'),
                     'desc' => __('Enable ECPay gateway method', 'ry-woocommerce-tools'),
-                    'id' => RY_WT::PREFIX . 'enabled_ecpay_gateway',
+                    'id' => Main::get_prefix_name('enabled_ecpay_gateway'),
                     'type' => 'checkbox',
                     'default' => 'no',
                     'checkboxgroup' => 'start',
                 ],
                 [
                     'desc' => __('Enable ECPay shipping method', 'ry-woocommerce-tools'),
-                    'id' => RY_WT::PREFIX . 'enabled_ecpay_shipping',
+                    'id' => Main::get_prefix_name('enabled_ecpay_shipping'),
                     'type' => 'checkbox',
                     'default' => 'no',
                     'checkboxgroup' => 'end',
@@ -120,14 +121,14 @@ final class RY_WT_WC_Admin_Settings extends WC_Settings_Page
                 [
                     'title' => __('NewebPay support', 'ry-woocommerce-tools'),
                     'desc' => __('Enable NewebPay gateway method', 'ry-woocommerce-tools'),
-                    'id' => RY_WT::PREFIX . 'enabled_newebpay_gateway',
+                    'id' => Main::get_prefix_name('enabled_newebpay_gateway'),
                     'type' => 'checkbox',
                     'default' => 'no',
                     'checkboxgroup' => 'start',
                 ],
                 [
                     'desc' => __('Enable NewebPay shipping method', 'ry-woocommerce-tools'),
-                    'id' => RY_WT::PREFIX . 'enabled_newebpay_shipping',
+                    'id' => Main::get_prefix_name('enabled_newebpay_shipping'),
                     'type' => 'checkbox',
                     'default' => 'no',
                     'checkboxgroup' => 'end',
@@ -135,21 +136,21 @@ final class RY_WT_WC_Admin_Settings extends WC_Settings_Page
                 [
                     'title' => __('PAYUNi support', 'ry-woocommerce-tools'),
                     'desc' => __('Enable PAYUNi gateway method', 'ry-woocommerce-tools'),
-                    'id' => RY_WT::PREFIX . 'enabled_payuni_gateway',
+                    'id' => Main::get_prefix_name('enabled_payuni_gateway'),
                     'type' => 'checkbox',
                     'default' => 'no',
                 ],
                 [
                     'title' => __('SmilePay support', 'ry-woocommerce-tools'),
                     'desc' => __('Enable SmilePay gateway method', 'ry-woocommerce-tools'),
-                    'id' => RY_WT::PREFIX . 'enabled_smilepay_gateway',
+                    'id' => Main::get_prefix_name('enabled_smilepay_gateway'),
                     'type' => 'checkbox',
                     'default' => 'no',
                     'checkboxgroup' => 'start',
                 ],
                 [
                     'desc' => __('Enable SmilePay shipping method', 'ry-woocommerce-tools'),
-                    'id' => RY_WT::PREFIX . 'enabled_smilepay_shipping',
+                    'id' => Main::get_prefix_name('enabled_smilepay_shipping'),
                     'type' => 'checkbox',
                     'default' => 'no',
                     'checkboxgroup' => 'end',
@@ -167,7 +168,7 @@ final class RY_WT_WC_Admin_Settings extends WC_Settings_Page
                 [
                     'title' => __('Repay action', 'ry-woocommerce-tools'),
                     'desc' => __('Show pay link at account orders page.', 'ry-woocommerce-tools'),
-                    'id' => RY_WT::PREFIX . 'repay_action',
+                    'id' => Main::get_prefix_name('repay_action'),
                     'type' => 'checkbox',
                     'default' => 'yes',
                     'autoload' => false,
@@ -175,14 +176,14 @@ final class RY_WT_WC_Admin_Settings extends WC_Settings_Page
                 [
                     'title' => __('Strength password', 'ry-woocommerce-tools'),
                     'desc' => __('Enable the strength password check.', 'ry-woocommerce-tools'),
-                    'id' => RY_WT::PREFIX . 'strength_password',
+                    'id' => Main::get_prefix_name('strength_password'),
                     'type' => 'checkbox',
                     'default' => 'yes',
                 ],
                 [
                     'title' => __('Show not paid info at order detail', 'ry-woocommerce-tools'),
                     'desc' => __('Show not paid info at order detail payment method info.', 'ry-woocommerce-tools'),
-                    'id' => RY_WT::PREFIX . 'show_unpay_title',
+                    'id' => Main::get_prefix_name('show_unpay_title'),
                     'type' => 'checkbox',
                     'default' => 'yes',
                     'autoload' => false,
@@ -199,21 +200,21 @@ final class RY_WT_WC_Admin_Settings extends WC_Settings_Page
                 [
                     'title' => __('Show Country', 'ry-woocommerce-tools'),
                     'desc' => __('Show Country select item', 'ry-woocommerce-tools'),
-                    'id' => RY_WT::PREFIX . 'show_country_select',
+                    'id' => Main::get_prefix_name('show_country_select'),
                     'type' => 'checkbox',
                     'default' => 'yes',
                 ],
                 [
                     'title' => __('Last name first', 'ry-woocommerce-tools'),
                     'desc' => __('Show Last name before first name input item', 'ry-woocommerce-tools'),
-                    'id' => RY_WT::PREFIX . 'last_name_first',
+                    'id' => Main::get_prefix_name('last_name_first'),
                     'type' => 'checkbox',
                     'default' => 'no',
                 ],
                 [
                     'title' => __('Address zip first', 'ry-woocommerce-tools'),
                     'desc' => __('Show address input item in zip state address', 'ry-woocommerce-tools'),
-                    'id' => RY_WT::PREFIX . 'address_zip_first',
+                    'id' => Main::get_prefix_name('address_zip_first'),
                     'type' => 'checkbox',
                     'default' => 'no',
                 ],
@@ -232,7 +233,7 @@ final class RY_WT_WC_Admin_Settings extends WC_Settings_Page
                         __('Product default weight (%s)', 'ry-woocommerce-tools'),
                         I18nUtil::get_weight_unit_label(get_option('woocommerce_weight_unit')),
                     ),
-                    'id' => RY_WT::PREFIX . 'shipping_apiinfo[weight]',
+                    'id' => Main::get_prefix_name('shipping_apiinfo[weight]'),
                     'type' => 'number',
                     'default' => '0',
                     'step' => '0.001',
@@ -240,7 +241,7 @@ final class RY_WT_WC_Admin_Settings extends WC_Settings_Page
                 ],
                 [
                     'title' => __('Shipping box size', 'ry-woocommerce-tools'),
-                    'id' => RY_WT::PREFIX . 'shipping_apiinfo[boxsize]',
+                    'id' => Main::get_prefix_name('shipping_apiinfo[boxsize]'),
                     'type' => 'select',
                     'default' => '1',
                     'options' => [
@@ -261,7 +262,7 @@ final class RY_WT_WC_Admin_Settings extends WC_Settings_Page
             ];
 
             if ($checkout_with_block) {
-                $setting_idx = array_search(RY_WT::PREFIX . 'show_country_select', array_column($settings, 'id'));
+                $setting_idx = array_search(Main::get_prefix_name('show_country_select'), array_column($settings, 'id'));
                 unset($settings[$setting_idx]);
                 $settings = array_values($settings);
             }

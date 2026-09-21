@@ -2,6 +2,8 @@
 
 defined('ABSPATH') or exit;
 
+use RY\WooCommerce\Main;
+
 final class RY_WT_WC_Gateways
 {
     private static ?self $_instance = null;
@@ -40,7 +42,7 @@ final class RY_WT_WC_Gateways
 
     public function unpay_title_notice($title, $order)
     {
-        if (apply_filters('ry_show_unpay_title_notice', 'yes' === RY_WT::get_option('show_unpay_title', 'yes'))) {
+        if (apply_filters('ry_show_unpay_title_notice', 'yes' === Main::get_option('show_unpay_title', 'yes'))) {
             if (!$order->is_paid()) {
                 $title .= ' ' . __('(not paid)', 'ry-woocommerce-tools');
             }

@@ -3,6 +3,7 @@
 defined('ABSPATH') or exit;
 
 use Automattic\WooCommerce\StoreApi\Utilities\RateLimits;
+use RY\WooCommerce\Main;
 
 final class RY_WT_WC_SmilePay_Shipping_Response extends RY_WT_SmilePay_Api
 {
@@ -27,7 +28,7 @@ final class RY_WT_WC_SmilePay_Shipping_Response extends RY_WT_SmilePay_Api
         add_action('valid_smilepay_shipping_map_request', [$this, 'doing_map_callback'], 10, 2);
         add_action('valid_smilepay_shipping_request', [$this, 'doing_callback']);
 
-        if ('yes' === RY_WT::get_option('smilepay_shipping_auto_order_status', 'yes')) {
+        if ('yes' === Main::get_option('smilepay_shipping_auto_order_status', 'yes')) {
             add_action('ry_smilepay_shipping_response_status_2', [$this, 'shipping_at_cvs'], 10, 2);
             add_action('ry_smilepay_shipping_response_status_4', [$this, 'shipping_out_cvs'], 10, 2);
             add_action('ry_smilepay_shipping_response_status_3', [$this, 'shipping_completed'], 10, 2);
@@ -207,7 +208,7 @@ final class RY_WT_WC_SmilePay_Shipping_Response extends RY_WT_SmilePay_Api
             $shipping_list[$transaction_ID]['status'] = $this->get_status($info_value);
             $shipping_list[$transaction_ID]['edit'] = (string) new WC_DateTime();
 
-            if ('yes' === RY_WT::get_option('smilepay_shipping_log_status_change', 'no')) {
+            if ('yes' === Main::get_option('smilepay_shipping_log_status_change', 'no')) {
                 if (isset($old_info['status'])) {
                     if ($old_info['status'] != $shipping_list[$transaction_ID]['status']) {
                         $order->add_order_note(sprintf(

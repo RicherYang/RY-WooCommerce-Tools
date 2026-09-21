@@ -2,6 +2,8 @@
 
 defined('ABSPATH') or exit;
 
+use RY\WooCommerce\Main;
+
 final class RY_WT_WC_SmilePay_Shipping extends RY_WT_Shipping_Model
 {
     public static array $support_methods = [
@@ -50,7 +52,7 @@ final class RY_WT_WC_SmilePay_Shipping extends RY_WT_Shipping_Model
 
         add_filter('woocommerce_update_order_review_fragments', [$this, 'shipping_choose_cvs_info']);
 
-        if ('yes' === RY_WT::get_option('smilepay_shipping_auto_get_no', 'yes')) {
+        if ('yes' === Main::get_option('smilepay_shipping_auto_get_no', 'yes')) {
             add_action('woocommerce_order_status_processing', [$this, 'get_code'], 10, 2);
         }
 
@@ -180,7 +182,7 @@ final class RY_WT_WC_SmilePay_Shipping extends RY_WT_Shipping_Model
 
     public function get_api_info()
     {
-        $api_info = RY_WT::get_option('smilepay_shipping_apiinfo', []);
+        $api_info = Main::get_option('smilepay_shipping_apiinfo', []);
         if (!is_array($api_info)) {
             $api_info = [];
         }

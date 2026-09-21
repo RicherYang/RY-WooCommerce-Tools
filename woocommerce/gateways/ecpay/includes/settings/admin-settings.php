@@ -2,6 +2,8 @@
 
 defined('ABSPATH') or exit;
 
+use RY\WooCommerce\Main;
+
 return [
     [
         'title' => __('Base options', 'ry-woocommerce-tools'),
@@ -11,7 +13,7 @@ return [
     ],
     [
         'title' => __('Debug log', 'ry-woocommerce-tools'),
-        'id' => RY_WT::PREFIX . 'ecpay_gateway_log',
+        'id' => Main::get_prefix_name('ecpay_gateway_log'),
         'type' => 'checkbox',
         'default' => 'no',
         'desc' => __('Enable logging', 'ry-woocommerce-tools') . '<br>'
@@ -24,7 +26,7 @@ return [
     ],
     [
         'title' => __('Trade no prefix', 'ry-woocommerce-tools'),
-        'id' => RY_WT::PREFIX . 'ecpay_gateway_apiinfo[prefix]',
+        'id' => Main::get_prefix_name('ecpay_gateway_apiinfo[prefix]'),
         'type' => 'text',
         'desc' => __('The prefix string of trade no. Only letters and numbers allowed.', 'ry-woocommerce-tools'),
         'desc_tip' => true,
@@ -32,7 +34,7 @@ return [
     ],
     [
         'title' => __('Payment item name', 'ry-woocommerce-tools'),
-        'id' => RY_WT::PREFIX . 'ecpay_gateway_apiinfo[item_name]',
+        'id' => Main::get_prefix_name('ecpay_gateway_apiinfo[item_name]'),
         'type' => 'text',
         'default' => '',
         'desc' => __('If empty use the first product name.', 'ry-woocommerce-tools'),
@@ -50,7 +52,7 @@ return [
     ],
     [
         'title' => __('Sandbox', 'ry-woocommerce-tools'),
-        'id' => RY_WT::PREFIX . 'ecpay_gateway_apiinfo[testmode]',
+        'id' => Main::get_prefix_name('ecpay_gateway_apiinfo[testmode]'),
         'type' => 'checkbox',
         'default' => 'no',
         'desc' => __('Enable sandbox', 'ry-woocommerce-tools')
@@ -59,21 +61,21 @@ return [
     ],
     [
         'title' => _x('MerchantID', 'ECPay', 'ry-woocommerce-tools'),
-        'id' => RY_WT::PREFIX . 'ecpay_gateway_apiinfo[MerchantID]',
+        'id' => Main::get_prefix_name('ecpay_gateway_apiinfo[MerchantID]'),
         'type' => 'text',
         'default' => '',
         'autoload' => false,
     ],
     [
         'title' => _x('HashKey', 'ECPay', 'ry-woocommerce-tools'),
-        'id' => RY_WT::PREFIX . 'ecpay_gateway_apiinfo[HashKey]',
+        'id' => Main::get_prefix_name('ecpay_gateway_apiinfo[HashKey]'),
         'type' => 'text',
         'default' => '',
         'autoload' => false,
     ],
     [
         'title' => _x('HashIV', 'ECPay', 'ry-woocommerce-tools'),
-        'id' => RY_WT::PREFIX . 'ecpay_gateway_apiinfo[HashIV]',
+        'id' => Main::get_prefix_name('ecpay_gateway_apiinfo[HashIV]'),
         'type' => 'text',
         'default' => '',
         'autoload' => false,

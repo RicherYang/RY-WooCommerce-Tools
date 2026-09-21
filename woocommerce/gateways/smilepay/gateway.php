@@ -2,6 +2,8 @@
 
 defined('ABSPATH') or exit;
 
+use RY\WooCommerce\Main;
+
 final class RY_WT_WC_SmilePay_Gateway extends RY_WT_Gateway_Model
 {
     private static ?self $_instance = null;
@@ -63,7 +65,7 @@ final class RY_WT_WC_SmilePay_Gateway extends RY_WT_Gateway_Model
 
     public function get_api_info()
     {
-        $api_info = RY_WT::get_option('smilepay_gateway_apiinfo', []);
+        $api_info = Main::get_option('smilepay_gateway_apiinfo', []);
         if (!is_array($api_info)) {
             $api_info = [];
         }

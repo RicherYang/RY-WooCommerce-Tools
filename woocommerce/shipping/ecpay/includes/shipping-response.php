@@ -2,6 +2,8 @@
 
 defined('ABSPATH') or exit;
 
+use RY\WooCommerce\Main;
+
 final class RY_WT_WC_ECPay_Shipping_Response extends RY_WT_ECPay_Api
 {
     private static ?self $_instance = null;
@@ -27,7 +29,7 @@ final class RY_WT_WC_ECPay_Shipping_Response extends RY_WT_ECPay_Api
             do_action('woocommerce_api_ry_ecpay_map_callback');
         }
 
-        if ('yes' === RY_WT::get_option('ecpay_shipping_auto_order_status', 'yes')) {
+        if ('yes' === Main::get_option('ecpay_shipping_auto_order_status', 'yes')) {
             add_action('ry_ecpay_shipping_response_status_2063', [$this, 'shipping_at_cvs'], 10, 2);
             add_action('ry_ecpay_shipping_response_status_2073', [$this, 'shipping_at_cvs'], 10, 2);
             add_action('ry_ecpay_shipping_response_status_3018', [$this, 'shipping_at_cvs'], 10, 2);
@@ -152,7 +154,7 @@ final class RY_WT_WC_ECPay_Shipping_Response extends RY_WT_ECPay_Api
                 $order->save();
             }
 
-            if ('yes' === RY_WT::get_option('ecpay_shipping_log_status_change', 'no')) {
+            if ('yes' === Main::get_option('ecpay_shipping_log_status_change', 'no')) {
                 if (isset($old_info['status'])) {
                     if ($old_info['status'] != $shipping_list[$info_value['AllPayLogisticsID']]['status']) {
                         $order->add_order_note(sprintf(

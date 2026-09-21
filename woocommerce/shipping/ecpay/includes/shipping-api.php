@@ -2,6 +2,8 @@
 
 defined('ABSPATH') or exit;
 
+use RY\WooCommerce\Main;
+
 final class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_ECPay_Api
 {
     private static ?self $_instance = null;
@@ -153,7 +155,7 @@ final class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_ECPay_Api
 
                 if ('CVS' === $args['LogisticsType']) {
                     $args['LogisticsSubType'] = $method_class::Shipping_Sub_Type;
-                    if ('C2C' === RY_WT::get_option('ecpay_shipping_cvs_type', 'C2C')) {
+                    if ('C2C' === Main::get_option('ecpay_shipping_cvs_type', 'C2C')) {
                         $args['LogisticsSubType'] .= 'C2C';
                     }
                     if ('UNIMART' === $args['LogisticsSubType']) {

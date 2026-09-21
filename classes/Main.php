@@ -1,10 +1,13 @@
 <?php
 
+namespace RY\WooCommerce;
+
 defined('ABSPATH') or exit;
 
 use RY\General\V20260810\AbstractBasic;
+use RY\WooCommerce\Admin\Admin;
 
-final class RY_WT extends AbstractBasic
+final class Main extends AbstractBasic
 {
     public const PREFIX = 'RY_WT_';
 
@@ -16,7 +19,7 @@ final class RY_WT extends AbstractBasic
 
     private static ?self $_instance = null;
 
-    public static function instance(): RY_WT
+    public static function instance(): Main
     {
         if (null === self::$_instance) {
             self::$_instance = new self();
@@ -29,15 +32,12 @@ final class RY_WT extends AbstractBasic
     protected function do_init(): void
     {
         if (is_admin()) {
-            include_once RY_WT_PLUGIN_DIR . 'includes/update.php';
-            RY_WT_Update::update();
+            Update::update();
 
-            include_once RY_WT_PLUGIN_DIR . 'admin/admin.php';
-            RY_WT_Admin::instance();
+            Admin::instance();
         }
 
-        include_once RY_WT_PLUGIN_DIR . 'includes/cron.php';
-        RY_WT_Cron::add_action();
+        Cron::add_action();
 
         add_action('woocommerce_init', [$this, 'do_woo_init']);
     }
@@ -47,8 +47,6 @@ final class RY_WT extends AbstractBasic
         if (version_compare(WC_VERSION, self::MIN_WC_VERSION, '<')) {
             return;
         }
-
-        include_once RY_WT_PLUGIN_DIR . 'includes/link-server.php';
 
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/abstracts/abstract-api.php';
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/abstracts/abstract-model.php';
@@ -60,47 +58,47 @@ final class RY_WT extends AbstractBasic
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/functions.php';
 
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/account.php';
-        RY_WT_WC_Account::instance();
+        \RY_WT_WC_Account::instance();
         include_once RY_WT_PLUGIN_DIR . 'woocommerce/countries.php';
-        RY_WT_WC_Countries::instance();
+        \RY_WT_WC_Countries::instance();
 
         if (is_admin()) {
             include_once RY_WT_PLUGIN_DIR . 'woocommerce/admin/admin.php';
-            RY_WT_WC_Admin::instance();
+            \RY_WT_WC_Admin::instance();
         } else {
             add_action('wp_enqueue_scripts', [$this, 'load_scripts']);
         }
 
         if ('yes' === self::get_option('enabled_ecpay_gateway', 'no')) {
             include_once RY_WT_PLUGIN_DIR . 'woocommerce/gateways/ecpay/gateway.php';
-            RY_WT_WC_ECPay_Gateway::instance();
+            \RY_WT_WC_ECPay_Gateway::instance();
         }
         if ('yes' === self::get_option('enabled_ecpay_shipping', 'no')) {
             include_once RY_WT_PLUGIN_DIR . 'woocommerce/shipping/ecpay/shipping.php';
-            RY_WT_WC_ECPay_Shipping::instance();
+            \RY_WT_WC_ECPay_Shipping::instance();
         }
 
         if ('yes' === self::get_option('enabled_newebpay_gateway', 'no')) {
             include_once RY_WT_PLUGIN_DIR . 'woocommerce/gateways/newebpay/gateway.php';
-            RY_WT_WC_NewebPay_Gateway::instance();
+            \RY_WT_WC_NewebPay_Gateway::instance();
         }
         if ('yes' === self::get_option('enabled_newebpay_shipping', 'no')) {
             include_once RY_WT_PLUGIN_DIR . 'woocommerce/shipping/newebpay/shipping.php';
-            RY_WT_WC_NewebPay_Shipping::instance();
+            \RY_WT_WC_NewebPay_Shipping::instance();
         }
 
         if ('yes' === self::get_option('enabled_payuni_gateway', 'no')) {
             include_once RY_WT_PLUGIN_DIR . 'woocommerce/gateways/payuni/gateway.php';
-            RY_WT_WC_PAYUNi_Gateway::instance();
+            \RY_WT_WC_PAYUNi_Gateway::instance();
         }
 
         if ('yes' === self::get_option('enabled_smilepay_gateway', 'no')) {
             include_once RY_WT_PLUGIN_DIR . 'woocommerce/gateways/smilepay/gateway.php';
-            RY_WT_WC_SmilePay_Gateway::instance();
+            \RY_WT_WC_SmilePay_Gateway::instance();
         }
         if ('yes' === self::get_option('enabled_smilepay_shipping', 'no')) {
             include_once RY_WT_PLUGIN_DIR . 'woocommerce/shipping/smilepay/shipping.php';
-            RY_WT_WC_SmilePay_Shipping::instance();
+            \RY_WT_WC_SmilePay_Shipping::instance();
         }
 
         do_action('ry_woo_tools_loaded');
@@ -123,7 +121,7 @@ final class RY_WT extends AbstractBasic
             return;
         }
 
-        RY_WT_LinkServer::instance()->send_tracking();
+        LinkServer::instance()->send_tracking();
     }
 
     public static function plugin_activation(): void

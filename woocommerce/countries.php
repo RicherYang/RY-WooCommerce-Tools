@@ -2,6 +2,8 @@
 
 defined('ABSPATH') or exit;
 
+use RY\WooCommerce\Main;
+
 final class RY_WT_WC_Countries
 {
     private static ?self $_instance = null;
@@ -23,14 +25,14 @@ final class RY_WT_WC_Countries
         add_filter('woocommerce_form_field_ry-hidden-country', [$this, 'field_hidden_country'], 20, 4);
         add_filter('woocommerce_form_field_ry-hidden-text', [$this, 'field_hidden_text'], 20, 4);
 
-        if ('no' === RY_WT::get_option('show_country_select', 'yes')) {
+        if ('no' === Main::get_option('show_country_select', 'yes')) {
             add_filter('woocommerce_billing_fields', [$this, 'hide_country']);
             add_filter('woocommerce_shipping_fields', [$this, 'hide_country']);
         }
-        if ('yes' === RY_WT::get_option('last_name_first', 'no')) {
+        if ('yes' === Main::get_option('last_name_first', 'no')) {
             add_filter('woocommerce_default_address_fields', [$this, 'last_name_first']);
         }
-        if ('yes' === RY_WT::get_option('address_zip_first', 'no')) {
+        if ('yes' === Main::get_option('address_zip_first', 'no')) {
             add_filter('woocommerce_default_address_fields', [$this, 'address_zip_first']);
         }
     }

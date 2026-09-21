@@ -1,16 +1,18 @@
 <?php
 
+namespace RY\WooCommerce;
+
 defined('ABSPATH') or exit;
 
 use RY\General\V20260810\AbstractLinkServer;
 
-final class RY_WT_LinkServer extends AbstractLinkServer
+final class LinkServer extends AbstractLinkServer
 {
     private static ?self $_instance = null;
 
     protected string $plugin_slug = 'ry-woocommerce-tools';
 
-    public static function instance(): RY_WT_LinkServer
+    public static function instance(): LinkServer
     {
         if (null === self::$_instance) {
             self::$_instance = new self();

@@ -3,6 +3,7 @@
 defined('ABSPATH') or exit;
 
 use Automattic\WooCommerce\StoreApi\Exceptions\RouteException;
+use RY\WooCommerce\Main;
 
 final class RY_WT_WC_ECPay_Shipping extends RY_WT_Shipping_Model
 {
@@ -53,7 +54,7 @@ final class RY_WT_WC_ECPay_Shipping extends RY_WT_Shipping_Model
         add_filter('woocommerce_update_order_review_fragments', [$this, 'checkout_choose_cvs_info']);
         add_action('woocommerce_checkout_create_order_shipping_item', [$this, 'remove_metadata'], 10, 4);
 
-        if ('yes' === RY_WT::get_option('ecpay_shipping_auto_get_no', 'yes')) {
+        if ('yes' === Main::get_option('ecpay_shipping_auto_get_no', 'yes')) {
             add_action('woocommerce_order_status_processing', [$this, 'get_code'], 10, 2);
         }
 
@@ -188,7 +189,7 @@ final class RY_WT_WC_ECPay_Shipping extends RY_WT_Shipping_Model
                     'post_url' => RY_WT_WC_ECPay_Shipping_Api::instance()->get_map_post_url(),
                 ], '', RY_WT_PLUGIN_DIR . 'templates/');
 
-                $cvs_type = RY_WT::get_option('ecpay_shipping_cvs_type', 'C2C');
+                $cvs_type = Main::get_option('ecpay_shipping_cvs_type', 'C2C');
                 $method_class = self::$support_methods[$chosen_shipping];
 
                 $subtype = $method_class::Shipping_Sub_Type;
@@ -285,7 +286,7 @@ final class RY_WT_WC_ECPay_Shipping extends RY_WT_Shipping_Model
 
     public function get_api_info()
     {
-        $api_info = RY_WT::get_option('ecpay_shipping_apiinfo', []);
+        $api_info = Main::get_option('ecpay_shipping_apiinfo', []);
         if (!is_array($api_info)) {
             $api_info = [];
         }

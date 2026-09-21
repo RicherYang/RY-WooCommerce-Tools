@@ -2,6 +2,8 @@
 
 defined('ABSPATH') or exit;
 
+use RY\WooCommerce\Main;
+
 abstract class RY_WT_WC_ECPay_Shipping_Method extends RY_WT_WC_Shipping_Method
 {
     public function is_available($package)
@@ -28,7 +30,7 @@ abstract class RY_WT_WC_ECPay_Shipping_Method extends RY_WT_WC_Shipping_Method
         $rate['meta_data']['LogisticsSubType'] = get_called_class()::Shipping_Sub_Type;
         if ('CVS' == $rate['meta_data']['LogisticsType']) {
             $api_info = RY_WT_WC_ECPay_Shipping::instance()->get_api_info();
-            if ('C2C' === RY_WT::get_option('ecpay_shipping_cvs_type', 'C2C')) {
+            if ('C2C' === Main::get_option('ecpay_shipping_cvs_type', 'C2C')) {
                 $rate['meta_data']['LogisticsSubType'] .= 'C2C';
             }
         }

@@ -3,6 +3,7 @@
 defined('ABSPATH') or exit;
 
 use Automattic\WooCommerce\Blocks\Utils\CartCheckoutUtils;
+use RY\WooCommerce\Main;
 
 final class RY_WT_WC_PAYUNi_Gateway_Admin
 {
@@ -50,12 +51,12 @@ final class RY_WT_WC_PAYUNi_Gateway_Admin
 
     public function check_option()
     {
-        $api_info = RY_WT::get_option('payuni_gateway_apiinfo', []);
+        $api_info = Main::get_option('payuni_gateway_apiinfo', []);
         if (is_array($api_info)) {
             if (isset($api_info['prefix']) && !preg_match('/^[a-z0-9]{0,3}$/i', $api_info['prefix'])) {
                 WC_Admin_Settings::add_error(__('Order no prefix only letters and numbers allowed, and maximum length is 3 characters.', 'ry-woocommerce-tools'));
                 $api_info['prefix'] = '';
-                RY_WT::update_option('payuni_gateway_apiinfo', $api_info, false);
+                Main::update_option('payuni_gateway_apiinfo', $api_info, false);
             }
 
             if (empty($api_info['MerID']) || empty($api_info['HashKey']) || empty($api_info['HashIV'])) {

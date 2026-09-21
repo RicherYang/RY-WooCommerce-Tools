@@ -2,6 +2,8 @@
 
 defined('ABSPATH') or exit;
 
+use RY\WooCommerce\Main;
+
 final class RY_WT_WC_Account
 {
     private static ?self $_instance = null;
@@ -20,7 +22,7 @@ final class RY_WT_WC_Account
     {
         add_filter('woocommerce_my_account_my_orders_actions', [$this, 'remove_pay_action']);
 
-        if ('no' === RY_WT::get_option('strength_password', 'yes')) {
+        if ('no' === Main::get_option('strength_password', 'yes')) {
             if ((!is_admin() || defined('DOING_AJAX')) && !defined('DOING_CRON')) {
                 add_action('wp_enqueue_scripts', [$this, 'remove_strength_password_script'], 20);
             }
@@ -29,7 +31,7 @@ final class RY_WT_WC_Account
 
     public function remove_pay_action($actions)
     {
-        if ('no' === RY_WT::get_option('repay_action', 'yes')) {
+        if ('no' === Main::get_option('repay_action', 'yes')) {
             unset($actions['pay']);
         }
 

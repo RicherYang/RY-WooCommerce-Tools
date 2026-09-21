@@ -1,14 +1,17 @@
 <?php
 
+namespace RY\WooCommerce\Admin;
+
 defined('ABSPATH') or exit;
 
 use RY\General\V20260810\AbstractAdmin;
+use RY\WooCommerce\Main;
 
-final class RY_WT_Admin extends AbstractAdmin
+final class Admin extends AbstractAdmin
 {
     private static ?self $_instance = null;
 
-    public static function instance(): RY_WT_Admin
+    public static function instance(): Admin
     {
         if (null === self::$_instance) {
             self::$_instance = new self();
@@ -28,12 +31,12 @@ final class RY_WT_Admin extends AbstractAdmin
 
     public function need_woocommerce(): void
     {
-        if (!defined('WC_VERSION') || version_compare(WC_VERSION, RY_WT::MIN_WC_VERSION, '<')) {
+        if (!defined('WC_VERSION') || version_compare(WC_VERSION, Main::MIN_WC_VERSION, '<')) {
             $message = sprintf(
                 /* translators: %1$s: Name of this plugin %2$s: min require version */
                 __('<strong>%1$s</strong> is inactive. It require WooCommerce version %2$s or newer.', 'ry-woocommerce-tools'),
                 __('RY Tools for WooCommerce', 'ry-woocommerce-tools'),
-                RY_WT::MIN_WC_VERSION,
+                Main::MIN_WC_VERSION,
             );
             printf('<div class="error"><p>%s</p></div>', wp_kses($message, ['strong' => []]));
         }
@@ -41,7 +44,7 @@ final class RY_WT_Admin extends AbstractAdmin
 
     public function show_time_error(): void
     {
-        if (RY_WT::get_option('ntp_time_error', false)) {
+        if (Main::get_option('ntp_time_error', false)) {
             printf(
                 '<div class="notice notice-error"><p>%s</p></div>',
                 esc_html__('Please check your server time setting. Server time is differs from NTP more than one minute.', 'ry-woocommerce-tools'),

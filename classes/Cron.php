@@ -1,8 +1,10 @@
 <?php
 
+namespace RY\WooCommerce;
+
 defined('ABSPATH') or exit;
 
-final class RY_WT_Cron
+final class Cron
 {
     public static function add_action(): void
     {
@@ -35,7 +37,7 @@ final class RY_WT_Cron
 
         if ($ntp_time > 0) {
             $time_diff = abs(current_time('timestamp', true) - $ntp_time);
-            RY_WT::update_option('ntp_time_error', $time_diff > MINUTE_IN_SECONDS);
+            Main::update_option('ntp_time_error', $time_diff > MINUTE_IN_SECONDS);
             return $time_diff;
         }
         return -1;
@@ -59,7 +61,7 @@ final class RY_WT_Cron
             'limit' => 100,
         ];
         while (true) {
-            $query = new WC_Order_Query($args);
+            $query = new \WC_Order_Query($args);
             $order_IDs = $query->get_orders();
             if (empty($order_IDs)) {
                 break;
