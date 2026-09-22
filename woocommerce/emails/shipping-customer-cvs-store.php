@@ -11,12 +11,12 @@ if (!class_exists('RY_Shipping_Email_Customer_CVS_Store', false)) {
             $this->customer_email = true;
 
             $this->title = __('Product sended to cvs store', 'ry-woocommerce-tools');
-            $this->description = __('This is an order notification sent to customers after the product send to CVS store with ECPay shipping.', 'ry-woocommerce-tools');
+            $this->description = __('This is an order notification sent to customers after the product send to CVS store.', 'ry-woocommerce-tools');
             $this->template_base = RY_WT_PLUGIN_DIR . 'templates/';
             $this->template_html = 'emails/customer-cvs-store.php';
             $this->template_plain = 'emails/plain/customer-cvs-store.php';
             $this->placeholders = [
-                '{site_title}' => $this->get_blogname(),
+                '{order_number}' => '',
             ];
 
             add_action('ry_shipping_customer_cvs_store_notification', [$this, 'trigger'], 10, 2);
@@ -38,12 +38,15 @@ if (!class_exists('RY_Shipping_Email_Customer_CVS_Store', false)) {
         {
             $this->setup_locale();
 
-            if ($order_ID && !is_a($order, 'WC_Order')) {
+            if ($order_ID && !$order instanceof WC_Order) {
                 $order = wc_get_order($order_ID);
             }
 
-            if (is_a($order, 'WC_Order')) {
+            if ($order instanceof WC_Order) {
                 $this->object = $order;
+
+                $this->placeholders['{order_number}'] = $this->object->get_order_number();
+
                 $this->recipient = $this->object->get_billing_email();
             }
 

@@ -175,6 +175,7 @@ final class RY_WT_WC_ECPay_Gateway_Response extends RY_WT_ECPay_Api
         if ($order->is_paid()) {
             $order->add_order_note(__('Payment failed within paid order', 'ry-woocommerce-tools'));
             $order->save();
+            do_action('ry_gateway_paid_order_failed', $order->get_id());
         } else {
             $order->update_status('failed', sprintf(
                 /* translators: %1$s: status message, %2$d status code */

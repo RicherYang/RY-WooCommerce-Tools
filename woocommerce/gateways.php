@@ -24,6 +24,9 @@ final class RY_WT_WC_Gateways
         add_filter('woocommerce_pre_payment_complete', [$this, 'remove_unpay_title_notice']);
         add_filter('woocommerce_email_setup_locale', [$this, 'remove_unpay_title_notice']);
         add_filter('woocommerce_email_restore_locale', [$this, 'add_unpay_title_notice']);
+
+        add_filter('woocommerce_email_classes', [$this, 'add_email_class']);
+        add_filter('woocommerce_email_actions', [$this, 'add_email_action']);
     }
 
     public function add_unpay_title_notice($status)
@@ -49,5 +52,19 @@ final class RY_WT_WC_Gateways
         }
 
         return $title;
+    }
+
+    public function add_email_class($emails)
+    {
+        $emails['RY_Gateway_Paid_Order_Failed'] = include RY_WT_PLUGIN_DIR . 'woocommerce/emails/gateway-paid-order-failed.php';
+
+        return $emails;
+    }
+
+    public function add_email_action($actions)
+    {
+        $actions[] = 'ry_gateway_paid_order_failed';
+
+        return $actions;
     }
 }

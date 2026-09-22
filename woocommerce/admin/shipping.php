@@ -175,7 +175,7 @@ final class RY_WT_WC_Admin_Shipping
 
     protected function get_ry_shipping_method($order)
     {
-        if (!is_a($order, 'WC_Order')) {
+        if (!$order instanceof WC_Order) {
             return false;
         }
 
