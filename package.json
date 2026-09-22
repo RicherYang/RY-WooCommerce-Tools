@@ -5,8 +5,8 @@
     "author": "Richer Yang",
     "private": true,
     "devDependencies": {
-        "@wordpress/i18n": "^6.27.0",
-        "@wordpress/scripts": "^34.2.0"
+        "@wordpress/i18n": "^6.28.0",
+        "@wordpress/scripts": "^35.0.0"
     },
     "scripts": {
         "start": "wp-scripts start",
