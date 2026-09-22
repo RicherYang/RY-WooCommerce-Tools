@@ -15,7 +15,7 @@ final class Main extends AbstractBasic
 
     public const MIN_WC_VERSION = '9.0.0';
 
-    public const MIN_PRO_TOOLS_VERSION = '2026.9.21';
+    public const MIN_PRO_TOOLS_VERSION = '2026.9.22';
 
     private static ?self $_instance = null;
 
