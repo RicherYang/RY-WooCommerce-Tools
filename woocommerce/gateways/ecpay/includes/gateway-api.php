@@ -196,8 +196,6 @@ final class RY_WT_WC_ECPay_Gateway_Api extends RY_WT_ECPay_Api
             return;
         }
 
-        RY_WT_WC_ECPay_Gateway::instance()->log('Credit query data', WC_Log_Levels::INFO, ['data' => $result->Data]);
-
         return $result->Data;
     }
 

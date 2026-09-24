@@ -18,20 +18,13 @@ abstract class RY_WT_Model
             $this->log_enabled = 'yes' === Main::get_option($this->model_type . '_log', 'no');
         }
 
-        if ($this->log_enabled || 'error' === $level) {
+        if ($this->log_enabled || WC_Log_Levels::INFO !== $level) {
             if (empty($this->log)) {
                 $this->log = wc_get_logger();
             }
 
-            if (version_compare(WC_VERSION, '8.6', '<')) {
-                $message .= ' CONTEXT: ' . wp_json_encode($context);
-                $this->log->log($level, $message, [
-                    'source' => 'ry_' . $this->model_type,
-                ]);
-            } else {
-                $context['source'] = 'ry_' . $this->model_type;
-                $this->log->log($level, $message, $context);
-            }
+            $context['source'] = 'ry_' . $this->model_type;
+            $this->log->log($level, $message, $context);
         }
     }
 }
