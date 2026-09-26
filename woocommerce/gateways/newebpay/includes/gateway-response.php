@@ -77,35 +77,41 @@ final class RY_WT_WC_NewebPay_Gateway_Response extends RY_WT_NewebPay_Api
 
         $order_ID = $this->get_order_id($info_value, $api_info['prefix']);
         if ($order = wc_get_order($order_ID)) {
-            $transaction_ID = (string) $order->get_transaction_id();
-            if ($transaction_ID === '' || $transaction_ID != $this->get_transaction_id($info_value)) {
-                $payment_type = $this->get_payment_type($info_value);
-                $order->set_transaction_id($this->get_transaction_id($info_value));
-                $order->update_meta_data('_newebpay_payment_type', $payment_type);
-                $order->save();
-                $order = wc_get_order($order_ID);
-            }
+            if ($order->get_meta('_newebpay_MerchantOrderNo', true) === $info_value->Result->MerchantOrderNo) {
+                $transaction_ID = (string) $order->get_transaction_id();
+                if ($transaction_ID === '' || $transaction_ID != $this->get_transaction_id($info_value)) {
+                    $payment_type = $this->get_payment_type($info_value);
+                    $order->set_transaction_id($this->get_transaction_id($info_value));
+                    $order->update_meta_data('_newebpay_payment_type', $payment_type);
+                    $order->save();
+                    $order = wc_get_order($order_ID);
+                }
 
-            $payment_status = $this->get_status($info_value);
-            RY_WT_WC_NewebPay_Gateway::instance()->log('Found #' . $order->get_id() . ' Payment status: ' . $payment_status, WC_Log_Levels::INFO);
+                $payment_status = $this->get_status($info_value);
+                RY_WT_WC_NewebPay_Gateway::instance()->log('Found #' . $order->get_id() . ' Payment status: ' . $payment_status, WC_Log_Levels::INFO);
 
-            if ($this->only_success) {
+                if ($this->only_success) {
+                    if (method_exists($this, 'payment_status_' . $payment_status)) {
+                        call_user_func([$this, 'payment_status_' . $payment_status], $order, $info_value->Result);
+                    }
+                    return;
+                }
+
                 if (method_exists($this, 'payment_status_' . $payment_status)) {
                     call_user_func([$this, 'payment_status_' . $payment_status], $order, $info_value->Result);
+                } else {
+                    $this->payment_status_unknow($order, $info_value->Result);
                 }
-                return;
-            }
 
-            if (method_exists($this, 'payment_status_' . $payment_status)) {
-                call_user_func([$this, 'payment_status_' . $payment_status], $order, $info_value->Result);
+                do_action('ry_newebpay_gateway_response_status_' . $payment_status, $info_value->Result, $order);
+                do_action('ry_newebpay_gateway_response', $info_value->Result, $order);
+
+                $this->die_success();
             } else {
-                $this->payment_status_unknow($order, $info_value->Result);
+                RY_WT_WC_NewebPay_Gateway::instance()->log('Order TradeNo mismatch for #' . $order->get_id(), WC_Log_Levels::WARNING);
+                $order->add_order_note(__('Payment send failed due to TradeNo mismatch.', 'ry-woocommerce-tools'));
+                $this->die_error();
             }
-
-            do_action('ry_newebpay_gateway_response_status_' . $payment_status, $info_value->Result, $order);
-            do_action('ry_newebpay_gateway_response', $info_value->Result, $order);
-
-            $this->die_success();
         } else {
             RY_WT_WC_NewebPay_Gateway::instance()->log('Order not found', WC_Log_Levels::WARNING);
             $this->die_error();

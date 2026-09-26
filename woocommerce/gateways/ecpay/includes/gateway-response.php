@@ -60,28 +60,34 @@ final class RY_WT_WC_ECPay_Gateway_Response extends RY_WT_ECPay_Api
         $api_info = RY_WT_WC_ECPay_Gateway::instance()->get_api_info();
         $order_ID = $this->get_order_id($info_value, $api_info['prefix']);
         if ($order = wc_get_order($order_ID)) {
-            $transaction_ID = (string) $order->get_transaction_id();
-            if ('' === $transaction_ID || !$order->is_paid() || $transaction_ID != $this->get_transaction_id($info_value)) {
-                list($payment_type, $payment_subtype) = $this->get_payment_info($info_value);
-                $order->set_transaction_id($this->get_transaction_id($info_value));
-                $order->update_meta_data('_ecpay_payment_type', $payment_type);
-                $order->update_meta_data('_ecpay_payment_subtype', $payment_subtype);
-                $order->save();
-                $order = wc_get_order($order->get_id());
-            }
+            if ($order->get_meta('_ecpay_MerchantTradeNo', true) === $info_value['MerchantTradeNo']) {
+                $transaction_ID = (string) $order->get_transaction_id();
+                if ('' === $transaction_ID || !$order->is_paid() || $transaction_ID != $this->get_transaction_id($info_value)) {
+                    list($payment_type, $payment_subtype) = $this->get_payment_info($info_value);
+                    $order->set_transaction_id($this->get_transaction_id($info_value));
+                    $order->update_meta_data('_ecpay_payment_type', $payment_type);
+                    $order->update_meta_data('_ecpay_payment_subtype', $payment_subtype);
+                    $order->save();
+                    $order = wc_get_order($order->get_id());
+                }
 
-            $payment_status = $this->get_status($info_value);
-            RY_WT_WC_ECPay_Gateway::instance()->log('Found #' . $order->get_id() . ' Payment status: ' . $payment_status, WC_Log_Levels::INFO);
+                $payment_status = $this->get_status($info_value);
+                RY_WT_WC_ECPay_Gateway::instance()->log('Found #' . $order->get_id() . ' Payment status: ' . $payment_status, WC_Log_Levels::INFO);
 
-            if (method_exists($this, 'payment_status_' . $payment_status)) {
-                call_user_func([$this, 'payment_status_' . $payment_status], $order, $info_value);
+                if (method_exists($this, 'payment_status_' . $payment_status)) {
+                    call_user_func([$this, 'payment_status_' . $payment_status], $order, $info_value);
+                } else {
+                    $this->payment_status_unknow($order, $info_value);
+                }
+
+                do_action('ry_ecpay_gateway_response', $info_value, $order);
+
+                $this->die_success();
             } else {
-                $this->payment_status_unknow($order, $info_value);
+                RY_WT_WC_ECPay_Gateway::instance()->log('Order TradeNo mismatch for #' . $order->get_id(), WC_Log_Levels::WARNING);
+                $order->add_order_note(__('Payment send failed due to TradeNo mismatch.', 'ry-woocommerce-tools'));
+                $this->die_error();
             }
-
-            do_action('ry_ecpay_gateway_response', $info_value, $order);
-
-            $this->die_success();
         } else {
             RY_WT_WC_ECPay_Gateway::instance()->log('Order not found', WC_Log_Levels::WARNING);
             $this->die_error();

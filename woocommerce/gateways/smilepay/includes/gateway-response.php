@@ -102,69 +102,75 @@ final class RY_WT_WC_SmilePay_Gateway_Response extends RY_WT_SmilePay_Api
         $api_info = RY_WT_WC_SmilePay_Gateway::instance()->get_api_info();
         $order_ID = $this->get_order_id($info_value, $api_info['prefix']);
         if ($order = wc_get_order($order_ID)) {
-            RY_WT_WC_SmilePay_Gateway::instance()->log('Found #' . $order->get_id(), WC_Log_Levels::INFO);
+            if ($order->get_meta('_smilepay_Data_id', true) === $info_value['Data_id']) {
+                RY_WT_WC_SmilePay_Gateway::instance()->log('Found #' . $order->get_id(), WC_Log_Levels::INFO);
 
-            $payment_type = '';
-            switch ($info_value['Classif']) {
-                case 'A':
-                    $payment_type = 1;
-                    break;
-                case 'B':
-                    $payment_type = 21;
-                    break;
-                case 'C':
-                    $payment_type = 3;
-                    break;
-                case 'E':
-                    $payment_type = 4;
-                    break;
-                case 'F':
-                    $payment_type = 6;
-                    break;
-            }
-
-            if (!$order->is_paid()) {
-                if ($info_value['Amount'] == ceil($order->get_total())) {
-                    $transaction_ID = (string) $order->get_transaction_id();
-                    if ($transaction_ID === '' || $transaction_ID != $this->get_transaction_id($info_value)) {
-                        $order->set_transaction_id($this->get_transaction_id($info_value));
-                        $order->update_meta_data('_smilepay_payment_type', $payment_type);
-                        $order->save();
-                        $order = wc_get_order($order->get_id());
-                    }
-                    $order->add_order_note(__('SmilePay payment completed', 'ry-woocommerce-tools'));
-                    $order->payment_complete();
+                $payment_type = '';
+                switch ($info_value['Classif']) {
+                    case 'A':
+                        $payment_type = 1;
+                        break;
+                    case 'B':
+                        $payment_type = 21;
+                        break;
+                    case 'C':
+                        $payment_type = 3;
+                        break;
+                    case 'E':
+                        $payment_type = 4;
+                        break;
+                    case 'F':
+                        $payment_type = 6;
+                        break;
                 }
-            }
 
-            switch ($payment_type) {
-                case 1:
-                    if (0 == $info_value['Response_id']) {
-                        if ($order->is_paid()) {
-                            $order->add_order_note(__('Payment failed within paid order', 'ry-woocommerce-tools'));
+                if (!$order->is_paid()) {
+                    if ($info_value['Amount'] == ceil($order->get_total())) {
+                        $transaction_ID = (string) $order->get_transaction_id();
+                        if ($transaction_ID === '' || $transaction_ID != $this->get_transaction_id($info_value)) {
+                            $order->set_transaction_id($this->get_transaction_id($info_value));
+                            $order->update_meta_data('_smilepay_payment_type', $payment_type);
                             $order->save();
-                            do_action('ry_gateway_paid_order_failed', $order->get_id());
-                        } else {
-                            $order->update_status('failed', sprintf(
-                                /* translators: Error status message */
-                                __('Payment failed (%s)', 'ry-woocommerce-tools'),
-                                $info_value['Errdesc'],
-                            ));
+                            $order = wc_get_order($order->get_id());
                         }
+                        $order->add_order_note(__('SmilePay payment completed', 'ry-woocommerce-tools'));
+                        $order->payment_complete();
                     }
-                    break;
-            }
-
-            do_action('ry_smilepay_gateway_response', $info_value, $order);
-
-            $payment_gateway = wc_get_payment_gateway_by_order($order);
-            if (property_exists($payment_gateway, 'get_code_mode')) {
-                if (!$payment_gateway->get_code_mode) {
-                    wp_safe_redirect($order->get_checkout_order_received_url());
-                    return;
                 }
+
+                switch ($payment_type) {
+                    case 1:
+                        if (0 == $info_value['Response_id']) {
+                            if ($order->is_paid()) {
+                                $order->add_order_note(__('Payment failed within paid order', 'ry-woocommerce-tools'));
+                                $order->save();
+                                do_action('ry_gateway_paid_order_failed', $order->get_id());
+                            } else {
+                                $order->update_status('failed', sprintf(
+                                    /* translators: Error status message */
+                                    __('Payment failed (%s)', 'ry-woocommerce-tools'),
+                                    $info_value['Errdesc'],
+                                ));
+                            }
+                        }
+                        break;
+                }
+
+                do_action('ry_smilepay_gateway_response', $info_value, $order);
+
+                $payment_gateway = wc_get_payment_gateway_by_order($order);
+                if (property_exists($payment_gateway, 'get_code_mode')) {
+                    if (!$payment_gateway->get_code_mode) {
+                        wp_safe_redirect($order->get_checkout_order_received_url());
+                        return;
+                    }
+                }
+                $this->die_success();
+            } else {
+                RY_WT_WC_SmilePay_Gateway::instance()->log('Order TradeNo mismatch for #' . $order->get_id(), WC_Log_Levels::WARNING);
+                $order->add_order_note(__('Payment send failed due to TradeNo mismatch.', 'ry-woocommerce-tools'));
+                $this->die_error();
             }
-            $this->die_success();
         } else {
             RY_WT_WC_SmilePay_Gateway::instance()->log('Order not found', WC_Log_Levels::WARNING);
             $this->die_error();
