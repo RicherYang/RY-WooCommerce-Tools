@@ -126,7 +126,7 @@ final class RY_WT_WC_ECPay_Shipping_Response extends RY_WT_ECPay_Api
             }
             RY_WT_WC_ECPay_Shipping::instance()->log('IPN request check failed', WC_Log_Levels::ERROR, ['response' => $check_value, 'self' => $ipn_info_check_value]);
         } else {
-            RY_WT_WC_ECPay_Shipping::instance()->log('IPN request failed', WC_Log_Levels::ERROR, ['get' => wp_unslash($_GET), 'post' => wp_unslash($_POST)]);
+            RY_WT_WC_ECPay_Shipping::instance()->log('IPN request failed', WC_Log_Levels::NOTICE, ['get' => wp_unslash($_GET), 'post' => wp_unslash($_POST)]);
         }
 
         return false;

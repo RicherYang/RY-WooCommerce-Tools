@@ -41,7 +41,7 @@ Please visit the [plugin forum page](https://ry-plugin.com/ry-woocommerce-tools/
 == Changelog ==
 
 = 2026.9.26 =
-* 調整 - 強化對於金流回傳的內容正確性驗證。
+* 調整 - 強化對於金流發送付款通知時的內容驗證。
 
 = 2026.9.22 =
 * 新增 - 已付款訂單付款失敗通知信。
