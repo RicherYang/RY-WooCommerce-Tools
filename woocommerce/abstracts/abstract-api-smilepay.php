@@ -95,4 +95,24 @@ abstract class RY_WT_SmilePay_Api extends RY_WT_Api
     {
         exit('<Roturlstatus>RY_SmilePay</Roturlstatus>');
     }
+
+    protected function set_tradeno($order, $tradeno = '')
+    {
+        $this->_set_tradeno($order, '_smilepay_Data_id', $tradeno);
+    }
+
+    protected function is_used_tradeno($order, $trade_no = '')
+    {
+        return $this->_is_used_tradeno($order, '_smilepay_Data_id', $trade_no);
+    }
+
+    protected function set_tradeno_transaction_id($order, $trade_no = '', $transaction_ID = '')
+    {
+        $this->_set_tradeno_transaction_id($order, '_smilepay_Data_id', $trade_no, $transaction_ID);
+    }
+
+    protected function get_tradeno($order)
+    {
+        return $this->_get_tradeno($order, '_smilepay_Data_id');
+    }
 }

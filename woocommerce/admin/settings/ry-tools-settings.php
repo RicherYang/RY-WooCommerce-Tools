@@ -234,9 +234,8 @@ final class RY_WT_WC_Admin_Settings extends WC_Settings_Page
                         I18nUtil::get_weight_unit_label(get_option('woocommerce_weight_unit')),
                     ),
                     'id' => Main::get_prefix_name('shipping_apiinfo[weight]'),
-                    'type' => 'number',
+                    'type' => 'text',
                     'default' => '0',
-                    'step' => '0.001',
                     'autoload' => false,
                 ],
                 [

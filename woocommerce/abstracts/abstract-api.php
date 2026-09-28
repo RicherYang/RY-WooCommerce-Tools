@@ -236,4 +236,55 @@ abstract class RY_WT_Api
 
         return $package_list;
     }
+
+    protected function _set_tradeno($order, $meta_key = '', $trade_no = '')
+    {
+        $list = $order->get_meta($meta_key, true);
+        if (!is_array($list)) {
+            $list = empty($list) ? [] : [$list => ''];
+        }
+        $list[$trade_no] = '';
+        $order->update_meta_data($meta_key, $list);
+    }
+
+    protected function _is_used_tradeno($order, $meta_key = '', $trade_no = '')
+    {
+        $list = $order->get_meta($meta_key, true);
+        if (!is_array($list)) {
+            $list = empty($list) ? [] : [$list => ''];
+        }
+
+        return isset($list[$trade_no]);
+    }
+
+    protected function _set_tradeno_transaction_id($order, $meta_key = '', $trade_no = '', $transaction_ID = '')
+    {
+        $list = $order->get_meta($meta_key, true);
+        if (!is_array($list)) {
+            $list = empty($list) ? [] : [$list => ''];
+        }
+        $list[$trade_no] = $transaction_ID;
+        $order->update_meta_data($meta_key, $list);
+    }
+
+    protected function _get_tradeno($order, $meta_key = '')
+    {
+        $transaction_ID = $order->get_transaction_id();
+
+        $list = $order->get_meta($meta_key, true);
+        if (!is_array($list)) {
+            $list = empty($list) ? [] : [$list => ''];
+            if (!empty($transaction_ID) && !empty($list)) {
+                $list[array_key_first($list)] = $transaction_ID;
+            }
+            $order->update_meta_data($meta_key, $list);
+            $order->save();
+        }
+
+        if (empty($transaction_ID)) {
+            return array_key_first($list);
+        }
+
+        return (string) array_search($transaction_ID, $list, true);
+    }
 }

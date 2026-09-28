@@ -77,7 +77,7 @@ final class RY_WT_WC_PAYUNi_Gateway_Api extends RY_WT_PAYUNi_Api
         $args = $this->build_args($data, '2.0');
         RY_WT_WC_PAYUNi_Gateway::instance()->log('Generating payment by ' . $gateway->id . ' for #' . $order->get_id(), WC_Log_Levels::INFO, ['data' => $data]);
 
-        $order->update_meta_data('_payuni_MerTradeNo', $data['MerTradeNo']);
+        $this->set_tradeno($order, $data['MerTradeNo']);
         $order->save();
 
         if ($api_info['testmode']) {
@@ -97,7 +97,7 @@ final class RY_WT_WC_PAYUNi_Gateway_Api extends RY_WT_PAYUNi_Api
 
         $data = [
             'MerID' => $api_info['MerID'],
-            'MerTradeNo' => $order->get_meta('_payuni_MerTradeNo', true),
+            'MerTradeNo' => $this->get_tradeno($order),
             'Timestamp' => new DateTime('now', new DateTimeZone('Asia/Taipei')),
         ];
         $data['Timestamp'] = $data['Timestamp']->getTimestamp();

@@ -118,9 +118,11 @@ final class RY_WT_WC_SmilePay_Gateway_Api extends RY_WT_SmilePay_Api
             return false;
         }
 
-        $transaction_ID = (string) $order->get_transaction_id();
-        if ($transaction_ID === '' || $transaction_ID != $this->get_transaction_id($info_value)) {
-            $order->set_transaction_id($this->get_transaction_id($info_value));
+        $order_transaction_ID = (string) $order->get_transaction_id();
+        $info_transaction_ID = (string) $this->get_transaction_id($info_value);
+        if ($order_transaction_ID === '' || $order_transaction_ID != $info_transaction_ID) {
+            $this->set_tradeno_transaction_id($order, $args['Data_id'], $info_transaction_ID);
+            $order->set_transaction_id($info_transaction_ID);
             $order->update_meta_data('_smilepay_payment_type', $args['Pay_zg']);
             $order->save();
             $order = wc_get_order($order->get_id());
@@ -187,7 +189,7 @@ final class RY_WT_WC_SmilePay_Gateway_Api extends RY_WT_SmilePay_Api
 
         $args = $this->add_type_info($args, $order, $gateway);
 
-        $order->update_meta_data('_smilepay_Data_id', $args['Data_id']);
+        $this->set_tradeno($order, $args['Data_id']);
         $order->save();
 
         if ($api_info['testmode']) {

@@ -102,7 +102,7 @@ final class RY_WT_WC_SmilePay_Gateway_Response extends RY_WT_SmilePay_Api
         $api_info = RY_WT_WC_SmilePay_Gateway::instance()->get_api_info();
         $order_ID = $this->get_order_id($info_value, $api_info['prefix']);
         if ($order = wc_get_order($order_ID)) {
-            if ($order->get_meta('_smilepay_Data_id', true) === $info_value['Data_id']) {
+            if ($this->is_used_tradeno($order, $info_value['Data_id'])) {
                 RY_WT_WC_SmilePay_Gateway::instance()->log('Found #' . $order->get_id(), WC_Log_Levels::INFO);
 
                 $payment_type = '';
@@ -126,9 +126,11 @@ final class RY_WT_WC_SmilePay_Gateway_Response extends RY_WT_SmilePay_Api
 
                 if (!$order->is_paid()) {
                     if ($info_value['Amount'] == ceil($order->get_total())) {
-                        $transaction_ID = (string) $order->get_transaction_id();
-                        if ($transaction_ID === '' || $transaction_ID != $this->get_transaction_id($info_value)) {
-                            $order->set_transaction_id($this->get_transaction_id($info_value));
+                        $order_transaction_ID = (string) $order->get_transaction_id();
+                        $info_transaction_ID = (string) $this->get_transaction_id($info_value);
+                        if ($order_transaction_ID === '' || $order_transaction_ID != $info_transaction_ID) {
+                            $this->set_tradeno_transaction_id($order, $info_value['Data_id'], $info_transaction_ID);
+                            $order->set_transaction_id($info_transaction_ID);
                             $order->update_meta_data('_smilepay_payment_type', $payment_type);
                             $order->save();
                             $order = wc_get_order($order->get_id());
