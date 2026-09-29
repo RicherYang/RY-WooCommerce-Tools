@@ -4,8 +4,6 @@ defined('ABSPATH') or exit;
 
 abstract class RY_WT_PAYUNi_Api extends RY_WT_Api
 {
-    protected const ENCRYPT_METHOD = 'aes-256-gcm';
-
     protected function get_3rd_return_url($order = null)
     {
         $return_url = $this->get_api_url('ry_payuni_gateway_return', null);
@@ -46,7 +44,7 @@ abstract class RY_WT_PAYUNi_Api extends RY_WT_Api
     protected function data_encrypt($args, $HashKey, $HashIV)
     {
         $tag = '';
-        $encrypted = @openssl_encrypt(http_build_query($args), self::ENCRYPT_METHOD, $HashKey, 0, $HashIV, $tag);
+        $encrypted = @openssl_encrypt(http_build_query($args), 'aes-256-gcm', $HashKey, 0, $HashIV, $tag);
         return trim(bin2hex($encrypted . ':::' . base64_encode($tag)));
     }
 
@@ -55,7 +53,7 @@ abstract class RY_WT_PAYUNi_Api extends RY_WT_Api
         $string = hex2bin($string);
         if (str_contains($string, ':::')) {
             list($encryptData, $tag) = explode(':::', $string, 2);
-            return openssl_decrypt($encryptData, self::ENCRYPT_METHOD, $HashKey, 0, $HashIV, base64_decode($tag));
+            return openssl_decrypt($encryptData, 'aes-256-gcm', $HashKey, 0, $HashIV, base64_decode($tag));
         }
         return false;
     }

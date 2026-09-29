@@ -188,7 +188,7 @@ final class RY_WT_WC_ECPay_Gateway_Api extends RY_WT_ECPay_Api
             return;
         }
 
-        $result->Data = openssl_decrypt($result->Data, self::ENCRYPT_METHOD, $api_info['HashKey'], 0, $api_info['HashIV']);
+        $result->Data = openssl_decrypt($result->Data, 'aes-128-cbc', $api_info['HashKey'], 0, $api_info['HashIV']);
         $result->Data = json_decode(urldecode($result->Data), true);
 
         if (!is_array($result->Data)) {
