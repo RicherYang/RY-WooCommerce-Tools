@@ -70,9 +70,6 @@ final class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_ECPay_Api
             }
 
             $shipping_list = $order->get_meta('_ecpay_shipping_info', true);
-            if (!is_array($shipping_list)) {
-                $shipping_list = [];
-            }
 
             $notify_url = $this->get_api_url('ry_ecpay_shipping_callback');
 
@@ -103,7 +100,7 @@ final class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_ECPay_Api
                 }
             }
 
-            if (0 === count($shipping_list)) {
+            if (empty($shipping_list)) {
                 if ('cod' === $order->get_payment_method()) {
                     $args['IsCollection'] = 'Y';
                 }
@@ -151,7 +148,10 @@ final class RY_WT_WC_ECPay_Shipping_Api extends RY_WT_ECPay_Api
             foreach ($package_list as $package_info) {
                 $create_datetime = new DateTime('now', new DateTimeZone('Asia/Taipei'));
                 $args['MerchantTradeDate'] = $create_datetime->format('Y/m/d H:i:s');
-                $args['MerchantTradeNo'] = $this->generate_trade_no($order->get_id(), $api_info['prefix']) . 'T' . $package_info['temp'];
+                $args['MerchantTradeNo'] = is_array($shipping_list) ? '' : $this->get_trade_no($order);
+                if (empty($args['MerchantTradeNo'])) {
+                    $args['MerchantTradeNo'] = $this->generate_trade_no($order->get_id(), $api_info['prefix']) . 'T' . $package_info['temp'];
+                }
 
                 if ('CVS' === $args['LogisticsType']) {
                     $args['LogisticsSubType'] = $method_class::Shipping_Sub_Type;

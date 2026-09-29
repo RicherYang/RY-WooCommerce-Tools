@@ -103,7 +103,7 @@ final class RY_WT_WC_ECPay_Gateway_Api extends RY_WT_ECPay_Api
 
         $args = [
             'MerchantID' => $api_info['MerchantID'],
-            'MerchantTradeNo' => $this->get_trade_no($order),
+            'MerchantTradeNo' => $this->get_trade_no($order, $order->get_transaction_id()),
             'TimeStamp' => new DateTime('now', new DateTimeZone('Asia/Taipei')),
         ];
 
@@ -154,7 +154,7 @@ final class RY_WT_WC_ECPay_Gateway_Api extends RY_WT_ECPay_Api
             ],
             'Data' => wp_json_encode([
                 'MerchantID' => $api_info['MerchantID'],
-                'MerchantTradeNo' => $this->get_trade_no($order),
+                'MerchantTradeNo' => $this->get_trade_no($order, $order->get_transaction_id()),
             ]),
         ];
         $args['RqHeader']['Timestamp'] = $args['RqHeader']['Timestamp']->getTimestamp();
@@ -207,7 +207,7 @@ final class RY_WT_WC_ECPay_Gateway_Api extends RY_WT_ECPay_Api
 
         $args = [
             'MerchantID' => $api_info['MerchantID'],
-            'MerchantTradeNo' => $this->get_trade_no($order),
+            'MerchantTradeNo' => $this->get_trade_no($order, $order->get_transaction_id()),
             'TradeNo' => $order->get_transaction_id(),
             'Action' => $action,
             'TotalAmount' => $amount,

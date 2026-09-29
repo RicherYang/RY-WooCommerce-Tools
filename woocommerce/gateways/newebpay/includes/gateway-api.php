@@ -120,7 +120,7 @@ final class RY_WT_WC_NewebPay_Gateway_Api extends RY_WT_NewebPay_Api
             'Version' => '1.3',
             'RespondType' => 'JSON',
             'TimeStamp' => new DateTime('now', new DateTimeZone('Asia/Taipei')),
-            'MerchantOrderNo' => $this->get_trade_no($order),
+            'MerchantOrderNo' => $this->get_trade_no($order, $order->get_transaction_id()),
             'Amt' => (int) ceil($order->get_total()),
         ];
         $args['TimeStamp'] = $args['TimeStamp']->getTimestamp();

@@ -277,15 +277,15 @@ abstract class RY_WT_Api
 
     /**
      * @param WC_Order $order
+     * @param string $transaction_ID
      * @return string
      */
-    protected function get_trade_no($order): string
+    protected function get_trade_no($order, $transaction_ID = ''): string
     {
         $list = $this->get_trade_no_list($order);
 
-        $transaction_ID = $order->get_transaction_id();
         if (empty($transaction_ID)) {
-            return array_key_first($list);
+            return (string) array_key_last($list);
         }
 
         return (string) array_search($transaction_ID, $list, true);

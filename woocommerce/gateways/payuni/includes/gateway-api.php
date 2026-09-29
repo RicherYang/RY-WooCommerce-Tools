@@ -97,7 +97,7 @@ final class RY_WT_WC_PAYUNi_Gateway_Api extends RY_WT_PAYUNi_Api
 
         $data = [
             'MerID' => $api_info['MerID'],
-            'MerTradeNo' => $this->get_trade_no($order),
+            'MerTradeNo' => $this->get_trade_no($order, $order->get_transaction_id()),
             'Timestamp' => new DateTime('now', new DateTimeZone('Asia/Taipei')),
         ];
         $data['Timestamp'] = $data['Timestamp']->getTimestamp();
