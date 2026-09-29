@@ -97,7 +97,7 @@ final class RY_WT_WC_NewebPay_Gateway_Api extends RY_WT_NewebPay_Api
         $form_data['TradeSha'] = $this->generate_hash_value($form_data['TradeInfo'], $api_info['HashKey'], $api_info['HashIV']);
         RY_WT_WC_NewebPay_Gateway::instance()->log('Generating payment by ' . $gateway->id . ' for #' . $order->get_id(), WC_Log_Levels::INFO, ['data' => $args]);
 
-        $this->set_tradeno($order, $args['MerchantOrderNo']);
+        $this->set_trade_no($order, $args['MerchantOrderNo']);
         $order->save();
 
         if ($api_info['testmode']) {
@@ -120,7 +120,7 @@ final class RY_WT_WC_NewebPay_Gateway_Api extends RY_WT_NewebPay_Api
             'Version' => '1.3',
             'RespondType' => 'JSON',
             'TimeStamp' => new DateTime('now', new DateTimeZone('Asia/Taipei')),
-            'MerchantOrderNo' => $this->get_tradeno($order),
+            'MerchantOrderNo' => $this->get_trade_no($order),
             'Amt' => (int) ceil($order->get_total()),
         ];
         $args['TimeStamp'] = $args['TimeStamp']->getTimestamp();

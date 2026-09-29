@@ -60,12 +60,12 @@ final class RY_WT_WC_ECPay_Gateway_Response extends RY_WT_ECPay_Api
         $api_info = RY_WT_WC_ECPay_Gateway::instance()->get_api_info();
         $order_ID = $this->get_order_id($info_value, $api_info['prefix']);
         if ($order = wc_get_order($order_ID)) {
-            if ($this->is_used_tradeno($order, $info_value['MerchantTradeNo'])) {
+            if ($this->is_used_trade_no($order, $info_value['MerchantTradeNo'])) {
                 $order_transaction_ID = (string) $order->get_transaction_id();
                 $info_transaction_ID = (string) $this->get_transaction_id($info_value);
                 if ('' === $order_transaction_ID || $order_transaction_ID != $info_transaction_ID) {
                     list($payment_type, $payment_subtype) = $this->get_payment_info($info_value);
-                    $this->set_tradeno_transaction_id($order, $info_value['MerchantTradeNo'], $info_transaction_ID);
+                    $this->set_trade_no_transaction_id($order, $info_value['MerchantTradeNo'], $info_transaction_ID);
                     $order->set_transaction_id($info_transaction_ID);
                     $order->update_meta_data('_ecpay_payment_type', $payment_type);
                     $order->update_meta_data('_ecpay_payment_subtype', $payment_subtype);

@@ -77,12 +77,12 @@ final class RY_WT_WC_PAYUNi_Gateway_Response extends RY_WT_PAYUNi_Api
 
         $order_ID = $this->get_order_id($info_value, $api_info['prefix']);
         if ($order = wc_get_order($order_ID)) {
-            if ($this->is_used_tradeno($order, $info_value['MerTradeNo'])) {
+            if ($this->is_used_trade_no($order, $info_value['MerTradeNo'])) {
                 $order_transaction_ID = (string) $order->get_transaction_id();
                 $info_transaction_ID = (string) $this->get_transaction_id($info_value);
                 if ($order_transaction_ID === '' || $order_transaction_ID != $info_transaction_ID) {
                     $payment_type = $this->get_payment_type($info_value);
-                    $this->set_tradeno_transaction_id($order, $info_value['MerTradeNo'], $info_transaction_ID);
+                    $this->set_trade_no_transaction_id($order, $info_value['MerTradeNo'], $info_transaction_ID);
                     $order->set_transaction_id($info_transaction_ID);
                     $order->update_meta_data('_payuni_payment_type', $payment_type);
                     $order->save();

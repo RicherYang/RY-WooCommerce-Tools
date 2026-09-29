@@ -6,6 +6,8 @@ use Automattic\WooCommerce\Utilities\NumberUtil;
 
 abstract class RY_WT_Api
 {
+    protected const TRADENO_META_KEY = '';
+
     private bool $do_die = false;
 
     public function get_api_url($request = '', $ssl = true): string
@@ -237,54 +239,70 @@ abstract class RY_WT_Api
         return $package_list;
     }
 
-    protected function _set_tradeno($order, $meta_key = '', $trade_no = '')
+    /**
+     * @param WC_Order $order
+     * @param string $trade_no
+     * @return void
+     */
+    protected function set_trade_no($order, $trade_no): void
     {
-        $list = $order->get_meta($meta_key, true);
-        if (!is_array($list)) {
-            $list = empty($list) ? [] : [$list => ''];
-        }
+        $list = $this->get_trade_no_list($order);
         $list[$trade_no] = '';
-        $order->update_meta_data($meta_key, $list);
+        $order->update_meta_data(static::TRADENO_META_KEY, $list);
     }
 
-    protected function _is_used_tradeno($order, $meta_key = '', $trade_no = '')
+    /**
+     * @param WC_Order $order
+     * @param string $trade_no
+     * @return bool
+     */
+    protected function is_used_trade_no($order, $trade_no): bool
     {
-        $list = $order->get_meta($meta_key, true);
-        if (!is_array($list)) {
-            $list = empty($list) ? [] : [$list => ''];
-        }
-
+        $list = $this->get_trade_no_list($order);
         return isset($list[$trade_no]);
     }
 
-    protected function _set_tradeno_transaction_id($order, $meta_key = '', $trade_no = '', $transaction_ID = '')
+    /**
+     * @param WC_Order $order
+     * @param string $trade_no
+     * @param string $transaction_ID
+     * @return void
+     */
+    protected function set_trade_no_transaction_id($order, $trade_no, $transaction_ID): void
     {
-        $list = $order->get_meta($meta_key, true);
-        if (!is_array($list)) {
-            $list = empty($list) ? [] : [$list => ''];
-        }
+        $list = $this->get_trade_no_list($order);
         $list[$trade_no] = $transaction_ID;
-        $order->update_meta_data($meta_key, $list);
+        $order->update_meta_data(static::TRADENO_META_KEY, $list);
     }
 
-    protected function _get_tradeno($order, $meta_key = '')
+    /**
+     * @param WC_Order $order
+     * @return string
+     */
+    protected function get_trade_no($order): string
     {
+        $list = $this->get_trade_no_list($order);
+
         $transaction_ID = $order->get_transaction_id();
-
-        $list = $order->get_meta($meta_key, true);
-        if (!is_array($list)) {
-            $list = empty($list) ? [] : [$list => ''];
-            if (!empty($transaction_ID) && !empty($list)) {
-                $list[array_key_first($list)] = $transaction_ID;
-            }
-            $order->update_meta_data($meta_key, $list);
-            $order->save();
-        }
-
         if (empty($transaction_ID)) {
             return array_key_first($list);
         }
 
         return (string) array_search($transaction_ID, $list, true);
+    }
+
+    /**
+     * @param WC_Order $order
+     * @return array
+     */
+    private function get_trade_no_list($order): array
+    {
+        $list = $order->get_meta(static::TRADENO_META_KEY, true);
+        if (!is_array($list)) {
+            $list = empty($list) ? [] : [$list => (string) $order->get_transaction_id()];
+            $order->update_meta_data(static::TRADENO_META_KEY, $list);
+            $order->save();
+        }
+        return $list;
     }
 }

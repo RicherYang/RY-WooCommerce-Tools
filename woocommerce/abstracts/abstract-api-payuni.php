@@ -4,6 +4,8 @@ defined('ABSPATH') or exit;
 
 abstract class RY_WT_PAYUNi_Api extends RY_WT_Api
 {
+    protected const TRADENO_META_KEY = '_payuni_MerTradeNo';
+
     protected function get_3rd_return_url($order = null)
     {
         $return_url = $this->get_api_url('ry_payuni_gateway_return', null);
@@ -109,25 +111,5 @@ abstract class RY_WT_PAYUNi_Api extends RY_WT_Api
             }
         }
         return false;
-    }
-
-    protected function set_tradeno($order, $tradeno = '')
-    {
-        $this->_set_tradeno($order, '_payuni_MerTradeNo', $tradeno);
-    }
-
-    protected function is_used_tradeno($order, $trade_no = '')
-    {
-        return $this->_is_used_tradeno($order, '_payuni_MerTradeNo', $trade_no);
-    }
-
-    protected function set_tradeno_transaction_id($order, $trade_no = '', $transaction_ID = '')
-    {
-        $this->_set_tradeno_transaction_id($order, '_payuni_MerTradeNo', $trade_no, $transaction_ID);
-    }
-
-    protected function get_tradeno($order)
-    {
-        return $this->_get_tradeno($order, '_payuni_MerTradeNo');
     }
 }
