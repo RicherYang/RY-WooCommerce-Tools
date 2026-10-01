@@ -95,6 +95,8 @@ final class RY_WT_WC_PAYUNi_Gateway_Response extends RY_WT_PAYUNi_Api
                 if ($this->only_success) {
                     if (method_exists($this, 'payment_status_' . $payment_status)) {
                         call_user_func([$this, 'payment_status_' . $payment_status], $order, $info_value);
+                    } else {
+                        $this->log_unknown_status($order, $info_value);
                     }
                     return;
                 }
@@ -160,20 +162,31 @@ final class RY_WT_WC_PAYUNi_Gateway_Response extends RY_WT_PAYUNi_Api
         }
     }
 
+    /**
+     * @param WC_Order $order
+     */
     protected function payment_status_unknow($order, $info_value)
     {
-        RY_WT_WC_PAYUNi_Gateway::instance()->log('Unknow status', WC_Log_Levels::INFO, ['status' => $this->get_status($info_value), 'status_msg' => $this->get_status_msg($info_value)]);
+        $this->log_unknown_status($order, $info_value);
+
         if ($order->is_paid()) {
             $order->add_order_note(__('Payment failed within paid order', 'ry-woocommerce-tools'));
             $order->save();
             do_action('ry_gateway_paid_order_failed', $order->get_id());
         } else {
-            $order->update_status('failed', sprintf(
-                /* translators: 1: Error status code 2: Error status message */
-                __('Payment failed: %1$s (%2$s)', 'ry-woocommerce-tools'),
-                $this->get_status($info_value),
-                $this->get_status_msg($info_value),
-            ));
+            $order->update_status('failed', $this->get_status_msg($info_value));
         }
+    }
+
+    protected function log_unknown_status($order, $info_value)
+    {
+        RY_WT_WC_PAYUNi_Gateway::instance()->log('Unknown status', WC_Log_Levels::INFO, ['status' => $this->get_status($info_value), 'status_msg' => $this->get_status_msg($info_value)]);
+
+        $order->add_order_note(sprintf(
+            /* translators: 1: Error status code 2: Error status message */
+            __('Unknown payment status: %1$s (%2$s)', 'ry-woocommerce-tools'),
+            $this->get_status($info_value),
+            $this->get_status_msg($info_value),
+        ));
     }
 }

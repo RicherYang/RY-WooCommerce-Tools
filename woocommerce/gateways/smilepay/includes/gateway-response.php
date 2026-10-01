@@ -148,11 +148,7 @@ final class RY_WT_WC_SmilePay_Gateway_Response extends RY_WT_SmilePay_Api
                                 $order->save();
                                 do_action('ry_gateway_paid_order_failed', $order->get_id());
                             } else {
-                                $order->update_status('failed', sprintf(
-                                    /* translators: Error status message */
-                                    __('Payment failed (%s)', 'ry-woocommerce-tools'),
-                                    $info_value['Errdesc'],
-                                ));
+                                $order->update_status('failed', $info_value['Errdesc']);
                             }
                         }
                         break;

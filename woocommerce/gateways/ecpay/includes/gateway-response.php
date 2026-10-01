@@ -182,17 +182,19 @@ final class RY_WT_WC_ECPay_Gateway_Response extends RY_WT_ECPay_Api
     protected function payment_status_unknow($order, $info_value)
     {
         RY_WT_WC_ECPay_Gateway::instance()->log('Unknow status', WC_Log_Levels::INFO, ['status' => $this->get_status($info_value), 'status_msg' => $this->get_status_msg($info_value)]);
+        $order->add_order_note(sprintf(
+            /* translators: 1: Error status code 2: Error status message */
+            __('Unknown payment status: %1$s (%2$s)', 'ry-woocommerce-tools'),
+            $this->get_status($info_value),
+            $this->get_status_msg($info_value),
+        ));
+
         if ($order->is_paid()) {
             $order->add_order_note(__('Payment failed within paid order', 'ry-woocommerce-tools'));
             $order->save();
             do_action('ry_gateway_paid_order_failed', $order->get_id());
         } else {
-            $order->update_status('failed', sprintf(
-                /* translators: %1$s: status message, %2$d status code */
-                __('Payment unkonw status: %1$s (%2$d)', 'ry-woocommerce-tools'),
-                $this->get_status_msg($info_value),
-                $this->get_status($info_value),
-            ));
+            $order->update_status('failed', $this->get_status_msg($info_value));
         }
     }
 }
