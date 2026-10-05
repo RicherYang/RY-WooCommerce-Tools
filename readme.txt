@@ -26,7 +26,7 @@ You can contribute to this plugin to [GitHub repository](https://github.com/Rich
 
 * PHP 8.2+
 * WordPress 7.0+
-* WooCommerce 9.0+
+* WooCommerce 10.0+
 
 == Frequently Asked Questions ==
 Basically I didn't follow the support forum at wordpress.org.
