@@ -5,7 +5,7 @@
  * Plugin URI: https://ry-plugin.com/ry-woocommerce-tools
  * Description: WooCommerce payment and shipping tools
  * Version: 2026.9.29
- * Requires at least: 6.8
+ * Requires at least: 7.0
  * Requires PHP: 8.2
  * Requires Plugins: woocommerce
  * Author: Richer Yang
