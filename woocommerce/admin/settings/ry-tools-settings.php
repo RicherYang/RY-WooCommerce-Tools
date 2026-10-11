@@ -250,8 +250,10 @@ final class RY_WT_WC_Admin_Settings extends WC_Settings_Page
                         '3' => _x('120 cm', 'box size', 'ry-woocommerce-tools'),
                         '4' => _x('150 cm', 'box size', 'ry-woocommerce-tools'),
                     ],
-                    'desc' => __('By product is set box size to the biggest product size.', 'ry-woocommerce-tools'),
-                    'desc_tip' => true,
+                    'desc' => sprintf(
+                        __('By Product: Calculate box size based on product dimensions. <a href="%s">More information</a>.', 'ry-woocommerce-tools'),
+                        'https://ry-plugin.com/blog/how-to-calculate-shipping-box-info'
+                    ),
                     'autoload' => false,
                 ],
                 [

@@ -48,13 +48,12 @@ final class RY_WT_WC_ECPay_Gateway_Api extends RY_WT_ECPay_Api
             'TradeDesc' => get_bloginfo('name'),
             'ItemName' => $item_name,
             'ReturnURL' => $notify_url,
-            'ClientBackURL' => $return_url,
             'OrderResultURL' => $return_url,
+            'ClientRedirectURL' => $return_url,
             'NeedExtraPaidInfo' => 'Y',
             'IgnorePayment' => '',
             'EncryptType' => 1,
             'PaymentInfoURL' => $notify_url,
-            'ClientRedirectURL' => $return_url,
         ];
         $args['TradeDesc'] = preg_replace('/[\x{21}-\x{2f}\x{3a}-\x{40}\x{5b}-\x{60}\x{7b}-\x{7e}]/', ' ', $args['TradeDesc']);
         $args['TradeDesc'] = mb_substr($args['TradeDesc'], 0, 100);

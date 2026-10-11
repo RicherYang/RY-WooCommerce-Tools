@@ -140,6 +140,7 @@ abstract class RY_WT_Api
             'price' => 0,
             'fee' => 0,
             'weight' => 0,
+            'volume' => 0,
             'size' => 0,
             'items' => 0,
         ];
@@ -154,7 +155,8 @@ abstract class RY_WT_Api
                 }
                 $temp = in_array($temp, $method_class::get_support_temp()) ? $temp : '1';
                 $weight = $product->get_weight();
-                $size = (float) $product->get_length() + (float) $product->get_width() + (float) $product->get_height();
+                $volume = ((float) $product->get_length()) * ((float) $product->get_width()) * ((float) $product->get_height()) * $item->get_quantity();
+                $size = ((float) $product->get_length()) + ((float) $product->get_width()) + ((float) $product->get_height());
 
                 $shipping_amount = $product->get_meta('_ry_shipping_amount', true);
                 if ('' == $shipping_amount) {
@@ -175,6 +177,7 @@ abstract class RY_WT_Api
             } else {
                 $temp = 1;
                 $weight = '';
+                $volume = 0;
                 $size = 0;
                 $item_price = $item->get_subtotal();
             }
@@ -202,6 +205,7 @@ abstract class RY_WT_Api
                     $package_list[0]['price'] += $item_price;
                     $package_list[0]['fee'] += $item->get_total();
                     $package_list[0]['weight'] += $weight * $item->get_quantity();
+                    $package_list[0]['volume'] += $volume;
                     $package_list[0]['size'] = $size;
 
                     $temp_package[$temp] += 1;
@@ -219,6 +223,7 @@ abstract class RY_WT_Api
             $package_list[$temp_package[$temp]]['price'] += $item_price;
             $package_list[$temp_package[$temp]]['fee'] += $item->get_total();
             $package_list[$temp_package[$temp]]['weight'] += $weight * $item->get_quantity();
+            $package_list[$temp_package[$temp]]['volume'] += $volume;
             $package_list[$temp_package[$temp]]['size'] = max($size, $package_list[$temp_package[$temp]]['size']);
         }
 
@@ -228,8 +233,12 @@ abstract class RY_WT_Api
                 continue;
             }
 
-            $package_info['price'] = (int) $package_info['price'];
-            $package_info['fee'] = (int) $package_info['fee'];
+            $package_list[$idx]['price'] = (int) $package_info['price'];
+            $package_list[$idx]['fee'] = (int) $package_info['fee'];
+            if ($package_info['volume'] > 0) {
+                $package_list[$idx]['size'] = max($package_info['size'], pow($package_info['volume'], 1 / 3) * 3);
+            }
+            unset($package_list[$idx]['volume']);
         }
 
         usort($package_list, function ($a, $b) {
