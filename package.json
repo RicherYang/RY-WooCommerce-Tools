@@ -5,8 +5,8 @@
     "author": "Richer Yang",
     "private": true,
     "devDependencies": {
-        "@wordpress/i18n": "^6.28.0",
-        "@wordpress/scripts": "^35.0.0"
+        "@wordpress/i18n": "7.0.0",
+        "@wordpress/scripts": "37.0.0"
     },
     "scripts": {
         "start": "wp-scripts start",
@@ -17,5 +17,11 @@
         "i18n:pot": "wp i18n make-pot \"\" \"languages/ry-woocommerce-tools.pot\" --slug=\"ry-woocommerce-tools\" --domain=\"ry-woocommerce-tools\" --exclude=\"node_modules,assets-src\"",
         "i18n:clearpot": "node -e \"const fs=require('fs');const path=require('path');const dir='languages';for(const file of fs.readdirSync(dir)){if(!file.endsWith('.pot'))continue;const full=path.join(dir,file);const data=fs.readFileSync(full,'utf8').split('\\n');const newData=data.filter(line=>!line.startsWith('\\\"POT-Creation-Date:'));fs.writeFileSync(full,newData.join('\\n'));}\"",
         "update": "npm update"
+    },
+    "allowScripts": {
+        "@parcel/watcher@2.6.0": true,
+        "core-js@3.51.0": true,
+        "core-js-pure@3.51.0": true,
+        "unrs-resolver@1.12.2": true
     }
 }
