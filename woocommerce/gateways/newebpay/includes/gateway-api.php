@@ -54,6 +54,7 @@ final class RY_WT_WC_NewebPay_Gateway_Api extends RY_WT_NewebPay_Api
             'SAMSUNGPAY' => 0,
             'LINEPAY' => 0,
             'AFTEE' => 0,
+            'OPPAY' => 0,
             'InstFlag' => 0,
             'CreditRed' => 0,
             'UNIONPAY' => 0,
@@ -64,7 +65,7 @@ final class RY_WT_WC_NewebPay_Gateway_Api extends RY_WT_NewebPay_Api
             'BARCODE' => 0,
             'ESUNWALLET' => 0,
             'TAIWANPAY' => 0,
-            'BITOPAY' => 0,
+            'BITOPRO' => 0,
             'TWQR' => 0,
             'EZPWECHAT' => 0,
             'EZPALIPAY' => 0,
@@ -190,7 +191,21 @@ final class RY_WT_WC_NewebPay_Gateway_Api extends RY_WT_NewebPay_Api
                     }
                     break;
                 case 'BNPL':
-                    $args['AFTEE'] = 1;
+                    if ($gateway->support_aftee === true) {
+                        $args['AFTEE'] = 1;
+                    }
+                    if ($gateway->support_oppay === true) {
+                        $args['OPPAY'] = 1;
+                    }
+                    $args['OrderDetail'] = wp_json_encode([[
+                        'ItemName' => $args['ItemDesc'],
+                        'ItemAmt' => $args['Amt'],
+                        'ItemType' => 1,
+                        'ItemOrderNo' => 0,
+                    ]]);
+                    break;
+                case 'AFTEE':
+                case 'OPPAY':
                     $args['OrderDetail'] = wp_json_encode([[
                         'ItemName' => $args['ItemDesc'],
                         'ItemAmt' => $args['Amt'],
