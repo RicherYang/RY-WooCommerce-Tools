@@ -36,7 +36,7 @@ final class RY_WT_WC_Shipping
             include_once RY_WT_PLUGIN_DIR . 'woocommerce/admin/shipping.php';
             RY_WT_WC_Admin_Shipping::instance();
         } else {
-            add_action('woocommerce_review_order_after_shipping', [$this, 'set_script'], 9);
+            add_action('woocommerce_after_checkout_form', [$this, 'set_script']);
         }
     }
 

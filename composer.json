@@ -1,6 +1,6 @@
 {
     "name": "ry/woocommerce-tools",
-    "version": "2026.9.29",
+    "version": "2026.11.3",
     "require": {
         "woocommerce/action-scheduler": "^4.0"
     },

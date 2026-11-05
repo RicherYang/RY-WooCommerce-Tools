@@ -21,11 +21,14 @@ $(function () {
     $(document.body).on('updated_checkout', function (e, data) {
         if (data !== undefined) {
             postShippingInfo = undefined;
+
             $('.woocommerce-checkout .ry-cvs-hide').show();
             $('.woocommerce-checkout .ry-ecpay-cvs-hide').show();
             $('.woocommerce-checkout .ry-newebpay-cvs-hide').show();
             $('.woocommerce-checkout .ry-payuni-cvs-hide').show();
             $('.woocommerce-checkout .ry-smilepay-cvs-hide').show();
+            $('.woocommerce-checkout .ry-hide').hide();
+
             if (data.fragments.ry_shipping_info !== undefined) {
                 if (data.fragments.ry_shipping_info.ecpay_cvs === true) {
                     setShippingPhone(true);
