@@ -5,7 +5,7 @@ Tags: woocommerce, payment, gateway, shipping
 Requires at least: 7.0
 Requires PHP: 8.2
 Tested up to: 7.1
-Stable tag: 2026.11.3
+Stable tag: 2026.11.4
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.txt
 
@@ -40,7 +40,7 @@ Please visit the [plugin forum page](https://ry-plugin.com/ry-woocommerce-tools/
 
 == Changelog ==
 
-= 2026.11.3 =
+= 2026.11.4 =
 * 調整 - 微調結帳表單 JavaScript 內容。
 
 = 2026.10.24 =

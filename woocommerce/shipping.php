@@ -186,7 +186,6 @@ final class RY_WT_WC_Shipping
 
     public function set_script()
     {
-        wp_enqueue_script('ry-checkout');
         if (true === WC()->cart->needs_shipping_address()) {
             $fields = WC()->checkout()->get_checkout_fields('shipping');
             if (isset($fields['shipping_phone']) && false === $fields['shipping_phone']['required']) {

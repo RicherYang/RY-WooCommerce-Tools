@@ -334,8 +334,8 @@ final class Update
             });
         }
 
-        if (version_compare($now_version, '2026.11.3', '<')) {
-            Main::update_option('version', '2026.11.3', true);
+        if (version_compare($now_version, '2026.11.4', '<')) {
+            Main::update_option('version', '2026.11.4', true);
         }
     }
 }
