@@ -4,8 +4,7 @@ namespace RY\WooCommerce;
 
 defined('ABSPATH') or exit;
 
-use RY\General\V20260810\Logs;
-use RY\WooCommerce\Main;
+use RY\General\V20261107\Logs;
 
 final class Update
 {
@@ -22,10 +21,6 @@ final class Update
         if ($now_version === '0.0.0') {
             Main::update_option('version', RY_WT_VERSION, true);
             return;
-        }
-
-        if (!wp_next_scheduled('ry_check_ntp_time')) {
-            wp_schedule_event(time(), 'daily', 'ry_check_ntp_time');
         }
 
         if (version_compare($now_version, '1.1.2', '<')) {
@@ -334,8 +329,23 @@ final class Update
             });
         }
 
-        if (version_compare($now_version, '2026.11.4', '<')) {
-            Main::update_option('version', '2026.11.4', true);
+        if (version_compare($now_version, '2026.11.7', '<')) {
+            add_action('init', function () {
+                wp_unschedule_hook('ry_check_ntp_time');
+
+                if (function_exists('stream_socket_client')) {
+                    as_schedule_recurring_action(time() + HOUR_IN_SECONDS, DAY_IN_SECONDS, 'RY_GENERAL_ntp_time', [], '', true);
+                }
+
+                Main::update_option('version', '2026.11.7', true);
+            });
+
+            $tracking = get_option('RY_General_tracking', null);
+            if ($tracking !== null) {
+                delete_option('RY_General_tracking');
+                update_option('RY_GENERAL_tracking', $tracking);
+            }
+            Main::delete_option('ntp_time_error');
         }
     }
 }

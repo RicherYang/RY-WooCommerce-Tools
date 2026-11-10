@@ -4,7 +4,7 @@ namespace RY\WooCommerce\Admin;
 
 defined('ABSPATH') or exit;
 
-use RY\General\V20260810\AbstractAdmin;
+use RY\General\V20261107\AbstractAdmin;
 use RY\WooCommerce\Main;
 
 final class Admin extends AbstractAdmin
@@ -24,7 +24,6 @@ final class Admin extends AbstractAdmin
     protected function do_init(): void
     {
         add_action('admin_notices', [$this, 'need_woocommerce']);
-        add_action('admin_notices', [$this, 'show_time_error']);
 
         add_filter('plugin_action_links_' . RY_WT_PLUGIN_BASENAME, [$this, 'plugin_action_links'], 10);
     }
@@ -39,16 +38,6 @@ final class Admin extends AbstractAdmin
                 Main::MIN_WC_VERSION,
             );
             printf('<div class="error"><p>%s</p></div>', wp_kses($message, ['strong' => []]));
-        }
-    }
-
-    public function show_time_error(): void
-    {
-        if (Main::get_option('ntp_time_error', false)) {
-            printf(
-                '<div class="notice notice-error"><p>%s</p></div>',
-                esc_html__('Please check your server time setting. Server time is differs from NTP more than one minute.', 'ry-woocommerce-tools'),
-            );
         }
     }
 

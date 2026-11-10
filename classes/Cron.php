@@ -2,45 +2,15 @@
 
 namespace RY\WooCommerce;
 
+use RY\Invoice\Amego\Main;
+
 defined('ABSPATH') or exit;
 
 final class Cron
 {
     public static function add_action(): void
     {
-        add_action('ry_check_ntp_time', [__CLASS__, 'check_ntp_time']);
-
         add_action('ry_wt_update_3_2_0', [__CLASS__, 'update_3_2_0']);
-    }
-
-    public static function check_ntp_time()
-    {
-        if (!function_exists('stream_socket_client')) {
-            wp_unschedule_hook('ry_check_ntp_time');
-            return -1;
-        }
-
-        $ntp_time = 0;
-        $ntp_server_url = apply_filters('ry_ntp_server_url', 'udp://time.google.com:123');
-        $socket = stream_socket_client($ntp_server_url, $errno, $errstr, 5);
-        if ($socket) {
-            fwrite($socket, chr(0x1B) . str_repeat(chr(0x00), 47)); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fwrite
-            $response = fread($socket, 48); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fread
-            fclose($socket); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose
-            if (!empty($response)) {
-                $data = @unpack('N12', $response);
-                if (is_array($data) && isset($data[9])) {
-                    $ntp_time = sprintf('%u', $data[9]) - 2208988800;
-                }
-            }
-        }
-
-        if ($ntp_time > 0) {
-            $time_diff = abs(current_time('timestamp', true) - $ntp_time);
-            Main::update_option('ntp_time_error', $time_diff > MINUTE_IN_SECONDS);
-            return $time_diff;
-        }
-        return -1;
     }
 
     public static function update_3_2_0(): void

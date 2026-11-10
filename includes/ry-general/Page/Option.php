@@ -1,11 +1,11 @@
 <?php
 
-namespace RY\General\V20260810\Page;
+namespace RY\General\V20261107\Page;
 
 defined('ABSPATH') or exit;
 
-use RY\General\V20260810\AbstractAdminPage;
-use RY\General\V20260810\Utils;
+use RY\General\V20261107\AbstractAdminPage;
+use RY\General\V20261107\Utils;
 
 final class Option extends AbstractAdminPage
 {
@@ -63,7 +63,7 @@ final class Option extends AbstractAdminPage
         check_ajax_referer('save-option', '_ajax_nonce');
 
         $tracking = isset($_POST['tracking']);
-        update_option('RY_General_tracking', Utils::bool_to_string($tracking), false);
+        update_option('RY_GENERAL_tracking', Utils::bool_to_string($tracking), false);
         if ($tracking) {
             as_schedule_recurring_action(time() + HOUR_IN_SECONDS, DAY_IN_SECONDS, 'RY_GENERAL_usage_tracking', [], '', true);
         } else {

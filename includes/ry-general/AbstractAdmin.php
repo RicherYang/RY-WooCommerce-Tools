@@ -1,11 +1,11 @@
 <?php
 
-namespace RY\General\V20260810;
+namespace RY\General\V20261107;
 
 defined('ABSPATH') or exit;
 
-use RY\General\V20260810\Page\Logs as PageLogs;
-use RY\General\V20260810\Page\Option as PageOption;
+use RY\General\V20261107\Page\Logs as PageLogs;
+use RY\General\V20261107\Page\Option as PageOption;
 
 abstract class AbstractAdmin
 {
@@ -14,7 +14,24 @@ abstract class AbstractAdmin
         PageLogs::init_menu();
         PageOption::init_menu();
 
+        add_action('admin_notices', [$this, 'show_time_error']);
         add_action('admin_menu', [$this, 'general_menu']);
+    }
+
+    public function show_time_error(): void
+    {
+        static $shown = false;
+        if ($shown) {
+            return;
+        }
+        $shown = true;
+
+        if (get_option('RY_GENERAL_ntp_time_diff', -1) > MINUTE_IN_SECONDS) {
+            printf(
+                '<div class="notice notice-error is-dismissible"><p>%s</p></div>',
+                esc_html__('Please check your server time setting. Server time is differs from NTP more than one minute.', 'ry-woocommerce-tools'),
+            );
+        }
     }
 
     public function general_menu(): void

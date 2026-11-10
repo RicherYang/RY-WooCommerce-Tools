@@ -4,7 +4,7 @@ namespace RY\WooCommerce;
 
 defined('ABSPATH') or exit;
 
-use RY\General\V20260810\AbstractLinkServer;
+use RY\General\V20261107\AbstractLinkServer;
 
 final class LinkServer extends AbstractLinkServer
 {

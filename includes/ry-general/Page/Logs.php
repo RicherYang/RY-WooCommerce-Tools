@@ -1,11 +1,11 @@
 <?php
 
-namespace RY\General\V20260810\Page;
+namespace RY\General\V20261107\Page;
 
 defined('ABSPATH') or exit;
 
-use RY\General\V20260810\AbstractAdminPage;
-use RY\General\V20260810\Logs as LogsUtil;
+use RY\General\V20261107\AbstractAdminPage;
+use RY\General\V20261107\Logs as LogsUtil;
 
 final class Logs extends AbstractAdminPage
 {

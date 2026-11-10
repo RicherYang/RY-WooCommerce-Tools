@@ -4,7 +4,7 @@ namespace RY\WooCommerce;
 
 defined('ABSPATH') or exit;
 
-use RY\General\V20260810\AbstractBasic;
+use RY\General\V20261107\AbstractBasic;
 use RY\WooCommerce\Admin\Admin;
 
 final class Main extends AbstractBasic
@@ -120,7 +120,7 @@ final class Main extends AbstractBasic
 
     public static function usage_tracking(): void
     {
-        if (get_option('RY_General_tracking', 'yes') !== 'yes') {
+        if (get_option('RY_GENERAL_tracking', 'yes') !== 'yes') {
             return;
         }
 
@@ -129,15 +129,11 @@ final class Main extends AbstractBasic
 
     public static function plugin_activation(): void
     {
-        if (!wp_next_scheduled('ry_check_ntp_time')) {
-            self::update_option('ntp_time_error', false);
-            wp_schedule_event(time(), 'daily', 'ry_check_ntp_time');
-        }
+        parent::plugin_activation();
     }
 
     public static function plugin_deactivation(): void
     {
-        wp_unschedule_hook('ry_check_ntp_time');
-        as_unschedule_all_actions('RY_GENERAL_usage_tracking');
+        parent::plugin_deactivation();
     }
 }

@@ -2,7 +2,7 @@
 # This file is distributed under the GPLv3.
 msgid ""
 msgstr ""
-"Project-Id-Version: RY Tools for WooCommerce 2026.11.3\n"
+"Project-Id-Version: RY Tools for WooCommerce 2026.11.7\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/ry-woocommerce-tools\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,7 +15,7 @@ msgstr ""
 
 #. Plugin Name of the plugin
 #: ry-woocommerce-tools.php
-#: admin/Admin.php:38
+#: admin/Admin.php:37
 #: woocommerce/admin/settings/html/tools.php:4
 msgid "RY Tools for WooCommerce"
 msgstr ""
@@ -41,17 +41,17 @@ msgid "https://richer.tw/"
 msgstr ""
 
 #. translators: %1$s: Name of this plugin %2$s: min require version
-#: admin/Admin.php:37
+#: admin/Admin.php:36
 #, php-format
 msgid "<strong>%1$s</strong> is inactive. It require WooCommerce version %2$s or newer."
 msgstr ""
 
-#: admin/Admin.php:50
-msgid "Please check your server time setting. Server time is differs from NTP more than one minute."
+#: admin/Admin.php:47
+msgid "Settings"
 msgstr ""
 
-#: admin/Admin.php:58
-msgid "Settings"
+#: includes/ry-general/AbstractAdmin.php:32
+msgid "Please check your server time setting. Server time is differs from NTP more than one minute."
 msgstr ""
 
 #: includes/ry-general/ActionScheduler/ListTable.php:30
@@ -367,26 +367,26 @@ msgstr ""
 msgid "%1$s expire date more then normal maximum (%2$d)."
 msgstr ""
 
-#: woocommerce/admin/admin.php:40
+#: woocommerce/admin/admin.php:42
 #: woocommerce/admin/settings/ry-tools-settings.php:226
 msgid "Shipping options"
 msgstr ""
 
-#: woocommerce/admin/admin.php:58
+#: woocommerce/admin/admin.php:60
 #: woocommerce/admin/settings/html/tools.php:4
 msgid "Tools"
 msgstr ""
 
-#: woocommerce/admin/admin.php:59
+#: woocommerce/admin/admin.php:61
 msgid "Pro version"
 msgstr ""
 
-#: woocommerce/admin/admin.php:75
+#: woocommerce/admin/admin.php:77
 msgid "Check server time failed."
 msgstr ""
 
 #. translators: %d: differ time (second)
-#: woocommerce/admin/admin.php:82
+#: woocommerce/admin/admin.php:84
 #, php-format
 msgid "Check server time success. Difference: %d second"
 msgid_plural "Check server time success. Difference: %d seconds"
@@ -628,7 +628,7 @@ msgid "Resend at cvs notification"
 msgstr ""
 
 #: woocommerce/countries.php:68
-#: woocommerce/shipping.php:195
+#: woocommerce/shipping.php:194
 msgid "required"
 msgstr ""
 
@@ -1925,7 +1925,7 @@ msgid_plural "Transporting <span class=\"count\">(%s)</span>"
 msgstr[0] ""
 msgstr[1] ""
 
-#: woocommerce/shipping.php:196
+#: woocommerce/shipping.php:195
 msgid "optional"
 msgstr ""
 

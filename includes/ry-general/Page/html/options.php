@@ -1,7 +1,7 @@
 <?php defined('ABSPATH') or exit; ?>
 
 <?php
-use RY\General\V20260810\Utils;
+use RY\General\V20261107\Utils;
 
 ?>
 
@@ -11,7 +11,7 @@ use RY\General\V20260810\Utils;
         <td>
             <fieldset>
                 <legend class="screen-reader-text"><span><?php esc_html_e('Enable tracking', 'ry-woocommerce-tools'); ?></span></legend>
-                <label for="tracking"><input name="tracking" type="checkbox" id="tracking" value="yes" <?php checked(Utils::string_to_bool(get_option('RY_General_tracking', 'yes'))); ?>>
+                <label for="tracking"><input name="tracking" type="checkbox" id="tracking" value="yes" <?php checked(Utils::string_to_bool(get_option('RY_GENERAL_tracking', 'yes'))); ?>>
                     <?php esc_html_e('Allow usage of RY Plugin to be tracked', 'ry-woocommerce-tools'); ?></label>
                 <p class="description">
                     <?php echo wp_kses(sprintf(
