@@ -4,7 +4,7 @@ namespace RY\WooCommerce;
 
 defined('ABSPATH') or exit;
 
-use RY\General\V20261107\Logs;
+use RY\General\V20261116\Logs;
 
 final class Update
 {
@@ -346,6 +346,10 @@ final class Update
                 update_option('RY_GENERAL_tracking', $tracking);
             }
             Main::delete_option('ntp_time_error');
+        }
+
+        if (version_compare($now_version, '2026.11.16', '<')) {
+            Main::update_option('version', '2026.11.16', true);
         }
     }
 }

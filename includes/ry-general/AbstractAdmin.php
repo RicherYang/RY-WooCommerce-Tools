@@ -1,11 +1,11 @@
 <?php
 
-namespace RY\General\V20261107;
+namespace RY\General\V20261116;
 
 defined('ABSPATH') or exit;
 
-use RY\General\V20261107\Page\Logs as PageLogs;
-use RY\General\V20261107\Page\Option as PageOption;
+use RY\General\V20261116\Page\Logs as PageLogs;
+use RY\General\V20261116\Page\Option as PageOption;
 
 abstract class AbstractAdmin
 {

@@ -4,7 +4,7 @@ namespace RY\WooCommerce\Admin;
 
 defined('ABSPATH') or exit;
 
-use RY\General\V20261107\AbstractAdmin;
+use RY\General\V20261116\AbstractAdmin;
 use RY\WooCommerce\Main;
 
 final class Admin extends AbstractAdmin

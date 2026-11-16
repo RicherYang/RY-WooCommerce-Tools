@@ -4,7 +4,7 @@ namespace RY\WooCommerce;
 
 defined('ABSPATH') or exit;
 
-use RY\General\V20261107\AbstractBasic;
+use RY\General\V20261116\AbstractBasic;
 use RY\WooCommerce\Admin\Admin;
 
 final class Main extends AbstractBasic

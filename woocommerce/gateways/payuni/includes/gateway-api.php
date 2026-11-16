@@ -281,7 +281,7 @@ final class RY_WT_WC_PAYUNi_Gateway_Api extends RY_WT_PAYUNi_Api
                 case 'CVS':
                     $now = new DateTime('now', new DateTimeZone('Asia/Taipei'));
                     $now->add(new DateInterval('P' . $gateway->expire_date . 'D'));
-                    $data['ExpireDate'] = $now->format('Ymd');
+                    $data['ExpireDate'] = $now->format('Y-m-d');
                     break;
                 case 'CreditInst':
                     if (isset($gateway->number_of_periods) && !empty($gateway->number_of_periods)) {
