@@ -66,8 +66,9 @@ abstract class RY_WT_PAYUNi_Api extends RY_WT_Api
 
         return wp_remote_post($url, [
             'timeout' => $timeout,
+            'httpversion' => '1.1',
+            'user-agent' => apply_filters('http_headers_useragent', 'RY/' . date('Y.m')),
             'body' => $args,
-            'user-agent' => apply_filters('http_headers_useragent', 'WordPress/' . get_bloginfo('version')),
         ]);
     }
 

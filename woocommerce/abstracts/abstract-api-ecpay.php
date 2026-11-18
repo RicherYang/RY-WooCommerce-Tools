@@ -76,8 +76,9 @@ abstract class RY_WT_ECPay_Api extends RY_WT_Api
 
         return wp_remote_post($url, [
             'timeout' => $timeout,
+            'httpversion' => '1.1',
+            'user-agent' => apply_filters('http_headers_useragent', 'RY/' . date('Y.m')),
             'body' => implode('&', $send_body),
-            'user-agent' => apply_filters('http_headers_useragent', 'WordPress/' . get_bloginfo('version')),
         ]);
     }
 
@@ -90,11 +91,12 @@ abstract class RY_WT_ECPay_Api extends RY_WT_Api
 
         return wp_remote_post($url, [
             'timeout' => $timeout,
+            'httpversion' => '1.1',
+            'user-agent' => apply_filters('http_headers_useragent', 'RY/' . date('Y.m')),
             'headers' => [
                 'Content-Type' => 'application/json',
             ],
             'body' => wp_json_encode($args),
-            'user-agent' => apply_filters('http_headers_useragent', 'WordPress/' . get_bloginfo('version')),
         ]);
     }
 

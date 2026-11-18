@@ -19,7 +19,7 @@ abstract class AbstractLinkServer
         $response = wp_remote_post($this->api_url . 'tracking', [
             'timeout' => 20,
             'httpversion' => '1.1',
-            'user-agent' => 'WordPress; RY Plugin',
+            'user-agent' => apply_filters('http_headers_useragent', 'RY/' . date('Y.m')),
             'headers' => [
                 'Content-Type' => 'application/json;charset=' . get_bloginfo('charset'),
             ],
