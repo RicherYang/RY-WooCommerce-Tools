@@ -2,6 +2,8 @@
 
 defined('ABSPATH') or exit;
 
+use Automattic\WooCommerce\StoreApi\Utilities\RateLimits;
+
 final class RY_WT_WC_NewebPay_Gateway_Response extends RY_WT_NewebPay_Api
 {
     private static ?self $_instance = null;
@@ -53,10 +55,27 @@ final class RY_WT_WC_NewebPay_Gateway_Response extends RY_WT_NewebPay_Api
             RY_WT_WC_NewebPay_Gateway::instance()->log('IPN request', WC_Log_Levels::INFO, ['data' => $ipn_info]);
             $api_info = RY_WT_WC_NewebPay_Gateway::instance()->get_api_info();
 
+            $this->enable_rate_limit(apply_filters('ry_callback_site_limit_seconds', HOUR_IN_SECONDS));
+            if (RateLimits::get_options()->enabled) {
+                if (RateLimits::is_exceeded_retry_after('ry_newebpay_ipn_error') !== false) {
+                    RY_WT_WC_NewebPay_Gateway::instance()->log('IPN check rate limit exceeded', WC_Log_Levels::ERROR, ['data' => $ipn_info]);
+                    return false;
+                }
+            }
+
             $info_value = $this->get_info_value($ipn_info);
             $ipn_info_check_value = $this->generate_hash_value($info_value, $api_info['HashKey'], $api_info['HashIV']);
             if (hash_equals($check_value, $ipn_info_check_value)) {
                 return true;
+            }
+
+            $this->enable_rate_limit(apply_filters('ry_callback_site_limit_seconds', HOUR_IN_SECONDS));
+            if (RateLimits::get_options()->enabled) {
+                RateLimits::update_rate_limit('ry_newebpay_ipn_error');
+                $seconds = RateLimits::is_exceeded_retry_after('ry_newebpay_ipn_error');
+                if ($seconds !== false) {
+                    do_action('ry_callback_check_failed_limited_notification', __('NewebPay', 'ry-woocommerce-tools'), $seconds);
+                }
             }
             RY_WT_WC_NewebPay_Gateway::instance()->log('IPN request check failed', WC_Log_Levels::ERROR, ['response' => $check_value, 'self' => $ipn_info_check_value]);
         } else {

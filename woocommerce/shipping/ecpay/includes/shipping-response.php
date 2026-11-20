@@ -2,6 +2,7 @@
 
 defined('ABSPATH') or exit;
 
+use Automattic\WooCommerce\StoreApi\Utilities\RateLimits;
 use RY\WooCommerce\Main;
 
 final class RY_WT_WC_ECPay_Shipping_Response extends RY_WT_ECPay_Api
@@ -120,9 +121,26 @@ final class RY_WT_WC_ECPay_Shipping_Response extends RY_WT_ECPay_Api
             RY_WT_WC_ECPay_Shipping::instance()->log('IPN request', WC_Log_Levels::INFO, ['data' => $ipn_info]);
             $api_info = RY_WT_WC_ECPay_Shipping::instance()->get_api_info();
 
+            $this->enable_rate_limit(apply_filters('ry_callback_site_limit_seconds', HOUR_IN_SECONDS));
+            if (RateLimits::get_options()->enabled) {
+                if (RateLimits::is_exceeded_retry_after('ry_ecpay_ipn_error') !== false) {
+                    RY_WT_WC_ECPay_Shipping::instance()->log('IPN check rate limit exceeded', WC_Log_Levels::ERROR, ['data' => $ipn_info]);
+                    return false;
+                }
+            }
+
             $ipn_info_check_value = $this->generate_hash_value($ipn_info, $api_info['HashKey'], $api_info['HashIV'], 'md5');
             if (hash_equals($check_value, $ipn_info_check_value)) {
                 return true;
+            }
+
+            $this->enable_rate_limit(apply_filters('ry_callback_site_limit_seconds', HOUR_IN_SECONDS));
+            if (RateLimits::get_options()->enabled) {
+                RateLimits::update_rate_limit('ry_ecpay_ipn_error');
+                $seconds = RateLimits::is_exceeded_retry_after('ry_ecpay_ipn_error');
+                if ($seconds !== false) {
+                    do_action('ry_callback_check_failed_limited_notification', __('ECPay', 'ry-woocommerce-tools'), $seconds);
+                }
             }
             RY_WT_WC_ECPay_Shipping::instance()->log('IPN request check failed', WC_Log_Levels::ERROR, ['response' => $check_value, 'self' => $ipn_info_check_value]);
         } else {

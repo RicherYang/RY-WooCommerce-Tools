@@ -163,6 +163,9 @@ final class RY_WT_WC_Shipping
 
     public function add_email_class($emails)
     {
+        if (!isset($emails['RY_Callback_Check_Failed_Limited'])) {
+            $emails['RY_Callback_Check_Failed_Limited'] = include RY_WT_PLUGIN_DIR . 'woocommerce/emails/callback-check-failed-limited.php';
+        }
         $emails['RY_Shipping_Email_Customer_CVS_Store'] = include RY_WT_PLUGIN_DIR . 'woocommerce/emails/shipping-customer-cvs-store.php';
 
         return $emails;
@@ -170,6 +173,9 @@ final class RY_WT_WC_Shipping
 
     public function add_email_action($actions)
     {
+        if (!in_array('ry_callback_check_failed_limited', $actions)) {
+            $actions[] = 'ry_callback_check_failed_limited';
+        }
         $actions[] = 'ry_shipping_customer_cvs_store';
 
         return $actions;

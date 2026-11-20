@@ -2,8 +2,6 @@
 
 namespace RY\WooCommerce;
 
-use RY\Invoice\Amego\Main;
-
 defined('ABSPATH') or exit;
 
 final class Cron

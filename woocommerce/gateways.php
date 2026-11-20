@@ -56,6 +56,9 @@ final class RY_WT_WC_Gateways
 
     public function add_email_class($emails)
     {
+        if (!isset($emails['RY_Callback_Check_Failed_Limited'])) {
+            $emails['RY_Callback_Check_Failed_Limited'] = include RY_WT_PLUGIN_DIR . 'woocommerce/emails/callback-check-failed-limited.php';
+        }
         $emails['RY_Gateway_Paid_Order_Failed'] = include RY_WT_PLUGIN_DIR . 'woocommerce/emails/gateway-paid-order-failed.php';
 
         return $emails;
@@ -63,6 +66,9 @@ final class RY_WT_WC_Gateways
 
     public function add_email_action($actions)
     {
+        if (!in_array('ry_callback_check_failed_limited', $actions)) {
+            $actions[] = 'ry_callback_check_failed_limited';
+        }
         $actions[] = 'ry_gateway_paid_order_failed';
 
         return $actions;

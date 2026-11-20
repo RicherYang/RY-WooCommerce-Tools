@@ -45,15 +45,12 @@ final class RY_WT_WC_SmilePay_Gateway_Response extends RY_WT_SmilePay_Api
             $api_info = RY_WT_WC_SmilePay_Gateway::instance()->get_api_info();
             $order_ID = $this->get_order_id($ipn_info, $api_info['prefix']);
             if ($order = wc_get_order($order_ID)) {
-                $this->enable_rate_limit();
-                $rate_option = RateLimits::get_options();
-                if ($rate_option->enabled) {
-                    $action_id = 'ry_smilepay_ipn_' . $order->get_id();
-                    if (RateLimits::is_exceeded_retry_after($action_id) !== false) {
-                        RY_WT_WC_SmilePay_Gateway::instance()->log('IPN request rate limit exceeded', WC_Log_Levels::ERROR, ['data' => $ipn_info]);
+                $this->enable_rate_limit(apply_filters('ry_callback_site_limit_seconds', HOUR_IN_SECONDS));
+                if (RateLimits::get_options()->enabled) {
+                    if (RateLimits::is_exceeded_retry_after('ry_smilepay_ipn_error') !== false) {
+                        RY_WT_WC_SmilePay_Gateway::instance()->log('IPN check rate limit exceeded', WC_Log_Levels::ERROR, ['data' => $ipn_info]);
                         return false;
                     }
-                    RateLimits::update_rate_limit($action_id);
                 }
 
                 $ipn_info_check_value = hash_hmac('md5', $order->get_id(), $order->get_order_key());
@@ -85,6 +82,15 @@ final class RY_WT_WC_SmilePay_Gateway_Response extends RY_WT_SmilePay_Api
                         if ($check_value === $ipn_info_check_value) {
                             return true;
                         }
+                    }
+                }
+
+                $this->enable_rate_limit(apply_filters('ry_callback_site_limit_seconds', HOUR_IN_SECONDS));
+                if (RateLimits::get_options()->enabled) {
+                    RateLimits::update_rate_limit('ry_smilepay_ipn_error');
+                    $seconds = RateLimits::is_exceeded_retry_after('ry_smilepay_ipn_error');
+                    if ($seconds !== false) {
+                        do_action('ry_callback_check_failed_limited_notification', __('SmilePay', 'ry-woocommerce-tools'), $seconds);
                     }
                 }
 

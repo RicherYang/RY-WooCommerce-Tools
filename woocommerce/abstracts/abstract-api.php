@@ -10,6 +10,8 @@ abstract class RY_WT_Api
 
     private bool $do_die = false;
 
+    private int $rate_limit_seconds = 0;
+
     public function get_api_url($request = '', $ssl = true): string
     {
         return WC()->api_request_url($request, $ssl);
@@ -39,14 +41,24 @@ abstract class RY_WT_Api
         exit;
     }
 
-    public function enable_rate_limit()
+    /**
+     * @param int $seconds
+     */
+    public function enable_rate_limit($seconds)
     {
-        add_filter('woocommerce_store_api_rate_limit_options', function ($options) {
-            $options['enabled'] = true;
-            $options['limit'] = 10;
-            $options['seconds'] = 600;
-            return $options;
-        }, 999);
+        static $added = false;
+        if (!$added) {
+            add_filter('woocommerce_store_api_rate_limit_options', function ($options) {
+                var_dump(1);
+                $options['enabled'] = true;
+                $options['limit'] = 10;
+                $options['seconds'] = $this->rate_limit_seconds;
+                return $options;
+            }, 99);
+            $added = true;
+        }
+
+        $this->rate_limit_seconds = $seconds;
     }
 
     public function auto_submit_data(string $url, array $args): void
@@ -249,8 +261,8 @@ abstract class RY_WT_Api
     }
 
     /**
-     * @param WC_Order $order
-     * @param string $trade_no
+     * @param  WC_Order $order
+     * @param  string   $trade_no
      * @return void
      */
     protected function set_trade_no($order, $trade_no): void
@@ -261,8 +273,8 @@ abstract class RY_WT_Api
     }
 
     /**
-     * @param WC_Order $order
-     * @param string $trade_no
+     * @param  WC_Order $order
+     * @param  string   $trade_no
      * @return bool
      */
     protected function is_used_trade_no($order, $trade_no): bool
@@ -272,9 +284,9 @@ abstract class RY_WT_Api
     }
 
     /**
-     * @param WC_Order $order
-     * @param string $trade_no
-     * @param string $transaction_ID
+     * @param  WC_Order $order
+     * @param  string   $trade_no
+     * @param  string   $transaction_ID
      * @return void
      */
     protected function set_trade_no_transaction_id($order, $trade_no, $transaction_ID): void
@@ -285,8 +297,8 @@ abstract class RY_WT_Api
     }
 
     /**
-     * @param WC_Order $order
-     * @param string $transaction_ID
+     * @param  WC_Order $order
+     * @param  string   $transaction_ID
      * @return string
      */
     protected function get_trade_no($order, $transaction_ID = ''): string
@@ -301,7 +313,7 @@ abstract class RY_WT_Api
     }
 
     /**
-     * @param WC_Order $order
+     * @param  WC_Order $order
      * @return array
      */
     private function get_trade_no_list($order): array
