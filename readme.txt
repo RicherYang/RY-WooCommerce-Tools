@@ -40,7 +40,7 @@ Please visit the [plugin forum page](https://ry-plugin.com/ry-woocommerce-tools/
 
 == Changelog ==
 
-= 2026.11.20 =
+= 2026.11.24 =
 * 新增 - 第三方主動通知的異常偵測封鎖機制。
 
 = 2026.11.16 =

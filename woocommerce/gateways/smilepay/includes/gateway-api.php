@@ -9,11 +9,13 @@ final class RY_WT_WC_SmilePay_Gateway_Api extends RY_WT_SmilePay_Api
     protected array $api_test_url = [
         'checkout' => 'https://ssl.smse.com.tw/ezpos/mtmk_utf.asp',
         'api_checkout' => 'https://ssl.smse.com.tw/api/SPPayment.asp',
+        'query' => 'https://ssl.smse.com.tw/api/SPPayment_QueryStatus.asp',
     ];
 
     protected array $api_url = [
         'checkout' => 'https://ssl.smse.com.tw/ezpos/mtmk_utf.asp',
         'api_checkout' => 'https://ssl.smse.com.tw/api/SPPayment.asp',
+        'query' => 'https://ssl.smse.com.tw/api/SPPayment_QueryStatus.asp',
     ];
 
     public static function instance(): RY_WT_WC_SmilePay_Gateway_Api
@@ -153,6 +155,44 @@ final class RY_WT_WC_SmilePay_Gateway_Api extends RY_WT_SmilePay_Api
                 $order->update_status('on-hold');
                 break;
         }
+    }
+
+    public function get_info($order)
+    {
+        $api_info = RY_WT_WC_SmilePay_Gateway::instance()->get_api_info();
+
+        $args = [
+            'Dcvc' => $api_info['Dcvc'],
+            'Rvg2c' => $api_info['Rvg2c'],
+            'Verify_key' => $api_info['Verify_key'],
+            'Data_id' => $this->get_trade_no($order, $order->get_transaction_id()),
+        ];
+
+        if ($api_info['testmode']) {
+            $url = $this->api_test_url['query'];
+        } else {
+            $url = $this->api_url['query'];
+        }
+
+        $response = $this->link_server($url . '?' . http_build_query($args), []);
+        if (is_wp_error($response)) {
+            RY_WT_WC_SmilePay_Gateway::instance()->log('Query failed', WC_Log_Levels::ERROR, ['data' => $args, 'info' => $response->get_error_messages()]);
+            return;
+        }
+
+        if (wp_remote_retrieve_response_code($response) != '200') {
+            RY_WT_WC_SmilePay_Gateway::instance()->log('Query HTTP status error', WC_Log_Levels::ERROR, ['data' => $args, 'code' => wp_remote_retrieve_response_code($response)]);
+            return;
+        }
+
+        $body = wp_remote_retrieve_body($response);
+        $result = @simplexml_load_string($body);
+        if (!$result) {
+            RY_WT_WC_SmilePay_Gateway::instance()->log('Query result parse failed', WC_Log_Levels::WARNING, ['data' => $args, 'result' => wp_remote_retrieve_body($response)]);
+            return;
+        }
+
+        return $result;
     }
 
     protected function get_code_info($order, $gateway)

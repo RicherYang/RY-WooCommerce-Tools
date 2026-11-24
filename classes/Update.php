@@ -348,8 +348,8 @@ final class Update
             Main::delete_option('ntp_time_error');
         }
 
-        if (version_compare($now_version, '2026.11.20', '<')) {
-            Main::update_option('version', '2026.11.20', true);
+        if (version_compare($now_version, '2026.11.24', '<')) {
+            Main::update_option('version', '2026.11.24', true);
         }
     }
 }

@@ -51,7 +51,7 @@ abstract class RY_WT_Api
             add_filter('woocommerce_store_api_rate_limit_options', function ($options) {
                 var_dump(1);
                 $options['enabled'] = true;
-                $options['limit'] = 10;
+                $options['limit'] = 6;
                 $options['seconds'] = $this->rate_limit_seconds;
                 return $options;
             }, 99);
